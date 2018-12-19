@@ -7,13 +7,22 @@ public class TileManager : MonoBehaviour {
 
     [SerializeField]
     public GameObject tile;
+    [SerializeField]
+    public GameObject tileGroup;
     
 	void Start () {
         Grid2D grid = Grid2D.instance;
-        for(int i = 0; i < grid.CellGetIndex(grid.rowCount,grid.columnCount); i++) {
-            Vector3 temp = grid.CellGetPosition(i);
-            temp.z = 0;
-            Instantiate(tile, temp, Quaternion.identity);
+
+        Vector3 gridLocation = grid.transform.position;
+        gridLocation.z = 0;
+        GameObject GroupPosition = Instantiate(tileGroup, gridLocation, Quaternion.identity);
+
+        for(int i = 0; i < grid.CellGetIndex(grid.rowCount,grid.columnCount) + 1; i++) 
+        {
+            Vector3 tilePosition = grid.CellGetPosition(i);
+            tilePosition.z = 0;
+            GameObject temp = Instantiate(tile, tilePosition, Quaternion.identity);
+            temp.transform.SetParent(GroupPosition.transform);            
         }		
 	}
 	

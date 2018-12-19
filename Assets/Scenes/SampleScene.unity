@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 1230741439594648, guid: f219442097769fb40999d5e3db40e0b6, type: 2}
+  tileGroup: {fileID: 1095548559965662, guid: 8eb8ad0e3d3721c4781c02389c479498, type: 2}
 --- !u!4 &227450415
 Transform:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 1147478997}
   m_LocalRotation: {x: 0.31598538, y: -0.13088542, z: 0.3596048, w: 0.8681629}
   m_LocalPosition: {x: 0, y: 0, z: 200}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
