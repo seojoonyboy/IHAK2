@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6930584b462e54bb846f4849d378f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 1230741439594648, guid: bf6e88147c889a243a3fb08cf76eab65, type: 2}
-  tileGroup: {fileID: 1095548559965662, guid: f3a53b39914e10e4eafb921757c3642f, type: 2}
+  tile: {fileID: 1230741439594648, guid: f219442097769fb40999d5e3db40e0b6, type: 2}
+  tileGroup: {fileID: 1095548559965662, guid: 8eb8ad0e3d3721c4781c02389c479498, type: 2}
 --- !u!4 &227450415
 Transform:
   m_ObjectHideFlags: 0
@@ -331,7 +331,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!224 &1038567045
@@ -463,7 +463,7 @@ MonoBehaviour:
   territoriesTexture: {fileID: 0}
   territoriesTextureNeutralColor: {r: 0, g: 0, b: 0, a: 0}
   _enableTerritories: 1
-  _numTerritories: 1
+  _numTerritories: 18
   _showTerritories: 1
   _colorizeTerritories: 0
   _colorizedTerritoriesAlpha: 0.71
@@ -524,9 +524,9 @@ Transform:
   m_GameObject: {fileID: 1147478997}
   m_LocalRotation: {x: 0.31598538, y: -0.13088542, z: 0.3596048, w: 0.8681629}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 98, y: 98, z: 1}
   m_Children:
-  - {fileID: 1798473589}
+  - {fileID: 1602497638}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 40, y: 0, z: 45}
@@ -766,14 +766,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1798473588
+--- !u!1 &1602497637
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1798473589}
+  - component: {fileID: 1602497638}
   m_Layer: 5
   m_Name: Surfaces
   m_TagString: Untagged
@@ -781,16 +781,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1798473589
+--- !u!4 &1602497638
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1798473588}
+  m_GameObject: {fileID: 1602497637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1147479002}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

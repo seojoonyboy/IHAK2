@@ -21,8 +21,7 @@ public class TileManager : MonoBehaviour {
         gridLocation.z = 0;
         GameObject GroupPosition = Instantiate(tileGroup, gridLocation, Quaternion.identity);
 
-        for(int i = 0; i < grid.CellGetIndex(grid.rowCount,grid.columnCount) + 1; i++) 
-        {
+        for (int i = 0; i < grid.CellGetIndex(grid.rowCount, grid.columnCount) + 1; i++) {
             Vector3 tilePosition = grid.CellGetPosition(i);
             tilePosition.z = 0;
             GameObject createTile = Instantiate(tile, tilePosition, Quaternion.identity);
