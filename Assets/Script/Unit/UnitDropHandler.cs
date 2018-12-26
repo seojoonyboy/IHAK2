@@ -17,12 +17,10 @@ public class UnitDropHandler : MonoBehaviour, IDropHandler {
         GameObject Temp = Instantiate(Unit);
         Vector3 location = cam.ScreenToWorldPoint(Input.mousePosition);
         location.z = 0;
-        Temp.transform.localPosition = location;
-        
+        Temp.transform.localPosition = location;       
         
         
 
         Debug.Log("메롱!");
-
     }
 }

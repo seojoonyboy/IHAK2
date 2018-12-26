@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnitDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler {
-    
-    private void Start() {
+public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+
+    public GameObject unit;
+    Vector3 startPosition;
+
+    public void OnBeginDrag (PointerEventData eventData) {
+        startPosition = transform.position;
     }
 
     public void OnDrag(PointerEventData eventData) {

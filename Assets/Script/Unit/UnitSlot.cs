@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnitButton : MonoBehaviour, IDropHandler {
+public class UnitSlot : MonoBehaviour, IDropHandler {
 
     public GameObject unit {
         get {
@@ -16,8 +16,9 @@ public class UnitButton : MonoBehaviour, IDropHandler {
 
     public void OnDrop (PointerEventData eventData) {
 
-        if(unit == false) {
-
+        if(!unit) {
+            DragHandler.unit.transform.SetParent(transform);
+            //ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
         }        
     }	
 }
