@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 224936262556873352}
   - component: {fileID: 222363079995733216}
   - component: {fileID: 114824825436443960}
+  - component: {fileID: 114865774839759740}
   m_Layer: 5
   m_Name: DeckListWindow
   m_TagString: Untagged
@@ -481,6 +482,26 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114865774839759740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569737242165272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa200fe5bfea6d7478aeb906bfda5ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots:
+  - {fileID: 1880577081146804}
+  - {fileID: 1310125191407828}
+  - {fileID: 1789075788132310}
+  - {fileID: 1796059882067166}
+  - {fileID: 1343016036962850}
+  - {fileID: 1625356706227730}
+  Add: {fileID: 1003585952399496, guid: abec676ae0063f54c92ee9a47f630a86, type: 2}
+  Modify: {fileID: 1287501187660574, guid: b1e865f4581424a4abe9590a2d86c2db, type: 2}
 --- !u!222 &222141542764251386
 CanvasRenderer:
   m_ObjectHideFlags: 1
