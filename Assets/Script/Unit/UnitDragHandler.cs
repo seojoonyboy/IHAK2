@@ -9,6 +9,7 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     Vector3 startPosition;
 
     public void OnBeginDrag (PointerEventData eventData) {
+        GetComponentInParent<UnitDropHandler>().unit = unit;
         startPosition = transform.position;
     }
 
@@ -16,7 +17,7 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         transform.position = Input.mousePosition;
     }
 
-    public void OnEndDrag(PointerEventData eventData) {
+    public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
     }	
 }
