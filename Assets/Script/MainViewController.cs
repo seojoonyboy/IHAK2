@@ -23,11 +23,11 @@ public class MainViewController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        StartCoroutine(LoaddingScene(null, SceneState.LogoScene.ToString(), SceneState.LogoScene));
+        startScene(null, SceneState.LogoScene);
     }
 
-    public void startMenuScene() {
-        StartCoroutine(LoaddingScene(sceneState.ToString(), SceneState.MenuScene.ToString(), SceneState.MenuScene));
+    public void startScene(string thisScene, SceneState targetScene) {
+        StartCoroutine(LoaddingScene(thisScene, targetScene.ToString(), targetScene));
     }
 
     IEnumerator LoaddingScene(string remove, string load, SceneState state) {
