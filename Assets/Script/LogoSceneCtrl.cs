@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class LogoSceneCtrl : MonoBehaviour {
 
-    MainViewController.SceneState sceneState = MainViewController.SceneState.LogoScene;
+    GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.LogoScene;
 
     public void startButton() {
-        MainViewController mvc = FindObjectOfType<MainViewController>();
-        mvc.startScene(sceneState.ToString(), MainViewController.SceneState.MenuScene);
+        GameSceneManager mvc = FindObjectOfType<GameSceneManager>();
+        mvc.startScene(sceneState.ToString(), GameSceneManager.SceneState.MenuScene);
     }
 }
