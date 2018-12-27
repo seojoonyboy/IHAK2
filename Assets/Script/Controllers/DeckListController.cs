@@ -5,10 +5,12 @@ using DataModules;
 using System.Collections;
 using System.Collections.Generic;
 
+using UniRx;
+using UniRx.Triggers;
 
 public class DeckListController : MonoBehaviour {
     [SerializeField] private GameObject[] slots;
-
+    private List<GameObject> items;
     PlayerInfosManager _PlayerInfosManager;
     public GameObject
         Add,
@@ -29,15 +31,37 @@ public class DeckListController : MonoBehaviour {
     }
 
     private void Initialize() {
-        Deck[] decks = _PlayerInfosManager.decks;
-        for(int i=0; i<decks.Length; i++) {
-            GameObject obj = Instantiate(Modify, slots[i].transform);
-            obj.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
-            if (decks[i].isLeader) obj.transform.Find("IsLeader").gameObject.SetActive(true);
-        }
+        List<Deck> decks = _PlayerInfosManager.decks;
+        Sort(decks);
+    }
 
-        for(int i=decks.Length; i<slots.Length; i++) {
-            GameObject obj = Instantiate(Add, slots[i].transform);
+    private void Sort(List<Deck> decks) {
+        items = new List<GameObject>();
+        Clear();
+        for (int i = 0; i < decks.Count; i++) {
+            GameObject newItem = Instantiate(Modify, slots[i].transform);
+            newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
+            newItem.transform.Find("IsLeader").gameObject.SetActive(decks[i].isLeader);
+            int id = decks[i].Id;
+            newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
+                .AsObservable()
+                .Subscribe(_ => {
+                    _PlayerInfosManager.RemoveDeck(id);
+                    Sort(_PlayerInfosManager.decks);
+                });
+            items.Add(newItem);
+        }
+        for (int i = decks.Count; i < slots.Length; i++) {
+            GameObject newItem = Instantiate(Add, slots[i].transform);
+            items.Add(newItem);
+        }
+    }
+
+    private void Clear() {
+        foreach(GameObject slot in slots) {
+            foreach(Transform tf in slot.transform) {
+                Destroy(tf.gameObject);
+            }
         }
     }
 }

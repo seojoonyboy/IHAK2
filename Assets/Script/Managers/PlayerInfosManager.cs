@@ -5,7 +5,7 @@ using DataModules;
 
 public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
-    public Deck[] decks;
+    public List<Deck> decks = new List<Deck>();
     void Awake() {
         DontDestroyOnLoad(gameObject);
     }
@@ -18,5 +18,10 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     // Update is called once per frame
     void Update() {
 
+    }
+
+    public void RemoveDeck(int id) {
+        Deck deck = decks.Find(x => x.Id == id);
+        decks.Remove(deck);
     }
 }
