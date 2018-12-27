@@ -28,8 +28,8 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     public void SetDummyDecks() {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         int deckNum = 3;
-        
-        for(int i=0; i<deckNum; i++) {
+
+        for (int i = 0; i < deckNum; i++) {
             Deck deck = new Deck();
 
             var species = (Species.Type[])Enum.GetValues(typeof(Species.Type));
@@ -41,7 +41,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
             deck.species = selectedSpecies;
             deck.Id = i;
 
-            if(i == 0) {
+            if (i == 0) {
                 deck.isLeader = true;
             }
 
