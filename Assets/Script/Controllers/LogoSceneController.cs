@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogoSceneCtrl : MonoBehaviour {
+public class LogoSceneController : MonoBehaviour {
 
-    GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.LogoScene;
+    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.LogoScene;
 
     public void startButton() {
         GameSceneManager mvc = FindObjectOfType<GameSceneManager>();
