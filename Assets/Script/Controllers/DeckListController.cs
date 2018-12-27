@@ -9,6 +9,9 @@ using UniRx;
 using UniRx.Triggers;
 
 public class DeckListController : MonoBehaviour {
+
+    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
+
     [SerializeField] private GameObject[] slots;
     private List<GameObject> items;
     PlayerInfosManager _PlayerInfosManager;
@@ -64,6 +67,9 @@ public class DeckListController : MonoBehaviour {
         for (int i = decks.Count; i < slots.Length; i++) {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
+            newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
+                moveToDeckSetting();
+            });
         }
     }
 
@@ -74,8 +80,12 @@ public class DeckListController : MonoBehaviour {
             }
         }
     }
-
     private void ReassignLeaderDeck() {
 
+    }
+
+    public void moveToDeckSetting() {
+        GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+        gsm.startScene(sceneState.ToString(), GameSceneManager.SceneState.DeckSettingScene);
     }
 }

@@ -9,19 +9,18 @@ public class GameSceneManager : MonoBehaviour {
         None,
         LogoScene,
         MenuScene,
-        SetDeck,
-        InGame,
+        DeckSettingScene,
+        InGameScene,
     }
 
     private SceneState sceneState;
 
     [SerializeField] GameObject loaddingWnd;
 
-    PlayerInfosManager _PlayerInfosManager;
 
     private void Awake() {
         sceneState = SceneState.None;
-        _PlayerInfosManager = PlayerInfosManager.Instance;
+
     }
 
     // Use this for initialization
