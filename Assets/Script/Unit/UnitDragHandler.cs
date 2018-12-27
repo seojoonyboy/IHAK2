@@ -7,8 +7,14 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public GameObject unit;
     Vector3 startPosition;
+    bool click;
+
+    private void Start() {
+        Input.simulateMouseWithTouches = true;
+    }
 
     public void OnBeginDrag (PointerEventData eventData) {
+        GetComponentInParent<UnitDropHandler>().unit = unit;
         startPosition = transform.position;
     }
 
@@ -16,7 +22,7 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         transform.position = Input.mousePosition;
     }
 
-    public void OnEndDrag(PointerEventData eventData) {
+    public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
     }	
 }

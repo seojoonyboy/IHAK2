@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class TileObject : MonoBehaviour {
 
-    DataManager test;
+    public int tileNum;
+    Vector3 Grid2DLocation;
+    public bool buildingSet = false;
 
 	// Use this for initialization
-	void Start () {
-        test = DataManager.Instance;
-    }
 	
 }
