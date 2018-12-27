@@ -15,7 +15,7 @@ public class TileManager : MonoBehaviour {
     DataManager test;
 
 
-    void Start () {
+    void Start () {        
         Grid2D grid = Grid2D.instance;
         test = DataManager.Instance;
 
@@ -34,6 +34,7 @@ public class TileManager : MonoBehaviour {
             if (i == 12) {
                 GameObject centerBuild = Instantiate(townCenter, tilePosition, Quaternion.identity);
                 createTile.GetComponent<TileObject>().buildingSet = true;
+                centerBuild.transform.SetParent(createTile.transform);
             }
 
         }

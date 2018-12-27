@@ -42,10 +42,11 @@ public class UnitDropHandler : MonoBehaviour, IDropHandler {
             return;
 
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-            GameObject selectUnit = Instantiate(unit);
+            GameObject selectBuilding = Instantiate(unit);
             Vector3 unitLocation = grid.CellGetPosition(targetTile.GetComponent<TileObject>().tileNum);
             unitLocation.z = 0;
-            selectUnit.transform.localPosition = unitLocation;
+            selectBuilding.transform.localPosition = unitLocation;
+            selectBuilding.transform.SetParent(targetTile.transform);
             targetTile.GetComponent<TileObject>().buildingSet = true;
         }
         else
