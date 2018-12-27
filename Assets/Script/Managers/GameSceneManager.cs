@@ -17,8 +17,11 @@ public class GameSceneManager : MonoBehaviour {
 
     [SerializeField] GameObject loaddingWnd;
 
+    PlayerInfosManager _PlayerInfosManager;
+
     private void Awake() {
         sceneState = SceneState.None;
+        _PlayerInfosManager = PlayerInfosManager.Instance;
     }
 
     // Use this for initialization
