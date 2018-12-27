@@ -9,6 +9,8 @@ public class TileManager : MonoBehaviour {
     public GameObject tile;
     [SerializeField]
     public GameObject tileGroup;
+    [SerializeField]
+    public GameObject townCenter;
 
     DataManager test;
 
@@ -23,11 +25,21 @@ public class TileManager : MonoBehaviour {
 
         for (int i = 0; i < grid.CellGetIndex(grid.rowCount, grid.columnCount) + 1; i++) {
             Vector3 tilePosition = grid.CellGetPosition(i);
-            tilePosition.z = 0;
+            tilePosition.z = 1;
             GameObject createTile = Instantiate(tile, tilePosition, Quaternion.identity);
             createTile.name = string.Format("Tile[{0},{1}]", grid.CellGetRow(i), grid.CellGetColumn(i));
-            createTile.transform.SetParent(GroupPosition.transform);            
-        }		
+            createTile.transform.SetParent(GroupPosition.transform);
+            createTile.GetComponent<TileObject>().tileNum = i;
+
+            if (i == 12) {
+                GameObject centerBuild = Instantiate(townCenter, tilePosition, Quaternion.identity);
+                createTile.GetComponent<TileObject>().buildingSet = true;
+            }
+
+        }
+        
+
+
 	}
 
     private void Update() {
