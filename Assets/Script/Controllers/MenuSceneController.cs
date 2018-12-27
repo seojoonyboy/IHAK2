@@ -44,5 +44,4 @@ public class MenuSceneController : MonoBehaviour {
         windowObject[num].SetActive(true);
         openedWindow = (Windows)num;
     }
-
 }
