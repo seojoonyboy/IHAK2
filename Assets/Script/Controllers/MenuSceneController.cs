@@ -22,21 +22,20 @@ public class MenuSceneController : MonoBehaviour {
     private void Awake() {
         
     }
+
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
-        //buttonObject[0].onClick.AsObservable().Subscribe(_ => {
-        //    buttonObject[0].transform.SetSiblingIndex(1);
-        //    OpenWindow(0);
-        //});
-        //buttonObject[1].onClick.AsObservable().Subscribe(_ => {
-        //    buttonObject[1].transform.SetSiblingIndex(1);
-        //    OpenWindow(1);
-        //});
-        //buttonObject[2].onClick.AsObservable().Subscribe(_ => {
-        //    buttonObject[2].transform.SetSiblingIndex(1);
-        //    OpenWindow(2);
-        //});
+
+        for(int i=0; i<buttonObject.Length; i++) {
+            int num = i;
+            buttonObject[i].onClick
+                .AsObservable()
+                .Subscribe(_ => {
+                    buttonObject[num].transform.SetSiblingIndex(1);
+                    OpenWindow(num);
+                });
+        }
     }
 
     public void OpenWindow(int num) {
@@ -45,5 +44,4 @@ public class MenuSceneController : MonoBehaviour {
         windowObject[num].SetActive(true);
         openedWindow = (Windows)num;
     }
-
 }
