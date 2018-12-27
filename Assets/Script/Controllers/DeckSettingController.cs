@@ -11,8 +11,7 @@ public class DeckSettingController : MonoBehaviour {
 
     public void settingButton() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        GameObject deckSet = new GameObject();
-        deckSet = GameObject.FindGameObjectWithTag("TileGroup");
+        GameObject deckSet = GameObject.FindGameObjectWithTag("TileGroup");
 
         Deck deck = new Deck();
         deck.Id = playerInfosManager.decks.Capacity;
