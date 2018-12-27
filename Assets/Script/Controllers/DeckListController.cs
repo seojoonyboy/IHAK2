@@ -18,15 +18,6 @@ public class DeckListController : MonoBehaviour {
     public GameObject
         Add,
         Modify;
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 
     void OnEnable() {
         _PlayerInfosManager = PlayerInfosManager.Instance;
@@ -45,7 +36,7 @@ public class DeckListController : MonoBehaviour {
         //id 기준으로 정렬, 대표 덱을 맨 앞으로 정렬
         decks.Sort((a, b) => a.Id.CompareTo(b.Id));
         Deck deck = decks.Find(x => x.isLeader == true);
-        if(decks.Count > 1 && deck != null) {
+        if (decks.Count > 1 && deck != null) {
             decks.Remove(deck);
             decks.Insert(0, deck);
         }
