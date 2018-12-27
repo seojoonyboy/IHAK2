@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
 using System.Linq;
+using System;
 
 public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
     public List<Deck> decks = new List<Deck>();
+
     void Awake() {
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        SetDummyDecks();
     }
 
     public void RemoveDeck(int id) {
@@ -30,5 +23,36 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         int maxId = decks.Max(x => x.Id);
         deck.Id = maxId + 1;
         decks.Add(deck);
+    }
+
+    public void SetDummyDecks() {
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
+        int deckNum = 3;
+        
+        for(int i=0; i<deckNum; i++) {
+            Deck deck = new Deck();
+
+            var species = (Species.Type[])Enum.GetValues(typeof(Species.Type));
+            Species.Type selectedSpecies = species[UnityEngine.Random.Range(0, species.Length - 1)];
+            var values = (Name[])Enum.GetValues(typeof(Name));
+            Name selectedName = values[UnityEngine.Random.Range(0, values.Length - 1)];
+
+            deck.Name = selectedName + " " + UnityEngine.Random.Range(0, 100).ToString();
+            deck.species = selectedSpecies;
+            deck.Id = i;
+
+            if(i == 0) {
+                deck.isLeader = true;
+            }
+
+            decks.Add(deck);
+        }
+    }
+
+    public enum Name {
+        위니,
+        미드레인지,
+        OTK,
+        빅
     }
 }

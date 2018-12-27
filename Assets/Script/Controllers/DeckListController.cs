@@ -18,15 +18,6 @@ public class DeckListController : MonoBehaviour {
     public GameObject
         Add,
         Modify;
-    // Use this for initialization
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 
     void OnEnable() {
         _PlayerInfosManager = PlayerInfosManager.Instance;
