@@ -20,8 +20,13 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     }
 
     public void AddDeck(Deck deck) {
-        int maxId = decks.Max(x => x.Id);
-        deck.Id = maxId + 1;
+        if(decks.Count != 0) {
+            int maxId = decks.Max(x => x.Id);
+            deck.Id = maxId + 1;
+        }
+        else {
+            deck.Id = 0;
+        }
         decks.Add(deck);
     }
 
