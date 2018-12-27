@@ -30,6 +30,14 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         decks.Add(deck);
     }
 
+    public void ChangeLeaderDeck(int id) {
+        Deck prevLeaderDeck = decks.Find(x => x.isLeader == true);
+        prevLeaderDeck.isLeader = false;
+
+        Deck deck = decks.Find(x => x.Id == id);
+        deck.isLeader = true;
+    }
+
     public void SetDummyDecks() {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         int deckNum = 3;
