@@ -9,6 +9,7 @@ public class DeckSettingController : MonoBehaviour {
 
     public void returnButton() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+        Destroy(GameObject.FindGameObjectWithTag("TileGroup"));
         gsm.startScene(sceneState.ToString(), GameSceneManager.SceneState.MenuScene);
     }
 }
