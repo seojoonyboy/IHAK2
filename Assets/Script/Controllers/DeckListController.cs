@@ -17,7 +17,7 @@ public class DeckListController : MonoBehaviour {
         Modify;
     // Use this for initialization
     void Start() {
-        
+
     }
 
     // Update is called once per frame
@@ -36,8 +36,17 @@ public class DeckListController : MonoBehaviour {
     }
 
     private void Sort(List<Deck> decks) {
-        items = new List<GameObject>();
         Clear();
+
+        items = new List<GameObject>();
+        //id 기준으로 정렬, 대표 덱을 맨 앞으로 정렬
+        decks.Sort((a, b) => a.Id.CompareTo(b.Id));
+        Deck deck = decks.Find(x => x.isLeader == true);
+        if(decks.Count > 1 && deck != null) {
+            decks.Remove(deck);
+            decks.Insert(0, deck);
+        }
+
         for (int i = 0; i < decks.Count; i++) {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
@@ -48,6 +57,7 @@ public class DeckListController : MonoBehaviour {
                 .Subscribe(_ => {
                     _PlayerInfosManager.RemoveDeck(id);
                     Sort(_PlayerInfosManager.decks);
+                    //ReassignLeaderDeck();
                 });
             items.Add(newItem);
         }
@@ -58,10 +68,14 @@ public class DeckListController : MonoBehaviour {
     }
 
     private void Clear() {
-        foreach(GameObject slot in slots) {
-            foreach(Transform tf in slot.transform) {
+        foreach (GameObject slot in slots) {
+            foreach (Transform tf in slot.transform) {
                 Destroy(tf.gameObject);
             }
         }
+    }
+
+    private void ReassignLeaderDeck() {
+
     }
 }
