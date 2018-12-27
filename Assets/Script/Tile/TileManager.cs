@@ -11,13 +11,11 @@ public class TileManager : MonoBehaviour {
     public GameObject tileGroup;
     [SerializeField]
     public GameObject townCenter;
+    
 
-    DataManager test;
-
-
-    void Start () {        
+    void Start () {
+        
         Grid2D grid = Grid2D.instance;
-        test = DataManager.Instance;
 
         Vector3 gridLocation = grid.transform.position;
         gridLocation.z = 0;

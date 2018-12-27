@@ -9,5 +9,6 @@ namespace DataModules {
         public string Name;
         public Species.Type species;
         public bool isLeader;
+        public GameObject settingDeck;
     }
 }
