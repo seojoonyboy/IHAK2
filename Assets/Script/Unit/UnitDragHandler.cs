@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     public GameObject unit;
     Vector3 startPosition;
-    bool click;
 
     private void Start() {
         Input.simulateMouseWithTouches = true;
@@ -15,6 +15,7 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag (PointerEventData eventData) {
         GetComponentInParent<UnitDropHandler>().unit = unit;
+        GetComponent<Image>().sprite = unit.GetComponent<BuildingObject>().mainSprite;        
         startPosition = transform.position;
     }
 
@@ -24,5 +25,6 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
+        GetComponent<Image>().sprite = unit.GetComponent<BuildingObject>().icon;
     }	
 }

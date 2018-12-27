@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4209676496149334}
   - component: {fileID: 212089261824697594}
+  - component: {fileID: 114187334941123790}
   m_Layer: 0
   m_Name: BlackSmith
   m_TagString: Untagged
@@ -40,6 +41,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114187334941123790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1176473451959736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300004, guid: 37a60b4083bbcb64e955711f9d730f97, type: 3}
+  mainSprite: {fileID: 21300000, guid: 207c5fd43bca85f4f8ce4d9501813019, type: 3}
 --- !u!212 &212089261824697594
 SpriteRenderer:
   m_ObjectHideFlags: 1
