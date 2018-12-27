@@ -44,14 +44,22 @@ public class DeckListController : MonoBehaviour {
         for (int i = 0; i < decks.Count; i++) {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
-            newItem.transform.Find("IsLeader").gameObject.SetActive(decks[i].isLeader);
+            newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(decks[i].isLeader);
             int id = decks[i].Id;
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
                     _PlayerInfosManager.RemoveDeck(id);
                     Sort(_PlayerInfosManager.decks);
-                    //ReassignLeaderDeck();
+                });
+            newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
+                .AsObservable()
+                .Subscribe(_ => {
+                    Modal.instantiate(decks[id].Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
+                        _PlayerInfosManager.ChangeLeaderDeck(id);
+                        Sort(_PlayerInfosManager.decks);
+                    });
+                    
                 });
             items.Add(newItem);
         }
@@ -70,9 +78,6 @@ public class DeckListController : MonoBehaviour {
                 Destroy(tf.gameObject);
             }
         }
-    }
-    private void ReassignLeaderDeck() {
-
     }
 
     public void moveToDeckSetting() {
