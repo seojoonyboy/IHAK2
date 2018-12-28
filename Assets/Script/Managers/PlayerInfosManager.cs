@@ -30,9 +30,14 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         decks.Add(deck);
     }
 
+    public Deck FindDeck(int id) {
+        Deck deck = decks.Find(x => x.Id == id);
+        return deck;
+    }
+
     public void ChangeLeaderDeck(int id) {
         Deck prevLeaderDeck = decks.Find(x => x.isLeader == true);
-        prevLeaderDeck.isLeader = false;
+        if(prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
 
         Deck deck = decks.Find(x => x.Id == id);
         deck.isLeader = true;
