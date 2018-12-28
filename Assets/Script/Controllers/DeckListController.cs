@@ -55,11 +55,10 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate(decks[id].Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
+                    Modal.instantiate((_PlayerInfosManager.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
                         _PlayerInfosManager.ChangeLeaderDeck(id);
                         Sort(_PlayerInfosManager.decks);
                     });
-                    
                 });
             items.Add(newItem);
         }
