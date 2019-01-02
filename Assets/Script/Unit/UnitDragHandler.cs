@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     public GameObject unit;
+    public int unitID;
     Vector3 startPosition;
 
     private void Start() {
@@ -15,6 +16,8 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag (PointerEventData eventData) {
         GetComponentInParent<UnitDropHandler>().unit = unit;
+        GetComponentInParent<UnitDropHandler>().selectID = unitID;
+        
         GetComponent<Image>().sprite = unit.GetComponent<BuildingObject>().mainSprite;        
         startPosition = transform.position;
     }

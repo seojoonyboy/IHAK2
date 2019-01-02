@@ -13,8 +13,7 @@ public class TileManager : MonoBehaviour {
     public GameObject townCenter;
     
 
-    void Start () {
-        
+    void Start () {        
         Grid2D grid = Grid2D.instance;
 
         Vector3 gridLocation = grid.transform.position;
@@ -34,13 +33,6 @@ public class TileManager : MonoBehaviour {
                 createTile.GetComponent<TileObject>().buildingSet = true;
                 centerBuild.transform.SetParent(createTile.transform);
             }
-
-        }
-        
-
-
+        }     
 	}
-
-    private void Update() {
-    }
 }

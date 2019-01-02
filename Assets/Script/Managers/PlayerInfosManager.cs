@@ -9,13 +9,27 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
     public List<Deck> decks = new List<Deck>();
 
+    [SerializeField]
+    public List<List<int>> deckListData;
+    [SerializeField]
+    public List<int> selectDeck;
+
+
+
+
+
+
+
+
     void Awake() {
         DontDestroyOnLoad(gameObject);
         SetDummyDecks();
+        
     }
 
     public void RemoveDeck(int id) {
         Deck deck = decks.Find(x => x.Id == id);
+        deck.deckData.Clear();
         decks.Remove(deck);
     }
 
@@ -46,6 +60,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     public void SetDummyDecks() {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         int deckNum = 3;
+        deckListData = new List<List<int>>();
 
         for (int i = 0; i < deckNum; i++) {
             Deck deck = new Deck();
@@ -58,11 +73,16 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
             deck.Name = selectedName + " " + UnityEngine.Random.Range(0, 100).ToString();
             deck.species = selectedSpecies;
             deck.Id = i;
+            deck.deckData = new List<int>();
+            deck.deckData.Add(i);
+            deckListData.Add(deck.deckData);
+            
 
             if (i == 0) {
                 deck.isLeader = true;
+                selectDeck = deckListData[i];
             }
-
+            
             decks.Add(deck);
         }
     }

@@ -7,30 +7,27 @@ using Grids2D;
 public class UnitDropHandler : MonoBehaviour, IDropHandler {
 
     public GameObject unit;
+    public int selectID;
     public GameObject targetTile;
     Camera cam;
     Grid2D grid;
+    public List<int> deckData;
+    public GameObject settingTile;
 
     private void Start() {
         cam = Camera.main;
         grid = Grid2D.instance;
+        settingTile = GameObject.FindGameObjectWithTag("TileGroup");
 
+        for (int i = 0; i < settingTile.transform.childCount; i++) {
+            if (i != 12)
+                deckData.Add(0);
+            else
+                deckData.Add(100);
+        }
     }
 
-    public void OnDrop(PointerEventData eventData) {
-
-        /*
-        float z = grid.transform.position.z;
-        GameObject selectUnit = Instantiate(unit);
-        Vector3 gridlocation = cam.ScreenToWorldPoint(Input.mousePosition);
-        Cell temp = grid.CellGetAtPosition(gridlocation);
-        Debug.Log(grid.CellGetIndex(temp));
-        Vector3 location = grid.CellGetPosition(grid.CellGetIndex(temp));
-        location.z = 0;
-
-        selectUnit.transform.localPosition = location;
-        unit = null;     
-        */
+    public void OnDrop(PointerEventData eventData) {        
 
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
@@ -43,7 +40,9 @@ public class UnitDropHandler : MonoBehaviour, IDropHandler {
 
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(unit);
-            Vector3 unitLocation = grid.CellGetPosition(targetTile.GetComponent<TileObject>().tileNum);
+            int tileNum = targetTile.GetComponent<TileObject>().tileNum;
+            deckData[tileNum] = selectID;
+            Vector3 unitLocation = grid.CellGetPosition(tileNum);
             unitLocation.z = 0;
             selectBuilding.transform.localPosition = unitLocation;
             selectBuilding.transform.SetParent(targetTile.transform);
@@ -52,6 +51,7 @@ public class UnitDropHandler : MonoBehaviour, IDropHandler {
         else
             return;
 
+        selectID = 0;
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
 
 
