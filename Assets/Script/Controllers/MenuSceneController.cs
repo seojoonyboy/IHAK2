@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -12,12 +13,14 @@ public class MenuSceneController : MonoBehaviour {
         SHOP = 2
     }
 
-    [SerializeField] GameObject[] windowObject = new GameObject[3];
-    [SerializeField] Button[] buttonObject = new Button[3];
+    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
+
+    [SerializeField] Transform buttonList;
+    [SerializeField] Transform windowList;
+    [SerializeField] GameObject switchButtons;
 
     private Windows openedWindow;
-
-    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
+    
 
     private void Awake() {
         
@@ -27,21 +30,48 @@ public class MenuSceneController : MonoBehaviour {
     void Start() {
         openedWindow = Windows.BASIC;
 
-        for(int i=0; i<buttonObject.Length; i++) {
-            int num = i;
-            buttonObject[i].onClick
-                .AsObservable()
-                .Subscribe(_ => {
-                    buttonObject[num].transform.SetSiblingIndex(1);
-                    OpenWindow(num);
-                });
+        switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(true));
+        switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
+    }
+
+    private void SetScreen() {
+        for(int i = 0; i < 3; i++) {
+            //windowList.GetChild(i).GetComponent<RectTransform>().rect.width = Screen.width; 
         }
     }
 
-    public void OpenWindow(int num) {
-        buttonObject[num].transform.SetSiblingIndex(1);
-        windowObject[(int)openedWindow].SetActive(false);
-        windowObject[num].SetActive(true);
-        openedWindow = (Windows)num;
+    public void switchButton(bool left) {
+        StartCoroutine(StopButton());
+        if (left) {
+            for(int i = 0; i < 4; i++) {
+                if(i < 2)
+                    iTween.MoveTo(windowList.GetChild(i).gameObject, iTween.Hash("x", windowList.GetChild(i).position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+                iTween.MoveTo(buttonList.GetChild(i).gameObject, iTween.Hash("x", buttonList.GetChild(i).position.x + Screen.width / 3, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            }
+            buttonList.GetChild(4).localPosition = new Vector3(-720, 0, 0);
+            buttonList.GetChild(4).GetChild(0).GetComponent<Text>().text = buttonList.GetChild(2).GetChild(0).GetComponent<Text>().text;
+            buttonList.GetChild(4).SetAsFirstSibling();
+            windowList.GetChild(2).localPosition = new Vector3(-1080, 60, 0);
+            windowList.GetChild(2).SetAsFirstSibling();
+        }
+        else {
+            for (int i = 1; i < 5; i++) {
+                if(i < 3)
+                    iTween.MoveTo(windowList.GetChild(i).gameObject, iTween.Hash("x", windowList.GetChild(i).position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+                iTween.MoveTo(buttonList.GetChild(i).gameObject, iTween.Hash("x", buttonList.GetChild(i).position.x - Screen.width / 3, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            }
+            buttonList.GetChild(0).localPosition = new Vector3(720, 0, 0);
+            buttonList.GetChild(0).GetChild(0).GetComponent<Text>().text = buttonList.GetChild(2).GetChild(0).GetComponent<Text>().text;
+            buttonList.GetChild(0).SetAsLastSibling();
+            windowList.GetChild(0).localPosition = new Vector3(1080, 60, 0);
+            windowList.GetChild(0).SetAsLastSibling();
+        }
     }
+
+    IEnumerator StopButton() {
+        switchButtons.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        switchButtons.gameObject.SetActive(true);
+    }
+
 }
