@@ -17,13 +17,8 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     public void RemoveDeck(int id) {
         Deck deck = decks.Find(x => x.Id == id);
         if (deck.isLeader) {
-            if (decks.Count > 1) {
-                decks.Remove(deck);
-                decks[0].isLeader = true;
-            }
-            else {
-                Modal.instantiate("한 개 이상의 덱을\n설정하셔야 합니다.", Modal.Type.CHECK);
-            }
+            decks.Remove(deck);
+            decks[0].isLeader = true;
         }
         else {
             decks.Remove(deck);
@@ -31,7 +26,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     }
 
     public void AddDeck(Deck deck) {
-        if(decks.Count != 0) {
+        if (decks.Count != 0) {
             int maxId = decks.Max(x => x.Id);
             deck.Id = maxId + 1;
         }
@@ -48,7 +43,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
 
     public void ChangeLeaderDeck(int id) {
         Deck prevLeaderDeck = decks.Find(x => x.isLeader == true);
-        if(prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
+        if (prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
 
         Deck deck = decks.Find(x => x.Id == id);
         deck.isLeader = true;
