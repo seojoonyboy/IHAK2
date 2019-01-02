@@ -34,12 +34,12 @@ public class DeckListController : MonoBehaviour {
 
         items = new List<GameObject>();
         //id 기준으로 정렬, 대표 덱을 맨 앞으로 정렬
-        decks.Sort((a, b) => a.Id.CompareTo(b.Id));
-        Deck deck = decks.Find(x => x.isLeader == true);
-        if (decks.Count > 1 && deck != null) {
-            decks.Remove(deck);
-            decks.Insert(0, deck);
-        }
+        //decks.Sort((a, b) => a.Id.CompareTo(b.Id));
+        //Deck deck = decks.Find(x => x.isLeader == true);
+        //if (decks.Count > 1 && deck != null) {
+        //    decks.Remove(deck);
+        //    decks.Insert(0, deck);
+        //}
 
         for (int i = 0; i < decks.Count; i++) {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
