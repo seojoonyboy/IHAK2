@@ -18,7 +18,8 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         Deck deck = decks.Find(x => x.Id == id);
         if (deck.isLeader) {
             decks.Remove(deck);
-            decks[0].isLeader = true;
+            if(decks.Count > 0)
+                decks[0].isLeader = true;
         }
         else {
             decks.Remove(deck);
