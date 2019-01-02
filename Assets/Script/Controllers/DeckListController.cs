@@ -49,8 +49,12 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    _PlayerInfosManager.RemoveDeck(id);
-                    Sort(_PlayerInfosManager.decks);
+                    Modal.instantiate((_PlayerInfosManager.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
+                        _PlayerInfosManager.RemoveDeck(id);
+                        Sort(_PlayerInfosManager.decks);
+                    });
+                    //_PlayerInfosManager.RemoveDeck(id);
+                    //Sort(_PlayerInfosManager.decks);
                 });
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
