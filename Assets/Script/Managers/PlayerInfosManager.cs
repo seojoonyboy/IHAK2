@@ -16,7 +16,18 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
 
     public void RemoveDeck(int id) {
         Deck deck = decks.Find(x => x.Id == id);
-        decks.Remove(deck);
+        if (deck.isLeader) {
+            if (decks.Count > 1) {
+                decks.Remove(deck);
+                decks[0].isLeader = true;
+            }
+            else {
+                Modal.instantiate("한 개 이상의 덱을\n설정하셔야 합니다.", Modal.Type.CHECK);
+            }
+        }
+        else {
+            decks.Remove(deck);
+        }
     }
 
     public void AddDeck(Deck deck) {
