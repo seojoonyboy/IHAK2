@@ -29,12 +29,18 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
 
     public void RemoveDeck(int id) {
         Deck deck = decks.Find(x => x.Id == id);
-        deck.deckData.Clear();
-        decks.Remove(deck);
+        if (deck.isLeader) {
+            decks.Remove(deck);
+            if(decks.Count > 0)
+                decks[0].isLeader = true;
+        }
+        else {
+            decks.Remove(deck);
+        }
     }
 
     public void AddDeck(Deck deck) {
-        if(decks.Count != 0) {
+        if (decks.Count != 0) {
             int maxId = decks.Max(x => x.Id);
             deck.Id = maxId + 1;
         }
@@ -51,7 +57,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
 
     public void ChangeLeaderDeck(int id) {
         Deck prevLeaderDeck = decks.Find(x => x.isLeader == true);
-        if(prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
+        if (prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
 
         Deck deck = decks.Find(x => x.Id == id);
         deck.isLeader = true;

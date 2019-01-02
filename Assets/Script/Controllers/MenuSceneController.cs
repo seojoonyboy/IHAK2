@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject switchButtons;
 
     private Windows openedWindow;
-    
+    private float mousDownPosition;
 
     private void Awake() {
         
@@ -29,19 +30,18 @@ public class MenuSceneController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
+        switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
+        switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
 
-        switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(true));
-        switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
-    }
-
-    private void SetScreen() {
-        for(int i = 0; i < 3; i++) {
-            //windowList.GetChild(i).GetComponent<RectTransform>().rect.width = Screen.width; 
-        }
+        //var camera = Camera.main.gameObject;
+        var downStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
+        var upStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0)).Select(_ => Input.mousePosition.x);
+        var dragStream = windowList.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
+        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
+        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
     }
 
     public void switchButton(bool left) {
-        StartCoroutine(StopButton());
         if (left) {
             for(int i = 0; i < 4; i++) {
                 if(i < 2)
@@ -67,11 +67,4 @@ public class MenuSceneController : MonoBehaviour {
             windowList.GetChild(0).SetAsLastSibling();
         }
     }
-
-    IEnumerator StopButton() {
-        switchButtons.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        switchButtons.gameObject.SetActive(true);
-    }
-
 }
