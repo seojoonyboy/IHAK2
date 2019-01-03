@@ -30,6 +30,9 @@ public class MenuSceneController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
+        buttonList.GetChild(0).GetComponent<Image>().sprite = buttonList.GetChild(3).GetComponent<Image>().sprite;
+        buttonList.GetChild(4).GetComponent<Image>().sprite = buttonList.GetChild(1).GetComponent<Image>().sprite;
+
         switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
         switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
 
@@ -49,9 +52,9 @@ public class MenuSceneController : MonoBehaviour {
                 iTween.MoveTo(buttonList.GetChild(i).gameObject, iTween.Hash("x", buttonList.GetChild(i).position.x + Screen.width / 3, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             }
             buttonList.GetChild(4).localPosition = new Vector3(-720, 0, 0);
-            buttonList.GetChild(4).GetChild(0).GetComponent<Text>().text = buttonList.GetChild(2).GetChild(0).GetComponent<Text>().text;
+            buttonList.GetChild(4).GetComponent<Image>().sprite = buttonList.GetChild(2).GetComponent<Image>().sprite;
             buttonList.GetChild(4).SetAsFirstSibling();
-            windowList.GetChild(2).localPosition = new Vector3(-1080, 60, 0);
+            windowList.GetChild(2).localPosition = new Vector3(-1080, 45, 0);
             windowList.GetChild(2).SetAsFirstSibling();
         }
         else {
@@ -61,9 +64,9 @@ public class MenuSceneController : MonoBehaviour {
                 iTween.MoveTo(buttonList.GetChild(i).gameObject, iTween.Hash("x", buttonList.GetChild(i).position.x - Screen.width / 3, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             }
             buttonList.GetChild(0).localPosition = new Vector3(720, 0, 0);
-            buttonList.GetChild(0).GetChild(0).GetComponent<Text>().text = buttonList.GetChild(2).GetChild(0).GetComponent<Text>().text;
+            buttonList.GetChild(0).GetComponent<Image>().sprite = buttonList.GetChild(2).GetComponent<Image>().sprite;
             buttonList.GetChild(0).SetAsLastSibling();
-            windowList.GetChild(0).localPosition = new Vector3(1080, 60, 0);
+            windowList.GetChild(0).localPosition = new Vector3(1080, 45, 0);
             windowList.GetChild(0).SetAsLastSibling();
         }
     }
