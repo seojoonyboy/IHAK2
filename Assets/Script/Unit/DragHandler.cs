@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
-    public GameObject unit;
-    public int unitID;
+    public GameObject setObject;
     Vector3 startPosition;
 
     private void Start() {
@@ -15,10 +14,9 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
-        GetComponentInParent<UnitDropHandler>().unit = unit;
-        GetComponentInParent<UnitDropHandler>().selectID = unitID;
-        
-        GetComponent<Image>().sprite = unit.GetComponent<BuildingObject>().mainSprite;        
+
+        GetComponentInParent<DropHandler>().setObject = setObject;
+        GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().mainSprite;        
         startPosition = transform.position;
     }
 
@@ -28,6 +26,6 @@ public class UnitDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
-        GetComponent<Image>().sprite = unit.GetComponent<BuildingObject>().icon;
+        GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
     }	
 }
