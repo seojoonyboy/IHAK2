@@ -8,10 +8,21 @@ using System;
 public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
     public List<Deck> decks = new List<Deck>();
+    
+    [SerializeField]
+    public List<int> selectDeck;
+
+
+
+
+
+
+
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
         SetDummyDecks();
+        
     }
 
     public void RemoveDeck(int id) {
@@ -65,11 +76,15 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
             deck.Name = selectedName + " " + UnityEngine.Random.Range(0, 100).ToString();
             deck.species = selectedSpecies;
             deck.Id = i;
+            deck.deckData = new List<int>();
+            deck.deckData.Add(i);
+            
 
             if (i == 0) {
                 deck.isLeader = true;
+                selectDeck = deck.deckData;
             }
-
+            
             decks.Add(deck);
         }
     }
