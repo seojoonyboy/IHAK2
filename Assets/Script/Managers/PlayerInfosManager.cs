@@ -4,10 +4,21 @@ using UnityEngine;
 using DataModules;
 using System.Linq;
 using System;
+using System.Text;
 
 public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
+    private NetworkManager _networkManager;
+
     public List<Deck> decks = new List<Deck>();
+
+    public int Exp { get; set; }
+    public int Lv { get; set; }
+    public string NickName { get; set; }
+
+    private Wallet wallet;
+
+    private StringBuilder sb = new StringBuilder();
 
     [SerializeField]
     public List<int> selectDeck;
@@ -16,6 +27,36 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         DontDestroyOnLoad(gameObject);
         SetDummyDecks();
 
+        wallet = new Wallet();
+        ReqUserInfo();
+    }
+
+    public void ReqUserInfo() {
+        sb.Remove(0, sb.Length);
+        _networkManager.request("GET", sb.ToString(), ReqUserInfoCallback);
+    }
+
+    private void ReqUserInfoCallback(HttpResponse response) {
+        //Server의 Wallet 정보 할당
+    }
+
+    public int GetGold() {
+        return wallet.gold;
+    }
+
+    public int GetJewel() {
+        return wallet.jewel;
+    }
+
+    public void ChangeGoldAmnt(int amount = 0) {
+        //sb.Remove(0, sb.Length);
+        //sb.Append(_networkManager.baseUrl).Append(amount);
+        //_networkManager.request("POST", sb.ToString(), OnChangeGold);
+    }
+
+    private void OnChangeGold(HttpResponse response) {
+        //wallet.gold = 
+        //EventHandler PostNotification 발생
     }
 
     public void RemoveDeck(int id) {
