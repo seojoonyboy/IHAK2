@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class BuildingObject : MonoBehaviour {
     public Sprite icon;
-    public Sprite mainSprite;	
+    public Sprite mainSprite;
+    public int buildingID;
+    public int hp;
 }

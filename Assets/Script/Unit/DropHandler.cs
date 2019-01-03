@@ -4,22 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Grids2D;
 
-public class UnitDropHandler : MonoBehaviour, IDropHandler {
+public class DropHandler : MonoBehaviour, IDropHandler {
 
-    public GameObject unit;
-    public int selectID;
+    public GameObject setObject;
     public GameObject targetTile;
     Camera cam;
     Grid2D grid;
     public List<int> deckData;
-    public GameObject settingTile;
+    public GameObject tileGroup;
 
     private void Start() {
         cam = Camera.main;
         grid = Grid2D.instance;
-        settingTile = GameObject.FindGameObjectWithTag("TileGroup");
+        tileGroup = GameObject.FindGameObjectWithTag("TileGroup");
 
-        for (int i = 0; i < settingTile.transform.childCount; i++) {
+        for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (i != 12)
                 deckData.Add(0);
             else
@@ -39,19 +38,18 @@ public class UnitDropHandler : MonoBehaviour, IDropHandler {
             return;
 
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-            GameObject selectBuilding = Instantiate(unit);
+            GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckData[tileNum] = selectID;
-            Vector3 unitLocation = grid.CellGetPosition(tileNum);
-            unitLocation.z = 0;
-            selectBuilding.transform.localPosition = unitLocation;
+            deckData[tileNum] = setObject.GetComponent<BuildingObject>().buildingID;
+            Vector3 setLocation = grid.CellGetPosition(tileNum);
+            setLocation.z = 0;
+            selectBuilding.transform.localPosition = setLocation;
             selectBuilding.transform.SetParent(targetTile.transform);
             targetTile.GetComponent<TileObject>().buildingSet = true;
         }
         else
             return;
 
-        selectID = 0;
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
 
 

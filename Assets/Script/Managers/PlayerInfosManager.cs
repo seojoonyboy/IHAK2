@@ -59,6 +59,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
 
         Deck deck = decks.Find(x => x.Id == id);
         deck.isLeader = true;
+        selectDeck = deck.deckData;
     }
 
     public void SetDummyDecks() {
