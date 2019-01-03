@@ -28,7 +28,7 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
         SetDummyDecks();
 
         wallet = new Wallet();
-        ReqUserInfo();
+        //ReqUserInfo();
     }
 
     public void ReqUserInfo() {
