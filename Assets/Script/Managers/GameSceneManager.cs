@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour {
-
     public enum SceneState {
         None,
         LogoScene,
@@ -17,10 +16,8 @@ public class GameSceneManager : MonoBehaviour {
 
     [SerializeField] GameObject loaddingWnd;
 
-
     private void Awake() {
         sceneState = SceneState.None;
-
     }
 
     // Use this for initialization
@@ -33,7 +30,6 @@ public class GameSceneManager : MonoBehaviour {
     }
 
     IEnumerator LoaddingScene(string remove, string load, SceneState state) {
-
         sceneState = SceneState.None;
         AsyncOperation AO;
         GameObject go = Instantiate(loaddingWnd);
