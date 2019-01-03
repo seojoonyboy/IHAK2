@@ -1216,7 +1216,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3273,6 +3273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setObject: {fileID: 0}
   targetTile: {fileID: 0}
+  touchObject: {fileID: 1160766957647134, guid: d672bd8d7927df84c92a2cd9f0a45a4a,
+    type: 2}
   deckData: 
   tileGroup: {fileID: 0}
 --- !u!1 &1393331836
@@ -4755,6 +4757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea60027bb4dcb44b99048120adb55a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deckSet: {fileID: 0}
 --- !u!1001 &1964531335
 Prefab:
   m_ObjectHideFlags: 0
