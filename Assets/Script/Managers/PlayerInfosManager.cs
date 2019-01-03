@@ -8,28 +8,21 @@ using System;
 public class PlayerInfosManager : Singleton<PlayerInfosManager> {
     protected PlayerInfosManager() { }
     public List<Deck> decks = new List<Deck>();
-    
+
     [SerializeField]
     public List<int> selectDeck;
-
-
-
-
-
-
-
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
         SetDummyDecks();
-        
+
     }
 
     public void RemoveDeck(int id) {
         Deck deck = decks.Find(x => x.Id == id);
         if (deck.isLeader) {
             decks.Remove(deck);
-            if(decks.Count > 0)
+            if (decks.Count > 0)
                 decks[0].isLeader = true;
         }
         else {
@@ -79,13 +72,11 @@ public class PlayerInfosManager : Singleton<PlayerInfosManager> {
             deck.Id = i;
             deck.deckData = new List<int>();
             deck.deckData.Add(i);
-            
 
             if (i == 0) {
                 deck.isLeader = true;
                 selectDeck = deck.deckData;
             }
-            
             decks.Add(deck);
         }
     }
