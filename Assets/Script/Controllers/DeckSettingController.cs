@@ -66,6 +66,21 @@ public class DeckSettingController : MonoBehaviour {
             Image image = pref.transform.Find("Background/Image").GetComponent<Image>();
             image.sprite = speciesPortraits[i];
         }
+        AddPrepareToggle(1);
+    }
+
+    /// <summary>
+    /// 준비중인 종족 Toggle 메뉴에 표시
+    /// </summary>
+    /// <param name="num"></param>
+    private void AddPrepareToggle(int num) {
+        ToggleGroup toggleGroup = modal.transform.Find("InnerModal/Body/DataArea/ToggleGroup").GetComponent<ToggleGroup>();
+        GameObject pref = Instantiate(new GameObject(), toggleGroup.transform);
+        Image image = pref.AddComponent<Image>();
+        image.sprite = speciesPortraits[0];
+        image.color = new Color(0, 0, 0, 1);
+        pref.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 160);
+        pref.AddComponent<Button>().onClick.AddListener(() => Modal.instantiate("준비중입니다.", Modal.Type.CHECK));
     }
 
     private void Toggle(Toggle t, int id) {
