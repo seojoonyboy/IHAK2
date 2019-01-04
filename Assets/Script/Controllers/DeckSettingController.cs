@@ -45,7 +45,9 @@ public class DeckSettingController : MonoBehaviour {
             .Subscribe(_ => {
                 modal.SetActive(false);
             });
-
+        modal.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
+            Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
+        });
         InitToggles();
     }
 
