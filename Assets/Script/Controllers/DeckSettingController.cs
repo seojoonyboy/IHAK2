@@ -30,11 +30,11 @@ public class DeckSettingController : MonoBehaviour {
         playerInfosManager.AddDeck(deck);
 
         Destroy(deckSet);
-        gsm.startScene(sceneState.ToString(), GameSceneManager.SceneState.MenuScene);
+        gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
     public void returnButton() {
         Destroy(deckSet);
-        gsm.startScene(sceneState.ToString(), GameSceneManager.SceneState.MenuScene);
+        gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 }

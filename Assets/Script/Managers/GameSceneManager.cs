@@ -14,22 +14,25 @@ public class GameSceneManager : MonoBehaviour {
 
     private SceneState sceneState;
 
+    PlayerInfosManager pim;
+
     [SerializeField] GameObject loaddingWnd;
 
     private void Awake() {
         sceneState = SceneState.None;
+        pim = PlayerInfosManager.Instance;
     }
 
     // Use this for initialization
     void Start() {
-        startScene(null, SceneState.LogoScene);
+        startScene(SceneState.None, SceneState.LogoScene);
     }
 
-    public void startScene(string thisScene, SceneState targetScene) {
+    public void startScene(SceneState thisScene, SceneState targetScene) {
         StartCoroutine(LoaddingScene(thisScene, targetScene.ToString(), targetScene));
     }
 
-    IEnumerator LoaddingScene(string remove, string load, SceneState state) {
+    IEnumerator LoaddingScene(SceneState remove, string load, SceneState state) {
         sceneState = SceneState.None;
         AsyncOperation AO;
         GameObject go = Instantiate(loaddingWnd);
@@ -37,8 +40,8 @@ public class GameSceneManager : MonoBehaviour {
         _wndLoadding = go.GetComponent<LoadingWindow>();
         _wndLoadding.initLoaddingLogo();
 
-        if (remove != null) {
-            AO = SceneManager.UnloadSceneAsync(remove);
+        if (remove != SceneState.None) {
+            AO = SceneManager.UnloadSceneAsync(remove.ToString());
             while (!AO.isDone) {
                 _wndLoadding.setLoaddingValue(AO.progress / 3);
                 yield return null;

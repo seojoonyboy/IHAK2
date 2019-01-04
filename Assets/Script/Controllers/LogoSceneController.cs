@@ -8,6 +8,6 @@ public class LogoSceneController : MonoBehaviour {
 
     public void startButton() {
         GameSceneManager mvc = FindObjectOfType<GameSceneManager>();
-        mvc.startScene(sceneState.ToString(), GameSceneManager.SceneState.MenuScene);
+        mvc.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 }
