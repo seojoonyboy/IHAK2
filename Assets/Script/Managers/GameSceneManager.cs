@@ -9,7 +9,7 @@ public class GameSceneManager : MonoBehaviour {
         LogoScene,
         MenuScene,
         DeckSettingScene,
-        InGameScene,
+        IngameScene,
     }
 
     private SceneState sceneState;
