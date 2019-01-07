@@ -14,18 +14,18 @@ public class DeckListController : MonoBehaviour {
 
     [SerializeField] private GameObject[] slots;
     private List<GameObject> items;
-    PlayerInfosManager _PlayerInfosManager;
+    //PlayerInfosManager _PlayerInfosManager;
     public GameObject
         Add,
         Modify;
 
     void OnEnable() {
-        _PlayerInfosManager = PlayerInfosManager.Instance;
+        //_PlayerInfosManager = PlayerInfosManager.Instance;
         Initialize();
     }
 
     private void Initialize() {
-        List<Deck> decks = _PlayerInfosManager.decks;
+        List<Deck> decks = PlayerInfosManager.Instance.decks;
         Sort(decks);
     }
 
@@ -49,9 +49,9 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((_PlayerInfosManager.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
-                        _PlayerInfosManager.RemoveDeck(id);
-                        Sort(_PlayerInfosManager.decks);
+                    Modal.instantiate((PlayerInfosManager.Instance.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
+                        PlayerInfosManager.Instance.RemoveDeck(id);
+                        Sort(PlayerInfosManager.Instance.decks);
                     });
                     //_PlayerInfosManager.RemoveDeck(id);
                     //Sort(_PlayerInfosManager.decks);
@@ -59,9 +59,9 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((_PlayerInfosManager.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
-                        _PlayerInfosManager.ChangeLeaderDeck(id);
-                        Sort(_PlayerInfosManager.decks);
+                    Modal.instantiate((PlayerInfosManager.Instance.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
+                        PlayerInfosManager.Instance.ChangeLeaderDeck(id);
+                        Sort(PlayerInfosManager.Instance.decks);
                     });
                 });
             items.Add(newItem);
@@ -85,6 +85,6 @@ public class DeckListController : MonoBehaviour {
 
     public void moveToDeckSetting() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        gsm.startScene(sceneState.ToString(), GameSceneManager.SceneState.DeckSettingScene);
+        gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
     }
 }
