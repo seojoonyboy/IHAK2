@@ -29,7 +29,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             GameObject tile = hit.transform.gameObject;            
             transform.position = cam.WorldToScreenPoint(tile.transform.position);
             Debug.Log(transform.position);
-            GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().mainSprite;      
+            GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().mainSprite;
         }
         else {
             GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;

@@ -45,6 +45,7 @@ public class DropHandler : MonoBehaviour, IDropHandler {
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;
             selectBuilding.transform.SetParent(targetTile.transform);
+            selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = tileGroup.transform.childCount - targetTile.GetComponent<TileObject>().tileNum;
             targetTile.GetComponent<TileObject>().buildingSet = true;
         }
         else

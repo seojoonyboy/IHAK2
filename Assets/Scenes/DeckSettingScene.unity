@@ -2265,6 +2265,7 @@ GameObject:
   - component: {fileID: 953607760}
   - component: {fileID: 953607759}
   - component: {fileID: 953607758}
+  - component: {fileID: 953607761}
   m_Layer: 5
   m_Name: Data
   m_TagString: Untagged
@@ -2287,7 +2288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 23.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &953607758
@@ -2336,6 +2337,16 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 953607756}
   m_CullTransparentMesh: 0
+--- !u!210 &953607761
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 953607756}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &987118987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,7 +2384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.050048828, y: -806.1}
+  m_AnchoredPosition: {x: -0.050048828, y: -806.05}
   m_SizeDelta: {x: 0.1001, y: -1612.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &987118989
@@ -2952,8 +2963,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 10, y: 0}
+  m_CellSize: {x: 120, y: 180}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &1287339119
