@@ -31,6 +31,7 @@ public class TileManager : MonoBehaviour {
             if (i == 12) {
                 GameObject centerBuild = Instantiate(townCenter, tilePosition, Quaternion.identity);
                 createTile.GetComponent<TileObject>().buildingSet = true;
+                centerBuild.GetComponent<SpriteRenderer>().sortingOrder = grid.CellGetIndex(grid.rowCount, grid.columnCount) + 1 - i;
                 centerBuild.transform.SetParent(createTile.transform);
             }
         }     
