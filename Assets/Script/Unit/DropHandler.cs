@@ -40,7 +40,7 @@ public class DropHandler : MonoBehaviour, IDropHandler {
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckData[tileNum] = setObject.GetComponent<BuildingObject>().buildingID;
+            deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.Id;
             Vector3 setLocation = grid.CellGetPosition(tileNum);
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;
