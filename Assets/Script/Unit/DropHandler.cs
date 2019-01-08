@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UniRx;
 using Grids2D;
 
 public class DropHandler : MonoBehaviour, IDropHandler {
 
     public GameObject setObject;
     public GameObject targetTile;
+    public GameObject tileGroup;
+    public float startCamSize;
+    public float camSize;
     Camera cam;
     Grid2D grid;
     public List<int> deckData;
-    public GameObject tileGroup;
 
     private void Start() {
         cam = Camera.main;
         grid = Grid2D.instance;
         tileGroup = GameObject.FindGameObjectWithTag("TileGroup");
+        startCamSize = cam.orthographicSize;
+        var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize, FrameCountType.Update).Subscribe(_ => camSize = cam.orthographicSize);
 
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (i != 12)
@@ -40,7 +45,7 @@ public class DropHandler : MonoBehaviour, IDropHandler {
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckData[tileNum] = setObject.GetComponent<BuildingObject>().buildingID;
+            deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.Id;
             Vector3 setLocation = grid.CellGetPosition(tileNum);
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;

@@ -4,20 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
+    DropHandler dropHandler;
     public GameObject setObject;
+    Vector3 startScale;
     Vector3 startPosition;
     Camera cam;
+    
 
     private void Start() {
+        dropHandler = GetComponentInParent<DropHandler>();
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
+        startScale = transform.localScale;
     }
 
+    
+
     public void OnBeginDrag (PointerEventData eventData) {
-        GetComponentInParent<DropHandler>().setObject = setObject;                
+        dropHandler.setObject = setObject;                
         startPosition = transform.position;
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
     }
 
     public void OnDrag(PointerEventData eventData) {    
@@ -34,6 +43,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         else {
             GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
             transform.position = Input.mousePosition;
+            transform.localScale = startScale;
         } 
 
     }
@@ -41,6 +51,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
         GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
     }
 
 }

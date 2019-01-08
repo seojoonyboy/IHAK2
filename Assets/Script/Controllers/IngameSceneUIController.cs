@@ -32,11 +32,11 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void SwitchTerritory(bool left) {
         if (left) {
-            iTween.MoveTo(territoryList.gameObject, iTween.Hash("x", territoryList.transform.position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            iTween.MoveTo(camera.gameObject, iTween.Hash("x", camera.transform.position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             
         }
         else {
-            iTween.MoveTo(territoryList.gameObject, iTween.Hash("x", territoryList.transform.position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            iTween.MoveTo(camera.gameObject, iTween.Hash("x", camera.transform.position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
         }
     }
 }
