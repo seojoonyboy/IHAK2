@@ -43,6 +43,8 @@ public class ConstructManager : Singleton<ConstructManager> {
         buildings[Building.Category.PRODUCT] = products;
         buildings[Building.Category.MILITARY] = militaries;
         buildings[Building.Category.SPECIAL] = specials;
+
+        AccountManager.Instance.SetDummyDecks(ref buildings);
     }
 
     public GameObject GetBuildingObject(Building.Category type, int id) {
