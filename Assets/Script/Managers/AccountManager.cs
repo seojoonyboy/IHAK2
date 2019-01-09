@@ -93,7 +93,7 @@ public class AccountManager : Singleton<AccountManager> {
 
         Deck deck = decks.Find(x => x.Id == id);
         deck.isLeader = true;
-        selectDeck = deck.deckData;
+        //selectDeck = deck.deckData;
     }
 
     public void SetDummyDecks() {
@@ -111,12 +111,12 @@ public class AccountManager : Singleton<AccountManager> {
             deck.Name = selectedName + " " + UnityEngine.Random.Range(0, 100).ToString();
             deck.species = selectedSpecies;
             deck.Id = i;
-            deck.deckData = new List<int>();
-            deck.deckData.Add(i);
+            //deck.deckData = new List<int>();
+            //deck.deckData.Add(i);
 
             if (i == 0) {
                 deck.isLeader = true;
-                selectDeck = deck.deckData;
+                //selectDeck = deck.deckData;
             }
             decks.Add(deck);
         }
