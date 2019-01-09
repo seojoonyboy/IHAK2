@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 using DataModules;
 using System;
 using UniRx;
 using UniRx.Triggers;
+
 
 public class DeckSettingController : MonoBehaviour {
     GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.DeckSettingScene;
@@ -110,6 +112,9 @@ public class DeckSettingController : MonoBehaviour {
 
         playerInfosManager.AddDeck(deck);
 
+        GameObject go = GameObject.Find("TileGroup(Clone)");
+        PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
+
         Destroy(deckSet);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
@@ -117,5 +122,7 @@ public class DeckSettingController : MonoBehaviour {
     public void returnButton() {
         Destroy(deckSet);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
+
+        //UnityEditor.PrefabUtility.CreatePrefab()
     }
 }

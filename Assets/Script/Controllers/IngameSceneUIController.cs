@@ -33,14 +33,14 @@ public class IngameSceneUIController : MonoBehaviour {
         if (left && camera.transform.position.x > 1079) {
             iTween.MoveTo(camera.gameObject, iTween.Hash("x", camera.transform.position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             yield return new WaitForSeconds(0.38f);
-            this.transform.GetChild(1).gameObject.SetActive(false);
-            this.transform.GetChild(0).gameObject.SetActive(true);
+            this.transform.GetChild(2).gameObject.SetActive(false);
+            this.transform.GetChild(1).gameObject.SetActive(true);
         }
         else if (!left && camera.transform.position.x < 1) {
             iTween.MoveTo(camera.gameObject, iTween.Hash("x", camera.transform.position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             yield return new WaitForSeconds(0.38f);
-            this.transform.GetChild(0).gameObject.SetActive(false);
-            this.transform.GetChild(1).gameObject.SetActive(true);
+            this.transform.GetChild(1).gameObject.SetActive(false);
+            this.transform.GetChild(2).gameObject.SetActive(true);
         }
         
     }
