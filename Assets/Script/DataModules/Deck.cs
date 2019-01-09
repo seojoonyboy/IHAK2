@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using DataModules;
 
 namespace DataModules {
     [System.Serializable]
@@ -9,6 +8,6 @@ namespace DataModules {
         public string Name;
         public Species.Type species;
         public bool isLeader;
-        public List<int> deckData;
+        public List<BuildingTile> buildingTiles;
     }
 }
