@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 224826732165372858}
   - component: {fileID: 222327077065046892}
   - component: {fileID: 114736545792596938}
+  - component: {fileID: 114890936853094782}
   m_Layer: 5
   m_Name: BasicWindow
   m_TagString: Untagged
@@ -1066,6 +1067,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114890936853094782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696457257441164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c366af26b8c3ce04b91910f7136cc37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startBattleButton: {fileID: 114936612601669086}
 --- !u!114 &114901915138634616
 MonoBehaviour:
   m_ObjectHideFlags: 1
