@@ -133,7 +133,6 @@ public class AccountManager : Singleton<AccountManager> {
             }
             decks.Add(deck);
         }
-        Debug.Log("!!");
     }
 
     public enum Name {
