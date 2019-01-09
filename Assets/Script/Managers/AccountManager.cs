@@ -25,7 +25,6 @@ public class AccountManager : Singleton<AccountManager> {
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
-        SetDummyDecks();
 
         wallet = new Wallet();
         //ReqUserInfo();
@@ -96,7 +95,7 @@ public class AccountManager : Singleton<AccountManager> {
         //selectDeck = deck.deckData;
     }
 
-    public void SetDummyDecks() {
+    public void SetDummyDecks(ref Dictionary<Building.Category, List<GameObject>> buildings) {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         int deckNum = 3;
 
@@ -111,12 +110,26 @@ public class AccountManager : Singleton<AccountManager> {
             deck.Name = selectedName + " " + UnityEngine.Random.Range(0, 100).ToString();
             deck.species = selectedSpecies;
             deck.Id = i;
-            //deck.deckData = new List<int>();
-            //deck.deckData.Add(i);
+
+            deck.buildingTiles = new List<BuildingTile>();
+
+            var buildingTypes = (Building.Category[])Enum.GetValues(typeof(Building.Category));
+            foreach(Building.Category category in buildingTypes) {
+                var lists = buildings[category];
+                int[] rndArray = RndNumGenerator.getRandomInt(3, 0, lists.Count - 1);
+                Coord[] coords = new Coord[] { new Coord(0, 0), new Coord(0, 1), new Coord(0, 2) };
+                int coordIndex = 0;
+                foreach (int num in rndArray) {
+                    BuildingTile bt = new BuildingTile();
+                    bt.data = lists[num].GetComponent<BuildingObject>().data;
+                    bt.coord = coords[coordIndex];
+                    deck.buildingTiles.Add(bt);
+                    coordIndex++;
+                }
+            }
 
             if (i == 0) {
                 deck.isLeader = true;
-                //selectDeck = deck.deckData;
             }
             decks.Add(deck);
         }
