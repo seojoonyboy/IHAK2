@@ -21,7 +21,7 @@ public class DropHandler : MonoBehaviour, IDropHandler {
         grid = Grid2D.instance;
         tileGroup = GameObject.FindGameObjectWithTag("TileGroup");
         startCamSize = cam.orthographicSize;
-        var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize, FrameCountType.Update).Subscribe(_ => camSize = cam.orthographicSize);
+        var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize).Subscribe(_ => camSize = cam.orthographicSize);
 
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (i != 12)

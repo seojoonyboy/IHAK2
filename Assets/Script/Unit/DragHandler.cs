@@ -11,6 +11,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public GameObject setObject;
     Vector3 startScale;
     Vector3 startPosition;
+    float camMagnification;
     Camera cam;
     
 
@@ -23,9 +24,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     
 
-    public void OnBeginDrag (PointerEventData eventData) {
-        dropHandler.setObject = setObject;                
-        startPosition = transform.position;
+    public void OnBeginDrag (PointerEventData eventData) {    
+        dropHandler.setObject = setObject;
+        startPosition = transform.position;        
+        camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
     }
 
@@ -35,9 +37,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         if (hit.collider != null) {
-            GameObject tile = hit.transform.gameObject;            
-            transform.position = cam.WorldToScreenPoint(tile.transform.position);
-            Debug.Log(transform.position);
+            GameObject tile = hit.transform.gameObject;
+            transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
+            transform.position = cam.WorldToScreenPoint(tile.transform.position);            
             GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().mainSprite;
         }
         else {
@@ -50,6 +52,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData) {        
         transform.localPosition = Vector3.zero;
+        transform.localScale = startScale;
         GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
     }
