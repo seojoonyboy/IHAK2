@@ -10,6 +10,10 @@ public class DataManager : Singleton<DataManager> {
     Dictionary<Building.Category, List<GameObject>> buildings;
     Dictionary<int, Image> buildingImages;
 
+    private void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start() {
         MakeBuildingObjects();
         GetComponent<BuildingImages>().SetImages();
@@ -26,8 +30,9 @@ public class DataManager : Singleton<DataManager> {
         foreach (Building item in result) {
             GameObject obj = new GameObject();
             obj.name = item.Name;
-            obj.transform.SetParent(transform);
+            obj.transform.SetParent(transform.Find("BuildingObjects").transform);
             BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
+            obj.AddComponent<SpriteRenderer>();
             buildingObject.data = item;
             
             if(item.Type == "Product") products.Add(obj);
