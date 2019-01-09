@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+[RequireComponent(typeof(DataManager))]
 public class BuildingImages : MonoBehaviour {
     [SerializeField] Sprite[] 
         product_images,
@@ -18,35 +19,46 @@ public class BuildingImages : MonoBehaviour {
     /// </summary>
     public void SetImages() {
         images = new Dictionary<int, Sprite>();
+        DataManager dataManager = GetComponent<DataManager>();
         var categories = (Building.Category[])Enum.GetValues(typeof(Building.Category));
         foreach(Building.Category category in categories) {
-            var lists = GetComponent<DataManager>().GetBuildingObjects(category);
+            var lists = dataManager.GetBuildingObjects(category);
             for (int i = 0; i < lists.Count; i++) {
-                Card card = lists[i].GetComponent<BuildingObject>().data;
+                BuildingObject buildingObject = lists[i].GetComponent<BuildingObject>();
+                Card card = buildingObject.data;
                 switch (category) {
                     case Building.Category.MILITARY:
                         try {
                             images[card.Id] = military_images[i];
+                            buildingObject.mainSprite = images[card.Id];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = military_images[0];
+                            buildingObject.mainSprite = images[0];
                         }
+                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
                     case Building.Category.PRODUCT:
                         try {
                             images[card.Id] = product_images[i];
+                            buildingObject.mainSprite = images[card.Id];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = product_images[0];
+                            buildingObject.mainSprite = images[0];
                         }
+                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
                     case Building.Category.SPECIAL:
                         try {
                             images[card.Id] = special_images[i];
+                            buildingObject.mainSprite = images[card.Id];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = special_images[0];
+                            buildingObject.mainSprite = images[0];
                         }
+                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
                 }
             }
