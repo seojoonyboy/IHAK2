@@ -6,8 +6,8 @@ using System.Linq;
 using System;
 using System.Text;
 
-public class PlayerInfosManager : Singleton<PlayerInfosManager> {
-    protected PlayerInfosManager() { }
+public class AccountManager : Singleton<AccountManager> {
+    protected AccountManager() { }
     private NetworkManager _networkManager;
 
     public List<Deck> decks = new List<Deck>();

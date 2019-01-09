@@ -25,7 +25,7 @@ public class DeckListController : MonoBehaviour {
     }
 
     private void Initialize() {
-        List<Deck> decks = PlayerInfosManager.Instance.decks;
+        List<Deck> decks = AccountManager.Instance.decks;
         Sort(decks);
     }
 
@@ -49,9 +49,9 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((PlayerInfosManager.Instance.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
-                        PlayerInfosManager.Instance.RemoveDeck(id);
-                        Sort(PlayerInfosManager.Instance.decks);
+                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
+                        AccountManager.Instance.RemoveDeck(id);
+                        Sort(AccountManager.Instance.decks);
                     });
                     //_PlayerInfosManager.RemoveDeck(id);
                     //Sort(_PlayerInfosManager.decks);
@@ -59,9 +59,9 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((PlayerInfosManager.Instance.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
-                        PlayerInfosManager.Instance.ChangeLeaderDeck(id);
-                        Sort(PlayerInfosManager.Instance.decks);
+                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
+                        AccountManager.Instance.ChangeLeaderDeck(id);
+                        Sort(AccountManager.Instance.decks);
                     });
                 });
             items.Add(newItem);

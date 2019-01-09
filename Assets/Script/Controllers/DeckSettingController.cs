@@ -10,7 +10,7 @@ using UniRx.Triggers;
 public class DeckSettingController : MonoBehaviour {
     GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.DeckSettingScene;
     GameSceneManager gsm;
-    PlayerInfosManager playerInfosManager;
+    AccountManager playerInfosManager;
 
     [SerializeField] public GameObject deckSet;
     [SerializeField] private GameObject togglePref;
@@ -31,7 +31,7 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     private void Start() {
-        playerInfosManager = PlayerInfosManager.Instance;
+        playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
         deckSet = GameObject.FindGameObjectWithTag("TileGroup");
 
