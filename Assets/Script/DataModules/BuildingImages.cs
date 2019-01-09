@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[RequireComponent(typeof(DataManager))]
+[RequireComponent(typeof(ConstructManager))]
 public class BuildingImages : MonoBehaviour {
     [SerializeField] Sprite[] 
         product_images,
@@ -19,7 +19,7 @@ public class BuildingImages : MonoBehaviour {
     /// </summary>
     public void SetImages() {
         images = new Dictionary<int, Sprite>();
-        DataManager dataManager = GetComponent<DataManager>();
+        ConstructManager dataManager = GetComponent<ConstructManager>();
         var categories = (Building.Category[])Enum.GetValues(typeof(Building.Category));
         foreach(Building.Category category in categories) {
             var lists = dataManager.GetBuildingObjects(category);

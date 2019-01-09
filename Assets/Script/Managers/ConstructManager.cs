@@ -4,8 +4,8 @@ using UnityEngine;
 using DataModules;
 using UnityEngine.UI;
 
-public class DataManager : Singleton<DataManager> {
-    protected DataManager() { }
+public class ConstructManager : Singleton<ConstructManager> {
+    protected ConstructManager() { }
 
     Dictionary<Building.Category, List<GameObject>> buildings;
     Dictionary<int, Image> buildingImages;

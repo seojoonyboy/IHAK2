@@ -14,13 +14,13 @@ public class GameSceneManager : MonoBehaviour {
 
     private SceneState sceneState;
 
-    PlayerInfosManager pim;
+    AccountManager accountManager;
 
     [SerializeField] GameObject loaddingWnd;
 
     private void Awake() {
         sceneState = SceneState.None;
-        pim = PlayerInfosManager.Instance;
+        accountManager = AccountManager.Instance;
     }
 
     // Use this for initialization
