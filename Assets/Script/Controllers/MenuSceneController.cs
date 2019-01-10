@@ -33,19 +33,18 @@ public class MenuSceneController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
-        selectedPosition = 1;
+        selectedPosition = 1;        
         //buttonList.GetChild(0).GetComponent<Image>().sprite = buttonList.GetChild(3).GetComponent<Image>().sprite;
         //buttonList.GetChild(4).GetComponent<Image>().sprite = buttonList.GetChild(1).GetComponent<Image>().sprite;
 
         switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
         switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
 
-        //var camera = Camera.main.gameObject;
         var downStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
-        var upStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0)).Select(_ => Input.mousePosition.x);
-        var dragStream = windowList.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
+        var upStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
+        var dragStream = windowList.gameObject.UpdateAsObservable().SkipUntil(downStream).DistinctUntilChanged().Buffer(upStream).RepeatUntilDestroy(this);
+        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
+        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
     }
 
     public void switchButton(bool left) {
