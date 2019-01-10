@@ -14,7 +14,6 @@ public class DeckListController : MonoBehaviour {
 
     [SerializeField] private GameObject[] slots;
     private List<GameObject> items;
-    //PlayerInfosManager _PlayerInfosManager;
     public GameObject
         Add,
         Modify;
@@ -38,6 +37,7 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
             newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(decks[i].isLeader);
             int id = decks[i].Id;
+            newItem.GetComponent<Index>().Id = id;
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
@@ -45,8 +45,6 @@ public class DeckListController : MonoBehaviour {
                         AccountManager.Instance.RemoveDeck(id);
                         Sort(AccountManager.Instance.decks);
                     });
-                    //_PlayerInfosManager.RemoveDeck(id);
-                    //Sort(_PlayerInfosManager.decks);
                 });
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
