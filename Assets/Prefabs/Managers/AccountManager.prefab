@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1756831730028824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -369.20706, y: 885.51605, z: 7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,13 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7d2d36d3944ba47b976f395502ace7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decks:
-  - Id: 0
-    Name: "\uC704\uB2C8 \uC6D0\uC2DC\uB371"
-    species: 0
-    isLeader: 0
-  - Id: 0
-    Name: "\uBBF8\uB4DC\uB808\uC778\uC9C0 \uBBF8\uB798\uB371"
-    species: 1
-    isLeader: 1
+  deckGroup: {fileID: 1277291512709744, guid: 0fc2114327284f249adcd53d7b931a42, type: 2}
+  decks: []
   selectDeck: 

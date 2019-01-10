@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 
-public class EditUI : MonoBehaviour {
+public class EditScenePanel : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.DeckSettingScene;
 

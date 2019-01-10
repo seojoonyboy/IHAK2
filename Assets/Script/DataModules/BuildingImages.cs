@@ -9,8 +9,11 @@ using System;
 public class BuildingImages : MonoBehaviour {
     [SerializeField] Sprite[] 
         product_images,
+        product_icons,
         military_images,
-        special_images;
+        military_icons,
+        special_images,
+        special_icons;
 
     private Dictionary<int, Sprite> images;
 
@@ -31,10 +34,12 @@ public class BuildingImages : MonoBehaviour {
                         try {
                             images[card.Id] = military_images[i];
                             buildingObject.mainSprite = images[card.Id];
+                            buildingObject.icon = military_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = military_images[0];
                             buildingObject.mainSprite = images[0];
+                            buildingObject.icon = military_icons[0];
                         }
                         lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
@@ -42,10 +47,12 @@ public class BuildingImages : MonoBehaviour {
                         try {
                             images[card.Id] = product_images[i];
                             buildingObject.mainSprite = images[card.Id];
+                            buildingObject.icon = product_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = product_images[0];
                             buildingObject.mainSprite = images[0];
+                            buildingObject.icon = product_icons[0];
                         }
                         lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
@@ -53,10 +60,12 @@ public class BuildingImages : MonoBehaviour {
                         try {
                             images[card.Id] = special_images[i];
                             buildingObject.mainSprite = images[card.Id];
+                            buildingObject.icon = special_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
                             images[card.Id] = special_images[0];
                             buildingObject.mainSprite = images[0];
+                            buildingObject.icon = special_icons[0];
                         }
                         lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;

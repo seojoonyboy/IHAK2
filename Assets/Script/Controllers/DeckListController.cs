@@ -18,6 +18,8 @@ public class DeckListController : MonoBehaviour {
         Add,
         Modify;
 
+    public GameObject temp;
+
     void OnEnable() {
         Initialize();
     }
@@ -61,6 +63,7 @@ public class DeckListController : MonoBehaviour {
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
                 moveToDeckSetting();
+                Debug.Log(newItem.transform.parent.GetSiblingIndex());
             });
         }
     }
