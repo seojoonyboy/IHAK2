@@ -9,18 +9,16 @@ public class DeckEditor : MonoBehaviour {
     public GameObject tileGroup;
     public GameObject editSceneUI;    
     AccountManager userAccount;
-    DropHandler dropHandler;
+    public List<int> deckData;
 
 	void Start () {
         userAccount = AccountManager.Instance;
-        dropHandler = editSceneUI.transform.GetChild(0).GetChild(0).GetComponent<DropHandler>();
 
-        userAccount.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        tileGroup = userAccount.transform.GetChild(0).GetChild(3).gameObject;
-        dropHandler.tileGroup = tileGroup;
+        userAccount.transform.GetChild(0).GetChild(userAccount.selectNumber).gameObject.SetActive(true);
+        tileGroup = userAccount.transform.GetChild(0).GetChild(userAccount.selectNumber).gameObject;
 
         for (int i = 0; i < tileGroup.transform.childCount; i++)
-            dropHandler.deckData.Add(0);
+            deckData.Add(0);
 
 
 

@@ -62,8 +62,8 @@ public class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
+                AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
                 moveToDeckSetting();
-                Debug.Log(newItem.transform.parent.GetSiblingIndex());
             });
         }
     }
@@ -76,7 +76,7 @@ public class DeckListController : MonoBehaviour {
         }
     }
 
-    public void moveToDeckSetting() {
+    public void moveToDeckSetting() {        
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
     }

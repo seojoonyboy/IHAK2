@@ -20,6 +20,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] private Button speciesConfirmBtn;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
+    [SerializeField] DeckListController deckListController;
 
     public Text 
         modalHeader,
@@ -36,6 +37,7 @@ public class DeckSettingController : MonoBehaviour {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
         deckSet = GameObject.FindGameObjectWithTag("TileGroup");
+        deckListController = FindObjectOfType<DeckListController>();
 
         chooseSpeciesBtn.onClick
             .AsObservable()
