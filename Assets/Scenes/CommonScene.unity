@@ -217,3 +217,112 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1612985306
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!1001 &1758341685
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114915176351608334, guid: 228b9715754e62f4a8efda6103eb1adc,
+        type: 2}
+      propertyPath: decks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -369.20706
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 885.51605
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4942332880243596, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915176351608334, guid: 228b9715754e62f4a8efda6103eb1adc,
+        type: 2}
+      propertyPath: decks.Array.data[0].Name
+      value: "\uC704\uB2C8 \uC6D0\uC2DC\uB371"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915176351608334, guid: 228b9715754e62f4a8efda6103eb1adc,
+        type: 2}
+      propertyPath: decks.Array.data[1].Name
+      value: "\uBBF8\uB4DC\uB808\uC778\uC9C0 \uBBF8\uB798\uB371"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915176351608334, guid: 228b9715754e62f4a8efda6103eb1adc,
+        type: 2}
+      propertyPath: decks.Array.data[1].species
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915176351608334, guid: 228b9715754e62f4a8efda6103eb1adc,
+        type: 2}
+      propertyPath: decks.Array.data[1].isLeader
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 228b9715754e62f4a8efda6103eb1adc, type: 2}
+  m_IsPrefabAsset: 0
