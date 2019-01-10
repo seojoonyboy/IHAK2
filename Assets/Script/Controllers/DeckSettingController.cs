@@ -112,15 +112,16 @@ public class DeckSettingController : MonoBehaviour {
 
         playerInfosManager.AddDeck(deck);
 
-        //GameObject go = GameObject.Find("TileGroup(Clone)");
-        //PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
-
-        Destroy(deckSet);
+        /*
+        GameObject go = GameObject.Find("TileGroup(Clone)");
+        PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
+        */
+        deckSet.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
     public void returnButton() {
-        Destroy(deckSet);
+        deckSet.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
 
         //UnityEditor.PrefabUtility.CreatePrefab()

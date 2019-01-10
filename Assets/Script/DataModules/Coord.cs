@@ -1,5 +1,6 @@
 
 namespace DataModules {
+    [System.Serializable]
     public class Coord {
         public int row;
         public int col;

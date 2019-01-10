@@ -9,6 +9,7 @@ using System.Text;
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
     private NetworkManager _networkManager;
+    public GameObject deckGroup;
 
     public List<Deck> decks = new List<Deck>();
 
@@ -29,6 +30,11 @@ public class AccountManager : Singleton<AccountManager> {
         wallet = new Wallet();
         //ReqUserInfo();
     }
+    private void Start() {
+        if (deckGroup != null)
+            Instantiate(deckGroup, transform);
+    }
+
 
     public void ReqUserInfo() {
         sb.Remove(0, sb.Length);

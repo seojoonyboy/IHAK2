@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Grids2D;
 using UnityEngine;
+using DataModules;
 
 public class TileManager : MonoBehaviour {
 
@@ -27,6 +28,8 @@ public class TileManager : MonoBehaviour {
             createTile.name = string.Format("Tile[{0},{1}]", grid.CellGetRow(i), grid.CellGetColumn(i));
             createTile.transform.SetParent(GroupPosition.transform);
             createTile.GetComponent<TileObject>().tileNum = i;
+            createTile.GetComponent<TileObject>().row = grid.CellGetRow(i);
+            createTile.GetComponent<TileObject>().col = grid.CellGetColumn(i);
 
             if (i == 12) {
                 GameObject centerBuild = Instantiate(townCenter, tilePosition, Quaternion.identity);

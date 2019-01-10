@@ -52,10 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    Id: 0
+    Name: 
+    Tier: 0
+    Hp: 0
+    Limit_num: 0
+    Type: 
+    Primal: 
   icon: {fileID: 21300030, guid: 37a60b4083bbcb64e955711f9d730f97, type: 3}
   mainSprite: {fileID: 21300000, guid: 50cd6217abaa4604da0d9667a63242b7, type: 3}
-  buildingID: 1
-  hp: 200
 --- !u!212 &212209987291245012
 SpriteRenderer:
   m_ObjectHideFlags: 1

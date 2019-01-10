@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataModules;
 
 public class TileObject : MonoBehaviour {
 
@@ -8,6 +9,6 @@ public class TileObject : MonoBehaviour {
     Vector3 Grid2DLocation;
     public bool buildingSet = false;
 
-	// Use this for initialization
-	
+    [SerializeField]  public Coord location;
+    [HideInInspector] public int row, col;
 }
