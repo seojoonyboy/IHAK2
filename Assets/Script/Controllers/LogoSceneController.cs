@@ -8,11 +8,8 @@ public class LogoSceneController : MonoBehaviour {
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.LogoScene;
 
     public void pressAnyKey() {
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
         transform.Find("Logo").gameObject.SetActive(false);
-        NetworkManager.Instance.request(deviceID, NetworkManager.Instance.baseUrl + "/api/users/deviceid/{deviceId}", NetworkManager.Callback);
-        
-        
+        AccountManager.Instance.GetUserInfo();
     }
 
     public void startButton() {

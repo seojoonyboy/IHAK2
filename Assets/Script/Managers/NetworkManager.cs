@@ -3,9 +3,17 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class NetworkManager : Singleton<NetworkManager> {
+    //public string baseUrl = "http://52.78.149.126/";
     public string baseUrl = "http://ihak2dev.fbl.kr/";
-    protected NetworkManager() { }
+    protected NetworkManager() {
+#if DEVELOPMENT_BUILD
+        baseUrl = "http://ihak2dev.fbl.kr/";
+        Debug.Log("Development Build");
+#endif
+    }
     public delegate void Callback(HttpResponse response);
+
+    //public string baseUrl = "http://ec2-52-78-149-126.ap-northeast-2.compute.amazonaws.com:8000/";
 
     public void request(string method, string url, WWWForm data, Callback callback, bool neeAuthor = true) {
         StartCoroutine(_request(method, url, data, callback, neeAuthor));
