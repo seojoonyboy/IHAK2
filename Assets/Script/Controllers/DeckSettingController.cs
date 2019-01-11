@@ -36,7 +36,7 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
-        deckSet = GameObject.FindGameObjectWithTag("TileGroup");
+        deckSet = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
         deckListController = FindObjectOfType<DeckListController>();
 
         chooseSpeciesBtn.onClick

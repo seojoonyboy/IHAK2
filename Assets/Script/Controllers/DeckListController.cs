@@ -62,7 +62,8 @@ public class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
-                AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
+                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
+                AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
                 moveToDeckSetting();
             });
         }
