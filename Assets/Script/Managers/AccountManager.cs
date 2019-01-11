@@ -104,6 +104,14 @@ public class AccountManager : Singleton<AccountManager> {
         //selectDeck = deck.deckData;
     }
 
+    public void GetUserInfo() {
+        string deviceID = SystemInfo.deviceUniqueIdentifier;
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/" + deviceID);
+        _networkManager.request("GET", url.ToString(), OnUserReqCallback, false);
+    }
+
     public void GetMyDecks() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
@@ -118,6 +126,23 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else if(response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
+        }
+        else {
+            Debug.Log("알 수 없는 Server 오류");
+        }
+    }
+
+    private void OnUserReqCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            decks = JsonReader.Read(response.data.ToString(), new Deck());
+            Deck deck = decks.FirstOrDefault();
+        }
+        else if (response.responseCode == 404) {
+            Debug.Log("저장되지 않은 계정");
+
+            Modal.instantiate("새로운 계정을 등록하세요", Modal.Type.CHECK, () => {
+                Debug.Log("알 수 없는 Server 오류");
+            });
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
