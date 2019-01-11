@@ -3,63 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
 using UnityEngine.UI;
+using System.Text;
+using System;
 
 public class ConstructManager : Singleton<ConstructManager> {
     protected ConstructManager() { }
 
-    Dictionary<Building.Category, List<GameObject>> buildings;
+    Dictionary<string, List<GameObject>> buildings;
     Dictionary<int, Image> buildingImages;
+    NetworkManager _networkManager;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
+        _networkManager = NetworkManager.Instance;
     }
 
     private void Start() {
-        MakeBuildingObjects();
-        GetComponent<BuildingImages>().SetImages();
+        SetAllBuildings();
+        AccountManager.Instance.GetMyDecks();
     }
 
-    private void MakeBuildingObjects() {
-        List<Building> result = JsonReader.Read("Buildings", new Building());
-
-        buildings = new Dictionary<Building.Category, List<GameObject>>();
-        List<GameObject> products = new List<GameObject>();
-        List<GameObject> militaries = new List<GameObject>();
-        List<GameObject> specials = new List<GameObject>();
-
-        foreach (Building item in result) {
-            GameObject obj = new GameObject();
-            obj.name = item.Name;
-            obj.transform.SetParent(transform.Find("BuildingObjects").transform);
-            BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
-            obj.AddComponent<SpriteRenderer>();
-            buildingObject.data = item;
-            
-            if(item.Type == "Product") products.Add(obj);
-            else if(item.Type == "Military") militaries.Add(obj);
-            else if(item.Type == "Special") specials.Add(obj);
-        }
-
-        buildings[Building.Category.PRODUCT] = products;
-        buildings[Building.Category.MILITARY] = militaries;
-        buildings[Building.Category.SPECIAL] = specials;
-
-        AccountManager.Instance.SetDummyDecks(ref buildings);
-    }
-
-    public GameObject GetBuildingObject(Building.Category type, int id) {
+    public GameObject GetBuildingObject(string type, int id) {
         List<GameObject> sectedCategoryBuildings = buildings[type];
         if (sectedCategoryBuildings == null) return null;
         foreach(GameObject obj in sectedCategoryBuildings) {
-            Card card = obj.GetComponent<BuildingObject>().data;
-            if(card.Id == id) {
+            Card card = obj.GetComponent<BuildingObject>().data.card;
+            if(card.id == id) {
                 return obj;
             }
         }
         return null;
     }
 
-    public List<GameObject> GetBuildingObjects(Building.Category type) {
+    public List<GameObject> GetBuildingObjects(string type) {
         return buildings[type];
+    }
+
+    private void SetAllBuildings() {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl);
+        url.Append("api/users/deviceid/6236213/cardsinventory");
+        _networkManager.request("GET", url.ToString(), OnSetAllBuildingsCallback, false);
+    }
+
+    private void OnSetAllBuildingsCallback(HttpResponse response) {
+        if(response.responseCode == 200) {
+            List<Building> result = JsonReader.Read(response.data.ToString(), new Building());
+
+            buildings = new Dictionary<string, List<GameObject>>();
+            List<GameObject> products = new List<GameObject>();
+            List<GameObject> militaries = new List<GameObject>();
+            List<GameObject> specials = new List<GameObject>();
+
+            foreach (Building item in result) {
+                GameObject obj = new GameObject();
+                obj.name = item.card.name;
+                obj.transform.SetParent(transform.Find("BuildingObjects").transform);
+                BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
+                obj.AddComponent<SpriteRenderer>();
+                buildingObject.data = item;
+
+                if (item.card.type == "prod") products.Add(obj);
+                else if (item.card.type == "military") militaries.Add(obj);
+                else if (item.card.type == "special") specials.Add(obj);
+            }
+
+            buildings["prod"] = products;
+            buildings["military"] = militaries;
+            buildings["special"] = specials;
+        }
     }
 }

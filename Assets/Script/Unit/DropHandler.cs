@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UniRx;
 
-public class DropHandler : MonoBehaviour, IDropHandler {
+public class DropHandler : MonoBehaviour {
 
     public GameObject setObject;
     public GameObject targetTile;
-    public GameObject tileGroup;
+    public DeckEditor deckEditor;
     public float startCamSize;
     public float camSize;
     Camera cam;
-    public List<int> deckData;
 
     private void Start() {
         cam = Camera.main;
@@ -20,8 +19,7 @@ public class DropHandler : MonoBehaviour, IDropHandler {
         var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize).Subscribe(_ => camSize = cam.orthographicSize);
     }
 
-    public void OnDrop(PointerEventData eventData) {        
-
+    public void OnDrop() {
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -34,19 +32,17 @@ public class DropHandler : MonoBehaviour, IDropHandler {
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.Id;
+            deckEditor.deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
             Vector3 setLocation = targetTile.transform.position;
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;
             selectBuilding.transform.SetParent(targetTile.transform);
-            selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = tileGroup.transform.childCount - targetTile.GetComponent<TileObject>().tileNum;
+            selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount - targetTile.GetComponent<TileObject>().tileNum;
             targetTile.GetComponent<TileObject>().buildingSet = true;
         }
         else
             return;
 
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
-
-
     }
 }

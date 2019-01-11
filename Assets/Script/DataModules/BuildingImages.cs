@@ -23,47 +23,47 @@ public class BuildingImages : MonoBehaviour {
     public void SetImages() {
         images = new Dictionary<int, Sprite>();
         ConstructManager dataManager = GetComponent<ConstructManager>();
-        var categories = (Building.Category[])Enum.GetValues(typeof(Building.Category));
-        foreach(Building.Category category in categories) {
+        string[] categories = new string[] { "prod", "military", "special" };
+        foreach(string category in categories) {
             var lists = dataManager.GetBuildingObjects(category);
             for (int i = 0; i < lists.Count; i++) {
                 BuildingObject buildingObject = lists[i].GetComponent<BuildingObject>();
-                Card card = buildingObject.data;
+                Card card = buildingObject.data.card;
                 switch (category) {
-                    case Building.Category.MILITARY:
+                    case "military":
                         try {
-                            images[card.Id] = military_images[i];
-                            buildingObject.mainSprite = images[card.Id];
+                            images[card.id] = military_images[i];
+                            buildingObject.mainSprite = images[card.id];
                             buildingObject.icon = military_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
-                            images[card.Id] = military_images[0];
+                            images[card.id] = military_images[0];
                             buildingObject.mainSprite = images[0];
                             buildingObject.icon = military_icons[0];
                         }
                         lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
-                    case Building.Category.PRODUCT:
+                    case "prod":
                         try {
-                            images[card.Id] = product_images[i];
-                            buildingObject.mainSprite = images[card.Id];
+                            images[card.id] = product_images[i];
+                            buildingObject.mainSprite = images[card.id];
                             buildingObject.icon = product_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
-                            images[card.Id] = product_images[0];
+                            images[card.id] = product_images[0];
                             buildingObject.mainSprite = images[0];
                             buildingObject.icon = product_icons[0];
                         }
                         lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         break;
-                    case Building.Category.SPECIAL:
+                    case "special":
                         try {
-                            images[card.Id] = special_images[i];
-                            buildingObject.mainSprite = images[card.Id];
+                            images[card.id] = special_images[i];
+                            buildingObject.mainSprite = images[card.id];
                             buildingObject.icon = special_icons[i];
                         }
                         catch (System.IndexOutOfRangeException e) {
-                            images[card.Id] = special_images[0];
+                            images[card.id] = special_images[0];
                             buildingObject.mainSprite = images[0];
                             buildingObject.icon = special_icons[0];
                         }

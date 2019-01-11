@@ -4,10 +4,10 @@ using DataModules;
 namespace DataModules {
     [System.Serializable]
     public class Deck {
-        public int Id;
-        public string Name;
-        public Species.Type species;
-        public bool isLeader;
-        public List<BuildingTile> buildingTiles;
+        public int id;
+        public string name;
+        public string race;
+        public int[] coordsSerial;
+        public int[,] coords;
     }
 }

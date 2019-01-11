@@ -36,14 +36,17 @@ public class DeckListController : MonoBehaviour {
 
         for (int i = 0; i < decks.Count; i++) {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
-            newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].Name;
-            newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(decks[i].isLeader);
-            int id = decks[i].Id;
+            newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
+
+            if(i == 0) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
+            else newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(false);
+
+            int id = decks[i].id;
             newItem.GetComponent<Index>().Id = id;
             newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).Name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
+                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
                         AccountManager.Instance.RemoveDeck(id);
                         Sort(AccountManager.Instance.decks);
                     });
@@ -51,7 +54,7 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).Name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
+                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
                         AccountManager.Instance.ChangeLeaderDeck(id);
                         Sort(AccountManager.Instance.decks);
                     });
@@ -62,8 +65,9 @@ public class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
+                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
+                AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
                 moveToDeckSetting();
-                Debug.Log(newItem.transform.parent.GetSiblingIndex());
             });
         }
     }
@@ -76,7 +80,7 @@ public class DeckListController : MonoBehaviour {
         }
     }
 
-    public void moveToDeckSetting() {
+    public void moveToDeckSetting() {        
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
     }

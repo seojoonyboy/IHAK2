@@ -20,6 +20,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] private Button speciesConfirmBtn;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
+    [SerializeField] DeckListController deckListController;
 
     public Text 
         modalHeader,
@@ -35,7 +36,8 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
-        deckSet = GameObject.FindGameObjectWithTag("TileGroup");
+        deckSet = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
+        deckListController = FindObjectOfType<DeckListController>();
 
         chooseSpeciesBtn.onClick
             .AsObservable()
@@ -105,10 +107,10 @@ public class DeckSettingController : MonoBehaviour {
 
     private void Callback(string inputText) {
         Deck deck = new Deck();
-        deck.Id = playerInfosManager.decks.Capacity;
+        deck.id = playerInfosManager.decks.Capacity;
         //deck.deckData = transform.GetChild(0).GetChild(0).GetComponent<DropHandler>().deckData; // 타일 하위 오브젝트 스크립트 말고 그룹용 오브젝트 스크립트를 만들어야하나?
-        deck.species = (Species.Type)speciesId;
-        deck.Name = inputText;
+        deck.race = ((Species.Type)speciesId).ToString();
+        deck.name = inputText;
 
         playerInfosManager.AddDeck(deck);
 
