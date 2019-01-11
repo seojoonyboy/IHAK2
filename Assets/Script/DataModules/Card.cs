@@ -4,26 +4,24 @@ using UnityEngine;
 
 namespace DataModules {
     [System.Serializable]
-    public class Building : Card {
-        public enum Category {
-            PRODUCT,
-            MILITARY,
-            SPECIAL
-        }
-    }
+    public class Building : CardFromServerData { }
     [System.Serializable]
-    public class Unit : Card { }
+    public class Unit : CardFromServerData { }
+
     [System.Serializable]
     public class Card {
-        public int Id;
-        public string Name;
-        public int Tier;
+        public int id;
+        public string race;
+        public string name;
+        public string type;
+        public int rareity;
+        public int hitPoint;
+        public int placementLimit;
+        public bool canAttack;
+    }
 
-        public int Hp;
-
-        public int Limit_num;
-
-        public string Type;
-        public string Primal;
+    public class CardFromServerData {
+        public int id;
+        public Card card;
     }
 }

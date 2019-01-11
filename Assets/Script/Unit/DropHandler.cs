@@ -32,7 +32,7 @@ public class DropHandler : MonoBehaviour {
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckEditor.deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.Id;
+            deckEditor.deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
             Vector3 setLocation = targetTile.transform.position;
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;
