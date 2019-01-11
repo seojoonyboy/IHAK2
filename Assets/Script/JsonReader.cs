@@ -15,10 +15,9 @@ public class JsonReader : MonoBehaviour {
 
     }
 
-    public static List<T> Read<T>(string fileName, T _class) {
-        TextAsset textAsset = Resources.Load(fileName) as TextAsset;
+    public static List<T> Read<T>(string data, T _class) {
         Type type = _class.GetType();
-        var result = JsonConvert.DeserializeObject<List<T>>(textAsset.text);
+        var result = JsonConvert.DeserializeObject<List<T>>(data);
         return result;
     }
 }
