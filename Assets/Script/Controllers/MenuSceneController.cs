@@ -5,6 +5,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class MenuSceneController : MonoBehaviour {
 
@@ -33,18 +34,19 @@ public class MenuSceneController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
-        selectedPosition = 1;        
+        selectedPosition = 1;
         //buttonList.GetChild(0).GetComponent<Image>().sprite = buttonList.GetChild(3).GetComponent<Image>().sprite;
         //buttonList.GetChild(4).GetComponent<Image>().sprite = buttonList.GetChild(1).GetComponent<Image>().sprite;
 
-        switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
-        switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
+        //switchButtons.transform.GetChild(0).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
+        //switchButtons.transform.GetChild(1).GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
 
-        var downStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
-        var upStream = windowList.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
-        var dragStream = windowList.gameObject.UpdateAsObservable().SkipUntil(downStream).DistinctUntilChanged().Buffer(upStream).RepeatUntilDestroy(this);
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
+        //var downStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
+        //var upStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
+        //var dragStream = this.gameObject.UpdateAsObservable().SkipUntil(downStream).DistinctUntilChanged().Buffer(upStream).RepeatUntilDestroy(this);
+        //dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(true));
+        //dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 300).ThrottleFirst(TimeSpan.FromMilliseconds(420)).Subscribe(_ => switchButton(false));
+        //GetComponent<HorizontalScrollSnap>()
     }
 
     public void switchButton(bool left) {
