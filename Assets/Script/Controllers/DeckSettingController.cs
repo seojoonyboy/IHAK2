@@ -33,6 +33,8 @@ public class DeckSettingController : MonoBehaviour {
         }
     }
 
+    public static Deck prevData = null;
+
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
@@ -53,6 +55,10 @@ public class DeckSettingController : MonoBehaviour {
             Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
         });
         InitToggles();
+        if (prevData != null) {
+            Debug.Log("Deck 수정 버튼을 통한 접근");
+            InitPrevData();
+        }
     }
 
     private void InitToggles() {
@@ -73,6 +79,10 @@ public class DeckSettingController : MonoBehaviour {
             image.sprite = speciesPortraits[i];
         }
         AddPrepareToggle(1);
+    }
+
+    private void InitPrevData() {
+
     }
 
     /// <summary>

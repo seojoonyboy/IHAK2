@@ -59,6 +59,11 @@ public class DeckListController : MonoBehaviour {
                         Sort(AccountManager.Instance.decks);
                     });
                 });
+            newItem.transform.Find("ModifyBtn").GetComponent<Button>().onClick
+                .AsObservable()
+                .Subscribe(_ => {
+                    moveToDeckSetting(decks[id]);
+                });
             items.Add(newItem);
         }
         for (int i = decks.Count; i < slots.Length; i++) {
@@ -80,8 +85,9 @@ public class DeckListController : MonoBehaviour {
         }
     }
 
-    public void moveToDeckSetting() {        
+    public void moveToDeckSetting(Deck building = null) {        
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
+        DeckSettingController.prevData = building;
     }
 }
