@@ -39,6 +39,15 @@ public class ConstructManager : Singleton<ConstructManager> {
         return buildings[type];
     }
 
+    public List<GameObject> GetBuildingObjects() {
+        List<GameObject> result = new List<GameObject>();
+        result.AddRange(buildings["prod"]);
+        result.AddRange(buildings["military"]);
+        result.AddRange(buildings["special"]);
+
+        return result;
+    }
+
     private void SetAllBuildings() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl);
