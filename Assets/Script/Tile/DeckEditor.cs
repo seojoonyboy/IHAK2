@@ -28,8 +28,8 @@ public class DeckEditor : MonoBehaviour {
     
     public void resetTile() {
         for(int i = 0; i<tileGroup.transform.childCount; i++) {
-            Destroy(tileGroup.transform.GetChild(0));
-            GetComponent<TileObject>().buildingSet = false;
+            Destroy(tileGroup.transform.GetChild(i).GetChild(0));
+            tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
         }
     }
 
