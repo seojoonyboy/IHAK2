@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +15,21 @@ public class AccountManager : Singleton<AccountManager> {
     public GameObject deckGroup;
     private string deviceID;
 
+    [Serializable]
+    public class UserClass {
+        public int id;
+        public string nickname;
+        public string deviceId;
+        public Card cards;
+        public List<Deck> decks;
+    }
+
     public List<Deck> decks = new List<Deck>();
 
     public int Exp { get; set; }
     public int Lv { get; set; }
     public string NickName { get; set; }
+    public UserClass userInfos { get; set; }
 
     private Wallet wallet;
 
@@ -30,11 +41,7 @@ public class AccountManager : Singleton<AccountManager> {
     [HideInInspector]
     public int selectNumber;
 
-    [Serializable]
-    public class UserClass {
-        public string Nickname;
-        public string DeviceId;
-    }
+    
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -44,6 +51,7 @@ public class AccountManager : Singleton<AccountManager> {
     }
     private void Start() {
         deviceID = SystemInfo.deviceUniqueIdentifier;
+        //deviceID = "12341234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
     }
@@ -60,6 +68,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void ReqUserInfoCallback(HttpResponse response) {
         //Server의 Wallet 정보 할당
         if (response.responseCode == 200) {
+            GetUserInfo();
             Debug.Log("저장 성공");
         }
         else if (response.responseCode == 400) {
@@ -143,9 +152,7 @@ public class AccountManager : Singleton<AccountManager> {
     public void GetMyDecks() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks");
+            .Append("api/users/deviceid/" + deviceID + "/decks");
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
         
     }
@@ -166,24 +173,21 @@ public class AccountManager : Singleton<AccountManager> {
     private void OnUserReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             Modal.instantiate("로그인 되었습니다.", Modal.Type.CHECK, () => {
+
+                userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
             });
         }
         else if (response.responseCode == 404) {
             Debug.Log("저장되지 않은 계정");
-
-            Modal.instantiate("새로운 계정을 등록합니다.", Modal.Type.CHECK, () => {
-                StringBuilder url = new StringBuilder();
-                url.Append(_networkManager.baseUrl)
-                    .Append("api/users");
-                _networkManager.request("PUT", url.ToString(), SetUserjsonData(), ReqUserInfoCallback, false);
-            });
+            Modal.instantiate("새로운 계정을 등록합니다.", "닉네임을 입력하세요.", Modal.Type.INSERT, SetUserReqData);
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
         }
     }
+    
 
 
     public void SetTileObjects() {
@@ -212,12 +216,15 @@ public class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    private string SetUserjsonData() {
+    private void SetUserReqData(string inputText) {
         UserClass userInfo = new UserClass();
-        userInfo.Nickname = "TestUser001";
-        userInfo.DeviceId = SystemInfo.deviceUniqueIdentifier;
+        userInfo.nickname = inputText;
+        userInfo.deviceId = deviceID;
         string json = JsonUtility.ToJson(userInfo);
-        return json;
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users");
+        _networkManager.request("PUT", url.ToString(), json, ReqUserInfoCallback, false);
     }
 
     public enum Name {

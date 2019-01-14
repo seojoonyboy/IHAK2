@@ -22,6 +22,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject switchButtons;
     [SerializeField] Sprite selectedButton;
     [SerializeField] Sprite unSelectecButton;
+    [SerializeField] Text userNickname;
 
     private Windows openedWindow;
     private float mousDownPosition;
@@ -35,6 +36,7 @@ public class MenuSceneController : MonoBehaviour {
     void Start() {
         openedWindow = Windows.BASIC;
         selectedPosition = 1;
+        userNickname.text = AccountManager.Instance.userInfos.nickname;
         //buttonList.GetChild(0).GetComponent<Image>().sprite = buttonList.GetChild(3).GetComponent<Image>().sprite;
         //buttonList.GetChild(4).GetComponent<Image>().sprite = buttonList.GetChild(1).GetComponent<Image>().sprite;
 
