@@ -76,6 +76,7 @@ public class DeckListController : MonoBehaviour {
                 .AsObservable()
                 .Subscribe(_ => {
                     moveToDeckSetting(decks[id]);
+                    AccountManager.Instance.selectNumber = newItem.transform.GetSiblingIndex();
                 });
             items.Add(newItem);
         }

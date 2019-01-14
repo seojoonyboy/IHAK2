@@ -23,6 +23,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] DeckListController deckListController;
     [SerializeField] public List<int> tileSetList;
     [SerializeField] public Button resetButton;
+    [SerializeField] public bool modify;
 
     public Text 
         modalHeader,
@@ -121,23 +122,35 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     private void Callback(string inputText) {
-        Deck deck = new Deck();
-        deck.id = playerInfosManager.decks.Capacity;
-        //deck.deckData = transform.GetChild(0).GetChild(0).GetComponent<DropHandler>().deckData; // 타일 하위 오브젝트 스크립트 말고 그룹용 오브젝트 스크립트를 만들어야하나?
-        deck.race = ((Species.Type)speciesId).ToString();
-        deck.name = inputText;
+        if (prevData == null) {
+            Deck deck = new Deck();
+            deck.id = playerInfosManager.decks.Capacity;
+            deck.race = ((Species.Type)speciesId).ToString();
+            deck.name = inputText;
+            deck.coordsSerial = new int[tileSetList.Count + 1];
+            for (int i = 0; i < tileSetList.Count; i++)
+                deck.coordsSerial[i] = tileSetList[i];
 
-        playerInfosManager.AddDeck(deck);
+            playerInfosManager.AddDeck(deck);
+        }
+        else {
+            for (int i = 0; i < tileSetList.Count; i++)
+                playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i] = tileSetList[i];
+
+            playerInfosManager.decks[playerInfosManager.selectNumber].name = inputText;
+        }
 
         /*
         GameObject go = GameObject.Find("TileGroup(Clone)");
         PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
         */
+        prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
     public void returnButton() {
+        prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
 
