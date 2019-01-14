@@ -8,7 +8,7 @@ using System;
 [RequireComponent(typeof(ConstructManager))]
 public class BuildingImages : MonoBehaviour {
     [SerializeField]
-    Sprite[]
+    public Sprite[]
         product_images,
         product_icons,
         military_images,

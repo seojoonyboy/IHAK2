@@ -51,7 +51,9 @@ public class ConstructManager : Singleton<ConstructManager> {
     private void SetAllBuildings() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl);
-        url.Append("api/users/deviceid/6236213/cardsinventory");
+        url.Append("api/users/deviceid/")
+            .Append(AccountManager.Instance.DEVICEID)
+            .Append("/cardsinventory");
         _networkManager.request("GET", url.ToString(), OnSetAllBuildingsCallback, false);
     }
 
@@ -81,6 +83,14 @@ public class ConstructManager : Singleton<ConstructManager> {
             buildings["military"] = militaries;
             buildings["special"] = specials;
             AccountManager.Instance.SetTileObjects();
+            SetSprite();
+        }
+    }
+
+    public void SetSprite() {
+        for(int i = 0; i<transform.GetChild(0).childCount; i++) {
+            transform.GetChild(0).GetChild(i).GetComponent<BuildingObject>().icon = GetComponent<BuildingImages>().total_icons[i];
+            transform.GetChild(0).GetChild(i).GetComponent<BuildingObject>().mainSprite = GetComponent<BuildingImages>().total_images[i];
         }
     }
 }

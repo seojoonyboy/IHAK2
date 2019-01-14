@@ -33,11 +33,11 @@ public class OwnCardGenerator : MonoBehaviour {
     private void SetCards() {
         int page = 0;
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < constructManager.GetBuildingObjects().Count; i++) {
             if (i != 0 && i % NUM_PER_PAGE == 0)
                 page++;
-
-            int random = UnityEngine.Random.Range(0, 25);
+             
+            
             GameObject slotData = Instantiate(slotObject, transform.GetChild(page));
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
             slotData.GetComponentInChildren<Image>().sprite = buildings[i].GetComponent<BuildingObject>().icon;

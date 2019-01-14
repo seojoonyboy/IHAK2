@@ -145,16 +145,26 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void TilebuildingList() {
+        /*
         if (playerInfosManager.decks[playerInfosManager.selectNumber] == null) {
             for (int i = 0; i < tileGroup.transform.childCount; i++) {
                 tileSetList.Add(0);
             }
         }
-        else {
+        else if(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial != null) {
             for (int i = 0; i < tileGroup.transform.childCount; i++) {
                 tileSetList.Add(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i]);
             }
         }
+        */
+
+        for (int i = 0; i < tileGroup.transform.childCount; i++) {
+            if (tileGroup.transform.GetChild(i).childCount != 0)
+                tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
+            else
+                tileSetList.Add(0);
+        }
+
     }
 
 

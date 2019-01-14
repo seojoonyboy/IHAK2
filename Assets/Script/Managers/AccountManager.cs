@@ -45,7 +45,6 @@ public class AccountManager : Singleton<AccountManager> {
 
     [SerializeField]
     public List<int> selectDeck;
-    [HideInInspector]
     public int selectNumber;
 
     

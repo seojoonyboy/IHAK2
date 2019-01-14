@@ -34,6 +34,7 @@ public class DropHandler : MonoBehaviour {
             transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
             Vector3 setLocation = targetTile.transform.position;
             setLocation.z = 0;
+            selectBuilding.GetComponent<SpriteRenderer>().sprite = selectBuilding.GetComponent<BuildingObject>().mainSprite;
             selectBuilding.transform.localPosition = setLocation;
             selectBuilding.transform.SetParent(targetTile.transform);
             selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount - targetTile.GetComponent<TileObject>().tileNum;
