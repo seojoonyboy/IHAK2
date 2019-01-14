@@ -13,6 +13,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Transform territoryList;
     [SerializeField] Transform camera;
     [SerializeField] Text playerName;
+    [SerializeField] GameObject playerCity;
 
     private float mousDownPosition;
 
@@ -24,6 +25,10 @@ public class IngameSceneUIController : MonoBehaviour {
         var dragStream = this.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
         dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(450)).Subscribe(_ => SwitchTerritory(true));
         dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(450)).Subscribe(_ => SwitchTerritory(false));
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        go.SetActive(true);
+        GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
+        go.SetActive(false);
     }
 
 
