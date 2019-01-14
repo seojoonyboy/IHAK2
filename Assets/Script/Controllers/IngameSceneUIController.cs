@@ -12,11 +12,13 @@ public class IngameSceneUIController : MonoBehaviour {
 
     [SerializeField] Transform territoryList;
     [SerializeField] Transform camera;
+    [SerializeField] Text playerName;
 
     private float mousDownPosition;
 
     // Use this for initialization
     void Start() {
+        playerName.text = AccountManager.Instance.userInfos.nickname;
         var downStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
         var upStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0)).Select(_ => Input.mousePosition.x);
         var dragStream = this.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
@@ -24,10 +26,6 @@ public class IngameSceneUIController : MonoBehaviour {
         dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(450)).Subscribe(_ => SwitchTerritory(false));
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
 
     void SwitchTerritory(bool left) {
         if (left && territoryList.localPosition.x < -1080) {
@@ -37,5 +35,12 @@ public class IngameSceneUIController : MonoBehaviour {
             iTween.MoveTo(territoryList.gameObject, iTween.Hash("x", territoryList.position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
         }
 
+    }
+
+    public void ClickOption() {
+        Modal.instantiate("게임에서 나가시겠습니까?", Modal.Type.YESNO, () => {
+            GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+            gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
+        });
     }
 }
