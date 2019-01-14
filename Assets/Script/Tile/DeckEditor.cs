@@ -10,6 +10,7 @@ public class DeckEditor : MonoBehaviour {
     public GameObject editSceneUI;    
     AccountManager userAccount;
     public List<int> deckData;
+    public Button resetButton;
 
 	void Start () {
         userAccount = AccountManager.Instance;
@@ -20,7 +21,17 @@ public class DeckEditor : MonoBehaviour {
         for (int i = 0; i < tileGroup.transform.childCount; i++)
             deckData.Add(0);
 
+        resetButton.OnClickAsObservable().Subscribe(_ =>resetTile());
 
 
-    }	
+    }
+    
+    public void resetTile() {
+        for(int i = 0; i<tileGroup.transform.childCount; i++) {
+            Destroy(tileGroup.transform.GetChild(0));
+            GetComponent<TileObject>().buildingSet = false;
+        }
+    }
+
+
 }
