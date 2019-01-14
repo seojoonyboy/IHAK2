@@ -143,7 +143,9 @@ public class AccountManager : Singleton<AccountManager> {
     public void GetMyDecks() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/6236213/decks");
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks");
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
         
     }
