@@ -53,10 +53,10 @@ public class AccountManager : Singleton<AccountManager> {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
+        deviceID = SystemInfo.deviceUniqueIdentifier;
         //ReqUserInfo();
     }
     private void Start() {
-        deviceID = SystemInfo.deviceUniqueIdentifier;
         //deviceID = "12341234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
@@ -125,7 +125,6 @@ public class AccountManager : Singleton<AccountManager> {
 
     public void AddDeck(Deck deck) {
         DeckPostForm form = new DeckPostForm();
-        form.deviceId = DEVICEID;
         form.Name = deck.name;
         form.Race = "primal";
         form.IsRepresent = false;
@@ -196,14 +195,15 @@ public class AccountManager : Singleton<AccountManager> {
     public void GetUserInfo() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/" + deviceID);
+            .Append("api/users/deviceid/" + DEVICEID);
         _networkManager.request("GET", url.ToString(), OnUserReqCallback, false);
     }
 
     public void GetMyDecks() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/" + deviceID + "/decks");
+            .Append("api/users/deviceid/" + DEVICEID + "/decks");
+        Debug.Log(DEVICEID);
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
         
     }

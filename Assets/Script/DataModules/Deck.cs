@@ -12,7 +12,6 @@ namespace DataModules {
     }
 
     public class DeckPostForm {
-        public string deviceId;
         public string Name;
         public string Race;
         public bool IsRepresent;
