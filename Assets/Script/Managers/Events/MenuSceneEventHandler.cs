@@ -57,6 +57,7 @@ public class MenuSceneEventHandler : Singleton<MenuSceneEventHandler>, IEventHan
     }
 
     public enum EVENT_TYPE {
-        NONE
+        NONE,
+        DECKLIST_CHANGED
     }
 }

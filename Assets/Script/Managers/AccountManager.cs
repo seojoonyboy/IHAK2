@@ -34,6 +34,7 @@ public class AccountManager : Singleton<AccountManager> {
     private Wallet wallet;
 
     private StringBuilder sb = new StringBuilder();
+    private int selId = -1;
 
     [SerializeField]
     public List<int> selectDeck;
@@ -98,16 +99,22 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void RemoveDeck(int id) {
-        Deck deck = decks.Find(x => x.id == id);
+        selId = id;
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(id);
+        _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+    }
+
+    private void RemoveComplete(HttpResponse response) {
+        if (response.responseCode != 200 || selId == -1) return;
+        Deck deck = decks.Find(x => x.id == selId);
+        if (deck == null) return;
         decks.Remove(deck);
-        //if (deck.isLeader) {
-        //    decks.Remove(deck);
-        //    if (decks.Count > 0)
-        //        decks[0].isLeader = true;
-        //}
-        //else {
-        //    decks.Remove(deck);
-        //}
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
     public void AddDeck(Deck deck) {
@@ -147,6 +154,7 @@ public class AccountManager : Singleton<AccountManager> {
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + deviceID + "/decks");
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
+        
     }
 
     private void OnMyDeckReqCallback(HttpResponse response) {
@@ -159,7 +167,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
-        }
+        }        
     }
 
     private void OnUserReqCallback(HttpResponse response) {
@@ -177,6 +185,34 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
+        }
+    }
+    
+
+
+    public void SetTileObjects() {
+        if (decks == null)
+            return;
+
+        ConstructManager cm = ConstructManager.Instance;
+        GameObject constructManager = cm.transform.gameObject;
+
+        for (int i = 0; i < decks.Count; i++) {            
+            for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
+                GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
+                transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
+                setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+                setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+            }
+        }
+    }
+
+    public void RemoveTileObjects(int num) {
+        Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
+        foreach(Transform tile in targetTileGroup) {
+            foreach(Transform data in tile) {
+                Destroy(data.gameObject);
+            }
         }
     }
 
