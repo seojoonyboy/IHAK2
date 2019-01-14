@@ -10,4 +10,12 @@ namespace DataModules {
         public int[] coordsSerial;
         public int[,] coords;
     }
+
+    public class DeckPostForm {
+        public string deviceId;
+        public string Name;
+        public string Race;
+        public bool IsRepresent;
+        public int[] CoordsSerial;
+    }
 }
