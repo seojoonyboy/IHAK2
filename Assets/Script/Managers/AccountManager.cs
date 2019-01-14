@@ -15,6 +15,13 @@ public class AccountManager : Singleton<AccountManager> {
     public GameObject deckGroup;
     private string deviceID;
 
+    
+
+    public class UserClassInput {
+        public string nickname;
+        public string deviceId;
+    }
+
     [Serializable]
     public class UserClass {
         public int id;
@@ -173,7 +180,6 @@ public class AccountManager : Singleton<AccountManager> {
     private void OnUserReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             Modal.instantiate("로그인 되었습니다.", Modal.Type.CHECK, () => {
-
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
@@ -217,7 +223,7 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     private void SetUserReqData(string inputText) {
-        UserClass userInfo = new UserClass();
+        UserClassInput userInfo = new UserClassInput();
         userInfo.nickname = inputText;
         userInfo.deviceId = deviceID;
         string json = JsonUtility.ToJson(userInfo);
