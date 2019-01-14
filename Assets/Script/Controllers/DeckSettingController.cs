@@ -14,13 +14,15 @@ public class DeckSettingController : MonoBehaviour {
     GameSceneManager gsm;
     AccountManager playerInfosManager;
 
-    [SerializeField] public GameObject deckSet;
+    [SerializeField] public GameObject tileGroup;
     [SerializeField] private GameObject togglePref;
     [SerializeField] private Button chooseSpeciesBtn;
     [SerializeField] private Button speciesConfirmBtn;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
     [SerializeField] DeckListController deckListController;
+    [SerializeField] public List<int> tileSetList;
+    [SerializeField] public Button resetButton;
 
     public Text 
         modalHeader,
@@ -38,9 +40,12 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
-        deckSet = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
+        playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
+        tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
         deckListController = FindObjectOfType<DeckListController>();
+        TilebuildingList();
 
+        resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         chooseSpeciesBtn.onClick
             .AsObservable()
             .Subscribe(_ => {
@@ -128,14 +133,39 @@ public class DeckSettingController : MonoBehaviour {
         GameObject go = GameObject.Find("TileGroup(Clone)");
         PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
         */
-        deckSet.SetActive(false);
+        tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
     public void returnButton() {
-        deckSet.SetActive(false);
+        tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
 
         //UnityEditor.PrefabUtility.CreatePrefab()
     }
+
+    public void TilebuildingList() {
+        if (playerInfosManager.decks[playerInfosManager.selectNumber] == null) {
+            for (int i = 0; i < tileGroup.transform.childCount; i++) {
+                tileSetList.Add(0);
+            }
+        }
+        else {
+            for (int i = 0; i < tileGroup.transform.childCount; i++) {
+                tileSetList.Add(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i]);
+            }
+        }
+    }
+
+
+    public void resetTile() {
+        for (int i = 0; i < tileGroup.transform.childCount; i++) {
+
+            if (tileGroup.transform.GetChild(i).childCount != 0)
+                Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
+            tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
+            tileSetList[i] = 0;
+        }
+    }
+
 }

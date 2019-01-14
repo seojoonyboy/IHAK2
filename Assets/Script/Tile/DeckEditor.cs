@@ -5,33 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 
 public class DeckEditor : MonoBehaviour {
-
-    public GameObject tileGroup;
-    public GameObject editSceneUI;    
-    AccountManager userAccount;
-    public List<int> deckData;
-    public Button resetButton;
-
-	void Start () {
-        userAccount = AccountManager.Instance;
-
-        userAccount.transform.GetChild(0).GetChild(userAccount.selectNumber).gameObject.SetActive(true);
-        tileGroup = userAccount.transform.GetChild(0).GetChild(userAccount.selectNumber).gameObject;
-
-        for (int i = 0; i < tileGroup.transform.childCount; i++)
-            deckData.Add(0);
-
-        resetButton.OnClickAsObservable().Subscribe(_ =>resetTile());
-
-
-    }
     
-    public void resetTile() {
-        for(int i = 0; i<tileGroup.transform.childCount; i++) {
-            Destroy(tileGroup.transform.GetChild(i).GetChild(0));
-            tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
-        }
-    }
 
 
 }

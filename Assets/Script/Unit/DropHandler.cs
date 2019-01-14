@@ -8,7 +8,6 @@ public class DropHandler : MonoBehaviour {
 
     public GameObject setObject;
     public GameObject targetTile;
-    public DeckEditor deckEditor;
     public float startCamSize;
     public float camSize;
     Camera cam;
@@ -32,7 +31,7 @@ public class DropHandler : MonoBehaviour {
         if (targetTile.GetComponent<TileObject>().buildingSet == false) {
             GameObject selectBuilding = Instantiate(setObject);
             int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-            deckEditor.deckData[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
+            transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
             Vector3 setLocation = targetTile.transform.position;
             setLocation.z = 0;
             selectBuilding.transform.localPosition = setLocation;
