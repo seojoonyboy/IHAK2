@@ -122,22 +122,22 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     private void Callback(string inputText) {
-        if (prevData == null) {
-            Deck deck = new Deck();
-            deck.id = playerInfosManager.decks.Capacity;
-            deck.race = ((Species.Type)speciesId).ToString();
-            deck.name = inputText;
-            deck.coordsSerial = new int[tileSetList.Count + 1];
-            for (int i = 0; i < tileSetList.Count; i++)
-                deck.coordsSerial[i] = tileSetList[i];
+        Deck deck = new Deck();
+        deck.race = ((Species.Type)speciesId).ToString();
+        deck.name = inputText;
+        deck.coordsSerial = new int[tileSetList.Count + 1];
+        for (int i = 0; i < tileSetList.Count; i++)
+            deck.coordsSerial[i] = tileSetList[i];
 
+        if (prevData == null) {
             playerInfosManager.AddDeck(deck);
         }
         else {
-            for (int i = 0; i < tileSetList.Count; i++)
-                playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i] = tileSetList[i];
-
-            playerInfosManager.decks[playerInfosManager.selectNumber].name = inputText;
+            //for (int i = 0; i < tileSetList.Count; i++)
+            //    playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i] = tileSetList[i];
+            deck.id = prevData.id;
+            playerInfosManager.ModifyDeck(deck);
+            //playerInfosManager.decks[playerInfosManager.selectNumber].name = inputText;
         }
 
         /*

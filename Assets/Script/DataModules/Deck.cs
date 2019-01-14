@@ -18,4 +18,12 @@ namespace DataModules {
         public bool IsRepresent;
         public int[] CoordsSerial;
     }
+
+    public class ModifyDeckPostForm {
+        public int Id;
+        public string Name;
+        public string Race;
+        public bool IsRepresent;
+        public int[] CoordsSerial;
+    }
 }

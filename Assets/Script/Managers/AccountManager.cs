@@ -142,6 +142,26 @@ public class AccountManager : Singleton<AccountManager> {
         tmpData = deck;
     }
 
+    public void ModifyDeck(Deck deck) {
+        ModifyDeckPostForm form = new ModifyDeckPostForm();
+        form.Id = deck.id;
+        form.Name = deck.name;
+        form.Race = "primal";
+        form.IsRepresent = false;
+        form.CoordsSerial = deck.coordsSerial;
+        var dataPack = JsonConvert.SerializeObject(form);
+
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(deck.id.ToString());
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
+
+        tmpData = deck;
+    }
+
     private void AddDeckCallback(HttpResponse response) {
         if (response.responseCode != 200 || tmpData == null) return;
         decks.Add(tmpData);
@@ -216,14 +236,14 @@ public class AccountManager : Singleton<AccountManager> {
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
 
-        for (int i = 0; i < decks.Count; i++) {            
-            for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
-                GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
-                transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
-                setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
-                setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-            }
-        }
+        //for (int i = 0; i < decks.Count; i++) {
+        //    for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
+        //        GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
+        //        transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
+        //        setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+        //        setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+        //    }
+        //}
     }
 
     public void RemoveTileObjects(int num) {
