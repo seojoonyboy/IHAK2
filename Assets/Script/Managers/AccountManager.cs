@@ -181,7 +181,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else if (response.responseCode == 404) {
             Debug.Log("저장되지 않은 계정");
-            Modal.instantiate("새로운 계정을 등록합니다.", "닉네임을 입력하세요.", Modal.Type.INSERT, SetUserjsonData);
+            Modal.instantiate("새로운 계정을 등록합니다.", "닉네임을 입력하세요.", Modal.Type.INSERT, SetUserReqData);
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
