@@ -180,7 +180,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
     }
 
-    private void SetUserjsonData(string inputText) {
+    private void SetUserReqData(string inputText) {
         UserClass userInfo = new UserClass();
         userInfo.nickname = inputText;
         userInfo.deviceId = deviceID;
