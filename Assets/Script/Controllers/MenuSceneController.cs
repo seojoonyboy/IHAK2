@@ -23,6 +23,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] Sprite selectedButton;
     [SerializeField] Sprite unSelectecButton;
     [SerializeField] Text userNickname;
+    [SerializeField] GameObject leaderDeck;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
@@ -39,7 +40,11 @@ public class MenuSceneController : MonoBehaviour {
         openedWindow = Windows.BASIC;
         selectedPosition = 1;
         hss = FindObjectOfType<HorizontalScrollSnap>();
-        //userNickname.text = AccountManager.Instance.userInfos.nickname;
+        userNickname.text = AccountManager.Instance.userInfos.nickname;        
+        GameObject go  = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        go.SetActive(true);
+        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
+        go.SetActive(false);
     }
 
     public void switchButton() {
