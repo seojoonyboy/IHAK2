@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using DataModules;
 using System.Linq;
 using System;
 using System.Text;
+
 
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
@@ -26,6 +28,12 @@ public class AccountManager : Singleton<AccountManager> {
     [HideInInspector]
     public int selectNumber;
 
+    [Serializable]
+    public class UserClass {
+        public string Nickname;
+        public string DeviceId;
+    }
+
     void Awake() {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
@@ -45,6 +53,15 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void ReqUserInfoCallback(HttpResponse response) {
         //Server의 Wallet 정보 할당
+        if (response.responseCode == 200) {
+            Debug.Log("저장 성공");
+        }
+        else if (response.responseCode == 400) {
+            Debug.Log("저장 실패");
+        }
+        else {
+            Debug.Log("알 수 없는 Server 오류");
+        }
     }
 
     public int GetGold() {
@@ -141,8 +158,11 @@ public class AccountManager : Singleton<AccountManager> {
         else if (response.responseCode == 404) {
             Debug.Log("저장되지 않은 계정");
 
-            Modal.instantiate("새로운 계정을 등록하세요", Modal.Type.CHECK, () => {
-                Debug.Log("알 수 없는 Server 오류");
+            Modal.instantiate("새로운 계정을 등록합니다.", Modal.Type.CHECK, () => {
+                StringBuilder url = new StringBuilder();
+                url.Append(_networkManager.baseUrl)
+                    .Append("api/users");
+                _networkManager.request("PUT", url.ToString(), SetUserjsonData(), ReqUserInfoCallback, false);
             });
         }
         else {
@@ -170,6 +190,13 @@ public class AccountManager : Singleton<AccountManager> {
         }
     }
 
+    private string SetUserjsonData() {
+        UserClass userInfo = new UserClass();
+        userInfo.Nickname = "TestUser001";
+        userInfo.DeviceId = SystemInfo.deviceUniqueIdentifier;
+        string json = JsonUtility.ToJson(userInfo);
+        return json;
+    }
 
     public enum Name {
         위니,

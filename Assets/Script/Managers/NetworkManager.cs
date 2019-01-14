@@ -10,8 +10,14 @@ public class NetworkManager : Singleton<NetworkManager> {
     public void request(string method, string url, WWWForm data, Callback callback, bool neeAuthor = true) {
         StartCoroutine(_request(method, url, data, callback, neeAuthor));
     }
+
+    public void request(string method, string url, string data, Callback callback, bool neeAuthor = true) {
+        StartCoroutine(_request(method, url, data, callback, neeAuthor));
+    }
+
     public void request(string method, string url, Callback callback, bool neeAuthor = true) {
-        request(method, url, null, callback, neeAuthor);
+        WWWForm data = null;
+        request(method, url, data, callback, neeAuthor);
     }
 
     IEnumerator _request(string method, string url, WWWForm data, Callback callback, bool needAuthor = true){
@@ -22,7 +28,7 @@ public class NetworkManager : Singleton<NetworkManager> {
                 break;
             case "PUT":
                 _www = UnityWebRequest.Put(url,data.data);
-                _www.SetRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                _www.SetRequestHeader("Content-Type", "application/json");
                 break;
             case "DELETE":
                 _www = UnityWebRequest.Delete(url);
@@ -39,6 +45,37 @@ public class NetworkManager : Singleton<NetworkManager> {
         }
 
         using(UnityWebRequest www = _www){
+            yield return www.Send();
+            callback(new HttpResponse(www));
+        }
+    }
+
+    IEnumerator _request(string method, string url, string data, Callback callback, bool needAuthor = true) {
+        UnityWebRequest _www;
+        switch (method) {
+            case "POST":
+                _www = UnityWebRequest.Post(url, data);
+                break;
+            case "PUT":
+                _www = UnityWebRequest.Put(url, data);
+                _www.method = "POST";
+                _www.SetRequestHeader("Content-Type", "application/json");
+                break;
+            case "DELETE":
+                _www = UnityWebRequest.Delete(url);
+                break;
+            case "GET":
+            default:
+                _www = UnityWebRequest.Get(url);
+                break;
+        }
+
+        if (needAuthor) {
+            //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
+            //_www.downloadHandler = new DownloadHandlerBuffer();
+        }
+
+        using (UnityWebRequest www = _www) {
             yield return www.Send();
             callback(new HttpResponse(www));
         }
