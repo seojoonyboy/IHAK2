@@ -7,10 +7,12 @@ using System.Collections.Generic;
 
 using UniRx;
 using UniRx.Triggers;
+using System;
 
 public class DeckListController : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
+    MenuSceneEventHandler eventHandler;
 
     [SerializeField] private GameObject[] slots;
     private List<GameObject> items;
@@ -19,6 +21,16 @@ public class DeckListController : MonoBehaviour {
         Modify;
 
     public GameObject temp;
+
+    void Start() {
+        eventHandler = MenuSceneEventHandler.Instance;
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
+    }
+
+    private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
+        Initialize();
+    }
 
     void OnEnable() {
         Initialize();
@@ -49,6 +61,7 @@ public class DeckListController : MonoBehaviour {
                     Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
                         AccountManager.Instance.RemoveDeck(id);
                         Sort(AccountManager.Instance.decks);
+                        AccountManager.Instance.RemoveTileObjects(newItem.transform.parent.GetSiblingIndex());
                     });
                 });
             newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
