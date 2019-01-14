@@ -145,6 +145,7 @@ public class AccountManager : Singleton<AccountManager> {
     public void ModifyDeck(Deck deck) {
         ModifyDeckPostForm form = new ModifyDeckPostForm();
         form.Id = deck.id;
+        Debug.Log(deck.id);
         form.Name = deck.name;
         form.Race = "primal";
         form.IsRepresent = false;
@@ -157,7 +158,7 @@ public class AccountManager : Singleton<AccountManager> {
             .Append(DEVICEID)
             .Append("/decks/")
             .Append(deck.id.ToString());
-        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), ModifyDeckCallback);
 
         tmpData = deck;
     }
@@ -165,6 +166,16 @@ public class AccountManager : Singleton<AccountManager> {
     private void AddDeckCallback(HttpResponse response) {
         if (response.responseCode != 200 || tmpData == null) return;
         decks.Add(tmpData);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+    }
+
+    private void ModifyDeckCallback(HttpResponse response) {
+        if (response.responseCode != 200 || tmpData == null) return;
+
+        Deck deck = decks.Find(x => x.id == tmpData.id);
+        deck.name = tmpData.name;
+        deck.coordsSerial = tmpData.coordsSerial;
+        deck.coords = tmpData.coords;
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
