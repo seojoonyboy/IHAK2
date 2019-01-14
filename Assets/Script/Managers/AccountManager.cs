@@ -191,7 +191,8 @@ public class AccountManager : Singleton<AccountManager> {
             for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
                 GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
                 transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
-                setBuild.transform.position = Vector2.zero;
+                setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+                setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
             }
         }
     }
