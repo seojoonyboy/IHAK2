@@ -7,13 +7,16 @@ using System;
 
 [RequireComponent(typeof(ConstructManager))]
 public class BuildingImages : MonoBehaviour {
-    [SerializeField] Sprite[] 
+    [SerializeField]
+    Sprite[]
         product_images,
         product_icons,
         military_images,
         military_icons,
         special_images,
-        special_icons;
+        special_icons,
+        total_images,
+        total_icons;
 
     private Dictionary<int, Sprite> images;
 

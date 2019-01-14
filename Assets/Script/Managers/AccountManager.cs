@@ -117,6 +117,7 @@ public class AccountManager : Singleton<AccountManager> {
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/6236213/decks");
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
+        
     }
 
     private void OnMyDeckReqCallback(HttpResponse response) {
@@ -129,7 +130,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
-        }
+        }        
     }
 
     private void OnUserReqCallback(HttpResponse response) {
@@ -148,6 +149,27 @@ public class AccountManager : Singleton<AccountManager> {
             Debug.Log("알 수 없는 Server 오류");
         }
     }
+
+
+    public void SetTileObject() {
+        if (decks == null)
+            return;
+
+        ConstructManager cm = ConstructManager.Instance;
+        GameObject constructManager = cm.transform.gameObject;
+        Debug.Log(constructManager.name);
+        Debug.Log(decks.Count);
+
+
+        for (int i = 0; i < decks.Count; i++) {            
+            for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
+                GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
+                transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
+                setBuild.transform.position = Vector2.zero;
+            }
+        }
+    }
+
 
     public enum Name {
         위니,
