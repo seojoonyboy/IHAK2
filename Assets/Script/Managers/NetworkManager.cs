@@ -94,7 +94,12 @@ public class HttpResponse {
         responseCode = _request.responseCode;
         isError = _request.isNetworkError;
         errorMessage = _request.error;
-        data = _request.downloadHandler.text;
+        if(_request.downloadHandler == null) {
+            data = null;
+        }
+        else {
+            data = _request.downloadHandler.text;
+        }
         header = _request.GetResponseHeader("Link");
     }
 }

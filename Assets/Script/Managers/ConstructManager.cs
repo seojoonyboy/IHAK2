@@ -80,7 +80,7 @@ public class ConstructManager : Singleton<ConstructManager> {
             buildings["prod"] = products;
             buildings["military"] = militaries;
             buildings["special"] = specials;
-            AccountManager.Instance.SetTileObject();
+            AccountManager.Instance.SetTileObjects();
         }
     }
 }

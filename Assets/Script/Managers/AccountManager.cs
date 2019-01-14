@@ -23,6 +23,7 @@ public class AccountManager : Singleton<AccountManager> {
     private Wallet wallet;
 
     private StringBuilder sb = new StringBuilder();
+    private int selId = -1;
 
     [SerializeField]
     public List<int> selectDeck;
@@ -89,16 +90,22 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void RemoveDeck(int id) {
-        Deck deck = decks.Find(x => x.id == id);
+        selId = id;
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(id);
+        _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+    }
+
+    private void RemoveComplete(HttpResponse response) {
+        if (response.responseCode != 200 || selId == -1) return;
+        Deck deck = decks.Find(x => x.id == selId);
+        if (deck == null) return;
         decks.Remove(deck);
-        //if (deck.isLeader) {
-        //    decks.Remove(deck);
-        //    if (decks.Count > 0)
-        //        decks[0].isLeader = true;
-        //}
-        //else {
-        //    decks.Remove(deck);
-        //}
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
     public void AddDeck(Deck deck) {
@@ -177,21 +184,27 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
 
-    public void SetTileObject() {
+    public void SetTileObjects() {
         if (decks == null)
             return;
 
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
-        Debug.Log(constructManager.name);
-        Debug.Log(decks.Count);
-
 
         for (int i = 0; i < decks.Count; i++) {            
             for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
                 GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
                 transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                 setBuild.transform.position = Vector2.zero;
+            }
+        }
+    }
+
+    public void RemoveTileObjects(int num) {
+        Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
+        foreach(Transform tile in targetTileGroup) {
+            foreach(Transform data in tile) {
+                Destroy(data.gameObject);
             }
         }
     }
