@@ -49,8 +49,8 @@ public class AccountManager : Singleton<AccountManager> {
         //ReqUserInfo();
     }
     private void Start() {
-        //deviceID = SystemInfo.deviceUniqueIdentifier;
-        deviceID = "12341234";
+        deviceID = SystemInfo.deviceUniqueIdentifier;
+        //deviceID = "12341234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
     }
