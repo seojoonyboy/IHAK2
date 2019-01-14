@@ -26,13 +26,10 @@ public class DeckListController : MonoBehaviour {
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
-    }
-
-    private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
         Initialize();
     }
 
-    void OnEnable() {
+    private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
         Initialize();
     }
 
@@ -47,6 +44,7 @@ public class DeckListController : MonoBehaviour {
         items = new List<GameObject>();
 
         for (int i = 0; i < decks.Count; i++) {
+            if (slots[i] == null) break;
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
@@ -75,12 +73,14 @@ public class DeckListController : MonoBehaviour {
             newItem.transform.Find("ModifyBtn").GetComponent<Button>().onClick
                 .AsObservable()
                 .Subscribe(_ => {
-                    moveToDeckSetting(decks[id]);
-                    AccountManager.Instance.selectNumber = newItem.transform.GetSiblingIndex();
+                    moveToDeckSetting(decks.Find(x => x.id == id));
+                    AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
+                    //Debug.Log(newItem.transform.parent.GetComponent<Index>().Id);
                 });
             items.Add(newItem);
         }
         for (int i = decks.Count; i < slots.Length; i++) {
+            if (slots[i] == null) break;
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
@@ -93,13 +93,14 @@ public class DeckListController : MonoBehaviour {
 
     private void Clear() {
         foreach (GameObject slot in slots) {
+            if (slot == null) break;
             foreach (Transform tf in slot.transform) {
                 Destroy(tf.gameObject);
             }
         }
     }
 
-    public void moveToDeckSetting(Deck building = null) {        
+    public void moveToDeckSetting(Deck building = null) {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
         DeckSettingController.prevData = building;

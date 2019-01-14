@@ -42,12 +42,12 @@ public class AccountManager : Singleton<AccountManager> {
 
     private StringBuilder sb = new StringBuilder();
     private int selId = -1;
+    //새로운 덱의 생성정보를 담는 임시 변수 (수정 예정)
+    private Deck tmpData = null;
 
     [SerializeField]
     public List<int> selectDeck;
     public int selectNumber;
-
-    
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -124,14 +124,28 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void AddDeck(Deck deck) {
-        if (decks.Count != 0) {
-            int maxId = decks.Max(x => x.id);
-            deck.id = maxId + 1;
-        }
-        else {
-            deck.id = 0;
-        }
-        decks.Add(deck);
+        DeckPostForm form = new DeckPostForm();
+        form.deviceId = DEVICEID;
+        form.Name = deck.name;
+        form.Race = "primal";
+        form.IsRepresent = false;
+        form.CoordsSerial = deck.coordsSerial;
+        var dataPack = JsonConvert.SerializeObject(form);
+
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks");
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
+
+        tmpData = deck;
+    }
+
+    private void AddDeckCallback(HttpResponse response) {
+        if (response.responseCode != 200 || tmpData == null) return;
+        decks.Add(tmpData);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
     public Deck FindDeck(int id) {
