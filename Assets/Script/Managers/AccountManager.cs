@@ -12,6 +12,7 @@ public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
     private NetworkManager _networkManager;
     public GameObject deckGroup;
+    private string deviceID;
 
     public List<Deck> decks = new List<Deck>();
 
@@ -41,10 +42,14 @@ public class AccountManager : Singleton<AccountManager> {
         //ReqUserInfo();
     }
     private void Start() {
+        deviceID = SystemInfo.deviceUniqueIdentifier;
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
     }
 
+    public string DEVICEID {
+        get { return deviceID; }
+    }
 
     public void ReqUserInfo() {
         sb.Remove(0, sb.Length);
@@ -122,7 +127,6 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void GetUserInfo() {
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + deviceID);
@@ -137,11 +141,11 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     private void OnMyDeckReqCallback(HttpResponse response) {
-        if(response.responseCode == 200) {
+        if (response.responseCode == 200) {
             decks = JsonReader.Read(response.data.ToString(), new Deck());
             Deck deck = decks.FirstOrDefault();
         }
-        else if(response.responseCode == 404) {
+        else if (response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
         }
         else {
@@ -151,8 +155,10 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void OnUserReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
-            decks = JsonReader.Read(response.data.ToString(), new Deck());
-            Deck deck = decks.FirstOrDefault();
+            Modal.instantiate("로그인 되었습니다.", Modal.Type.CHECK, () => {
+                LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
+                lgc.startButton();
+            });
         }
         else if (response.responseCode == 404) {
             Debug.Log("저장되지 않은 계정");
