@@ -27,19 +27,27 @@ public class MenuSceneController : MonoBehaviour {
     private Windows openedWindow;
     private static int pageNum = 1;
 
+    MenuSceneEventHandler eventHandler;
+
     private void Awake() {
-        
+        eventHandler = MenuSceneEventHandler.Instance;
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
+    }
+
+    private void OnSetTileCompleted(Enum Event_Type, Component Sender, object Param) {
+        if(leaderDeck == null) return;
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        go.SetActive(true);
+        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
+        go.SetActive(false);
     }
 
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
         hss = FindObjectOfType<HorizontalScrollSnap>();
-        userNickname.text = AccountManager.Instance.userInfos.nickname;        
-        GameObject go  = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
-        go.SetActive(true);
-        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
-        go.SetActive(false);
+        userNickname.text = AccountManager.Instance.userInfos.nickname;
         clickMenuButton(pageNum);
     }
 
