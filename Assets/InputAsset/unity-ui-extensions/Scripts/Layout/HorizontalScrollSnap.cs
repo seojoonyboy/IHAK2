@@ -74,7 +74,11 @@ namespace UnityEngine.UI.Extensions
             int _offset = 0;
             float _dimension = 0;
             float currentXPosition = 0;
-            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 3 : PageStep);
+
+
+            //지정한 spread만큼 패널의 넓이의 스크롤 공간 좌우로 확장
+            int spread = 1;
+            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? spread : PageStep);
 
 
             for (int i = 0; i < _screensContainer.transform.childCount; i++)
