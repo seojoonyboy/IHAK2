@@ -38,6 +38,7 @@ public class AccountManager : Singleton<AccountManager> {
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
 
+
     private Wallet wallet;
 
     private StringBuilder sb = new StringBuilder();
@@ -203,15 +204,15 @@ public class AccountManager : Singleton<AccountManager> {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + DEVICEID + "/decks");
-        Debug.Log(DEVICEID);
         _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
-        
     }
 
     private void OnMyDeckReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             decks = JsonReader.Read(response.data.ToString(), new Deck());
             Deck deck = decks.FirstOrDefault();
+
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
         }
         else if (response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
@@ -227,6 +228,8 @@ public class AccountManager : Singleton<AccountManager> {
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
+
+                ConstructManager.Instance.SetAllBuildings();
                 SetTileObjects();
             });
         }
@@ -283,6 +286,8 @@ public class AccountManager : Singleton<AccountManager> {
         url.Append(_networkManager.baseUrl)
             .Append("api/users");
         _networkManager.request("PUT", url.ToString(), json, ReqUserInfoCallback, false);
+
+        ConstructManager.Instance.SetAllBuildings();
     }
 
     
