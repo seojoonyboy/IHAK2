@@ -28,7 +28,6 @@ public class DeckListController : MonoBehaviour {
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
-        Initialize();
     }
 
     private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
@@ -45,8 +44,9 @@ public class DeckListController : MonoBehaviour {
 
         items = new List<GameObject>();
 
-        for (int i = 0; i < decks.Count; i++) {
-            if (slots[i] == null) break;
+        for (int i = 0; i < slots.Length; i++) {
+            if (slots[i] == null || decks.Count == 0 || decks.Count - 1 < i) break;
+            Debug.Log(i);
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
@@ -87,7 +87,7 @@ public class DeckListController : MonoBehaviour {
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
                 //AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
-                AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
+                AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
                 moveToDeckSetting();
             });
         }
