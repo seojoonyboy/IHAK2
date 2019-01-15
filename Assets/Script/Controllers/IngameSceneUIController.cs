@@ -5,26 +5,23 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class IngameSceneUIController : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
 
-    [SerializeField] Transform territoryList;
-    [SerializeField] Transform camera;
+    [SerializeField] GameObject commandBar;
+    [SerializeField] Transform commandBarPos;
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
 
-    private float mousDownPosition;
+    private HorizontalScrollSnap hss;
 
     // Use this for initialization
     void Start() {
         playerName.text = AccountManager.Instance.userInfos.nickname;
-        var downStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonDown(0)).Select(_ => mousDownPosition = Input.mousePosition.x);
-        var upStream = this.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0)).Select(_ => Input.mousePosition.x);
-        var dragStream = this.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(450)).Subscribe(_ => SwitchTerritory(true));
-        dragStream.Where(_ => mousDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(450)).Subscribe(_ => SwitchTerritory(false));
+        hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
@@ -32,14 +29,11 @@ public class IngameSceneUIController : MonoBehaviour {
     }
 
 
-    void SwitchTerritory(bool left) {
-        if (left && territoryList.localPosition.x < -1080) {
-            iTween.MoveTo(territoryList.gameObject, iTween.Hash("x", territoryList.position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
-        }
-        else if (!left && territoryList.localPosition.x > -1) {
-            iTween.MoveTo(territoryList.gameObject, iTween.Hash("x", territoryList.position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
-        }
-
+    public void SwitchCommand() {
+        if(hss.CurrentPage != 0)
+            iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(1).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        else
+            iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(0).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
     }
 
     public void ClickOption() {

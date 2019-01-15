@@ -19,17 +19,12 @@ public class MenuSceneController : MonoBehaviour {
 
     [SerializeField] Transform buttonSelect;
     [SerializeField] Transform buttonList;
-    [SerializeField] Transform windowList;
     [SerializeField] GameObject switchButtons;
-    [SerializeField] Sprite selectedButton;
-    [SerializeField] Sprite unSelectecButton;
     [SerializeField] Text userNickname;
     [SerializeField] GameObject leaderDeck;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
-    private float mousDownPosition;
-    private int selectedPosition;
     private static int pageNum = 1;
 
     private void Awake() {
@@ -39,7 +34,6 @@ public class MenuSceneController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
-        selectedPosition = 1;
         hss = FindObjectOfType<HorizontalScrollSnap>();
         userNickname.text = AccountManager.Instance.userInfos.nickname;        
         GameObject go  = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
