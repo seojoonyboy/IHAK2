@@ -755,7 +755,7 @@ SpriteRenderer:
   m_Size: {x: 2.7, y: 2.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &241497938
@@ -941,7 +941,7 @@ MonoBehaviour:
   PrevButton: {fileID: 0}
   NextButton: {fileID: 0}
   transitionSpeed: 15000
-  UseFastSwipe: 1
+  UseFastSwipe: 0
   FastSwipeThreshold: 5
   SwipeVelocityThreshold: 10000
   MaskArea: {fileID: 0}
