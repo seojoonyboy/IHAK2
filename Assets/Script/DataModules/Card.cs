@@ -10,7 +10,7 @@ namespace DataModules {
 
     [System.Serializable]
     public class Card {
-        public int id;
+        public string id;
         public string race;
         public string name;
         public string type;

@@ -9,75 +9,40 @@ using System;
 public class BuildingImages : MonoBehaviour {
     [SerializeField]
     public Sprite[]
-        product_images,
-        product_icons,
-        military_images,
-        military_icons,
-        special_images,
-        special_icons,
-        total_images,
-        total_icons;
+        buildingImages,
+        buildingIcons;
 
-    private Dictionary<int, Sprite> images;
-
-    /// <summary>
-    /// Image를 카드의 Id값에 Mapping
-    /// </summary>
+    public Sprite 
+        defaultImage,
+        defaultIcon;
+    
     public void SetImages() {
-        images = new Dictionary<int, Sprite>();
         ConstructManager dataManager = GetComponent<ConstructManager>();
-        string[] categories = new string[] { "prod", "military", "special" };
-        foreach(string category in categories) {
-            var lists = dataManager.GetBuildingObjects(category);
-            for (int i = 0; i < lists.Count; i++) {
-                BuildingObject buildingObject = lists[i].GetComponent<BuildingObject>();
-                Card card = buildingObject.data.card;
-                switch (category) {
-                    case "military":
-                        try {
-                            images[card.id] = military_images[i];
-                            buildingObject.mainSprite = images[card.id];
-                            buildingObject.icon = military_icons[i];
-                        }
-                        catch (System.IndexOutOfRangeException e) {
-                            images[card.id] = military_images[0];
-                            buildingObject.mainSprite = images[0];
-                            buildingObject.icon = military_icons[0];
-                        }
-                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
-                        break;
-                    case "prod":
-                        try {
-                            images[card.id] = product_images[i];
-                            buildingObject.mainSprite = images[card.id];
-                            buildingObject.icon = product_icons[i];
-                        }
-                        catch (System.IndexOutOfRangeException e) {
-                            images[card.id] = product_images[0];
-                            buildingObject.mainSprite = images[0];
-                            buildingObject.icon = product_icons[0];
-                        }
-                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
-                        break;
-                    case "special":
-                        try {
-                            images[card.id] = special_images[i];
-                            buildingObject.mainSprite = images[card.id];
-                            buildingObject.icon = special_icons[i];
-                        }
-                        catch (System.IndexOutOfRangeException e) {
-                            images[card.id] = special_images[0];
-                            buildingObject.mainSprite = images[0];
-                            buildingObject.icon = special_icons[0];
-                        }
-                        lists[i].GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
-                        break;
-                }
-            }
+        var lists = dataManager.GetBuildingObjects();
+        foreach(GameObject obj in lists) {
+            BuildingObject bo = obj.GetComponent<BuildingObject>();
+            bo.mainSprite = GetImage(bo.data.card.id);
+            bo.icon = GetIcon(bo.data.card.id);
+
+            obj.GetComponent<SpriteRenderer>().sprite = bo.mainSprite;
         }
     }
 
-    public Sprite GetImage(int id) {
-        return images[id];
+    public Sprite GetImage(string id) {
+        foreach(Sprite sprite in buildingImages) {
+            if(sprite.name == id) {
+                return sprite;
+            }
+        }
+        return defaultImage;
+    }
+
+    public Sprite GetIcon(string id) {
+        foreach(Sprite sprite in buildingIcons) {
+            if (sprite.name == id) {
+                return sprite;
+            }
+        }
+        return defaultImage;
     }
 }
