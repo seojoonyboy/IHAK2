@@ -45,11 +45,11 @@ public class MenuSceneController : MonoBehaviour {
 
     public void switchButton() {
         iTween.MoveTo(buttonSelect.GetChild(1).gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        pageNum = hss.CurrentPage;
     }
 
     public void clickMenuButton(int page) {
         hss.GoToScreen(page);
-        pageNum = page;
         switchButton();
     }
 }
