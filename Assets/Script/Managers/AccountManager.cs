@@ -227,6 +227,8 @@ public class AccountManager : Singleton<AccountManager> {
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
+
+                ConstructManager.Instance.SetAllBuildings();
             });
         }
         else if (response.responseCode == 404) {
@@ -275,6 +277,8 @@ public class AccountManager : Singleton<AccountManager> {
         url.Append(_networkManager.baseUrl)
             .Append("api/users");
         _networkManager.request("PUT", url.ToString(), json, ReqUserInfoCallback, false);
+
+        ConstructManager.Instance.SetAllBuildings();
     }
 
     public enum Name {
