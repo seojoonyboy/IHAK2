@@ -263,7 +263,7 @@ public class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
-        
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
 
     public void RemoveTileObjects(int num) {
