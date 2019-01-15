@@ -17,6 +17,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
 
+    [SerializeField] Transform buttonSelect;
     [SerializeField] Transform buttonList;
     [SerializeField] Transform windowList;
     [SerializeField] GameObject switchButtons;
@@ -29,7 +30,7 @@ public class MenuSceneController : MonoBehaviour {
     private Windows openedWindow;
     private float mousDownPosition;
     private int selectedPosition;
-    private Vector3[] buttonPos = { new Vector3(-360, 0, 0), new Vector3(0, 0, 0), new Vector3(360, 0, 0) };
+    private static int pageNum = 1;
 
     private void Awake() {
         
@@ -45,14 +46,16 @@ public class MenuSceneController : MonoBehaviour {
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
         go.SetActive(false);
+        clickMenuButton(pageNum);
     }
 
     public void switchButton() {
-        iTween.MoveTo(buttonList.GetChild(1).gameObject, iTween.Hash("x", buttonPos[hss.CurrentPage].x, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        iTween.MoveTo(buttonSelect.GetChild(1).gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
     }
 
     public void clickMenuButton(int page) {
         hss.GoToScreen(page);
+        pageNum = page;
         switchButton();
     }
 }

@@ -38,6 +38,7 @@ public class AccountManager : Singleton<AccountManager> {
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
 
+
     private Wallet wallet;
 
     private StringBuilder sb = new StringBuilder();
