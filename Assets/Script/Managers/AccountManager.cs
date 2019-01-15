@@ -211,8 +211,8 @@ public class AccountManager : Singleton<AccountManager> {
         if (response.responseCode == 200) {
             decks = JsonReader.Read(response.data.ToString(), new Deck());
             Deck deck = decks.FirstOrDefault();
-
             MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+            SetTileObjects();
         }
         else if (response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
@@ -228,9 +228,7 @@ public class AccountManager : Singleton<AccountManager> {
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
-
-                ConstructManager.Instance.SetAllBuildings();
-                SetTileObjects();
+                ConstructManager.Instance.SetAllBuildings();                
             });
         }
         else if (response.responseCode == 404) {
