@@ -46,7 +46,6 @@ public class DeckListController : MonoBehaviour {
 
         for (int i = 0; i < slots.Length; i++) {
             if (slots[i] == null || decks.Count == 0 || decks.Count - 1 < i) break;
-            Debug.Log(i);
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
