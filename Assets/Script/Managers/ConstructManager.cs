@@ -18,11 +18,6 @@ public class ConstructManager : Singleton<ConstructManager> {
         _networkManager = NetworkManager.Instance;
     }
 
-    private void Start() {
-        SetAllBuildings();
-        AccountManager.Instance.GetMyDecks();
-    }
-
     public GameObject GetBuildingObject(string type, int id) {
         List<GameObject> sectedCategoryBuildings = buildings[type];
         if (sectedCategoryBuildings == null) return null;
@@ -48,12 +43,13 @@ public class ConstructManager : Singleton<ConstructManager> {
         return result;
     }
 
-    private void SetAllBuildings() {
+    public void SetAllBuildings() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl);
         url.Append("api/users/deviceid/")
             .Append(AccountManager.Instance.DEVICEID)
             .Append("/cardsinventory");
+        Debug.Log(url.ToString());
         _networkManager.request("GET", url.ToString(), OnSetAllBuildingsCallback, false);
     }
 

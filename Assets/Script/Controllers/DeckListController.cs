@@ -23,6 +23,8 @@ public class DeckListController : MonoBehaviour {
     public GameObject temp;
 
     void Start() {
+        AccountManager.Instance.GetMyDecks();
+
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
