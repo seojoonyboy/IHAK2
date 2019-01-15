@@ -1794,7 +1794,7 @@ MonoBehaviour:
   PrevButton: {fileID: 0}
   NextButton: {fileID: 0}
   transitionSpeed: 7500
-  UseFastSwipe: 1
+  UseFastSwipe: 0
   FastSwipeThreshold: 5
   SwipeVelocityThreshold: 10000
   MaskArea: {fileID: 0}
@@ -3954,10 +3954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSelect: {fileID: 1210229599}
   buttonList: {fileID: 1774911722}
-  windowList: {fileID: 693657039}
   switchButtons: {fileID: 1263145096}
-  selectedButton: {fileID: 21300058, guid: a7e318c53ffe2f247af7081d21052057, type: 3}
-  unSelectecButton: {fileID: 21300056, guid: a7e318c53ffe2f247af7081d21052057, type: 3}
   userNickname: {fileID: 1598393294}
   leaderDeck: {fileID: 1653077301}
 --- !u!1 &1849317692
