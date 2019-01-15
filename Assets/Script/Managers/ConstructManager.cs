@@ -18,18 +18,6 @@ public class ConstructManager : Singleton<ConstructManager> {
         _networkManager = NetworkManager.Instance;
     }
 
-    public GameObject GetBuildingObject(string type, int id) {
-        List<GameObject> sectedCategoryBuildings = buildings[type];
-        if (sectedCategoryBuildings == null) return null;
-        foreach(GameObject obj in sectedCategoryBuildings) {
-            Card card = obj.GetComponent<BuildingObject>().data.card;
-            if(card.id == id) {
-                return obj;
-            }
-        }
-        return null;
-    }
-
     public List<GameObject> GetBuildingObjects(string type) {
         return buildings[type];
     }
@@ -77,15 +65,9 @@ public class ConstructManager : Singleton<ConstructManager> {
 
             buildings["prod"] = products;
             buildings["military"] = militaries;
-            buildings["special"] = specials;            
-            SetSprite();
-        }
-    }
+            buildings["special"] = specials;
 
-    public void SetSprite() {
-        for(int i = 0; i<transform.GetChild(0).childCount; i++) {
-            transform.GetChild(0).GetChild(i).GetComponent<BuildingObject>().icon = GetComponent<BuildingImages>().total_icons[i];
-            transform.GetChild(0).GetChild(i).GetComponent<BuildingObject>().mainSprite = GetComponent<BuildingImages>().total_images[i];
+            GetComponent<BuildingImages>().SetImages();
         }
     }
 }
