@@ -941,7 +941,7 @@ MonoBehaviour:
   PrevButton: {fileID: 0}
   NextButton: {fileID: 0}
   transitionSpeed: 15000
-  UseFastSwipe: 0
+  UseFastSwipe: 1
   FastSwipeThreshold: 5
   SwipeVelocityThreshold: 10000
   MaskArea: {fileID: 0}
@@ -3348,7 +3348,7 @@ MonoBehaviour:
   commandBar: {fileID: 1723423577}
   commandBarPos: {fileID: 277951}
   playerName: {fileID: 1683901745}
-  playerCity: {fileID: 0}
+  playerCity: {fileID: 364303838}
 --- !u!114 &807158599
 MonoBehaviour:
   m_ObjectHideFlags: 0
