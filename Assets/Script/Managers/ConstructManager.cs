@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using DataModules;
 using UnityEngine.UI;
 using System.Text;
@@ -56,6 +57,7 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.transform.SetParent(transform.Find("BuildingObjects").transform);
                 BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
                 obj.AddComponent<SpriteRenderer>();
+                //obj.AddComponent<SortingGroup>();
                 buildingObject.data = item;
 
                 if (item.card.type == "prod") products.Add(obj);

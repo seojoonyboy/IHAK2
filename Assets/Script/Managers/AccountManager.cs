@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using DataModules;
 using System.Linq;
@@ -260,6 +261,7 @@ public class AccountManager : Singleton<AccountManager> {
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
                     setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.AddComponent<LayoutGroup>();
                 }
             }
         }
