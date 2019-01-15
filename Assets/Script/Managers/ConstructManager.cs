@@ -81,8 +81,7 @@ public class ConstructManager : Singleton<ConstructManager> {
 
             buildings["prod"] = products;
             buildings["military"] = militaries;
-            buildings["special"] = specials;
-            AccountManager.Instance.SetTileObjects();
+            buildings["special"] = specials;            
             SetSprite();
         }
     }

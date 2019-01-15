@@ -227,6 +227,7 @@ public class AccountManager : Singleton<AccountManager> {
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
+                SetTileObjects();
             });
         }
         else if (response.responseCode == 404) {
@@ -246,15 +247,22 @@ public class AccountManager : Singleton<AccountManager> {
 
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
+        GameObject targetBuilding;
 
-        //for (int i = 0; i < decks.Count; i++) {
-        //    for(int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
-        //        GameObject setBuild = Instantiate(constructManager.transform.GetChild(0).GetChild(decks[i].coordsSerial[j]).gameObject, transform.GetChild(0).GetChild(i).GetChild(j));
-        //        transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
-        //        setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
-        //        setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-        //    }
-        //}
+
+        for (int i = 0; i < decks.Count; i++) {
+            for (int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
+                targetBuilding = FindBuildingWithID(decks[i].coordsSerial[j]);
+                if (targetBuilding != null) {
+                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
+                    transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                }
+            }
+        }
+        
     }
 
     public void RemoveTileObjects(int num) {
@@ -277,6 +285,22 @@ public class AccountManager : Singleton<AccountManager> {
         _networkManager.request("PUT", url.ToString(), json, ReqUserInfoCallback, false);
     }
 
+    
+    
+    public GameObject FindBuildingWithID(int ID) {
+
+        GameObject buildingGroup = FindObjectOfType<ConstructManager>().transform.GetChild(0).gameObject;
+        GameObject targetBuilding;       
+
+        for (int i = 0; i < buildingGroup.transform.childCount; i++)  {
+            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().data.id == ID)  {
+                targetBuilding = buildingGroup.transform.GetChild(i).gameObject;
+                return targetBuilding;
+             }
+        }
+        return null;        
+    }
+    
     public enum Name {
         위니,
         미드레인지,
