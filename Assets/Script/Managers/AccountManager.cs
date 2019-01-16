@@ -260,7 +260,7 @@ public class AccountManager : Singleton<AccountManager> {
                     transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount*2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
                 }
             }
