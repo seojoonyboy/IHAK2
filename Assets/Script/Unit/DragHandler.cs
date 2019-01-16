@@ -37,13 +37,21 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     }
 
     public void OnEndDrag() {
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = new Vector3(0, 14, 0);
         transform.localScale = startScale;
-        GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
 
+        Canvas.ForceUpdateCanvases();
+        var glg = transform.parent.GetComponent<GridLayoutGroup>();
+        glg.CalculateLayoutInputHorizontal();
+        glg.CalculateLayoutInputVertical();
+        glg.SetLayoutHorizontal();
+        glg.SetLayoutVertical();
         canDrag = false;
         dropHandler.OnDrop();
+
+        GetComponent<Image>().enabled = true;
+        transform.Find("Name").GetComponent<Text>().enabled = true;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -55,11 +63,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         if (hit.collider != null) {
             GameObject tile = hit.transform.gameObject;
             transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
-            transform.position = cam.WorldToScreenPoint(tile.transform.position);            
-            GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().mainSprite;
+            transform.position = cam.WorldToScreenPoint(tile.transform.position);
+
+            GetComponent<Image>().enabled = false;
+            transform.Find("Name").GetComponent<Text>().enabled = false;
         }
         else {
-            GetComponent<Image>().sprite = setObject.GetComponent<BuildingObject>().icon;
             transform.position = Input.mousePosition;
             transform.localScale = startScale;
         }

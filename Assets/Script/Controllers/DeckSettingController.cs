@@ -31,6 +31,9 @@ public class DeckSettingController : MonoBehaviour {
         modalHeader,
         content;
 
+    [Header("UISlider")]
+    public Slider[] sliders;
+
     private int speciesId = 0;
     public int SpeciesId {
         get {
@@ -78,10 +81,6 @@ public class DeckSettingController : MonoBehaviour {
             Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
         });
         InitToggles();
-        if (prevData != null) {
-            Debug.Log("Deck 수정 버튼을 통한 접근");
-            InitPrevData();
-        }
     }
 
     private void InitToggles() {
@@ -103,10 +102,6 @@ public class DeckSettingController : MonoBehaviour {
         }
         AddPrepareToggle(1);
         AddPrepareToggle(2);
-    }
-
-    private void InitPrevData() {
-
     }
 
     /// <summary>
@@ -136,7 +131,12 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void settingButton() {
-        Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", Modal.Type.INSERT, Callback);
+        if (prevData == null) {
+            Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, Callback);
+        }
+        else {
+            Modal.instantiate("덱 이름 설정", null, prevData.name, Modal.Type.INSERT, Callback);
+        }
     }
 
     private void Callback(string inputText) {
@@ -187,9 +187,7 @@ public class DeckSettingController : MonoBehaviour {
             else
                 tileSetList.Add(0);
         }
-
     }
-
 
     public void resetTile() {
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
@@ -202,7 +200,6 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void PickEditBuilding() {
-
         if (cam == null)
             return;
 
@@ -256,14 +253,11 @@ public class DeckSettingController : MonoBehaviour {
             targetTile = null;
             selectBuilding.transform.position = mousePosition;
         }
-            
     }
 
     public void DropEditBuilding() {
         if (selectBuilding == null)
             return;
-
-
         if(targetTile != null) {
             if (targetTile.GetComponent<TileObject>().buildingSet == false) {
                 Vector3 position = targetTile.transform.position;
@@ -281,10 +275,31 @@ public class DeckSettingController : MonoBehaviour {
         else {
             selectBuilding.transform.position = startEditPosition;
         }
-
-
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
+    }
+
+    public int ChangeSliderValue(int value = 0, string type = null) {
+        Slider slider = null;
+        switch (type) {
+            case "Eco":
+                slider = sliders[0];
+                break;
+            case "Industry":
+                slider = sliders[4];
+                break;
+            case "Shield":
+                slider = sliders[2];
+                break;
+            case "Farm":
+                slider = sliders[1];
+                break;
+        }
+        if (slider != null) {
+            slider.value += value;
+            return (int)slider.value;
+        }
+        return 0;
     }
 }

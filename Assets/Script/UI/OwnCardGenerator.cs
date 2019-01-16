@@ -11,9 +11,12 @@ public class OwnCardGenerator : MonoBehaviour {
         slotObject,
         detailModal;
 
+    [Header("UI")]
+    public Sprite[] cardPanels;
+
     List<GameObject> buildings;
 
-    private const int NUM_PER_PAGE = 14;
+    private const int NUM_PER_PAGE = 8;
     // Use this for initialization
     void Start () {
         constructManager = ConstructManager.Instance;
@@ -26,7 +29,7 @@ public class OwnCardGenerator : MonoBehaviour {
     private void SetPage(int totalNum, int numPerPage) {
         for(int i=0; i<totalNum/numPerPage + 1; i++) {
             GameObject setPage = Instantiate(pageObject, transform);
-            setPage.transform.localPosition += new Vector3(i * Screen.width, -36f);
+            setPage.transform.localPosition += new Vector3(i * Screen.width, 0);
         }
     }
 
@@ -36,12 +39,12 @@ public class OwnCardGenerator : MonoBehaviour {
         for (int i = 0; i < constructManager.GetBuildingObjects().Count; i++) {
             if (i != 0 && i % NUM_PER_PAGE == 0)
                 page++;
-             
-            
             GameObject slotData = Instantiate(slotObject, transform.GetChild(page));
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
-            slotData.GetComponentInChildren<Image>().sprite = buildings[i].GetComponent<BuildingObject>().icon;
+            BuildingObject info = buildings[i].GetComponent<BuildingObject>();
 
+            slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
+            slotData.transform.Find("Name").GetComponent<Text>().text = info.name;
             slotData.GetComponentInChildren<LongClickButton>().onShortClick.AddListener(() => ShowDetail(buildingObject.GetComponent<BuildingObject>()));
         }
     }
