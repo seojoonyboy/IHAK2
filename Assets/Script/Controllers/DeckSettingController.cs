@@ -82,13 +82,10 @@ public class DeckSettingController : MonoBehaviour {
             Debug.Log("Deck 수정 버튼을 통한 접근");
             InitPrevData();
         }
-
-
-
     }
 
     private void InitToggles() {
-        int length = Enum.GetValues(typeof(Species.Type)).Length;
+        int length = 1;
         for(int i=0; i<length; i++) {
             ToggleGroup toggleGroup = modal.transform.Find("InnerModal/Body/DataArea/ToggleGroup").GetComponent<ToggleGroup>();
             GameObject pref = Instantiate(togglePref, toggleGroup.transform);
@@ -105,6 +102,7 @@ public class DeckSettingController : MonoBehaviour {
             image.sprite = speciesPortraits[i];
         }
         AddPrepareToggle(1);
+        AddPrepareToggle(2);
     }
 
     private void InitPrevData() {
@@ -153,17 +151,9 @@ public class DeckSettingController : MonoBehaviour {
             playerInfosManager.AddDeck(deck);
         }
         else {
-            //for (int i = 0; i < tileSetList.Count; i++)
-            //    playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i] = tileSetList[i];
             deck.id = prevData.id;
             playerInfosManager.ModifyDeck(deck);
-            //playerInfosManager.decks[playerInfosManager.selectNumber].name = inputText;
         }
-
-        /*
-        GameObject go = GameObject.Find("TileGroup(Clone)");
-        PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
-        */
         prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
@@ -173,24 +163,9 @@ public class DeckSettingController : MonoBehaviour {
         prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
-
-        //UnityEditor.PrefabUtility.CreatePrefab()
     }
 
     public void TilebuildingList() {
-        /*
-        if (playerInfosManager.decks[playerInfosManager.selectNumber] == null) {
-            for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                tileSetList.Add(0);
-            }
-        }
-        else if(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial != null) {
-            for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                tileSetList.Add(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i]);
-            }
-        }
-        */
-
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
@@ -291,5 +266,4 @@ public class DeckSettingController : MonoBehaviour {
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
     }
-
 }
