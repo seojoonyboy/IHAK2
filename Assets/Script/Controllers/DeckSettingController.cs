@@ -129,14 +129,17 @@ public class DeckSettingController : MonoBehaviour {
         deck.race = ((Species.Type)speciesId).ToString();
         deck.name = inputText;
         deck.coordsSerial = new int[tileSetList.Count + 1];
-        for (int i = 0; i < tileSetList.Count; i++)
+        for (int i = 0; i < tileSetList.Count; i++) {
             deck.coordsSerial[i] = tileSetList[i];
-
+            if (tileGroup.transform.GetChild(i).childCount != 0)
+                tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation = tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum;
+        }
         if (prevData == null) {
             playerInfosManager.AddDeck(deck);
         }
         else {
             deck.id = prevData.id;
+            playerInfosManager.decks[playerInfosManager.selectNumber] = deck;
             playerInfosManager.ModifyDeck(deck);
         }
         prevData = null;
@@ -146,6 +149,19 @@ public class DeckSettingController : MonoBehaviour {
 
     public void returnButton() {
         prevData = null;
+
+        for(int i = 0; i < tileGroup.transform.childCount; i++) {
+            if (tileGroup.transform.GetChild(i).childCount != 0) {
+                GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
+                if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
+                    building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                    building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
+                    building.transform.position = building.transform.parent.position;
+                    building.transform.parent.GetComponent<TileObject>().buildingSet = true;
+                }
+            }
+        }
+       // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
@@ -229,12 +245,18 @@ public class DeckSettingController : MonoBehaviour {
         if (selectBuilding == null)
             return;
         if(targetTile != null) {
-            Vector3 position = targetTile.transform.position;
-            position.z = 0;
-            tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
-            tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
-            selectBuilding.transform.SetParent(targetTile.transform);
-            selectBuilding.transform.position = position;
+            if (targetTile.GetComponent<TileObject>().buildingSet == false) {
+                Vector3 position = targetTile.transform.position;
+                position.z = 0;
+                tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
+                selectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+                selectBuilding.transform.SetParent(targetTile.transform);
+                selectBuilding.transform.position = position;
+                targetTile.GetComponent<TileObject>().buildingSet = true;
+            }
+            else
+                selectBuilding.transform.position = startEditPosition;
         }
         else {
             selectBuilding.transform.position = startEditPosition;
