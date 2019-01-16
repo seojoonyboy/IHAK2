@@ -154,6 +154,7 @@ public class DeckSettingController : MonoBehaviour {
         }
         else {
             deck.id = prevData.id;
+            playerInfosManager.decks[playerInfosManager.selectNumber] = deck;
             playerInfosManager.ModifyDeck(deck);
         }
         prevData = null;
