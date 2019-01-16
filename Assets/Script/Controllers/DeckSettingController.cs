@@ -144,17 +144,9 @@ public class DeckSettingController : MonoBehaviour {
             playerInfosManager.AddDeck(deck);
         }
         else {
-            //for (int i = 0; i < tileSetList.Count; i++)
-            //    playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i] = tileSetList[i];
             deck.id = prevData.id;
             playerInfosManager.ModifyDeck(deck);
-            //playerInfosManager.decks[playerInfosManager.selectNumber].name = inputText;
         }
-
-        /*
-        GameObject go = GameObject.Find("TileGroup(Clone)");
-        PrefabUtility.CreatePrefab("Assets/Resources/Prefabs/LeaderDeck.prefab", go);
-        */
         prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
@@ -164,24 +156,9 @@ public class DeckSettingController : MonoBehaviour {
         prevData = null;
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
-
-        //UnityEditor.PrefabUtility.CreatePrefab()
     }
 
     public void TilebuildingList() {
-        /*
-        if (playerInfosManager.decks[playerInfosManager.selectNumber] == null) {
-            for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                tileSetList.Add(0);
-            }
-        }
-        else if(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial != null) {
-            for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                tileSetList.Add(playerInfosManager.decks[playerInfosManager.selectNumber].coordsSerial[i]);
-            }
-        }
-        */
-
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
