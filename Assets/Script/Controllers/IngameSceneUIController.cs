@@ -18,14 +18,17 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private HorizontalScrollSnap hss;
 
-    // Use this for initialization
-    void Start() {
-        playerName.text = AccountManager.Instance.userInfos.nickname;
-        hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
+    private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
         go.SetActive(false);
+    }
+
+    // Use this for initialization
+    void Start() {
+        playerName.text = AccountManager.Instance.userInfos.nickname;
+        hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
     }
 
 
