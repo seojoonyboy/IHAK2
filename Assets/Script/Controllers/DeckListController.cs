@@ -26,8 +26,11 @@ public class DeckListController : MonoBehaviour {
         AccountManager.Instance.GetMyDecks();
 
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
+    }
+
+    private void OnDestroy() {
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
     }
 
     private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
@@ -45,7 +48,7 @@ public class DeckListController : MonoBehaviour {
         items = new List<GameObject>();
 
         for (int i = 0; i < slots.Length; i++) {
-            if (slots[i] == null || decks.Count == 0 || decks.Count - 1 < i) break;
+            if (decks.Count == 0 || decks.Count - 1 < i) break;
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
@@ -94,7 +97,6 @@ public class DeckListController : MonoBehaviour {
 
     private void Clear() {
         foreach (GameObject slot in slots) {
-            if (slot == null) break;
             foreach (Transform tf in slot.transform) {
                 Destroy(tf.gameObject);
             }
