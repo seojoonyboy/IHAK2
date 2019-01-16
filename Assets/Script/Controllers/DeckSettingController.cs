@@ -68,7 +68,7 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     private void InitToggles() {
-        int length = Enum.GetValues(typeof(Species.Type)).Length;
+        int length = 1;
         for(int i=0; i<length; i++) {
             ToggleGroup toggleGroup = modal.transform.Find("InnerModal/Body/DataArea/ToggleGroup").GetComponent<ToggleGroup>();
             GameObject pref = Instantiate(togglePref, toggleGroup.transform);
@@ -85,6 +85,7 @@ public class DeckSettingController : MonoBehaviour {
             image.sprite = speciesPortraits[i];
         }
         AddPrepareToggle(1);
+        AddPrepareToggle(2);
     }
 
     private void InitPrevData() {
