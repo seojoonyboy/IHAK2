@@ -79,7 +79,6 @@ public class DeckListController : MonoBehaviour {
                 .Subscribe(_ => {
                     moveToDeckSetting(decks.Find(x => x.id == id));
                     AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
-                    //Debug.Log(newItem.transform.parent.GetComponent<Index>().Id);
                 });
             items.Add(newItem);
         }

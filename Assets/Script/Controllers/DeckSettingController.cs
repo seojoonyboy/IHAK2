@@ -80,28 +80,10 @@ public class DeckSettingController : MonoBehaviour {
         modal.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
             Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
         });
-        InitToggles();
-    }
 
-    private void InitToggles() {
-        int length = 1;
-        for(int i=0; i<length; i++) {
-            ToggleGroup toggleGroup = modal.transform.Find("InnerModal/Body/DataArea/ToggleGroup").GetComponent<ToggleGroup>();
-            GameObject pref = Instantiate(togglePref, toggleGroup.transform);
-            pref.name = "Toggle" + i;
-            int id = i;
-            Toggle toggle = pref.GetComponent<Toggle>();
-            toggle.group = toggleGroup;
-            if(i == 0) {
-                toggle.isOn = true;
-                Toggle(toggle, id);
-            }
-            toggle.onValueChanged.AddListener(delegate { Toggle(toggle, id); });
-            Image image = pref.transform.Find("Background/Image").GetComponent<Image>();
-            image.sprite = speciesPortraits[i];
-        }
-        AddPrepareToggle(1);
-        AddPrepareToggle(2);
+        modal.transform.Find("InnerModal/Header/ExitBtn").GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
+            Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
+        });
     }
 
     /// <summary>
@@ -118,16 +100,19 @@ public class DeckSettingController : MonoBehaviour {
         pref.AddComponent<Button>().onClick.AddListener(() => Modal.instantiate("준비중입니다.", Modal.Type.CHECK));
     }
 
-    private void Toggle(Toggle t, int id) {
-        if (t.isOn) {
-            SetModalText(id);
-        }
+    public void OnPrepareModal() {
+        Modal.instantiate("준비중입니다.", Modal.Type.CHECK);
+    }
+
+    public void Toggle(Toggle toggle) {
+        toggle.transform.Find("Active").gameObject.SetActive(toggle.isOn);
+        toggle.transform.Find("Deactive").gameObject.SetActive(!toggle.isOn);
     }
 
     private void SetModalText(int id) {
-        string species = ((Species.Type)id).ToString();
-        modalHeader.text = species;
-        content.text = species + "에 대한 설명";
+        //string species = ((Species.Type)id).ToString();
+        //modalHeader.text = species;
+        //content.text = species + "에 대한 설명";
     }
 
     public void settingButton() {
