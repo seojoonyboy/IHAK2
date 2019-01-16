@@ -84,6 +84,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
         else {
             Debug.Log("알 수 없는 Server 오류");
+            Debug.Log(response.responseCode);
         }
     }
 

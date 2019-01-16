@@ -275,12 +275,18 @@ public class DeckSettingController : MonoBehaviour {
 
 
         if(targetTile != null) {
-            Vector3 position = targetTile.transform.position;
-            position.z = 0;
-            tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
-            tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
-            selectBuilding.transform.SetParent(targetTile.transform);
-            selectBuilding.transform.position = position;
+            if (targetTile.GetComponent<TileObject>().buildingSet == false) {
+                Vector3 position = targetTile.transform.position;
+                position.z = 0;
+                tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
+                selectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+                selectBuilding.transform.SetParent(targetTile.transform);
+                selectBuilding.transform.position = position;
+                targetTile.GetComponent<TileObject>().buildingSet = true;
+            }
+            else
+                selectBuilding.transform.position = startEditPosition;
         }
         else {
             selectBuilding.transform.position = startEditPosition;
