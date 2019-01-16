@@ -27,29 +27,37 @@ public class MenuSceneController : MonoBehaviour {
     private Windows openedWindow;
     private static int pageNum = 1;
 
+    MenuSceneEventHandler eventHandler;
+
     private void Awake() {
-        
+        eventHandler = MenuSceneEventHandler.Instance;
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
+    }
+
+    private void OnSetTileCompleted(Enum Event_Type, Component Sender, object Param) {
+        if(leaderDeck == null) return;
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        go.SetActive(true);
+        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
+        go.SetActive(false);
     }
 
     // Use this for initialization
     void Start() {
         openedWindow = Windows.BASIC;
         hss = FindObjectOfType<HorizontalScrollSnap>();
-        userNickname.text = AccountManager.Instance.userInfos.nickname;        
-        GameObject go  = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
-        go.SetActive(true);
-        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
-        go.SetActive(false);
+        userNickname.text = AccountManager.Instance.userInfos.nickname;
         clickMenuButton(pageNum);
     }
 
     public void switchButton() {
         iTween.MoveTo(buttonSelect.GetChild(1).gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        pageNum = hss.CurrentPage;
     }
 
     public void clickMenuButton(int page) {
         hss.GoToScreen(page);
-        pageNum = page;
         switchButton();
     }
 }

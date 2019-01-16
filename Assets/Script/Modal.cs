@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,13 +28,14 @@ public class Modal : MonoBehaviour {
 			Debug.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
 			return;
 		}
-		GameObject modal = Resources.Load("Prefabs/ModalWindow", typeof(GameObject)) as GameObject;
+		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
             Debug.LogError("no Canvas");
             return;
         }
-        Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
+        Instantiate(modal).GetComponent<Modal>().setData(text, function, type);
+        //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
 	}
 	/// <summary>
 	/// Modal 창 생성기 (Insert 편) 
@@ -48,13 +49,14 @@ public class Modal : MonoBehaviour {
 			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return;
 		}
-		GameObject modal = Resources.Load("Prefabs/ModalWindow", typeof(GameObject)) as GameObject;
+		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
             Debug.LogError("no Canvas");
             return;
         }
-        Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
+        Instantiate(modal).GetComponent<Modal>().setData(text, inputText, function);
+        //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
 
 	public void setData(string text, UnityAction function, Type type) {
