@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DataModules;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngameCityManager : MonoBehaviour {
 
@@ -13,6 +14,15 @@ public class IngameCityManager : MonoBehaviour {
         public Card cardInfo;
     }
 
+    [SerializeField]
+    private Image hpValueBar;
+    [SerializeField]
+    private Text hpValue;
+    [SerializeField]
+    private Text maxHp;
+
+    private int cityHP = 0;
+    private int cityMaxHP = 0;
     private Deck deck;
     private List<BuildingsInfo> buildingsInfo = new List<BuildingsInfo>();
     public int[] buildingList;
@@ -25,9 +35,40 @@ public class IngameCityManager : MonoBehaviour {
         for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
             bi.id = deck.coordsSerial[i];
             bi.activate = true;
-            bi.cardInfo = this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
-            bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
+            if (i != 12) {
+                bi.cardInfo = transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
+                bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
+                cityHP += bi.hp;
+            }
+        }
+        cityMaxHP = cityHP;
+        
+        maxHp.text = hpValue.text = cityMaxHP.ToString();
+        hpValueBar.fillAmount = cityHP / cityMaxHP;
+    }
+
+    private void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray2D ray = new Ray2D(worldPoint, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, worldPoint);
+            if (hit.collider.gameObject.tag == "Building") {
+                cityHP -= 100;
+                hpValue.text = cityHP.ToString();
+                hpValueBar.fillAmount = (float)cityHP / (float)cityMaxHP;
+            }
         }
     }
-	
+
+    public void OnCollisionEnter(Collision col) {
+        Debug.Log(col.ToString());
+    }
+    public void OnCollisionEnter2D(Collision2D col) {
+        Debug.Log(col.ToString());
+        if(col.gameObject.tag == "Building") {
+            cityHP -= 100;
+            hpValue.text = cityHP.ToString();
+            hpValueBar.fillAmount = cityHP / cityMaxHP;
+        }
+    }
 }
