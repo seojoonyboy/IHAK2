@@ -56,6 +56,8 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.transform.SetParent(transform.Find("BuildingObjects").transform);
                 BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
                 obj.AddComponent<SpriteRenderer>();
+                obj.AddComponent<PolygonCollider2D>().points = new Vector2[4] { new Vector2(0, 10), new Vector2(-10, 0), new Vector2(0, -10), new Vector2(10, 0) };
+                obj.tag = "Building";
                 buildingObject.data = item;
 
                 if (item.card.type == "prod") products.Add(obj);

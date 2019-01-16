@@ -12,7 +12,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     Vector3 startPosition;
     float camMagnification;
     Camera cam;
-    private bool canDrag = false;
+    public bool canDrag = false;
 
     public void BeginDrag() {
         canDrag = true;
