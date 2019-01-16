@@ -31,7 +31,7 @@ public class AccountManager : Singleton<AccountManager> {
         public Card cards;
         public List<Deck> decks;
     }
-
+    public bool userDataAvailable = false;
     public List<Deck> decks = new List<Deck>();
 
     public int Exp { get; set; }
@@ -211,10 +211,17 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void OnMyDeckReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
-            decks = JsonReader.Read(response.data.ToString(), new Deck());
-            Deck deck = decks.FirstOrDefault();
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
-            SetTileObjects();
+            if (userDataAvailable == false) {
+                decks = JsonReader.Read(response.data.ToString(), new Deck());
+                Deck deck = decks.FirstOrDefault();
+                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+                userDataAvailable = true;
+                SetTileObjects();
+            }
+            else {
+                Debug.Log("저장된 데이터 활용");
+                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+            }
         }
         else if (response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
@@ -262,6 +269,7 @@ public class AccountManager : Singleton<AccountManager> {
                     GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
                     transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
                     setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount*2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
@@ -270,6 +278,7 @@ public class AccountManager : Singleton<AccountManager> {
         }
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
+    
 
     public void RemoveTileObjects(int num) {
         Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
