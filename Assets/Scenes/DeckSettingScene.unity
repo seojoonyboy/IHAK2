@@ -590,7 +590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -143.3, y: 196.9}
+  m_AnchoredPosition: {x: -143.29999, y: 343.99997}
   m_SizeDelta: {x: 110, y: 60.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &291359395
@@ -661,7 +661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -143.29999, y: 317.25}
+  m_AnchoredPosition: {x: -143.29999, y: 470.25}
   m_SizeDelta: {x: 209, y: 112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &331431735
@@ -1341,7 +1341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 0}
+  m_AnchoredPosition: {x: 500, y: 98}
   m_SizeDelta: {x: 43, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &488914706
@@ -2555,7 +2555,7 @@ GameObject:
   - component: {fileID: 864193328}
   - component: {fileID: 864193329}
   m_Layer: 5
-  m_Name: GoldSlider
+  m_Name: IndustrySlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2860,7 +2860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -276.7, y: 196.9}
+  m_AnchoredPosition: {x: -276.7, y: 344}
   m_SizeDelta: {x: 110, y: 60.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1015605903
@@ -2907,7 +2907,7 @@ GameObject:
   - component: {fileID: 1019890539}
   - component: {fileID: 1019890540}
   m_Layer: 5
-  m_Name: FoodSlider
+  m_Name: FarmSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3176,7 +3176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 0}
+  m_AnchoredPosition: {x: -500, y: 98}
   m_SizeDelta: {x: 43, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1104875007
@@ -4180,8 +4180,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 44.5}
-  m_SizeDelta: {x: 1080, y: 397.1}
+  m_AnchoredPosition: {x: 0, y: 119}
+  m_SizeDelta: {x: 1080, y: 545.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1359430374
 MonoBehaviour:
@@ -4246,6 +4246,11 @@ MonoBehaviour:
   pageObject: {fileID: 1723172687633890, guid: 68e55042cd67925478ac6df94c396ed9, type: 2}
   slotObject: {fileID: 1091408301705190, guid: 74b09a4382baf6949a8091f5543b843d, type: 2}
   detailModal: {fileID: 1995726371}
+  cardPanels:
+  - {fileID: 21300070, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
+  - {fileID: 21300072, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
+  - {fileID: 21300076, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
+  - {fileID: 21300074, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
 --- !u!1 &1363568143
 GameObject:
   m_ObjectHideFlags: 0
@@ -5229,7 +5234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 131, y: 306}
+  m_AnchoredPosition: {x: 131, y: 459}
   m_SizeDelta: {x: 176.54999, y: 89.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856610770
@@ -5644,8 +5649,15 @@ MonoBehaviour:
   resetButton: {fileID: 1856610770}
   modify: 0
   selectBuilding: {fileID: 0}
+  targetTile: {fileID: 0}
+  startEditPosition: {x: 0, y: 0, z: 0}
   modalHeader: {fileID: 475413629}
   content: {fileID: 74268605}
+  sliders:
+  - {fileID: 1681351635}
+  - {fileID: 1019890540}
+  - {fileID: 2106643451}
+  - {fileID: 864193329}
 --- !u!1 &1915366578
 GameObject:
   m_ObjectHideFlags: 0
