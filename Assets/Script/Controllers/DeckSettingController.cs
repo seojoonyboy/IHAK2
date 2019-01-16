@@ -25,7 +25,8 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public Button resetButton;
     [SerializeField] public bool modify;
     [SerializeField] public GameObject selectBuilding;
-
+    [SerializeField] public GameObject targetTile;
+    [SerializeField] public Vector3 startEditPosition;
     public Text 
         modalHeader,
         content;
@@ -54,9 +55,15 @@ public class DeckSettingController : MonoBehaviour {
 
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
 
+        /* 테스트용
+        downStream.Subscribe(_ => Debug.Log("원클릭"));
+        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => Debug.Log("FromMillSecond500클릭"));
+        */
+        
         downStream.Subscribe(_ => PickEditBuilding());
+        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => MoveEditBuilding());
         upStream.Subscribe(_ => DropEditBuilding());
-
+        
         chooseSpeciesBtn.onClick
             .AsObservable()
             .Subscribe(_ => {
@@ -180,6 +187,10 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void PickEditBuilding() {
+
+        if (cam == null)
+            return;
+
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -195,10 +206,63 @@ public class DeckSettingController : MonoBehaviour {
                     return;
             }
             selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
+            startEditPosition = selectBuilding.transform.position;
         }
     }
 
+    public void MoveEditBuilding() {
+        if (selectBuilding == null)
+            return;
+
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
+        Vector3 mousePosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
+        mousePosition.z = 0;
+
+        Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(origin, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        
+
+        if (hit.collider != null) {
+            if (hit.collider.tag == "Tile") {
+                targetTile = hit.transform.gameObject;
+                Vector3 buildingPosition = targetTile.transform.position;
+                buildingPosition.z = 0;
+                selectBuilding.transform.position = buildingPosition;
+            }
+            else if (hit.collider.tag == "Building") {
+                targetTile = hit.transform.parent.gameObject;
+                Vector3 buildingPosition = targetTile.transform.position;
+                buildingPosition.z = 0;
+                selectBuilding.transform.position = buildingPosition;
+            }
+        }
+        else {
+            targetTile = null;
+            selectBuilding.transform.position = mousePosition;
+        }
+            
+    }
+
     public void DropEditBuilding() {
+        if (selectBuilding == null)
+            return;
+
+
+        if(targetTile != null) {
+            Vector3 position = targetTile.transform.position;
+            position.z = 0;
+            tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
+            tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+            selectBuilding.transform.SetParent(targetTile.transform);
+            selectBuilding.transform.position = position;
+        }
+        else {
+            selectBuilding.transform.position = startEditPosition;
+        }
+
+
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
     }
