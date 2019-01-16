@@ -37,10 +37,10 @@ TextureImporter:
     21300064: DeckSettingSceneUI_32
     21300066: DeckSettingSceneUI_33
     21300068: DeckSettingSceneUI_34
-    21300070: BlueOutlineSlot
-    21300072: YellowOutlineSlot
+    21300070: IndustryCardMark
+    21300072: FarmCardMark
     21300074: RedOutlineSlot
-    21300076: GreenOutlineSlot
+    21300076: EcoCardMark
     21300078: ResetBtn
     21300080: FilterActive
     21300082: FilterDeactive
@@ -623,7 +623,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlueOutlineSlot
+      name: IndustryCardMark
       rect:
         serializedVersion: 2
         x: 143
@@ -643,7 +643,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: YellowOutlineSlot
+      name: FarmCardMark
       rect:
         serializedVersion: 2
         x: 364
@@ -683,7 +683,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenOutlineSlot
+      name: EcoCardMark
       rect:
         serializedVersion: 2
         x: 810

@@ -44,7 +44,7 @@ public class Modal : MonoBehaviour {
 	/// <param name="inputText">inputField 빈공간에 들어갈 내용</param>
 	/// <param name="type">Modal.Type.종류</param>
 	/// <param name="function">yes 버튼 누를 경우 실행 함수</param>
-	public static void instantiate(string text, string inputText, Type type, UnityAction<string> function) {
+	public static void instantiate(string text, string descText, string inputText, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
 			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
 			return;
@@ -55,7 +55,7 @@ public class Modal : MonoBehaviour {
             Debug.LogError("no Canvas");
             return;
         }
-        Instantiate(modal).GetComponent<Modal>().setData(text, inputText, function);
+        Instantiate(modal).GetComponent<Modal>().setData(text, descText, inputText, function);
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
 
@@ -70,14 +70,16 @@ public class Modal : MonoBehaviour {
 		yesButton.onClick.AddListener(function);
 	}
 
-	public void setData(string text, string inputText, UnityAction<string> function) {
+	public void setData(string text, string descText, string inputText, UnityAction<string> function) {
 		describe.gameObject.SetActive(false);
 		inputGameObject.SetActive(true);
 		noButton.gameObject.SetActive(false);
 		yesButton.GetComponentInChildren<Text>().text = "저장";
 		insertTitle.text = text;
-		inputField.GetComponentInChildren<Text>().text = inputText;
-		yesButton.onClick.AddListener(() => {checkInputText(inputField.text, function);});
+		inputField.GetComponentInChildren<Text>().text = descText;
+        inputField.text = inputText;
+
+        yesButton.onClick.AddListener(() => {checkInputText(inputField.text, function);});
 	}
 
 	private void checkInputText(string text, UnityAction<string> function) {
