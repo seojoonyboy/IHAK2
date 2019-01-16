@@ -243,7 +243,9 @@ public class AccountManager : Singleton<AccountManager> {
     }
     
 
-
+    /// <summary>
+    /// 모든 건물 타일을 GameObject로 만드는 함수
+    /// </summary>
     public void SetTileObjects() {
         if (decks == null)
             return;
