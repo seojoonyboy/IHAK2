@@ -19,9 +19,6 @@ public class EditScenePanel : MonoBehaviour {
     
 
     private void Start() {
-        content = transform.GetChild(0);
-        leftBtn = transform.GetChild(3);
-        rightBtn = transform.GetChild(4);
         page = 0;
 
         leftBtn.GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(true));

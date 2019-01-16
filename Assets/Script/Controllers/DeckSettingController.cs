@@ -75,9 +75,6 @@ public class DeckSettingController : MonoBehaviour {
             Debug.Log("Deck 수정 버튼을 통한 접근");
             InitPrevData();
         }
-
-
-
     }
 
     private void InitToggles() {
@@ -228,5 +225,4 @@ public class DeckSettingController : MonoBehaviour {
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
     }
-
 }
