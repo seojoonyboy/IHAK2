@@ -12,7 +12,13 @@ public class PlayerController : MonoBehaviour {
         FOOD = 1,
         ENVIRONMENT = 2,
         REPAIR = 3,
+    }
 
+    private class PlayerResource {
+        public int gold = 50;
+        public int food = 50;
+        public int turn = 600;
+        public int environment = 300;
     }
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
@@ -21,12 +27,16 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
 
+    PlayerResource resourceClass;
     private int gameTurn;
 
 	// Use this for initialization
 	void Start () {
-        gameTurn = 600;
-        playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = gameTurn.ToString();
+        resourceClass = new PlayerResource();
+        playerResource.Find("Food/Value").gameObject.GetComponent<Text>().text = resourceClass.food.ToString();
+        playerResource.Find("Gold/Value").gameObject.GetComponent<Text>().text = resourceClass.gold.ToString();
+        playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = resourceClass.turn.ToString();
+        playerResource.Find("Environment/Value").gameObject.GetComponent<Image>().fillAmount = resourceClass.environment / 300;
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));

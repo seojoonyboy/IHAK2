@@ -13,7 +13,7 @@ public class DeckSettingController : MonoBehaviour {
     GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.DeckSettingScene;
     GameSceneManager gsm;
     AccountManager playerInfosManager;
-
+    Camera cam;
     [SerializeField] public GameObject tileGroup;
     [SerializeField] private GameObject togglePref;
     [SerializeField] private Button chooseSpeciesBtn;
@@ -24,6 +24,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public List<int> tileSetList;
     [SerializeField] public Button resetButton;
     [SerializeField] public bool modify;
+    [SerializeField] public GameObject selectBuilding;
 
     public Text 
         modalHeader,
@@ -41,12 +42,21 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         gsm = FindObjectOfType<GameSceneManager>();
+        cam = Camera.main;
+        var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+        var dragStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButton(0));
+        var upStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0));
+
         playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
         tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
         deckListController = FindObjectOfType<DeckListController>();
         TilebuildingList();
 
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
+
+        downStream.Subscribe(_ => PickEditBuilding());
+        upStream.Subscribe(_ => DropEditBuilding());
+
         chooseSpeciesBtn.onClick
             .AsObservable()
             .Subscribe(_ => {
@@ -65,6 +75,9 @@ public class DeckSettingController : MonoBehaviour {
             Debug.Log("Deck 수정 버튼을 통한 접근");
             InitPrevData();
         }
+
+
+
     }
 
     private void InitToggles() {
@@ -190,6 +203,30 @@ public class DeckSettingController : MonoBehaviour {
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
             tileSetList[i] = 0;
         }
+    }
+
+    public void PickEditBuilding() {
+        Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(origin, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if(hit.collider != null) {
+            if (hit.collider.tag == "Building") {
+                selectBuilding = hit.transform.gameObject;
+            }
+            else if (hit.collider.tag == "Tile") {
+                if (hit.transform.gameObject.transform.childCount != 0)
+                    selectBuilding = hit.transform.GetChild(0).gameObject;
+                else
+                    return;
+            }
+            selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
+        }
+    }
+
+    public void DropEditBuilding() {
+        selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
+        selectBuilding = null;
     }
 
 }
