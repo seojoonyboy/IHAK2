@@ -32,6 +32,12 @@ public class ConstructManager : Singleton<ConstructManager> {
         return result;
     }
 
+    public GameObject GetBuildingObjectById(int id) {
+        var buildings = GetBuildingObjects();
+        var result = buildings.Find(x => x.GetComponent<BuildingObject>().data.id == id);
+        return result;
+    }
+
     public void SetAllBuildings() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl);
