@@ -1,39 +1,24 @@
 fileFormatVersion: 2
-guid: a7e318c53ffe2f247af7081d21052057
+guid: 45ece51ad7bb19a429d596e4ac75f129
 TextureImporter:
   fileIDToRecycleName:
-    21300000: 190102 ui_2_0
-    21300002: DeckSettingBtn
-    21300004: BasicBtn
-    21300006: 190102 ui_2_3
-    21300008: ShopBtn
-    21300010: OptionBtn
-    21300012: 190102 ui_2_6
-    21300014: 190102 ui_2_7
-    21300016: 190102 ui_2_8
-    21300018: 190102 ui_2_9
-    21300020: 190102 ui_2_10
-    21300022: 190102 ui_2_11
-    21300024: 190102 ui_2_12
-    21300026: LevelIcon
-    21300028: GoldIcon
-    21300030: GemIcon
-    21300032: BattleBtn
-    21300034: 190102 ui_2_17
-    21300036: 190102 ui_2_18
-    21300038: 190102 ui_2_19
-    21300040: 190102 ui_2_20
-    21300042: 190102 ui_2_21
-    21300044: InputFeild
-    21300046: 190102 ui_2_23
-    21300048: boxslot_ContainBG
-    21300050: boxslot_EmptyBG
-    21300052: boxslot_Timer
-    21300054: 190102 ui_2_27
-    21300056: menu_UnselectedMenu
-    21300058: menu_SelectedMenu
-    21300060: 190102 ui_2_30
-    21300062: boxslot_box
+    21300000: MainMenu_AccountResourceBG
+    21300002: MainMenu_NicknameBG
+    21300004: MainMenu_ResourceInput
+    21300006: MainMenu_OptionBtn
+    21300008: MainMenu_GemImg
+    21300010: MainMenu_GoldImg
+    21300012: MainMenu_LevelImg
+    21300014: MainMenu_ShopWindowBtn
+    21300016: MainMenu_BasicWindowBtn
+    21300018: MainMenu_DeckSettingWindowBtn
+    21300020: MainMenu_BasicTxt
+    21300022: MainMenu_ShopTxt
+    21300024: MainMenu_BattleBtnTxt
+    21300026: MainMenu_SelectedBtn
+    21300028: MainMenu_EmptySlot
+    21300030: MainMenu_MenuButtonBG
+    21300032: MainMenu_DeckSettingTxt
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -171,13 +156,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 190102 ui_2_0
+      name: MainMenu_AccountResourceBG
       rect:
         serializedVersion: 2
         x: 0
-        y: 1633
-        width: 1080
-        height: 287
+        y: 1927
+        width: 1024
+        height: 121
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,19 +170,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d715e22fca53d142bd9d9840863fde7
+      spriteID: 54c18b332c6a4fa45a86e8c3321c4558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DeckSettingBtn
+      name: MainMenu_NicknameBG
       rect:
         serializedVersion: 2
-        x: 87
-        y: 1346
-        width: 270
-        height: 210
+        x: 0
+        y: 1770
+        width: 1024
+        height: 113
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,19 +190,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f4a1e8e43d3d6d41980a666c990c405
+      spriteID: 65073f33ad2efe34489207d307291167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BasicBtn
+      name: MainMenu_ResourceInput
       rect:
         serializedVersion: 2
-        x: 406
-        y: 1342
-        width: 270
-        height: 210
+        x: 34
+        y: 1648
+        width: 319
+        height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,19 +210,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 783d58a574343d74eaf586c446e991bb
+      spriteID: e7baaa023f596e74ebce566da599bd37
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190102 ui_2_3
+      name: MainMenu_OptionBtn
       rect:
         serializedVersion: 2
-        x: 510
-        y: 1342
-        width: 68
-        height: 42
+        x: 868
+        y: 1650
+        width: 78
+        height: 81
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,19 +230,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 757dc57dbcd9f254db99bea3d5740a07
+      spriteID: 656b8a05c0fd5f74fabce621dc283368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShopBtn
+      name: MainMenu_GemImg
       rect:
         serializedVersion: 2
-        x: 711
-        y: 1342
-        width: 270
-        height: 210
+        x: 54
+        y: 1487
+        width: 59
+        height: 67
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,19 +250,159 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a799a9fa4e236bd4ca44e96c1abb2e1b
+      spriteID: c898ab419f142ab47810de4764a4d2d5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OptionBtn
+      name: MainMenu_GoldImg
       rect:
         serializedVersion: 2
-        x: 74
+        x: 145
+        y: 1481
+        width: 79
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 799634637c512f44da20f85df896062d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_LevelImg
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 1481
+        width: 78
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea9fc8570378eb641856f02ebbf99b2d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_ShopWindowBtn
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 1450
+        width: 136
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11751148454145a44875defe11d82131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_BasicWindowBtn
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 1443
+        width: 154
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cad300162c001a4e9a57cb26ae96d95
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_DeckSettingWindowBtn
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 1460
+        width: 182
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bce1449ec05b62488dc4940a0d4fa55
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_BasicTxt
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 1330
+        width: 71
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c611e17df3d8a44aa452e7f7a6799b9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_ShopTxt
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 1263
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2da44193d7a49844b31ab20d6f1b979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MainMenu_BattleBtnTxt
+      rect:
+        serializedVersion: 2
+        x: 55
         y: 1176
-        width: 102
-        height: 108
+        width: 122
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -285,19 +410,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 372007c3ce48b8d44ad1d353579f0e60
+      spriteID: 42ae0ea879d39d3468b315b2ae1a0e6c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: LevelIcon
+      name: MainMenu_SelectedBtn
       rect:
         serializedVersion: 2
-        x: 60
-        y: 960
-        width: 130
-        height: 136
+        x: 598
+        y: 685
+        width: 380
+        height: 165
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -305,19 +430,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4361aec3c1766394b9bb5903d9c958ae
+      spriteID: aa0105f4e3a8d4244ba9f03f8808e166
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GoldIcon
+      name: MainMenu_EmptySlot
       rect:
         serializedVersion: 2
-        x: 248
-        y: 990
-        width: 76
-        height: 76
+        x: 714
+        y: 294
+        width: 231
+        height: 299
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,199 +450,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7b8d981df345e745b9aa84c482bdb97
+      spriteID: c5aecc6a7efdc494b91ab9a886f6484d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GemIcon
-      rect:
-        serializedVersion: 2
-        x: 374
-        y: 993
-        width: 62
-        height: 70
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b19ce6c502692443ab79d74a224d4b1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BattleBtn
-      rect:
-        serializedVersion: 2
-        x: 728
-        y: 1012
-        width: 326
-        height: 154
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b5b7d30e9194df74ca57b644f49c16ae
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 190102 ui_2_21
-      rect:
-        serializedVersion: 2
-        x: 845
-        y: 924
-        width: 97
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e9a6ee1e1b587944685832b8ec220862
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: InputFeild
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 779
-        width: 284
-        height: 93
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db4cc1a852e711d4baf861943ce603a7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boxslot_ContainBG
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 582
-        width: 216
-        height: 269
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aae85f9b45889fa4a83c85ce6715cdf8
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boxslot_EmptyBG
-      rect:
-        serializedVersion: 2
-        x: 825
-        y: 582
-        width: 214
-        height: 269
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: afbf9d4690d1c4948af9414ecfe662d1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boxslot_Timer
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 656
-        width: 248
-        height: 88
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0178942882ec59d44ab3b17e8c9f0765
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: menu_UnselectedMenu
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 306
-        width: 350
-        height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2111b9156c9bfe478538771f8b121e6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: menu_SelectedMenu
-      rect:
-        serializedVersion: 2
-        x: 634
-        y: 310
-        width: 382
-        height: 181
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1702ced663187d4bb6485cd59e74bb0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 190102 ui_2_30
+      name: MainMenu_MenuButtonBG
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1080
-        height: 189
+        y: 4
+        width: 1024
+        height: 195
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -525,19 +470,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e0333aa591cf5b43af56da48ea37718
+      spriteID: 73d17d623eb193c47aae14525ddc60a5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boxslot_box
+      name: MainMenu_DeckSettingTxt
       rect:
         serializedVersion: 2
-        x: 320
-        y: 637
-        width: 173
-        height: 158
+        x: 52
+        y: 1399
+        width: 110
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -545,7 +490,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 213f5025205e568448858f2a62514167
+      spriteID: 2d94034174601674ebe5700c8c07be4b
       vertices: []
       indices: 
       edges: []
@@ -553,7 +498,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: bfea531618097074eaae8d3da941e9e7
+    spriteID: 9e09e80c64d10864cad7bcb691735a49
     vertices: []
     indices: 
     edges: []
