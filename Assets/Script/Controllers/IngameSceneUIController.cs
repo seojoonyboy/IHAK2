@@ -20,7 +20,7 @@ public class IngameSceneUIController : MonoBehaviour {
     private HorizontalScrollSnap hss;
 
     private void Awake() {
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
         go.SetActive(false);

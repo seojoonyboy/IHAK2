@@ -7,6 +7,7 @@ namespace DataModules {
         public int id;
         public string name;
         public string race;
+        public bool isRepresent;
         public int[] coordsSerial;
         public int[,] coords;
     }

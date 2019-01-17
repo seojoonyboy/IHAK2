@@ -21,6 +21,7 @@ public class DeckListController : MonoBehaviour {
         Modify;
 
     public GameObject temp;
+    
 
     void Start() {
         AccountManager.Instance.GetMyDecks();
@@ -39,6 +40,14 @@ public class DeckListController : MonoBehaviour {
 
     public void Initialize() {
         List<Deck> decks = AccountManager.Instance.decks;
+        int leaderIndex = 0;
+        foreach (Deck deck in decks) {
+            if(deck.isRepresent == true) {
+                AccountManager.Instance.leaderIndex = leaderIndex;
+                break;
+            }
+            leaderIndex++;
+        }
         Sort(decks);
     }
 
@@ -52,7 +61,8 @@ public class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
-            if(i == 0) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
+            //if (i == 0) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
+            if (i == AccountManager.Instance.leaderIndex) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
             else newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(false);
 
             int id = decks[i].id;
@@ -70,7 +80,9 @@ public class DeckListController : MonoBehaviour {
                 .AsObservable()
                 .Subscribe(_ => {
                     Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
-                        AccountManager.Instance.ChangeLeaderDeck(id);
+                        int index = newItem.transform.Find("LeaderSetBtn").parent.parent.GetSiblingIndex();
+                        //AccountManager.Instance.ChangeLeaderDeck(id);
+                        AccountManager.Instance.ChangeLeaderDeck(id, index);
                         Sort(AccountManager.Instance.decks);
                     });
                 });
@@ -94,6 +106,7 @@ public class DeckListController : MonoBehaviour {
                 moveToDeckSetting();
             });
         }
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null, AccountManager.Instance.leaderIndex);
     }
 
     private void Clear() {
