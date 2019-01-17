@@ -183,6 +183,8 @@ public class DeckSettingController : MonoBehaviour {
 
     public void resetTile() {
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
+            if (i == tileGroup.transform.childCount / 2)
+                continue;
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
