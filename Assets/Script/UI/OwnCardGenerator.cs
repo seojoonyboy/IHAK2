@@ -43,6 +43,15 @@ public class OwnCardGenerator : MonoBehaviour {
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
 
+            if (info.data.card.type == "prod")
+                slotData.GetComponent<Image>().sprite = cardPanels[0];
+            else if (info.data.card.type == "military")
+                slotData.GetComponent<Image>().sprite = cardPanels[3];
+            else if (info.data.card.type == "special")
+                slotData.GetComponent<Image>().sprite = cardPanels[2];
+            else
+                slotData.GetComponent<Image>().sprite = cardPanels[1];
+
             slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
             slotData.transform.Find("Name").GetComponent<Text>().text = info.name;
             slotData.GetComponentInChildren<LongClickButton>().onShortClick.AddListener(() => ShowDetail(buildingObject.GetComponent<BuildingObject>()));
