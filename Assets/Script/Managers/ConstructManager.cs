@@ -63,6 +63,7 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.name = item.card.name;
                 obj.transform.SetParent(transform.Find("BuildingObjects").transform);
                 BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
+                obj.GetComponent<BuildingObject>().setTileLocation = -1;
                 obj.AddComponent<SpriteRenderer>();
                 obj.AddComponent<PolygonCollider2D>().points = new Vector2[4] { new Vector2(0, 10), new Vector2(-10, 0), new Vector2(0, -10), new Vector2(10, 0) };
                 obj.tag = "Building";
