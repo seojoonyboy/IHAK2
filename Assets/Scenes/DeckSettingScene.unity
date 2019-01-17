@@ -1689,7 +1689,7 @@ GameObject:
   - component: {fileID: 350883288}
   - component: {fileID: 350883287}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BuildingName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7335,6 +7335,7 @@ MonoBehaviour:
   togglePref: {fileID: 1402426340390542, guid: 672bcc4d6c06c6947ac027f262dc967e, type: 2}
   chooseSpeciesBtn: {fileID: 331431735}
   speciesConfirmBtn: {fileID: 1646890065}
+  deleteButton: {fileID: 355703677}
   modal: {fileID: 780269801}
   speciesPortraits:
   - {fileID: 0}
