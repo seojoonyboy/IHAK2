@@ -57,7 +57,7 @@ public class AccountManager : Singleton<AccountManager> {
         //ReqUserInfo();
     }
     private void Start() {
-        //deviceID = "12341234";
+        //deviceID = "11231234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
     }
