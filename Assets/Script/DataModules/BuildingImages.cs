@@ -12,14 +12,14 @@ public class BuildingImages : MonoBehaviour {
         buildingImages,
         buildingIcons;
 
-    public Sprite 
+    public Sprite
         defaultImage,
         defaultIcon;
-    
+
     public void SetImages() {
         ConstructManager dataManager = GetComponent<ConstructManager>();
         var lists = dataManager.GetBuildingObjects();
-        foreach(GameObject obj in lists) {
+        foreach (GameObject obj in lists) {
             BuildingObject bo = obj.GetComponent<BuildingObject>();
             bo.mainSprite = GetImage(bo.data.card.id);
             bo.icon = GetIcon(bo.data.card.id);
@@ -29,8 +29,8 @@ public class BuildingImages : MonoBehaviour {
     }
 
     public Sprite GetImage(string id) {
-        foreach(Sprite sprite in buildingImages) {
-            if(sprite.name == id) {
+        foreach (Sprite sprite in buildingImages) {
+            if (sprite.name == id) {
                 return sprite;
             }
         }
@@ -38,7 +38,7 @@ public class BuildingImages : MonoBehaviour {
     }
 
     public Sprite GetIcon(string id) {
-        foreach(Sprite sprite in buildingIcons) {
+        foreach (Sprite sprite in buildingIcons) {
             if (sprite.name == id) {
                 return sprite;
             }

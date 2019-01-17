@@ -19,7 +19,7 @@ public class OwnCardGenerator : MonoBehaviour {
 
     private const int NUM_PER_PAGE = 8;
     // Use this for initialization
-    void Start () {
+    void Start() {
         constructManager = ConstructManager.Instance;
         buildings = constructManager.GetBuildingObjects();
 
@@ -28,7 +28,7 @@ public class OwnCardGenerator : MonoBehaviour {
     }
 
     private void SetPage(int totalNum, int numPerPage) {
-        for(int i=0; i<totalNum/numPerPage + 1; i++) {
+        for (int i = 0; i < totalNum / numPerPage + 1; i++) {
             GameObject setPage = Instantiate(pageObject, transform);
             setPage.transform.localPosition += new Vector3(i * 1080f, 0);
         }
@@ -60,7 +60,7 @@ public class OwnCardGenerator : MonoBehaviour {
     }
 
     private void ShowDetail(BuildingObject buildingObject) {
-        if(buildingObject.data.card.unit == null) {
+        if (buildingObject.data.card.unit == null) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);
 
@@ -76,11 +76,14 @@ public class OwnCardGenerator : MonoBehaviour {
             Card card = buildingObject.data.card;
             hp.text = card.hitPoint.ToString();
             header.text = card.name;
-            limitCount.text = "ÇÑµµ " + card.placementLimit.ToString();
+            limitCount.text = "í•œë„ " + card.placementLimit.ToString();
 
-            tier.text = card.rareity + " µî±Ş";
+            tier.text = card.rareity + " ë“±ê¸‰";
             food.text = card.product.food.ToString();
             gold.text = card.product.gold.ToString();
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.id);
         }
         else {
             unitGenDetailModal.SetActive(true);
@@ -95,20 +98,25 @@ public class OwnCardGenerator : MonoBehaviour {
 
             Card card = buildingObject.data.card;
             Unit unit = card.unit;
-            tier.text = unit.tearNeed + " µî±Ş";
+
+            tier.text = unit.tearNeed + " ë“±ê¸‰";
             header.text = card.name;
 
-            unitName.text = "À¯´Ö»ı»ê " + unit.name;
-            needResources.text = "½Ä·® : " + unit.cost.food + "\n"
-                + "°ñµå : " + unit.cost.gold + "\n"
-                + "È¯°æ : " + unit.cost.environment + "\n";
+            unitName.text = "ìœ ë‹›ìƒì‚° " + unit.name;
+            Debug.Log(tier.text);
+            needResources.text = "ì‹ëŸ‰ : " + unit.cost.food + "\n"
+                + "ê³¨ë“œ : " + unit.cost.gold + "\n"
+                + "í™˜ê²½ : " + unit.cost.environment + "\n";
 
-            unitSpec.text = "Ã¼·Â : " + unit.hitPoint
-                + "°ø°İ·Â : " + unit.power
-                + "°ø°İ ¼Óµµ : " + unit.attackSpeed
-                + "°ø°İ ¹üÀ§ : " + unit.attackRange
-                + "ÀÌµ¿ ¼Óµµ : " + unit.moveSpeed
-                + "¿ä±¸ ·¹º§ : " + unit.tearNeed;
+            unitSpec.text = "ì²´ë ¥ : " + unit.hitPoint
+                + "ê³µê²©ë ¥ : " + unit.power
+                + "ê³µê²© ì†ë„ : " + unit.attackSpeed
+                + "ê³µê²© ë²”ìœ„ : " + unit.attackRange
+                + "ì´ë™ ì†ë„ : " + unit.moveSpeed
+                + "ìš”êµ¬ ë ˆë²¨ : " + unit.tearNeed;
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.id);
         }
     }
 }
