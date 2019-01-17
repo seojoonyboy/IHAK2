@@ -42,7 +42,7 @@ namespace DataModules {
         public int id;
         public int food;
         public int gold;
-        public int enviroment;
+        public int environment;
     }
 
     public class CardFromServerData {

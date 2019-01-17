@@ -338,26 +338,13 @@ public class DeckSettingController : MonoBehaviour {
 
     }
 
-    public int ChangeSliderValue(int value = 0, string type = null) {
-        Slider slider = null;
-        switch (type) {
-            case "Eco":
-                slider = sliders[0];
-                break;
-            case "Industry":
-                slider = sliders[4];
-                break;
-            case "Shield":
-                slider = sliders[2];
-                break;
-            case "Farm":
-                slider = sliders[1];
-                break;
-        }
-        if (slider != null) {
-            slider.value += value;
-            return (int)slider.value;
-        }
-        return 0;
+    public void ChangeSliderValue(Cost cost) {
+        sliders[0].value += cost.environment;
+        sliders[3].value += cost.gold;
+        sliders[1].value += cost.food;
+    }
+
+    public void OnSliderValueChanged(GameObject slider) {
+        slider.transform.Find("Text").GetComponent<Text>().text = slider.GetComponent<Slider>().value.ToString();
     }
 }
