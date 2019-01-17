@@ -14,7 +14,7 @@ namespace DataModules {
         public string type;
         public string prodType;
         public int rareity;
-        public string product;
+        public Cost product;
         public int hitPoint;
         public int placementLimit;
         public bool canAttack;
@@ -25,7 +25,7 @@ namespace DataModules {
     public class Unit {
         public int id;
         public string name;
-        public string cost;
+        public Cost cost;
         public int coolTime;
         public int size;
         public int power;
@@ -35,6 +35,14 @@ namespace DataModules {
         public int hitPoint;
         public float moveSpeed;
         public int tearNeed;
+    }
+
+    [System.Serializable]
+    public class Cost {
+        public int id;
+        public int food;
+        public int gold;
+        public int enviroment;
     }
 
     public class CardFromServerData {
