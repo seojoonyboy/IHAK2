@@ -42,6 +42,7 @@ public class DeckSettingController : MonoBehaviour {
     public Slider[] sliders;
 
     private int speciesId = 0;
+    private int deckCount;
     public int SpeciesId {
         get {
             return speciesId;
@@ -54,6 +55,7 @@ public class DeckSettingController : MonoBehaviour {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
 
+        deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
         var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
@@ -99,17 +101,19 @@ public class DeckSettingController : MonoBehaviour {
         if (prevData != null) {
             int[] coords = prevData.coordsSerial;
             Cost product = null;
-            foreach(int coord in coords) {
+            foreach (int coord in coords) {
                 GameObject obj = constructManager.GetBuildingObjectById(coord);
-                if(obj != null) {
+                if (obj != null) {
                     BuildingObject buildingObject = obj.GetComponent<BuildingObject>();
                     product = buildingObject.data.card.product;
-                    if(product != null) {
+                    if (product != null) {
                         ChangeSliderValue(product);
                     }
                 }
             }
         }
+        else
+            deckCount++;
     }
 
     /// <summary>
@@ -232,7 +236,7 @@ public class DeckSettingController : MonoBehaviour {
                 Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
         }
         */
-        if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1)
+        if (playerInfosManager.selectNumber > deckCount - 1)
             return;
 
         playerInfosManager.checkDeck(playerInfosManager.selectNumber);
