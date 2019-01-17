@@ -14,6 +14,8 @@ public class IngameCityManager : MonoBehaviour {
         public Card cardInfo;
     }
 
+    
+
     [SerializeField]
     private Image hpValueBar;
     [SerializeField]
@@ -48,16 +50,16 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Ray2D ray = new Ray2D(worldPoint, Vector2.zero);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, worldPoint);
-            if (hit.collider.gameObject.tag == "Building") {
-                cityHP -= 100;
-                hpValue.text = cityHP.ToString();
-                hpValueBar.fillAmount = (float)cityHP / (float)cityMaxHP;
-            }
-        }
+        //if (Input.GetMouseButtonDown(0)) {
+        //    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Ray2D ray = new Ray2D(worldPoint, Vector2.zero);
+        //    RaycastHit2D hit = Physics2D.Raycast(ray.origin, worldPoint);
+        //    if (hit.collider.gameObject.tag == "Building") {
+        //        cityHP -= 100;
+        //        hpValue.text = cityHP.ToString();
+        //        hpValueBar.fillAmount = (float)cityHP / (float)cityMaxHP;
+        //    }
+        //}
     }
 
     public void OnCollisionEnter(Collision col) {
@@ -69,6 +71,31 @@ public class IngameCityManager : MonoBehaviour {
             cityHP -= 100;
             hpValue.text = cityHP.ToString();
             hpValueBar.fillAmount = cityHP / cityMaxHP;
+        }
+    }
+
+    private void InitProduction() {
+        PlayerController pc = FindObjectOfType<PlayerController>();
+        foreach (BuildingsInfo bi in buildingsInfo) {
+            if (bi.cardInfo.type == "prod") {
+                switch (bi.cardInfo.prodType) {
+                    case "gold":
+                        pc.pInfo.clickGold[0] += bi.cardInfo.product.gold;
+                        pc.pInfo.clickGold[1] += bi.cardInfo.product.food;
+                        pc.pInfo.clickGold[2] += bi.cardInfo.product.enviroment;
+                        break;
+                    case "food":
+                        pc.pInfo.clickFood[0] += bi.cardInfo.product.gold;
+                        pc.pInfo.clickFood[1] += bi.cardInfo.product.food;
+                        pc.pInfo.clickFood[2] += bi.cardInfo.product.enviroment;
+                        break;
+                    case "env":
+                        pc.pInfo.clickEnvironment[0] += bi.cardInfo.product.gold;
+                        pc.pInfo.clickEnvironment[1] += bi.cardInfo.product.food;
+                        pc.pInfo.clickEnvironment[2] += bi.cardInfo.product.enviroment;
+                        break;
+                }
+            }
         }
     }
 }
