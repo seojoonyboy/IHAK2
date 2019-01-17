@@ -49,7 +49,7 @@ public class MenuSceneController : MonoBehaviour {
         hss = FindObjectOfType<HorizontalScrollSnap>();
         userNickname.text = AccountManager.Instance.userInfos.nickname;
         clickMenuButton(pageNum);
-        
+        //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null);
     }
 
     public void switchButton() {
