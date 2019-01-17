@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UniRx;
+using DataModules;
 
 public class DropHandler : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class DropHandler : MonoBehaviour {
     public float startCamSize;
     public float camSize;
     Camera cam;
+    public DeckSettingController deckSettingController;
 
     private void Start() {
         cam = Camera.main;
@@ -41,7 +43,10 @@ public class DropHandler : MonoBehaviour {
             selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount - targetTile.GetComponent<TileObject>().tileNum;
             targetTile.GetComponent<TileObject>().buildingSet = true;
 
-            int hp = buildingObject.data.card.hitPoint;
+            string prodType = buildingObject.data.card.prodType;
+            Cost cost = buildingObject.data.card.product;
+
+            deckSettingController.ChangeSliderValue(cost);
         }
         else
             return;
