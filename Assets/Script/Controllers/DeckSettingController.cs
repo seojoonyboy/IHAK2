@@ -118,10 +118,17 @@ public class DeckSettingController : MonoBehaviour {
 
     public void settingButton() {
         if (prevData == null) {
-            Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, Callback);
+            GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, Callback);
+            modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
         }
         else {
-            Modal.instantiate("덱 이름 설정", null, prevData.name, Modal.Type.INSERT, Callback);
+            string name = prevData.name;
+            string str = name;
+            if (name.Length > 8) {
+                str = name.Substring(0, 8);
+            }
+            GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, Callback);
+            modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
         }
     }
 
