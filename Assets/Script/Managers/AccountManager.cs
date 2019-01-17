@@ -263,7 +263,7 @@ public class AccountManager : Singleton<AccountManager> {
         for (int i = 0; i < decks.Count; i++) {
             for (int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
 
-                if(j == transform.GetChild(0).GetChild(i).childCount/2) {
+                if (j == transform.GetChild(0).GetChild(i).childCount/2) {
                     targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
                     if (targetBuilding != null && transform.GetChild(0).GetChild(i).GetChild(j).childCount == 0) {
                         GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
@@ -414,6 +414,23 @@ public class AccountManager : Singleton<AccountManager> {
         }
         return null;        
     }
+
+    public void SetHQ(int num) {
+
+        GameObject targetbuilding = FindObjectOfType<ConstructManager>().townCenter;
+        if (transform.GetChild(0).GetChild(num).GetChild(transform.GetChild(0).GetChild(num).childCount / 2).childCount == 0) {
+            if(targetbuilding != null) {
+                GameObject targetTile = transform.GetChild(0).GetChild(num).GetChild(transform.GetChild(0).GetChild(num).childCount / 2).gameObject;
+                targetbuilding = Instantiate(targetbuilding, targetTile.transform);
+                targetTile.GetComponent<TileObject>().buildingSet = true;
+                targetbuilding.transform.position = targetTile.transform.position;
+                targetbuilding.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
+                targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+            }            
+        }
+    }
+    
+
     
     public enum Name {
         위니,

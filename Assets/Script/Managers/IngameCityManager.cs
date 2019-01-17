@@ -82,17 +82,17 @@ public class IngameCityManager : MonoBehaviour {
                     case "gold":
                         pc.pInfo.clickGold[0] += bi.cardInfo.product.gold;
                         pc.pInfo.clickGold[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickGold[2] += bi.cardInfo.product.enviroment;
+                        pc.pInfo.clickGold[2] += bi.cardInfo.product.environment;
                         break;
                     case "food":
                         pc.pInfo.clickFood[0] += bi.cardInfo.product.gold;
                         pc.pInfo.clickFood[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickFood[2] += bi.cardInfo.product.enviroment;
+                        pc.pInfo.clickFood[2] += bi.cardInfo.product.environment;
                         break;
                     case "env":
                         pc.pInfo.clickEnvironment[0] += bi.cardInfo.product.gold;
                         pc.pInfo.clickEnvironment[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickEnvironment[2] += bi.cardInfo.product.enviroment;
+                        pc.pInfo.clickEnvironment[2] += bi.cardInfo.product.environment;
                         break;
                 }
             }
