@@ -301,6 +301,35 @@ public class AccountManager : Singleton<AccountManager> {
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
 
+    public void checkDeck(int num) {
+        if (decks == null)
+            return;
+
+        if (num > decks.Count - 1)
+            return;
+
+        ConstructManager cm = ConstructManager.Instance;
+        GameObject constructManager = cm.transform.gameObject;
+        GameObject targetBuilding;
+
+        for (int i = 0; i < transform.GetChild(0).GetChild(num).childCount; i++) {
+            if (decks[num].coordsSerial[i] != 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0) {
+                targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
+                if (targetBuilding != null) {
+                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
+                    transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
+                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.AddComponent<LayoutGroup>();
+                }
+            }
+            else if (decks[num].coordsSerial[i] == 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
+                Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(0).gameObject);
+        }
+    }
+
 
 
     public void RemoveTileObjects(int num) {

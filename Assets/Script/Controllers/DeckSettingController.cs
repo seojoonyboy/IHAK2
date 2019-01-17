@@ -26,6 +26,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public bool reset = false;
     [SerializeField] public bool modify;
     [SerializeField] public GameObject selectBuilding;
+    [SerializeField] public GameObject buildingStatus;
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
     public Text 
@@ -65,7 +66,7 @@ public class DeckSettingController : MonoBehaviour {
         */
         
         downStream.Subscribe(_ => PickEditBuilding());
-        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => MoveEditBuilding());
+        dragStream.Delay(TimeSpan.FromMilliseconds(1000)).Subscribe(_ => MoveEditBuilding());
         upStream.Subscribe(_ => DropEditBuilding());
         
         chooseSpeciesBtn.onClick
@@ -192,6 +193,7 @@ public class DeckSettingController : MonoBehaviour {
         }
 
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+        playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
@@ -225,26 +227,36 @@ public class DeckSettingController : MonoBehaviour {
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider != null) {
+        if (hit.collider != null) {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
+                buildingStatus = selectBuilding;
             }
             else if (hit.collider.tag == "Tile") {
-                if (hit.transform.gameObject.transform.childCount != 0)
+                if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
-                else
+                    buildingStatus = selectBuilding;
+                }
+                else {
+                    gameObject.transform.GetChild(4).gameObject.SetActive(false);
                     return;
+                }
             }
             selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
             startEditPosition = selectBuilding.transform.position;
+            gameObject.transform.GetChild(4).gameObject.SetActive(true);
         }
+        else
+            gameObject.transform.GetChild(4).gameObject.SetActive(false);
+
     }
 
     public void MoveEditBuilding() {
         if (selectBuilding == null)
             return;
 
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
+        
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;        
         Vector3 mousePosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
         mousePosition.z = 0;
 
@@ -259,6 +271,8 @@ public class DeckSettingController : MonoBehaviour {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
+                
+
             }
             else if (hit.collider.tag == "Building") {
                 targetTile = hit.transform.parent.gameObject;
@@ -271,6 +285,7 @@ public class DeckSettingController : MonoBehaviour {
             targetTile = null;
             selectBuilding.transform.position = mousePosition;
         }
+        
     }
 
     public void DropEditBuilding() {
@@ -291,11 +306,13 @@ public class DeckSettingController : MonoBehaviour {
                 selectBuilding.transform.position = startEditPosition;
         }
         else {
-            selectBuilding.transform.position = startEditPosition;
+            selectBuilding.transform.position = startEditPosition;            
         }
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
+
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
+        
     }
 
     public int ChangeSliderValue(int value = 0, string type = null) {
