@@ -37,25 +37,28 @@ public class Modal : MonoBehaviour {
         Instantiate(modal).GetComponent<Modal>().setData(text, function, type);
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
 	}
-	/// <summary>
-	/// Modal 창 생성기 (Insert 편) 
-	/// </summary>
-	/// <param name="text">제목 들어갈 내용</param>
-	/// <param name="inputText">inputField 빈공간에 들어갈 내용</param>
-	/// <param name="type">Modal.Type.종류</param>
-	/// <param name="function">yes 버튼 누를 경우 실행 함수</param>
-	public static void instantiate(string text, string descText, string inputText, Type type, UnityAction<string> function) {
+    /// <summary>
+    /// Modal 창 생성기 (Insert 편) 
+    /// </summary>
+    /// <param name="text">제목 들어갈 내용</param>
+    /// <param name="descText">inputField 빈공간에 들어갈 내용</param>
+    /// <param name="inputText">inputField value</param>
+    /// <param name="type">Modal.Type.종류</param>
+    /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
+    public static GameObject instantiate(string text, string descText, string inputText, Type type, UnityAction<string> function) {
 		if(type != Type.INSERT) {
 			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
-			return;
+			return null;
 		}
 		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
         Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
         if(canvas == null) {
             Debug.LogError("no Canvas");
-            return;
+            return null;
         }
-        Instantiate(modal).GetComponent<Modal>().setData(text, descText, inputText, function);
+        GameObject tmp = Instantiate(modal);
+        tmp.GetComponent<Modal>().setData(text, descText, inputText, function);
+        return tmp;
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
 
