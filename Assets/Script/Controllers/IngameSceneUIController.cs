@@ -12,6 +12,7 @@ public class IngameSceneUIController : MonoBehaviour {
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
 
     [SerializeField] GameObject commandBar;
+    [SerializeField] Transform produceButonList;
     [SerializeField] Transform commandBarPos;
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
@@ -33,10 +34,34 @@ public class IngameSceneUIController : MonoBehaviour {
 
 
     public void SwitchCommand() {
-        if(hss.CurrentPage != 0)
-            iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(1).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
-        else
-            iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(0).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        if (hss.CurrentPage != 0) {
+            //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(1).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            ShutProductButtons(true);
+            commandBar.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        else {
+            //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(0).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+            ShutProductButtons(false);
+            commandBar.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+
+    private void ShutProductButtons(bool shut) {
+        if(shut) {
+            Debug.Log("shut");            
+            Color shutColor = new Color(255, 255, 255, 0.7f);
+            produceButonList.GetComponent<Image>().color = shutColor;
+            for (int i = 0; i < 4; i++)
+                produceButonList.GetChild(i).GetComponent<Image>().color = shutColor;
+            produceButonList.GetChild(4).gameObject.SetActive(true);
+        }
+        else {
+            Color onColor = new Color(255, 255, 255, 1.0f);
+            produceButonList.GetComponent<Image>().color = onColor;
+            for (int i = 0; i < 4; i++)
+                produceButonList.GetChild(i).GetComponent<Image>().color = onColor;
+            produceButonList.GetChild(4).gameObject.SetActive(false);
+        }
     }
 
     public void ClickOption() {
