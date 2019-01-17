@@ -407,6 +407,7 @@ public class AccountManager : Singleton<AccountManager> {
     public void RemoveTileObjects(int num) {
         Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
         foreach(Transform tile in targetTileGroup) {
+            tile.GetComponent<TileObject>().buildingSet = false;
             foreach(Transform data in tile) {
                 Destroy(data.gameObject);
             }
