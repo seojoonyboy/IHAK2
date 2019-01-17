@@ -7267,6 +7267,7 @@ MonoBehaviour:
   togglePref: {fileID: 1402426340390542, guid: 672bcc4d6c06c6947ac027f262dc967e, type: 2}
   chooseSpeciesBtn: {fileID: 331431735}
   speciesConfirmBtn: {fileID: 1646890065}
+  deleteButton: {fileID: 355703677}
   modal: {fileID: 780269801}
   speciesPortraits:
   - {fileID: 0}
@@ -7278,6 +7279,7 @@ MonoBehaviour:
   reset: 0
   modify: 0
   selectBuilding: {fileID: 0}
+  buildingStatus: {fileID: 0}
   targetTile: {fileID: 0}
   startEditPosition: {x: 0, y: 0, z: 0}
   modalHeader: {fileID: 475413629}

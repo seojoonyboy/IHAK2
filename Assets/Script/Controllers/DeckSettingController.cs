@@ -18,6 +18,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] private GameObject togglePref;
     [SerializeField] private Button chooseSpeciesBtn;
     [SerializeField] private Button speciesConfirmBtn;
+    [SerializeField] public Button deleteButton;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
     [SerializeField] DeckListController deckListController;
@@ -59,12 +60,12 @@ public class DeckSettingController : MonoBehaviour {
         TilebuildingList();
 
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
-
+        deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
         /* 테스트용
         downStream.Subscribe(_ => Debug.Log("원클릭"));
         dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => Debug.Log("FromMillSecond500클릭"));
         */
-        
+
         downStream.Subscribe(_ => PickEditBuilding());
         dragStream.Delay(TimeSpan.FromMilliseconds(1000)).Subscribe(_ => MoveEditBuilding());
         upStream.Subscribe(_ => DropEditBuilding());
@@ -246,9 +247,10 @@ public class DeckSettingController : MonoBehaviour {
             startEditPosition = selectBuilding.transform.position;
             gameObject.transform.GetChild(4).gameObject.SetActive(true);
         }
+        /*
         else
             gameObject.transform.GetChild(4).gameObject.SetActive(false);
-
+            */
     }
 
     public void MoveEditBuilding() {
@@ -311,8 +313,14 @@ public class DeckSettingController : MonoBehaviour {
 
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
-        
+        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
+    }
+
+    public void DeleteBuilding() {
+        tileSetList[buildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+        buildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
+        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        Destroy(buildingStatus);
     }
 
     public int ChangeSliderValue(int value = 0, string type = null) {
