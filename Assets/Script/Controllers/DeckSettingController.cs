@@ -332,6 +332,9 @@ public class DeckSettingController : MonoBehaviour {
         if (selectbuildingStatus == null)
             return;
 
+        if (selectbuildingStatus.GetComponent<BuildingObject>().data.id > 990)
+            return;
+
         tileSetList[selectbuildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         selectbuildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
