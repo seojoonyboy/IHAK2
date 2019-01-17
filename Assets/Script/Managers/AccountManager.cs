@@ -298,6 +298,7 @@ public class AccountManager : Singleton<AccountManager> {
                 setBuild.AddComponent<LayoutGroup>();
             }
         }
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
 
 

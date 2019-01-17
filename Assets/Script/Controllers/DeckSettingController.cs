@@ -153,19 +153,36 @@ public class DeckSettingController : MonoBehaviour {
 
         if (reset == false) {
             for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                if (tileGroup.transform.GetChild(i).childCount != 0) {
-                    GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
-                    if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
-                        building.transform.parent.GetComponent<TileObject>().buildingSet = false;
-                        building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
-                        building.transform.position = building.transform.parent.position;
-                        building.transform.parent.GetComponent<TileObject>().buildingSet = true;
+                if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
+                    if (tileGroup.transform.GetChild(i).childCount != 0) {
+                        Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
+                        tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
+                        continue;
+                    }
+                }
+                else if (playerInfosManager.decks[playerInfosManager.selectNumber] != null) {
+                    if (tileGroup.transform.GetChild(i).childCount != 0) {
+                        GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
+                        if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
+                            building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                            building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
+                            building.transform.position = building.transform.parent.position;
+                            building.transform.parent.GetComponent<TileObject>().buildingSet = true;
+                        }
                     }
                 }
             }
         }
-        else if (reset == true)
-            playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+        else if (reset == true) {
+            if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
+                for (int i = 0; i < tileGroup.transform.childCount; i++) {
+                    if (tileGroup.transform.GetChild(i).childCount != 0)
+                        Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
+                }
+            }
+            else
+                playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+        }
 
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         tileGroup.SetActive(false);
