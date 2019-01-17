@@ -23,6 +23,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] DeckListController deckListController;
     [SerializeField] public List<int> tileSetList;
     [SerializeField] public Button resetButton;
+    [SerializeField] public bool reset = false;
     [SerializeField] public bool modify;
     [SerializeField] public GameObject selectBuilding;
     [SerializeField] public GameObject targetTile;
@@ -150,18 +151,23 @@ public class DeckSettingController : MonoBehaviour {
     public void returnButton() {
         prevData = null;
 
-        for(int i = 0; i < tileGroup.transform.childCount; i++) {
-            if (tileGroup.transform.GetChild(i).childCount != 0) {
-                GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
-                if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
-                    building.transform.parent.GetComponent<TileObject>().buildingSet = false;
-                    building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
-                    building.transform.position = building.transform.parent.position;
-                    building.transform.parent.GetComponent<TileObject>().buildingSet = true;
+        if (reset == false) {
+            for (int i = 0; i < tileGroup.transform.childCount; i++) {
+                if (tileGroup.transform.GetChild(i).childCount != 0) {
+                    GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
+                    if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
+                        building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                        building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
+                        building.transform.position = building.transform.parent.position;
+                        building.transform.parent.GetComponent<TileObject>().buildingSet = true;
+                    }
                 }
             }
         }
-       // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+        else if (reset == true)
+            playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+
+        // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
@@ -177,12 +183,12 @@ public class DeckSettingController : MonoBehaviour {
 
     public void resetTile() {
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
-
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
             tileSetList[i] = 0;
         }
+        reset = true;
     }
 
     public void PickEditBuilding() {
