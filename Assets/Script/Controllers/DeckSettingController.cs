@@ -12,7 +12,10 @@ using UniRx.Triggers;
 public class DeckSettingController : MonoBehaviour {
     GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.DeckSettingScene;
     GameSceneManager gsm;
+
     AccountManager playerInfosManager;
+    ConstructManager constructManager;
+
     Camera cam;
     [SerializeField] public GameObject tileGroup;
     [SerializeField] private GameObject togglePref;
@@ -30,6 +33,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public GameObject selectbuildingStatus;
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
+
     public Text 
         modalHeader,
         content;
@@ -48,6 +52,8 @@ public class DeckSettingController : MonoBehaviour {
 
     private void Start() {
         playerInfosManager = AccountManager.Instance;
+        constructManager = ConstructManager.Instance;
+
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
         var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
@@ -87,6 +93,23 @@ public class DeckSettingController : MonoBehaviour {
         modal.transform.Find("InnerModal/Header/ExitBtn").GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
             Modal.instantiate("종족 선택을 취소하시겠습니까?", Modal.Type.YESNO, () => modal.SetActive(false));
         });
+
+        ResetAllSliderValues();
+
+        if (prevData != null) {
+            int[] coords = prevData.coordsSerial;
+            Cost product = null;
+            foreach(int coord in coords) {
+                GameObject obj = constructManager.GetBuildingObjectById(coord);
+                if(obj != null) {
+                    BuildingObject buildingObject = obj.GetComponent<BuildingObject>();
+                    product = buildingObject.data.card.product;
+                    if(product != null) {
+                        ChangeSliderValue(product);
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -355,6 +378,12 @@ public class DeckSettingController : MonoBehaviour {
         sliders[0].value += cost.environment;
         sliders[3].value += cost.gold;
         sliders[1].value += cost.food;
+    }
+
+    public void ResetAllSliderValues() {
+        for(int i=0; i<sliders.Length; i++) {
+            sliders[i].value = 0;
+        }
     }
 
     public void OnSliderValueChanged(GameObject slider) {

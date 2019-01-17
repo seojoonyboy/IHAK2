@@ -14,11 +14,17 @@ public class PlayerController : MonoBehaviour {
         REPAIR = 3,
     }
 
-    private class PlayerResource {
+    class PlayerResource {
         public int gold = 50;
         public int food = 50;
         public int turn = 600;
         public int environment = 300;
+    }
+
+    public class ProductInfo { //gold food environment 순서의 생산량 저장
+        public int[] clickGold;
+        public int[] clickFood;
+        public int[] clickEnvironment;
     }
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
@@ -27,12 +33,14 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
 
-    PlayerResource resourceClass;
+    private PlayerResource resourceClass;
     private int gameTurn;
+    public ProductInfo pInfo { get; set; }
 
 	// Use this for initialization
 	void Start () {
         resourceClass = new PlayerResource();
+        pInfo = new ProductInfo();
         playerResource.Find("Food/Value").gameObject.GetComponent<Text>().text = resourceClass.food.ToString();
         playerResource.Find("Gold/Value").gameObject.GetComponent<Text>().text = resourceClass.gold.ToString();
         playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = resourceClass.turn.ToString();
@@ -46,15 +54,38 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void ClickButton(Buttons btn) {
+        int env = 0;
         switch (btn){
-            case Buttons.GOLD:
-                gameTurn--;
+            case Buttons.GOLD: 
+                env = resourceClass.environment;
+                if (env + pInfo.clickGold[2] >= 0) {
+                    resourceClass.gold += pInfo.clickGold[0];
+                    resourceClass.food += pInfo.clickGold[1];
+                    resourceClass.environment += pInfo.clickGold[2];
+                    gameTurn--;
+                }
                 break;
             case Buttons.FOOD:
-                gameTurn--;
+                env = resourceClass.environment;
+                if (env + pInfo.clickFood[2] >= 0) {
+                    resourceClass.gold += pInfo.clickFood[0];
+                    resourceClass.food += pInfo.clickFood[1];
+                    resourceClass.environment += pInfo.clickFood[2];
+                    gameTurn--;
+                }
                 break;
             case Buttons.ENVIRONMENT:
-                gameTurn--;
+                
+                if (env + pInfo.clickEnvironment[2] < 300) {
+                    if (resourceClass.gold + pInfo.clickFood[0] >= 0 && resourceClass.food + pInfo.clickFood[1] >= 0) {
+                        resourceClass.gold += pInfo.clickFood[0];
+                        resourceClass.food += pInfo.clickFood[1];
+                        resourceClass.environment += pInfo.clickFood[2];
+                        if (resourceClass.environment > 300)
+                            resourceClass.environment = 300;
+                    }
+                    gameTurn--;
+                }
                 break;
             case Buttons.REPAIR:
                 gameTurn--;
