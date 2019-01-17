@@ -229,24 +229,34 @@ public class DeckSettingController : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         if (hit.collider != null) {
+
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
                 selectbuildingStatus = selectBuilding;
+
+                if (selectBuilding.GetComponent<BuildingObject>().data.id > 990)
+                    selectBuilding = null;
+
             }
             else if (hit.collider.tag == "Tile") {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
-                    //selectbuildingStatus = selectBuilding;
+                    selectbuildingStatus = selectBuilding;
+
+                    if (selectBuilding.GetComponent<BuildingObject>().data.id > 990)
+                        selectBuilding = null;
                 }
                 else {
                     gameObject.transform.GetChild(4).gameObject.SetActive(false);
                     return;
                 }
             }
-            selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
-            ShowBuildingStatus();
-            startEditPosition = selectBuilding.transform.position;
-            
+
+            if (selectBuilding != null) {
+                selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
+                startEditPosition = selectBuilding.transform.position;
+            }
+            ShowBuildingStatus();           
         }
         /*
         else

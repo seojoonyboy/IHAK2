@@ -13,6 +13,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     Dictionary<string, List<GameObject>> buildings;
     Dictionary<int, Image> buildingImages;
     NetworkManager _networkManager;
+    public GameObject townCenter;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
