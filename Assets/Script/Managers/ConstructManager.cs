@@ -50,7 +50,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     }
 
     private void OnSetAllBuildingsCallback(HttpResponse response) {
-        if(response.responseCode == 200) {
+        if (response.responseCode == 200) {
             List<Building> result = JsonReader.Read(response.data.ToString(), new Building());
 
             buildings = new Dictionary<string, List<GameObject>>();
