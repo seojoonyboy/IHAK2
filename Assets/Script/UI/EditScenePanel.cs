@@ -13,6 +13,7 @@ public class EditScenePanel : MonoBehaviour {
     [SerializeField] Transform content;
     [SerializeField] Transform leftBtn;
     [SerializeField] Transform rightBtn;
+    [SerializeField] Text pageText;
     public int page;
 
     private float mouseDownPosition;
@@ -50,7 +51,8 @@ public class EditScenePanel : MonoBehaviour {
             for (int i = 0; i < content.childCount; i++) 
                 iTween.MoveTo(content.GetChild(i).gameObject, iTween.Hash("x", content.GetChild(i).position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
 
-            page++;            
+            page++;
         }
+        pageText.text = (page + 1) + " / " + content.childCount;
     }
 }
