@@ -236,13 +236,14 @@ public class DeckSettingController : MonoBehaviour {
             else if (hit.collider.tag == "Tile") {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
-                    selectbuildingStatus = selectBuilding;
+                    //selectbuildingStatus = selectBuilding;
                 }
                 else {
                     gameObject.transform.GetChild(4).gameObject.SetActive(false);
                     return;
                 }
             }
+            selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
             ShowBuildingStatus();
             startEditPosition = selectBuilding.transform.position;
             
@@ -251,6 +252,7 @@ public class DeckSettingController : MonoBehaviour {
         else
             gameObject.transform.GetChild(4).gameObject.SetActive(false);
             */
+        
     }
 
     public void MoveEditBuilding() {
