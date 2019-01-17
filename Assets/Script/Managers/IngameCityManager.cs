@@ -33,20 +33,22 @@ public class IngameCityManager : MonoBehaviour {
     void Start () {
         deck = AccountManager.Instance.decks[0];
         buildingList = deck.coordsSerial;
-        BuildingsInfo bi = new BuildingsInfo();
         for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
+            BuildingsInfo bi = new BuildingsInfo();
             bi.id = deck.coordsSerial[i];
             bi.activate = true;
             if (i != 12) {
-                bi.cardInfo = transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
+                bi.cardInfo = this.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
                 bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
                 cityHP += bi.hp;
             }
+            buildingsInfo.Add(bi);
         }
         cityMaxHP = cityHP;
         
         maxHp.text = hpValue.text = cityMaxHP.ToString();
         hpValueBar.fillAmount = cityHP / cityMaxHP;
+        InitProduction();
     }
 
     private void Update() {
@@ -77,6 +79,8 @@ public class IngameCityManager : MonoBehaviour {
     private void InitProduction() {
         PlayerController pc = FindObjectOfType<PlayerController>();
         foreach (BuildingsInfo bi in buildingsInfo) {
+            if (bi.cardInfo == null)
+                continue;
             if (bi.cardInfo.type == "prod") {
                 switch (bi.cardInfo.prodType) {
                     case "gold":
