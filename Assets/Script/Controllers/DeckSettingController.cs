@@ -27,7 +27,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public bool reset = false;
     [SerializeField] public bool modify;
     [SerializeField] public GameObject selectBuilding;
-    [SerializeField] public GameObject buildingStatus;
+    [SerializeField] public GameObject selectbuildingStatus;
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
     public Text 
@@ -231,21 +231,21 @@ public class DeckSettingController : MonoBehaviour {
         if (hit.collider != null) {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
-                buildingStatus = selectBuilding;
+                selectbuildingStatus = selectBuilding;
             }
             else if (hit.collider.tag == "Tile") {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
-                    buildingStatus = selectBuilding;
+                    selectbuildingStatus = selectBuilding;
                 }
                 else {
                     gameObject.transform.GetChild(4).gameObject.SetActive(false);
                     return;
                 }
             }
-            selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
+            ShowBuildingStatus();
             startEditPosition = selectBuilding.transform.position;
-            gameObject.transform.GetChild(4).gameObject.SetActive(true);
+            
         }
         /*
         else
@@ -317,10 +317,23 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void DeleteBuilding() {
-        tileSetList[buildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
-        buildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
+        if (selectbuildingStatus == null)
+            return;
+
+        tileSetList[selectbuildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+        selectbuildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
-        Destroy(buildingStatus);
+        Destroy(selectbuildingStatus);
+    }
+
+    public void ShowBuildingStatus() {
+        if (selectbuildingStatus == null)
+            return;
+
+        gameObject.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
+        gameObject.transform.GetChild(4).GetChild(1).GetChild(1).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
+        gameObject.transform.GetChild(4).gameObject.SetActive(true);
+
     }
 
     public int ChangeSliderValue(int value = 0, string type = null) {
