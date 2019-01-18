@@ -197,8 +197,10 @@ public class DeckSettingController : MonoBehaviour {
                     if (tileGroup.transform.GetChild(i).childCount != 0) {
                         GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
 
-                        if (building.GetComponent<BuildingObject>().setTileLocation < 0) {                            
-                            building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                        if (building.GetComponent<BuildingObject>().setTileLocation < 0) {
+                            if (building.transform.parent.childCount == 1)
+                                building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+
                             Destroy(building);
                             continue;
                         }

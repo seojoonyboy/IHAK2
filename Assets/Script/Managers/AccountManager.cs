@@ -370,28 +370,12 @@ public class AccountManager : Singleton<AccountManager> {
                     setBuild.AddComponent<LayoutGroup>();
                 }
             }
-            /*
-            else if (decks[num].coordsSerial[i] != 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0 && decks[num].coordsSerial[i] != transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<BuildingObject>().data.id) {
-
-                for (int j = 0; i < transform.GetChild(0).GetChild(num).GetChild(i).childCount; j++)
-                    Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(j));
-
-                targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
-                if (targetBuilding != null) {
-                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
-                    transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
-                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-                    setBuild.AddComponent<LayoutGroup>();
-                }
-            }
-            */
             else if (decks[num].coordsSerial[i] == 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
                 Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(0).gameObject);
 
-            if (transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0)
+            if (transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
+                transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
+            else if(transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0)
                 transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = false;
         }
 
