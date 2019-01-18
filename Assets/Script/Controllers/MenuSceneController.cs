@@ -37,7 +37,12 @@ public class MenuSceneController : MonoBehaviour {
 
     private void OnSetTileCompleted(Enum Event_Type, Component Sender, object Param) {
         if(leaderDeck == null) return;
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(0).gameObject;
+        int num = leaderDeck.transform.GetChildCount();
+        if (num > 0) {
+            for (int i = 0; i < num; i++)
+                Destroy(leaderDeck.transform.GetChild(i).gameObject);
+        }
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild((int)Param).gameObject;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
         go.SetActive(false);

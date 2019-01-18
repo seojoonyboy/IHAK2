@@ -36,6 +36,7 @@ public class AccountManager : Singleton<AccountManager> {
     public int Lv { get; set; }
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
+    public int leaderIndex { get; set; }
 
 
     private Wallet wallet;
@@ -138,8 +139,6 @@ public class AccountManager : Singleton<AccountManager> {
             .Append(DEVICEID)
             .Append("/decks");
         _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
-
-        tmpData = deck;
     }
 
     public void ModifyDeck(Deck deck) {
@@ -148,7 +147,7 @@ public class AccountManager : Singleton<AccountManager> {
         Debug.Log(deck.id);
         form.Name = deck.name;
         form.Race = "primal";
-        form.IsRepresent = false;
+        form.IsRepresent = deck.isRepresent;
         form.CoordsSerial = deck.coordsSerial;
         var dataPack = JsonConvert.SerializeObject(form);
 
@@ -164,8 +163,10 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     private void AddDeckCallback(HttpResponse response) {
-        if (response.responseCode != 200 || tmpData == null) return;
-        decks.Add(tmpData);
+        if (response.responseCode != 200) return;
+        Deck deck =  JsonConvert.DeserializeObject<Deck>(response.data);
+        decks.Add(deck);
+        
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
@@ -184,13 +185,14 @@ public class AccountManager : Singleton<AccountManager> {
         return deck;
     }
 
-    public void ChangeLeaderDeck(int id) {
-        //Deck prevLeaderDeck = decks.Find(x => x.isLeader == true);
-        //if (prevLeaderDeck != null) prevLeaderDeck.isLeader = false;
-
-        //Deck deck = decks.Find(x => x.id == id);
-        //deck.isLeader = true;
-        //selectDeck = deck.deckData;
+    public void ChangeLeaderDeck(int id, int index) {
+        Deck deck = decks.Find(x => x.isRepresent ==  true);
+        deck.isRepresent = false;
+        //ModifyDeck(deck);
+        deck = decks.Find(x => x.id == id);
+        deck.isRepresent = true;
+        ModifyDeck(deck);
+        leaderIndex = index;
     }
 
     public void GetUserInfo() {
@@ -389,6 +391,7 @@ public class AccountManager : Singleton<AccountManager> {
     public void RemoveTileObjects(int num) {
         Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
         foreach(Transform tile in targetTileGroup) {
+            tile.GetComponent<TileObject>().buildingSet = false;
             foreach(Transform data in tile) {
                 Destroy(data.gameObject);
             }
