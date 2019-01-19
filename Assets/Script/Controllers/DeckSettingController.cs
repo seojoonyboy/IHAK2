@@ -71,6 +71,7 @@ public class DeckSettingController : MonoBehaviour {
         
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
+
         /* 테스트용
         downStream.Subscribe(_ => Debug.Log("원클릭"));
         dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => Debug.Log("FromMillSecond500클릭"));
@@ -173,6 +174,7 @@ public class DeckSettingController : MonoBehaviour {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation = tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum;
         }
+        deck.coordsSerial = new int[tileSetList.Count];
         if (prevData == null) {
             playerInfosManager.AddDeck(deck);
         }
@@ -189,7 +191,6 @@ public class DeckSettingController : MonoBehaviour {
     public void returnButton() {
         prevData = null;
 
-        
         if (reset == false) {
             for (int i = 0; i < tileGroup.transform.childCount; i++) {
                 if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
