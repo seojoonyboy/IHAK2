@@ -49,10 +49,7 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        playerResource.Find("Food/Value").gameObject.GetComponent<Text>().text = resourceClass.food.ToString();
-        playerResource.Find("Gold/Value").gameObject.GetComponent<Text>().text = resourceClass.gold.ToString();
-        playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = resourceClass.turn.ToString();
-        playerResource.Find("Environment/Value").gameObject.GetComponent<Image>().fillAmount = resourceClass.environment / 300.0f;
+        PrintResource();
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
@@ -96,10 +93,13 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.turn--;
                 break;
         }
+        PrintResource();
+    }
+
+    private void PrintResource() {
         playerResource.Find("Food/Value").gameObject.GetComponent<Text>().text = resourceClass.food.ToString();
         playerResource.Find("Gold/Value").gameObject.GetComponent<Text>().text = resourceClass.gold.ToString();
         playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = resourceClass.turn.ToString();
         playerResource.Find("Environment/Value").gameObject.GetComponent<Image>().fillAmount = resourceClass.environment / 300.0f;
-
     }
 }

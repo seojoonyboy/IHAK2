@@ -65,17 +65,20 @@ public class MenuSceneController : MonoBehaviour {
 
     IEnumerator HideButton() {
         yield return new WaitForSeconds(0.2f);
-        if (pageNum == 0) {
-            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
-            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
-        }
-        if (pageNum == 1) {
-            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true); 
-            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); 
-        }
-        if (pageNum == 2) {
-            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true); 
-            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(false);
+        switch (pageNum) {
+            case 0:
+                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
+                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
+                break;
+            
+            case 2:
+                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true);
+                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(false);
+                break;
+            default :
+                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true);
+                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true);
+                break;
         }
     }
 
