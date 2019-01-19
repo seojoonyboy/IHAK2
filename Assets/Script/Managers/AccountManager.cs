@@ -15,6 +15,7 @@ public class AccountManager : Singleton<AccountManager> {
     private NetworkManager _networkManager;
     public GameObject deckGroup;
     private string deviceID;
+    public GameSceneManager.SceneState scenestate;
 
     public class UserClassInput {
         public string nickname;
@@ -401,6 +402,7 @@ public class AccountManager : Singleton<AccountManager> {
                 Destroy(data.gameObject);
             }
         }
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, null);
     }
 
     private void SetUserReqData(string inputText) {

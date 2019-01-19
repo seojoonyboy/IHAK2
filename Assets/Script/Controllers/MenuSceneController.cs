@@ -37,7 +37,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private void OnSetTileCompleted(Enum Event_Type, Component Sender, object Param) {
         if(leaderDeck == null) return;
-        int num = leaderDeck.transform.GetChildCount();
+        int num = leaderDeck.transform.childCount;
         if (num > 0) {
             for (int i = 0; i < num; i++)
                 Destroy(leaderDeck.transform.GetChild(i).gameObject);
@@ -60,10 +60,32 @@ public class MenuSceneController : MonoBehaviour {
     public void switchButton() {
         iTween.MoveTo(buttonSelect.GetChild(1).gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.3f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
         pageNum = hss.CurrentPage;
+        StartCoroutine(HideButton());
+    }
+
+    IEnumerator HideButton() {
+        yield return new WaitForSeconds(0.2f);
+        if (pageNum == 0) {
+            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
+            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
+        }
+        if (pageNum == 1) {
+            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true); 
+            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); 
+        }
+        if (pageNum == 2) {
+            buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true); 
+            buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     public void clickMenuButton(int page) {
         hss.GoToScreen(page);
         switchButton();
+    }
+
+    public void OpenOption() {
+        OptionController oc = FindObjectOfType<OptionController>();
+        oc.EnterOptionWindow(true);
     }
 }
