@@ -277,6 +277,7 @@ public class DeckSettingController : MonoBehaviour {
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
             tileSetList[i] = 0;
         }
+        ResetAllSliderValues();
         ResetUICardCount();
         reset = true;
     }
@@ -406,6 +407,9 @@ public class DeckSettingController : MonoBehaviour {
         count--;
         slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
 
+        Cost cost = selectbuildingStatus.GetComponent<BuildingObject>().data.card.product;
+        MinusSliderValue(cost);
+
         tileSetList[selectbuildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         selectbuildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
@@ -486,6 +490,36 @@ public class DeckSettingController : MonoBehaviour {
         sliders[0].value += cost.environment;
         sliders[3].value += cost.gold;
         sliders[1].value += cost.food;
+    }
+
+    public void MinusSliderValue(Cost cost) {
+
+        if (cost.environment > 0) {
+            if (sliders[0].value > 0)
+                sliders[0].value -= cost.environment;
+        }
+        else {
+            if (sliders[0].value > 0)
+                sliders[0].value += cost.environment;
+        }
+
+        if (cost.gold > 0) {
+            if (sliders[3].value > 0)
+                sliders[3].value -= cost.gold;
+        }
+        else {
+            if (sliders[3].value > 0)
+                sliders[3].value += cost.gold;
+        }
+
+        if (cost.food > 0) {
+            if (sliders[1].value > 0)
+                sliders[1].value -= cost.food;
+        }
+        else {
+            if (sliders[1].value > 0)
+                sliders[1].value += cost.food;
+        }
     }
 
     public void ResetAllSliderValues() {
