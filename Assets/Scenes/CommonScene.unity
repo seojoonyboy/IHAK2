@@ -2509,6 +2509,7 @@ GameObject:
   - component: {fileID: 911806312}
   - component: {fileID: 911806314}
   - component: {fileID: 911806313}
+  - component: {fileID: 911806315}
   m_Layer: 0
   m_Name: LanguageSetWindow
   m_TagString: Untagged
@@ -2570,6 +2571,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 911806311}
   m_CullTransparentMesh: 0
+--- !u!114 &911806315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 911806311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!1 &964876530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3548,6 +3562,7 @@ GameObject:
   - component: {fileID: 1332112642}
   - component: {fileID: 1332112644}
   - component: {fileID: 1332112643}
+  - component: {fileID: 1332112645}
   m_Layer: 0
   m_Name: GameSetWindow
   m_TagString: Untagged
@@ -3609,6 +3624,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1332112641}
   m_CullTransparentMesh: 0
+--- !u!114 &1332112645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1332112641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!1 &1373252587
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,6 +4983,7 @@ GameObject:
   - component: {fileID: 1853445602}
   - component: {fileID: 1853445604}
   - component: {fileID: 1853445603}
+  - component: {fileID: 1853445605}
   m_Layer: 0
   m_Name: AccountSetWindow
   m_TagString: Untagged
@@ -5016,6 +5045,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1853445601}
   m_CullTransparentMesh: 0
+--- !u!114 &1853445605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1853445601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!1 &1873205831
 GameObject:
   m_ObjectHideFlags: 0
