@@ -72,7 +72,7 @@ public class DeckListController : MonoBehaviour {
                 .Subscribe(_ => {
                     Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
                         AccountManager.Instance.RemoveDeck(id);
-                        Sort(AccountManager.Instance.decks);
+                        //  Sort(AccountManager.Instance.decks);
                         AccountManager.Instance.RemoveTileObjects(newItem.transform.parent.GetSiblingIndex());
                     });
                 });
