@@ -31,13 +31,13 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, OnSetTileCompleted);
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
     }
 
-    private void OnSetTileCompleted(Enum Event_Type, Component Sender, object Param) {
+    private void ResetTileGroupFinished(Enum Event_Type, Component Sender, object Param) {
         if(leaderDeck == null) return;
-        int num = leaderDeck.transform.GetChildCount();
+        int num = leaderDeck.transform.childCount;
         if (num > 0) {
             for (int i = 0; i < num; i++)
                 Destroy(leaderDeck.transform.GetChild(i).gameObject);

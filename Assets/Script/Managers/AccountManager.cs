@@ -13,6 +13,8 @@ using System.Text;
 public class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
     private NetworkManager _networkManager;
+    MenuSceneEventHandler eventHandler;
+
     public GameObject deckGroup;
     private string deviceID;
 
@@ -29,7 +31,6 @@ public class AccountManager : Singleton<AccountManager> {
         public Card cards;
         public List<Deck> decks;
     }
-    public bool userDataAvailable = false;
     public List<Deck> decks = new List<Deck>();
 
     public int Exp { get; set; }
@@ -42,7 +43,6 @@ public class AccountManager : Singleton<AccountManager> {
     private Wallet wallet;
 
     private StringBuilder sb = new StringBuilder();
-    private int selId = -1;
     //새로운 덱의 생성정보를 담는 임시 변수 (수정 예정)
     private Deck tmpData = null;
 
@@ -55,8 +55,18 @@ public class AccountManager : Singleton<AccountManager> {
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
         deviceID = SystemInfo.deviceUniqueIdentifier;
-        //ReqUserInfo();
+
+        eventHandler = MenuSceneEventHandler.Instance;
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
     }
+
+    private void OnDeckListChanged(Enum Event_Type, Component Sender, object Param) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/" + DEVICEID + "/decks");
+        _networkManager.request("GET", url.ToString(), OnMyDeckLoaded, false);
+    }
+
     private void Start() {
         //deviceID = "11231234";
         if (deckGroup != null)
@@ -107,22 +117,25 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void RemoveDeck(int id) {
-        selId = id;
+        Deck deck = decks.Find(x => x.id == id);
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/")
             .Append(DEVICEID)
             .Append("/decks/")
             .Append(id);
-        _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+        if (deck != null && deck.isRepresent == true) {
+            Modal.instantiate("대표 덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
+                _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+            });
+        }
+        else {
+            _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+        }
     }
 
     private void RemoveComplete(HttpResponse response) {
-        if (response.responseCode != 200 || selId == -1) return;
-        Deck deck = decks.Find(x => x.id == selId);
-        if (deck == null) return;
-        decks.Remove(deck);
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
     }
 
     public void AddDeck(Deck deck) {
@@ -162,12 +175,39 @@ public class AccountManager : Singleton<AccountManager> {
         tmpData = deck;
     }
 
+    public void ChangeLeaderDeck(int id) {
+        Debug.Log(id);
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/change_represent/")
+            .Append(id.ToString());
+        WWWForm form = new WWWForm();
+        _networkManager.request("PUT", url.ToString(), "asd", ChangeLeaderDeckCallback);
+    }
+
+    private void ChangeLeaderDeckCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                decks = JsonReader.Read(response.data.ToString(), new Deck());
+            }
+            else {
+                decks = new List<Deck>();
+            }
+            SetBuildingToTiles();
+            SetTileGroups(ref decks);
+
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
+        }
+    }
+
     private void AddDeckCallback(HttpResponse response) {
         if (response.responseCode != 200) return;
         Deck deck =  JsonConvert.DeserializeObject<Deck>(response.data);
         decks.Add(deck);
         
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
     }
 
     private void ModifyDeckCallback(HttpResponse response) {
@@ -177,22 +217,12 @@ public class AccountManager : Singleton<AccountManager> {
         deck.name = tmpData.name;
         deck.coordsSerial = tmpData.coordsSerial;
         deck.coords = tmpData.coords;
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
     }
 
     public Deck FindDeck(int id) {
         Deck deck = decks.Find(x => x.id == id);
         return deck;
-    }
-
-    public void ChangeLeaderDeck(int id, int index) {
-        Deck deck = decks.Find(x => x.isRepresent ==  true);
-        deck.isRepresent = false;
-        //ModifyDeck(deck);
-        deck = decks.Find(x => x.id == id);
-        deck.isRepresent = true;
-        ModifyDeck(deck);
-        leaderIndex = index;
     }
 
     public void GetUserInfo() {
@@ -202,26 +232,18 @@ public class AccountManager : Singleton<AccountManager> {
         _networkManager.request("GET", url.ToString(), OnUserReqCallback, false);
     }
 
-    public void GetMyDecks() {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/" + DEVICEID + "/decks");
-        _networkManager.request("GET", url.ToString(), OnMyDeckReqCallback, false);
-    }
-
-    private void OnMyDeckReqCallback(HttpResponse response) {
+    private void OnMyDeckLoaded(HttpResponse response) {
         if (response.responseCode == 200) {
-            if (userDataAvailable == false) {
+            if(response.data != null) {
                 decks = JsonReader.Read(response.data.ToString(), new Deck());
-                Deck deck = decks.FirstOrDefault();
-                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
-                userDataAvailable = true;
-                SetTileObjects();
             }
             else {
-                Debug.Log("저장된 데이터 활용");
-                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
+                decks = new List<Deck>();
             }
+            SetBuildingToTiles();
+            SetTileGroups(ref decks);
+
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
         }
         else if (response.responseCode == 404) {
             Debug.Log("페이지를 찾을 수 없습니다");
@@ -249,22 +271,43 @@ public class AccountManager : Singleton<AccountManager> {
         }
     }
     
+    private void SetTileGroups(ref List<Deck> decks) {
+        Transform tileGroups = transform.GetChild(0);
+
+        int leaderIndex = 0;
+        for (int i = 0; i < decks.Count; i++) {
+            Transform tileGroup = tileGroups.GetChild(i);
+            Deck deck = decks[i];
+            int[] coords = deck.coordsSerial;
+            if (deck.isRepresent) leaderIndex = i;
+
+            for (int j = 0; j < coords.Length; j++) {
+                if (coords[j] != 0 && coords[j] != 1000) {
+                    Transform tile = tileGroup.GetChild(j);
+                    foreach (Transform child in tile) {
+                        Destroy(child.gameObject);
+                    }
+                    Instantiate(FindBuildingWithID(coords[j]), tile);
+                }
+            }
+        }
+
+        //eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, leaderIndex);
+    }
 
     /// <summary>
-    /// 모든 건물 타일을 GameObject로 만드는 함수
+    /// 모든 건물 타일을 각각 GameObject로 만드는 함수
     /// </summary>
-    public void SetTileObjects() {
+    public void SetBuildingToTiles() {
         if (decks == null)
             return;
-
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
         GameObject targetBuilding;
 
-
         for (int i = 0; i < decks.Count; i++) {
             for (int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
-
+                //HQ 설정
                 if (j == transform.GetChild(0).GetChild(i).childCount/2) {
                     targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
                     if (targetBuilding != null && transform.GetChild(0).GetChild(i).GetChild(j).childCount == 0) {
@@ -278,16 +321,19 @@ public class AccountManager : Singleton<AccountManager> {
                     }
                     continue;
                 }
-                
-
                 targetBuilding = FindBuildingWithID(decks[i].coordsSerial[j]);
+                //그 외
                 if (targetBuilding != null) {
+                    
                     GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
+
+                    Debug.Log(setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum);
+
                     transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
                     setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount*2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
                 }
             }

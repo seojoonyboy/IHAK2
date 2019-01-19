@@ -58,8 +58,6 @@ public class GameSceneManager : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         _wndLoadding.setLoaddingValue(1.0f);
         yield return new WaitForSeconds(0.5f);
-        if (state == SceneState.MenuScene)
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null, AccountManager.Instance.leaderIndex);
         Destroy(_wndLoadding.gameObject);
         sceneState = state;
     }
