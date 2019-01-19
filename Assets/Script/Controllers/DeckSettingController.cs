@@ -174,7 +174,7 @@ public class DeckSettingController : MonoBehaviour {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation = tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum;
         }
-        deck.coordsSerial = new int[tileSetList.Count];
+        deck.coordsSerial = tileSetList.ToArray();
         if (prevData == null) {
             playerInfosManager.AddDeck(deck);
         }

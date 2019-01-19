@@ -16,6 +16,8 @@ public class AccountManager : Singleton<AccountManager> {
     MenuSceneEventHandler eventHandler;
 
     public GameObject deckGroup;
+    public GameObject defaultTileGroup;
+
     private string deviceID;
     public GameSceneManager.SceneState scenestate;
 
@@ -46,6 +48,7 @@ public class AccountManager : Singleton<AccountManager> {
     private StringBuilder sb = new StringBuilder();
     //새로운 덱의 생성정보를 담는 임시 변수 (수정 예정)
     private Deck tmpData = null;
+    private GameObject tmpObj;
 
     [SerializeField]
     public List<int> selectDeck;
@@ -117,7 +120,7 @@ public class AccountManager : Singleton<AccountManager> {
         //EventHandler PostNotification 발생
     }
 
-    public void RemoveDeck(int id) {
+    public void RemoveDeck(int id, GameObject obj) {
         Deck deck = decks.Find(x => x.id == id);
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
@@ -125,6 +128,7 @@ public class AccountManager : Singleton<AccountManager> {
             .Append(DEVICEID)
             .Append("/decks/")
             .Append(id);
+        tmpObj = obj;
         if (deck != null && deck.isRepresent == true) {
             Modal.instantiate("대표 덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
                 _networkManager.request("DELETE", url.ToString(), RemoveComplete);
@@ -136,7 +140,15 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     private void RemoveComplete(HttpResponse response) {
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
+        if(response.responseCode == 200) {
+            if(tmpObj != null) {
+                int slotNum = tmpObj.transform.parent.GetComponent<Index>().Id;
+                Destroy(transform.GetChild(0).GetChild(slotNum).gameObject);
+                Instantiate(defaultTileGroup, transform.GetChild(0)).SetActive(false);
+            } 
+            
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
+        }
     }
 
     public void AddDeck(Deck deck) {
