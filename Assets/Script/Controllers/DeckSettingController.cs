@@ -24,6 +24,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public Button deleteButton;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
+    [SerializeField] public GameObject uicontent;
     [SerializeField] DeckListController deckListController;
     [SerializeField] public List<int> tileSetList;
     [SerializeField] public Button resetButton;
@@ -33,6 +34,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public GameObject selectbuildingStatus;
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
+    [SerializeField] public bool picking = false;
 
     public Text 
         modalHeader,
@@ -54,19 +56,19 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
-
+        uicontent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;        
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
         var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
         var dragStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButton(0));
         var upStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0));
-
         playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
         tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
         deckListController = FindObjectOfType<DeckListController>();
         TilebuildingList();
-
+        CheckUICardCount();
+        
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
         /* 테스트용
@@ -75,7 +77,7 @@ public class DeckSettingController : MonoBehaviour {
         */
 
         downStream.Subscribe(_ => PickEditBuilding());
-        dragStream.Delay(TimeSpan.FromMilliseconds(1000)).Subscribe(_ => MoveEditBuilding());
+        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => MoveEditBuilding());
         upStream.Subscribe(_ => DropEditBuilding());
         
         chooseSpeciesBtn.onClick
@@ -241,8 +243,9 @@ public class DeckSettingController : MonoBehaviour {
         if (playerInfosManager.selectNumber > deckCount - 1)
             return;
 
-        playerInfosManager.checkDeck(playerInfosManager.selectNumber);
+        
         tileGroup.SetActive(false);
+        playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
@@ -259,11 +262,21 @@ public class DeckSettingController : MonoBehaviour {
         for (int i = 0; i < tileGroup.transform.childCount; i++) {
             if (i == tileGroup.transform.childCount / 2)
                 continue;
-            if (tileGroup.transform.GetChild(i).childCount != 0)
-                Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
+            if (tileGroup.transform.GetChild(i).childCount != 0) {
+                /*
+                GameObject card = FindCard(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
+                int count = BuildingCount(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
+                --count;
+                card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card.placementLimit;
+                */
+                Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject); // accountManager => 하위 => tileGroup(몇번째 그룹?) => GetChild(i) i번째 타일 => GetChild(0) 0번째에 있는 건물
+            }
+
+
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
             tileSetList[i] = 0;
         }
+        ResetUICardCount();
         reset = true;
     }
 
@@ -313,10 +326,11 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void MoveEditBuilding() {
+        
         if (selectBuilding == null)
             return;
 
-        
+        picking = true;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;        
         Vector3 mousePosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
         mousePosition.z = 0;
@@ -346,7 +360,6 @@ public class DeckSettingController : MonoBehaviour {
             targetTile = null;
             selectBuilding.transform.position = mousePosition;
         }
-        
     }
 
     public void DropEditBuilding() {
@@ -367,9 +380,14 @@ public class DeckSettingController : MonoBehaviour {
                 selectBuilding.transform.position = startEditPosition;
         }
         else {
-            selectBuilding.transform.position = startEditPosition;            
+            //selectBuilding.transform.position = startEditPosition;
+            if (picking == true)
+                DeleteBuilding();
+            else
+                selectBuilding.transform.position = startEditPosition;
         }
 
+        picking = false;
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
@@ -381,6 +399,11 @@ public class DeckSettingController : MonoBehaviour {
 
         if (selectbuildingStatus.GetComponent<BuildingObject>().data.id > 990)
             return;
+
+        GameObject slot = FindCard(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
+        int count = BuildingCount(selectbuildingStatus);
+        count--;
+        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
 
         tileSetList[selectbuildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         selectbuildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
@@ -398,7 +421,7 @@ public class DeckSettingController : MonoBehaviour {
 
     }
 
-    public int BuildingCount(GameObject _object) {       
+    public int BuildingCount(GameObject _object) {
         int count = 0;
         
         for(int i = 0; i < tileGroup.transform.childCount; i++) {
@@ -411,6 +434,52 @@ public class DeckSettingController : MonoBehaviour {
         }
         return count;
     }
+
+    public void CheckUICardCount() {
+        if (uicontent == null)
+            return;
+
+        for(int i = 0; i < uicontent.transform.childCount; i++) // 페이지 검사
+        {
+            for(int j = 0; j< uicontent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
+            {
+                GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
+                slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+            }
+        }
+    }
+
+    public void ResetUICardCount() {
+        if (uicontent == null)
+            return;
+
+        for (int i = 0; i < uicontent.transform.childCount; i++) // 페이지 검사
+        {
+            for (int j = 0; j < uicontent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
+            {
+                GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
+                slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+            }
+        }
+    }
+
+    public GameObject FindCard(int id) {
+
+        GameObject card;
+
+        if(uicontent != null) {
+            for(int i = 0; i< uicontent.transform.childCount; i++) {
+                for(int j = 0; j < uicontent.transform.GetChild(i).childCount; j++) {
+                    if (uicontent.transform.GetChild(i).GetChild(j).GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.id == id) {
+                        card = uicontent.transform.GetChild(i).GetChild(j).gameObject;
+                        return card;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void ChangeSliderValue(Cost cost) {
         sliders[0].value += cost.environment;

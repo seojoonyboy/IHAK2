@@ -43,11 +43,19 @@ public class DropHandler : MonoBehaviour {
                 selectBuilding.transform.SetParent(targetTile.transform);
                 selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount - targetTile.GetComponent<TileObject>().tileNum;
                 targetTile.GetComponent<TileObject>().buildingSet = true;
+                GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
+                
+                if(slot != null) {
+                    slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                }
 
                 string prodType = buildingObject.data.card.prodType;
                 Cost cost = buildingObject.data.card.product;
 
                 deckSettingController.ChangeSliderValue(cost);
+
+                
+
             }
             else
                 return;

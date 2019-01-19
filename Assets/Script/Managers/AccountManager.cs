@@ -220,6 +220,7 @@ public class AccountManager : Singleton<AccountManager> {
             }
             else {
                 Debug.Log("저장된 데이터 활용");
+                //checkDeck(selectNumber);
                 MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
             }
         }
@@ -374,11 +375,15 @@ public class AccountManager : Singleton<AccountManager> {
             }
             else if (decks[num].coordsSerial[i] == 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
                 Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(0).gameObject);
+            
 
-            if (transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
+            
+            if (decks[num].coordsSerial[i] != 0) {
                 transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-            else if(transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0)
+            }
+            else if (decks[num].coordsSerial[i] <= 0)
                 transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = false;
+                
         }
 
 
