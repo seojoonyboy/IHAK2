@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour {
     public enum SceneState {
-        None,
-        LogoScene,
-        MenuScene,
-        DeckSettingScene,
-        IngameScene,
+        None = 0,
+        LogoScene = 1,
+        MenuScene = 2,
+        DeckSettingScene = 3,
+        IngameScene = 4,
     }
 
     private SceneState sceneState;
@@ -53,7 +53,7 @@ public class GameSceneManager : MonoBehaviour {
         AO = SceneManager.LoadSceneAsync(load, LoadSceneMode.Additive);
         while (!AO.isDone) {
             _wndLoadding.setLoaddingValue(0.5f + AO.progress / 3);
-            yield return null;
+            yield return null; 
         }
         yield return new WaitForSeconds(0.5f);
         _wndLoadding.setLoaddingValue(1.0f);
@@ -62,5 +62,6 @@ public class GameSceneManager : MonoBehaviour {
             MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null, AccountManager.Instance.leaderIndex);
         Destroy(_wndLoadding.gameObject);
         sceneState = state;
+        AccountManager.Instance.scenestate = state;
     }
 }
