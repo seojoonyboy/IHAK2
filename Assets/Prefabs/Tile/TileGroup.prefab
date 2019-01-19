@@ -108,6 +108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4731519097062116}
+  - component: {fileID: 114084133812629086}
   m_Layer: 0
   m_Name: TileGroup
   m_TagString: TileGroup
@@ -1606,6 +1607,17 @@ MonoBehaviour:
     col: 2
   row: 1
   col: 2
+--- !u!114 &114084133812629086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162081098818026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00159c9b68c9fe544a73bfcb6e2b75fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114098461325195654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1780,15 +1792,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    Id: 0
-    Name: 
-    Tier: 0
-    Hp: 0
-    Limit_num: 0
-    Type: 
-    Primal: 
+    id: 0
+    card:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rareity: 0
+      product:
+        id: 0
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      canAttack: 0
+      unit:
+        id: 0
+        name: 
+        cost:
+          id: 0
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tearNeed: 0
   icon: {fileID: 21300024, guid: 37a60b4083bbcb64e955711f9d730f97, type: 3}
   mainSprite: {fileID: 21300000, guid: d7b1d8c6cbe30314ca1f5c776d44ab24, type: 3}
+  setTileLocation: 0
 --- !u!114 &114575845443507872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2958,7 +2997,7 @@ SpriteRenderer:
   m_Size: {x: 2.7, y: 2.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!212 &212728745795789178

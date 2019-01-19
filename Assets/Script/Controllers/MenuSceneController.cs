@@ -31,20 +31,27 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
     }
 
+    private void OnDestroy() {
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+    }
+
     private void ResetTileGroupFinished(Enum Event_Type, Component Sender, object Param) {
-        if(leaderDeck == null) return;
-        int num = leaderDeck.transform.childCount;
-        if (num > 0) {
-            for (int i = 0; i < num; i++)
-                Destroy(leaderDeck.transform.GetChild(i).gameObject);
+        foreach(Transform tf in leaderDeck.transform) {
+            Destroy(tf.gameObject);
         }
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild((int)Param).gameObject;
         go.SetActive(true);
-        GameObject ld = (GameObject)Instantiate(go, leaderDeck.transform);
+        GameObject lo = Instantiate(go, leaderDeck.transform);
+        foreach(Transform tile in lo.transform) {
+            if(tile.childCount > 1) {
+                for(int i= 1; i<tile.childCount; i++) {
+                    Destroy(tile.GetChild(i).gameObject);
+                }
+            }
+        }
         go.SetActive(false);
     }
 

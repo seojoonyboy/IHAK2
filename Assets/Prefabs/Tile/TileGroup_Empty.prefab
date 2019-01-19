@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4428682239435922}
+  - component: {fileID: 114787252426975634}
   m_Layer: 0
   m_Name: TileGroup_Empty
   m_TagString: TileGroup
@@ -1845,6 +1846,17 @@ MonoBehaviour:
     col: 2
   row: 1
   col: 2
+--- !u!114 &114787252426975634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1055812249702644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00159c9b68c9fe544a73bfcb6e2b75fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114806919111400174
 MonoBehaviour:
   m_ObjectHideFlags: 1
