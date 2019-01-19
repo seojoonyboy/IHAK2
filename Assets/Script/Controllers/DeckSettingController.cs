@@ -101,6 +101,8 @@ public class DeckSettingController : MonoBehaviour {
 
         ResetAllSliderValues();
 
+
+
         if (prevData != null) {
             int[] coords = prevData.coordsSerial;
             Cost product = null;

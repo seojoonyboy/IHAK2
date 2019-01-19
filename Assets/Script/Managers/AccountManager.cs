@@ -145,8 +145,7 @@ public class AccountManager : Singleton<AccountManager> {
                 int slotNum = tmpObj.transform.parent.GetComponent<Index>().Id;
                 Destroy(transform.GetChild(0).GetChild(slotNum).gameObject);
                 Instantiate(defaultTileGroup, transform.GetChild(0)).SetActive(false);
-            } 
-            
+            }
             MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
         }
     }
@@ -189,7 +188,6 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     public void ChangeLeaderDeck(int id) {
-        Debug.Log(id);
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/")
@@ -255,7 +253,6 @@ public class AccountManager : Singleton<AccountManager> {
             }
             SetBuildingToTiles();
             SetTileGroups(ref decks);
-
             MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
         }
         else if (response.responseCode == 404) {
@@ -290,6 +287,7 @@ public class AccountManager : Singleton<AccountManager> {
         int leaderIndex = 0;
         for (int i = 0; i < decks.Count; i++) {
             Transform tileGroup = tileGroups.GetChild(i);
+            
             Deck deck = decks[i];
             int[] coords = deck.coordsSerial;
             if (deck.isRepresent) leaderIndex = i;
@@ -330,7 +328,6 @@ public class AccountManager : Singleton<AccountManager> {
                         setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                         setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
                         setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-                        setBuild.AddComponent<LayoutGroup>();
                     }
                     continue;
                 }
@@ -340,14 +337,11 @@ public class AccountManager : Singleton<AccountManager> {
                     
                     GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
 
-                    Debug.Log(setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum);
-
                     transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
                     setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
                     setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-                    setBuild.AddComponent<LayoutGroup>();
                 }
             }
         }
