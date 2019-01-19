@@ -1,0 +1,849 @@
+fileFormatVersion: 2
+guid: 6f90b51cc62695a468c389b4898e5f12
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: OptionUI_Window
+    21300002: OptionUI_lang_KOR
+    21300004: OptionUI_facebookImg
+    21300006: OptionUI_5
+    21300008: OptionUI_6
+    21300010: OptionUI_7
+    21300012: OptionUI_8
+    21300014: OptionUI_9
+    21300016: OptionUI_10
+    21300018: OptionUI_11
+    21300020: OptionUI_12
+    21300022: OptionUI_exitBtn
+    21300024: OptionUI_14
+    21300026: OptionUI_15
+    21300028: OptionUI_16
+    21300030: OptionUI_lang_ENG
+    21300032: OptionUI_googleplayImg
+    21300034: OptionUI_19
+    21300036: OptionUI_20
+    21300038: OptionUI_21
+    21300040: OptionUI_22
+    21300042: OptionUI_23
+    21300044: OptionUI_24
+    21300046: OptionUI_25
+    21300048: OptionUI_26
+    21300050: OptionUI_27
+    21300052: OptionUI_28
+    21300054: OptionUI_lang_CHI
+    21300056: OptionUI_30
+    21300058: OptionUI_31
+    21300060: OptionUI_effectSound
+    21300062: OptionUI_buttonImg
+    21300064: OptionUI_34
+    21300066: OptionUI_35
+    21300068: OptionUI_36
+    21300070: OptionUI_37
+    21300072: OptionUI_38
+    21300074: OptionUI_39
+    21300076: OptionUI_bgSound
+    21300078: OptionUI_41
+    21300080: OptionUI_menuBtn
+    21300082: OptionUI_43
+    21300084: OptionUI_44
+    21300086: OptionUI_45
+    21300088: OptionUI_provition
+    21300090: OptionUI_nightPopup
+    21300092: OptionUI_menuBtnClicked
+    21300094: OptionUI_policy
+    21300096: OptionUI_50
+    21300098: OptionUI_51
+    21300100: OptionUI_piPolicy
+    21300102: OptionUI_53
+    21300104: OptionUI_54
+    21300106: OptionUI_adPopup
+    21300108: OptionUI_settingHandle_Off
+    21300110: OptionUI_settingHandle_On
+    21300112: OptionUI_help
+    21300114: OptionUI_59
+    21300116: OptionUI_60
+    21300118: OptionUI_61
+    21300120: OptionUI_setting
+    21300122: OptionUI_63
+    21300124: OptionUI_onTxt
+    21300126: OptionUI_65
+    21300128: OptionUI_settingBg_On
+    21300130: OptionUI_offTxt
+    21300132: OptionUI_68
+    21300134: OptionUI_69
+    21300136: OptionUI_settingBg_Off
+    21300138: OptionUI_Account
+    21300140: OptionUI_gameSetting
+    21300142: OptionUI_langSetting
+    21300144: OptionUI_deviceLink
+    21300146: OptionUI_facebookTxt
+    21300148: OptionUI_googleplayTxt
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: tvOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: OptionUI_Window
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1107
+        width: 986
+        height: 912
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf491c492df1a024e8e29d23e293a0a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_lang_KOR
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 1015
+        width: 110
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 382fcd2274998e549a8b23c9e31c80c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_facebookImg
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 1002
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7ef53d80539db249b66c20caea8e4a9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_exitBtn
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 1008
+        width: 66
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea17494452f429444a7b6bee79b81c68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_lang_ENG
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 955
+        width: 184
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee25e8a3dad859b4fa835d1a9b115440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_googleplayImg
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 910
+        width: 64
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0632848abb3f6d4fb56bfed96edea61
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_lang_CHI
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 876
+        width: 109
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5afea151210c2094c8601379f9902ce1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_effectSound
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 745
+        width: 118
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6043418adfde5354fa7b9b678c20c2a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_buttonImg
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 761
+        width: 437
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46afc534109c3bd479c7ab2cf464f263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_bgSound
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 621
+        width: 116
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef8b09b8d5622aa478c1ff26125b2bcf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_menuBtn
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 609
+        width: 253
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49976030d0ddc8245be5d0fad431f0ce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_provition
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 558
+        width: 151
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d75315c5ef8834a8da1c1a068dd34e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_nightPopup
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 483
+        width: 145
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 576202e1b07e8ad4c8ecd284ec942512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_menuBtnClicked
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 466
+        width: 252
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ffc14537dabc6f4ab391033e4b5eb16
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_policy
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 467
+        width: 151
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63a6882b43b9d12459c99d34c0885ae8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_piPolicy
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 370
+        width: 316
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f678dc57d82982340830c32fcc0f1a97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_adPopup
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 334
+        width: 151
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f438b687d8b1a94fa72fec49e744fe2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_settingHandle_Off
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 336
+        width: 83
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 870667f4898fafb49b249017b1af0f28
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_settingHandle_On
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 337
+        width: 83
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c513076892dd144e95e124fa4b17803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_help
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 278
+        width: 252
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8ec697654f2dd341afce3cff307c5ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_setting
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 209
+        width: 83
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0f6f2760b9d91c42b012a764868a590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_onTxt
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 223
+        width: 57
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de551bfa2c4c8ff46ae9f7efd169c6d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_settingBg_On
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 200
+        width: 232
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b022f715700daa943b7b32e322ad0391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_offTxt
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 100
+        width: 78
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9148666c63c92a148b0371f6206d1ba9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_settingBg_Off
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 67
+        width: 231
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6743aa806316420459d5c3ea5b2fa603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_Account
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 1002
+        width: 78
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 399400edfd4f49f4cb35a987553d7794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_gameSetting
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 905
+        width: 152
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18aa9957c7613d84c967eca81008e501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_langSetting
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 804
+        width: 148
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 498a5afb49c4d8944a2cb0f071b501c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_deviceLink
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 718
+        width: 147
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5819da5d10b835a4da5badc74b0ebb84
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_facebookTxt
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 1025
+        width: 180
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63e26c6652d0b324591a4b300407da44
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: OptionUI_googleplayTxt
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 918
+        width: 230
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66ed465a5a27a674086f68b27926e800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 4a78f7139dbadf34eb1ed81d991079d6
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
