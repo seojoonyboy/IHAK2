@@ -123,6 +123,10 @@ public class AccountManager : Singleton<AccountManager> {
         Deck deck = decks.Find(x => x.id == selId);
         if (deck == null) return;
         decks.Remove(deck);
+        /*
+        for(int i = 0; i < transform.GetChild(0).childCount; i++)
+        */
+
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, this);
     }
 
