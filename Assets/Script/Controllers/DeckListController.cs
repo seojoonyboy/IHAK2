@@ -24,14 +24,13 @@ public class DeckListController : MonoBehaviour {
     
 
     void Start() {
-        AccountManager.Instance.GetMyDecks();
-
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, OnDeckChanged);
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, null);
     }
 
     private void OnDestroy() {
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.DECKLIST_CHANGED, OnDeckChanged);
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, OnDeckChanged);
     }
 
     private void OnDeckChanged(Enum Event_Type, Component Sender, object Param) {
@@ -44,6 +43,7 @@ public class DeckListController : MonoBehaviour {
         foreach (Deck deck in decks) {
             if(deck.isRepresent == true) {
                 AccountManager.Instance.leaderIndex = leaderIndex;
+                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, leaderIndex);
                 break;
             }
             leaderIndex++;
@@ -82,7 +82,7 @@ public class DeckListController : MonoBehaviour {
                     Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
                         int index = newItem.transform.Find("LeaderSetBtn").parent.parent.GetSiblingIndex();
                         //AccountManager.Instance.ChangeLeaderDeck(id);
-                        AccountManager.Instance.ChangeLeaderDeck(id, index);
+                        AccountManager.Instance.ChangeLeaderDeck(id);
                         Sort(AccountManager.Instance.decks);
                     });
                 });
@@ -106,7 +106,6 @@ public class DeckListController : MonoBehaviour {
                 moveToDeckSetting();
             });
         }
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null, AccountManager.Instance.leaderIndex);
     }
 
     private void Clear() {

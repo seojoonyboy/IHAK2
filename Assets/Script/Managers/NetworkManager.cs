@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 public class NetworkManager : Singleton<NetworkManager> {
-    public string baseUrl = "http://ihak2dev.fbl.kr/";
+    public string baseUrl = "http://ihak2devclient.fbl.kr/";
     protected NetworkManager() { }
     public delegate void Callback(HttpResponse response);
 
