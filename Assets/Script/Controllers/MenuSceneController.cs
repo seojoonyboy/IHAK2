@@ -66,4 +66,9 @@ public class MenuSceneController : MonoBehaviour {
         hss.GoToScreen(page);
         switchButton();
     }
+
+    public void OpenOption() {
+        OptionController oc = FindObjectOfType<OptionController>();
+        oc.EnterOptionWindow(true);
+    }
 }
