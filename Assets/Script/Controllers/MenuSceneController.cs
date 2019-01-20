@@ -32,6 +32,8 @@ public class MenuSceneController : MonoBehaviour {
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+
+        eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, AccountManager.Instance.leaderIndex);
     }
 
     private void OnDestroy() {
