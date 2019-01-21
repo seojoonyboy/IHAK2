@@ -299,7 +299,7 @@ public class DeckSettingController : MonoBehaviour {
                 selectBuilding = hit.transform.gameObject;
                 selectbuildingStatus = selectBuilding;
 
-                if (selectBuilding.GetComponent<BuildingObject>().data.id > 990)
+                if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
 
             }
@@ -308,7 +308,7 @@ public class DeckSettingController : MonoBehaviour {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     selectbuildingStatus = selectBuilding;
 
-                    if (selectBuilding.GetComponent<BuildingObject>().data.id > 990)
+                    if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
                 }
                 else {
@@ -352,9 +352,9 @@ public class DeckSettingController : MonoBehaviour {
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
 
-                if (targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile)
+                if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier == targetTile.GetComponent<TileObject>().Tier)
                     selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
-                else if(targetTile.GetComponent<TileObject>().buildingSet == true)
+                else if(targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier != targetTile.GetComponent<TileObject>().Tier)
                     selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else if (hit.collider.tag == "Building") {
@@ -377,14 +377,18 @@ public class DeckSettingController : MonoBehaviour {
             return;
         if(targetTile != null) {
             if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-                Vector3 position = targetTile.transform.position;
-                position.z = 0;
-                tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
-                selectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
-                tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
-                selectBuilding.transform.SetParent(targetTile.transform);
-                selectBuilding.transform.position = position;
-                targetTile.GetComponent<TileObject>().buildingSet = true;
+                if (playerInfosManager.userTier == targetTile.GetComponent<TileObject>().Tier) {
+                    Vector3 position = targetTile.transform.position;
+                    position.z = 0;
+                    tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
+                    selectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
+                    tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+                    selectBuilding.transform.SetParent(targetTile.transform);
+                    selectBuilding.transform.position = position;
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                }
+                else
+                    selectBuilding.transform.position = startEditPosition;
             }
             else
                 selectBuilding.transform.position = startEditPosition;
@@ -408,13 +412,14 @@ public class DeckSettingController : MonoBehaviour {
         if (selectbuildingStatus == null)
             return;
 
-        if (selectbuildingStatus.GetComponent<BuildingObject>().data.id > 990)
+        if (selectbuildingStatus.GetComponent<BuildingObject>().data.id == -1)
             return;
 
         GameObject slot = FindCard(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
-        int count = BuildingCount(selectbuildingStatus);
-        count--;
-        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
+        int count = 1 - BuildingCount(selectbuildingStatus);
+        count++;
+        //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
+        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
 
         Cost cost = selectbuildingStatus.GetComponent<BuildingObject>().data.card.product;
         MinusSliderValue(cost);
@@ -458,7 +463,9 @@ public class DeckSettingController : MonoBehaviour {
             for(int j = 0; j< uicontent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
             {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
-                slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                //slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                int count = 1 - BuildingCount(slot.GetComponent<DragHandler>().setObject);
+                slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
             }
         }
     }
@@ -472,7 +479,8 @@ public class DeckSettingController : MonoBehaviour {
             for (int j = 0; j < uicontent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
             {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
-                slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                slot.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             }
         }
     }

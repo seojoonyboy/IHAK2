@@ -41,7 +41,7 @@ public class AccountManager : Singleton<AccountManager> {
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
     public int leaderIndex { get; set; }
-
+    public int userTier = 0;
 
     private Wallet wallet;
 
@@ -53,7 +53,7 @@ public class AccountManager : Singleton<AccountManager> {
     [SerializeField]
     public List<int> selectDeck;
     public int selectNumber;
-
+    
     void Awake() {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
@@ -75,6 +75,8 @@ public class AccountManager : Singleton<AccountManager> {
         //deviceID = "11231234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
+
+        Debug.Log(Lv);
     }
 
     public string DEVICEID {
@@ -90,7 +92,7 @@ public class AccountManager : Singleton<AccountManager> {
         //Server의 Wallet 정보 할당
         if (response.responseCode == 200) {
             GetUserInfo();
-            Debug.Log("저장 성공");
+            Debug.Log("저장 성공");            
         }
         else if (response.responseCode == 400) {
             Debug.Log("저장 실패");
@@ -288,7 +290,7 @@ public class AccountManager : Singleton<AccountManager> {
                 userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
-                ConstructManager.Instance.SetAllBuildings();                
+                ConstructManager.Instance.SetAllBuildings();
             });
         }
         else if (response.responseCode == 404) {
@@ -312,7 +314,7 @@ public class AccountManager : Singleton<AccountManager> {
             if (deck.isRepresent) leaderIndex = i;
 
             for (int j = 0; j < coords.Length; j++) {
-                if (coords[j] != 0 && coords[j] != 1000) {
+                if (coords[j] != 0 && coords[j] != -1) {
                     Transform tile = tileGroup.GetChild(j);
                     foreach (Transform child in tile) {
                         Destroy(child.gameObject);

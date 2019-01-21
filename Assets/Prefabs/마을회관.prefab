@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    id: 1000
+    id: -1
     card:
       id: primal_town_center
       race: primal
@@ -94,7 +94,7 @@ MonoBehaviour:
         id: 1200
         food: 0
         gold: 0
-        enviroment: 0
+        environment: 0
       hitPoint: 1500
       placementLimit: 1
       canAttack: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
           id: 0
           food: 0
           gold: 0
-          enviroment: 0
+          environment: 0
         coolTime: 0
         size: 0
         power: 0
