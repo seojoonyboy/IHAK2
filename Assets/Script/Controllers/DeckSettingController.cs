@@ -187,12 +187,6 @@ public class DeckSettingController : MonoBehaviour {
         }
         prevData = null;
 
-        DataModules.Resources resources = new DataModules.Resources();
-        resources.env = (int)sliders[0].value;
-        resources.food = (int)sliders[1].value;
-        resources.gold = (int)sliders[2].value;
-        tileGroup.GetComponent<TileGroup>().prodPower = resources;
-
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
