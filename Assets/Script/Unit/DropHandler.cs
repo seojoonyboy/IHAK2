@@ -25,44 +25,45 @@ public class DropHandler : MonoBehaviour {
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if (hit.collider != null)
-            targetTile = hit.transform.gameObject;
-        else
-            return;
+        if (hit.collider != null) {
+            if (hit.collider.tag == "Tile")
+                targetTile = hit.transform.gameObject;
+            else if (hit.collider.tag == "Building")
+                targetTile = hit.transform.parent.gameObject;
 
-        if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-            if (deckSettingController.BuildingCount(setObject) < setObject.GetComponent<BuildingObject>().data.card.placementLimit) {
-                GameObject selectBuilding = Instantiate(setObject);
-                int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-                transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
-                Vector3 setLocation = targetTile.transform.position;
-                setLocation.z = 0;
-                BuildingObject buildingObject = selectBuilding.GetComponent<BuildingObject>();
-                selectBuilding.GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
-                selectBuilding.transform.localPosition = setLocation;
-                selectBuilding.transform.SetParent(targetTile.transform);
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                targetTile.GetComponent<TileObject>().buildingSet = true;
-                GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
-                
-                if(slot != null) {
-                    slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+            if (targetTile.GetComponent<TileObject>().buildingSet == false) {
+                if (deckSettingController.BuildingCount(setObject) < setObject.GetComponent<BuildingObject>().data.card.placementLimit) {
+                    GameObject selectBuilding = Instantiate(setObject);
+                    int tileNum = targetTile.GetComponent<TileObject>().tileNum;
+                    transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
+                    Vector3 setLocation = targetTile.transform.position;
+                    setLocation.z = 0;
+                    BuildingObject buildingObject = selectBuilding.GetComponent<BuildingObject>();
+                    selectBuilding.GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
+                    selectBuilding.transform.localPosition = setLocation;
+                    selectBuilding.transform.SetParent(targetTile.transform);
+                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                    GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
+
+                    if (slot != null) {
+                        slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                    }
+
+                    string prodType = buildingObject.data.card.prodType;
+                    Cost cost = buildingObject.data.card.product;
+
+                    deckSettingController.ChangeSliderValue(cost);
+
+
+
                 }
-
-                string prodType = buildingObject.data.card.prodType;
-                Cost cost = buildingObject.data.card.product;
-
-                deckSettingController.ChangeSliderValue(cost);
-
-                
-
+                else
+                    return;
             }
             else
                 return;
         }
-        else
-            return;
-
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
     }
 }
