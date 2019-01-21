@@ -13,8 +13,11 @@ public class IngameCityManager : MonoBehaviour {
         public int maxHp;
         public Card cardInfo;
     }
-
     
+    public UpgradeInfo 
+        hq_tier_1,
+        hq_tier_2,
+        hq_tier_3; 
 
     [SerializeField]
     private Image hpValueBar;
