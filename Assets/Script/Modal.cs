@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Modal : MonoBehaviour {
 	[SerializeField] private Button yesButton;
 	[SerializeField] private Button noButton;
+	[SerializeField] private Button closeBtn;
 	[SerializeField] private Text describe;
 	[SerializeField] private GameObject inputGameObject;
 	[SerializeField] private Text insertTitle;
@@ -62,6 +63,30 @@ public class Modal : MonoBehaviour {
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
 
+    /// <summary>
+    /// Modal 창 생성기 (Insert 편) + 창닫기 버튼 추가
+    /// </summary>
+    /// <param name="text">제목 들어갈 내용</param>
+    /// <param name="descText">inputField 빈공간에 들어갈 내용</param>
+    /// <param name="inputText">inputField value</param>
+    /// <param name="type">Modal.Type.종류</param>
+    /// <param name="function">yes 버튼 누를 경우 실행 함수</param>
+    public static GameObject instantiateWithClose(string text, string descText, string inputText, Type type, UnityAction<string> function) {
+		if(type != Type.INSERT) {
+			Debug.LogWarning("enum YESNO 또는 CHECK는 매개변수를 줄여주십시오!");
+			return null;
+		}
+		GameObject modal = Resources.Load("Prefabs/ModalCanvas", typeof(GameObject)) as GameObject;
+        Canvas canvas = (Canvas)FindObjectOfType(typeof(Canvas));
+        if(canvas == null) {
+            Debug.LogError("no Canvas");
+            return null;
+        }
+        GameObject tmp = Instantiate(modal);
+        tmp.GetComponent<Modal>().setData(text, descText, inputText, function, true);
+        return tmp;
+        //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
+	}
 	public void setData(string text, UnityAction function, Type type) {
 		if(type == Type.CHECK) {
 			noButton.gameObject.SetActive(false);
@@ -69,11 +94,12 @@ public class Modal : MonoBehaviour {
 		}
 		describe.text = text;
 		yesButton.onClick.AddListener(closeButton);
+		closeBtn.gameObject.SetActive(false);
 		if(function == null) return;
 		yesButton.onClick.AddListener(function);
 	}
 
-	public void setData(string text, string descText, string inputText, UnityAction<string> function) {
+	public void setData(string text, string descText, string inputText, UnityAction<string> function, bool closeExist = false) {
 		describe.gameObject.SetActive(false);
 		inputGameObject.SetActive(true);
 		noButton.gameObject.SetActive(false);
@@ -81,7 +107,7 @@ public class Modal : MonoBehaviour {
 		insertTitle.text = text;
 		inputField.GetComponentInChildren<Text>().text = descText;
         inputField.text = inputText;
-
+		closeBtn.gameObject.SetActive(closeExist);
         yesButton.onClick.AddListener(() => {checkInputText(inputField.text, function);});
 	}
 
@@ -96,6 +122,7 @@ public class Modal : MonoBehaviour {
 
 	private void Start() {
 		noButton.onClick.AddListener(closeButton);
+		closeBtn.onClick.AddListener(closeButton);
 	}
 
 	private void closeButton() {
