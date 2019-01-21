@@ -7,11 +7,18 @@ using UniRx;
 using UniRx.Triggers;
 
 public class SwitchButton : MonoBehaviour {
+
+    public bool switchOn { get; set; }
+
+    private void Awake() {
+        switchOn = true;
+    }
+
     private void Start() {
         GetComponent<Button>().onClick.AsObservable().Subscribe(_ => SwitchActive());
     }
     public void SwitchActive() {
-        bool isOn = GetComponent<Animator>().GetBool("OnSwitch");
-        GetComponent<Animator>().SetBool("OnSwitch", !isOn);
+        switchOn = !GetComponent<Animator>().GetBool("OnSwitch");
+        GetComponent<Animator>().SetBool("OnSwitch", switchOn);
     }
 }

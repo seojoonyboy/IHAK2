@@ -1037,6 +1037,11 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 341165338}
   m_CullTransparentMesh: 0
+--- !u!1 &470600868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1383583656341508, guid: d9bac415e63f85341b5995a24ab9b40d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1381187868}
 --- !u!1 &479428199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,6 +2833,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1037446364 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1383583656341508, guid: d9bac415e63f85341b5995a24ab9b40d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1424353987}
 --- !u!1 &1039866274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3637,6 +3647,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Delegates: []
   delegates: []
+--- !u!1 &1365503991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1383583656341508, guid: d9bac415e63f85341b5995a24ab9b40d,
+    type: 2}
+  m_PrefabInternal: {fileID: 845693808}
 --- !u!1 &1373252587
 GameObject:
   m_ObjectHideFlags: 0
@@ -5458,6 +5473,11 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997312021}
   m_CullTransparentMesh: 0
+--- !u!1 &2053782363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1383583656341508, guid: d9bac415e63f85341b5995a24ab9b40d,
+    type: 2}
+  m_PrefabInternal: {fileID: 712989957}
 --- !u!224 &2053782368 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224128080499747152, guid: d9bac415e63f85341b5995a24ab9b40d,
@@ -5607,7 +5627,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10000
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &2109836163
 RectTransform:
@@ -5644,3 +5664,8 @@ MonoBehaviour:
   - {fileID: 1853445602}
   - {fileID: 1332112642}
   - {fileID: 911806312}
+  switchList:
+  - {fileID: 2053782363}
+  - {fileID: 1037446364}
+  - {fileID: 1365503991}
+  - {fileID: 470600868}
