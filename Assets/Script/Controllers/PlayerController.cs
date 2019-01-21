@@ -110,14 +110,18 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void HqUpgrade() {
-        Debug.Log("업글");
+        
         if(hqLevel == 0) {
             if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
                 icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
+                Debug.Log("2단계 업글");
                 pInfo.clickGold[0] += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
                 pInfo.clickFood[1] += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
                 pInfo.clickEnvironment[2] += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                resourceClass.food -= icm.hq_tier_2.upgradeCost.food;
+                resourceClass.gold -= icm.hq_tier_2.upgradeCost.gold;
+                resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
             }
@@ -126,9 +130,13 @@ public class PlayerController : MonoBehaviour {
             if (icm.hq_tier_3.upgradeCost.food < resourceClass.food &&
                 icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
+                Debug.Log("3단계 업글");
                 pInfo.clickGold[0] += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
                 pInfo.clickFood[1] += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
                 pInfo.clickEnvironment[2] += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                resourceClass.food -= icm.hq_tier_3.upgradeCost.food;
+                resourceClass.gold -= icm.hq_tier_3.upgradeCost.gold;
+                resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
             }
