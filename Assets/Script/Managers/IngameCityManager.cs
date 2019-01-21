@@ -37,7 +37,7 @@ public class IngameCityManager : MonoBehaviour {
             BuildingsInfo bi = new BuildingsInfo();
             bi.id = deck.coordsSerial[i];
             bi.activate = true;
-            if (i != 12) {
+            if (i != deck.coordsSerial.Length / 2) {
                 bi.cardInfo = this.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
                 bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
                 cityHP += bi.hp;
@@ -97,6 +97,8 @@ public class IngameCityManager : MonoBehaviour {
                         pc.pInfo.clickEnvironment[0] += bi.cardInfo.product.gold;
                         pc.pInfo.clickEnvironment[1] += bi.cardInfo.product.food;
                         pc.pInfo.clickEnvironment[2] += bi.cardInfo.product.environment;
+                        break;
+                    case "all":
                         break;
                 }
             }
