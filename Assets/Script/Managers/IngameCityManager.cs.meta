@@ -3,7 +3,13 @@ guid: 1c6f00c58b54e2f4886660c9dcf26ce9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hq_tier_1: {fileID: 11400000, guid: 1e7ea0a2f4e53744fa935f8e5708e138, type: 2}
+  - hq_tier_2: {fileID: 11400000, guid: 0d44c1c600de9834789bd44a69066fd8, type: 2}
+  - hq_tier_3: {fileID: 11400000, guid: aa84a1710db493647adbe47a2d138129, type: 2}
+  - hpValueBar: {instanceID: 0}
+  - hpValue: {instanceID: 0}
+  - maxHp: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
