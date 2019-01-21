@@ -24,7 +24,8 @@ public class Modal : MonoBehaviour {
 	/// <param name="text">설명에 들어갈 내용</param>
 	/// <param name="type">Modal.Type.종류</param>
 	/// <param name="function">yes 버튼 누를 경우 실행 함수(필요하면)</param>
-	public static void instantiate(string text, Type type, UnityAction function = null) {
+	/// <param name="title">제목에 들어갈 내용(필요하면)(급하게 넣은 매개변수)</param>
+	public static void instantiate(string text, Type type, UnityAction function = null, string title = null) {
 		if(type == Type.INSERT) {
 			Debug.LogWarning("enum INSERT는 매개변수 하나 더 있습니다!");
 			return;
@@ -35,7 +36,7 @@ public class Modal : MonoBehaviour {
             Debug.LogError("no Canvas");
             return;
         }
-        Instantiate(modal).GetComponent<Modal>().setData(text, function, type);
+        Instantiate(modal).GetComponent<Modal>().setData(text, function, type, title);
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
 	}
     /// <summary>
@@ -87,11 +88,12 @@ public class Modal : MonoBehaviour {
         return tmp;
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
-	public void setData(string text, UnityAction function, Type type) {
+	public void setData(string text, UnityAction function, Type type, string title = null) {
 		if(type == Type.CHECK) {
 			noButton.gameObject.SetActive(false);
 			yesButton.GetComponentInChildren<Text>().text = "확인";
 		}
+		insertTitle.text = title;
 		describe.text = text;
 		yesButton.onClick.AddListener(closeButton);
 		closeBtn.gameObject.SetActive(false);

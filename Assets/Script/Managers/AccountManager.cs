@@ -58,7 +58,7 @@ public class AccountManager : Singleton<AccountManager> {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
-        deviceID = SystemInfo.deviceUniqueIdentifier;
+        deviceID = SystemInfo.deviceUniqueIdentifier + "1";
 
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
