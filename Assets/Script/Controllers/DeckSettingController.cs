@@ -350,18 +350,23 @@ public class DeckSettingController : MonoBehaviour {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
-                
 
+                if (targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile)
+                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
+                else if(targetTile.GetComponent<TileObject>().buildingSet == true)
+                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else if (hit.collider.tag == "Building") {
                 targetTile = hit.transform.parent.gameObject;
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
+                selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
             }
         }
         else {
             targetTile = null;
+            selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
             selectBuilding.transform.position = mousePosition;
         }
     }
@@ -392,6 +397,7 @@ public class DeckSettingController : MonoBehaviour {
         }
 
         picking = false;
+        selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
         cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        

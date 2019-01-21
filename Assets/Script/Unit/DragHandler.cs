@@ -52,6 +52,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;
+        transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
+        transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -61,15 +63,36 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         if (hit.collider != null) {
-            GameObject tile = hit.transform.gameObject;
-            transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
-            transform.position = cam.WorldToScreenPoint(tile.transform.position);
 
-            GetComponent<Image>().enabled = false;
-            transform.Find("Name").GetComponent<Text>().enabled = false;
+            if(hit.collider.tag == "Tile") {
+                GameObject tile = hit.transform.gameObject;
+                transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
+                transform.position = cam.WorldToScreenPoint(tile.transform.position);
+
+                GetComponent<Image>().enabled = false;
+                transform.Find("Name").GetComponent<Text>().enabled = false;
+                transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
+
+                if (tile.GetComponent<TileObject>().buildingSet == false)
+                    transform.GetChild(0).GetComponent<Image>().color = Color.green;   //slot => Data;
+                else
+                    transform.GetChild(0).GetComponent<Image>().color = Color.red;
+            }
+            else if (hit.collider.tag == "Building") {
+                GameObject tile = hit.transform.parent.gameObject;
+                transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
+                transform.position = cam.WorldToScreenPoint(tile.transform.position);
+
+                GetComponent<Image>().enabled = false;
+                transform.Find("Name").GetComponent<Text>().enabled = false;
+                transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
+
+                transform.GetChild(0).GetComponent<Image>().color = Color.red; //slot => Data;
+            }
         }
         else {
             transform.position = Input.mousePosition;
+            transform.GetChild(0).GetComponent<Image>().color = Color.white;
             transform.localScale = startScale;
         }
     }
