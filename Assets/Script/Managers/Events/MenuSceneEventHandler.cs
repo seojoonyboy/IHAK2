@@ -60,6 +60,7 @@ public class MenuSceneEventHandler : Singleton<MenuSceneEventHandler>, IEventHan
         NONE,
         REQUEST_MY_DECKS,
         RESET_DECK_LISTS,
-        CHANGE_MAINSCENE_TILE_GROUP
+        CHANGE_MAINSCENE_TILE_GROUP,
+        SET_LEADER_DECK_TOUCH_POWER
     }
 }

@@ -68,27 +68,27 @@ public class PlayerController : MonoBehaviour {
         int env = resourceClass.environment;
         switch (btn){
             case Buttons.GOLD: 
-                if (env + pInfo.clickGold[2] >= 0) {
-                    resourceClass.gold += pInfo.clickGold[0];
-                    resourceClass.food += pInfo.clickGold[1];
-                    resourceClass.environment += pInfo.clickGold[2];
+                if (env + icm.productResources.gold.environment >= 0) {
+                    resourceClass.gold += icm.productResources.gold.gold;
+                    resourceClass.food += icm.productResources.gold.food;
+                    resourceClass.environment += icm.productResources.gold.environment;
                     resourceClass.turn--;
                 }
                 break;
             case Buttons.FOOD:
-                if (env + pInfo.clickFood[2] >= 0) {
-                    resourceClass.gold += pInfo.clickFood[0];
-                    resourceClass.food += pInfo.clickFood[1];
-                    resourceClass.environment += pInfo.clickFood[2];
+                if (env + icm.productResources.food.environment >= 0) {
+                    resourceClass.gold += icm.productResources.food.gold;
+                    resourceClass.food += icm.productResources.food.food;
+                    resourceClass.environment += icm.productResources.food.environment;
                     resourceClass.turn--;
                 }
                 break;
             case Buttons.ENVIRONMENT:
                 if (env < 300) {
-                    if (resourceClass.gold + pInfo.clickEnvironment[0] >= 0 && resourceClass.food + pInfo.clickEnvironment[1] >= 0) {
-                        resourceClass.gold += pInfo.clickEnvironment[0];
-                        resourceClass.food += pInfo.clickEnvironment[1];
-                        resourceClass.environment += pInfo.clickEnvironment[2];
+                    if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
+                        resourceClass.gold += icm.productResources.env.gold;
+                        resourceClass.food += icm.productResources.env.food;
+                        resourceClass.environment += icm.productResources.env.environment;
                         if (resourceClass.environment > 300)
                             resourceClass.environment = 300;
                         resourceClass.turn--;

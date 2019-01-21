@@ -22,6 +22,7 @@ public class MenuSceneController : MonoBehaviour {
     [SerializeField] GameObject switchButtons;
     [SerializeField] Text userNickname;
     [SerializeField] GameObject leaderDeck;
+    [SerializeField] DeckListController deckListController;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
@@ -32,12 +33,24 @@ public class MenuSceneController : MonoBehaviour {
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
 
         eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, AccountManager.Instance.leaderIndex);
     }
 
+    private void SetLeaderDeckTouchPower(Enum Event_Type, Component Sender, object Param) {
+        if(Param != null) {
+            GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
+
+            DataModules.ProductResources productResources = (DataModules.ProductResources)Param;
+            go.GetComponent<TileGroup>().touchPerProdPower = productResources;
+            leaderDeck.transform.GetChild(0).transform.GetComponent<TileGroup>().touchPerProdPower = productResources;
+        }
+    }
+
     private void OnDestroy() {
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
     }
 
     private void ResetTileGroupFinished(Enum Event_Type, Component Sender, object Param) {
@@ -46,7 +59,7 @@ public class MenuSceneController : MonoBehaviour {
         }
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild((int)Param).gameObject;
         go.SetActive(true);
-        SetProdPowerInfo(ref go);
+
         GameObject lo = Instantiate(go, leaderDeck.transform);
 
         foreach(Transform tile in lo.transform) {
@@ -57,36 +70,6 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         go.SetActive(false);
-    }
-
-    //Server에 생산력 총합에 대한 Data가 없어 Client에서 해당 처리를 진행
-    //Server구축시 재변경
-    private void SetProdPowerInfo(ref GameObject go) {
-        int env = 0;
-        int gold = 0;
-        int food = 0;
-
-        foreach (Transform tile in go.transform) {
-            if(tile.childCount >= 1) {
-                DataModules.Card card = tile.GetChild(0).GetComponent<BuildingObject>().data.card;
-                string type = card.prodType;
-                DataModules.Cost product = card.product;
-
-                if (type == "food") food += product.food;
-                else if (type == "gold") gold += product.gold;
-                else if (type == "env") env += product.environment;
-                else if (type == "all") {
-                    gold += product.gold;
-                    food += product.food;
-                    env += product.environment;
-                }
-            }
-        }
-        DataModules.Resources resources = new DataModules.Resources();
-        resources.env = env;
-        resources.food = food;
-        resources.gold = gold;
-        go.GetComponent<TileGroup>().touchPerProdPower = resources;
     }
 
     // Use this for initialization

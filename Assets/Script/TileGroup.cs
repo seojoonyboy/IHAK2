@@ -4,5 +4,5 @@ using UnityEngine;
 using DataModules;
 
 public class TileGroup : MonoBehaviour {
-    public DataModules.Resources touchPerProdPower;
+    public ProductResources touchPerProdPower;
 }
