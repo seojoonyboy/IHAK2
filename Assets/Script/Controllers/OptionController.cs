@@ -30,7 +30,7 @@ public class OptionController : MonoBehaviour {
             settingWindows[0].SetSiblingIndex(2);
             for (int i = 0; i < switchList.Length; i++) {
                 if (!switchList[i].GetComponent<SwitchButton>().switchOn)
-                    switchList[i].GetComponent<Animator>().SetTrigger("IsOffWhenGameStart");
+                    switchList[i].GetComponent<Animator>().SetBool("OnSwitch", false);
             }
         }
         opend = !opend;
