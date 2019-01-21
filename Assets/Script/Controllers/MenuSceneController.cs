@@ -46,7 +46,7 @@ public class MenuSceneController : MonoBehaviour {
         }
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild((int)Param).gameObject;
         go.SetActive(true);
-        SetProdPowerInfo(go);
+        SetProdPowerInfo(ref go);
         GameObject lo = Instantiate(go, leaderDeck.transform);
 
         foreach(Transform tile in lo.transform) {
@@ -61,7 +61,7 @@ public class MenuSceneController : MonoBehaviour {
 
     //Server에 생산력 총합에 대한 Data가 없어 Client에서 해당 처리를 진행
     //Server구축시 재변경
-    private void SetProdPowerInfo(GameObject go) {
+    private void SetProdPowerInfo(ref GameObject go) {
         int env = 0;
         int gold = 0;
         int food = 0;
@@ -72,7 +72,7 @@ public class MenuSceneController : MonoBehaviour {
                 string type = card.prodType;
                 DataModules.Cost product = card.product;
 
-                if (type == "prod") food += product.food;
+                if (type == "food") food += product.food;
                 else if (type == "gold") gold += product.gold;
                 else if (type == "env") env += product.environment;
             }
