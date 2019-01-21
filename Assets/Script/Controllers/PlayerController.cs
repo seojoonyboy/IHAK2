@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Text foodValue;
     [SerializeField] Text goldValue;
     [SerializeField] Text turnValue;
+    [SerializeField] Image envValue;
 
     private PlayerResource resourceClass;    
     public ProductInfo pInfo { get; set; }
@@ -97,9 +98,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void PrintResource() {
-        playerResource.Find("Food/Value").gameObject.GetComponent<Text>().text = resourceClass.food.ToString();
-        playerResource.Find("Gold/Value").gameObject.GetComponent<Text>().text = resourceClass.gold.ToString();
-        playerResource.Find("Turn/Value").gameObject.GetComponent<Text>().text = resourceClass.turn.ToString();
-        playerResource.Find("Environment/Value").gameObject.GetComponent<Image>().fillAmount = resourceClass.environment / 300.0f;
+        foodValue.text = resourceClass.food.ToString();
+        goldValue.text = resourceClass.gold.ToString();
+        turnValue.text = resourceClass.turn.ToString();
+        envValue.fillAmount = resourceClass.environment / 300.0f;
     }
 }
