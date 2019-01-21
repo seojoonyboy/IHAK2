@@ -73,8 +73,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
                 transform.Find("Name").GetComponent<Text>().enabled = false;
                 transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
 
-                if (tile.GetComponent<TileObject>().buildingSet == false)
-                    transform.GetChild(0).GetComponent<Image>().color = Color.green;   //slot => Data;
+                if (tile.GetComponent<TileObject>().buildingSet == false) {
+                    if (AccountManager.Instance.userTier == tile.GetComponent<TileObject>().Tier)
+                        transform.GetChild(0).GetComponent<Image>().color = Color.green;   //slot => Data;
+                    else
+                        transform.GetChild(0).GetComponent<Image>().color = Color.red;
+                }
                 else
                     transform.GetChild(0).GetComponent<Image>().color = Color.red;
             }

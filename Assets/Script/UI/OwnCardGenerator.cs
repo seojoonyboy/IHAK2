@@ -56,7 +56,8 @@ public class OwnCardGenerator : MonoBehaviour {
 
             slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
             slotData.transform.Find("Name").GetComponent<Text>().text = info.name;
-            slotData.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + buildings[i].GetComponent<BuildingObject>().data.card.placementLimit.ToString(); //슬롯데이터중, 건물의 갯수 표기;
+            //slotData.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + buildings[i].GetComponent<BuildingObject>().data.card.placementLimit.ToString(); //슬롯데이터중, 건물의 갯수 표기;
+            slotData.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             slotData.GetComponentInChildren<LongClickButton>().onShortClick.AddListener(() => ShowDetail(buildingObject.GetComponent<BuildingObject>()));
         }
     }

@@ -32,31 +32,36 @@ public class DropHandler : MonoBehaviour {
                 targetTile = hit.transform.parent.gameObject;
 
             if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-                if (deckSettingController.BuildingCount(setObject) < setObject.GetComponent<BuildingObject>().data.card.placementLimit) {
-                    GameObject selectBuilding = Instantiate(setObject);
-                    int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-                    transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
-                    Vector3 setLocation = targetTile.transform.position;
-                    setLocation.z = 0;
-                    BuildingObject buildingObject = selectBuilding.GetComponent<BuildingObject>();
-                    selectBuilding.GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
-                    selectBuilding.transform.localPosition = setLocation;
-                    selectBuilding.transform.SetParent(targetTile.transform);
-                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    targetTile.GetComponent<TileObject>().buildingSet = true;
-                    GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
+                //if (setObject.GetComponent<BuildingObject>().data.card.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
+                if (1 - deckSettingController.BuildingCount(setObject) > 0) {
+                    if (targetTile.GetComponent<TileObject>().Tier == AccountManager.Instance.userTier) {
+                        GameObject selectBuilding = Instantiate(setObject);
+                        int tileNum = targetTile.GetComponent<TileObject>().tileNum;
+                        transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
+                        Vector3 setLocation = targetTile.transform.position;
+                        setLocation.z = 0;
+                        BuildingObject buildingObject = selectBuilding.GetComponent<BuildingObject>();
+                        selectBuilding.GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
+                        selectBuilding.transform.localPosition = setLocation;
+                        selectBuilding.transform.SetParent(targetTile.transform);
+                        selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        targetTile.GetComponent<TileObject>().buildingSet = true;
+                        GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
 
-                    if (slot != null) {
-                        slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                        if (slot != null) {
+                            //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                            int count = 1 - deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject);
+                            slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = count.ToString() + " / " + 1;
+                        }
+
+                        string prodType = buildingObject.data.card.prodType;
+                        Cost cost = buildingObject.data.card.product;
+
+                        deckSettingController.ChangeSliderValue(cost);
                     }
 
-                    string prodType = buildingObject.data.card.prodType;
-                    Cost cost = buildingObject.data.card.product;
-
-                    deckSettingController.ChangeSliderValue(cost);
-
-
-
+                    else
+                        return;
                 }
                 else
                     return;
