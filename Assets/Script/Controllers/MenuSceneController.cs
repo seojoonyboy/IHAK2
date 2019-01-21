@@ -46,7 +46,9 @@ public class MenuSceneController : MonoBehaviour {
         }
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild((int)Param).gameObject;
         go.SetActive(true);
+        SetProdPowerInfo(ref go);
         GameObject lo = Instantiate(go, leaderDeck.transform);
+
         foreach(Transform tile in lo.transform) {
             if(tile.childCount > 1) {
                 for(int i= 1; i<tile.childCount; i++) {
@@ -55,6 +57,36 @@ public class MenuSceneController : MonoBehaviour {
             }
         }
         go.SetActive(false);
+    }
+
+    //Server에 생산력 총합에 대한 Data가 없어 Client에서 해당 처리를 진행
+    //Server구축시 재변경
+    private void SetProdPowerInfo(ref GameObject go) {
+        int env = 0;
+        int gold = 0;
+        int food = 0;
+
+        foreach (Transform tile in go.transform) {
+            if(tile.childCount >= 1) {
+                DataModules.Card card = tile.GetChild(0).GetComponent<BuildingObject>().data.card;
+                string type = card.prodType;
+                DataModules.Cost product = card.product;
+
+                if (type == "food") food += product.food;
+                else if (type == "gold") gold += product.gold;
+                else if (type == "env") env += product.environment;
+                else if (type == "all") {
+                    gold += product.gold;
+                    food += product.food;
+                    env += product.environment;
+                }
+            }
+        }
+        DataModules.Resources resources = new DataModules.Resources();
+        resources.env = env;
+        resources.food = food;
+        resources.gold = gold;
+        go.GetComponent<TileGroup>().touchPerProdPower = resources;
     }
 
     // Use this for initialization

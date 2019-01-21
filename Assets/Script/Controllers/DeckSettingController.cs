@@ -186,6 +186,7 @@ public class DeckSettingController : MonoBehaviour {
             playerInfosManager.ModifyDeck(deck);
         }
         prevData = null;
+
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
