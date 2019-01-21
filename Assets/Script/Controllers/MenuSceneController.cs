@@ -75,6 +75,11 @@ public class MenuSceneController : MonoBehaviour {
                 if (type == "food") food += product.food;
                 else if (type == "gold") gold += product.gold;
                 else if (type == "env") env += product.environment;
+                else if (type == "all") {
+                    gold += product.gold;
+                    food += product.food;
+                    env += product.environment;
+                }
             }
         }
         DataModules.Resources resources = new DataModules.Resources();
