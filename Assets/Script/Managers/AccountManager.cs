@@ -189,6 +189,25 @@ public class AccountManager : Singleton<AccountManager> {
         tmpData = deck;
     }
 
+    public void GetDeckDetail(int id) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(id.ToString());
+        _networkManager.request("GET", url.ToString(), GetDetailDeckCallback, false);
+    }
+
+    private void GetDetailDeckCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                DeckDetail deck = JsonConvert.DeserializeObject<DeckDetail>(response.data.ToString());
+                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, deck.productResources);
+            }
+        }
+    }
+
     public void ChangeLeaderDeck(int id) {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)

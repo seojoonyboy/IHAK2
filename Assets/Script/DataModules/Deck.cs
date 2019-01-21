@@ -10,6 +10,7 @@ namespace DataModules {
         public bool isRepresent;
         public int[] coordsSerial;
         public int[,] coords;
+        public Card[] cards;
     }
 
     public class DeckPostForm {
@@ -25,5 +26,25 @@ namespace DataModules {
         public string Race;
         public bool IsRepresent;
         public int[] CoordsSerial;
+    }
+
+    [System.Serializable]
+    public class DeckDetail : Deck {
+        public ProductResources productResources;
+    }
+
+    [System.Serializable]
+    public class ProductResources {
+        public Resource food;
+        public Resource gold;
+        public Resource env;
+    }
+
+    [System.Serializable]
+    public class Resource {
+        public int id;
+        public int food;
+        public int gold;
+        public int environment;
     }
 }

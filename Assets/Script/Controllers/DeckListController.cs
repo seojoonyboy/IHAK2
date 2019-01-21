@@ -37,6 +37,19 @@ public class DeckListController : MonoBehaviour {
         Initialize();
     }
 
+    public int GetDeckId(int slotNum) {
+        int id = -1;
+        if (slotNum <= slots.Length) {
+            try {
+                id = slots[slotNum].transform.GetChild(0).transform.GetComponent<Index>().Id;
+            }
+            catch(NullReferenceException e) {
+
+            }
+        }
+        return id;
+    }
+
     public void Initialize() {
         List<Deck> decks = AccountManager.Instance.decks;
         int leaderIndex = 0;
@@ -49,6 +62,8 @@ public class DeckListController : MonoBehaviour {
             leaderIndex++;
         }
         Sort(decks);
+        AccountManager.Instance.GetDeckDetail(GetDeckId(leaderIndex));
+        //Debug.Log(GetDeckId(leaderIndex));
     }
 
     private void Sort(List<Deck> decks) {

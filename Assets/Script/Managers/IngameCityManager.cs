@@ -23,6 +23,8 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Text hpValue;
     [SerializeField] private Text maxHp;
 
+    public ProductResources productResources;
+
     private int cityHP = 0;
     private int cityMaxHP = 0;
     private Deck deck;
@@ -48,7 +50,9 @@ public class IngameCityManager : MonoBehaviour {
         
         maxHp.text = hpValue.text = cityMaxHP.ToString();
         hpValueBar.fillAmount = cityHP / cityMaxHP;
-        InitProduction();
+        //InitProduction();
+
+        productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
     }
 
     private void Update() {
