@@ -19,6 +19,8 @@ namespace DataModules {
         public int placementLimit;
         public bool canAttack;
         public AttackInfo attackInfo;
+        public Skill[] activeSkill;
+        public Skill[] productSkills;
         public Unit unit;
     }
 
@@ -56,7 +58,17 @@ namespace DataModules {
 
     [System.Serializable]
     public class Skill {
+        public int id;
+        public string name;
+        public SkillDetail method;
+        public int tierNeed;
+    }
 
+    [System.Serializable]
+    public class SkillDetail {
+        public int id;
+        public string methodName;
+        public string args;
     }
 
     public class CardFromServerData {
