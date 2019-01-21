@@ -36,9 +36,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Text goldValue;
     [SerializeField] Text turnValue;
     [SerializeField] Image envValue;
+    [SerializeField] IngameCityManager icm;
 
     private PlayerResource resourceClass;    
     public ProductInfo pInfo { get; set; }
+    private int hqLevel;
 
     private void Awake() {
         resourceClass = new PlayerResource();
@@ -51,11 +53,14 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         PrintResource();
+        hqLevel = 0;
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
         commandButtons.GetChild(2).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.ENVIRONMENT));
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
+
+        commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
 
     }
 
@@ -102,5 +107,32 @@ public class PlayerController : MonoBehaviour {
         goldValue.text = resourceClass.gold.ToString();
         turnValue.text = resourceClass.turn.ToString();
         envValue.fillAmount = resourceClass.environment / 300.0f;
+    }
+
+    private void HqUpgrade() {
+        Debug.Log("업글");
+        if(hqLevel == 0) {
+            if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
+                icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
+                icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
+                pInfo.clickGold[0] += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
+                pInfo.clickFood[1] += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
+                pInfo.clickEnvironment[2] += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                hqLevel++;
+                resourceClass.turn--;
+            }
+        }
+        else if(hqLevel == 1) {
+            if (icm.hq_tier_3.upgradeCost.food < resourceClass.food &&
+                icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
+                icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
+                pInfo.clickGold[0] += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
+                pInfo.clickFood[1] += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
+                pInfo.clickEnvironment[2] += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                hqLevel++;
+                resourceClass.turn--;
+            }
+        }
+        PrintResource();
     }
 }

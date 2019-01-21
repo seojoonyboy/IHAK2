@@ -19,12 +19,9 @@ public class IngameCityManager : MonoBehaviour {
         hq_tier_2,
         hq_tier_3; 
 
-    [SerializeField]
-    private Image hpValueBar;
-    [SerializeField]
-    private Text hpValue;
-    [SerializeField]
-    private Text maxHp;
+    [SerializeField] private Image hpValueBar;
+    [SerializeField] private Text hpValue;
+    [SerializeField] private Text maxHp;
 
     private int cityHP = 0;
     private int cityMaxHP = 0;
