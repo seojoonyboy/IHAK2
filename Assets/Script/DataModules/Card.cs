@@ -18,6 +18,7 @@ namespace DataModules {
         public int hitPoint;
         public int placementLimit;
         public bool canAttack;
+        public AttackInfo attackInfo;
         public Unit unit;
     }
 
@@ -43,6 +44,19 @@ namespace DataModules {
         public int food;
         public int gold;
         public int environment;
+    }
+
+    [System.Serializable]
+    public class AttackInfo {
+        public int id;
+        public int power;
+        public float attackSpeed;
+        public float attackRange;
+    }
+
+    [System.Serializable]
+    public class Skill {
+
     }
 
     public class CardFromServerData {
