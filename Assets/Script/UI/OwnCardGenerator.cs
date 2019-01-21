@@ -85,7 +85,7 @@ public class OwnCardGenerator : MonoBehaviour {
             gold.text = card.product.gold.ToString();
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
         }
         else {
             unitGenDetailModal.SetActive(true);
@@ -118,7 +118,7 @@ public class OwnCardGenerator : MonoBehaviour {
                 + "요구 레벨 : " + unit.tearNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
         }
     }
 }
