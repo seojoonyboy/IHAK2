@@ -151,7 +151,7 @@ public class DeckSettingController : MonoBehaviour {
 
     public void settingButton() {
         if (prevData == null) {
-            GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, Callback);
+            GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
             modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
         }
         else {
@@ -160,12 +160,12 @@ public class DeckSettingController : MonoBehaviour {
             if (name.Length > 8) {
                 str = name.Substring(0, 8);
             }
-            GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, Callback);
+            GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
             modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
         }
     }
 
-    private void Callback(string inputText) {
+    private void OnclickInputConfirm(string inputText) {
         Deck deck = new Deck();
         deck.race = ((Species.Type)speciesId).ToString();
         deck.name = inputText;
