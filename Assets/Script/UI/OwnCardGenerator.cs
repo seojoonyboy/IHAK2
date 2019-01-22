@@ -29,7 +29,13 @@ public class OwnCardGenerator : MonoBehaviour {
     }
 
     private void SetPage(int totalNum, int numPerPage) {
-        for (int i = 0; i < totalNum / numPerPage + 1; i++) {
+
+        int page = totalNum / numPerPage + 1;
+
+        if (totalNum != 0 && totalNum % numPerPage == 0)
+            page--;
+
+        for (int i = 0; i < page; i++) {
             GameObject setPage = Instantiate(pageObject, transform);
             setPage.transform.localPosition += new Vector3(i * 1080f, 0);
         }
