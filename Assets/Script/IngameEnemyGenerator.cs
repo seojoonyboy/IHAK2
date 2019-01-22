@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IngameEnemyGenerator : MonoBehaviour {
-
     public GameObject enemyTileGroup;
+    public IngameCityManager ingameCityManager;
+
     /*
     public List<int> enemyBuildingList =  new List<int>{ 28, 36, 36, 49 ,47,
                                                          38, 44, 672, 29, 32,
@@ -14,7 +15,7 @@ public class IngameEnemyGenerator : MonoBehaviour {
                                                          */
 
     private void Start() {
-        Instantiate(enemyTileGroup, transform);
+        GameObject tileGroup = Instantiate(enemyTileGroup, transform);
+        ingameCityManager.SetEnemyBuildingLists(ref tileGroup);
     }
-
 }
