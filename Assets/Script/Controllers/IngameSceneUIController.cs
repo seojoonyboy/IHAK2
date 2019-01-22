@@ -68,6 +68,7 @@ public class IngameSceneUIController : MonoBehaviour {
         Modal.instantiate("게임에서 나가시겠습니까?", Modal.Type.YESNO, () => {
             GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
             gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
+            IngameScoreManager.Instance.DestroySelf();
         });
     }
 }

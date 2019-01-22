@@ -31,21 +31,34 @@ public class IngameCityManager : MonoBehaviour {
     private List<BuildingsInfo> buildingsInfo = new List<BuildingsInfo>();
     public int[] buildingList;
 
+    private int[] demoIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+
     // Use this for initialization
     void Start () {
         deck = AccountManager.Instance.decks[0];
         buildingList = deck.coordsSerial;
-        for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
+        //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
+        //    BuildingsInfo bi = new BuildingsInfo();
+        //    bi.id = deck.coordsSerial[i];
+        //    bi.activate = true;
+        //    if (i != deck.coordsSerial.Length / 2) {
+        //        bi.cardInfo = transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
+        //        bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
+        //        cityHP += bi.hp;
+        //    }
+        //    buildingsInfo.Add(bi);
+        //}
+
+        for (int i = 0; i < demoIndex.Length; i++) {    // 3x3 마을용 연산
             BuildingsInfo bi = new BuildingsInfo();
-            bi.id = deck.coordsSerial[i];
+            bi.id = deck.coordsSerial[demoIndex[i]];
             bi.activate = true;
-            if (i != deck.coordsSerial.Length / 2) {
-                bi.cardInfo = this.transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
-                bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
-                cityHP += bi.hp;
-            }
+            bi.cardInfo = transform.GetChild(1).GetChild(demoIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
+            bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
+            cityHP += bi.hp;
             buildingsInfo.Add(bi);
         }
+
         cityMaxHP = cityHP;
         
         maxHp.text = hpValue.text = cityMaxHP.ToString();
