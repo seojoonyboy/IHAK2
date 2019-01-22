@@ -93,10 +93,13 @@ public class PlayerController : MonoBehaviour {
                         resourceClass.gold += icm.productResources.env.gold;
                         resourceClass.food += icm.productResources.env.food;
                         resourceClass.environment += icm.productResources.env.environment;
-                        if (resourceClass.environment > 300)
+                        if (resourceClass.environment > 300) {
+                            scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product); 
                             resourceClass.environment = 300;
+                        }
+                        else
+                            scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
                         resourceClass.turn--;
-                        scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
                     }
                 }
                 break;
