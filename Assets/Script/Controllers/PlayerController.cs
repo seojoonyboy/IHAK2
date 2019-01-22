@@ -41,8 +41,10 @@ public class PlayerController : MonoBehaviour {
     private PlayerResource resourceClass;    
     public ProductInfo pInfo { get; set; }
     private int hqLevel;
+    IngameScoreManager scoreManager;
 
     private void Awake() {
+        scoreManager = IngameScoreManager.Instance;
         resourceClass = new PlayerResource();
         pInfo = new ProductInfo();
         pInfo.clickGold = new int[3];
@@ -73,6 +75,7 @@ public class PlayerController : MonoBehaviour {
                     resourceClass.food += icm.productResources.gold.food;
                     resourceClass.environment += icm.productResources.gold.environment;
                     resourceClass.turn--;
+                    scoreManager.AddScore(icm.productResources.gold.gold, IngameScoreManager.ScoreType.Product);
                 }
                 break;
             case Buttons.FOOD:
@@ -81,6 +84,7 @@ public class PlayerController : MonoBehaviour {
                     resourceClass.food += icm.productResources.food.food;
                     resourceClass.environment += icm.productResources.food.environment;
                     resourceClass.turn--;
+                    scoreManager.AddScore(icm.productResources.food.food, IngameScoreManager.ScoreType.Product);
                 }
                 break;
             case Buttons.ENVIRONMENT:
@@ -92,6 +96,7 @@ public class PlayerController : MonoBehaviour {
                         if (resourceClass.environment > 300)
                             resourceClass.environment = 300;
                         resourceClass.turn--;
+                        scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
                     }
                 }
                 break;
@@ -142,5 +147,9 @@ public class PlayerController : MonoBehaviour {
             }
         }
         PrintResource();
+    }
+
+    private void OnDestroy() {
+        
     }
 }
