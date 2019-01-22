@@ -328,7 +328,7 @@ public class AccountManager : Singleton<AccountManager> {
     }
 
     /// <summary>
-    /// 모든 건물 타일을 각각 GameObject로 만드는 함수
+    /// Server의 Data로 건물 타일을 각각 GameObject로 만드는 함수
     /// </summary>
     public void SetBuildingToTiles() {
         if (decks == null)
@@ -338,6 +338,10 @@ public class AccountManager : Singleton<AccountManager> {
         GameObject targetBuilding;
 
         for (int i = 0; i < decks.Count; i++) {
+            TileGroup tileGroup = transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
+            tileGroup.units = new List<Unit>();
+            tileGroup.activeSkills = new List<Skill>();
+
             for (int j = 0; j < transform.GetChild(0).GetChild(i).childCount; j++) {
                 //HQ 설정
                 if (j == transform.GetChild(0).GetChild(i).childCount/2) {
@@ -360,13 +364,22 @@ public class AccountManager : Singleton<AccountManager> {
 
                     transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
+
+                    BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
+                    buildingObject.setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
                     setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+
+                    Card card = buildingObject.data.card;
+                    if(card.unit.id != 0) tileGroup.units.Add(card.unit);
+                    if (card.activeSkill.Length != 0) {
+                        foreach(Skill skill in card.activeSkill) {
+                            tileGroup.activeSkills.Add(skill);
+                        }
+                    }
                 }
             }
         }
-        //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
 
 
@@ -404,7 +417,6 @@ public class AccountManager : Singleton<AccountManager> {
                 setBuild.AddComponent<LayoutGroup>();
             }
         }
-        //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, this);
     }
 
     public void checkDeck(int num) {
@@ -448,9 +460,6 @@ public class AccountManager : Singleton<AccountManager> {
             }
             else if (decks[num].coordsSerial[i] == 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
                 Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(0).gameObject);
-            
-
-            
             if (decks[num].coordsSerial[i] != 0) {
                 transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
             }
@@ -458,8 +467,6 @@ public class AccountManager : Singleton<AccountManager> {
                 transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = false;
         }
     }
-
-
 
     public void RemoveTileObjects(int num) {
         Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
@@ -484,8 +491,6 @@ public class AccountManager : Singleton<AccountManager> {
 
         ConstructManager.Instance.SetAllBuildings();
     }
-
-    
     
     public GameObject FindBuildingWithID(int ID) {
 
@@ -515,8 +520,6 @@ public class AccountManager : Singleton<AccountManager> {
             }            
         }
     }
-    
-
     
     public enum Name {
         위니,
