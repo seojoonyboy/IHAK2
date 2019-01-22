@@ -21,6 +21,13 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
 
     public int playerScore = 0;
 
+
+    /// <summary>
+	/// 점수 연산 및 자동 대입
+	/// </summary>
+	/// <param name="num">공식에 적용되는 배수</param>
+	/// <param name="type">ScoreType.종류</param>
+	/// <param name="gametime">게임 시간</param>
     // Use this for initialization
     public void AddScore(int num, ScoreType type, int gametime = 0) {
         switch (type) {
