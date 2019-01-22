@@ -14,6 +14,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     Dictionary<int, Image> buildingImages;
     NetworkManager _networkManager;
     public GameObject townCenter;
+    public GameObject hpGauge;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -67,6 +68,8 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.AddComponent<SpriteRenderer>();
                 obj.AddComponent<PolygonCollider2D>().points = new Vector2[4] { new Vector2(0, 10), new Vector2(-10, 0), new Vector2(0, -10), new Vector2(10, 0) };
                 obj.tag = "Building";
+                GameObject gauge = Instantiate(hpGauge, obj.transform);
+                gauge.SetActive(false);
                 buildingObject.data = item;
 
                 if (item.card.type == "prod") products.Add(obj);

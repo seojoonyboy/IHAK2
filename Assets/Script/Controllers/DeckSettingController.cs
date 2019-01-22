@@ -68,7 +68,6 @@ public class DeckSettingController : MonoBehaviour {
         deckListController = FindObjectOfType<DeckListController>();
         TilebuildingList();
         CheckUICardCount();
-        
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
