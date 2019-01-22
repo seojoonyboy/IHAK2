@@ -518,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTileGroup: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1,
     type: 2}
+  ingameCityManager: {fileID: 364303840}
 --- !u!1 &244663229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,6 +1292,22 @@ MonoBehaviour:
   hpValueBar: {fileID: 1784039172}
   hpValue: {fileID: 993183136}
   maxHp: {fileID: 300477045}
+  productResources:
+    food:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    gold:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    env:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
   buildingList: 
 --- !u!50 &364303841
 Rigidbody2D:

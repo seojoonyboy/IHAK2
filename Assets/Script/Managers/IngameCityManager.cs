@@ -5,13 +5,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class IngameCityManager : MonoBehaviour {
-
-    class BuildingsInfo {
-        public int id;
+    [System.Serializable]
+    class BuildingInfo {
+        public int tileNum;
         public bool activate;
         public int hp;
         public int maxHp;
         public Card cardInfo;
+        public GameObject gameObject;
+
+        public BuildingInfo() { }
+
+        public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, Card card, GameObject gameObject) {
+            this.tileNum = tileNum;
+            this.activate = activate;
+            this.hp = hp;
+            this.maxHp = maxHp;
+            this.cardInfo = card;
+            this.gameObject = gameObject;
+        }
     }
     
     public UpgradeInfo 
@@ -28,10 +40,11 @@ public class IngameCityManager : MonoBehaviour {
     private int cityHP = 0;
     private int cityMaxHP = 0;
     private Deck deck;
-    private List<BuildingsInfo> buildingsInfo = new List<BuildingsInfo>();
-    public int[] buildingList;
+    [SerializeField] private List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
+    [SerializeField] private List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
 
-    private int[] demoIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+    private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+    public int[] buildingList;
 
     // Use this for initialization
     void Start () {
@@ -49,14 +62,15 @@ public class IngameCityManager : MonoBehaviour {
         //    buildingsInfo.Add(bi);
         //}
 
-        for (int i = 0; i < demoIndex.Length; i++) {    // 3x3 마을용 연산
-            BuildingsInfo bi = new BuildingsInfo();
-            bi.id = deck.coordsSerial[demoIndex[i]];
+        for (int i = 0; i < demoTileIndex.Length; i++) {    // 3x3 마을용 연산
+            BuildingInfo bi = new BuildingInfo();
+            bi.tileNum = demoTileIndex[i];
             bi.activate = true;
-            bi.cardInfo = transform.GetChild(1).GetChild(demoIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
+            bi.gameObject = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
+            bi.cardInfo = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
             bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
             cityHP += bi.hp;
-            buildingsInfo.Add(bi);
+            myBuildingsInfo.Add(bi);
         }
 
         cityMaxHP = cityHP;
@@ -84,6 +98,7 @@ public class IngameCityManager : MonoBehaviour {
     public void OnCollisionEnter(Collision col) {
         Debug.Log(col.ToString());
     }
+
     public void OnCollisionEnter2D(Collision2D col) {
         Debug.Log(col.ToString());
         if(col.gameObject.tag == "Building") {
@@ -95,7 +110,7 @@ public class IngameCityManager : MonoBehaviour {
 
     private void InitProduction() {
         PlayerController pc = FindObjectOfType<PlayerController>();
-        foreach (BuildingsInfo bi in buildingsInfo) {
+        foreach (BuildingInfo bi in myBuildingsInfo) {
             if (bi.cardInfo == null)
                 continue;
             if (bi.cardInfo.type == "prod") {
@@ -118,6 +133,28 @@ public class IngameCityManager : MonoBehaviour {
                     case "all":
                         break;
                 }
+            }
+        }
+    }
+
+    public void SetEnemyBuildingLists(ref GameObject tilegroup) {
+        foreach(Transform tile in tilegroup.transform) {
+            if(tile.childCount == 1) {
+                int tileNum = tile.GetComponent<TileObject>().tileNum;
+                GameObject building = tile.GetChild(0).gameObject;
+                BuildingObject buildingObject = building.GetComponent<BuildingObject>();
+                Card card = buildingObject.data.card;
+
+                BuildingInfo info = new BuildingInfo(
+                    tileNum: tileNum,
+                    activate: true,
+                    hp: card.hitPoint,
+                    maxHp: card.hitPoint,
+                    card: card,
+                    gameObject: building
+                );
+
+                enemyBuildingsInfo.Add(info);
             }
         }
     }
