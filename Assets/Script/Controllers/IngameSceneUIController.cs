@@ -13,7 +13,6 @@ public class IngameSceneUIController : MonoBehaviour {
 
     [SerializeField] GameObject commandBar;
     [SerializeField] Transform produceButonList;
-    [SerializeField] Transform commandBarPos;
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
     [SerializeField] Transform cityPos;

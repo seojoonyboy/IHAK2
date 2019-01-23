@@ -35,7 +35,7 @@ public class IngameCityManager : MonoBehaviour {
 
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
-    [SerializeField] private Text maxHp;
+    //[SerializeField] private Text maxHp;
 
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
@@ -82,8 +82,9 @@ public class IngameCityManager : MonoBehaviour {
         }
 
         cityMaxHP = cityHP;
-        
-        maxHp.text = hpValue.text = cityMaxHP.ToString();
+
+        //maxHp.text = hpValue.text = cityMaxHP.ToString();
+        hpValue.text = ((int)(cityHP / cityMaxHP) * 100).ToString() + "%";
         hpValueBar.fillAmount = cityHP / cityMaxHP;
         //InitProduction();
 

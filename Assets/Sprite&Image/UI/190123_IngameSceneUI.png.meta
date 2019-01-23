@@ -1,43 +1,38 @@
 fileFormatVersion: 2
-guid: 81825bbadeedc0f458c076045ce3113d
+guid: 28aecdd04553734458470c67c54fad27
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ingameScene_resourceGroup
-    21300002: ingameScene_HQinfo
-    21300004: ingameScene_environBG
-    21300006: ingameScene_environBar
-    21300008: ingameScene_environ1st
-    21300010: ingameScene_environ3st
-    21300012: ingameScene_environImg
-    21300014: ingameScene_environ2st
-    21300016: ingameScene_timerImg
-    21300018: ingameSceneUI_13
-    21300020: ingameSceneUI_14
-    21300022: ingameScene_HQImg
-    21300024: ingameScene_expFilling
-    21300026: ingameScene_expBar
-    21300028: ingameScene_disasterTxt
-    21300030: ingameScene_foodImg
-    21300032: ingameScene_goldImg
-    21300034: ingameScene_turnImg
-    21300036: ingameScene_expBG
-    21300038: ingameScene_unitTxt
-    21300040: ingameSceneUI_28
-    21300042: ingameScene_inputResource
-    21300044: ingameScene_optionBtn
-    21300046: ingameScene_cardSlot
-    21300048: ingameScene_hqUpgradeBtn
-    21300050: ingameScene_goldTxt
-    21300052: ingameScene_environtTxt
-    21300054: ingameScene_foodBtn
-    21300056: ingameScene_goleBtn
-    21300058: ingameScene_environtBtn
-    21300060: ingameScene_repairBtn
-    21300062: ingameScene_cardGroup
-    21300064: ingameScene_btnGroup
-    21300066: ingameScene_hqUpgradeTxt
-    21300068: ingameScene_foodTxt
-    21300070: ingameScene_repairTxt
+    21300000: 190123_IngameSceneUI_ResuorceBar
+    21300002: 190123_IngameSceneUI_gameinfoBar
+    21300004: 190123_IngameSceneUI_envBG
+    21300006: 190123_IngameSceneUI_hpBG
+    21300008: 190123_IngameSceneUI_envBar
+    21300010: 190123_IngameSceneUI_hpBar
+    21300012: 190123_IngameSceneUI_timerIcon
+    21300014: 190123_IngameSceneUI_hpIcon
+    21300016: 190123_IngameSceneUI_envIcon
+    21300018: 190123_IngameSceneUI_optionIcon
+    21300020: 190123_IngameSceneUI_enemySlot
+    21300022: 190123_IngameSceneUI_playerSlot
+    21300024: 190123_IngameSceneUI_switchCityBtn
+    21300026: 190123_IngameSceneUI_hqIcon
+    21300028: 190123_IngameSceneUI_3rdIcon
+    21300030: 190123_IngameSceneUI_rankPopup
+    21300032: 190123_IngameSceneUI_foodIcon
+    21300034: 190123_IngameSceneUI_golIcon
+    21300036: 190123_IngameSceneUI_turnIcon
+    21300038: 190123_IngameSceneUI_1stIcon
+    21300040: 190123_IngameSceneUI_resourceInput
+    21300042: 190123_IngameSceneUI_2ndIcon
+    21300044: 190123_IngameSceneUI_cardSlot
+    21300046: 190123_IngameSceneUI_goldBtn
+    21300048: 190123_IngameSceneUI_repairBtn
+    21300050: 190123_IngameSceneUI_hqUpBtn
+    21300052: 190123_IngameSceneUI_foodBtn
+    21300054: 190123_IngameSceneUI_envBtn
+    21300056: 190123_IngameSceneUI_refreshCardBtn
+    21300058: 190123_IngameSceneUI_cardBG
+    21300060: 190123_IngameSceneUI_commandBtnBG
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -175,327 +170,347 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ingameScene_resourceGroup
+      name: 190123_IngameSceneUI_ResuorceBar
       rect:
         serializedVersion: 2
         x: 0
-        y: 1929
+        y: 1957
         width: 1024
-        height: 119
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f78b8ca3bf0836e42b9aadd796ac3be4
+      spriteID: 69bc91f92bc40b64f867dc26ff388397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_HQinfo
+      name: 190123_IngameSceneUI_gameinfoBar
       rect:
         serializedVersion: 2
         x: 0
-        y: 1727
+        y: 1868
         width: 1024
-        height: 184
+        height: 78
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c7c66c9e44434e45bbf69fe43c4e339
+      spriteID: 655dd8d227e25094bbdbd1c59907fe24
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_environBG
+      name: 190123_IngameSceneUI_envBG
       rect:
         serializedVersion: 2
         x: 0
-        y: 1645
+        y: 1793
         width: 1024
         height: 58
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d30ecf25b42ba4cba54d256b1a256f
+      spriteID: 4e230c089d052d84eb91a01b53bf6342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_environBar
+      name: 190123_IngameSceneUI_hpBG
       rect:
         serializedVersion: 2
         x: 0
-        y: 1576
+        y: 1717
+        width: 1024
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb1b090c793584b4fb4246ff620b175e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_envBar
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1651
         width: 1024
         height: 43
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: afbc1c5fec609164196054f06fa739ef
+      spriteID: 3d69722e3202285479fcec2ca99da1ed
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_environ1st
+      name: 190123_IngameSceneUI_hpBar
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1516
-        width: 338
-        height: 43
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 45e213c7cb09ac348863e49c42127b94
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_environ3st
-      rect:
-        serializedVersion: 2
-        x: 683
-        y: 1516
-        width: 337
+        x: 1
+        y: 1572
+        width: 914
         height: 43
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c596396fd609c44cb388cf247c0336f
+      spriteID: 1ec139bc9afd98040bd142c1a3d1786f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_environImg
+      name: 190123_IngameSceneUI_timerIcon
       rect:
         serializedVersion: 2
-        x: 16
-        y: 1455
-        width: 32
-        height: 37
+        x: 760
+        y: 1489
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2bf1e8c56bfcfd478ebaa05b9041fd7
+      spriteID: 851cf73807ccbd74b9e7a0d5547e3506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_environ2st
+      name: 190123_IngameSceneUI_hpIcon
       rect:
         serializedVersion: 2
-        x: 340
-        y: 1470
-        width: 337
-        height: 43
+        x: 834
+        y: 1499
+        width: 38
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb08905c3f684cc4d9062a2855ebcf85
+      spriteID: e8b364037526edf4fa4f38f7a8cbf9ac
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_timerImg
-      rect:
-        serializedVersion: 2
-        x: 934
-        y: 1410
-        width: 61
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c493ca30f13aed34d9c40abe5b47d420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameSceneUI_13
-      rect:
-        serializedVersion: 2
-        x: 329
-        y: 1419
-        width: 6
-        height: 43
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 969576025c4cfe648b3021df233efab5
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameSceneUI_14
-      rect:
-        serializedVersion: 2
-        x: 680
-        y: 1419
-        width: 6
-        height: 43
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c22ce03ca328bea4c9e354213ab0c36e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_HQImg
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 1248
-        width: 112
-        height: 118
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74002186a6c65c44ca27a07a3b9b3d49
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_expFilling
-      rect:
-        serializedVersion: 2
-        x: 283
-        y: 1352
-        width: 519
-        height: 56
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53a7ae944f266954ebf05ff706eb17cd
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_expBar
-      rect:
-        serializedVersion: 2
-        x: 283
-        y: 1286
-        width: 519
-        height: 58
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da4d8a8d6ba2008499fad02ae62edc29
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_disasterTxt
+      name: 190123_IngameSceneUI_envIcon
       rect:
         serializedVersion: 2
         x: 880
-        y: 1227
-        width: 80
-        height: 84
+        y: 1499
+        width: 28
+        height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00bf94894c584f545b8888a8d797441c
+      spriteID: 56dab2dc797e7af47914fc9c0767c966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_foodImg
+      name: 190123_IngameSceneUI_optionIcon
       rect:
         serializedVersion: 2
-        x: 12
-        y: 1139
-        width: 70
-        height: 67
+        x: 944
+        y: 1481
+        width: 72
+        height: 75
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b5f8003c91000e43a85c82811aa5f79
+      spriteID: 7bc84442b56c8824ab5ddd0088acccfe
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_goldImg
+      name: 190123_IngameSceneUI_enemySlot
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1432
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 437ed0434f3e8a44ca036c5416416dbd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_playerSlot
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 1420
+        width: 57
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1f4865c1a4c6e040a22c86463091dd4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_switchCityBtn
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 1355
+        width: 81
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dba1d597db68214ebfa4076438ebd8b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_hqIcon
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 1250
+        width: 112
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0789710c87ad48443ae12fbc0034c18a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_3rdIcon
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 1221
+        width: 59
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 361cdd11aee47804da24246ceccd05d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_rankPopup
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 1098
+        width: 238
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 587e95570274a624c8f1eabbf62adeff
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_foodIcon
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1139
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91e9167f4dbc9234e85b26eed2758e79
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_golIcon
       rect:
         serializedVersion: 2
         x: 114
@@ -503,19 +518,19 @@ TextureImporter:
         width: 67
         height: 66
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28e72d8ae64163541b45e9e0c304e2a8
+      spriteID: d695f7c91b57a224b823cae87899588b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_turnImg
+      name: 190123_IngameSceneUI_turnIcon
       rect:
         serializedVersion: 2
         x: 213
@@ -523,299 +538,239 @@ TextureImporter:
         width: 66
         height: 66
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 466663d5423ebc44886d25a56814e24f
+      spriteID: 46be2ae248a46064fa4b40038c3c8996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_expBG
+      name: 190123_IngameSceneUI_1stIcon
       rect:
         serializedVersion: 2
-        x: 283
-        y: 1201
-        width: 530
-        height: 68
+        x: 307
+        y: 1149
+        width: 58
+        height: 58
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ced20eb3de15384a9aa0870400ff2c9
+      spriteID: 13f6677c4585d3b40a09da88bd0c5062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_unitTxt
+      name: 190123_IngameSceneUI_resourceInput
       rect:
         serializedVersion: 2
-        x: 888
-        y: 1138
-        width: 76
-        height: 84
+        x: 14
+        y: 1043
+        width: 219
+        height: 69
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d19db155cce9f99479f6279eccb90449
+      spriteID: e28211f6ac401f642ae6e3b86cddc493
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameSceneUI_28
+      name: 190123_IngameSceneUI_2ndIcon
       rect:
         serializedVersion: 2
-        x: 586
-        y: 1143
-        width: 17
-        height: 29
+        x: 307
+        y: 1081
+        width: 61
+        height: 58
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73bf88804fe5c38478e8194d103e44c7
+      spriteID: 04f28bb35eac3d9449bb2d20471b93f9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_inputResource
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 1028
-        width: 227
-        height: 86
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1adc62619202a6f43988f37cfd6fd01e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_optionBtn
-      rect:
-        serializedVersion: 2
-        x: 299
-        y: 1032
-        width: 78
-        height: 81
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d6c12905572fb3241b45d7f3ee67965e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_cardSlot
+      name: 190123_IngameSceneUI_cardSlot
       rect:
         serializedVersion: 2
         x: 791
         y: 868
         width: 182
-        height: 248
+        height: 246
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a65f8c8e8fb245c43961c26a21f946ee
+      spriteID: 121028b630af64642872f178be766b61
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_hqUpgradeBtn
-      rect:
-        serializedVersion: 2
-        x: 490
-        y: 867
-        width: 240
-        height: 139
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 090d54b32a90a294b87eadafaabd6d6b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_goldTxt
-      rect:
-        serializedVersion: 2
-        x: 179
-        y: 867
-        width: 32
-        height: 37
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da78447ced6022a44afbc59c408a3828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_environtTxt
-      rect:
-        serializedVersion: 2
-        x: 268
-        y: 865
-        width: 62
-        height: 39
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9bf37071d994dd74b8afcd54cd473332
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_foodBtn
+      name: 190123_IngameSceneUI_goldBtn
       rect:
         serializedVersion: 2
         x: 27
-        y: 619
+        y: 811
         width: 192
         height: 204
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1cf0649592ebdc4e890e756092965d9
+      spriteID: 9d9e8bd2401b7164bad4be864dfec3cd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_goleBtn
+      name: 190123_IngameSceneUI_repairBtn
       rect:
         serializedVersion: 2
-        x: 279
-        y: 616
-        width: 192
-        height: 205
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de5147f4cca29984d80a5631280d4628
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_environtBtn
-      rect:
-        serializedVersion: 2
-        x: 534
-        y: 616
-        width: 192
-        height: 205
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c024dee2d0fd3e8478b36be8d0bb5d3e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_repairBtn
-      rect:
-        serializedVersion: 2
-        x: 784
-        y: 617
+        x: 243
+        y: 812
         width: 192
         height: 204
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08322040ef3ae794a817f5c25f37d3ee
+      spriteID: ceb20f05acc698a4b9d262cfaffa7ffa
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_cardGroup
+      name: 190123_IngameSceneUI_hqUpBtn
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 726
+        width: 274
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab8c4bc08570fa2448bd82cf5e0b014f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_foodBtn
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 592
+        width: 192
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa99967f9ab10c34d9fdae0b681b0a2d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_envBtn
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 597
+        width: 192
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08c4ddd910a97bd48a9cd5b3511d63c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_refreshCardBtn
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 600
+        width: 189
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4c400089a2d35f4bbb4319f5f75d667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190123_IngameSceneUI_cardBG
       rect:
         serializedVersion: 2
         x: 0
-        y: 290
+        y: 295
         width: 1024
         height: 286
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3aa4f9d87c06fc24b894f6932e51b8db
+      spriteID: a4e4e60a919858044a74317441f9cf30
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ingameScene_btnGroup
+      name: 190123_IngameSceneUI_commandBtnBG
       rect:
         serializedVersion: 2
         x: 0
@@ -823,73 +778,13 @@ TextureImporter:
         width: 1024
         height: 252
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abb678e67c96e8b4dbdc7a1e55be744e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_hqUpgradeTxt
-      rect:
-        serializedVersion: 2
-        x: 532
-        y: 1029
-        width: 170
-        height: 82
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ea65ed89c285514a978e0ae86d4f5a4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_foodTxt
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 865
-        width: 63
-        height: 38
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 626099570e1e5fe4fbc249731b0f0762
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ingameScene_repairTxt
-      rect:
-        serializedVersion: 2
-        x: 379
-        y: 867
-        width: 62
-        height: 38
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fcc434663fef4144f99e168a9bb14449
+      spriteID: 171e8c6c59f01e642831d2c84e88a523
       vertices: []
       indices: 
       edges: []
@@ -897,7 +792,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d6dd25953f851c9438fa4862ec65bd09
+    spriteID: a68c9b068d492d64eb2228cf788fcb41
     vertices: []
     indices: 
     edges: []
