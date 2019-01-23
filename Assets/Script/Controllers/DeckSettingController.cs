@@ -25,6 +25,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
     [SerializeField] public GameObject uicontent;
+    [SerializeField] public GameObject effectUI;
     [SerializeField] DeckListController deckListController;
     [SerializeField] public List<int> tileSetList;
     [SerializeField] public Button resetButton;
@@ -56,7 +57,8 @@ public class DeckSettingController : MonoBehaviour {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
-        uicontent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;        
+        uicontent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;
+        effectUI = transform.GetChild(6).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
@@ -68,6 +70,8 @@ public class DeckSettingController : MonoBehaviour {
         deckListController = FindObjectOfType<DeckListController>();
         TilebuildingList();
         CheckUICardCount();
+        ResetActiveSlot();
+        DeckEffectCheck();
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
@@ -286,6 +290,7 @@ public class DeckSettingController : MonoBehaviour {
         }
         ResetAllSliderValues();
         ResetUICardCount();
+        ResetActiveSlot();
         reset = true;
     }
 
@@ -424,6 +429,13 @@ public class DeckSettingController : MonoBehaviour {
         count++;
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
         slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+
+        GameObject ActiveSkillUISlot = FindActiveSlot(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
+        if(ActiveSkillUISlot != null) {
+            ClearActiveSlot(ActiveSkillUISlot);
+        }
+
+
 
         Cost cost = selectbuildingStatus.GetComponent<BuildingObject>().data.card.product;
         MinusSliderValue(cost);
@@ -571,5 +583,121 @@ public class DeckSettingController : MonoBehaviour {
 
         return setComplete;
     }
+
+    public void DeckEffectCheck() {
+        int slotNum = 0;
+        for(int i = 0; i < tileGroup.transform.childCount; i++) {
+            GameObject tile = tileGroup.transform.GetChild(i).gameObject;
+            if (tile.GetComponent<TileObject>().buildingSet == true && tile.transform.childCount == 1) {
+                GameObject building = tile.transform.GetChild(0).gameObject;
+
+                if(building.GetComponent<BuildingObject>().data.card.activeSkill.Length >= 1) {
+                    effectUI.transform.GetChild(slotNum).gameObject.SetActive(true);
+                    effectUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
+                    effectUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.activeSkill[0].name;
+                    slotNum++;
+                }
+
+                if(building.GetComponent<BuildingObject>().data.card.productSkills.Length >= 1) {
+                    effectUI.transform.GetChild(slotNum).gameObject.SetActive(true);
+                    effectUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
+                    effectUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.productSkills[0].name;
+                    slotNum++;
+                }
+
+                if(building.GetComponent<BuildingObject>().data.card.unit.id >= 1) {
+                    effectUI.transform.GetChild(slotNum).gameObject.SetActive(true);
+                    effectUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                    effectUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
+                    effectUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.unit.name;
+                    slotNum++;
+                }
+            }
+        }
+    }
+
+    public GameObject FindActiveSlot(int num) {
+        GameObject slot;
+        for(int i = 0; i < effectUI.transform.childCount; i++) {
+            if(effectUI.transform.GetChild(i).GetComponent<ActiveSlot>().id == num) {
+                slot = effectUI.transform.GetChild(i).gameObject;
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    public GameObject FindActiveNullSlot() {
+        GameObject slot;
+        for (int i = 0; i < effectUI.transform.childCount; i++) {
+            if(effectUI.transform.GetChild(i).GetComponent<ActiveSlot>().id == 0 && effectUI.transform.GetChild(i).gameObject.activeSelf == false) {
+                return effectUI.transform.GetChild(i).gameObject;
+            }
+        }
+        return null;
+    }
+
+    public void ClearActiveSlot(GameObject _object) {
+        GameObject slot;
+        slot = _object;
+        slot.GetComponent<Image>().sprite = null;
+        slot.GetComponent<ActiveSlot>().id = 0;
+        slot.GetComponent<ActiveSlot>()._object = null;
+        slot.transform.GetChild(0).GetComponent<Text>().text = " ";
+        slot.SetActive(false);
+    }
+
+    public void ResetActiveSlot() {
+        GameObject slot;
+        for (int i = 0; i < effectUI.transform.childCount; i++) {
+            slot = effectUI.transform.GetChild(i).gameObject;
+            slot.GetComponent<Image>().sprite = null;
+            slot.GetComponent<ActiveSlot>().id = 0;
+            slot.GetComponent<ActiveSlot>()._object = null;
+            slot.transform.GetChild(0).GetComponent<Text>().text = " ";
+            slot.SetActive(false);
+        }
+    }
+
+    public void AddActiveSlot(GameObject _building) {
+        GameObject slot = FindActiveNullSlot();
+        GameObject building = _building;      
+
+
+        if(slot != null) {
+            if (building.GetComponent<BuildingObject>().data.card.activeSkill.Length >= 1) {
+                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                slot.GetComponent<ActiveSlot>()._object = building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.activeSkill[0].name;
+                slot.SetActive(true);
+                slot = FindActiveNullSlot();
+            }
+
+            if (building.GetComponent<BuildingObject>().data.card.productSkills.Length >= 1 && slot != null) {
+                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                slot.GetComponent<ActiveSlot>()._object = building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.productSkills[0].name;
+                slot.SetActive(true);
+                slot = FindActiveNullSlot();
+            }
+
+            if (building.GetComponent<BuildingObject>().data.card.unit.id >= 1 && slot != null) {
+                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
+                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                slot.GetComponent<ActiveSlot>()._object = building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.unit.name;
+                slot.SetActive(true);
+                slot = FindActiveNullSlot();
+            }
+        } 
+    }
+
 
 }

@@ -53,7 +53,7 @@ public class DropHandler : MonoBehaviour {
                             int count = 1 - deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject);
                             slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = count.ToString() + " / " + 1;
                         }
-
+                        deckSettingController.AddActiveSlot(selectBuilding);
                         string prodType = buildingObject.data.card.prodType;
                         Cost cost = buildingObject.data.card.product;
 
