@@ -90,6 +90,8 @@ public class IngameCityManager : MonoBehaviour {
 
         productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
 
+
+        TakeDamage(Target.ENEMY_1, 6, 20);
         //테스트
         //SkillDetail skillDetail = new SkillDetail();
         //skillDetail.id = 1;
@@ -173,12 +175,29 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
                 enemyBuilding.hp -= amount;
+                if (enemyBuilding.hp < enemyBuilding.maxHp) {
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                    float hp = enemyBuilding.hp;
+                    float maxHp = enemyBuilding.maxHp;
+                    float hpScaleX = hp / maxHp;
+                    Debug.Log(hpScaleX);
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                }
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
                 break;
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (myBuilding == null) return false;
                 myBuilding.hp -= amount;
+                if (myBuilding.hp < myBuilding.maxHp) {
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                    float hp = myBuilding.hp;
+                    float maxHp = myBuilding.maxHp;
+                    float hpScaleX = hp / maxHp;
+                    Debug.Log(hpScaleX);
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                }
+
                 if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
                 break;
         }
