@@ -35,6 +35,8 @@ public class IngameSceneUIController : MonoBehaviour {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
         playerCity.transform.GetChild(1).position = cityPos.position;
+        IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
+        ieg.enemyTileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
     }
 
     private void Update() {
