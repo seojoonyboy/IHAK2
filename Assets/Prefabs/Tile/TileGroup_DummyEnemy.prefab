@@ -2179,7 +2179,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372382854036342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -84.375, y: -145.45454, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4784784078253508}
@@ -5320,6 +5320,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114016244829429686
 MonoBehaviour:
@@ -5375,6 +5376,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114017835780652692
 MonoBehaviour:
@@ -5449,6 +5451,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114034067191484090
 MonoBehaviour:
@@ -5523,6 +5526,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
   mainSprite: {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114134696163166972
 MonoBehaviour:
@@ -5578,6 +5582,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
   mainSprite: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114137311266337792
 MonoBehaviour:
@@ -5633,6 +5638,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114161711299555062
 MonoBehaviour:
@@ -5745,6 +5751,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114222888242194424
 MonoBehaviour:
@@ -5819,6 +5826,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114272485299867738
 MonoBehaviour:
@@ -5881,6 +5889,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114338338050285772
 MonoBehaviour:
@@ -5974,6 +5983,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
   mainSprite: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114372621215220670
 MonoBehaviour:
@@ -6029,6 +6039,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114386197067012894
 MonoBehaviour:
@@ -6179,6 +6190,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114539832355634612
 MonoBehaviour:
@@ -6253,6 +6265,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
   mainSprite: {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114587800089368012
 MonoBehaviour:
@@ -6308,6 +6321,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
   mainSprite: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114618848023811028
 MonoBehaviour:
@@ -6401,6 +6415,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114669643111464720
 MonoBehaviour:
@@ -6456,6 +6471,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114684200099636048
 MonoBehaviour:
@@ -6511,6 +6527,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114702807084622772
 MonoBehaviour:
@@ -6577,6 +6594,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
   mainSprite: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114715024567586980
 MonoBehaviour:
@@ -6651,6 +6669,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114740497992436744
 MonoBehaviour:
@@ -6725,6 +6744,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
   mainSprite: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114762786620045784
 MonoBehaviour:
@@ -6847,6 +6867,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
+  spine: {fileID: 0}
   setTileLocation: 0
 --- !u!114 &114803575516754000
 MonoBehaviour:
@@ -6997,6 +7018,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114942977549099818
 MonoBehaviour:
@@ -7059,6 +7081,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114964064716686380
 MonoBehaviour:
@@ -7114,6 +7137,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!114 &114973011730946104
 MonoBehaviour:
@@ -7169,6 +7193,7 @@ MonoBehaviour:
         tearNeed: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  spine: {fileID: 0}
   setTileLocation: -1
 --- !u!212 &212003201519791924
 SpriteRenderer:

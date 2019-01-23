@@ -8,6 +8,7 @@ using DataModules;
 using System.Linq;
 using System;
 using System.Text;
+using Spine.Unity;
 
 
 public class AccountManager : Singleton<AccountManager> {
@@ -367,9 +368,14 @@ public class AccountManager : Singleton<AccountManager> {
 
                     BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
                     buildingObject.setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
-                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
-
+                    if(setBuild.GetComponent<SpriteRenderer>() != null) {
+                        setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    }
+                    else {
+                        setBuild.GetComponent<MeshRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        StartCoroutine(SetAnimation(setBuild.GetComponent<SkeletonAnimation>()));
+                    }
                     Card card = buildingObject.data.card;
                     if(card.unit.id != 0) tileGroup.units.Add(card.unit);
                     if (card.activeSkill.Length != 0) {
@@ -380,6 +386,12 @@ public class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
+    }
+
+    IEnumerator SetAnimation(SkeletonAnimation animation) {
+        yield return new WaitForSeconds(1f);
+        animation.skeleton.SetAttachment("tile", null);
+        animation.AnimationState.SetAnimation(0, animation.skeleton.Data.Animations.First(), true);
     }
 
 

@@ -81,34 +81,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4944a18e297fb9042af5cf05d9281286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingImages:
-  - {fileID: 21300000, guid: 6138dc56d7a1bd547b30478d0a0591cf, type: 3}
-  - {fileID: 21300000, guid: 2f49ac7b08e4dc94ebd4c5cd93fcb920, type: 3}
-  - {fileID: 21300000, guid: e4250ec0c0614944fa5d9b6efc9f8bcc, type: 3}
-  - {fileID: 21300000, guid: 13490bd4e68578443aa9cab8cccfb6df, type: 3}
-  - {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
-  - {fileID: 21300000, guid: dfaf7480582c3c347835b93c455d35ba, type: 3}
-  - {fileID: 21300000, guid: 591ee07ccc7db414491739be3cef8756, type: 3}
-  - {fileID: 21300000, guid: ea238b1982c4e444ba0a7f9dc1f43f1b, type: 3}
-  - {fileID: 21300000, guid: 683acf5cf1e9cf14e9869740bec1c337, type: 3}
-  - {fileID: 21300000, guid: 4ca2643ee9138bc458bc346f08840e41, type: 3}
-  - {fileID: 21300000, guid: 16eb6d9de9084dd4987fcff8a34213a6, type: 3}
-  - {fileID: 21300000, guid: 181e2f88c4d616b498693bc48356f12c, type: 3}
-  buildingIcons:
-  - {fileID: 21300000, guid: 6138dc56d7a1bd547b30478d0a0591cf, type: 3}
-  - {fileID: 21300000, guid: 2f49ac7b08e4dc94ebd4c5cd93fcb920, type: 3}
-  - {fileID: 21300000, guid: e4250ec0c0614944fa5d9b6efc9f8bcc, type: 3}
-  - {fileID: 21300000, guid: 13490bd4e68578443aa9cab8cccfb6df, type: 3}
-  - {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
-  - {fileID: 21300000, guid: dfaf7480582c3c347835b93c455d35ba, type: 3}
-  - {fileID: 21300000, guid: 591ee07ccc7db414491739be3cef8756, type: 3}
-  - {fileID: 21300000, guid: ea238b1982c4e444ba0a7f9dc1f43f1b, type: 3}
-  - {fileID: 21300000, guid: 683acf5cf1e9cf14e9869740bec1c337, type: 3}
-  - {fileID: 21300000, guid: 4ca2643ee9138bc458bc346f08840e41, type: 3}
-  - {fileID: 21300000, guid: 16eb6d9de9084dd4987fcff8a34213a6, type: 3}
-  - {fileID: 21300000, guid: 181e2f88c4d616b498693bc48356f12c, type: 3}
-  defaultImage: {fileID: 21300000, guid: 13490bd4e68578443aa9cab8cccfb6df, type: 3}
-  defaultIcon: {fileID: 21300000, guid: 13490bd4e68578443aa9cab8cccfb6df, type: 3}
+  primal_product_buildingImages:
+  - {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  - {fileID: 21300000, guid: 7b8b33ee74f17494297f59eb0e612857, type: 3}
+  - {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  - {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
+  - {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
+  - {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  - {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  - {fileID: 21300000, guid: a86b259392c211e46b5c170cb19053e5, type: 3}
+  primal_other_buildingImages:
+  - {fileID: 21300000, guid: 841d34b615c0dba458bc3ef3eb8d1dd7, type: 3}
+  - {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
+  - {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
+  - {fileID: 21300000, guid: 338a505ce1fedfa43979ca4e6da39e8f, type: 3}
+  - {fileID: 21300000, guid: a58d41fdaf3d53843bb9a0023dd3bacc, type: 3}
+  - {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
+  - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
+  - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
+  - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  primal_product_buildingIcons:
+  - {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  - {fileID: 21300000, guid: 7b8b33ee74f17494297f59eb0e612857, type: 3}
+  - {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  - {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
+  - {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
+  - {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  - {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  - {fileID: 21300000, guid: a86b259392c211e46b5c170cb19053e5, type: 3}
+  primal_other_buildingIcons:
+  - {fileID: 21300000, guid: 841d34b615c0dba458bc3ef3eb8d1dd7, type: 3}
+  - {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
+  - {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
+  - {fileID: 21300000, guid: 338a505ce1fedfa43979ca4e6da39e8f, type: 3}
+  - {fileID: 21300000, guid: a58d41fdaf3d53843bb9a0023dd3bacc, type: 3}
+  - {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
+  - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
+  - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
+  - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  primal_product_buildingSpines:
+  - {fileID: 11400000, guid: f0413cec7bf9843838f4e53040feba29, type: 2}
+  - {fileID: 11400000, guid: 37f44ed153c984e4f836e365d876a7c8, type: 2}
+  - {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  - {fileID: 11400000, guid: 4158c2ebe28cf4ef0aea626eb9f2a951, type: 2}
+  - {fileID: 11400000, guid: 24365531d5762478c9c9d7d67e415330, type: 2}
+  - {fileID: 11400000, guid: 2b60aa3cc28524eccac2920ebb6c7e7a, type: 2}
+  - {fileID: 11400000, guid: b25e97fa615b54e0fbaeeb13d465e7ed, type: 2}
+  - {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  - {fileID: 11400000, guid: 9d57efc392ac747b4a05b478ca7f7315, type: 2}
+  defaultImage: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  defaultIcon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
 --- !u!114 &114857590617120512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,3 +144,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1248483a4b192a042b057c6c1bd6f3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  townCenter: {fileID: 1202557845967086, guid: 71564ada467bce74abaf12a07e000987, type: 2}
+  hpGauge: {fileID: 1877220338478122, guid: fe1c74e31cc80504896365668378ef12, type: 2}
