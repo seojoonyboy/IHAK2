@@ -20,6 +20,7 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
     }
 
     public int playerScore = 0;
+    public int dummyScore = 100000;
 
 
     /// <summary>
