@@ -39,7 +39,7 @@ public class IngameSceneUIController : MonoBehaviour {
         hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
         playerCity.transform.GetChild(1).position = cityPos.position;
         IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
-        ieg.enemyTileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
+        ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);
     }
@@ -47,13 +47,11 @@ public class IngameSceneUIController : MonoBehaviour {
     public void SwitchCommand() {
         
         if (hss.CurrentPage != 0) {
-            //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(1).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             ShutProductButtons(true);
             commandBar.transform.GetChild(0).gameObject.SetActive(false);
             playerRankBtn.GetChild(0).gameObject.SetActive(false);
         }
         else {
-            //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(0).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             ShutProductButtons(false);
             commandBar.transform.GetChild(0).gameObject.SetActive(true);
             dummyRankBtn.GetChild(0).gameObject.SetActive(false);
