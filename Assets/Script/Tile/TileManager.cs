@@ -53,8 +53,8 @@ public class TileManager : MonoBehaviour {
         int[] outsideTile = new int[] { 0, 1, 2, 3, 4, 5, 9, 10, 14, 15, 19, 20, 21, 22, 23, 24 };
         Debug.Log(backGround.name);
 
-        int columnCount = 6;
-        int rowCount = 6;
+        int columnCount = 8;
+        int rowCount = 8;
 
 
         for(int i = 0; i<outsideTile.Length; i++) {
@@ -65,7 +65,7 @@ public class TileManager : MonoBehaviour {
 
             if(tile.GetComponent<TileObject>().location.row == 0) {
                 if(tile.GetComponent<TileObject>().location.col == 0) {
-                    for (int j = 1; j < 7; j++) {
+                    for (int j = 1; j < 8; j++) {
                         backTile = Instantiate(tile, tilePos - columnRange*j - rowRange*j, Quaternion.identity);
                         backTile.transform.SetParent(backGround.transform);
                         backTile.GetComponent<SpriteRenderer>().sprite = tileSprite[UnityEngine.Random.Range(0, 4)];
@@ -113,7 +113,7 @@ public class TileManager : MonoBehaviour {
                 }
 
                 else if (tile.GetComponent<TileObject>().location.col == 4) {
-                    for (int j = 1; j < 7; j++) {
+                    for (int j = 1; j < 8; j++) {
                         backTile = Instantiate(tile, tilePos + columnRange*j + rowRange*j, Quaternion.identity);
                         backTile.transform.SetParent(backGround.transform);
                         backTile.GetComponent<SpriteRenderer>().sprite = tileSprite[UnityEngine.Random.Range(0, 4)];
@@ -145,8 +145,8 @@ public class TileManager : MonoBehaviour {
                     
             }
 
-            if (columnCount < 6)
-                columnCount = 6;
+            if (columnCount < 8)
+                columnCount = 8;
             
             if(tile.GetComponent<TileObject>().location.col == 0) {
                 for(int j = 1; j<rowCount; j++) {
@@ -169,8 +169,8 @@ public class TileManager : MonoBehaviour {
                     rowCount--;
             }
 
-            if (rowCount < 6)
-                rowCount = 6;
+            if (rowCount < 8)
+                rowCount = 8;
 
         }
 

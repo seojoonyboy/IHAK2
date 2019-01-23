@@ -93,6 +93,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
                 transform.GetChild(0).GetComponent<Image>().color = Color.red; //slot => Data;
             }
+            else if (hit.collider.tag == "BackGroundTile") {
+                transform.position = Input.mousePosition;
+                transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                transform.localScale = startScale;
+            }
         }
         else {
             transform.position = Input.mousePosition;

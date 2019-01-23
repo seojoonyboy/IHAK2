@@ -203,7 +203,7 @@ public class DeckSettingController : MonoBehaviour {
         prevData = null;
 
         if (reset == false) {
-            for (int i = 0; i < tileGroup.transform.childCount; i++) {
+            for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
                 if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
                     if (tileGroup.transform.GetChild(i).childCount != 0) {
                         Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
@@ -262,7 +262,7 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void TilebuildingList() {
-        for (int i = 0; i < tileGroup.transform.childCount; i++) {
+        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
             else
@@ -271,7 +271,7 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void resetTile() {
-        for (int i = 0; i < tileGroup.transform.childCount; i++) {
+        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             if (i == tileGroup.transform.childCount / 2)
                 continue;
             if (tileGroup.transform.GetChild(i).childCount != 0) {
@@ -325,6 +325,10 @@ public class DeckSettingController : MonoBehaviour {
                     return;
                 }
             }
+            else if (hit.collider.tag == "BackGroundTile") {
+                gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                return;
+            }
 
             if (selectBuilding != null) {
                 selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
@@ -373,6 +377,12 @@ public class DeckSettingController : MonoBehaviour {
                 selectBuilding.transform.position = buildingPosition;
                 selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
             }
+            else if(hit.collider.tag == "BackGroundTile") {
+                targetTile = null;
+                selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+                selectBuilding.transform.position = mousePosition;
+            }
+
         }
         else {
             targetTile = null;
@@ -459,7 +469,7 @@ public class DeckSettingController : MonoBehaviour {
     public int BuildingCount(GameObject _object) {
         int count = 0;
         
-        for(int i = 0; i < tileGroup.transform.childCount; i++) {
+        for(int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 GameObject compareObject = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
 
@@ -570,7 +580,7 @@ public class DeckSettingController : MonoBehaviour {
         int count = 0;
         bool setComplete = false;
 
-        for(int i = 0; i< tileGroup.transform.childCount; i++) {
+        for(int i = 0; i< tileGroup.transform.childCount - 1; i++) {
             if (tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet)
                 count++;
         }
@@ -586,7 +596,7 @@ public class DeckSettingController : MonoBehaviour {
 
     public void DeckEffectCheck() {
         int slotNum = 0;
-        for(int i = 0; i < tileGroup.transform.childCount; i++) {
+        for(int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             GameObject tile = tileGroup.transform.GetChild(i).gameObject;
             if (tile.GetComponent<TileObject>().buildingSet == true && tile.transform.childCount == 1) {
                 GameObject building = tile.transform.GetChild(0).gameObject;
