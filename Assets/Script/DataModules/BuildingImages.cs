@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Spine;
+using Spine.Unity;
 
 [RequireComponent(typeof(ConstructManager))]
 public class BuildingImages : MonoBehaviour {
@@ -14,6 +16,8 @@ public class BuildingImages : MonoBehaviour {
         primal_other_buildingImages,
         primal_product_buildingIcons,
         primal_other_buildingIcons;
+    
+    public SkeletonDataAsset[] primal_product_buildingSpines;
 
     public Sprite
         defaultImage,
@@ -27,8 +31,16 @@ public class BuildingImages : MonoBehaviour {
             Card card = bo.data.card;
             bo.mainSprite = GetImage(card.race, card.type, card.id);
             bo.icon = GetIcon(card.race, card.type, card.id);
+            bo.spine = null;//GetSpine(card.race, card.type, card.id);
 
-            obj.GetComponent<SpriteRenderer>().sprite = bo.mainSprite;
+            if(bo.spine == null) { 
+                SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
+                sprite.sprite = bo.mainSprite;
+            }
+            else {
+                SkeletonAnimation animation = obj.AddComponent<SkeletonAnimation>();
+                animation.skeletonDataAsset = bo.spine;
+            }
         }
     }
 
@@ -46,6 +58,22 @@ public class BuildingImages : MonoBehaviour {
                 break;
         }
         return defaultImage;
+    }
+
+    public SkeletonDataAsset GetSpine(string race, string type, string id) {
+        SkeletonDataAsset[] spines;
+        switch (race) {
+            case "primal" :
+                if (type == "prod") spines = primal_product_buildingSpines;
+                else return null;
+                foreach (SkeletonDataAsset spine in spines) {
+                    if (spine.name == id) {
+                        return spine;
+                    }
+                }
+                break;
+        }
+        return null;
     }
 
     public Sprite GetIcon(string race, string type, string id) {
