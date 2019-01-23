@@ -16,7 +16,11 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
     [SerializeField] Transform cityPos;
-    
+    [SerializeField] Transform lookingCity;
+    [SerializeField] Transform switchBtn;
+    [SerializeField] Transform playerRankBtn;
+    [SerializeField] Transform dummyRankBtn;
+
 
     private HorizontalScrollSnap hss;
     private GameObject city;
@@ -36,22 +40,26 @@ public class IngameSceneUIController : MonoBehaviour {
         playerCity.transform.GetChild(1).position = cityPos.position;
         IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
         ieg.enemyTileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
-    }
-
-    private void Update() {
+        lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
+        switchBtn.GetChild(0).gameObject.SetActive(false);
     }
 
     public void SwitchCommand() {
+        
         if (hss.CurrentPage != 0) {
             //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(1).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             ShutProductButtons(true);
             commandBar.transform.GetChild(0).gameObject.SetActive(false);
+            playerRankBtn.GetChild(0).gameObject.SetActive(false);
         }
         else {
             //iTween.MoveTo(commandBar, iTween.Hash("y", commandBarPos.GetChild(0).position.y, "time", 0.2f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
             ShutProductButtons(false);
             commandBar.transform.GetChild(0).gameObject.SetActive(true);
+            dummyRankBtn.GetChild(0).gameObject.SetActive(false);
         }
+        
+        StartCoroutine(HideButton());
     }
 
     private void ShutProductButtons(bool shut) {
@@ -69,6 +77,47 @@ public class IngameSceneUIController : MonoBehaviour {
             for (int i = 0; i < 4; i++)
                 produceButonList.GetChild(i).GetComponent<Image>().color = onColor;
             produceButonList.GetChild(4).gameObject.SetActive(false);
+        }
+    }
+
+    public void SwtichCity(bool left) {
+        if(left) {
+            hss.GoToScreen(hss.CurrentPage - 1);
+        }
+        if(!left) {
+            hss.GoToScreen(hss.CurrentPage + 1);
+        }
+        SwitchCommand();
+    }
+
+    IEnumerator HideButton() {
+        yield return new WaitForSeconds(0.2f);
+        lookingCity.GetChild(hss._previousPage).localScale = new Vector3(1.0f, 1.0f, 1);
+        lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
+        switch (hss.CurrentPage) {
+            case 0:
+                switchBtn.GetChild(0).gameObject.SetActive(false);
+                switchBtn.GetChild(1).gameObject.SetActive(true);
+                break;
+            default:
+                switchBtn.GetChild(0).gameObject.SetActive(true);
+                switchBtn.GetChild(1).gameObject.SetActive(false);
+                break;
+        }
+    }
+
+    public void PopRank(bool player) {
+        if (player) {
+            if (playerRankBtn.GetChild(0).gameObject.activeSelf)
+                playerRankBtn.GetChild(0).gameObject.SetActive(false);
+            else
+                playerRankBtn.GetChild(0).gameObject.SetActive(true);
+        }
+        else {
+            if (dummyRankBtn.GetChild(0).gameObject.activeSelf)
+                dummyRankBtn.GetChild(0).gameObject.SetActive(false);
+            else
+                dummyRankBtn.GetChild(0).gameObject.SetActive(true);
         }
     }
 
