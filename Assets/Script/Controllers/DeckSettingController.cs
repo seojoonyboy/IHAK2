@@ -149,23 +149,28 @@ public class DeckSettingController : MonoBehaviour {
         //content.text = species + "에 대한 설명";
     }
 
-    public void settingButton() {
-        if (prevData == null) {
-            GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, Callback);
-            modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
-        }
-        else {
-            string name = prevData.name;
-            string str = name;
-            if (name.Length > 8) {
-                str = name.Substring(0, 8);
+    public void SettingButton() {
+
+        if (DeckCheck() == true) {
+            if (prevData == null) {
+                GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
+                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
             }
-            GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, Callback);
-            modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+            else {
+                string name = prevData.name;
+                string str = name;
+                if (name.Length > 8) {
+                    str = name.Substring(0, 8);
+                }
+                GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
+                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+            }
         }
+        else
+            Modal.instantiate("갈색 타일내에 건물 배치를 완료해야합니다.", Modal.Type.CHECK);
     }
 
-    private void Callback(string inputText) {
+    private void OnclickInputConfirm(string inputText) {
         Deck deck = new Deck();
         deck.race = ((Species.Type)speciesId).ToString();
         deck.name = inputText;
@@ -547,4 +552,24 @@ public class DeckSettingController : MonoBehaviour {
     public void OnSliderValueChanged(GameObject slider) {
         slider.transform.Find("Text").GetComponent<Text>().text = slider.GetComponent<Slider>().value.ToString();
     }
+
+    public bool DeckCheck() {
+
+        int count = 0;
+        bool setComplete = false;
+
+        for(int i = 0; i< tileGroup.transform.childCount; i++) {
+            if (tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet)
+                count++;
+        }
+
+        if (count > 8)
+            setComplete = true;
+        else
+            setComplete = false;
+
+
+        return setComplete;
+    }
+
 }

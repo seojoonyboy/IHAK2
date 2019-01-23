@@ -1,17 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DataModules;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class IngameCityManager : MonoBehaviour {
-
-    class BuildingsInfo {
-        public int id;
+    [System.Serializable]
+    public class BuildingInfo {
+        public int tileNum;
         public bool activate;
         public int hp;
         public int maxHp;
         public Card cardInfo;
+        public GameObject gameObject;
+
+        public BuildingInfo() { }
+
+        public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, Card card, GameObject gameObject) {
+            this.tileNum = tileNum;
+            this.activate = activate;
+            this.hp = hp;
+            this.maxHp = maxHp;
+            this.cardInfo = card;
+            this.gameObject = gameObject;
+        }
     }
     
     public UpgradeInfo 
@@ -23,15 +37,22 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Text hpValue;
     [SerializeField] private Text maxHp;
 
+    IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
 
     private int cityHP = 0;
     private int cityMaxHP = 0;
     private Deck deck;
-    private List<BuildingsInfo> buildingsInfo = new List<BuildingsInfo>();
+    public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
+    public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
+
+    private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     public int[] buildingList;
 
-    private int[] demoIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+    void Awake() {
+        ingameSceneEventHandler = IngameSceneEventHandler.Instance;
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
+    }
 
     // Use this for initialization
     void Start () {
@@ -49,14 +70,15 @@ public class IngameCityManager : MonoBehaviour {
         //    buildingsInfo.Add(bi);
         //}
 
-        for (int i = 0; i < demoIndex.Length; i++) {    // 3x3 마을용 연산
-            BuildingsInfo bi = new BuildingsInfo();
-            bi.id = deck.coordsSerial[demoIndex[i]];
+        for (int i = 0; i < demoTileIndex.Length; i++) {    // 3x3 마을용 연산
+            BuildingInfo bi = new BuildingInfo();
+            bi.tileNum = demoTileIndex[i];
             bi.activate = true;
-            bi.cardInfo = transform.GetChild(1).GetChild(demoIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
+            bi.gameObject = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
+            bi.cardInfo = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
             bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
             cityHP += bi.hp;
-            buildingsInfo.Add(bi);
+            myBuildingsInfo.Add(bi);
         }
 
         cityMaxHP = cityHP;
@@ -66,6 +88,13 @@ public class IngameCityManager : MonoBehaviour {
         //InitProduction();
 
         productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
+
+        //테스트
+        //SkillDetail skillDetail = new SkillDetail();
+        //skillDetail.id = 1;
+        //skillDetail.methodName = "마그마 스킬";
+        //skillDetail.args = "5,6,1,15";
+        //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
     }
 
     private void Update() {
@@ -85,6 +114,7 @@ public class IngameCityManager : MonoBehaviour {
     public void OnCollisionEnter(Collision col) {
         Debug.Log(col.ToString());
     }
+
     public void OnCollisionEnter2D(Collision2D col) {
         Debug.Log(col.ToString());
         if(col.gameObject.tag == "Building") {
@@ -96,7 +126,7 @@ public class IngameCityManager : MonoBehaviour {
 
     private void InitProduction() {
         PlayerController pc = FindObjectOfType<PlayerController>();
-        foreach (BuildingsInfo bi in buildingsInfo) {
+        foreach (BuildingInfo bi in myBuildingsInfo) {
             if (bi.cardInfo == null)
                 continue;
             if (bi.cardInfo.type == "prod") {
@@ -121,5 +151,91 @@ public class IngameCityManager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void TakeDamageEventOcccured(Enum Event_Type, Component Sender, object Param) {
+        object[] parms = (object[])Param;
+        Target target = (Target)parms[0];
+        int[] targetTileNums = (int[])parms[1];
+        int damageAmount = (int)parms[2];
+
+        TakeDamage(
+            target: target,
+            numbers: targetTileNums.ToList(),
+            amount: damageAmount
+        );
+    }
+
+    public bool TakeDamage(Target target, int tileNum, int amount) {
+        switch (target) {
+            case Target.ENEMY_1:
+                BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (enemyBuilding == null) return false;
+                enemyBuilding.hp -= amount;
+                if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+                break;
+            case Target.ME:
+                BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (myBuilding == null) return false;
+                myBuilding.hp -= amount;
+                if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                break;
+        }
+        return true;
+    }
+
+    public bool TakeDamage(Target target, List<int> numbers, int amount) {
+        switch (target) {
+            case Target.ENEMY_1:
+                foreach (int tileNum in numbers) {
+                    //Debug.Log(tileNum + "에 데미지");
+                    BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                    if (enemyBuilding == null) return false;
+                    enemyBuilding.hp -= amount;
+                    if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+                }
+                break;
+            case Target.ME:
+                foreach (int tileNum in numbers) {
+                    BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
+                    if (myBuilding == null) return false;
+                    myBuilding.hp -= amount;
+                    if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                }
+                break;
+        }
+        return true;
+    }
+
+    private void BuildingDestroyed(BuildingInfo buildingInfo) {
+        buildingInfo.hp = 0;
+        buildingInfo.activate = false;
+    }
+
+    public void SetEnemyBuildingLists(ref GameObject tilegroup) {
+        foreach(Transform tile in tilegroup.transform) {
+            if(tile.childCount == 1) {
+                int tileNum = tile.GetComponent<TileObject>().tileNum;
+                GameObject building = tile.GetChild(0).gameObject;
+                BuildingObject buildingObject = building.GetComponent<BuildingObject>();
+                Card card = buildingObject.data.card;
+
+                BuildingInfo info = new BuildingInfo(
+                    tileNum: tileNum,
+                    activate: true,
+                    hp: card.hitPoint,
+                    maxHp: card.hitPoint,
+                    card: card,
+                    gameObject: building
+                );
+
+                enemyBuildingsInfo.Add(info);
+            }
+        }
+    }
+
+    public enum Target {
+        ME,
+        ENEMY_1
     }
 }

@@ -10598,6 +10598,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileSprite.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4629068900592442, guid: 14c7e72cc5b2a5342afe16abc8b37ebf, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10634,6 +10639,41 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileGroup
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tile
+      value: 
+      objectReference: {fileID: 1672670492766660, guid: 7905fefc1ab603748990188bf5111b53,
+        type: 2}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileSprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: e4619dd6fd4247a47a93028620177f70,
+        type: 3}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileSprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: bd9446b933a26e3449f6b1a9c9d76593,
+        type: 3}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileSprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1af42830ab7d05149a397e28f48d069b,
+        type: 3}
+    - target: {fileID: 114458259936578224, guid: 14c7e72cc5b2a5342afe16abc8b37ebf,
+        type: 2}
+      propertyPath: tileSprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 39e5699e603fcd048a7b782a6619667e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14c7e72cc5b2a5342afe16abc8b37ebf, type: 2}
   m_IsPrefabAsset: 0
@@ -11157,7 +11197,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1909547847}
-        m_MethodName: settingButton
+        m_MethodName: SettingButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
