@@ -21,6 +21,7 @@ public class GameSceneManager : MonoBehaviour {
     private void Awake() {
         sceneState = SceneState.None;
         accountManager = AccountManager.Instance;
+        Application.targetFrameRate = 600;
     }
 
     // Use this for initialization

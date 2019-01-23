@@ -16,13 +16,17 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Transform commandBarPos;
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
+    [SerializeField] Transform cityPos;
+    
 
     private HorizontalScrollSnap hss;
+    private GameObject city;
 
     private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
+        ld.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
         go.SetActive(false);
     }
 
@@ -30,8 +34,11 @@ public class IngameSceneUIController : MonoBehaviour {
     void Start() {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
+        playerCity.transform.GetChild(1).position = cityPos.position;
     }
 
+    private void Update() {
+    }
 
     public void SwitchCommand() {
         if (hss.CurrentPage != 0) {
