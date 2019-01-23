@@ -30,8 +30,8 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         HandDeck(cards);
 
-        UseCard(0);
-        UseCard(1);
+        //UseCard(0);
+        //UseCard(1);
     }
 
     private void InitUnitCard() {
@@ -73,7 +73,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     //card use
     public void UseCard(int handIndex) {
-        Debug.Log(Hand[handIndex].GetComponent<IngameCard>().data.GetType());
+        //Debug.Log(Hand[handIndex].GetComponent<IngameCard>().data.GetType());
         Grave.Add(Hand[handIndex]);
         Hand.RemoveAt(handIndex);
 
