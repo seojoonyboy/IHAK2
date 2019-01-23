@@ -168,8 +168,4 @@ public class PlayerController : MonoBehaviour {
         }
         PrintResource();
     }
-
-    private void OnDestroy() {
-        
-    }
 }

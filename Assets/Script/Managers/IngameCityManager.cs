@@ -74,6 +74,7 @@ public class IngameCityManager : MonoBehaviour {
         //    Ray2D ray = new Ray2D(worldPoint, Vector2.zero);
         //    RaycastHit2D hit = Physics2D.Raycast(ray.origin, worldPoint);
         //    if (hit.collider.gameObject.tag == "Building") {
+        //        Debug.Log(hit.collider.gameObject.ToString());
         //        cityHP -= 100;
         //        hpValue.text = cityHP.ToString();
         //        hpValueBar.fillAmount = (float)cityHP / (float)cityMaxHP;
