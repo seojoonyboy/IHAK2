@@ -16,6 +16,7 @@ public class IngameEnemyGenerator : MonoBehaviour {
 
     private void Start() {
         GameObject tileGroup = Instantiate(enemyTileGroup, transform);
+        tileGroup.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
         ingameCityManager.SetEnemyBuildingLists(ref tileGroup);
     }
 }
