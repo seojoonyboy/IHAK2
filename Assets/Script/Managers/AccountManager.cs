@@ -370,10 +370,10 @@ public class AccountManager : Singleton<AccountManager> {
                     buildingObject.setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
                     if(setBuild.GetComponent<SpriteRenderer>() != null) {
                         setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
                     }
                     else {
-                        setBuild.GetComponent<MeshRenderer>().sortingOrder = setBuild.transform.parent.parent.childCount * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        setBuild.GetComponent<MeshRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
                         StartCoroutine(SetAnimation(setBuild.GetComponent<SkeletonAnimation>()));
                     }
                     Card card = buildingObject.data.card;
