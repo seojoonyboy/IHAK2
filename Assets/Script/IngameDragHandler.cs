@@ -25,7 +25,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         if(hit.collider != null) {
-
             if (hit.collider.tag == "BackGroundTile") {
                 GameObject tile = hit.transform.gameObject;
                 Vector3 position = cam.WorldToScreenPoint(tile.transform.position);
