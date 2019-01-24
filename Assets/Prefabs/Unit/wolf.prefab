@@ -177,7 +177,13 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 653ef9ffda1b74e0f9cda3540112e533, type: 2}
+  - {fileID: 2100000, guid: 56a8f3c7eb4a541f5a59a734394c8cb0, type: 2}
+  - {fileID: 2100000, guid: ca7fbaa495685468899a304480ca9751, type: 2}
+  - {fileID: 2100000, guid: 56a8f3c7eb4a541f5a59a734394c8cb0, type: 2}
+  - {fileID: 2100000, guid: ca7fbaa495685468899a304480ca9751, type: 2}
+  - {fileID: 2100000, guid: 56a8f3c7eb4a541f5a59a734394c8cb0, type: 2}
+  - {fileID: 2100000, guid: ca7fbaa495685468899a304480ca9751, type: 2}
+  - {fileID: 2100000, guid: 56a8f3c7eb4a541f5a59a734394c8cb0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -240,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 0}
+  skeletonDataAsset: {fileID: 11400000, guid: 3276e6ecab96c47a6aeae1fbebf7fff5, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
