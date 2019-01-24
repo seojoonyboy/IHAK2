@@ -16,8 +16,8 @@ public class Tower_Detactor : MonoBehaviour {
     void Start() {
         box = GetComponent<CircleCollider2D>();
         setRange(40);
-        damage = 8;
-        atkTime = 0.6f;
+        damage = 23;
+        atkTime = 1.4f;
     }
 
     public void init(AttackInfo info) {
