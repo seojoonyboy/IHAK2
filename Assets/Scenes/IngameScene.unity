@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 68597178}
   - component: {fileID: 68597177}
   m_Layer: 0
-  m_Name: FoodProduce
+  m_Name: GoldProduce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300052, guid: 28aecdd04553734458470c67c54fad27, type: 3}
+  m_Sprite: {fileID: 21300046, guid: 28aecdd04553734458470c67c54fad27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2399,7 +2399,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 32, y: 37}
+  m_SizeDelta: {x: 60, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &338264709
 MonoBehaviour:
@@ -2461,7 +2461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAE08"
+  m_Text: "\uC2DD\uB7C9"
 --- !u!222 &338264712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2646,10 +2646,23 @@ MonoBehaviour:
   hpValueBar: {fileID: 1784039172}
   hpValue: {fileID: 993183136}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
-  enemyTotalHP: 0
-  enemyCurrentTotalHP: 0
-  enemyTotalHPGauge: {fileID: 1211720891}
   productResources:
+    food:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    gold:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    env:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+  unActiveResources:
     food:
       id: 0
       food: 0
@@ -2680,6 +2693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa605099e0cf7046a93b6c17c7d77df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 807158603}
   cardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa, type: 2}
   cardParent: {fileID: 1589755684}
   Deck: []
@@ -3302,7 +3316,7 @@ GameObject:
   - component: {fileID: 489541114}
   - component: {fileID: 489541113}
   m_Layer: 0
-  m_Name: Gold
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5263,11 +5277,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commandButtons: {fileID: 468451359}
   playerResource: {fileID: 568280589}
-  foodValue: {fileID: 1191445014}
-  goldValue: {fileID: 1735805637}
+  goldValue: {fileID: 1191445014}
+  foodValue: {fileID: 1735805637}
   turnValue: {fileID: 1194451107}
   envValue: {fileID: 1749300415}
   icm: {fileID: 364303840}
+  hqLevel: 0
 --- !u!1 &820021119
 GameObject:
   m_ObjectHideFlags: 0
@@ -7215,7 +7230,7 @@ GameObject:
   - component: {fileID: 1191445013}
   - component: {fileID: 1191445016}
   m_Layer: 0
-  m_Name: Value
+  m_Name: GoldValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7320,7 +7335,7 @@ GameObject:
   - component: {fileID: 1194451106}
   - component: {fileID: 1194451109}
   m_Layer: 0
-  m_Name: Value
+  m_Name: TurnValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7609,7 +7624,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.693
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1211720894
@@ -9620,7 +9635,7 @@ GameObject:
   - component: {fileID: 1574302833}
   - component: {fileID: 1574302832}
   m_Layer: 0
-  m_Name: GoldProduce
+  m_Name: FoodProduce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9705,7 +9720,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300046, guid: 28aecdd04553734458470c67c54fad27, type: 3}
+  m_Sprite: {fileID: 21300052, guid: 28aecdd04553734458470c67c54fad27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10757,7 +10772,7 @@ GameObject:
   - component: {fileID: 1735805636}
   - component: {fileID: 1735805639}
   m_Layer: 0
-  m_Name: Value
+  m_Name: FoodValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11100,7 +11115,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.693
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1784039173
@@ -11121,7 +11136,7 @@ GameObject:
   - component: {fileID: 1795569693}
   - component: {fileID: 1795569692}
   m_Layer: 0
-  m_Name: Food
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13178,7 +13193,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 63, y: 38}
+  m_SizeDelta: {x: 40, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072480207
 MonoBehaviour:
@@ -13240,7 +13255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC2DD\uB7C9"
+  m_Text: "\uAE08"
 --- !u!222 &2072480210
 CanvasRenderer:
   m_ObjectHideFlags: 0

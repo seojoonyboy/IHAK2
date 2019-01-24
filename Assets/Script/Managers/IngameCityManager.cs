@@ -47,6 +47,7 @@ public class IngameCityManager : MonoBehaviour {
 
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
+    public ProductResources unActiveResources;
 
     public int cityHP = 0;
     private int cityMaxHP = 0;
@@ -60,6 +61,20 @@ public class IngameCityManager : MonoBehaviour {
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
+    }
+
+    void OnDestroy() {
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
+    }
+
+    private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
+        Debug.Log("HQ 업그레이트 이벤트 발생");
+        IngameDeckShuffler ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
+        ingameDeckShuffler.Clear();
+        ingameDeckShuffler.InitUnitCard();
+        ingameDeckShuffler.InitSkillCard();
     }
 
     // Use this for initialization
@@ -147,7 +162,7 @@ public class IngameCityManager : MonoBehaviour {
         foreach (BuildingInfo bi in myBuildingsInfo) {
             if (bi.cardInfo == null)
                 continue;
-            if (bi.cardInfo.type == "prod") {
+            if (bi.cardInfo.type == "prod" && bi.activate) {
                 switch (bi.cardInfo.prodType) {
                     case "gold":
                         pc.pInfo.clickGold[0] += bi.cardInfo.product.gold;
@@ -360,6 +375,13 @@ public class IngameCityManager : MonoBehaviour {
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
 
+                if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+                    GameObject detector = enemyBuilding.gameObject.transform.Find("Detector").gameObject;
+                    if (detector != null) {
+                        detector.GetComponent<Tower_Detactor>().enabled = true;
+                    }
+                }
+
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
                     enemyBuilding.hp = enemyBuilding.maxHp;
@@ -505,6 +527,14 @@ public class IngameCityManager : MonoBehaviour {
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
+
+        if(buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+            GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
+            if(detector != null) {
+                detector.GetComponent<Tower_Detactor>().enabled = false;
+            }
+        }
+
         buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -539,6 +569,68 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
     }
+
+    public void SetUnactiveBuilding() {
+        while (true) {
+            int num = UnityEngine.Random.Range(0, 7);
+            if (myBuildingsInfo[num].cardInfo.type == "HQ")
+                continue;
+            if (myBuildingsInfo[num].activate == false)
+                continue;
+            else {
+                myBuildingsInfo[num].activate = false;
+                switch (myBuildingsInfo[num].cardInfo.prodType) {
+                    case "gold":
+                        productResources.gold.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.gold.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.gold.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    case "food":
+                        productResources.food.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.food.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.food.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    case "env":
+                        productResources.env.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.env.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.env.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    default:
+                        break;
+                }
+                Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화");
+                StartCoroutine(UnActivateForTime(myBuildingsInfo[num]));
+                return;
+            }
+            
+        }
+    }
+
+    IEnumerator UnActivateForTime(BuildingInfo card) {
+        yield return new WaitForSeconds(30.0f);
+        card.activate = true;
+        Debug.Log(card.cardInfo.name + " 활성화");
+        switch (card.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food += card.cardInfo.product.food;
+                productResources.gold.gold += card.cardInfo.product.gold;
+                productResources.gold.environment += card.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food += card.cardInfo.product.food;
+                productResources.food.gold += card.cardInfo.product.gold;
+                productResources.food.environment += card.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food += card.cardInfo.product.food;
+                productResources.env.gold += card.cardInfo.product.gold;
+                productResources.env.environment += card.cardInfo.product.environment;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     /*
     IEnumerator Damage() {

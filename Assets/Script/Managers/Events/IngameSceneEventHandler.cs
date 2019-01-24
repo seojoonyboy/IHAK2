@@ -58,6 +58,7 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
 
     public enum EVENT_TYPE {
         NONE,
-        TAKE_DAMAGE
+        TAKE_DAMAGE,
+        HQ_UPGRADE
     }
 }
