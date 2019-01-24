@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour {
         int env = resourceClass.environment;
         switch (btn){
             case Buttons.GOLD: 
-                if (env + icm.productResources.gold.environment > 0) {
+                if (env + icm.productResources.gold.environment > 0 && icm.productResources.gold.gold > 0) {
                     resourceClass.gold += icm.productResources.gold.gold;
                     resourceClass.food += icm.productResources.gold.food;
                     resourceClass.environment += icm.productResources.gold.environment;
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour {
                 scoreManager.AddScore(icm.productResources.gold.gold, IngameScoreManager.ScoreType.Product);
                 break;
             case Buttons.FOOD:
-                if (env + icm.productResources.food.environment > 0) {
+                if (env + icm.productResources.food.environment > 0 && icm.productResources.food.food > 0) {
                     resourceClass.gold += icm.productResources.food.gold;
                     resourceClass.food += icm.productResources.food.food;
                     resourceClass.environment += icm.productResources.food.environment;
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour {
                 scoreManager.AddScore(icm.productResources.food.food, IngameScoreManager.ScoreType.Product);
                 break;
             case Buttons.ENVIRONMENT:
-                if (env < 300) {
+                if (env < 300 && icm.productResources.env.environment > 0) {
                     if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
                         resourceClass.gold += icm.productResources.env.gold;
                         resourceClass.food += icm.productResources.env.food;
