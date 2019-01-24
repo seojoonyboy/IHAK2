@@ -47,7 +47,7 @@ public class UnitAI : MonoBehaviour {
 	private void SearchUnitData() {
 		TileGroup[] list = FindObjectsOfType<TileGroup>();
 		foreach(TileGroup tilegroup in list) {
-            if (tilegroup.gameObject.name.CompareTo("TileGroup_Empty_1(Clone)") == 0)
+            if (tilegroup.gameObject.name.CompareTo("TileGroup_DummyEnemy(Clone)") != 0)
                 unit = tilegroup.units[0];
 		}
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
