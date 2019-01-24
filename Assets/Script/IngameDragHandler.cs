@@ -29,7 +29,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         if(hit.collider != null) {
             if (hit.collider.tag == "BackGroundTile") {
                 GameObject tile = hit.transform.gameObject;
-                Vector3 position = cam.WorldToScreenPoint(tile.transform.position);
+                Vector3 position = cam.WorldToScreenPoint(origin);
                 position.z = 0;
                 transform.position = position;
 
