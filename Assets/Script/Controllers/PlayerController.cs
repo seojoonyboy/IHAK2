@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
 
     public PlayerResource resourceClass;
     public ProductInfo pInfo { get; set; }
-    private int hqLevel;
+    public int hqLevel;
     IngameScoreManager scoreManager;
     
     
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         PrintResource();
-        hqLevel = 0;
+        hqLevel = 1;
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HqUpgrade() {
         
-        if(hqLevel == 0) {
+        if(hqLevel == 1) {
             if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
                 icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
@@ -141,9 +141,11 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
+
+                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
             }
         }
-        else if(hqLevel == 1) {
+        else if(hqLevel == 2) {
             if (icm.hq_tier_3.upgradeCost.food < resourceClass.food &&
                 icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
@@ -156,6 +158,8 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
+
+                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
             }
         }
         PrintResource();
