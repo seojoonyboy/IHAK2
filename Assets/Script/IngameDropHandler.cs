@@ -12,6 +12,7 @@ public class IngameDropHandler : MonoBehaviour {
     [SerializeField] IngameCityManager ingameCityManager;
     [SerializeField] PlayerController playerController;
     [SerializeField] IngameDeckShuffler ingameDeckShuffler;
+    [SerializeField] Sprite magma;
 
     Camera cam;
     bool canSpell = true;
@@ -84,6 +85,7 @@ public class IngameDropHandler : MonoBehaviour {
                     Skill skill = (Skill)data;
                     if (playerController.isEnoughResources(skill.cost)) {
                         ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
+                        ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
                         IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
 
                         playerController.resourceClass.gold -= skill.cost.gold;
