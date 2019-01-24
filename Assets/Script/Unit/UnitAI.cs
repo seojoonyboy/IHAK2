@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
@@ -16,7 +16,7 @@ public class UnitAI : MonoBehaviour {
 	private Transform healthBar;
 	private BuildingObject target;
 	private float maxHealth;
-    private float health;
+    public float health;
 	private float moveSpeed;
 	private float currentTime;
 	private Unit unit;
@@ -26,7 +26,9 @@ public class UnitAI : MonoBehaviour {
 	private SkeletonAnimation skeletonAnimation;
 	public Spine.AnimationState spineAnimationState;
     public Spine.Skeleton skeleton;
-	
+
+    public GameObject ontile;
+
 	void Start () {
 		SearchUnitData();
 		healthBar = transform.GetChild(1).GetChild(1);
@@ -152,8 +154,11 @@ public class UnitAI : MonoBehaviour {
 	public void damaged(int damage) {
 		health -= damage;
 		calculateHealthBar();
-		if(health <= 0) {
-			Destroy(gameObject);
+		if(health <= 0) {            
+            //ontile.GetComponent<TileCollision>().count--;
+            if (ontile.GetComponent<TileCollision>().count <= 0)
+                ontile.GetComponent<TileCollision>().check = false;
+            Destroy(gameObject);
 		}
 	}
 
@@ -166,4 +171,29 @@ public class UnitAI : MonoBehaviour {
 	void setFlip(Vector2 move) {
         skeleton.ScaleX = move.x < 0 ? 1f: -1f;
 	}
+
+    public void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.tag == "Tile")
+            coll.GetComponent<TileCollision>().count++;
+    }
+
+
+    public void OnTriggerStay2D(Collider2D coll) {
+        if (coll.gameObject.tag == "Tile") {
+            ontile = coll.gameObject;
+            ontile.GetComponent<TileCollision>().check = true;
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D coll) {
+        if (coll.gameObject.tag == "Tile") {
+            if (coll.GetComponent<TileCollision>().count > 0) {
+                coll.GetComponent<TileCollision>().count--;
+
+                if (coll.GetComponent<TileCollision>().count == 0)
+                    coll.GetComponent<TileCollision>().check = false;
+            }
+        }
+    }
+
 }
