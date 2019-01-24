@@ -68,7 +68,6 @@ GameObject:
   - component: {fileID: 4656852050040714}
   - component: {fileID: 114862925840933516}
   - component: {fileID: 61600329227709166}
-  - component: {fileID: 50522118640935380}
   m_Layer: 10
   m_Name: goblin
   m_TagString: Untagged
@@ -205,26 +204,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835397233811550}
   m_Mesh: {fileID: 0}
---- !u!50 &50522118640935380
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1569794317466014}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &61600329227709166
 BoxCollider2D:
   m_ObjectHideFlags: 1
