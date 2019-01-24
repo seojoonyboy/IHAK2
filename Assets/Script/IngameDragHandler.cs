@@ -32,7 +32,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 GameObject tile = hit.transform.gameObject;
                 Vector3 position = cam.WorldToScreenPoint(origin);
                 position.z = 0;
-                transform.position = position;
+                transform.position = new Vector3(position.x, position.y + 100f, position.z);
 
                 //Debug.Log(hit.collider.gameObject.layer);
             }
