@@ -39,6 +39,7 @@ public class IngameCityManager : MonoBehaviour {
 
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
+    [SerializeField] private Sprite wreckSprite;
     //[SerializeField] private Text maxHp;
 
     IngameSceneEventHandler ingameSceneEventHandler;
@@ -238,6 +239,8 @@ public class IngameCityManager : MonoBehaviour {
         buildingInfo.hp = 0;
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
+        buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
+        buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void SetEnemyBuildingLists(ref GameObject tilegroup) {
