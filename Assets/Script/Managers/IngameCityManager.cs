@@ -44,6 +44,7 @@ public class IngameCityManager : MonoBehaviour {
 
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
+    public ProductResources unActiveResources;
 
     public int cityHP = 0;
     private int cityMaxHP = 0;
@@ -156,7 +157,7 @@ public class IngameCityManager : MonoBehaviour {
         foreach (BuildingInfo bi in myBuildingsInfo) {
             if (bi.cardInfo == null)
                 continue;
-            if (bi.cardInfo.type == "prod") {
+            if (bi.cardInfo.type == "prod" && bi.activate) {
                 switch (bi.cardInfo.prodType) {
                     case "gold":
                         pc.pInfo.clickGold[0] += bi.cardInfo.product.gold;
@@ -476,6 +477,68 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
     }
+
+    public void SetUnactiveBuilding() {
+        while (true) {
+            int num = UnityEngine.Random.Range(0, 7);
+            if (myBuildingsInfo[num].cardInfo.type == "HQ")
+                continue;
+            if (myBuildingsInfo[num].activate == false)
+                continue;
+            else {
+                myBuildingsInfo[num].activate = false;
+                switch (myBuildingsInfo[num].cardInfo.prodType) {
+                    case "gold":
+                        productResources.gold.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.gold.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.gold.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    case "food":
+                        productResources.food.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.food.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.food.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    case "env":
+                        productResources.env.food -= myBuildingsInfo[num].cardInfo.product.food;
+                        productResources.env.gold -= myBuildingsInfo[num].cardInfo.product.gold;
+                        productResources.env.environment -= myBuildingsInfo[num].cardInfo.product.environment;
+                        break;
+                    default:
+                        break;
+                }
+                Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화");
+                StartCoroutine(UnActivateForTime(myBuildingsInfo[num]));
+                return;
+            }
+            
+        }
+    }
+
+    IEnumerator UnActivateForTime(BuildingInfo card) {
+        yield return new WaitForSeconds(30.0f);
+        card.activate = true;
+        Debug.Log(card.cardInfo.name + " 활성화");
+        switch (card.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food += card.cardInfo.product.food;
+                productResources.gold.gold += card.cardInfo.product.gold;
+                productResources.gold.environment += card.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food += card.cardInfo.product.food;
+                productResources.food.gold += card.cardInfo.product.gold;
+                productResources.food.environment += card.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food += card.cardInfo.product.food;
+                productResources.env.gold += card.cardInfo.product.gold;
+                productResources.env.environment += card.cardInfo.product.environment;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     /*
     IEnumerator Damage() {
