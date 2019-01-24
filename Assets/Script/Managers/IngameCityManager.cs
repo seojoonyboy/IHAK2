@@ -92,6 +92,8 @@ public class IngameCityManager : MonoBehaviour {
 
 
         TakeDamage(Target.ENEMY_1, 6, 20);
+        TakeDamage(Target.ENEMY_1, 6, 80);
+        TakeDamage(Target.ENEMY_1, 7, 100);
         //테스트
         //SkillDetail skillDetail = new SkillDetail();
         //skillDetail.id = 1;
