@@ -65,7 +65,9 @@ public class PlayerController : MonoBehaviour {
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
         commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
-
+        icm.productResources.gold.gold += 5;
+        icm.productResources.food.food += 5;
+        icm.productResources.env.environment += 5;
     }
 
     private void ClickButton(Buttons btn) {
@@ -73,12 +75,14 @@ public class PlayerController : MonoBehaviour {
         switch (btn){
             case Buttons.GOLD: 
                 if (env + icm.productResources.gold.environment > 0) {
-                    resourceClass.gold += icm.productResources.gold.gold;
-                    resourceClass.food += icm.productResources.gold.food;
-                    resourceClass.environment += icm.productResources.gold.environment;
-                    resourceClass.turn--;
-                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
-                        icm.DecideUnActiveBuilding();
+                    if (icm.productResources.gold.gold > 0) {
+                        resourceClass.gold += icm.productResources.gold.gold;
+                        resourceClass.food += icm.productResources.gold.food;
+                        resourceClass.environment += icm.productResources.gold.environment;
+                        resourceClass.turn--;
+                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                            icm.DecideUnActiveBuilding();
+                    }
                 }
                 else {
                     resourceClass.gold += icm.productResources.gold.gold;
@@ -91,12 +95,14 @@ public class PlayerController : MonoBehaviour {
                 break;
             case Buttons.FOOD:
                 if (env + icm.productResources.food.environment > 0) {
-                    resourceClass.gold += icm.productResources.food.gold;
-                    resourceClass.food += icm.productResources.food.food;
-                    resourceClass.environment += icm.productResources.food.environment;
-                    resourceClass.turn--;
-                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
-                        icm.DecideUnActiveBuilding();
+                    if (icm.productResources.food.food > 0) {
+                        resourceClass.gold += icm.productResources.food.gold;
+                        resourceClass.food += icm.productResources.food.food;
+                        resourceClass.environment += icm.productResources.food.environment;
+                        resourceClass.turn--;
+                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                            icm.DecideUnActiveBuilding();
+                    }
                 }
                 else {
                     resourceClass.gold += icm.productResources.food.gold;
@@ -109,19 +115,21 @@ public class PlayerController : MonoBehaviour {
                 break;
             case Buttons.ENVIRONMENT:
                 if (env < 300) {
-                    if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
-                        resourceClass.gold += icm.productResources.env.gold;
-                        resourceClass.food += icm.productResources.env.food;
-                        resourceClass.environment += icm.productResources.env.environment;
-                        if (resourceClass.environment > 300) {
-                            scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product); 
-                            resourceClass.environment = 300;
+                    if (icm.productResources.env.environment > 0) {
+                        if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
+                            resourceClass.gold += icm.productResources.env.gold;
+                            resourceClass.food += icm.productResources.env.food;
+                            resourceClass.environment += icm.productResources.env.environment;
+                            if (resourceClass.environment > 300) {
+                                scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product);
+                                resourceClass.environment = 300;
+                            }
+                            else
+                                scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
+                            if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+                                icm.CancleUnActiveBuilding();
+                            resourceClass.turn--;
                         }
-                        else
-                            scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
-                        if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
-                            icm.CancleUnActiveBuilding();
-                        resourceClass.turn--;
                     }
                 }
                 break;
@@ -147,15 +155,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void HqUpgrade() {
-        
         if(hqLevel == 1) {
             if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
                 icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
                 Debug.Log("2단계 업글");
-                pInfo.clickGold[0] += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
-                pInfo.clickFood[1] += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
-                pInfo.clickEnvironment[2] += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                icm.productResources.gold.gold += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
+                icm.productResources.food.food += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
+                icm.productResources.env.environment += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
                 resourceClass.food -= icm.hq_tier_2.upgradeCost.food;
                 resourceClass.gold -= icm.hq_tier_2.upgradeCost.gold;
                 resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
@@ -170,18 +177,20 @@ public class PlayerController : MonoBehaviour {
                 icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
                 Debug.Log("3단계 업글");
-                pInfo.clickGold[0] += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
-                pInfo.clickFood[1] += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
-                pInfo.clickEnvironment[2] += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                icm.productResources.gold.gold += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
+                icm.productResources.food.food += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
+                icm.productResources.env.environment += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
                 resourceClass.food -= icm.hq_tier_3.upgradeCost.food;
                 resourceClass.gold -= icm.hq_tier_3.upgradeCost.gold;
                 resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
-
+                commandButtons.parent.GetChild(0).GetComponent<Image>().enabled = false;
+                commandButtons.parent.GetChild(0).GetChild(1).gameObject.SetActive(false);
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
             }
         }
+        commandButtons.parent.GetChild(0).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
     }
 }
