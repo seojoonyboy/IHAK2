@@ -72,13 +72,15 @@ public class PlayerController : MonoBehaviour {
         int env = resourceClass.environment;
         switch (btn){
             case Buttons.GOLD: 
-                if (env + icm.productResources.gold.environment > 0 && icm.productResources.gold.gold > 0) {
-                    resourceClass.gold += icm.productResources.gold.gold;
-                    resourceClass.food += icm.productResources.gold.food;
-                    resourceClass.environment += icm.productResources.gold.environment;
-                    resourceClass.turn--;
-                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
-                        icm.DecideUnActiveBuilding();
+                if (env + icm.productResources.gold.environment > 0) {
+                    if (icm.productResources.gold.gold > 0) {
+                        resourceClass.gold += icm.productResources.gold.gold;
+                        resourceClass.food += icm.productResources.gold.food;
+                        resourceClass.environment += icm.productResources.gold.environment;
+                        resourceClass.turn--;
+                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                            icm.DecideUnActiveBuilding();
+                    }
                 }
                 else {
                     resourceClass.gold += icm.productResources.gold.gold;
@@ -90,13 +92,15 @@ public class PlayerController : MonoBehaviour {
                 scoreManager.AddScore(icm.productResources.gold.gold, IngameScoreManager.ScoreType.Product);
                 break;
             case Buttons.FOOD:
-                if (env + icm.productResources.food.environment > 0 && icm.productResources.food.food > 0) {
-                    resourceClass.gold += icm.productResources.food.gold;
-                    resourceClass.food += icm.productResources.food.food;
-                    resourceClass.environment += icm.productResources.food.environment;
-                    resourceClass.turn--;
-                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
-                        icm.DecideUnActiveBuilding();
+                if (env + icm.productResources.food.environment > 0) {
+                    if (icm.productResources.food.food > 0) {
+                        resourceClass.gold += icm.productResources.food.gold;
+                        resourceClass.food += icm.productResources.food.food;
+                        resourceClass.environment += icm.productResources.food.environment;
+                        resourceClass.turn--;
+                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                            icm.DecideUnActiveBuilding();
+                    }
                 }
                 else {
                     resourceClass.gold += icm.productResources.food.gold;
@@ -108,20 +112,22 @@ public class PlayerController : MonoBehaviour {
                 scoreManager.AddScore(icm.productResources.food.food, IngameScoreManager.ScoreType.Product);
                 break;
             case Buttons.ENVIRONMENT:
-                if (env < 300 && icm.productResources.env.environment > 0) {
-                    if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
-                        resourceClass.gold += icm.productResources.env.gold;
-                        resourceClass.food += icm.productResources.env.food;
-                        resourceClass.environment += icm.productResources.env.environment;
-                        if (resourceClass.environment > 300) {
-                            scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product); 
-                            resourceClass.environment = 300;
+                if (env < 300) {
+                    if (icm.productResources.env.environment > 0) {
+                        if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
+                            resourceClass.gold += icm.productResources.env.gold;
+                            resourceClass.food += icm.productResources.env.food;
+                            resourceClass.environment += icm.productResources.env.environment;
+                            if (resourceClass.environment > 300) {
+                                scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product);
+                                resourceClass.environment = 300;
+                            }
+                            else
+                                scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
+                            if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+                                icm.CancleUnActiveBuilding();
+                            resourceClass.turn--;
                         }
-                        else
-                            scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
-                        if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
-                            icm.CancleUnActiveBuilding();
-                        resourceClass.turn--;
                     }
                 }
                 break;
