@@ -52,6 +52,8 @@ public class IngameDropHandler : MonoBehaviour {
                         playerController.resourceClass.food -= unit.cost.food;
                         playerController.resourceClass.environment -= unit.cost.environment;
 
+                        IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
+
                         playerController.PrintResource();
                         ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
                     }
@@ -70,6 +72,7 @@ public class IngameDropHandler : MonoBehaviour {
                     Skill skill = (Skill)data;
                     if (playerController.isEnoughResources(skill.cost)) {
                         ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
+                        IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
 
                         playerController.resourceClass.gold -= skill.cost.gold;
                         playerController.resourceClass.food -= skill.cost.food;
