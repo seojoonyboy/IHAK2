@@ -1516,7 +1516,7 @@ GameObject:
   - component: {fileID: 212488315758560272}
   - component: {fileID: 60473428465225098}
   m_Layer: 9
-  m_Name: "\uBC1C\uB9AC\uC2A4\uD0C0"
+  m_Name: great_power_stone
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,7 +1804,7 @@ GameObject:
   - component: {fileID: 212958666960273954}
   - component: {fileID: 60275869998598272}
   m_Layer: 9
-  m_Name: "\uB300\uD615 \uB9C8\uB825\uC758\uB3CC"
+  m_Name: great_power_stone
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3200,7 +3200,7 @@ GameObject:
   - component: {fileID: 212035240371803094}
   - component: {fileID: 60736726006727184}
   m_Layer: 9
-  m_Name: "\uBC1C\uB9AC\uC2A4\uD0C0"
+  m_Name: great_power_stone
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3863,7 +3863,7 @@ GameObject:
   - component: {fileID: 212647239564050004}
   - component: {fileID: 60836305581850584}
   m_Layer: 9
-  m_Name: "\uB300\uD615 \uB9C8\uB825\uC758\uB3CC"
+  m_Name: great_power_stone
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14754,7 +14754,6 @@ MonoBehaviour:
       prodType: 
       rareity: 2
       product:
-        id: 10
         food: 0
         gold: 0
         environment: 0
@@ -14772,7 +14771,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -14815,14 +14813,13 @@ MonoBehaviour:
   data:
     id: 28
     card:
-      id: ballista_tower
+      id: great_power_stone
       race: primal
       name: "\uBC1C\uB9AC\uC2A4\uD0C0"
       type: military
       prodType: 
       rareity: 1
       product:
-        id: 11
         food: 0
         gold: 0
         environment: 0
@@ -14840,7 +14837,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -14897,7 +14893,6 @@ MonoBehaviour:
       prodType: gold
       rareity: 2
       product:
-        id: 27
         food: 0
         gold: 15
         environment: -4
@@ -14915,7 +14910,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -14984,7 +14978,6 @@ MonoBehaviour:
       prodType: 
       rareity: 3
       product:
-        id: 25
         food: 0
         gold: 0
         environment: 0
@@ -15002,7 +14995,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15076,7 +15068,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 6
         food: 0
         gold: 0
         environment: 0
@@ -15094,7 +15085,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15132,7 +15122,6 @@ MonoBehaviour:
       prodType: env
       rareity: 2
       product:
-        id: 19
         food: -2
         gold: -2
         environment: 7
@@ -15150,7 +15139,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15250,14 +15238,13 @@ MonoBehaviour:
   data:
     id: 28
     card:
-      id: ballista_tower
+      id: great_power_stone
       race: primal
       name: "\uBC1C\uB9AC\uC2A4\uD0C0"
       type: military
       prodType: 
       rareity: 1
       product:
-        id: 11
         food: 0
         gold: 0
         environment: 0
@@ -15275,7 +15262,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15356,7 +15342,6 @@ MonoBehaviour:
       prodType: 
       rareity: 2
       product:
-        id: 10
         food: 0
         gold: 0
         environment: 0
@@ -15374,7 +15359,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15412,7 +15396,6 @@ MonoBehaviour:
       prodType: all
       rareity: 3
       product:
-        id: 31
         food: 9
         gold: 5
         environment: -5
@@ -15426,7 +15409,11 @@ MonoBehaviour:
         attackRange: 0
       activeSkill: []
       productSkills:
-      - id: 6
+      - cost:
+          food: 0
+          gold: 0
+          environment: 0
+        id: 6
         name: "\uBC29\uC557\uAC04"
         method:
           id: 6
@@ -15437,7 +15424,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15525,7 +15511,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 7
         food: 0
         gold: 0
         environment: 0
@@ -15543,7 +15528,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15605,7 +15589,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 32
         food: 0
         gold: 0
         environment: 0
@@ -15623,7 +15606,6 @@ MonoBehaviour:
         id: 1
         name: "\uB291\uB300"
         cost:
-          id: 35
           food: 150
           gold: 0
           environment: 0
@@ -15804,7 +15786,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 32
         food: 0
         gold: 0
         environment: 0
@@ -15822,7 +15803,6 @@ MonoBehaviour:
         id: 1
         name: "\uB291\uB300"
         cost:
-          id: 35
           food: 150
           gold: 0
           environment: 0
@@ -15879,7 +15859,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 8
         food: 0
         gold: 0
         environment: 0
@@ -15897,7 +15876,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -15947,7 +15925,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 7
         food: 0
         gold: 0
         environment: 0
@@ -15965,7 +15942,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16077,7 +16053,6 @@ MonoBehaviour:
       prodType: gold
       rareity: 2
       product:
-        id: 27
         food: 0
         gold: 15
         environment: -4
@@ -16095,7 +16070,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16133,7 +16107,6 @@ MonoBehaviour:
       prodType: env
       rareity: 2
       product:
-        id: 19
         food: -2
         gold: -2
         environment: 7
@@ -16151,7 +16124,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16189,7 +16161,6 @@ MonoBehaviour:
       prodType: food
       rareity: 2
       product:
-        id: 23
         food: 15
         gold: 0
         environment: -4
@@ -16207,7 +16178,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16256,7 +16226,6 @@ MonoBehaviour:
       prodType: env
       rareity: 3
       product:
-        id: 20
         food: -1
         gold: -4
         environment: 13
@@ -16274,7 +16243,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16355,7 +16323,6 @@ MonoBehaviour:
       prodType: env
       rareity: 2
       product:
-        id: 19
         food: -2
         gold: -2
         environment: 7
@@ -16373,7 +16340,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16430,7 +16396,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 6
         food: 0
         gold: 0
         environment: 0
@@ -16448,7 +16413,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16589,7 +16553,6 @@ MonoBehaviour:
       prodType: 
       rareity: 1
       product:
-        id: 1200
         food: 0
         gold: 0
         environment: 0
@@ -16607,7 +16570,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16800,7 +16762,6 @@ MonoBehaviour:
       prodType: food
       rareity: 2
       product:
-        id: 23
         food: 15
         gold: 0
         environment: -4
@@ -16818,7 +16779,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16856,7 +16816,6 @@ MonoBehaviour:
       prodType: 
       rareity: 2
       product:
-        id: 12
         food: 0
         gold: 0
         environment: 0
@@ -16869,7 +16828,11 @@ MonoBehaviour:
         attackSpeed: 0
         attackRange: 0
       activeSkill:
-      - id: 2
+      - cost:
+          food: 0
+          gold: 0
+          environment: 0
+        id: 2
         name: "\uC6B4\uC11D"
         method:
           id: 2
@@ -16881,7 +16844,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16919,7 +16881,6 @@ MonoBehaviour:
       prodType: gold
       rareity: 2
       product:
-        id: 27
         food: 0
         gold: 15
         environment: -4
@@ -16937,7 +16898,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
@@ -16975,7 +16935,6 @@ MonoBehaviour:
       prodType: food
       rareity: 2
       product:
-        id: 23
         food: 15
         gold: 0
         environment: -4
@@ -16993,7 +16952,6 @@ MonoBehaviour:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
