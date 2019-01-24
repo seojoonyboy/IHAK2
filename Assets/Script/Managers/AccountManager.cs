@@ -133,9 +133,14 @@ public class AccountManager : Singleton<AccountManager> {
             .Append(id);
         tmpObj = obj;
         if (deck != null && deck.isRepresent == true) {
-            Modal.instantiate("대표 덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
-                _networkManager.request("DELETE", url.ToString(), RemoveComplete);
-            });
+            if(decks.Count == 1) {
+                Modal.instantiate("덱이 하나밖에 없어 제거할 수 없습니다.", Modal.Type.CHECK);
+            }
+            else if(decks.Count > 1) {
+                Modal.instantiate("대표 덱을 삭제하시겠습니까?", Modal.Type.YESNO, () => {
+                    _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+                });
+            }
         }
         else {
             _networkManager.request("DELETE", url.ToString(), RemoveComplete);
