@@ -13,6 +13,8 @@ public class BasicController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        if(AccountManager.Instance.decks.Count == 0) 
+            startBattleButton.interactable = false;
         startBattleButton.OnClickAsObservable().Subscribe(_ => StartBattle());
     }
 	
