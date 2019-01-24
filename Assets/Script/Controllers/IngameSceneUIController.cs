@@ -20,10 +20,14 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Transform switchBtn;
     [SerializeField] Transform playerRankBtn;
     [SerializeField] Transform dummyRankBtn;
+    [SerializeField] Text ingameTimer;
+    [SerializeField] IngameResultManager resultManager;
 
 
     private HorizontalScrollSnap hss;
     private GameObject city;
+    private bool isPlaying = true;
+    private float time = 300;
 
     private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
@@ -42,6 +46,26 @@ public class IngameSceneUIController : MonoBehaviour {
         ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);
+    }
+
+    private void Update() {
+        if (isPlaying) {
+            time -= Time.deltaTime;
+            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
+            if (((int)(time % 60)) < 10)
+                ingameTimer.text += "0";
+            ingameTimer.text += ((int)(time % 60)).ToString();
+            if (time < 0) {
+                ingameTimer.text = "0:00";
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
+                
+            }
+            if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            }
+        }
     }
 
     public void SwitchCommand() {
@@ -121,9 +145,15 @@ public class IngameSceneUIController : MonoBehaviour {
 
     public void ClickOption() {
         Modal.instantiate("게임에서 나가시겠습니까?", Modal.Type.YESNO, () => {
-            GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-            gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
-            IngameScoreManager.Instance.DestroySelf();
+            ExitIngameScene();
         });
     }
+
+    public void ExitIngameScene() {
+        GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+        gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
+        IngameScoreManager.Instance.DestroySelf();
+    }
+
+    
 }
