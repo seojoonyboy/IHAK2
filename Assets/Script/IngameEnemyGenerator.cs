@@ -20,11 +20,6 @@ public class IngameEnemyGenerator : MonoBehaviour {
         tileGroup = Instantiate(enemyTileGroup, transform);
         tileGroup.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
         ingameCityManager.SetEnemyBuildingLists(ref tileGroup);
-        Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(-60f, -60f, 0f);
-        Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(60f, -60f, 0f);
-        Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(-60f, 60f, 0f);
-        Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(60f, 60f, 0f);
-        Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(60f, 60f, 0f);
 
         ingameCityManager.eachPlayersTileGroups.Add(tileGroup);
     }
