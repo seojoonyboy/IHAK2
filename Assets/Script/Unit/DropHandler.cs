@@ -31,9 +31,9 @@ public class DropHandler : MonoBehaviour {
             else if (hit.collider.tag == "Building")
                 targetTile = hit.transform.parent.gameObject;
             else if (hit.collider.tag == "BackGroundTile")
-                return;
+                return; 
 
-            if (targetTile.GetComponent<TileObject>().buildingSet == false) {
+            if (targetTile.GetComponent<TileObject>().buildingSet == false && targetTile != null) {
                 //if (setObject.GetComponent<BuildingObject>().data.card.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
                 if (1 - deckSettingController.BuildingCount(setObject) > 0) {
                     if (targetTile.GetComponent<TileObject>().Tier == AccountManager.Instance.userTier) {
