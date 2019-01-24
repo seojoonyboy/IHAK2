@@ -15,7 +15,6 @@ public class IngameCityManager : MonoBehaviour {
         public int maxHp;
         public Card cardInfo;
         public GameObject gameObject;
-
         public BuildingInfo() { }
 
         public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, Card card, GameObject gameObject) {
@@ -44,7 +43,6 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private int enemyTotalHP;
     [SerializeField] private int enemyCurrentTotalHP;
     [SerializeField] private GameObject enemyTotalHPGauge;
-
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
     public ProductResources unActiveResources;
@@ -382,6 +380,14 @@ public class IngameCityManager : MonoBehaviour {
                     }
                 }
 
+                BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
+                if (buildingObject.data.card.id == "magma_altar") {
+                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                }
+                else if (buildingObject.data.card.id == "wolves_den") {
+                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                }
+
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
                     enemyBuilding.hp = enemyBuilding.maxHp;
@@ -596,6 +602,13 @@ public class IngameCityManager : MonoBehaviour {
                         productResources.env.environment -= myBuildingsInfo[num].cardInfo.product.environment;
                         break;
                     default:
+                        BuildingObject buildingObject = myBuildingsInfo[num].gameObject.GetComponent<BuildingObject>();
+                        if(buildingObject.data.card.id == "magma_altar") {
+                            GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                        }
+                        else if(buildingObject.data.card.id == "wolves_den") {
+                            GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                        }
                         break;
                 }
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화");
@@ -627,6 +640,13 @@ public class IngameCityManager : MonoBehaviour {
                 productResources.env.environment += card.cardInfo.product.environment;
                 break;
             default:
+                BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
+                if (buildingObject.data.card.id == "magma_altar") {
+                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                }
+                else if (buildingObject.data.card.id == "wolves_den") {
+                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                }
                 break;
         }
     }
