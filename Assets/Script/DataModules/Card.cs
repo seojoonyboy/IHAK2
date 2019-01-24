@@ -42,7 +42,6 @@ namespace DataModules {
 
     [System.Serializable]
     public class Cost {
-        public int id;
         public int food;
         public int gold;
         public int environment;
@@ -58,6 +57,7 @@ namespace DataModules {
 
     [System.Serializable]
     public class Skill {
+        public Cost cost;
         public int id;
         public string name;
         public SkillDetail method;
