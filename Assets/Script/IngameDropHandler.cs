@@ -72,6 +72,10 @@ public class IngameDropHandler : MonoBehaviour {
             }
 
             if(data.GetType() == typeof(Skill)) {
+                if (ingameCityManager.CurrentView == 0) {
+                    Debug.Log("아군 도시에는 스펠 불가");
+                    return;
+                }
                 Debug.Log(canSpell);
                 if (canSpell) {
                     //Debug.Log("주문 공격");
