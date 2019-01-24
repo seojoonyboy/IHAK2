@@ -77,6 +77,8 @@ public class PlayerController : MonoBehaviour {
                     resourceClass.food += icm.productResources.gold.food;
                     resourceClass.environment += icm.productResources.gold.environment;
                     resourceClass.turn--;
+                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                        icm.DecideUnActiveBuilding();
                 }
                 else {
                     resourceClass.gold += icm.productResources.gold.gold;
@@ -93,6 +95,8 @@ public class PlayerController : MonoBehaviour {
                     resourceClass.food += icm.productResources.food.food;
                     resourceClass.environment += icm.productResources.food.environment;
                     resourceClass.turn--;
+                    if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                        icm.DecideUnActiveBuilding();
                 }
                 else {
                     resourceClass.gold += icm.productResources.food.gold;
@@ -115,6 +119,8 @@ public class PlayerController : MonoBehaviour {
                         }
                         else
                             scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
+                        if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+                            icm.CancleUnActiveBuilding();
                         resourceClass.turn--;
                     }
                 }
