@@ -65,9 +65,9 @@ public class PlayerController : MonoBehaviour {
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
         commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
-        icm.productResources.gold.gold += 5;
-        icm.productResources.food.food += 5;
-        icm.productResources.env.environment += 5;
+        icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
+        icm.productResources.food.food += icm.hq_tier_1.product.food;
+        icm.productResources.env.environment += icm.hq_tier_1.product.env;
     }
 
     private void ClickButton(Buttons btn) {

@@ -587,35 +587,6 @@ public class IngameCityManager : MonoBehaviour {
             if (myBuildingsInfo[num].activate == false)
                 continue;
             else {
-                myBuildingsInfo[num].activate = false;
-                switch (myBuildingsInfo[num].cardInfo.prodType) {
-                    case "gold":
-                        productResources.gold.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.gold.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.gold.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    case "food":
-                        productResources.food.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.food.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.food.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    case "env":
-                        productResources.env.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.env.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.env.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    default:
-                        BuildingObject buildingObject = myBuildingsInfo[num].gameObject.GetComponent<BuildingObject>();
-                        if(buildingObject.data.card.id == "magma_altar") {
-                            GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
-                        }
-                        else if(buildingObject.data.card.id == "wolves_den") {
-                            GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
-                        }
-                        break;
-                }
-                Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화");
-                StartCoroutine(UnActivateForTime(myBuildingsInfo[num]));
                 unactiveBuildingIndex = num;
                 myBuildingsInfo[num].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
@@ -650,14 +621,19 @@ public class IngameCityManager : MonoBehaviour {
                 productResources.env.environment -= bi.cardInfo.product.environment;
                 break;
             default:
+                BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+                if (buildingObject.data.card.id == "magma_altar") {
+                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                }
+                else if (buildingObject.data.card.id == "wolves_den") {
+                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                }
                 break;
         }
         Debug.Log(bi.cardInfo.name + " 비활성화");
         bi.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
         unactiveBuildingIndex = 100;
         StartCoroutine(UnActivateForTime(bi));
-
-
     }
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
