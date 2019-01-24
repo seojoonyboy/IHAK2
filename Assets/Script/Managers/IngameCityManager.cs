@@ -342,6 +342,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     BuildingDestroyed(enemyBuilding);
                 }
+                IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
