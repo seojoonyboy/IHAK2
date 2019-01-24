@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IngameDropHandler : MonoBehaviour {
     public GameObject selectedObject;
@@ -25,6 +27,12 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     public void OnDrop() {
+        GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
+        if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);

@@ -16,6 +16,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData) {
         dropHandler.selectedObject = gameObject;
+        dropHandler.selectedObject.GetComponent<Image>().raycastTarget = false;
         GetComponent<DataModules.Index>().Id = transform.GetSiblingIndex();
         startPosition = transform.position;
         startScale = transform.localScale;
@@ -45,7 +46,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
         transform.localScale = startScale;
-
+        dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
         Canvas.ForceUpdateCanvases();
         var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
         hlg.CalculateLayoutInputHorizontal();
