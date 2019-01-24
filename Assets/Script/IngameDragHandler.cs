@@ -24,18 +24,25 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider != null && hit.collider.tag == "BackGroundTile") {
-            GameObject tile = hit.transform.gameObject;
-            transform.position = cam.WorldToScreenPoint(tile.transform.position);
+        if(hit.collider != null) {
 
-            //Debug.Log(transform.position);
-            Debug.Log(hit.collider.name);
+            if (hit.collider.tag == "BackGroundTile") {
+                GameObject tile = hit.transform.gameObject;
+                Vector3 position = cam.WorldToScreenPoint(tile.transform.position);
+                position.z = 0;
+                Debug.Log(position);
+                transform.position = position;
+            }
+            else {
+                transform.position = Input.mousePosition;
+            }
+            
         }
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        transform.localPosition = new Vector3(0, 14, 0);
-        transform.localScale = startScale;
+        transform.position = startPosition;
+        transform.localScale = new Vector3(1, 1, 1);
 
         Canvas.ForceUpdateCanvases();
         var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
