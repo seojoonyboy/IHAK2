@@ -93,13 +93,16 @@ public class IngameCityManager : MonoBehaviour {
 
         TakeDamage(Target.ENEMY_1, 6, 20);
         TakeDamage(Target.ENEMY_1, 6, 80);
+        RepairBuilding(Target.ENEMY_1, 6);
         TakeDamage(Target.ENEMY_1, 7, 100);
+        RepairBuilding(Target.ENEMY_1, 7);
         //테스트
         //SkillDetail skillDetail = new SkillDetail();
         //skillDetail.id = 1;
         //skillDetail.methodName = "마그마 스킬";
         //skillDetail.args = "5,6,1,15";
         //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
+        StartCoroutine("Repairing");
     }
 
     private void Update() {
@@ -171,36 +174,188 @@ public class IngameCityManager : MonoBehaviour {
         );
     }
 
-    public bool TakeDamage(Target target, int tileNum, int amount) {
+    public bool RepairBuilding(Target target, int tileNum) {
         switch (target) {
             case Target.ENEMY_1:
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
-                enemyBuilding.hp -= amount;
-                if (enemyBuilding.hp < enemyBuilding.maxHp) {
-                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                    float hp = enemyBuilding.hp;
-                    float maxHp = enemyBuilding.maxHp;
-                    float hpScaleX = hp / maxHp;
-                    Debug.Log(hpScaleX);
-                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                if (enemyBuilding.activate == false) return false;
+
+                float enemyMaxHP = enemyBuilding.maxHp;
+                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);
+                enemyBuilding.hp += enemyAmount;
+                float enemyHp = enemyBuilding.hp;
+                float enemyHpScaleX = enemyHp / enemyMaxHP;
+                enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
+
+                if (enemyBuilding.hp > enemyBuilding.maxHp) {
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
+                    enemyBuilding.hp = enemyBuilding.maxHp;
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
                 break;
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (myBuilding == null) return false;
-                myBuilding.hp -= amount;
-                if (myBuilding.hp < myBuilding.maxHp) {
-                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                    float hp = myBuilding.hp;
-                    float maxHp = myBuilding.maxHp;
-                    float hpScaleX = hp / maxHp;
-                    Debug.Log(hpScaleX);
-                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                if (myBuilding.activate == false) return false;
+
+                float playerMaxHp = myBuilding.maxHp;
+                int playerAmount = Mathf.RoundToInt(playerMaxHp * 0.2f);
+                myBuilding.hp += playerAmount;
+                float playerHp = myBuilding.hp;
+                float playerHpScaleX = playerHp / playerMaxHp;
+                myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(playerHpScaleX, 1, 1);
+
+                if (myBuilding.hp > myBuilding.maxHp) {
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
+                    myBuilding.hp = myBuilding.maxHp;
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
 
                 if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                break;
+        }
+        return true;
+    }
+
+
+
+
+    public bool RepairBuilding(Target target, int tileNum, int amount) {
+        switch (target) {
+            case Target.ENEMY_1:
+                BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (enemyBuilding == null) return false;
+                if (enemyBuilding.activate == false) return false;
+
+                float enemyMaxHP = enemyBuilding.maxHp;
+                enemyBuilding.hp += amount;
+                float enemyHp = enemyBuilding.hp;
+                float enemyHpScaleX = enemyHp / enemyMaxHP;
+                enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
+
+                if (enemyBuilding.hp > enemyBuilding.maxHp) {
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
+                    enemyBuilding.hp = enemyBuilding.maxHp;
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
+                }
+                if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+
+                break;
+
+            case Target.ME:
+                BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (myBuilding == null) return false;
+                if (myBuilding.activate == false) return false;
+
+                float playerMaxHp = myBuilding.maxHp;
+                myBuilding.hp += amount;
+                float playerHp = myBuilding.hp;
+                float playerHpScaleX = playerHp / playerMaxHp;
+                myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(playerHpScaleX, 1, 1);
+
+                if (myBuilding.hp > myBuilding.maxHp) {
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
+                    myBuilding.hp = myBuilding.maxHp;
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
+                }
+
+                if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                break;
+        }
+        return true;
+    }
+
+    public bool RepairBuilding(Target target, List<int> numbers, int amount) {
+        switch (target) {
+            case Target.ENEMY_1:
+                foreach (int tileNum in numbers) {
+                    //Debug.Log(tileNum + "에 데미지");
+                    BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                    if (enemyBuilding == null) return false;
+                    enemyBuilding.hp += amount;
+                    if (enemyBuilding.hp > enemyBuilding.maxHp) enemyBuilding.hp = enemyBuilding.maxHp;
+                }
+                break;
+            case Target.ME:
+                foreach (int tileNum in numbers) {
+                    BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
+                    if (myBuilding == null) return false;
+                    myBuilding.hp += amount;
+                    if (myBuilding.hp > 0) myBuilding.hp = myBuilding.maxHp;
+                }
+                break;
+        }
+        return true;
+    }
+
+    public bool RepairDestroyBuilding(Target target, int tileNum) {
+        switch (target) {
+            case Target.ENEMY_1:
+                BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (enemyBuilding == null) return false;
+                if (enemyBuilding.activate == true) return false;
+
+                float enemyMaxHP = enemyBuilding.maxHp;
+                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.5f);
+                enemyBuilding.hp += enemyAmount;
+                float enemyHp = enemyBuilding.hp;
+                float enemyHpScaleX = enemyHp / enemyMaxHP;
+                enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
+                enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                enemyBuilding.activate = true;
+
+                if (enemyBuilding.hp > enemyBuilding.maxHp) {
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
+                    enemyBuilding.hp = enemyBuilding.maxHp;
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
+                }
+                break;
+        }
+        return true;
+    }
+
+
+
+    public bool TakeDamage(Target target, int tileNum, int amount) {
+        switch (target) {
+            case Target.ENEMY_1:
+                BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (enemyBuilding == null) return false;
+                enemyBuilding.hp -= amount;
+                float enemyHp = enemyBuilding.hp;
+                float enemyMaxHp = enemyBuilding.maxHp;
+                if (enemyBuilding.hp < enemyBuilding.maxHp) {
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                    float hpScaleX = enemyHp / enemyMaxHp;
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                }
+                if (enemyBuilding.hp < 0) {
+                    float hpScaleX = enemyHp / enemyMaxHp;
+                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    BuildingDestroyed(enemyBuilding);
+                }
+                break;
+            case Target.ME:
+                BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
+                if (myBuilding == null) return false;
+                myBuilding.hp -= amount;
+                float playerHp = myBuilding.hp;
+                float playerMaxHp = myBuilding.maxHp;
+                if (myBuilding.hp < myBuilding.maxHp) {
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                    float hpScaleX = playerHp / playerMaxHp;
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                }
+
+                if (myBuilding.hp < 0) {
+                    float hpScaleX = playerHp / playerMaxHp;
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    BuildingDestroyed(myBuilding);
+                }
                 break;
         }
         return true;
@@ -255,6 +410,17 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
     }
+
+    IEnumerator Repairing() {
+        while (myBuildingsInfo[myBuildingsInfo.Count / 2].hp != 0 || enemyBuildingsInfo[enemyBuildingsInfo.Count / 2].hp != 0) {
+            yield return new WaitForSeconds(1f);
+            for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
+                TakeDamage(Target.ENEMY_1, i, 20);
+                RepairDestroyBuilding(Target.ENEMY_1, i);
+            }
+        }
+    }
+
 
     public enum Target {
         ME,
