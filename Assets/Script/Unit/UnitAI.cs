@@ -30,7 +30,7 @@ public class UnitAI : MonoBehaviour {
 	void Start () {
 		SearchUnitData();
 		healthBar = transform.GetChild(1).GetChild(1);
-		moveSpeed = 1f / unit.moveSpeed;
+		moveSpeed = unit.moveSpeed;
 		maxHealth = unit.hitPoint;
         health = unit.hitPoint;
 
