@@ -5,6 +5,7 @@ using UnityEngine;
 public class Temple_Damager : MonoBehaviour {
     IngameSceneEventHandler ingameSceneEventHandler;
     IEnumerator coroutine;
+    public Sprite magma;
 
     private int damageAmount;
     private int interval;
@@ -44,11 +45,25 @@ public class Temple_Damager : MonoBehaviour {
             parms[0] = IngameCityManager.Target.ENEMY_1;
             parms[1] = rndTargets;
             parms[2] = damageAmount;
-
+            GenerateSprite(rndTargets);
             ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, null, parms);
             count--;
         }
         Destroy(GetComponent<Temple_Damager>());
+    }
+
+    private void GenerateSprite(int[] parm) {
+        var cityManager = FindObjectOfType<IngameCityManager>();
+        for(int i = 0; i < parm.Length; i++) {
+            Transform pos = cityManager.enemyBuildingsInfo[parm[i]].gameObject.transform;
+            GameObject magmaObject = new GameObject("magma");
+            magmaObject.transform.SetParent(pos, false);
+            SpriteRenderer magmaRender = magmaObject.AddComponent<SpriteRenderer>();
+            magmaRender.sprite = magma;
+            magmaRender.sortingOrder = pos.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            Destroy(magmaObject, 1f);
+        }
+        
     }
 
     void OnDestroy() {
