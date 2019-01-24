@@ -2646,6 +2646,9 @@ MonoBehaviour:
   hpValueBar: {fileID: 1784039172}
   hpValue: {fileID: 993183136}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
+  enemyTotalHP: 0
+  enemyCurrentTotalHP: 0
+  enemyTotalHPGauge: {fileID: 1211720891}
   productResources:
     food:
       id: 0
@@ -2662,6 +2665,7 @@ MonoBehaviour:
       food: 0
       gold: 0
       environment: 0
+  cityHP: 0
   myBuildingsInfo: []
   enemyBuildingsInfo: []
   buildingList: 
@@ -5164,6 +5168,7 @@ MonoBehaviour:
   dummyRankBtn: {fileID: 688760572}
   ingameTimer: {fileID: 1905110268}
   resultManager: {fileID: 1567472046}
+  isPlaying: 1
 --- !u!114 &807158599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7604,7 +7609,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.693
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1211720894
@@ -11095,7 +11100,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.693
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1784039173
