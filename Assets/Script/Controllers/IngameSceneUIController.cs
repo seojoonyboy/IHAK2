@@ -48,6 +48,8 @@ public class IngameSceneUIController : MonoBehaviour {
         ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);
+        playerRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "Dummy";
+        dummyRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = AccountManager.Instance.NickName;
     }
 
     private void Update() {

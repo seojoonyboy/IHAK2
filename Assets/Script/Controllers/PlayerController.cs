@@ -65,7 +65,9 @@ public class PlayerController : MonoBehaviour {
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
         commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
-
+        icm.productResources.gold.gold += 5;
+        icm.productResources.food.food += 5;
+        icm.productResources.env.environment += 5;
     }
 
     private void ClickButton(Buttons btn) {
@@ -153,15 +155,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void HqUpgrade() {
-        
         if(hqLevel == 1) {
             if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
                 icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
                 Debug.Log("2단계 업글");
-                pInfo.clickGold[0] += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
-                pInfo.clickFood[1] += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
-                pInfo.clickEnvironment[2] += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                icm.productResources.gold.gold += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
+                icm.productResources.food.food += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
+                icm.productResources.env.environment += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
                 resourceClass.food -= icm.hq_tier_2.upgradeCost.food;
                 resourceClass.gold -= icm.hq_tier_2.upgradeCost.gold;
                 resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
@@ -176,18 +177,19 @@ public class PlayerController : MonoBehaviour {
                 icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
                 Debug.Log("3단계 업글");
-                pInfo.clickGold[0] += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
-                pInfo.clickFood[1] += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
-                pInfo.clickEnvironment[2] += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                icm.productResources.gold.gold += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
+                icm.productResources.food.food += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
+                icm.productResources.env.environment += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
                 resourceClass.food -= icm.hq_tier_3.upgradeCost.food;
                 resourceClass.gold -= icm.hq_tier_3.upgradeCost.gold;
                 resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
-
+                commandButtons.parent.GetChild(0).gameObject.SetActive(false);
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
             }
         }
+        commandButtons.parent.GetChild(0).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
     }
 }
