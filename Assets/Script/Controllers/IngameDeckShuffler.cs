@@ -98,6 +98,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             GameObject card = Instantiate(cardPref, cardParent);
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             card.GetComponent<IngameCard>().data = unit;
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
             if (unit.tearNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
@@ -110,6 +111,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             GameObject card = Instantiate(cardPref, cardParent);
             card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             card.GetComponent<IngameCard>().data = skill;
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
             if (skill.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }

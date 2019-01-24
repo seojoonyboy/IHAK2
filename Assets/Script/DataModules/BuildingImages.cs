@@ -1,10 +1,5 @@
 using DataModules;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
-using Spine;
 using Spine.Unity;
 
 [RequireComponent(typeof(ConstructManager))]
