@@ -27,7 +27,11 @@ public class IngameCityManager : MonoBehaviour {
             this.gameObject = gameObject;
         }
     }
-    
+
+    //현재 어떤 화면을 보고 있는지
+    public int CurrentView;
+    public ArrayList eachPlayersTileGroups = new ArrayList();
+
     public UpgradeInfo 
         hq_tier_1,
         hq_tier_2,
@@ -35,12 +39,13 @@ public class IngameCityManager : MonoBehaviour {
 
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
+    [SerializeField] private Sprite wreckSprite;
     //[SerializeField] private Text maxHp;
 
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
 
-    private int cityHP = 0;
+    public int cityHP = 0;
     private int cityMaxHP = 0;
     private Deck deck;
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
@@ -386,7 +391,10 @@ public class IngameCityManager : MonoBehaviour {
 
     private void BuildingDestroyed(BuildingInfo buildingInfo) {
         buildingInfo.hp = 0;
+        IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
+        buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
+        buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void SetEnemyBuildingLists(ref GameObject tilegroup) {

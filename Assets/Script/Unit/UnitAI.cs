@@ -13,7 +13,7 @@ public class UnitAI : MonoBehaviour {
 	};
 	private delegate void timeUpdate(float time);
 	private timeUpdate update;
-	private SpriteRenderer healthBar;
+	private Transform healthBar;
 	private BuildingObject target;
 	private float maxHealth;
     private float health;
@@ -29,8 +29,8 @@ public class UnitAI : MonoBehaviour {
 	
 	void Start () {
 		SearchUnitData();
-		//healthBar = transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
-		moveSpeed = 1f / unit.moveSpeed;
+		healthBar = transform.GetChild(1).GetChild(1);
+		moveSpeed = unit.moveSpeed;
 		maxHealth = unit.hitPoint;
         health = unit.hitPoint;
 
@@ -93,8 +93,7 @@ public class UnitAI : MonoBehaviour {
 			setState(enemyState.ATTACK);
 			return;
 		}
-		Vector3 force = distance.normalized * moveSpeed * time * 50f;
-		//transform.position += force;
+		Vector3 force = distance.normalized * moveSpeed * time;
 		transform.Translate(force.x, force.y, 0f);
 		if(currentTime < 2f) return;
 		currentTime = 0f;
@@ -108,7 +107,8 @@ public class UnitAI : MonoBehaviour {
 		if(currentTime < unit.attackSpeed) return;
 		currentTime = 0f;
 		cityManager.TakeDamage(IngameCityManager.Target.ENEMY_1, tileNum, unit.power);
-		if(!enemy.activate && enemy.hp <= 0) {
+		if(enemy.hp <= 0) {
+            target = null;
 			searchBuilding(); 
 			setState(enemyState.MOVE);};
 		spineAnimationState.SetAnimation(0, "attack", false);
@@ -120,7 +120,7 @@ public class UnitAI : MonoBehaviour {
 			searchBuilding();
 			return false;
 		}
-		if(distance <= unit.attackRange * 2f) 
+		if(distance <= unit.attackRange) 
 			return true;
 		return false;
 	}
@@ -132,7 +132,6 @@ public class UnitAI : MonoBehaviour {
 		}
 		float distance = 0f;
 		foreach(BuildingObject target in buildings) {
-			//TODO : 해당 건물의 HP가 0인지를 파악해야함
 			int num = target.transform.GetComponentInParent<TileObject>().tileNum;
 			if(cityManager.enemyBuildingsInfo[num].hp <= 0) continue;
 			Vector3 buildingPos = target.transform.parent.position;
@@ -152,23 +151,19 @@ public class UnitAI : MonoBehaviour {
 
 	public void damaged(int damage) {
 		health -= damage;
-		//calculateHealthBar();
+		calculateHealthBar();
 		if(health <= 0) {
 			Destroy(gameObject);
 		}
 	}
 
 	private void calculateHealthBar() {
+		if(!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
 		float percent = (float)health / maxHealth;
-		float sizeWidth = 2.5f * percent;
-		float posX = percent * 1.25f - 1.25f;
-		healthBar.size = new Vector2(sizeWidth, 0.3f);
-		healthBar.transform.localPosition = new Vector3(posX, 0f, 0f);
+		healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
 	}
 
 	void setFlip(Vector2 move) {
-        //bool isFlip = move.y < 0 || (move.y == 0 && move.x > 0);
-        //skeleton.ScaleX = isFlip ? 1f: -1f;
         skeleton.ScaleX = move.x < 0 ? 1f: -1f;
 	}
 }

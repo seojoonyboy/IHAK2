@@ -16,7 +16,9 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData) {
         dropHandler.selectedObject = gameObject;
+        GetComponent<DataModules.Index>().Id = transform.GetSiblingIndex();
         startPosition = transform.position;
+        startScale = transform.localScale;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -29,8 +31,9 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 GameObject tile = hit.transform.gameObject;
                 Vector3 position = cam.WorldToScreenPoint(tile.transform.position);
                 position.z = 0;
-                Debug.Log(position);
                 transform.position = position;
+
+                //Debug.Log(hit.collider.gameObject.layer);
             }
             else {
                 transform.position = Input.mousePosition;
@@ -41,13 +44,15 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = startScale;
 
         Canvas.ForceUpdateCanvases();
         var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
         hlg.CalculateLayoutInputHorizontal();
-        //hlg.CalculateLayoutInputVertical();
+        hlg.CalculateLayoutInputVertical();
         hlg.SetLayoutHorizontal();
-        //hlg.SetLayoutVertical();
+        hlg.SetLayoutVertical();
+
+        dropHandler.OnDrop();
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class IngameScoreManager : Singleton<IngameScoreManager> {  
     public enum ScoreType{
@@ -15,12 +16,14 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
         GoldFirst,
         EnvFirst,
         DamageFirst,
-        HealthFirst,
+        Health,
         SpecialTile
     }
 
     public int playerScore = 0;
     public int dummyScore = 100000;
+
+    public Dictionary<string, int> scoreList;
 
 
     /// <summary>
@@ -61,16 +64,24 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
             case ScoreType.DamageFirst:
                 playerScore += 4000;
                 break;
-            case ScoreType.HealthFirst:
+            case ScoreType.EnvFirst:
                 playerScore += 4000;
                 break;
-            case ScoreType.EnvFirst:
-                playerScore += num * 25;
+            case ScoreType.Health:
+                playerScore += num * 1;
                 break;
             case ScoreType.SpecialTile:
                 playerScore += playerScore * (1 + num);
                 break;
         }
+    }
+
+    public void SortScore() {
+        Dictionary<string, int> tempList = new Dictionary<string, int>();
+        tempList.Add(AccountManager.Instance.userInfos.nickname, playerScore);
+        tempList.Add("Dummy", dummyScore);
+
+        scoreList = tempList.OrderByDescending(num => num.Value).ToDictionary(score => score.Key, score => score.Value);
     }
 
     public void DestroySelf() {
