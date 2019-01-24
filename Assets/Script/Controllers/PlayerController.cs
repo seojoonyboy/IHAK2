@@ -36,15 +36,14 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Text goldValue;
     [SerializeField] Text turnValue;
     [SerializeField] Image envValue;
-    [SerializeField] Text ingameTimer;
     [SerializeField] IngameCityManager icm;
 
     private PlayerResource resourceClass;    
     public ProductInfo pInfo { get; set; }
     private int hqLevel;
     IngameScoreManager scoreManager;
-    private float time = 300;
-    private bool isPlaying = true;
+    
+    
 
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
@@ -67,20 +66,6 @@ public class PlayerController : MonoBehaviour {
 
         commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
 
-    }
-
-    private void Update() {
-        if(isPlaying){
-            time -= Time.deltaTime;
-            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
-            if (((int)(time % 60)) < 10)
-                ingameTimer.text += "0";
-            ingameTimer.text += ((int)(time % 60)).ToString();
-            if (time < 0) {
-                ingameTimer.text = "0:00";
-                isPlaying = false;
-            }
-        }
     }
 
     private void ClickButton(Buttons btn) {
