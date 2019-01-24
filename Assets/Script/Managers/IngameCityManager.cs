@@ -315,6 +315,7 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == true) return false;
+                if (enemyBuilding.gameObject.transform.parent.GetComponent<TileCollision>().check == true) return false;
 
                 float enemyMaxHP = enemyBuilding.maxHp;
                 int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.5f);
@@ -323,6 +324,7 @@ public class IngameCityManager : MonoBehaviour {
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
                 enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                enemyBuilding.gameObject.GetComponent<SpriteRenderer>().sprite = enemyBuilding.gameObject.GetComponent<BuildingObject>().mainSprite;
                 enemyBuilding.activate = true;
 
                 if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
@@ -465,16 +467,26 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    IEnumerator Repairing() {
-        while (myBuildingsInfo[myBuildingsInfo.Count / 2].hp != 0 || enemyBuildingsInfo[enemyBuildingsInfo.Count / 2].hp != 0) {
-            yield return new WaitForSeconds(1f);
+    IEnumerator Repair() {
+        while (transform.parent.parent.parent.parent.GetComponent<IngameSceneUIController>().isPlaying == true) { // playerCity -> MyTerritory -> content -> Haorizontal Scroll Snap -> UICanvas
+            yield return new WaitForSeconds(60f);
             for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
-                TakeDamage(Target.ENEMY_1, i, 20);
+                RepairBuilding(Target.ENEMY_1, i);
                 RepairDestroyBuilding(Target.ENEMY_1, i);
             }
         }
     }
 
+    /*
+    IEnumerator Damage() {
+        while (transform.parent.parent.parent.parent.GetComponent<IngameSceneUIController>().isPlaying == true) {
+            yield return new WaitForSeconds(1f);
+            for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
+                TakeDamage(Target.ENEMY_1, i, 20);
+            }
+        }
+    }
+    */
 
     public enum Target {
         ME,

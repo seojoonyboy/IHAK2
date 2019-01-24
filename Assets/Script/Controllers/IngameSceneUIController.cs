@@ -26,7 +26,8 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private HorizontalScrollSnap hss;
     private GameObject city;
-    private bool isPlaying = true;
+    [HideInInspector]
+    public bool isPlaying = true;
     private float time = 300;
 
     private void Awake() {

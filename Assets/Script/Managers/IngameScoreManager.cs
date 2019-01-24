@@ -21,7 +21,7 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
     }
 
     public int playerScore = 0;
-    public int dummyScore = 100000;
+    public int dummyScore = 50000;
 
     public Dictionary<string, int> scoreList;
 
@@ -36,39 +36,39 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
     public void AddScore(int num, ScoreType type, int gametime = 0) {
         switch (type) {
             case ScoreType.Product: //생산량을 num으로 받음
-                playerScore += num * 4;
+                playerScore += num;
                 break;
             case ScoreType.ActiveCard:
-                playerScore += (100 * num);
+                playerScore += (20 * num);
                 break;
             case ScoreType.Attack:
-                playerScore += num * 8;
+                playerScore += num * 5;
                 break;
             case ScoreType.DestroyUnit:
-                playerScore += num * 150;
+                playerScore += num * 80;
                 break;
             case ScoreType.DestroyBuilding:
-                playerScore += num * 300;
+                playerScore += num * 150;
                 break;
             case ScoreType.DestroyCity:
-                playerScore += num * gametime + 300;
+                playerScore += num * gametime + 100;
                 break;
 
 
             case ScoreType.FoodFirst:
-                playerScore += 4000;
+                playerScore += 3000;
                 break;
             case ScoreType.GoldFirst:
-                playerScore += 4000;
+                playerScore += 3000;
                 break;
             case ScoreType.DamageFirst:
-                playerScore += 4000;
+                playerScore += 3000;
                 break;
             case ScoreType.EnvFirst:
-                playerScore += 4000;
+                playerScore += 3000;
                 break;
             case ScoreType.Health:
-                playerScore += num * 1;
+                playerScore += num;
                 break;
             case ScoreType.SpecialTile:
                 playerScore += playerScore * (1 + num);
