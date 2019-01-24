@@ -58,7 +58,7 @@ public class DeckSettingController : MonoBehaviour {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
         uicontent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;
-        effectUI = transform.GetChild(6).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
+        effectUI = transform.GetChild(5).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
