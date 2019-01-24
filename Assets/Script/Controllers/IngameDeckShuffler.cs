@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
-
+    [SerializeField] PlayerController playerController;
     List<GameObject> cards;
     [SerializeField] GameObject cardPref;
     [SerializeField] Transform cardParent;
@@ -35,20 +35,32 @@ public class IngameDeckShuffler : MonoBehaviour {
         //UseCard(1);
     }
 
-    private void InitUnitCard() {
+    public void Clear() {
+        foreach (Transform card in cardParent.transform) {
+            Destroy(card.gameObject);
+        }
+    }
+
+    public void InitUnitCard() {
         foreach (Unit unit in tileGroup.units) {
             GameObject card = Instantiate(cardPref, cardParent);
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             card.GetComponent<IngameCard>().data = unit;
+            if (unit.tearNeed > playerController.hqLevel) {
+                card.SetActive(false);
+            }
             cards.Add(card);
         }
     }
 
-    private void InitSkillCard() {
+    public void InitSkillCard() {
         foreach (Skill skill in tileGroup.activeSkills) {
             GameObject card = Instantiate(cardPref, cardParent);
             card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             card.GetComponent<IngameCard>().data = skill;
+            if (skill.tierNeed > playerController.hqLevel) {
+                card.SetActive(false);
+            }
             cards.Add(card);
         }
     }

@@ -2662,6 +2662,7 @@ MonoBehaviour:
       food: 0
       gold: 0
       environment: 0
+  cityHP: 0
   myBuildingsInfo: []
   enemyBuildingsInfo: []
   buildingList: 
@@ -2676,6 +2677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa605099e0cf7046a93b6c17c7d77df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 807158603}
   cardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa, type: 2}
   cardParent: {fileID: 1589755684}
   Deck: []
@@ -5263,6 +5265,7 @@ MonoBehaviour:
   turnValue: {fileID: 1194451107}
   envValue: {fileID: 1749300415}
   icm: {fileID: 364303840}
+  hqLevel: 0
 --- !u!1 &820021119
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,6 +57,20 @@ public class IngameCityManager : MonoBehaviour {
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
+    }
+
+    void OnDestroy() {
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
+    }
+
+    private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
+        Debug.Log("HQ 업그레이트 이벤트 발생");
+        IngameDeckShuffler ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
+        ingameDeckShuffler.Clear();
+        ingameDeckShuffler.InitUnitCard();
+        ingameDeckShuffler.InitSkillCard();
     }
 
     // Use this for initialization
@@ -107,7 +121,7 @@ public class IngameCityManager : MonoBehaviour {
         //skillDetail.methodName = "마그마 스킬";
         //skillDetail.args = "5,6,1,15";
         //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
-        StartCoroutine("Repairing");
+        //StartCoroutine("Repairing");
     }
 
     private void Update() {
@@ -311,6 +325,13 @@ public class IngameCityManager : MonoBehaviour {
                 enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 enemyBuilding.activate = true;
 
+                if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+                    GameObject detector = enemyBuilding.gameObject.transform.Find("Detector").gameObject;
+                    if (detector != null) {
+                        detector.GetComponent<Tower_Detactor>().enabled = true;
+                    }
+                }
+
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
                     enemyBuilding.hp = enemyBuilding.maxHp;
@@ -411,6 +432,14 @@ public class IngameCityManager : MonoBehaviour {
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
+
+        if(buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+            GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
+            if(detector != null) {
+                detector.GetComponent<Tower_Detactor>().enabled = false;
+            }
+        }
+
         buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
