@@ -34,6 +34,7 @@ public class IngameSceneUIController : MonoBehaviour {
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
         ld.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
+        playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);
         go.SetActive(false);
     }
 
@@ -86,7 +87,8 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void ShutProductButtons(bool shut) {
         if(shut) {
-            Debug.Log("shut");            
+            Debug.Log("shut");
+            playerCity.GetComponent<IngameCityManager>().CurrentView = 1;
             Color shutColor = new Color(255, 255, 255, 0.7f);
             produceButonList.GetComponent<Image>().color = shutColor;
             for (int i = 0; i < 4; i++)
@@ -94,6 +96,7 @@ public class IngameSceneUIController : MonoBehaviour {
             produceButonList.GetChild(4).gameObject.SetActive(true);
         }
         else {
+            playerCity.GetComponent<IngameCityManager>().CurrentView = 0;
             Color onColor = new Color(255, 255, 255, 1.0f);
             produceButonList.GetComponent<Image>().color = onColor;
             for (int i = 0; i < 4; i++)

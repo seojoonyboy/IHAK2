@@ -2817,6 +2817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c6f00c58b54e2f4886660c9dcf26ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentView: 0
   hq_tier_1: {fileID: 11400000, guid: 1e7ea0a2f4e53744fa935f8e5708e138, type: 2}
   hq_tier_2: {fileID: 11400000, guid: 0d44c1c600de9834789bd44a69066fd8, type: 2}
   hq_tier_3: {fileID: 11400000, guid: aa84a1710db493647adbe47a2d138129, type: 2}
@@ -11323,6 +11324,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedObject: {fileID: 0}
+  unitPrefs:
+  - {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+  ingameCityManager: {fileID: 364303840}
+  ingameDeckShuffler: {fileID: 364303842}
 --- !u!1 &1596784571
 GameObject:
   m_ObjectHideFlags: 0
