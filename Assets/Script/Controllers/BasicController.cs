@@ -13,8 +13,6 @@ public class BasicController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if(AccountManager.Instance.decks.Count == 0) 
-            startBattleButton.interactable = false;
         startBattleButton.OnClickAsObservable().Subscribe(_ => StartBattle());
     }
 	
@@ -24,6 +22,8 @@ public class BasicController : MonoBehaviour {
 	}
 
     private void StartBattle() {
+        if(AccountManager.Instance.decks.Count == 0)
+            Modal.instantiate("덱이 존재하지 않습니다.\n덱을 하나 만들어주세요.", Modal.Type.CHECK);
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
     }
