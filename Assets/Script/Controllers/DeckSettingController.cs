@@ -272,7 +272,7 @@ public class DeckSettingController : MonoBehaviour {
 
     public void resetTile() {
         for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
-            if (i == tileGroup.transform.childCount / 2)
+            if (i == (tileGroup.transform.childCount - 1) / 2)
                 continue;
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 /*
