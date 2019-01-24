@@ -59,7 +59,9 @@ public class IngameSceneUIController : MonoBehaviour {
             if (time < 0) {
                 ingameTimer.text = "0:00";
                 isPlaying = false;
+                IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
+
             }
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
                 isPlaying = false;

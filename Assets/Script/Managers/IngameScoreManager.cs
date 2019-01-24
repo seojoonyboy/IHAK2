@@ -16,7 +16,7 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
         GoldFirst,
         EnvFirst,
         DamageFirst,
-        HealthFirst,
+        Health,
         SpecialTile
     }
 
@@ -64,11 +64,11 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
             case ScoreType.DamageFirst:
                 playerScore += 4000;
                 break;
-            case ScoreType.HealthFirst:
+            case ScoreType.EnvFirst:
                 playerScore += 4000;
                 break;
-            case ScoreType.EnvFirst:
-                playerScore += num * 25;
+            case ScoreType.Health:
+                playerScore += num * 1;
                 break;
             case ScoreType.SpecialTile:
                 playerScore += playerScore * (1 + num);
