@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 68597178}
   - component: {fileID: 68597177}
   m_Layer: 0
-  m_Name: FoodProduce
+  m_Name: GoldProduce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300052, guid: 28aecdd04553734458470c67c54fad27, type: 3}
+  m_Sprite: {fileID: 21300046, guid: 28aecdd04553734458470c67c54fad27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2399,7 +2399,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 32, y: 37}
+  m_SizeDelta: {x: 60, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &338264709
 MonoBehaviour:
@@ -2461,7 +2461,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAE08"
+  m_Text: "\uC2DD\uB7C9"
 --- !u!222 &338264712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2662,6 +2662,23 @@ MonoBehaviour:
       food: 0
       gold: 0
       environment: 0
+  unActiveResources:
+    food:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    gold:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    env:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+  cityHP: 0
   myBuildingsInfo: []
   enemyBuildingsInfo: []
   buildingList: 
@@ -3298,7 +3315,7 @@ GameObject:
   - component: {fileID: 489541114}
   - component: {fileID: 489541113}
   m_Layer: 0
-  m_Name: Gold
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5164,6 +5181,7 @@ MonoBehaviour:
   dummyRankBtn: {fileID: 688760572}
   ingameTimer: {fileID: 1905110268}
   resultManager: {fileID: 1567472046}
+  isPlaying: 1
 --- !u!114 &807158599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5258,8 +5276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commandButtons: {fileID: 468451359}
   playerResource: {fileID: 568280589}
-  foodValue: {fileID: 1191445014}
-  goldValue: {fileID: 1735805637}
+  goldValue: {fileID: 1191445014}
+  foodValue: {fileID: 1735805637}
   turnValue: {fileID: 1194451107}
   envValue: {fileID: 1749300415}
   icm: {fileID: 364303840}
@@ -7210,7 +7228,7 @@ GameObject:
   - component: {fileID: 1191445013}
   - component: {fileID: 1191445016}
   m_Layer: 0
-  m_Name: Value
+  m_Name: GoldValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7315,7 +7333,7 @@ GameObject:
   - component: {fileID: 1194451106}
   - component: {fileID: 1194451109}
   m_Layer: 0
-  m_Name: Value
+  m_Name: TurnValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9615,7 +9633,7 @@ GameObject:
   - component: {fileID: 1574302833}
   - component: {fileID: 1574302832}
   m_Layer: 0
-  m_Name: GoldProduce
+  m_Name: FoodProduce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9700,7 +9718,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300046, guid: 28aecdd04553734458470c67c54fad27, type: 3}
+  m_Sprite: {fileID: 21300052, guid: 28aecdd04553734458470c67c54fad27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10752,7 +10770,7 @@ GameObject:
   - component: {fileID: 1735805636}
   - component: {fileID: 1735805639}
   m_Layer: 0
-  m_Name: Value
+  m_Name: FoodValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11116,7 +11134,7 @@ GameObject:
   - component: {fileID: 1795569693}
   - component: {fileID: 1795569692}
   m_Layer: 0
-  m_Name: Food
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13173,7 +13191,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 63, y: 38}
+  m_SizeDelta: {x: 40, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2072480207
 MonoBehaviour:
@@ -13235,7 +13253,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC2DD\uB7C9"
+  m_Text: "\uAE08"
 --- !u!222 &2072480210
 CanvasRenderer:
   m_ObjectHideFlags: 0
