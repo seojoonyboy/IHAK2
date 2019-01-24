@@ -2646,6 +2646,9 @@ MonoBehaviour:
   hpValueBar: {fileID: 1784039172}
   hpValue: {fileID: 993183136}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
+  enemyTotalHP: 0
+  enemyCurrentTotalHP: 0
+  enemyTotalHPGauge: {fileID: 1211720891}
   productResources:
     food:
       id: 0
