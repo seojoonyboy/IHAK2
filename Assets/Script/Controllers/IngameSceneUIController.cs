@@ -60,7 +60,6 @@ public class IngameSceneUIController : MonoBehaviour {
                 ingameTimer.text = "0:00";
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
-                
             }
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
                 isPlaying = false;
