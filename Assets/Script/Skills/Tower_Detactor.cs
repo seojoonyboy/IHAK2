@@ -46,7 +46,7 @@ public class Tower_Detactor : MonoBehaviour {
         time += Time.deltaTime;
         if (time < atkTime) return;
         time -= atkTime;
-        enemy.SendMessage("damage", damage, SendMessageOptions.DontRequireReceiver);
+        enemy.SendMessage("damaged", damage, SendMessageOptions.DontRequireReceiver);
         shootArrow();
     }
 
