@@ -8,9 +8,12 @@ public class IngameDropHandler : MonoBehaviour {
     public GameObject[] unitPrefs;
 
     [SerializeField] IngameCityManager ingameCityManager;
+    [SerializeField] PlayerController playerController;
     [SerializeField] IngameDeckShuffler ingameDeckShuffler;
 
     Camera cam;
+    bool canSpell = true;
+
     // Use this for initialization
     void Start() {
         cam = Camera.main;
@@ -28,7 +31,10 @@ public class IngameDropHandler : MonoBehaviour {
 
         if(hit.collider != null) {
             Debug.Log(hit.collider.tag);
-            if(hit.collider.tag == "BackGroundTile") {
+            IngameCard card = selectedObject.GetComponent<IngameCard>();
+            object data = card.data;
+
+            if (hit.collider.tag == "BackGroundTile") {
                 if (ingameCityManager.CurrentView == 0) {
                     Debug.Log("아군 도시에는 유닛생산 불가");
                     return;
@@ -36,22 +42,60 @@ public class IngameDropHandler : MonoBehaviour {
                 //Debug.Log(hit.collider.name);
                 var tmp = ingameCityManager.eachPlayersTileGroups;
                 
-                IngameCard card = selectedObject.GetComponent<IngameCard>();
-                object data = card.data;
                 if(data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
-                    IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
-                    GameObject goblin = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-                    goblin.transform.position = hit.transform.position;
+                    if (playerController.isEnoughResources(unit.cost)) {
+                        GameObject goblin = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
+                        goblin.transform.position = hit.transform.position;
 
-                    ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+                        playerController.resourceClass.gold -= unit.cost.gold;
+                        playerController.resourceClass.food -= unit.cost.food;
+                        playerController.resourceClass.environment -= unit.cost.environment;
+
+                        IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
+
+                        playerController.PrintResource();
+                        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+                    }
+                    else {
+                        Debug.Log("자원 부족");
+                    }
                 }
-                else if(data.GetType() == typeof(Skill)) {
-                    Skill skill = (Skill)data;
-                    IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+            }
 
+            if(data.GetType() == typeof(Skill)) {
+                Debug.Log(canSpell);
+                if (canSpell) {
+                    //Debug.Log("주문 공격");
+                    StartCoroutine(CoolTime());
+
+                    Skill skill = (Skill)data;
+                    if (playerController.isEnoughResources(skill.cost)) {
+                        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
+                        IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+
+                        playerController.resourceClass.gold -= skill.cost.gold;
+                        playerController.resourceClass.food -= skill.cost.food;
+                        playerController.resourceClass.environment -= skill.cost.environment;
+
+                        playerController.PrintResource();
+
+                        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+                    }
+                    else {
+                        Debug.Log("자원 부족");
+                    }
+                }
+                else {
+                    Debug.Log("스킬 쿨타임!");
                 }
             }
         }
+    }
+
+    IEnumerator CoolTime() {
+        canSpell = false;
+        yield return new WaitForSeconds(7.0f);
+        canSpell = true;
     }
 }
