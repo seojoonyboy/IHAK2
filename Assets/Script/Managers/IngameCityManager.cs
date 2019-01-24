@@ -44,7 +44,7 @@ public class IngameCityManager : MonoBehaviour {
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
 
-    private int cityHP = 0;
+    public int cityHP = 0;
     private int cityMaxHP = 0;
     private Deck deck;
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
@@ -190,6 +190,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
                 }
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+                IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
@@ -235,6 +236,7 @@ public class IngameCityManager : MonoBehaviour {
 
     private void BuildingDestroyed(BuildingInfo buildingInfo) {
         buildingInfo.hp = 0;
+        IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
     }
 

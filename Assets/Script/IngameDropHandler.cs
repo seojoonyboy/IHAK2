@@ -40,7 +40,7 @@ public class IngameDropHandler : MonoBehaviour {
                 object data = card.data;
                 if(data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
-                    
+                    IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
                     GameObject goblin = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
                     goblin.transform.position = hit.transform.position;
 
@@ -48,6 +48,7 @@ public class IngameDropHandler : MonoBehaviour {
                 }
                 else if(data.GetType() == typeof(Skill)) {
                     Skill skill = (Skill)data;
+                    IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
 
                 }
             }
