@@ -4165,6 +4165,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4197,6 +4202,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300000, guid: d1e0bd2b1a4529442a60e3bd3385e828,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
   m_IsPrefabAsset: 0
