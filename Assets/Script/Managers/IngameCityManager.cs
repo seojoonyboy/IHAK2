@@ -32,10 +32,10 @@ public class IngameCityManager : MonoBehaviour {
     public int CurrentView;
     public ArrayList eachPlayersTileGroups = new ArrayList();
 
-    public UpgradeInfo 
+    public UpgradeInfo
         hq_tier_1,
         hq_tier_2,
-        hq_tier_3; 
+        hq_tier_3;
 
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
@@ -51,6 +51,9 @@ public class IngameCityManager : MonoBehaviour {
     private Deck deck;
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
+
+    public int unactiveBuildingIndex = 100;
+    private List<BuildingInfo> unactiveBuildings = new List<BuildingInfo>();
 
     private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     public int[] buildingList;
@@ -75,7 +78,7 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         deck = AccountManager.Instance.decks[0];
         buildingList = deck.coordsSerial;
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
@@ -145,7 +148,7 @@ public class IngameCityManager : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D col) {
         Debug.Log(col.ToString());
-        if(col.gameObject.tag == "Building") {
+        if (col.gameObject.tag == "Building") {
             cityHP -= 100;
             hpValue.text = cityHP.ToString();
             hpValueBar.fillAmount = cityHP / cityMaxHP;
@@ -399,7 +402,7 @@ public class IngameCityManager : MonoBehaviour {
                     BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                     if (enemyBuilding == null) return false;
                     enemyBuilding.hp -= amount;
-                    if(enemyBuilding.hp < enemyBuilding.maxHp) {
+                    if (enemyBuilding.hp < enemyBuilding.maxHp) {
                         enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
                         float hp = enemyBuilding.hp;
                         float maxHp = enemyBuilding.maxHp;
@@ -436,9 +439,9 @@ public class IngameCityManager : MonoBehaviour {
         buildingInfo.activate = false;
         buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
 
-        if(buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+        if (buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
-            if(detector != null) {
+            if (detector != null) {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
             }
         }
@@ -447,8 +450,8 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public void SetEnemyBuildingLists(ref GameObject tilegroup) {
-        foreach(Transform tile in tilegroup.transform) {
-            if(tile.childCount == 1) {
+        foreach (Transform tile in tilegroup.transform) {
+            if (tile.childCount == 1) {
                 int tileNum = tile.GetComponent<TileObject>().tileNum;
                 GameObject building = tile.GetChild(0).gameObject;
                 BuildingObject buildingObject = building.GetComponent<BuildingObject>();
@@ -478,7 +481,7 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    public void SetUnactiveBuilding() {
+    public void DecideUnActiveBuilding() {
         while (true) {
             int num = UnityEngine.Random.Range(0, 7);
             if (myBuildingsInfo[num].cardInfo.type == "HQ")
@@ -486,37 +489,54 @@ public class IngameCityManager : MonoBehaviour {
             if (myBuildingsInfo[num].activate == false)
                 continue;
             else {
-                myBuildingsInfo[num].activate = false;
-                switch (myBuildingsInfo[num].cardInfo.prodType) {
-                    case "gold":
-                        productResources.gold.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.gold.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.gold.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    case "food":
-                        productResources.food.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.food.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.food.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    case "env":
-                        productResources.env.food -= myBuildingsInfo[num].cardInfo.product.food;
-                        productResources.env.gold -= myBuildingsInfo[num].cardInfo.product.gold;
-                        productResources.env.environment -= myBuildingsInfo[num].cardInfo.product.environment;
-                        break;
-                    default:
-                        break;
-                }
-                Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화");
-                StartCoroutine(UnActivateForTime(myBuildingsInfo[num]));
+                unactiveBuildingIndex = num;
+                myBuildingsInfo[num].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
                 return;
             }
-            
         }
+    }
+
+    public void CancleUnActiveBuilding() {
+        myBuildingsInfo[unactiveBuildingIndex].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        Debug.Log(myBuildingsInfo[unactiveBuildingIndex].cardInfo.name + " 비활성화 예정 해제");
+        unactiveBuildingIndex = 100;
+    }
+
+    public void SetUnactiveBuilding() {
+        BuildingInfo bi = myBuildingsInfo[unactiveBuildingIndex];
+        bi.activate = false;
+        switch (bi.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food -= bi.cardInfo.product.food;
+                productResources.gold.gold -= bi.cardInfo.product.gold;
+                productResources.gold.environment -= bi.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food -= bi.cardInfo.product.food;
+                productResources.food.gold -= bi.cardInfo.product.gold;
+                productResources.food.environment -= bi.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food -= bi.cardInfo.product.food;
+                productResources.env.gold -= bi.cardInfo.product.gold;
+                productResources.env.environment -= bi.cardInfo.product.environment;
+                break;
+            default:
+                break;
+        }
+        Debug.Log(bi.cardInfo.name + " 비활성화");
+        bi.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+        unactiveBuildingIndex = 100;
+        StartCoroutine(UnActivateForTime(bi));
+
+
     }
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
         yield return new WaitForSeconds(30.0f);
         card.activate = true;
+        card.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         Debug.Log(card.cardInfo.name + " 활성화");
         switch (card.cardInfo.prodType) {
             case "gold":
