@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
         REPAIR = 3,
     }
 
-    class PlayerResource {
+    public class PlayerResource {
         public int gold = 50;
         public int food = 50;
         public int turn = 600;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
 
-    private PlayerResource resourceClass;    
+    public PlayerResource resourceClass;
     public ProductInfo pInfo { get; set; }
     private int hqLevel;
     IngameScoreManager scoreManager;
@@ -112,11 +112,18 @@ public class PlayerController : MonoBehaviour {
         PrintResource();
     }
 
-    private void PrintResource() {
+    public void PrintResource() {
         foodValue.text = resourceClass.food.ToString();
         goldValue.text = resourceClass.gold.ToString();
         turnValue.text = resourceClass.turn.ToString();
         envValue.fillAmount = resourceClass.environment / 300.0f;
+    }
+
+    public bool isEnoughResources(DataModules.Cost cost) {
+        if (resourceClass.gold < cost.gold) return false;
+        if (resourceClass.environment < cost.environment) return false;
+        if (resourceClass.food < cost.food) return false;
+        return true;
     }
 
     private void HqUpgrade() {
