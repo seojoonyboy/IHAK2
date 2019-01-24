@@ -27,7 +27,11 @@ public class IngameCityManager : MonoBehaviour {
             this.gameObject = gameObject;
         }
     }
-    
+
+    //현재 어떤 화면을 보고 있는지
+    public int CurrentView;
+    public ArrayList eachPlayersTileGroups = new ArrayList();
+
     public UpgradeInfo 
         hq_tier_1,
         hq_tier_2,
@@ -182,7 +186,7 @@ public class IngameCityManager : MonoBehaviour {
                     float hp = enemyBuilding.hp;
                     float maxHp = enemyBuilding.maxHp;
                     float hpScaleX = hp / maxHp;
-                    Debug.Log(hpScaleX);
+                    //Debug.Log(hpScaleX);
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
                 }
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);

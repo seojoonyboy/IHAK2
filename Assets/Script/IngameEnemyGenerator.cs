@@ -25,5 +25,7 @@ public class IngameEnemyGenerator : MonoBehaviour {
         Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(-60f, 60f, 0f);
         Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(60f, 60f, 0f);
         Instantiate(goblin, transform.GetChild(0), false).transform.localPosition = new Vector3(60f, 60f, 0f);
+
+        ingameCityManager.eachPlayersTileGroups.Add(tileGroup);
     }
 }
