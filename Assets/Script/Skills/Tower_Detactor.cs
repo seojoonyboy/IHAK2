@@ -31,13 +31,15 @@ public class Tower_Detactor : MonoBehaviour {
         box.radius = range;
     }
     private void OnTriggerStay2D(Collider2D other) {
-        if (isAttacking) return;
-        isAttacking = true;
-        //enemy = other.transform.parent;
-        enemy = other.transform;
-        Debug.Log(enemy.name);
-        time = 0f;
-        box.enabled = false;
+        if(other.gameObject.layer == 10) {
+            if (isAttacking) return;
+            isAttacking = true;
+            //enemy = other.transform.parent;
+            enemy = other.transform;
+            Debug.Log(enemy.name);
+            time = 0f;
+            box.enabled = false;
+        }
     }
 
     private void Update() {
@@ -52,8 +54,8 @@ public class Tower_Detactor : MonoBehaviour {
 
     private void shootArrow() {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
-        iTween.MoveTo(arrow, enemy.position, atkTime * 0.5f);
-        Destroy(arrow, atkTime * 0.5f);
+        iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
+        Destroy(arrow, atkTime * 0.3f);
     }
 
     private bool checkEnemyDead() {
