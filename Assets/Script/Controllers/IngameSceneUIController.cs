@@ -1,6 +1,9 @@
+using DataModules;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -34,15 +37,57 @@ public class IngameSceneUIController : MonoBehaviour {
     private float baseScreenHeight = 1920.0f;
     private float screenRate;
 
+    public static int deckId;
+
     private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
         screenRate = baseScreenHeight / (Screen.height);
         Camera.main.orthographicSize = baseCameraSize / screenRate;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
+
+        ProductResources touchProdPower = ld.GetComponent<TileGroup>().touchPerProdPower;
+        bool isDataExist = isDataInited(touchProdPower);
+        if (!isDataExist) {
+            NetworkManager networkManager = NetworkManager.Instance;
+            StringBuilder url = new StringBuilder();
+            url.Append(networkManager.baseUrl)
+                .Append("api/users/deviceid/")
+                .Append(AccountManager.Instance.DEVICEID)
+                .Append("/decks/")
+                .Append(deckId);
+            NetworkManager.Instance.request("GET", url.ToString(), OnDataCallback, false);
+        }
+
         ld.transform.localScale = new Vector3(1, 1, 1);
         playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);
         go.SetActive(false);
+    }
+
+    private void OnDataCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if(response.data != null) {
+                DeckDetail deckDetail = JsonConvert.DeserializeObject<DeckDetail>(response.data.ToString());
+
+                ProductResources touchPower = deckDetail.productResources;
+                playerCity.GetComponent<IngameCityManager>().productResources = touchPower;
+            }
+        }
+    }
+
+    private bool isDataInited(ProductResources touchProdPower) {
+        Resource food = touchProdPower.food;
+        Resource gold = touchProdPower.gold;
+        Resource env = touchProdPower.env;
+
+        if (food.food == 0 && food.gold == 0 && food.environment == 0) {
+            if (gold.food == 0 && gold.gold == 0 && gold.environment == 0) {
+                if (env.food == 0 && env.gold == 0 && env.environment == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     // Use this for initialization
