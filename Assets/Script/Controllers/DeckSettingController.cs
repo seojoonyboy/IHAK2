@@ -160,8 +160,9 @@ public class DeckSettingController : MonoBehaviour {
         if (DeckCheck() == true) {
             if (prevData == null) {
                 saveBtnClick = true;
-                GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
+                GameObject modal = Modal.instantiateWithClose("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
                 modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+                modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
             }
             else {
                 saveBtnClick = true;
@@ -170,8 +171,9 @@ public class DeckSettingController : MonoBehaviour {
                 if (name.Length > 8) {
                     str = name.Substring(0, 8);
                 }
-                GameObject modal = Modal.instantiate("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
+                GameObject modal = Modal.instantiateWithClose("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
                 modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+                modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
             }
         }
         else
