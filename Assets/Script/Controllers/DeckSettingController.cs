@@ -37,6 +37,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
     [SerializeField] public bool picking = false;
+    [SerializeField] public int sortOrder = 0;
 
     public Text 
         modalHeader,
@@ -321,7 +322,7 @@ public class DeckSettingController : MonoBehaviour {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
                 selectbuildingStatus = selectBuilding;
-
+                sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                 if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
 
@@ -330,7 +331,7 @@ public class DeckSettingController : MonoBehaviour {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     selectbuildingStatus = selectBuilding;
-
+                    sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                     if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
                 }
@@ -380,6 +381,7 @@ public class DeckSettingController : MonoBehaviour {
                     Vector3 buildingPosition = targetTile.transform.position;
                     buildingPosition.z = 0;
                     selectBuilding.transform.position = buildingPosition;
+                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1;
 
                     if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier == targetTile.GetComponent<TileObject>().Tier)
                         selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
@@ -397,6 +399,7 @@ public class DeckSettingController : MonoBehaviour {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
+                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1;
                 selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else if(hit.collider.tag == "BackGroundTile") {
@@ -428,20 +431,25 @@ public class DeckSettingController : MonoBehaviour {
                     tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
                     selectBuilding.transform.SetParent(targetTile.transform);
                     selectBuilding.transform.position = position;
+                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum;
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
                 else
                     DeleteBuilding();
             }
-            else
+            else {
                 selectBuilding.transform.position = startEditPosition;
+                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
+            }
         }
         else {
             //selectBuilding.transform.position = startEditPosition;
             if (picking == true)
                 DeleteBuilding();
-            else
+            else {
+                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
                 selectBuilding.transform.position = startEditPosition;
+            }
         }
 
         picking = false;
