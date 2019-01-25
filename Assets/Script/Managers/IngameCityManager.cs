@@ -610,7 +610,7 @@ public class IngameCityManager : MonoBehaviour {
 
     public void DecideUnActiveBuilding() {
         while (true) {
-            int num = UnityEngine.Random.Range(0, 7);
+            int num = UnityEngine.Random.Range(0, 9);
             if (myBuildingsInfo[num].cardInfo.type == "HQ")
                 continue;
             if (myBuildingsInfo[num].activate == false)
