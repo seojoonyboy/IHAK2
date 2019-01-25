@@ -277,6 +277,11 @@ public class AccountManager : Singleton<AccountManager> {
                 decks = new List<Deck>();
             }
             SetBuildingToTiles();
+            foreach(Deck deck in decks) {
+                if (deck.isRepresent) {
+                    IngameSceneUIController.deckId = deck.id;
+                }
+            }
             SetTileGroups(ref decks);
             MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
         }
