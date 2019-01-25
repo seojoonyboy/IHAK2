@@ -10,7 +10,9 @@ public class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
     [SerializeField] PlayerController playerController;
     List<GameObject> cards;
-    [SerializeField] GameObject cardPref;
+    [SerializeField] GameObject 
+        unitCardPref,
+        spellCardPref;
     [SerializeField] Transform cardParent;
 
     private int handCount;
@@ -96,16 +98,14 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     public void InitUnitCard() {
         foreach (Unit unit in tileGroup.units) {
-            GameObject card = Instantiate(cardPref, cardParent);
-            card.transform.Find("Name").GetComponent<Text>().text = unit.name;
+            GameObject card = Instantiate(unitCardPref, cardParent);
+            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             card.GetComponent<IngameCard>().data = unit;
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.imageName);
 
-            StringBuilder sb = new StringBuilder();
-            if (unit.cost.food > 0) sb.Append("식량 : " + unit.cost.food + "\n");
-            if (unit.cost.gold > 0) sb.Append("금 : " + unit.cost.gold);
-            card.transform.Find("Cost").GetComponent<Text>().text = sb.ToString();
-            card.transform.Find("Tier").GetComponent<Text>().text = unit.tearNeed + " 등급";
+            if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
+            if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
+            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tearNeed.ToString();
             if (unit.tearNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
@@ -115,15 +115,14 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     public void InitSkillCard() {
         foreach (Skill skill in tileGroup.activeSkills) {
-            GameObject card = Instantiate(cardPref, cardParent);
-            card.transform.Find("Name").GetComponent<Text>().text = skill.name;
+            GameObject card = Instantiate(spellCardPref, cardParent);
+            card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             card.GetComponent<IngameCard>().data = skill;
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
-            StringBuilder sb = new StringBuilder();
-            if (skill.cost.food > 0) sb.Append("식량 : " + skill.cost.food + "\n");
-            if (skill.cost.gold > 0) sb.Append("금 : " + skill.cost.gold);
-            card.transform.Find("Cost").GetComponent<Text>().text = sb.ToString();
-            card.transform.Find("Tier").GetComponent<Text>().text = skill.tierNeed + " 등급";
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.imageName);
+
+            if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
+            if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
+            card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
             if (skill.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
