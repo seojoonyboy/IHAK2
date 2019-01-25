@@ -36,9 +36,8 @@ public class IngameDropHandler : MonoBehaviour {
         if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        if(hit.collider != null) {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
+        foreach(RaycastHit2D hit in hits) {
             Debug.Log(hit.collider.tag);
             Debug.Log(hit.collider.name);
             IngameCard card = selectedObject.GetComponent<IngameCard>();
