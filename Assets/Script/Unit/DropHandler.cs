@@ -46,6 +46,7 @@ public class DropHandler : MonoBehaviour {
                         selectBuilding.GetComponent<SpriteRenderer>().sprite = buildingObject.mainSprite;
                         selectBuilding.transform.localPosition = setLocation;
                         selectBuilding.transform.SetParent(targetTile.transform);
+                        selectBuilding.transform.localScale = new Vector3(1, 1, 1);
                         selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = targetTile.transform.parent.childCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                         targetTile.GetComponent<TileObject>().buildingSet = true;
                         GameObject slot = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
