@@ -4,6 +4,7 @@ using UnityEngine;
 using DataModules;
 using System;
 using UnityEngine.UI;
+using System.Text;
 
 public class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
@@ -99,6 +100,12 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             card.GetComponent<IngameCard>().data = unit;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+
+            StringBuilder sb = new StringBuilder();
+            if (unit.cost.food > 0) sb.Append("식량 : " + unit.cost.food + "\n");
+            if (unit.cost.gold > 0) sb.Append("금 : " + unit.cost.gold);
+            card.transform.Find("Cost").GetComponent<Text>().text = sb.ToString();
+            card.transform.Find("Tier").GetComponent<Text>().text = unit.tearNeed + " 등급";
             if (unit.tearNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
@@ -112,6 +119,11 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             card.GetComponent<IngameCard>().data = skill;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
+            StringBuilder sb = new StringBuilder();
+            if (skill.cost.food > 0) sb.Append("식량 : " + skill.cost.food + "\n");
+            if (skill.cost.gold > 0) sb.Append("금 : " + skill.cost.gold);
+            card.transform.Find("Cost").GetComponent<Text>().text = sb.ToString();
+            card.transform.Find("Tier").GetComponent<Text>().text = skill.tierNeed + " 등급";
             if (skill.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
