@@ -225,10 +225,10 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
-                commandButtons.parent.GetChild(0).GetComponent<Image>().enabled = false;
-                commandButtons.parent.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                commandButtons.parent.GetChild(2).GetComponent<Image>().enabled = false;
+                commandButtons.parent.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
-                OpenHqUpgrageInfo(false);
+                hqUpgradeWnd.SetActive(false);
             }
             else {
                 if (!warningOn)
