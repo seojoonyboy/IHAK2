@@ -364,7 +364,7 @@ public class DeckSettingController : MonoBehaviour {
             return;
 
         picking = true;
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;        
+        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;        
         Vector3 mousePosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
         mousePosition.z = 0;
 
@@ -448,7 +448,7 @@ public class DeckSettingController : MonoBehaviour {
         selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
+        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
     }
 
     public void DeleteBuilding() {

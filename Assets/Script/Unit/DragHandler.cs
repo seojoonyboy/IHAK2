@@ -37,13 +37,13 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         dropHandler.setObject = setObject;
         startPosition = transform.position;        
         camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
+        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
     }
 
     public void OnEndDrag() {
         transform.localPosition = new Vector3(0, 14, 0);
         transform.localScale = startScale;
-        cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
+        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
 
         Canvas.ForceUpdateCanvases();
         var glg = transform.parent.GetComponent<GridLayoutGroup>();
