@@ -493,8 +493,12 @@ public class DeckSettingController : MonoBehaviour {
 
     public int BuildingCount(GameObject _object) {
         int count = 0;
-        
-        for(int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+
+        if (_object == null)
+            return count;
+
+
+        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 GameObject compareObject = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
 
