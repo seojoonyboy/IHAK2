@@ -206,6 +206,7 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.turn--;
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
                 OpenHqUpgrageInfo(false);
+                icm.DecideUnActiveBuilding();
             }
             else {
                 if (!warningOn)
@@ -235,6 +236,8 @@ public class PlayerController : MonoBehaviour {
                     StartCoroutine(HqUpgradeWarning());
             }
         }
+        if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+            icm.CancleUnActiveBuilding();
         commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
     }
