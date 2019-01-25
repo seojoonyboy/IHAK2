@@ -29,12 +29,17 @@ public class IngameSceneUIController : MonoBehaviour {
     [HideInInspector]
     public bool isPlaying = true;
     private float time = 300;
+    private float baseCameraSize = 957.0f;
+    private float baseScreenHeight = 1920.0f;
+    private float screenRate;
 
     private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
+        screenRate = baseScreenHeight / (Screen.height);
+        Camera.main.orthographicSize = baseCameraSize / screenRate;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
-        ld.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
+        ld.transform.localScale = new Vector3(1, 1, 1);
         playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);
         go.SetActive(false);
     }
@@ -43,9 +48,11 @@ public class IngameSceneUIController : MonoBehaviour {
     void Start() {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
+        cityPos.position = new Vector3(cityPos.position.x, cityPos.position.y / screenRate, cityPos.position.z);
         playerCity.transform.GetChild(1).position = cityPos.position;
         IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
         ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
+        ieg.tileGroup.transform.localScale = new Vector3(1, 1, 1);
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);
         playerRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "Dummy";
@@ -94,18 +101,22 @@ public class IngameSceneUIController : MonoBehaviour {
         if(shut) {
             Debug.Log("shut");
             playerCity.GetComponent<IngameCityManager>().CurrentView = 1;
-            Color shutColor = new Color(255, 255, 255, 0.7f);
+            Color shutColor = new Color(255, 255, 255, 0.3f);
             produceButonList.GetComponent<Image>().color = shutColor;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++) {
                 produceButonList.GetChild(i).GetComponent<Image>().color = shutColor;
+                produceButonList.GetChild(i).GetChild(0).GetComponent<Text>().color = shutColor;
+            }
             produceButonList.GetChild(4).gameObject.SetActive(true);
         }
         else {
             playerCity.GetComponent<IngameCityManager>().CurrentView = 0;
             Color onColor = new Color(255, 255, 255, 1.0f);
             produceButonList.GetComponent<Image>().color = onColor;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++) {
                 produceButonList.GetChild(i).GetComponent<Image>().color = onColor;
+                produceButonList.GetChild(i).GetChild(0).GetComponent<Text>().color = onColor;
+            }
             produceButonList.GetChild(4).gameObject.SetActive(false);
         }
     }
