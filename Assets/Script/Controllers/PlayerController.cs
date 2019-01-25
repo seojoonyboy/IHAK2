@@ -37,13 +37,15 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Text turnValue;
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
+    [SerializeField] GameObject hqUpgradeWnd;
 
     public PlayerResource resourceClass;
     public ProductInfo pInfo { get; set; }
     public int hqLevel;
     IngameScoreManager scoreManager;
-    
-    
+    private bool warningOn = false;
+
+
 
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         PrintResource();
         hqLevel = 1;
 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour {
         commandButtons.GetChild(2).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.ENVIRONMENT));
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
-        commandButtons.parent.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => HqUpgrade()); // HqUpgrade버튼 접근후 함수 구독
+        
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
         icm.productResources.food.food += icm.hq_tier_1.product.food;
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
@@ -72,8 +74,8 @@ public class PlayerController : MonoBehaviour {
 
     private void ClickButton(Buttons btn) {
         int env = resourceClass.environment;
-        switch (btn){
-            case Buttons.GOLD: 
+        switch (btn) {
+            case Buttons.GOLD:
                 if (env + icm.productResources.gold.environment > 0) {
                     if (icm.productResources.gold.gold > 0) {
                         resourceClass.gold += icm.productResources.gold.gold;
@@ -154,9 +156,43 @@ public class PlayerController : MonoBehaviour {
         return true;
     }
 
-    private void HqUpgrade() {
-        if(hqLevel == 1) {
-            if(icm.hq_tier_2.upgradeCost.food < resourceClass.food && 
+    public void OpenHqUpgrageInfo(bool open) {
+        if (hqLevel < 3)
+            hqUpgradeWnd.SetActive(open);
+        if (open) {
+            hqUpgradeWnd.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = "Lv." + hqLevel.ToString() + " 업그레이드";
+            if (hqLevel == 1) {
+                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.gold.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.food - icm.hq_tier_1.product.food).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.food.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.env - icm.hq_tier_1.product.env).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.env.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.hp - icm.hq_tier_1.hp).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.hp.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(0).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.gold.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.food.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.env.ToString();
+            }
+            if (hqLevel == 2) {
+                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.gold.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.food - icm.hq_tier_2.product.food).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.food.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.env - icm.hq_tier_2.product.env).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.env.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.hp - icm.hq_tier_2.hp).ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.hp.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(0).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.gold.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.food.ToString();
+                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.env.ToString();
+            }
+        }
+    }
+
+    public void HqUpgrade() {
+        if (hqLevel == 1) {
+            if (icm.hq_tier_2.upgradeCost.food < resourceClass.food &&
                 icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
                 Debug.Log("2단계 업글");
@@ -168,11 +204,15 @@ public class PlayerController : MonoBehaviour {
                 resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
-
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
+                OpenHqUpgrageInfo(false);
+            }
+            else {
+                if (!warningOn)
+                    StartCoroutine(HqUpgradeWarning());
             }
         }
-        else if(hqLevel == 2) {
+        else if (hqLevel == 2) {
             if (icm.hq_tier_3.upgradeCost.food < resourceClass.food &&
                 icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
                 icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
@@ -188,9 +228,26 @@ public class PlayerController : MonoBehaviour {
                 commandButtons.parent.GetChild(0).GetComponent<Image>().enabled = false;
                 commandButtons.parent.GetChild(0).GetChild(1).gameObject.SetActive(false);
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
+                OpenHqUpgrageInfo(false);
+            }
+            else {
+                if (!warningOn)
+                    StartCoroutine(HqUpgradeWarning());
             }
         }
-        commandButtons.parent.GetChild(0).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
+        commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
+    }
+
+    IEnumerator HqUpgradeWarning() {
+        warningOn = true;
+        hqUpgradeWnd.transform.GetChild(0).GetChild(8).gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        hqUpgradeWnd.transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        hqUpgradeWnd.transform.GetChild(0).GetChild(8).gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        hqUpgradeWnd.transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
+        warningOn = false;
     }
 }
