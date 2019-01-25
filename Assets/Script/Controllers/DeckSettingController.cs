@@ -455,7 +455,9 @@ public class DeckSettingController : MonoBehaviour {
 
         if(count > 0) {
             slot.GetComponent<Image>().color = Color.white;
-            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;                
+            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+            slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
+            slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
         }
 
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
@@ -515,6 +517,8 @@ public class DeckSettingController : MonoBehaviour {
                 if (count == 0) {
                     slot.GetComponent<Image>().color = Color.grey;
                     slot.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                    slot.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+                    slot.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
                 }
 
                 slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
@@ -534,7 +538,9 @@ public class DeckSettingController : MonoBehaviour {
                 //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
                 slot.GetComponent<Image>().color = Color.white;
                 slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
                 slot.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
+                slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
             }
         }
     }

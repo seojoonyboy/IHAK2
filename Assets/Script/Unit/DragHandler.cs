@@ -55,10 +55,16 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
-        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) > 0)
+        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) > 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
-        else if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0)
+            transform.GetChild(1).GetComponent<Text>().color = Color.white;
+            transform.GetChild(2).GetComponent<Text>().color = Color.white;
+        }
+        else if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            transform.GetChild(1).GetComponent<Text>().color = Color.gray;
+            transform.GetChild(2).GetComponent<Text>().color = Color.gray;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
