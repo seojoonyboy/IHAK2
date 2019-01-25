@@ -51,14 +51,14 @@ public class IngameSceneUIController : MonoBehaviour {
         //if (!isDataExist) {
 
         //}
-        NetworkManager networkManager = NetworkManager.Instance;
-        StringBuilder url = new StringBuilder();
-        url.Append(networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(AccountManager.Instance.DEVICEID)
-            .Append("/decks/")
-            .Append(deckId);
-        NetworkManager.Instance.request("GET", url.ToString(), OnDataCallback, false);
+        //NetworkManager networkManager = NetworkManager.Instance;
+        //StringBuilder url = new StringBuilder();
+        //url.Append(networkManager.baseUrl)
+        //    .Append("api/users/deviceid/")
+        //    .Append(AccountManager.Instance.DEVICEID)
+        //    .Append("/decks/")
+        //    .Append(deckId);
+        //NetworkManager.Instance.request("GET", url.ToString(), OnDataCallback, false);
 
         ld.transform.localScale = new Vector3(1, 1, 1);
         playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);
