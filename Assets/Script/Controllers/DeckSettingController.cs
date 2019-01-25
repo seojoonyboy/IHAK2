@@ -445,6 +445,12 @@ public class DeckSettingController : MonoBehaviour {
         GameObject slot = FindCard(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
         int count = 1 - BuildingCount(selectbuildingStatus);
         count++;
+
+        if(count > 0) {
+            slot.GetComponent<Image>().color = Color.white;
+            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;                
+        }
+
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
         slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
 
@@ -499,6 +505,11 @@ public class DeckSettingController : MonoBehaviour {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
                 int count = 1 - BuildingCount(slot.GetComponent<DragHandler>().setObject);
+                if (count == 0) {
+                    slot.GetComponent<Image>().color = Color.grey;
+                    slot.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                }
+
                 slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
             }
         }
@@ -514,6 +525,8 @@ public class DeckSettingController : MonoBehaviour {
             {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                slot.GetComponent<Image>().color = Color.white;
+                slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
                 slot.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             }
         }

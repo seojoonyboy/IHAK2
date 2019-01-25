@@ -41,7 +41,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Sprite wreckSprite;
     //[SerializeField] private Text maxHp;
     [SerializeField] private int enemyTotalHP;
-    [SerializeField] private int enemyCurrentTotalHP;
+    [SerializeField] public int enemyCurrentTotalHP;
     [SerializeField] private GameObject enemyTotalHPGauge;
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
@@ -206,11 +206,19 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == false) return false;
+                if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
                 float enemyMaxHP = enemyBuilding.maxHp;
-                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);
+                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);                
                 enemyBuilding.hp += enemyAmount;
                 enemyCurrentTotalHP += enemyAmount;
+
+                int plusHp;
+                if (enemyCurrentTotalHP > enemyTotalHP) {
+                    plusHp = enemyCurrentTotalHP - enemyTotalHP;
+                    enemyCurrentTotalHP -= plusHp;
+                }
+
                 float enemyHp = enemyBuilding.hp;
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
@@ -218,8 +226,7 @@ public class IngameCityManager : MonoBehaviour {
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
-                float textPercent = (totalHp / totalMaxHp) * 100f;
-                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(textPercent).ToString() + "%";
+                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -272,10 +279,16 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == false) return false;
+                if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
                 float enemyMaxHP = enemyBuilding.maxHp;
                 enemyBuilding.hp += amount;
                 enemyCurrentTotalHP += amount;
+                int plusHp;
+                if (enemyCurrentTotalHP > enemyTotalHP) {
+                    plusHp = enemyCurrentTotalHP - enemyTotalHP;
+                    enemyCurrentTotalHP -= plusHp;
+                }
                 float enemyHp = enemyBuilding.hp;
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
@@ -283,8 +296,7 @@ public class IngameCityManager : MonoBehaviour {
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
-                float textPercent = (totalHp / totalMaxHp) * 100f;
-                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(textPercent).ToString() + "%";
+                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -292,13 +304,13 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.hp = enemyBuilding.maxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
-
+                
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-
+                
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
 
                 break;
@@ -356,6 +368,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == true) return false;
                 if (enemyBuilding.gameObject.transform.parent.GetComponent<TileCollision>().check == true) return false;
+                if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
                 float enemyMaxHP = enemyBuilding.maxHp;
                 int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.5f);
@@ -371,8 +384,7 @@ public class IngameCityManager : MonoBehaviour {
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
-                float textPercent = (totalHp / totalMaxHp) * 100f;
-                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(textPercent).ToString() + "%";
+                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
 
@@ -396,12 +408,13 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.hp = enemyBuilding.maxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
-
+                
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
+                
                 break;
         }
         return true;
@@ -414,16 +427,21 @@ public class IngameCityManager : MonoBehaviour {
             case Target.ENEMY_1:
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
+                if (enemyBuilding.hp <= 0) return false;
                 enemyBuilding.hp -= amount;
                 enemyCurrentTotalHP -= amount;
+                int minusHp;
+                if (enemyBuilding.hp < 0) {
+                    minusHp = 0 - enemyBuilding.hp;
+                    enemyCurrentTotalHP += minusHp;
+                }
                 float enemyHp = enemyBuilding.hp;
                 float enemyMaxHp = enemyBuilding.maxHp;
 
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
-                float textPercent = (totalHp / totalMaxHp) * 100f;
-                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(textPercent).ToString() + "%";
+                enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
                 if (enemyBuilding.hp < enemyBuilding.maxHp) {
@@ -431,10 +449,11 @@ public class IngameCityManager : MonoBehaviour {
                     float hpScaleX = enemyHp / enemyMaxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
                 }
-                if (enemyBuilding.hp < 0) {
+                if (enemyBuilding.hp <= 0) {
                     float hpScaleX = enemyHp / enemyMaxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    enemyBuilding.hp = 0;
                     BuildingDestroyed(enemyBuilding);
                 }
 
@@ -475,16 +494,21 @@ public class IngameCityManager : MonoBehaviour {
                     //Debug.Log(tileNum + "에 데미지");
                     BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                     if (enemyBuilding == null) return false;
+                    if (enemyBuilding.hp <= 0) return false;
                     enemyBuilding.hp -= amount;
                     enemyCurrentTotalHP -= amount;
+                    int minusHp;
+                    if (enemyBuilding.hp < 0) {
+                        minusHp = 0 - enemyBuilding.hp;
+                        enemyCurrentTotalHP += minusHp;
+                    }
                     float enemyHp = enemyBuilding.hp;
                     float enemyMaxHp = enemyBuilding.maxHp;
 
                     float totalHp = enemyCurrentTotalHP;
                     float totalMaxHp = enemyTotalHP;
                     float percent = totalHp / totalMaxHp;
-                    float textPercent = (totalHp / totalMaxHp) * 100f;
-                    enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(textPercent).ToString() + "%";
+                    enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
                     if (enemyBuilding.hp < enemyBuilding.maxHp) {
@@ -492,10 +516,11 @@ public class IngameCityManager : MonoBehaviour {
                         float hpScaleX = enemyHp / enemyMaxHp;
                         enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
                     }
-                    if (enemyBuilding.hp < 0) {
+                    if (enemyBuilding.hp <= 0) {
                         float hpScaleX = enemyHp / enemyMaxHp;
                         enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                         enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        enemyBuilding.hp = 0;
                         BuildingDestroyed(enemyBuilding);
                     }
 
