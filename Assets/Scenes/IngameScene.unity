@@ -2803,7 +2803,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 807158603}
-  cardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa, type: 2}
+  unitCardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa,
+    type: 2}
+  spellCardPref: {fileID: 1508483023320674, guid: df5e88c4511dcd04b8ddfa226685ec26,
+    type: 2}
   cardParent: {fileID: 1589755684}
   Deck: []
   Hand: []
