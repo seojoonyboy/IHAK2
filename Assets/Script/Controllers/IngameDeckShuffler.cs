@@ -47,6 +47,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void DeactiveCard(string id) {
         if (id == "wolves_den") {
             foreach (GameObject card in cards) {
+                card.gameObject.SetActive(true);
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
@@ -59,6 +60,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         else if (id == "magma_altar") {
             foreach (GameObject card in cards) {
+                card.gameObject.SetActive(true);
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Skill)) {
                     Skill skill = (Skill)data;

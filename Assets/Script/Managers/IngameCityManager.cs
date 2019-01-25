@@ -667,10 +667,10 @@ public class IngameCityManager : MonoBehaviour {
             default:
                 BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
                 if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                    GetComponent<IngameDeckShuffler>().DeactiveCard("magma_altar");
                 }
                 else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                    GetComponent<IngameDeckShuffler>().DeactiveCard("wolves_den");
                 }
                 break;
         }
@@ -708,10 +708,10 @@ public class IngameCityManager : MonoBehaviour {
             default:
                 BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
                 if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                    GetComponent<IngameDeckShuffler>().ActivateCard("magma_altar");
                 }
                 else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard(buildingObject.data.card.id);
+                    GetComponent<IngameDeckShuffler>().ActivateCard("wolves_den");
                 }
                 break;
         }
