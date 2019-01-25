@@ -40,6 +40,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     public void Clear() {
         foreach (Transform card in cardParent.transform) {
+            cards.Remove(card.gameObject);
             Destroy(card.gameObject);
         }
     }
