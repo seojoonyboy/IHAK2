@@ -40,6 +40,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         if(hit.collider != null) {
             Debug.Log(hit.collider.tag);
+            Debug.Log(hit.collider.name);
             IngameCard card = selectedObject.GetComponent<IngameCard>();
             object data = card.data;
 
@@ -54,8 +55,8 @@ public class IngameDropHandler : MonoBehaviour {
                 if(data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
                     if (playerController.isEnoughResources(unit.cost)) {
-                        GameObject goblin = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-                        goblin.transform.position = hit.transform.position;
+                        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
+                        wolf.transform.position = hit.point + new Vector2(0f, 50f);//hit.transform.position;
 
                         playerController.resourceClass.gold -= unit.cost.gold;
                         playerController.resourceClass.food -= unit.cost.food;

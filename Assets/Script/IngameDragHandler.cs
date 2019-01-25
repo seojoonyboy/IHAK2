@@ -23,30 +23,25 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnDrag(PointerEventData eventData) {
-        Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(origin, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        transform.position = Input.mousePosition;
 
-        if(hit.collider != null) {
-            if (hit.collider.tag == "BackGroundTile") {
-                GameObject tile = hit.transform.gameObject;
-                Vector3 position = cam.WorldToScreenPoint(origin);
-                position.z = 0;
-                transform.position = new Vector3(position.x, position.y + 100f, position.z);
+        GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
+        if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
 
-                //Debug.Log(hit.collider.gameObject.layer);
-            }
-            else {
-                transform.position = Input.mousePosition;
-            }
-            
-        }
+        transform.GetComponent<Image>().enabled = false;
+        foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
         transform.localScale = startScale;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
+        transform.GetComponent<Image>().enabled = true;
+        foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         Canvas.ForceUpdateCanvases();
         var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
         hlg.CalculateLayoutInputHorizontal();
