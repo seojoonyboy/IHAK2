@@ -454,6 +454,14 @@ public class DeckSettingController : MonoBehaviour {
         GameObject slot = FindCard(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
         int count = 1 - BuildingCount(selectbuildingStatus);
         count++;
+
+        if(count > 0) {
+            slot.GetComponent<Image>().color = Color.white;
+            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+            slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
+            slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
+        }
+
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
         slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
 
@@ -485,8 +493,12 @@ public class DeckSettingController : MonoBehaviour {
 
     public int BuildingCount(GameObject _object) {
         int count = 0;
-        
-        for(int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+
+        if (_object == null)
+            return count;
+
+
+        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 GameObject compareObject = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
 
@@ -508,6 +520,13 @@ public class DeckSettingController : MonoBehaviour {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
                 int count = 1 - BuildingCount(slot.GetComponent<DragHandler>().setObject);
+                if (count == 0) {
+                    slot.GetComponent<Image>().color = Color.grey;
+                    slot.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                    slot.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+                    slot.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
+                }
+
                 slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
             }
         }
@@ -523,7 +542,11 @@ public class DeckSettingController : MonoBehaviour {
             {
                 GameObject slot = uicontent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
+                slot.GetComponent<Image>().color = Color.white;
+                slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
                 slot.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
+                slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
             }
         }
     }

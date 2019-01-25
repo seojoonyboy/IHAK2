@@ -13,6 +13,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     float camMagnification;
     Camera cam;
     public bool canDrag = false;
+    public GameObject deckSettingController; 
 
     public void BeginDrag() {
         canDrag = true;
@@ -24,11 +25,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
-
+        deckSettingController = transform.parent.parent.parent.parent.gameObject;
         GetComponent<LongClickButton>().onShortClick.AddListener(() => Debug.Log("Short Button Click"));
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
+        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         dropHandler.setObject = setObject;
         startPosition = transform.position;        
@@ -53,10 +55,20 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
-        transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
+        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) > 0) {
+            transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
+            transform.GetChild(1).GetComponent<Text>().color = Color.white;
+            transform.GetChild(2).GetComponent<Text>().color = Color.white;
+        }
+        else if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) {
+            transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            transform.GetChild(1).GetComponent<Text>().color = Color.gray;
+            transform.GetChild(2).GetComponent<Text>().color = Color.gray;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);

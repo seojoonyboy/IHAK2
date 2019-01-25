@@ -36,10 +36,10 @@ public class IngameDropHandler : MonoBehaviour {
         if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-
-        if(hit.collider != null) {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
+        foreach(RaycastHit2D hit in hits) {
             Debug.Log(hit.collider.tag);
+            Debug.Log(hit.collider.name);
             IngameCard card = selectedObject.GetComponent<IngameCard>();
             object data = card.data;
 
@@ -54,8 +54,8 @@ public class IngameDropHandler : MonoBehaviour {
                 if(data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
                     if (playerController.isEnoughResources(unit.cost)) {
-                        GameObject goblin = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-                        goblin.transform.position = hit.transform.position;
+                        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
+                        wolf.transform.position = hit.point + new Vector2(0f, 50f);//hit.transform.position;
 
                         playerController.resourceClass.gold -= unit.cost.gold;
                         playerController.resourceClass.food -= unit.cost.food;
