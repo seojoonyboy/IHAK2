@@ -46,12 +46,13 @@ public class DeckSettingController : MonoBehaviour {
 
     private int speciesId = 0;
     private int deckCount;
+    public bool saveBtnClick = false;
     public int SpeciesId {
         get {
             return speciesId;
         }
     }
-
+    
     public static Deck prevData = null;
 
     private void Start() {
@@ -157,10 +158,12 @@ public class DeckSettingController : MonoBehaviour {
 
         if (DeckCheck() == true) {
             if (prevData == null) {
+                saveBtnClick = true;
                 GameObject modal = Modal.instantiate("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
                 modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
             }
             else {
+                saveBtnClick = true;
                 string name = prevData.name;
                 string str = name;
                 if (name.Length > 8) {
@@ -295,6 +298,8 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void PickEditBuilding() {
+        if (saveBtnClick == true)
+            return;
         if (cam == null)
             return;
 
@@ -344,7 +349,8 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void MoveEditBuilding() {
-        
+        if (saveBtnClick == true)
+            return;
         if (selectBuilding == null)
             return;
 
@@ -392,6 +398,8 @@ public class DeckSettingController : MonoBehaviour {
     }
 
     public void DropEditBuilding() {
+        if (saveBtnClick == true)
+            return;
         if (selectBuilding == null)
             return;
         if(targetTile != null) {
