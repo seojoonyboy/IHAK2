@@ -375,15 +375,22 @@ public class DeckSettingController : MonoBehaviour {
 
         if (hit.collider != null) {
             if (hit.collider.tag == "Tile") {
-                targetTile = hit.transform.gameObject;
-                Vector3 buildingPosition = targetTile.transform.position;
-                buildingPosition.z = 0;
-                selectBuilding.transform.position = buildingPosition;
+                if (hit.collider.GetComponent<TileObject>().Tier == playerInfosManager.userTier) {
+                    targetTile = hit.transform.gameObject;
+                    Vector3 buildingPosition = targetTile.transform.position;
+                    buildingPosition.z = 0;
+                    selectBuilding.transform.position = buildingPosition;
 
-                if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier == targetTile.GetComponent<TileObject>().Tier)
-                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
-                else if(targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier != targetTile.GetComponent<TileObject>().Tier)
-                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
+                    if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier == targetTile.GetComponent<TileObject>().Tier)
+                        selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
+                    else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier != targetTile.GetComponent<TileObject>().Tier)
+                        selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else {
+                    targetTile = null;
+                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+                    selectBuilding.transform.position = mousePosition;
+                }
             }
             else if (hit.collider.tag == "Building") {
                 targetTile = hit.transform.parent.gameObject;
@@ -424,7 +431,7 @@ public class DeckSettingController : MonoBehaviour {
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
                 else
-                    selectBuilding.transform.position = startEditPosition;
+                    DeleteBuilding();
             }
             else
                 selectBuilding.transform.position = startEditPosition;
