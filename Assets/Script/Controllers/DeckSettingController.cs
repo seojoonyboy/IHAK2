@@ -21,6 +21,7 @@ public class DeckSettingController : MonoBehaviour {
     [SerializeField] private GameObject togglePref;
     [SerializeField] private Button chooseSpeciesBtn;
     [SerializeField] private Button speciesConfirmBtn;
+
     [SerializeField] public Button deleteButton;
     [SerializeField] private GameObject modal;
     [SerializeField] Sprite[] speciesPortraits;
@@ -199,7 +200,13 @@ public class DeckSettingController : MonoBehaviour {
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
-    public void returnButton() {
+    public void ReturnBtn() {
+        Modal.instantiate("배치된 건물 데이터가 저장되지 않습니다.\n정말 나가시겠습니까?", Modal.Type.YESNO, () => {
+            Return();
+        });
+    }
+
+    private void Return() {
         prevData = null;
 
         if (reset == false) {
@@ -227,7 +234,7 @@ public class DeckSettingController : MonoBehaviour {
                             building.transform.parent.GetComponent<TileObject>().buildingSet = false;
                             building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
                             building.transform.position = building.transform.parent.position;
-                            building.transform.parent.GetComponent<TileObject>().buildingSet = true;                            
+                            building.transform.parent.GetComponent<TileObject>().buildingSet = true;
                         }
                     }
                 }
@@ -243,7 +250,7 @@ public class DeckSettingController : MonoBehaviour {
             else
                 playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         }
-        
+
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
 
         /*
@@ -255,7 +262,7 @@ public class DeckSettingController : MonoBehaviour {
         if (playerInfosManager.selectNumber > deckCount - 1)
             return;
 
-        
+
         tileGroup.SetActive(false);
         playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
