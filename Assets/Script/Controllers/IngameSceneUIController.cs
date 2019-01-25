@@ -26,6 +26,7 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private HorizontalScrollSnap hss;
     private GameObject city;
+    private IngameEnemyGenerator ieg;
     [HideInInspector]
     public bool isPlaying = true;
     private float time = 300;
@@ -50,7 +51,7 @@ public class IngameSceneUIController : MonoBehaviour {
         hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
         cityPos.position = new Vector3(cityPos.position.x, cityPos.position.y / screenRate, cityPos.position.z);
         playerCity.transform.GetChild(1).position = cityPos.position;
-        IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
+        ieg = FindObjectOfType<IngameEnemyGenerator>();
         ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
         ieg.tileGroup.transform.localScale = new Vector3(1, 1, 1);
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
@@ -75,6 +76,10 @@ public class IngameSceneUIController : MonoBehaviour {
 
             }
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            }
+            if (ieg.ingameCityManager.cityHP < 1) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
