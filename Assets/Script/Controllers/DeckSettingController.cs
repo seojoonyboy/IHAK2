@@ -183,7 +183,7 @@ public class DeckSettingController : MonoBehaviour {
 
     private void OnclickInputConfirm(string inputText) {
         Deck deck = new Deck();
-        deck.race = ((Species.Type)speciesId).ToString();
+        deck.race = "primal";
         deck.name = inputText;
         deck.coordsSerial = new int[tileSetList.Count + 1];
         for (int i = 0; i < tileSetList.Count; i++) {
@@ -196,6 +196,7 @@ public class DeckSettingController : MonoBehaviour {
             playerInfosManager.AddDeck(deck);
         }
         else {
+            deck.isRepresent = prevData.isRepresent;
             deck.id = prevData.id;
             playerInfosManager.decks[playerInfosManager.selectNumber] = deck;
             playerInfosManager.ModifyDeck(deck);
