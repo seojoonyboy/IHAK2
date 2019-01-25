@@ -710,7 +710,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (buildingObject.data.card.id == "magma_altar") {
                     GetComponent<IngameDeckShuffler>().ActivateCard("magma_altar");
                 }
-                else if (buildingObject.data.card.id == "wolves_den") {
+                if (buildingObject.data.card.id == "wolves_den") {
                     GetComponent<IngameDeckShuffler>().ActivateCard("wolves_den");
                 }
                 break;

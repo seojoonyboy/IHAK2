@@ -47,7 +47,6 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void DeactiveCard(string id) {
         if (id == "wolves_den") {
             foreach (GameObject card in cards) {
-                card.gameObject.SetActive(true);
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
@@ -60,7 +59,6 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         else if (id == "magma_altar") {
             foreach (GameObject card in cards) {
-                card.gameObject.SetActive(true);
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Skill)) {
                     Skill skill = (Skill)data;
@@ -78,11 +76,12 @@ public class IngameDeckShuffler : MonoBehaviour {
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
-                    if (unit.name == "늑대") {
+                    if (unit.name == "늑대" && playerController.hqLevel >= unit.tearNeed) {
                         card.SetActive(true);
                     }
                 }
             }
+            return;
         }
 
         else if (id == "magma_altar") {
@@ -90,11 +89,12 @@ public class IngameDeckShuffler : MonoBehaviour {
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Skill)) {
                     Skill skill = (Skill)data;
-                    if (skill.name == "마그마") {
+                    if (skill.name == "마그마" && playerController.hqLevel >= skill.tierNeed) {
                         card.SetActive(true);
                     }
                 }
             }
+            return;
         }
     }
 
@@ -108,6 +108,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
             if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
             card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tearNeed.ToString();
+            Debug.Log(playerController.hqLevel);
             if (unit.tearNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
@@ -125,6 +126,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
             if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
             card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
+            Debug.Log(playerController.hqLevel);
             if (skill.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
