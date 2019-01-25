@@ -631,10 +631,10 @@ public class IngameCityManager : MonoBehaviour {
         while (unActiveAlert) {
             if (unActiveAlert)
                 myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.4f);
             if (unActiveAlert)
                 myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
