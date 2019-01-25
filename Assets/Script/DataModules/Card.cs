@@ -38,6 +38,7 @@ namespace DataModules {
         public int hitPoint;
         public float moveSpeed;
         public int tearNeed;
+        public string imageName;
     }
 
     [System.Serializable]
@@ -62,6 +63,7 @@ namespace DataModules {
         public string name;
         public SkillDetail method;
         public int tierNeed;
+        public string imageName;
     }
 
     [System.Serializable]
