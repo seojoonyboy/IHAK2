@@ -43,9 +43,12 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private int enemyTotalHP;
     [SerializeField] public int enemyCurrentTotalHP;
     [SerializeField] private GameObject enemyTotalHPGauge;
+    [SerializeField] GameObject unactiveGroup;
+
     IngameSceneEventHandler ingameSceneEventHandler;
     public ProductResources productResources;
     public ProductResources unActiveResources;
+    public GameObject unactiveImage;
 
     public int cityHP = 0;
     private int cityMaxHP = 0;
@@ -54,7 +57,8 @@ public class IngameCityManager : MonoBehaviour {
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
 
     public int unactiveBuildingIndex = 100;
-    private List<BuildingInfo> unactiveBuildings = new List<BuildingInfo>();
+    private bool unActiveAlert = false;
+
 
     private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     public int[] buildingList;
@@ -209,7 +213,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
                 float enemyMaxHP = enemyBuilding.maxHp;
-                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);                
+                int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);
                 enemyBuilding.hp += enemyAmount;
                 enemyCurrentTotalHP += enemyAmount;
 
@@ -235,12 +239,12 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
 
-                if(enemyCurrentTotalHP > enemyTotalHP) {
+                if (enemyCurrentTotalHP > enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-                
+
 
 
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
@@ -304,13 +308,13 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.hp = enemyBuilding.maxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
-                
+
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-                
+
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
 
                 break;
@@ -408,13 +412,13 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.hp = enemyBuilding.maxHp;
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
-                
+
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-                
+
                 break;
         }
         return true;
@@ -615,12 +619,27 @@ public class IngameCityManager : MonoBehaviour {
                 unactiveBuildingIndex = num;
                 myBuildingsInfo[num].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
+                unActiveAlert = true;
+                StartCoroutine(StartAlert());
                 return;
             }
         }
     }
 
+    IEnumerator StartAlert() {
+        int index = unactiveBuildingIndex;
+        while (unActiveAlert) {
+            if (unActiveAlert)
+                myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            yield return new WaitForSeconds(0.5f);
+            if (unActiveAlert)
+                myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     public void CancleUnActiveBuilding() {
+        unActiveAlert = false;
         myBuildingsInfo[unactiveBuildingIndex].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         Debug.Log(myBuildingsInfo[unactiveBuildingIndex].cardInfo.name + " 비활성화 예정 해제");
         unactiveBuildingIndex = 100;
@@ -656,13 +675,17 @@ public class IngameCityManager : MonoBehaviour {
                 break;
         }
         Debug.Log(bi.cardInfo.name + " 비활성화");
-        bi.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+        unActiveAlert = false;
         unactiveBuildingIndex = 100;
         StartCoroutine(UnActivateForTime(bi));
     }
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
-        yield return new WaitForSeconds(30.0f);
+        StartCoroutine(UnActivateTimer());
+        card.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1.0f);
+        card.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+        yield return new WaitForSeconds(29.0f);
         card.activate = true;
         card.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         Debug.Log(card.cardInfo.name + " 활성화");
@@ -694,6 +717,17 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
+    IEnumerator UnActivateTimer() {
+        GameObject time = Instantiate(unactiveImage, unactiveGroup.transform);
+        int leftTime = 30;
+        while (leftTime >= 1) {
+            yield return new WaitForSeconds(1.0f);
+            leftTime--;
+            time.transform.GetChild(0).GetComponent<Text>().text = leftTime.ToString();
+        }
+        Destroy(time);
+    }
+
 
     /*
     IEnumerator Damage() {
@@ -716,7 +750,7 @@ public class IngameCityManager : MonoBehaviour {
         enemyCurrentTotalHP = enemyTotalHP;
         enemyTotalHPGauge.GetComponent<Image>().fillAmount = totalHp / totalHp;
     }
-      
+
 
     public enum Target {
         ME,
