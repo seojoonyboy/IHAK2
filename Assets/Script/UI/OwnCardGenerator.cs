@@ -117,11 +117,11 @@ public class OwnCardGenerator : MonoBehaviour {
                 + "골드 : " + unit.cost.gold + "\n"
                 + "환경 : " + unit.cost.environment + "\n";
 
-            unitSpec.text = "체력 : " + unit.hitPoint
-                + "공격력 : " + unit.power
-                + "공격 속도 : " + unit.attackSpeed
-                + "공격 범위 : " + unit.attackRange
-                + "이동 속도 : " + unit.moveSpeed
+            unitSpec.text = "체력 : " + unit.hitPoint + "\n"
+                + "공격력 : " + unit.power + "\n"
+                + "공격 속도 : " + unit.attackSpeed + "\n"
+                + "공격 범위 : " + unit.attackRange + "\n"
+                + "이동 속도 : " + unit.moveSpeed + "\n"
                 + "요구 레벨 : " + unit.tearNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
