@@ -61,7 +61,7 @@ public class DeckSettingController : MonoBehaviour {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
         uicontent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;
-        effectUI = transform.GetChild(5).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
+        effectUI = transform.GetChild(4).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
@@ -501,9 +501,9 @@ public class DeckSettingController : MonoBehaviour {
         if (selectbuildingStatus == null)
             return;
 
-        gameObject.transform.GetChild(4).GetChild(0).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
-        gameObject.transform.GetChild(4).GetChild(1).GetChild(1).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
-        gameObject.transform.GetChild(4).gameObject.SetActive(true);
+        gameObject.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
+        gameObject.transform.GetChild(3).GetChild(1).GetChild(1).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
+        gameObject.transform.GetChild(3).gameObject.SetActive(true);
 
     }
 
