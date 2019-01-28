@@ -90,6 +90,7 @@ public class OwnCardGenerator : MonoBehaviour {
             tier.text = card.rareity + " 등급";
             food.text = card.product.food.ToString();
             gold.text = card.product.gold.ToString();
+            env.text = card.product.environment.ToString();
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
