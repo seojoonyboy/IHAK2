@@ -25,6 +25,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Transform dummyRankBtn;
     [SerializeField] Text ingameTimer;
     [SerializeField] IngameResultManager resultManager;
+    [SerializeField] GameObject repairAlert;
 
 
     private HorizontalScrollSnap hss;
@@ -105,6 +106,7 @@ public class IngameSceneUIController : MonoBehaviour {
         playerRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "Dummy";
         dummyRankBtn.parent.GetChild(1).GetComponent<Text>().text = "Dummy";
         dummyRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = AccountManager.Instance.userInfos.nickname;
+        StartCoroutine("EnemyRepair");
     }
 
     private void Update() {
@@ -225,5 +227,17 @@ public class IngameSceneUIController : MonoBehaviour {
         IngameScoreManager.Instance.DestroySelf();
     }
 
-    
+    IEnumerator EnemyRepair() {
+        while(time > 60 && isPlaying == true) {
+            yield return new WaitForSeconds(60f);
+            repairAlert.SetActive(true);
+            StartCoroutine("DisableAlert");
+        }
+    }
+
+    IEnumerator DisableAlert() {
+        yield return new WaitForSeconds(1.5f);
+        repairAlert.SetActive(false);
+    }
+
 }
