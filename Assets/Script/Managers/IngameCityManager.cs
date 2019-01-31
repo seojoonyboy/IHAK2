@@ -30,38 +30,55 @@ public class IngameCityManager : MonoBehaviour {
     //현재 어떤 화면을 보고 있는지
     public int CurrentView;
     public ArrayList eachPlayersTileGroups = new ArrayList();
-
+    
     public UpgradeInfo
         hq_tier_1,
         hq_tier_2,
         hq_tier_3;
 
+    [Header(" - TotalHPUI")]
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
-    [SerializeField] private Sprite wreckSprite;
-    //[SerializeField] private Text maxHp;
+    [SerializeField] private GameObject enemyTotalHPGauge;
+
+    [Space(10)]
+    
+    [Header(" - TotalHPInformation")]
     [SerializeField] private int enemyTotalHP;
     [SerializeField] public int enemyCurrentTotalHP;
-    [SerializeField] private GameObject enemyTotalHPGauge;
-    [SerializeField] GameObject unactiveGroup;
+    [SerializeField] public int cityHP = 0;
+    [SerializeField] private int cityMaxHP = 0;
 
-    IngameSceneEventHandler ingameSceneEventHandler;
+    [Space(10)]  
+
+    [Header (" - ProductResource")]
     public ProductResources productResources;
-    public ProductResources unActiveResources;
-    public GameObject unactiveImage;
+    public ProductResources unActiveResources;    
 
-    public int cityHP = 0;
-    private int cityMaxHP = 0;
-    private Deck deck;
+    [Space(10)]
+
+    [Header(" - DeckInfo")]
+    [SerializeField] private Deck deck;
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
 
+    [Space(10)]
+    [Header(" - PlayerDeck")]
+    private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+    public int[] buildingList;
+
+
+    [Space(10)]
+    [Header(" - UnActive")]
+    public GameObject unactiveImage;
+    [SerializeField] GameObject unactiveGroup;
     public int unactiveBuildingIndex = 100;
     private bool unActiveAlert = false;
 
-
-    private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
-    public int[] buildingList;
+    [Space(10)]
+    [Header(" - Other")]
+    [SerializeField] private Sprite wreckSprite;
+    IngameSceneEventHandler ingameSceneEventHandler;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -131,7 +148,7 @@ public class IngameCityManager : MonoBehaviour {
         //skillDetail.args = "5,6,1,15";
         //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
         //StartCoroutine("Damage");
-        SetEnemyHP();
+        SetEnemyTotalHP();
         StartCoroutine("Repair");
     }
 
@@ -204,7 +221,7 @@ public class IngameCityManager : MonoBehaviour {
         );
     }
 
-    public bool RepairBuilding(Target target, int tileNum) {
+    public bool RepairBuilding(Target target, int tileNum) { // 고정적으로 20%회복
         switch (target) {
             case Target.ENEMY_1:
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
@@ -212,21 +229,26 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding.activate == false) return false;
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
+                //회복연산
                 float enemyMaxHP = enemyBuilding.maxHp;
                 int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.2f);
                 enemyBuilding.hp += enemyAmount;
-                enemyCurrentTotalHP += enemyAmount;
+                enemyCurrentTotalHP += enemyAmount; // 전체 체력의 회복;
 
+                //전체체력에서 오버한 체력
                 int plusHp;
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     plusHp = enemyCurrentTotalHP - enemyTotalHP;
                     enemyCurrentTotalHP -= plusHp;
                 }
+                
 
+                //회복뒤 건물 체력
                 float enemyHp = enemyBuilding.hp;
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
 
+                //회복뒤 전체 건물
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
@@ -285,18 +307,24 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding.activate == false) return false;
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
+                //회복연산
                 float enemyMaxHP = enemyBuilding.maxHp;
                 enemyBuilding.hp += amount;
                 enemyCurrentTotalHP += amount;
+
+                //오버 체력
                 int plusHp;
                 if (enemyCurrentTotalHP > enemyTotalHP) {
                     plusHp = enemyCurrentTotalHP - enemyTotalHP;
                     enemyCurrentTotalHP -= plusHp;
                 }
+
+                // 회복뒤 빌딩 체력게이지 연산
                 float enemyHp = enemyBuilding.hp;
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
 
+                // 회복뒤 전체 체력게이지 연산
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
@@ -365,7 +393,7 @@ public class IngameCityManager : MonoBehaviour {
         return true;
     }
 
-    public bool RepairDestroyBuilding(Target target, int tileNum) {
+    public bool RepairDestroyBuilding(Target target, int tileNum) { //체력 0되서 비활성화 된 체력.
         switch (target) {
             case Target.ENEMY_1:
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
@@ -374,10 +402,13 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding.gameObject.transform.parent.GetComponent<TileCollision>().check == true) return false;
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
 
+                //회복 연산
                 float enemyMaxHP = enemyBuilding.maxHp;
                 int enemyAmount = Mathf.RoundToInt(enemyMaxHP * 0.5f);
                 enemyBuilding.hp += enemyAmount;
                 enemyCurrentTotalHP += enemyAmount;
+
+                //체력게이지
                 float enemyHp = enemyBuilding.hp;
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
@@ -385,6 +416,7 @@ public class IngameCityManager : MonoBehaviour {
                 enemyBuilding.gameObject.GetComponent<SpriteRenderer>().sprite = enemyBuilding.gameObject.GetComponent<BuildingObject>().mainSprite;
                 enemyBuilding.activate = true;
 
+                //전체체력게이지
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
@@ -432,8 +464,12 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.hp <= 0) return false;
+
+                //체력감소 연산
                 enemyBuilding.hp -= amount;
                 enemyCurrentTotalHP -= amount;
+
+                //0에서 추가로 들어온 건물데미지만큼 전체 체력 회복;
                 int minusHp;
                 if (enemyBuilding.hp < 0) {
                     minusHp = 0 - enemyBuilding.hp;
@@ -442,6 +478,7 @@ public class IngameCityManager : MonoBehaviour {
                 float enemyHp = enemyBuilding.hp;
                 float enemyMaxHp = enemyBuilding.maxHp;
 
+                //전체 체력게이지 연산
                 float totalHp = enemyCurrentTotalHP;
                 float totalMaxHp = enemyTotalHP;
                 float percent = totalHp / totalMaxHp;
@@ -740,7 +777,7 @@ public class IngameCityManager : MonoBehaviour {
     }
     */
 
-    public void SetEnemyHP() {
+    public void SetEnemyTotalHP() {
         for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
             BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == i);
             if (enemyBuilding == null) continue;

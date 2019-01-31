@@ -35,8 +35,8 @@ public class DropHandler : MonoBehaviour {
 
             if (targetTile.GetComponent<TileObject>().buildingSet == false && targetTile != null) {
                 //if (setObject.GetComponent<BuildingObject>().data.card.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
-                if (1 - deckSettingController.BuildingCount(setObject) > 0) {
-                    if (targetTile.GetComponent<TileObject>().Tier == AccountManager.Instance.userTier) {
+                if (1 - deckSettingController.OnTileBuildingCount(setObject) > 0) {
+                    if (targetTile.GetComponent<TileObject>().Tier <= AccountManager.Instance.userTier) {
                         GameObject selectBuilding = Instantiate(setObject);
                         int tileNum = targetTile.GetComponent<TileObject>().tileNum;
                         transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = setObject.GetComponent<BuildingObject>().data.id;
@@ -53,7 +53,7 @@ public class DropHandler : MonoBehaviour {
 
                         if (slot != null) {
                             //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
-                            int count = 1 - deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject);
+                            int count = 1 - deckSettingController.OnTileBuildingCount(slot.GetComponent<DragHandler>().setObject);
                             if (count == 0) {                                                                
                                 slot.GetComponent<Image>().color = Color.gray;
                                 slot.transform.GetChild(0).GetComponent<Image>().color = Color.gray;

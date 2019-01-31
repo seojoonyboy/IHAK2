@@ -11851,37 +11851,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea60027bb4dcb44b99048120adb55a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGroup: {fileID: 0}
   togglePref: {fileID: 1402426340390542, guid: 672bcc4d6c06c6947ac027f262dc967e, type: 2}
   chooseSpeciesBtn: {fileID: 331431735}
   speciesConfirmBtn: {fileID: 1646890065}
   deleteButton: {fileID: 355703677}
   modal: {fileID: 780269801}
+  cardsContent: {fileID: 0}
+  activeSlotUI: {fileID: 0}
+  resetButton: {fileID: 1856610770}
+  modalHeader: {fileID: 475413629}
+  content: {fileID: 74268605}
   speciesPortraits:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  uicontent: {fileID: 0}
-  effectUI: {fileID: 0}
-  deckListController: {fileID: 0}
+  tileGroup: {fileID: 0}
   tileSetList: 
-  resetButton: {fileID: 1856610770}
-  reset: 0
-  modify: 0
   selectBuilding: {fileID: 0}
   selectbuildingStatus: {fileID: 0}
   targetTile: {fileID: 0}
   startEditPosition: {x: 0, y: 0, z: 0}
   picking: 0
   sortOrder: 0
-  modalHeader: {fileID: 475413629}
-  content: {fileID: 74268605}
+  reset: 0
+  modify: 0
+  saveBtnClick: 0
   sliders:
   - {fileID: 1681351635}
   - {fileID: 1019890540}
   - {fileID: 2106643451}
   - {fileID: 864193329}
-  saveBtnClick: 0
 --- !u!1 &1915366578
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     float camMagnification;
     Camera cam;
     public bool canDrag = false;
-    public GameObject deckSettingController;
+    public DeckSettingController deckSettingController;
     public AccountManager accountManager;
 
     public void BeginDrag() {
@@ -26,13 +26,13 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
-        deckSettingController = transform.parent.parent.parent.parent.gameObject;
+        deckSettingController = DeckSettingController.Instance;
         GetComponent<LongClickButton>().onShortClick.AddListener(() => Debug.Log("Short Button Click"));
         accountManager = AccountManager.Instance;
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
-        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) return;
+        if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         dropHandler.setObject = setObject;
         startPosition = transform.position;        
@@ -57,12 +57,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
-        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) > 0) {
+        if (1 - deckSettingController.OnTileBuildingCount(setObject) > 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
             transform.GetChild(1).GetComponent<Text>().color = Color.white;
             transform.GetChild(2).GetComponent<Text>().color = Color.white;
         }
-        else if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) {
+        else if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.gray;
             transform.GetChild(1).GetComponent<Text>().color = Color.gray;
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;
@@ -70,7 +70,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (1 - deckSettingController.GetComponent<DeckSettingController>().BuildingCount(setObject) <= 0) return;
+        if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
@@ -79,7 +79,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         if (hit.collider != null) {
             if(hit.collider.tag == "Tile") {
                 GameObject tile = hit.transform.gameObject;
-                if (accountManager.userTier == tile.GetComponent<TileObject>().Tier) {
+                if (accountManager.userTier >= tile.GetComponent<TileObject>().Tier) {
 
                     transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
                     transform.position = cam.WorldToScreenPoint(tile.transform.position);
@@ -89,7 +89,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
                     transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
 
                     if (tile.GetComponent<TileObject>().buildingSet == false) {
-                        if (AccountManager.Instance.userTier == tile.GetComponent<TileObject>().Tier)
+                        if (AccountManager.Instance.userTier >= tile.GetComponent<TileObject>().Tier)
                             transform.GetChild(0).GetComponent<Image>().color = Color.green;   //slot => Data;
                         else
                             transform.GetChild(0).GetComponent<Image>().color = Color.red;

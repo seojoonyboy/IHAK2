@@ -16,8 +16,11 @@ public class AccountManager : Singleton<AccountManager> {
     private NetworkManager _networkManager;
     MenuSceneEventHandler eventHandler;
 
+    [Header(" - UserDeck")]
     public GameObject deckGroup;
     public GameObject defaultTileGroup;
+    public int userTier = 0;
+    public int selectNumber;
 
     private string deviceID;
     public GameSceneManager.SceneState scenestate;
@@ -35,6 +38,7 @@ public class AccountManager : Singleton<AccountManager> {
         public Card cards;
         public List<Deck> decks;
     }
+    [Header(" - DeckList")]
     public List<Deck> decks = new List<Deck>();
 
     public int Exp { get; set; }
@@ -42,7 +46,7 @@ public class AccountManager : Singleton<AccountManager> {
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
     public int leaderIndex { get; set; }
-    public int userTier = 0;
+    
 
     private Wallet wallet;
 
@@ -51,9 +55,7 @@ public class AccountManager : Singleton<AccountManager> {
     private Deck tmpData = null;
     private GameObject tmpObj;
 
-    [SerializeField]
-    public List<int> selectDeck;
-    public int selectNumber;
+    
     
     void Awake() {
         DontDestroyOnLoad(gameObject);
