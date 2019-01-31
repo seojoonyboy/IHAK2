@@ -40,7 +40,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     
     [Header(" - EditingBuilding")]
     [SerializeField] public GameObject selectBuilding;
-    [SerializeField] public GameObject selectbuildingStatus;
+    [SerializeField] public GameObject saveSelectBuilding;
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
     [SerializeField] public bool picking = false;
@@ -332,7 +332,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
-                selectbuildingStatus = selectBuilding;
+                saveSelectBuilding = selectBuilding;
                 sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                 if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
@@ -341,7 +341,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             else if (hit.collider.tag == "Tile") {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
-                    selectbuildingStatus = selectBuilding;
+                    saveSelectBuilding = selectBuilding;
                     sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                     if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
@@ -471,14 +471,14 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void DeleteBuilding() {
-        if (selectbuildingStatus == null)
+        if (saveSelectBuilding == null)
             return;
 
-        if (selectbuildingStatus.GetComponent<BuildingObject>().data.id == -1)
+        if (saveSelectBuilding.GetComponent<BuildingObject>().data.id == -1)
             return;
 
-        GameObject slot = FindCard(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
-        int count = 1 - OnTileBuildingCount(selectbuildingStatus);
+        GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().data.id);
+        int count = 1 - OnTileBuildingCount(saveSelectBuilding);
         count++;
 
         if(count > 0) {
@@ -491,29 +491,29 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
         slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
 
-        GameObject ActiveSkillUISlot = FindActiveSlot(selectbuildingStatus.GetComponent<BuildingObject>().data.id);
+        GameObject ActiveSkillUISlot = FindActiveSlot(saveSelectBuilding.GetComponent<BuildingObject>().data.id);
         if(ActiveSkillUISlot != null) {
             ClearActiveSlot(ActiveSkillUISlot);
         }
 
 
 
-        Cost cost = selectbuildingStatus.GetComponent<BuildingObject>().data.card.product;
+        Cost cost = saveSelectBuilding.GetComponent<BuildingObject>().data.card.product;
         MinusSliderValue(cost);
 
-        tileSetList[selectbuildingStatus.transform.parent.GetComponent<TileObject>().tileNum] = 0;
-        selectbuildingStatus.transform.parent.GetComponent<TileObject>().buildingSet = false;
+        tileSetList[saveSelectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+        saveSelectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
-        Destroy(selectbuildingStatus);
+        Destroy(saveSelectBuilding);
     }
 
     public void ShowBuildingStatus() {
         //오른쪽 위에 빌딩 정보를 띄우는 함수
-        if (selectbuildingStatus == null)
+        if (saveSelectBuilding == null)
             return;
 
-        gameObject.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
-        gameObject.transform.GetChild(3).GetChild(1).GetChild(1).GetComponent<Text>().text = selectbuildingStatus.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
+        gameObject.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
+        gameObject.transform.GetChild(3).GetChild(1).GetChild(1).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
         gameObject.transform.GetChild(3).gameObject.SetActive(true);
 
     }
