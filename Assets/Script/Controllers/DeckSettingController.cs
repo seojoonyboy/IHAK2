@@ -44,7 +44,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public GameObject targetTile;
     [SerializeField] public Vector3 startEditPosition;
     [SerializeField] public bool picking = false;
-    [SerializeField] public int sortOrder = 0;
+    [SerializeField] public int startSortingOrder = 0;
 
     [Header(" - Flag")]
     [SerializeField] public bool reset = false;
@@ -333,7 +333,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
                 saveSelectBuilding = selectBuilding;
-                sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
+                startSortingOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                 if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
 
@@ -342,7 +342,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     saveSelectBuilding = selectBuilding;
-                    sortOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
+                    startSortingOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
                     if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
                 }
@@ -450,7 +450,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
             else {
                 selectBuilding.transform.position = startEditPosition;
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
+                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = startSortingOrder;
             }
         }
         else {
@@ -458,7 +458,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (picking == true)
                 DeleteBuilding();
             else {
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
+                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = startSortingOrder;
                 selectBuilding.transform.position = startEditPosition;
             }
         }
@@ -503,7 +503,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         tileSetList[saveSelectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         saveSelectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
-        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
         Destroy(saveSelectBuilding);
     }
 
