@@ -69,7 +69,7 @@ public class IngameSceneUIController : MonoBehaviour {
     private void OnDataCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             if(response.data != null) {
-                DeckDetail deckDetail = JsonConvert.DeserializeObject<DeckDetail>(response.data.ToString());
+                DeckDetail deckDetail = JsonReader.Read<DeckDetail>(response.data.ToString());
 
                 ProductResources touchPower = deckDetail.productResources;
                 playerCity.GetComponent<IngameCityManager>().productResources = touchPower;
