@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace DataModules {
     [System.Serializable]
-    public class Building : CardFromServerData { }
+    public class Building {
+        public int id;
+        public Card card;
+    }
 
     [System.Serializable]
     public class Card {
@@ -71,10 +74,5 @@ namespace DataModules {
         public int id;
         public string methodName;
         public string args;
-    }
-
-    public class CardFromServerData {
-        public int id;
-        public Card card;
     }
 }

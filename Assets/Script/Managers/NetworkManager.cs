@@ -38,6 +38,7 @@ public class NetworkManager : Singleton<NetworkManager> {
                 _www = UnityWebRequest.Get(url);
                 break;
         }
+        _www.timeout = 10;
 
         if (needAuthor) {
             //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
@@ -45,7 +46,7 @@ public class NetworkManager : Singleton<NetworkManager> {
         }
 
         using(UnityWebRequest www = _www){
-            yield return www.Send();
+            yield return www.SendWebRequest();
             callback(new HttpResponse(www));
         }
     }
@@ -69,6 +70,7 @@ public class NetworkManager : Singleton<NetworkManager> {
                 _www = UnityWebRequest.Get(url);
                 break;
         }
+        _www.timeout = 10;
 
         if (needAuthor) {
             //_www.SetRequestHeader("Authorization", "Token " + GameManager.Instance.userStore.userTokenId);
@@ -76,7 +78,7 @@ public class NetworkManager : Singleton<NetworkManager> {
         }
 
         using (UnityWebRequest www = _www) {
-            yield return www.Send();
+            yield return www.SendWebRequest();
             callback(new HttpResponse(www));
         }
     }

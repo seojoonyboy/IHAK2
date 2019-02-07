@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using DataModules;
 using System.Linq;
 using System;
@@ -11,7 +10,7 @@ using System.Text;
 using Spine.Unity;
 
 
-public class AccountManager : Singleton<AccountManager> {
+public partial class AccountManager : Singleton<AccountManager> {
     protected AccountManager() { }
     private NetworkManager _networkManager;
     MenuSceneEventHandler eventHandler;
@@ -21,8 +20,6 @@ public class AccountManager : Singleton<AccountManager> {
     public GameObject defaultTileGroup;
     public int userTier = 0;
     public int selectNumber;
-
-    private string deviceID;
     public GameSceneManager.SceneState scenestate;
 
     public class UserClassInput {
@@ -55,13 +52,11 @@ public class AccountManager : Singleton<AccountManager> {
     private Deck tmpData = null;
     private GameObject tmpObj;
 
-    
-    
     void Awake() {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
-        deviceID = SystemInfo.deviceUniqueIdentifier;
+        DEVICEID = SystemInfo.deviceUniqueIdentifier;
 
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
@@ -82,9 +77,7 @@ public class AccountManager : Singleton<AccountManager> {
         Debug.Log(Lv);
     }
 
-    public string DEVICEID {
-        get { return deviceID; }
-    }
+    public string DEVICEID { get; private set; }
 
     public void ReqUserInfo() {
         sb.Remove(0, sb.Length);
@@ -93,16 +86,18 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void ReqUserInfoCallback(HttpResponse response) {
         //Server의 Wallet 정보 할당
-        if (response.responseCode == 200) {
-            GetUserInfo();
-            Debug.Log("저장 성공");            
-        }
-        else if (response.responseCode == 400) {
-            Debug.Log("저장 실패");
+        if (response.responseCode != 200) {
+            if (response.responseCode == 400) {
+                Debug.Log("저장 실패");
+            }
+            else {
+                Debug.Log("알 수 없는 Server 오류");
+                Debug.Log(response.responseCode);
+            }
         }
         else {
-            Debug.Log("알 수 없는 Server 오류");
-            Debug.Log(response.responseCode);
+            GetUserInfo();
+            Debug.Log("저장 성공");
         }
     }
 
@@ -114,185 +109,11 @@ public class AccountManager : Singleton<AccountManager> {
         return wallet.jewel;
     }
 
-    public void ChangeGoldAmnt(int amount = 0) {
-        //sb.Remove(0, sb.Length);
-        //sb.Append(_networkManager.baseUrl).Append(amount);
-        //_networkManager.request("POST", sb.ToString(), OnChangeGold);
-    }
-
-    private void OnChangeGold(HttpResponse response) {
-        //wallet.gold = 
-        //EventHandler PostNotification 발생
-    }
-
-    public void RemoveDeck(int id, GameObject obj) {
-        Deck deck = decks.Find(x => x.id == id);
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks/")
-            .Append(id);
-        tmpObj = obj;
-        if (deck != null) {
-            if(decks.Count == 1) {
-                Modal.instantiate("덱이 하나밖에 없어 제거할 수 없습니다.", Modal.Type.CHECK);
-            }
-            else if(deck.isRepresent) {
-                Modal.instantiate("대표 덱은 삭제할 수 없습니다.", Modal.Type.CHECK);
-            }
-            else {
-                _networkManager.request("DELETE", url.ToString(), RemoveComplete);
-            }
-        }
-    }
-
-    private void RemoveComplete(HttpResponse response) {
-        if(response.responseCode == 200) {
-            if(tmpObj != null) {
-                int slotNum = tmpObj.transform.parent.GetComponent<Index>().Id;
-                Destroy(transform.GetChild(0).GetChild(slotNum).gameObject);
-                Instantiate(defaultTileGroup, transform.GetChild(0)).SetActive(false);
-            }
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
-        }
-    }
-
-    public void AddDeck(Deck deck) {
-        DeckPostForm form = new DeckPostForm();
-        form.Name = deck.name;
-        form.Race = "primal";
-        form.IsRepresent = false;
-        form.CoordsSerial = deck.coordsSerial;
-        var dataPack = JsonConvert.SerializeObject(form);
-
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks");
-        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
-    }
-
-    public void ModifyDeck(Deck deck) {
-        ModifyDeckPostForm form = new ModifyDeckPostForm();
-        form.Id = deck.id;
-        Debug.Log(deck.id);
-        form.Name = deck.name;
-        form.Race = "primal";
-        form.IsRepresent = deck.isRepresent;
-        form.CoordsSerial = deck.coordsSerial;
-        var dataPack = JsonConvert.SerializeObject(form);
-
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks/")
-            .Append(deck.id.ToString());
-        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), ModifyDeckCallback);
-
-        tmpData = deck;
-    }
-
-    public void GetDeckDetail(int id) {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks/")
-            .Append(id.ToString());
-        _networkManager.request("GET", url.ToString(), GetDetailDeckCallback, false);
-    }
-
-    private void GetDetailDeckCallback(HttpResponse response) {
-        if (response.responseCode == 200) {
-            if (response.data != null) {
-                DeckDetail deck = JsonReader.Read<DeckDetail>(response.data.ToString());
-                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, deck.productResources);
-            }
-        }
-    }
-
-    public void ChangeLeaderDeck(int id) {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/decks/change_represent/")
-            .Append(id.ToString());
-        WWWForm form = new WWWForm();
-        _networkManager.request("PUT", url.ToString(), "asd", ChangeLeaderDeckCallback);
-    }
-
-    private void ChangeLeaderDeckCallback(HttpResponse response) {
-        if (response.responseCode == 200) {
-            if (response.data != null) {
-                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
-            }
-            else {
-                decks = new List<Deck>();
-            }
-            SetBuildingToTiles();
-            SetTileGroups(ref decks);
-
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
-        }
-    }
-
-    private void AddDeckCallback(HttpResponse response) {
-        if (response.responseCode != 200) return;
-        Deck deck = JsonReader.Read<Deck>(response.data);
-        decks.Add(deck);
-        
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
-    }
-
-    private void ModifyDeckCallback(HttpResponse response) {
-        if (response.responseCode != 200 || tmpData == null) return;
-
-        Deck deck = decks.Find(x => x.id == tmpData.id);
-        deck.name = tmpData.name;
-        deck.coordsSerial = tmpData.coordsSerial;
-        deck.coords = tmpData.coords;
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
-    }
-
-    public Deck FindDeck(int id) {
-        Deck deck = decks.Find(x => x.id == id);
-        return deck;
-    }
-
     public void GetUserInfo() {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + DEVICEID);
         _networkManager.request("GET", url.ToString(), OnUserReqCallback, false);
-    }
-
-    private void OnMyDeckLoaded(HttpResponse response) {
-        if (response.responseCode == 200) {
-            if(response.data != null) {
-                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
-            }
-            else {
-                decks = new List<Deck>();
-            }
-            SetBuildingToTiles();
-            foreach(Deck deck in decks) {
-                if (deck.isRepresent) {
-                    IngameSceneUIController.deckId = deck.id;
-                }
-            }
-            SetTileGroups(ref decks);
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
-        }
-        else if (response.responseCode == 404) {
-            Debug.Log("페이지를 찾을 수 없습니다");
-        }
-        else {
-            Debug.Log("알 수 없는 Server 오류");
-        }        
     }
 
     private void OnUserReqCallback(HttpResponse response) {
@@ -334,7 +155,6 @@ public class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
-
         //eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, leaderIndex);
     }
 
@@ -407,7 +227,6 @@ public class AccountManager : Singleton<AccountManager> {
         animation.skeleton.SetAttachment("tile", null);
         animation.AnimationState.SetAnimation(0, animation.skeleton.Data.Animations.First(), true);
     }
-
 
     public void SetTileObjects(int num) {
         if (decks == null)
@@ -515,7 +334,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void SetUserReqData(string inputText) {
         UserClassInput userInfo = new UserClassInput();
         userInfo.nickname = inputText;
-        userInfo.deviceId = deviceID;
+        userInfo.deviceId = DEVICEID;
         string json = JsonUtility.ToJson(userInfo);
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
@@ -562,5 +381,173 @@ public class AccountManager : Singleton<AccountManager> {
         미드레인지,
         OTK,
         빅
+    }
+}
+
+/// <summary>
+/// 플레이어 덱 관련 처리
+/// </summary>
+public partial class AccountManager {
+    public void RemoveDeck(int id, GameObject obj) {
+        Deck deck = decks.Find(x => x.id == id);
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(id);
+        tmpObj = obj;
+        if (deck != null) {
+            if (decks.Count == 1) {
+                Modal.instantiate("덱이 하나밖에 없어 제거할 수 없습니다.", Modal.Type.CHECK);
+            }
+            else if (deck.isRepresent) {
+                Modal.instantiate("대표 덱은 삭제할 수 없습니다.", Modal.Type.CHECK);
+            }
+            else {
+                _networkManager.request("DELETE", url.ToString(), RemoveComplete);
+            }
+        }
+    }
+
+    private void RemoveComplete(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (tmpObj != null) {
+                int slotNum = tmpObj.transform.parent.GetComponent<Index>().Id;
+                Destroy(transform.GetChild(0).GetChild(slotNum).gameObject);
+                Instantiate(defaultTileGroup, transform.GetChild(0)).SetActive(false);
+            }
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
+        }
+    }
+
+    public void AddDeck(Deck deck) {
+        DeckPostForm form = new DeckPostForm();
+        form.Name = deck.name;
+        form.Race = "primal";
+        form.IsRepresent = false;
+        form.CoordsSerial = deck.coordsSerial;
+        var dataPack = JsonConvert.SerializeObject(form);
+
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks");
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
+    }
+
+    public void ModifyDeck(Deck deck) {
+        ModifyDeckPostForm form = new ModifyDeckPostForm();
+        form.Id = deck.id;
+        Debug.Log(deck.id);
+        form.Name = deck.name;
+        form.Race = "primal";
+        form.IsRepresent = deck.isRepresent;
+        form.CoordsSerial = deck.coordsSerial;
+        var dataPack = JsonConvert.SerializeObject(form);
+
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(deck.id.ToString());
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), ModifyDeckCallback);
+
+        tmpData = deck;
+    }
+
+    public void GetDeckDetail(int id) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(id.ToString());
+        _networkManager.request("GET", url.ToString(), GetDetailDeckCallback, false);
+    }
+
+    private void GetDetailDeckCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                DeckDetail deck = JsonReader.Read<DeckDetail>(response.data.ToString());
+                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, deck.productResources);
+            }
+        }
+    }
+
+    public void ChangeLeaderDeck(int id) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/change_represent/")
+            .Append(id.ToString());
+        WWWForm form = new WWWForm();
+        _networkManager.request("PUT", url.ToString(), "asd", ChangeLeaderDeckCallback);
+    }
+
+    private void ChangeLeaderDeckCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
+            }
+            else {
+                decks = new List<Deck>();
+            }
+            SetBuildingToTiles();
+            SetTileGroups(ref decks);
+
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
+        }
+    }
+
+    private void AddDeckCallback(HttpResponse response) {
+        if (response.responseCode != 200) return;
+        Deck deck = JsonReader.Read<Deck>(response.data);
+        decks.Add(deck);
+
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
+    }
+
+    private void ModifyDeckCallback(HttpResponse response) {
+        if (response.responseCode != 200 || tmpData == null) return;
+
+        Deck deck = decks.Find(x => x.id == tmpData.id);
+        deck.name = tmpData.name;
+        deck.coordsSerial = tmpData.coordsSerial;
+        deck.coords = tmpData.coords;
+        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
+    }
+
+    public Deck FindDeck(int id) {
+        Deck deck = decks.Find(x => x.id == id);
+        return deck;
+    }
+
+    private void OnMyDeckLoaded(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
+            }
+            else {
+                decks = new List<Deck>();
+            }
+            SetBuildingToTiles();
+            foreach (Deck deck in decks) {
+                if (deck.isRepresent) {
+                    IngameSceneUIController.deckId = deck.id;
+                }
+            }
+            SetTileGroups(ref decks);
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
+        }
+        else if (response.responseCode == 404) {
+            Debug.Log("페이지를 찾을 수 없습니다");
+        }
+        else {
+            Debug.Log("알 수 없는 Server 오류");
+        }
     }
 }
