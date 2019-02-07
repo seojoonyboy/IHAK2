@@ -208,7 +208,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void GetDetailDeckCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             if (response.data != null) {
-                DeckDetail deck = JsonConvert.DeserializeObject<DeckDetail>(response.data.ToString());
+                DeckDetail deck = JsonReader.Read<DeckDetail>(response.data.ToString());
                 MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, deck.productResources);
             }
         }
@@ -228,7 +228,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void ChangeLeaderDeckCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             if (response.data != null) {
-                decks = JsonReader.Read(response.data.ToString(), new Deck());
+                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
             }
             else {
                 decks = new List<Deck>();
@@ -242,7 +242,7 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void AddDeckCallback(HttpResponse response) {
         if (response.responseCode != 200) return;
-        Deck deck =  JsonConvert.DeserializeObject<Deck>(response.data);
+        Deck deck = JsonReader.Read<Deck>(response.data);
         decks.Add(deck);
         
         MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
@@ -273,7 +273,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void OnMyDeckLoaded(HttpResponse response) {
         if (response.responseCode == 200) {
             if(response.data != null) {
-                decks = JsonReader.Read(response.data.ToString(), new Deck());
+                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
             }
             else {
                 decks = new List<Deck>();
@@ -298,7 +298,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void OnUserReqCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             Modal.instantiate("로그인 되었습니다.", Modal.Type.CHECK, () => {
-                userInfos = JsonConvert.DeserializeObject<UserClass>(response.data);
+                userInfos = JsonReader.Read<UserClass>(response.data);
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
                 ConstructManager.Instance.SetAllBuildings();
