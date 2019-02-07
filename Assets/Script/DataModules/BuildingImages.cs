@@ -26,15 +26,15 @@ public class BuildingImages : MonoBehaviour {
             Card card = bo.data.card;
             bo.mainSprite = GetImage(card.race, card.type, card.id);
             bo.icon = GetIcon(card.race, card.type, card.id);
-            bo.spine = null;//GetSpine(card.race, card.type, card.id);
+            bo.spine = GetSpine(card.race, card.type, card.id);
 
             if(bo.spine == null) { 
                 SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
                 sprite.sprite = bo.mainSprite;
             }
             else {
-                SkeletonAnimation animation = obj.AddComponent<SkeletonAnimation>();
-                animation.skeletonDataAsset = bo.spine;
+                obj.AddComponent<SkeletonAnimation>();
+                obj.AddComponent<TileSpineAnimation>();
             }
         }
     }
@@ -63,6 +63,7 @@ public class BuildingImages : MonoBehaviour {
                 else return null;
                 foreach (SkeletonDataAsset spine in spines) {
                     if (spine.name == id) {
+                        spine.GetSkeletonData(false);
                         return spine;
                     }
                 }

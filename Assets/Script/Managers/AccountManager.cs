@@ -199,7 +199,6 @@ public partial class AccountManager : Singleton<AccountManager> {
                     }
                     else {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                        StartCoroutine(SetAnimation(setBuild.GetComponent<SkeletonAnimation>()));
                     }
                     Card card = buildingObject.data.card;
                     if(card.unit.id != 0) tileGroup.units.Add(card.unit);
@@ -211,12 +210,6 @@ public partial class AccountManager : Singleton<AccountManager> {
                 }
             }
         }
-    }
-
-    IEnumerator SetAnimation(SkeletonAnimation animation) {
-        yield return new WaitForSeconds(1f);
-        animation.skeleton.SetAttachment("tile", null);
-        animation.AnimationState.SetAnimation(0, animation.skeleton.Data.Animations.First(), true);
     }
 
     public void SetTileObjects(int num) {
