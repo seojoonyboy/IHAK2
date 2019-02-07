@@ -62,19 +62,10 @@ public partial class AccountManager : Singleton<AccountManager> {
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
     }
 
-    private void OnDeckListChanged(Enum Event_Type, Component Sender, object Param) {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/" + DEVICEID + "/decks");
-        _networkManager.request("GET", url.ToString(), OnMyDeckLoaded, false);
-    }
-
     private void Start() {
         //deviceID = "11231234";
         if (deckGroup != null)
             Instantiate(deckGroup, transform);
-
-        Debug.Log(Lv);
     }
 
     public string DEVICEID { get; private set; }
@@ -374,6 +365,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// 플레이어 덱 관련 처리
 /// </summary>
 public partial class AccountManager {
+    private void OnDeckListChanged(Enum Event_Type, Component Sender, object Param) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/" + DEVICEID + "/decks");
+        _networkManager.request("GET", url.ToString(), OnMyDeckLoaded, false);
+    }
+
     public void RemoveDeck(int id, GameObject obj) {
         Deck deck = decks.Find(x => x.id == id);
         StringBuilder url = new StringBuilder();
