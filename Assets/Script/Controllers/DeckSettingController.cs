@@ -37,7 +37,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [Header(" - TileGroup")]
     [SerializeField] public GameObject tileGroup;
     [SerializeField] public List<int> tileSetList;
-    
+    [SerializeField] public int tileCount = 0;
+
     [Header(" - EditingBuilding")]
     [SerializeField] public GameObject selectBuilding;
     [SerializeField] public GameObject saveSelectBuilding;
@@ -81,6 +82,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         var upStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0));
         playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
         tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
+        tileCount = tileGroup.transform.childCount - 1;
         TilebuildingList();
         CheckCardCount();
         ResetActiveSlot();
@@ -227,7 +229,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         prevData = null;
 
         if (reset == false) {
-            for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+            for (int i = 0; i < tileCount; i++) {
                 if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
                     if (tileGroup.transform.GetChild(i).childCount != 0) {
                         Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
@@ -286,7 +288,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void TilebuildingList() {
-        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+        for (int i = 0; i < tileCount; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
             else
@@ -295,8 +297,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void resetTile() {
-        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
-            if (i == (tileGroup.transform.childCount - 1) / 2)
+        for (int i = 0; i < tileCount; i++) {
+            if (i == tileCount / 2)
                 continue;
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 /*
@@ -526,7 +528,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return count;
 
 
-        for (int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+        for (int i = 0; i < tileCount; i++) {
             if (tileGroup.transform.GetChild(i).childCount != 0) {
                 GameObject compareObject = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
 
@@ -650,7 +652,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         int count = 0;
         bool setComplete = false;
 
-        for(int i = 0; i< tileGroup.transform.childCount - 1; i++) {
+        for(int i = 0; i< tileCount; i++) {
             if (tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet)
                 count++;
         }
@@ -667,7 +669,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     public void DeckActiveCheck() {
         //건물의 액티브 스킬(현재는 start()에서 활용)
         int slotNum = 0;
-        for(int i = 0; i < tileGroup.transform.childCount - 1; i++) {
+        for(int i = 0; i < tileCount; i++) {
             GameObject tile = tileGroup.transform.GetChild(i).gameObject;
             if (tile.GetComponent<TileObject>().buildingSet == true && tile.transform.childCount == 1) {
                 GameObject building = tile.transform.GetChild(0).gameObject;

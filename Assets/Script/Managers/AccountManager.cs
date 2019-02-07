@@ -346,24 +346,28 @@ public class AccountManager : Singleton<AccountManager> {
             return;
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
+        GameObject targetTile;
         GameObject targetBuilding;
 
         for (int i = 0; i < decks.Count; i++) {
             TileGroup tileGroup = transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
+            int tileCount = transform.GetChild(0).GetChild(i).childCount - 1;
+
             tileGroup.units = new List<Unit>();
             tileGroup.activeSkills = new List<Skill>();
 
-            for (int j = 0; j < transform.GetChild(0).GetChild(i).childCount - 1; j++) {
+            for (int j = 0; j < tileCount; j++) {                
+                targetTile = transform.GetChild(0).GetChild(i).GetChild(j).gameObject;
                 //HQ 설정
-                if (j == (transform.GetChild(0).GetChild(i).childCount - 1)/2) {
+                if (j == tileCount / 2) {
                     targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                    if (targetBuilding != null && transform.GetChild(0).GetChild(i).GetChild(j).childCount == 0) {
-                        GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
-                        transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
-                        setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
-                        setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
+                    if (targetBuilding != null && targetTile.transform.childCount == 0) {
+                        GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+                        targetTile.GetComponent<TileObject>().buildingSet = true;
+                        setBuild.transform.position = targetTile.transform.position;
+                        setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                         setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
                     continue;
                 }
@@ -371,19 +375,19 @@ public class AccountManager : Singleton<AccountManager> {
                 //그 외
                 if (targetBuilding != null) {
                     
-                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(i).GetChild(j));
+                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
 
-                    transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = transform.GetChild(0).GetChild(i).GetChild(j).position;
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = targetTile.transform.position;
 
                     BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
-                    buildingObject.setTileLocation = transform.GetChild(0).GetChild(i).GetChild(j).GetComponent<TileObject>().tileNum;
+                    buildingObject.setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                     if(setBuild.GetComponent<SpriteRenderer>() != null) {
                         setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
                     else {
-                        setBuild.GetComponent<MeshRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                        setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                         StartCoroutine(SetAnimation(setBuild.GetComponent<SkeletonAnimation>()));
                     }
                     Card card = buildingObject.data.card;
@@ -412,17 +416,20 @@ public class AccountManager : Singleton<AccountManager> {
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
         GameObject targetBuilding;
+        GameObject targetTile;
+        int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
 
-        for (int i = 0; i < transform.GetChild(0).GetChild(num).childCount - 1; i++) {
-            if (i == (transform.GetChild(0).GetChild(num).childCount  - 1) / 2) {
+        for (int i = 0; i < tileCount; i++) {
+            targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
+            if (i == tileCount / 2) {
                 targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                if (targetBuilding != null && transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0) {
-                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
-                    transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
+                if (targetBuilding != null && targetTile.transform.childCount == 0) {
+                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = targetTile.transform.position;
+                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
                 }
                 continue;
@@ -430,12 +437,12 @@ public class AccountManager : Singleton<AccountManager> {
 
             targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
             if (targetBuilding != null) {
-                GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
-                transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-                setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
-                setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
+                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+                targetTile.GetComponent<TileObject>().buildingSet = true;
+                setBuild.transform.position = targetTile.transform.position;
+                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                 setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                 setBuild.AddComponent<LayoutGroup>();
             }
         }
@@ -451,42 +458,46 @@ public class AccountManager : Singleton<AccountManager> {
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
         GameObject targetBuilding;
+        GameObject targetTile;
+        int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
 
-        for (int i = 0; i < transform.GetChild(0).GetChild(num).childCount - 1; i++) {
-            if (i == (transform.GetChild(0).GetChild(num).childCount - 1) / 2) {
+        for (int i = 0; i < tileCount; i++) {
+            targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
+
+            if (i == tileCount / 2) {
                 targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                if (targetBuilding != null && transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0) {
-                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
-                    transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
+                if (targetBuilding != null && targetTile.transform.childCount == 0) {
+                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = targetTile.transform.position;
+                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
                 }
                 continue;
             }
 
 
-            if (decks[num].coordsSerial[i] != 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount == 0) {
+            if (decks[num].coordsSerial[i] != 0 && targetTile.transform.childCount == 0) {
                 targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
                 if (targetBuilding != null) {
-                    GameObject setBuild = Instantiate(targetBuilding, transform.GetChild(0).GetChild(num).GetChild(i));
-                    transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = transform.GetChild(0).GetChild(num).GetChild(i).position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().tileNum;
+                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+                    targetTile.GetComponent<TileObject>().buildingSet = true;
+                    setBuild.transform.position = targetTile.transform.position;
+                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = (setBuild.transform.parent.parent.childCount - 1) * 2 - setBuild.transform.parent.GetComponent<TileObject>().tileNum;
+                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     setBuild.AddComponent<LayoutGroup>();
                 }
             }
-            else if (decks[num].coordsSerial[i] == 0 && transform.GetChild(0).GetChild(num).GetChild(i).childCount != 0)
-                Destroy(transform.GetChild(0).GetChild(num).GetChild(i).GetChild(0).gameObject);
+            else if (decks[num].coordsSerial[i] == 0 && targetTile.transform.childCount != 0)
+                Destroy(targetTile.transform.GetChild(0).gameObject);
             if (decks[num].coordsSerial[i] != 0) {
-                transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = true;
+                targetTile.GetComponent<TileObject>().buildingSet = true;
             }
             else if (decks[num].coordsSerial[i] <= 0)
-                transform.GetChild(0).GetChild(num).GetChild(i).GetComponent<TileObject>().buildingSet = false;
+                targetTile.GetComponent<TileObject>().buildingSet = false;
         }
     }
 
@@ -531,14 +542,17 @@ public class AccountManager : Singleton<AccountManager> {
     public void SetHQ(int num) {
 
         GameObject targetbuilding = FindObjectOfType<ConstructManager>().townCenter;
-        if (transform.GetChild(0).GetChild(num).GetChild((transform.GetChild(0).GetChild(num).childCount -1) / 2).childCount == 0) {
+        GameObject targetTileGroup = transform.GetChild(0).GetChild(num).gameObject;
+        int tileCount = targetTileGroup.transform.childCount - 1;
+
+        if (targetTileGroup.transform.GetChild(tileCount / 2).childCount == 0) {
             if(targetbuilding != null) {
-                GameObject targetTile = transform.GetChild(0).GetChild(num).GetChild((transform.GetChild(0).GetChild(num).childCount - 1) / 2).gameObject;
+                GameObject targetTile = targetTileGroup.transform.GetChild(tileCount / 2).gameObject;
                 targetbuilding = Instantiate(targetbuilding, targetTile.transform);
                 targetTile.GetComponent<TileObject>().buildingSet = true;
                 targetbuilding.transform.position = targetTile.transform.position;
                 targetbuilding.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = (targetTile.transform.parent.childCount - 1) * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
             }            
         }
     }
