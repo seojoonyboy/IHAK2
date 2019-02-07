@@ -395,7 +395,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     Vector3 buildingPosition = targetTile.transform.position;
                     buildingPosition.z = 0;
                     selectBuilding.transform.position = buildingPosition;
-                    setSortingOrder(selectBuilding, (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1);
+                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier)
                         setColor(selectBuilding, Color.green);
                     else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier < targetTile.GetComponent<TileObject>().Tier)
@@ -412,7 +412,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
-                setSortingOrder(selectBuilding, (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1);
+                setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                 setColor(selectBuilding, Color.red);
             }
             else if(hit.collider.tag == "BackGroundTile") {
@@ -444,7 +444,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
                     selectBuilding.transform.SetParent(targetTile.transform);
                     selectBuilding.transform.position = position;
-                    setSortingOrder(selectBuilding, (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum);
+                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
                 else
