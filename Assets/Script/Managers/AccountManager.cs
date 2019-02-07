@@ -177,8 +177,13 @@ public partial class AccountManager : Singleton<AccountManager> {
                         targetTile.GetComponent<TileObject>().buildingSet = true;
                         setBuild.transform.position = targetTile.transform.position;
                         setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                        setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        if(setBuild.GetComponent<SpriteRenderer>() != null) {
+                            setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+                            setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        }
+                        else {
+                            setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        }
                     }
                     continue;
                 }

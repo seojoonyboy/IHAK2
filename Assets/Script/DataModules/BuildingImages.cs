@@ -12,7 +12,9 @@ public class BuildingImages : MonoBehaviour {
         primal_product_buildingIcons,
         primal_other_buildingIcons;
     
-    public SkeletonDataAsset[] primal_product_buildingSpines;
+    public SkeletonDataAsset[] 
+        primal_product_buildingSpines,
+        primal_other_buildingSpines;
 
     public Sprite
         defaultImage,
@@ -60,7 +62,7 @@ public class BuildingImages : MonoBehaviour {
         switch (race) {
             case "primal" :
                 if (type == "prod") spines = primal_product_buildingSpines;
-                else return null;
+                else  spines = primal_other_buildingSpines;
                 foreach (SkeletonDataAsset spine in spines) {
                     if (spine.name == id) {
                         spine.GetSkeletonData(false);

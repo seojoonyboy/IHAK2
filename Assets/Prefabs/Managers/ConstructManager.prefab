@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4553109808846016}
   - component: {fileID: 114857590617120512}
   - component: {fileID: 114255265318009386}
+  - component: {fileID: 114106502685654768}
   m_Layer: 0
   m_Name: ConstructManager
   m_TagString: Untagged
@@ -70,6 +71,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114106502685654768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614664046666158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b237515f91a2448478d20919417101a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  primal_unit_cardImages:
+  - {fileID: 21300016, guid: c697561aef9a5b44a952673550891248, type: 3}
+  primal_spell_cardImages:
+  - {fileID: 21300006, guid: c697561aef9a5b44a952673550891248, type: 3}
+  defaultImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &114255265318009386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +118,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
   - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
   - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  - {fileID: 21300000, guid: d1e0bd2b1a4529442a60e3bd3385e828, type: 3}
+  - {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
   primal_product_buildingIcons:
   - {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   - {fileID: 21300000, guid: 7b8b33ee74f17494297f59eb0e612857, type: 3}
@@ -121,6 +140,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
   - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
   - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  - {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
+  - {fileID: 21300000, guid: d1e0bd2b1a4529442a60e3bd3385e828, type: 3}
   primal_product_buildingSpines:
   - {fileID: 11400000, guid: f0413cec7bf9843838f4e53040feba29, type: 2}
   - {fileID: 11400000, guid: 37f44ed153c984e4f836e365d876a7c8, type: 2}
@@ -131,6 +152,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b25e97fa615b54e0fbaeeb13d465e7ed, type: 2}
   - {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
   - {fileID: 11400000, guid: 9d57efc392ac747b4a05b478ca7f7315, type: 2}
+  primal_other_buildingSpines:
+  - {fileID: 11400000, guid: 38e779772e7314c609353dc8cbd04504, type: 2}
   defaultImage: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   defaultIcon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
 --- !u!114 &114857590617120512
