@@ -360,7 +360,10 @@ public partial class AccountManager : Singleton<AccountManager> {
                 targetTile.GetComponent<TileObject>().buildingSet = true;
                 targetbuilding.transform.position = targetTile.transform.position;
                 targetbuilding.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                if(targetbuilding.GetComponent<SpriteRenderer>() != null)
+                    targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                else
+                    targetbuilding.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
             }            
         }
     }
