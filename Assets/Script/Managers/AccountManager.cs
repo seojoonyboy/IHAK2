@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using DataModules;
 using System.Linq;
 using System;
@@ -21,8 +20,6 @@ public class AccountManager : Singleton<AccountManager> {
     public GameObject defaultTileGroup;
     public int userTier = 0;
     public int selectNumber;
-
-    private string deviceID;
     public GameSceneManager.SceneState scenestate;
 
     public class UserClassInput {
@@ -55,13 +52,11 @@ public class AccountManager : Singleton<AccountManager> {
     private Deck tmpData = null;
     private GameObject tmpObj;
 
-    
-    
     void Awake() {
         DontDestroyOnLoad(gameObject);
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
-        deviceID = SystemInfo.deviceUniqueIdentifier;
+        DEVICEID = SystemInfo.deviceUniqueIdentifier;
 
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
@@ -82,9 +77,7 @@ public class AccountManager : Singleton<AccountManager> {
         Debug.Log(Lv);
     }
 
-    public string DEVICEID {
-        get { return deviceID; }
-    }
+    public string DEVICEID { get; private set; }
 
     public void ReqUserInfo() {
         sb.Remove(0, sb.Length);
@@ -93,16 +86,18 @@ public class AccountManager : Singleton<AccountManager> {
 
     private void ReqUserInfoCallback(HttpResponse response) {
         //Server의 Wallet 정보 할당
-        if (response.responseCode == 200) {
-            GetUserInfo();
-            Debug.Log("저장 성공");            
-        }
-        else if (response.responseCode == 400) {
-            Debug.Log("저장 실패");
+        if (response.responseCode != 200) {
+            if (response.responseCode == 400) {
+                Debug.Log("저장 실패");
+            }
+            else {
+                Debug.Log("알 수 없는 Server 오류");
+                Debug.Log(response.responseCode);
+            }
         }
         else {
-            Debug.Log("알 수 없는 Server 오류");
-            Debug.Log(response.responseCode);
+            GetUserInfo();
+            Debug.Log("저장 성공");
         }
     }
 
@@ -112,17 +107,6 @@ public class AccountManager : Singleton<AccountManager> {
 
     public int GetJewel() {
         return wallet.jewel;
-    }
-
-    public void ChangeGoldAmnt(int amount = 0) {
-        //sb.Remove(0, sb.Length);
-        //sb.Append(_networkManager.baseUrl).Append(amount);
-        //_networkManager.request("POST", sb.ToString(), OnChangeGold);
-    }
-
-    private void OnChangeGold(HttpResponse response) {
-        //wallet.gold = 
-        //EventHandler PostNotification 발생
     }
 
     public void RemoveDeck(int id, GameObject obj) {
@@ -504,7 +488,7 @@ public class AccountManager : Singleton<AccountManager> {
     private void SetUserReqData(string inputText) {
         UserClassInput userInfo = new UserClassInput();
         userInfo.nickname = inputText;
-        userInfo.deviceId = deviceID;
+        userInfo.deviceId = DEVICEID;
         string json = JsonUtility.ToJson(userInfo);
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
