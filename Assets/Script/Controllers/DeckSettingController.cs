@@ -336,7 +336,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
                 saveSelectBuilding = selectBuilding;
-                startSortingOrder = getSortingOrder(selectBuilding);
+                startSortingOrder = GetSortingOrder(selectBuilding);
                 if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
 
@@ -345,7 +345,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     saveSelectBuilding = selectBuilding;
-                    startSortingOrder = getSortingOrder(selectBuilding);
+                    startSortingOrder = GetSortingOrder(selectBuilding);
                     if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
                 }
@@ -395,15 +395,15 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     Vector3 buildingPosition = targetTile.transform.position;
                     buildingPosition.z = 0;
                     selectBuilding.transform.position = buildingPosition;
-                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
+                    SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum + 1);
                     if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier)
-                        setColor(selectBuilding, Color.green);
+                        SetColor(selectBuilding, Color.green);
                     else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier < targetTile.GetComponent<TileObject>().Tier)
-                        setColor(selectBuilding, Color.red);
+                        SetColor(selectBuilding, Color.red);
                 }
                 else {
                     targetTile = null;
-                    setColor(selectBuilding, Color.white);
+                    SetColor(selectBuilding, Color.white);
                     selectBuilding.transform.position = mousePosition;
                 }
             }
@@ -412,19 +412,19 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
-                setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
-                setColor(selectBuilding, Color.red);
+                SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum + 1);
+                SetColor(selectBuilding, Color.red);
             }
             else if(hit.collider.tag == "BackGroundTile") {
                 targetTile = null;
-                setColor(selectBuilding, Color.white);
+                SetColor(selectBuilding, Color.white);
                 selectBuilding.transform.position = mousePosition;
             }
 
         }
         else {
             targetTile = null;
-            setColor(selectBuilding, Color.white);
+            SetColor(selectBuilding, Color.white);
             selectBuilding.transform.position = mousePosition;
         }
     }
@@ -444,7 +444,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
                     selectBuilding.transform.SetParent(targetTile.transform);
                     selectBuilding.transform.position = position;
-                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
+                    SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
                 else
@@ -452,7 +452,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
             else {
                 selectBuilding.transform.position = startEditPosition;
-                setSortingOrder(selectBuilding, startSortingOrder);
+                SetSortingOrder(selectBuilding, startSortingOrder);
             }
         }
         else {
@@ -460,13 +460,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (picking == true)
                 DeleteBuilding();
             else {
-                setSortingOrder(selectBuilding, startSortingOrder);
+                SetSortingOrder(selectBuilding, startSortingOrder);
                 selectBuilding.transform.position = startEditPosition;
             }
         }
 
         picking = false;
-        setColor(selectBuilding, Color.white);
+        SetColor(selectBuilding, Color.white);
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
@@ -786,7 +786,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
         } 
     }
-    private void setColor(GameObject setBuilding, Color color) {
+    private void SetColor(GameObject setBuilding, Color color) {
         SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
         if(spriteRenderer != null) {
             spriteRenderer.color = color;
@@ -796,7 +796,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
     }
 
-    private void setSortingOrder(GameObject setBuilding, int order) {
+    private void SetSortingOrder(GameObject setBuilding, int order) {
         SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
         if(spriteRenderer != null) {
             spriteRenderer.sortingOrder = order;
@@ -806,7 +806,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
     }
 
-    private int getSortingOrder(GameObject setBuilding) {
+    private int GetSortingOrder(GameObject setBuilding) {
         SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
         if(spriteRenderer != null) return spriteRenderer.sortingOrder;
         else return setBuilding.GetComponent<MeshRenderer>().sortingOrder;
