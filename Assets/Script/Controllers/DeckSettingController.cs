@@ -7,6 +7,7 @@ using DataModules;
 using System;
 using UniRx;
 using UniRx.Triggers;
+using Spine.Unity;
 
 
 public class DeckSettingController : Singleton<DeckSettingController> {
@@ -335,7 +336,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (hit.collider.tag == "Building") {
                 selectBuilding = hit.transform.gameObject;
                 saveSelectBuilding = selectBuilding;
-                startSortingOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
+                startSortingOrder = getSortingOrder(selectBuilding);
                 if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                     selectBuilding = null;
 
@@ -344,7 +345,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 if (hit.transform.gameObject.transform.childCount != 0) {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     saveSelectBuilding = selectBuilding;
-                    startSortingOrder = selectBuilding.GetComponent<SpriteRenderer>().sortingOrder;
+                    startSortingOrder = getSortingOrder(selectBuilding);
                     if (selectBuilding.GetComponent<BuildingObject>().data.id == -1)
                         selectBuilding = null;
                 }
@@ -394,16 +395,15 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     Vector3 buildingPosition = targetTile.transform.position;
                     buildingPosition.z = 0;
                     selectBuilding.transform.position = buildingPosition;
-                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1;
-
+                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier)
-                        selectBuilding.GetComponent<SpriteRenderer>().color = Color.green;
+                        setColor(selectBuilding, Color.green);
                     else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier < targetTile.GetComponent<TileObject>().Tier)
-                        selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
+                        setColor(selectBuilding, Color.red);
                 }
                 else {
                     targetTile = null;
-                    selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+                    setColor(selectBuilding, Color.white);
                     selectBuilding.transform.position = mousePosition;
                 }
             }
@@ -412,19 +412,19 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum + 1;
-                selectBuilding.GetComponent<SpriteRenderer>().color = Color.red;
+                setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
+                setColor(selectBuilding, Color.red);
             }
             else if(hit.collider.tag == "BackGroundTile") {
                 targetTile = null;
-                selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+                setColor(selectBuilding, Color.white);
                 selectBuilding.transform.position = mousePosition;
             }
 
         }
         else {
             targetTile = null;
-            selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+            setColor(selectBuilding, Color.white);
             selectBuilding.transform.position = mousePosition;
         }
     }
@@ -444,7 +444,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
                     selectBuilding.transform.SetParent(targetTile.transform);
                     selectBuilding.transform.position = position;
-                    selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = (tileGroup.transform.childCount * 2) - targetTile.GetComponent<TileObject>().tileNum;
+                    setSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
                 else
@@ -452,7 +452,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
             else {
                 selectBuilding.transform.position = startEditPosition;
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = startSortingOrder;
+                setSortingOrder(selectBuilding, startSortingOrder);
             }
         }
         else {
@@ -460,13 +460,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (picking == true)
                 DeleteBuilding();
             else {
-                selectBuilding.GetComponent<SpriteRenderer>().sortingOrder = startSortingOrder;
+                setSortingOrder(selectBuilding, startSortingOrder);
                 selectBuilding.transform.position = startEditPosition;
             }
         }
 
         picking = false;
-        selectBuilding.GetComponent<SpriteRenderer>().color = Color.white;
+        setColor(selectBuilding, Color.white);
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
         selectBuilding = null;
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
@@ -786,6 +786,30 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
         } 
     }
+    private void setColor(GameObject setBuilding, Color color) {
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) {
+            spriteRenderer.color = color;
+        }
+        else {
+            setBuilding.GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
+        }
+    }
 
+    private void setSortingOrder(GameObject setBuilding, int order) {
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) {
+            spriteRenderer.sortingOrder = order;
+        }
+        else {
+            setBuilding.GetComponent<MeshRenderer>().sortingOrder = order;
+        }
+    }
+
+    private int getSortingOrder(GameObject setBuilding) {
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) return spriteRenderer.sortingOrder;
+        else return setBuilding.GetComponent<MeshRenderer>().sortingOrder;
+    }
 
 }
