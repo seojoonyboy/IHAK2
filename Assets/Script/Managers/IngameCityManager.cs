@@ -5,6 +5,7 @@ using DataModules;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Spine.Unity;
 
 public class IngameCityManager : MonoBehaviour {
     [System.Serializable]
@@ -654,7 +655,7 @@ public class IngameCityManager : MonoBehaviour {
                 continue;
             else {
                 unactiveBuildingIndex = num;
-                myBuildingsInfo[num].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                SetColor(myBuildingsInfo[num].gameObject, Color.red);
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
                 unActiveAlert = true;
                 StartCoroutine(StartAlert());
@@ -667,17 +668,17 @@ public class IngameCityManager : MonoBehaviour {
         int index = unactiveBuildingIndex;
         while (unActiveAlert) {
             if (unActiveAlert)
-                myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                SetColor(myBuildingsInfo[index].gameObject, Color.red);
             yield return new WaitForSeconds(0.4f);
             if (unActiveAlert)
-                myBuildingsInfo[index].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                SetColor(myBuildingsInfo[index].gameObject, Color.white);
             yield return new WaitForSeconds(0.2f);
         }
     }
 
     public void CancleUnActiveBuilding() {
         unActiveAlert = false;
-        myBuildingsInfo[unactiveBuildingIndex].gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        SetColor(myBuildingsInfo[unactiveBuildingIndex].gameObject, Color.white);
         Debug.Log(myBuildingsInfo[unactiveBuildingIndex].cardInfo.name + " 비활성화 예정 해제");
         unactiveBuildingIndex = 100;
     }
@@ -719,12 +720,12 @@ public class IngameCityManager : MonoBehaviour {
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
         StartCoroutine(UnActivateTimer());
-        card.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        SetColor(card.gameObject, Color.red);
         yield return new WaitForSeconds(1.0f);
-        card.gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+        SetColor(card.gameObject, Color.gray);
         yield return new WaitForSeconds(29.0f);
         card.activate = true;
-        card.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        SetColor(card.gameObject, Color.white);
         Debug.Log(card.cardInfo.name + " 활성화");
         switch (card.cardInfo.prodType) {
             case "gold":
@@ -786,6 +787,16 @@ public class IngameCityManager : MonoBehaviour {
         float totalHp = enemyTotalHP;
         enemyCurrentTotalHP = enemyTotalHP;
         enemyTotalHPGauge.GetComponent<Image>().fillAmount = totalHp / totalHp;
+    }
+
+    private void SetColor(GameObject setBuilding, Color color) {
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) {
+            spriteRenderer.color = color;
+        }
+        else {
+            setBuilding.GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
+        }
     }
 
 
