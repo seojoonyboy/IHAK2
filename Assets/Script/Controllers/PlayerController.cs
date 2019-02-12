@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -147,6 +146,9 @@ public class PlayerController : MonoBehaviour {
         foodValue.text = resourceClass.food.ToString();
         turnValue.text = resourceClass.turn.ToString();
         envValue.fillAmount = resourceClass.environment / 300.0f;
+
+        Text envText = envValue.transform.parent.GetChild(2).GetComponent<Text>();
+        envText.text = Mathf.RoundToInt(envValue.fillAmount * 100.0f).ToString() + "%" ;
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
