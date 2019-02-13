@@ -6345,6 +6345,7 @@ GameObject:
   - component: {fileID: 807158599}
   - component: {fileID: 807158598}
   - component: {fileID: 807158603}
+  - component: {fileID: 807158604}
   m_Layer: 0
   m_Name: UICanvas
   m_TagString: Untagged
@@ -6478,6 +6479,17 @@ MonoBehaviour:
   icm: {fileID: 364303840}
   hqUpgradeWnd: {fileID: 1300248408}
   hqLevel: 0
+--- !u!114 &807158604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 807158597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7256b21883894054ebe2ebe73bfbe337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &820021119
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,8 +7788,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 807158603}
-        m_MethodName: OpenHqUpgrageInfo
-        m_Mode: 6
+        m_MethodName: OnUpgradeModal
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

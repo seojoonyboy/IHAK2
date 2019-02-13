@@ -31,7 +31,7 @@ public class IngameCityManager : MonoBehaviour {
     //현재 어떤 화면을 보고 있는지
     public int CurrentView;
     public ArrayList eachPlayersTileGroups = new ArrayList();
-    
+
     public UpgradeInfo
         hq_tier_1,
         hq_tier_2,
@@ -43,18 +43,18 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private GameObject enemyTotalHPGauge;
 
     [Space(10)]
-    
+
     [Header(" - TotalHPInformation")]
     [SerializeField] private int enemyTotalHP;
     [SerializeField] public int enemyCurrentTotalHP;
     [SerializeField] public int cityHP = 0;
     [SerializeField] private int cityMaxHP = 0;
 
-    [Space(10)]  
+    [Space(10)]
 
-    [Header (" - ProductResource")]
+    [Header(" - ProductResource")]
     public ProductResources productResources;
-    public ProductResources unActiveResources;    
+    public ProductResources unActiveResources;
 
     [Space(10)]
 
@@ -126,6 +126,12 @@ public class IngameCityManager : MonoBehaviour {
             cityHP += bi.hp;
             myBuildingsInfo.Add(bi);
         }
+
+        IEnumerable<GameObject> gameObjects =
+            from x in myBuildingsInfo
+            select x.gameObject;
+
+        ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, this, gameObjects.ToList());
 
         cityMaxHP = cityHP;
 
@@ -242,7 +248,7 @@ public class IngameCityManager : MonoBehaviour {
                     plusHp = enemyCurrentTotalHP - enemyTotalHP;
                     enemyCurrentTotalHP -= plusHp;
                 }
-                
+
 
                 //회복뒤 건물 체력
                 float enemyHp = enemyBuilding.hp;

@@ -47,6 +47,12 @@ public class IngameSceneUIController : MonoBehaviour {
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
 
+        foreach(Transform tile in ld.transform) {
+            tile.gameObject.layer = 8;
+            foreach(Transform building in tile) {
+                building.gameObject.layer = 8;
+            }
+        }
         ProductResources touchProdPower = ld.GetComponent<TileGroup>().touchPerProdPower;
         //bool isDataExist = isDataInited(touchProdPower);
         //if (!isDataExist) {
@@ -239,5 +245,4 @@ public class IngameSceneUIController : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         repairAlert.SetActive(false);
     }
-
 }

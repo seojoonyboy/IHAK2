@@ -25,6 +25,8 @@ namespace DataModules {
         public Skill[] activeSkill;
         public Skill[] productSkills;
         public Unit unit;
+
+        public int lv;
     }
 
     [System.Serializable]

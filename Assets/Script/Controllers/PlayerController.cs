@@ -1,11 +1,13 @@
+using DataModules;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour {
+public partial class PlayerController : MonoBehaviour {
 
     public enum Buttons {
         GOLD = 0,
@@ -40,12 +42,37 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] GameObject hqUpgradeWnd;
 
     public PlayerResource resourceClass;
+
+    public IngameCityManager IngameCityManager {
+        get { return icm; }
+    }
+
+    public int Food {
+        get { return resourceClass.food; }
+        set {
+            resourceClass.food = value;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+        }
+    }
+    public int Gold {
+        get { return resourceClass.gold; }
+        set {
+            resourceClass.gold = value;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+        }
+    }
+    public int Env {
+        get { return resourceClass.environment; }
+        set {
+            resourceClass.environment = value;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+        }
+    }
+
     public ProductInfo pInfo { get; set; }
     public int hqLevel;
     IngameScoreManager scoreManager;
     private bool warningOn = false;
-
-
 
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
@@ -66,30 +93,34 @@ public class PlayerController : MonoBehaviour {
         commandButtons.GetChild(2).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.ENVIRONMENT));
         //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
-        
+
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
         icm.productResources.food.food += icm.hq_tier_1.product.food;
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
     }
 
+    private void OnMouseDown() {
+        Debug.Log("클릭!");
+    }
+
     private void ClickButton(Buttons btn) {
-        int env = resourceClass.environment;
+        int env = Env;
         switch (btn) {
             case Buttons.GOLD:
                 if (env + icm.productResources.gold.environment > 0) {
                     if (icm.productResources.gold.gold > 0) {
-                        resourceClass.gold += icm.productResources.gold.gold;
-                        resourceClass.food += icm.productResources.gold.food;
-                        resourceClass.environment += icm.productResources.gold.environment;
+                        Gold += icm.productResources.gold.gold;
+                        Food += icm.productResources.gold.food;
+                        Env += icm.productResources.gold.environment;
                         resourceClass.turn--;
-                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                        if (Env < 100 && icm.unactiveBuildingIndex == 100)
                             icm.DecideUnActiveBuilding();
                     }
                 }
                 else {
-                    resourceClass.gold += icm.productResources.gold.gold;
-                    resourceClass.food += icm.productResources.gold.food;
-                    resourceClass.environment = 300;
+                    Gold += icm.productResources.gold.gold;
+                    Food += icm.productResources.gold.food;
+                    Env = 300;
                     icm.SetUnactiveBuilding();
                     resourceClass.turn--;
                 }
@@ -98,18 +129,18 @@ public class PlayerController : MonoBehaviour {
             case Buttons.FOOD:
                 if (env + icm.productResources.food.environment > 0) {
                     if (icm.productResources.food.food > 0) {
-                        resourceClass.gold += icm.productResources.food.gold;
-                        resourceClass.food += icm.productResources.food.food;
-                        resourceClass.environment += icm.productResources.food.environment;
+                        Gold += icm.productResources.food.gold;
+                        Food += icm.productResources.food.food;
+                        Env += icm.productResources.food.environment;
                         resourceClass.turn--;
-                        if (resourceClass.environment < 100 && icm.unactiveBuildingIndex == 100)
+                        if (Env < 100 && icm.unactiveBuildingIndex == 100)
                             icm.DecideUnActiveBuilding();
                     }
                 }
                 else {
-                    resourceClass.gold += icm.productResources.food.gold;
-                    resourceClass.food += icm.productResources.food.food;
-                    resourceClass.environment = 300;
+                    Gold += icm.productResources.food.gold;
+                    Food += icm.productResources.food.food;
+                    Env = 300;
                     icm.SetUnactiveBuilding();
                     resourceClass.turn--;
                 }
@@ -118,17 +149,17 @@ public class PlayerController : MonoBehaviour {
             case Buttons.ENVIRONMENT:
                 if (env < 300) {
                     if (icm.productResources.env.environment > 0) {
-                        if (resourceClass.gold + icm.productResources.env.gold >= 0 && resourceClass.food + icm.productResources.env.food >= 0) {
-                            resourceClass.gold += icm.productResources.env.gold;
-                            resourceClass.food += icm.productResources.env.food;
-                            resourceClass.environment += icm.productResources.env.environment;
-                            if (resourceClass.environment > 300) {
-                                scoreManager.AddScore(icm.productResources.env.environment - (resourceClass.environment - 300), IngameScoreManager.ScoreType.Product);
-                                resourceClass.environment = 300;
+                        if (Gold + icm.productResources.env.gold >= 0 && Food + icm.productResources.env.food >= 0) {
+                            Gold += icm.productResources.env.gold;
+                            Food += icm.productResources.env.food;
+                            Env += icm.productResources.env.environment;
+                            if (Env > 300) {
+                                scoreManager.AddScore(icm.productResources.env.environment - (Env - 300), IngameScoreManager.ScoreType.Product);
+                                Env = 300;
                             }
                             else
                                 scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
-                            if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+                            if (Env >= 100 && icm.unactiveBuildingIndex != 100)
                                 icm.CancleUnActiveBuilding();
                             resourceClass.turn--;
                         }
@@ -143,18 +174,25 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void PrintResource() {
-        goldValue.text = resourceClass.gold.ToString();
-        foodValue.text = resourceClass.food.ToString();
+        goldValue.text = Gold.ToString();
+        foodValue.text = Food.ToString();
         turnValue.text = resourceClass.turn.ToString();
-        envValue.fillAmount = resourceClass.environment / 300.0f;
+        envValue.fillAmount = Env / 300.0f;
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
-        if (resourceClass.gold < cost.gold) return false;
-        if (resourceClass.environment < cost.environment) return false;
-        if (resourceClass.food < cost.food) return false;
+        if (Gold < cost.gold) return false;
+        if (Env < cost.environment) return false;
+        if (Food < cost.food) return false;
         return true;
     }
+}
+
+/// <summary>
+/// Upgrade 관련 처리
+/// </summary>
+public partial class PlayerController {
+    private bool isUpgradeModalActivated = false;
 
     public void OpenHqUpgrageInfo(bool open) {
         if (hqLevel < 3)
@@ -192,16 +230,16 @@ public class PlayerController : MonoBehaviour {
 
     public void HqUpgrade() {
         if (hqLevel == 1) {
-            if (icm.hq_tier_2.upgradeCost.food < resourceClass.food &&
-                icm.hq_tier_2.upgradeCost.gold < resourceClass.gold &&
-                icm.hq_tier_2.upgradeCost.env < resourceClass.environment) {
+            if (icm.hq_tier_2.upgradeCost.food < Food &&
+                icm.hq_tier_2.upgradeCost.gold < Gold &&
+                icm.hq_tier_2.upgradeCost.env < Env) {
                 Debug.Log("2단계 업글");
                 icm.productResources.gold.gold += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
                 icm.productResources.food.food += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
                 icm.productResources.env.environment += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
-                resourceClass.food -= icm.hq_tier_2.upgradeCost.food;
-                resourceClass.gold -= icm.hq_tier_2.upgradeCost.gold;
-                resourceClass.environment -= icm.hq_tier_2.upgradeCost.env;
+                Food -= icm.hq_tier_2.upgradeCost.food;
+                Gold -= icm.hq_tier_2.upgradeCost.gold;
+                Env -= icm.hq_tier_2.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
@@ -214,16 +252,16 @@ public class PlayerController : MonoBehaviour {
             }
         }
         else if (hqLevel == 2) {
-            if (icm.hq_tier_3.upgradeCost.food < resourceClass.food &&
-                icm.hq_tier_3.upgradeCost.gold < resourceClass.gold &&
-                icm.hq_tier_3.upgradeCost.env < resourceClass.environment) {
+            if (icm.hq_tier_3.upgradeCost.food < Food &&
+                icm.hq_tier_3.upgradeCost.gold < Gold &&
+                icm.hq_tier_3.upgradeCost.env < Env) {
                 Debug.Log("3단계 업글");
                 icm.productResources.gold.gold += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
                 icm.productResources.food.food += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
                 icm.productResources.env.environment += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
-                resourceClass.food -= icm.hq_tier_3.upgradeCost.food;
-                resourceClass.gold -= icm.hq_tier_3.upgradeCost.gold;
-                resourceClass.environment -= icm.hq_tier_3.upgradeCost.env;
+                Food -= icm.hq_tier_3.upgradeCost.food;
+                Gold -= icm.hq_tier_3.upgradeCost.gold;
+                Env -= icm.hq_tier_3.upgradeCost.env;
                 hqLevel++;
                 resourceClass.turn--;
                 commandButtons.parent.GetChild(2).GetComponent<Image>().enabled = false;
@@ -236,7 +274,7 @@ public class PlayerController : MonoBehaviour {
                     StartCoroutine(HqUpgradeWarning());
             }
         }
-        if (resourceClass.environment >= 100 && icm.unactiveBuildingIndex != 100)
+        if (Env >= 100 && icm.unactiveBuildingIndex != 100)
             icm.CancleUnActiveBuilding();
         commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
@@ -252,5 +290,80 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         hqUpgradeWnd.transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
         warningOn = false;
+    }
+
+    private GameObject selectedObj;
+
+    public void OnUpgradeModal() {
+        GameObject spritePanel = icm.transform.GetChild(1).Find("Background/Dissolve").gameObject;
+        GameObject uiPanel = transform.Find("UIDissolve").gameObject;
+
+        spritePanel.SetActive(true);
+        uiPanel.SetActive(true);
+
+        //scroll 비활성화
+        var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();
+        horizontalScrollSnap.enabled = false;
+        var scrollRect = transform.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
+        scrollRect.enabled = false;
+
+        //upgrade 가능한 빌딩 order 변경
+        isUpgradeModalActivated = true;
+        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+    }
+
+    public void OnUpgradeBtnClicked() {
+        if (Upgrade(selectedObj)) {
+            CloseUpgradeModal();
+        }
+        else {
+            //업그레이드 불가하다는 알림
+
+        }
+    }
+
+    public void CloseUpgradeModal() {
+        //modal 비활성화
+        //scroll 활성화
+        isUpgradeModalActivated = false;
+    }
+
+    public bool isUpgradeModalActivate() {
+        return isUpgradeModalActivated;
+    }
+
+    public bool Upgrade(GameObject obj) {
+        if (obj == null) return false;
+        BuildingObject bo = obj.GetComponent<BuildingObject>();
+        var origin_productPower = bo.data.card.product;
+        int lv = bo.data.card.lv;
+        int tier = bo.data.card.rareity;
+        UpgradableBuildingGetter ubg = GetComponent<UpgradableBuildingGetter>();
+        Resource resource = ubg.CalcCost(lv, tier);
+        if (!ubg.isEnoughResource(resource)) return false;
+
+        int foodChange = System.Convert.ToInt32(origin_productPower.food * (lv / 10.0f + tier / 10.0f));
+        int envChange = System.Convert.ToInt32(origin_productPower.environment * (lv / 10.0f + tier / 10.0f));
+        int goldChange = System.Convert.ToInt32(origin_productPower.gold * (lv / 10.0f + tier / 10.0f));
+
+        icm.productResources.food.food += foodChange;
+        icm.productResources.gold.food += foodChange;
+        icm.productResources.env.food += foodChange;
+
+        icm.productResources.food.environment += envChange;
+        icm.productResources.gold.environment += envChange;
+        icm.productResources.env.environment += envChange;
+
+        icm.productResources.food.gold += goldChange;
+        icm.productResources.gold.gold += goldChange;
+        icm.productResources.env.gold += goldChange;
+
+        bo.data.card.product.food += foodChange;
+        bo.data.card.product.gold += goldChange;
+        bo.data.card.product.environment += envChange;
+
+        bo.data.card.lv = ++lv;
+
+        return true;
     }
 }
