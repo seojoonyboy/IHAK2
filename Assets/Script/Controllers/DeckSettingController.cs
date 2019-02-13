@@ -692,7 +692,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     slotNum++;
                 }
 
-                if(building.GetComponent<BuildingObject>().data.card.unit.id >= 1) {
+                if(building.GetComponent<BuildingObject>().data.card.unit.id != "0") {
                     activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
@@ -776,7 +776,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 slot = FindActiveNullSlot();
             }
 
-            if (building.GetComponent<BuildingObject>().data.card.unit.id >= 1 && slot != null) {
+            if (building.GetComponent<BuildingObject>().data.card.unit.id != "0" && slot != null) {
                 slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
                 slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
                 slot.GetComponent<ActiveSlot>()._object = building;

@@ -41,6 +41,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Image hpValueBar;
     [SerializeField] private Text hpValue;
     [SerializeField] private GameObject enemyTotalHPGauge;
+    [SerializeField] IngameSceneUIController ingameSceneUIController;
 
     [Space(10)]
 
@@ -606,7 +607,7 @@ public class IngameCityManager : MonoBehaviour {
 
     private void BuildingDestroyed(BuildingInfo buildingInfo) {
         buildingInfo.hp = 0;
-        IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rareity, IngameScoreManager.ScoreType.DestroyBuilding);
+        IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
 
@@ -643,7 +644,7 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     IEnumerator Repair() {
-        while (transform.parent.parent.parent.parent.GetComponent<IngameSceneUIController>().isPlaying == true) { // playerCity -> MyTerritory -> content -> Haorizontal Scroll Snap -> UICanvas
+        while (ingameSceneUIController.isPlaying == true) { // playerCity -> MyTerritory -> content -> Haorizontal Scroll Snap -> UICanvas
             yield return new WaitForSeconds(60f);
             for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
                 RepairBuilding(Target.ENEMY_1, i);

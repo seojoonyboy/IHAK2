@@ -342,7 +342,7 @@ public partial class PlayerController {
         BuildingObject bo = obj.GetComponent<BuildingObject>();
         var origin_productPower = bo.data.card.product;
         int lv = bo.data.card.lv;
-        int tier = bo.data.card.rareity;
+        int tier = bo.data.card.rarity;
         UpgradableBuildingGetter ubg = GetComponent<UpgradableBuildingGetter>();
         Resource resource = ubg.CalcCost(lv, tier);
         if (!ubg.isEnoughResource(resource)) return false;

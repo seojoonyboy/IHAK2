@@ -87,7 +87,7 @@ public class OwnCardGenerator : MonoBehaviour {
             header.text = card.name;
             limitCount.text = "한도 " + card.placementLimit.ToString();
 
-            tier.text = card.rareity + " 등급";
+            tier.text = card.rarity + " 등급";
             food.text = card.product.food.ToString();
             gold.text = card.product.gold.ToString();
             env.text = card.product.environment.ToString();
