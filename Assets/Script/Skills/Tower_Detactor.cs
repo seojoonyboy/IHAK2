@@ -12,6 +12,10 @@ public class Tower_Detactor : MonoBehaviour {
     private float time;
     [SerializeField]
     private GameObject arrow;
+    [SerializeField]
+    public int towerShellCount = 0;
+    [SerializeField]
+    public int towerMaxShell = 0;
 
     void Start() {
         box = GetComponent<CircleCollider2D>();
@@ -47,6 +51,7 @@ public class Tower_Detactor : MonoBehaviour {
         if (checkEnemyDead()) return;
         time += Time.deltaTime;
         if (time < atkTime) return;
+        if (towerShellCount <= 0) return;
         time -= atkTime;
         enemy.SendMessage("damaged", damage, SendMessageOptions.DontRequireReceiver);
         shootArrow();
@@ -55,6 +60,7 @@ public class Tower_Detactor : MonoBehaviour {
     private void shootArrow() {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
+        towerShellCount--;
         Destroy(arrow, atkTime * 0.3f);
     }
 
