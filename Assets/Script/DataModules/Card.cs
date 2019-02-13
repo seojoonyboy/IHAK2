@@ -21,8 +21,8 @@ namespace DataModules {
         public int hitPoint;
         public int placementLimit;
         public AttackInfo attackInfo;
-        public Skill[] activeSkill;
-        public Skill[] productSkills;
+        public Skill[] activeSkills;
+        public Skill[] passiveSkills;
         public Unit unit;
 
         public int lv;
@@ -68,6 +68,7 @@ namespace DataModules {
         public string name;
         public SkillDetail method;
         public int tierNeed;
+        public string desc;
         public string imageName;
     }
 

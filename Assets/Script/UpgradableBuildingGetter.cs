@@ -64,6 +64,9 @@ public class UpgradableBuildingGetter : MonoBehaviour {
         //Debug.Log("자원 변동 이벤트 발생");
         canInvoke = false;
 
+        List<GameObject> availableItems = new List<GameObject>();
+        List<GameObject> unavailableItems = new List<GameObject>();
+        GameObject hqItem = null;
         foreach(GameObject building in buildingInfos) {
             BuildingObject buildingObject = building.GetComponent<BuildingObject>();
             Card card = buildingObject.data.card;
@@ -83,17 +86,42 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             Text CostGold = costArea.Find("Data/Gold/Val").GetComponent<Text>();
             Text CostEco = costArea.Find("Data/Eco/Val").GetComponent<Text>();
 
-            Resource costs = CalcCost(card.lv, card.rarity);
+            int lv = 0;
+
+            if(card.id == "primal_town_center") {
+                lv = card.lv + 1;
+                hqItem = item;
+            }
+            else lv = card.lv;
+
+            Resource costs = CalcCost(lv, card.rarity);
             CostFood.text = costs.food.ToString();
             CostGold.text = costs.gold.ToString();
             CostEco.text = costs.environment.ToString();
 
             Name.text = buildingObject.data.card.name;
 
+            item.AddComponent<Index>().Id = costs.gold;
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
+                unavailableItems.Add(item);
+            }
+            else {
+                availableItems.Add(item);
             }
         }
+
+        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        foreach (GameObject building in unavailableItems) {
+            building.transform.SetAsFirstSibling();
+        }
+
+        availableItems = availableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        foreach(GameObject building in availableItems) {
+            building.transform.SetAsFirstSibling();
+        }
+
+        if(hqItem != null) hqItem.transform.SetAsFirstSibling();
     }
 
     private void ClearList() {
@@ -153,5 +181,16 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         if (building.data.card.rarity > playerController.hqLevel) return false;
         return isEnoughResource(resource);
+    }
+
+    public class MyComparer : IComparer<int> {
+        public int Compare(int x, int y) {
+            if (x > y)
+                return 1;
+            if (x < y)
+                return -1;
+            else
+                return 0;
+        }
     }
 }
