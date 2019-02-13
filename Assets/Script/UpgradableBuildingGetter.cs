@@ -58,6 +58,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
         if (!playerController.isUpgradeModalActivate()) return;
         if (!canInvoke) return;
 
+        ClearList();
         var playerResource = (PlayerController.PlayerResource)Param;
 
         //Debug.Log("자원 변동 이벤트 발생");
@@ -95,6 +96,15 @@ public class UpgradableBuildingGetter : MonoBehaviour {
         }
     }
 
+    private void ClearList() {
+        foreach(Transform tf in upgradeModal_content) {
+            Destroy(tf.gameObject);
+        }
+    }
+
+    public void CloseModal() {
+        upgradeModal.SetActive(false);
+    }
     //public List<GameObject> GetUpgradableBuildingList() {
     //    //HQ의 LV 이하까지 업그레이드 가능
     //    List<GameObject> list = new List<GameObject>();

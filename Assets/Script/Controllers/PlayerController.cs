@@ -298,9 +298,10 @@ public partial class PlayerController {
     }
 
     private GameObject selectedObj;
+    GameObject spritePanel;
 
     public void OnUpgradeModal() {
-        GameObject spritePanel = icm.transform.GetChild(1).Find("Background/Dissolve").gameObject;
+        spritePanel = icm.transform.GetChild(1).Find("Background/Dissolve").gameObject;
         GameObject uiPanel = transform.Find("UIDissolve").gameObject;
 
         spritePanel.SetActive(true);
@@ -330,6 +331,8 @@ public partial class PlayerController {
     public void CloseUpgradeModal() {
         //modal 비활성화
         //scroll 활성화
+        GetComponent<UpgradableBuildingGetter>().CloseModal();
+        spritePanel.SetActive(false);
         isUpgradeModalActivated = false;
     }
 
