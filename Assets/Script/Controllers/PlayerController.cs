@@ -28,9 +28,12 @@ public class PlayerController : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
 
-
+    [Header(" - UI")]
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
+    public PlayerResource resourceClass;
+
+    [Header(" - ResourceText")]
     [SerializeField] Text goldValue;
     [SerializeField] Text foodValue;
     [SerializeField] Text turnValue;
@@ -38,9 +41,11 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] IngameCityManager icm;
     [SerializeField] GameObject hqUpgradeWnd;
 
-    public PlayerResource resourceClass;
-    public ProductInfo pInfo { get; set; }
+    [Header (" - Player")]        
     public int hqLevel;
+
+    
+    public ProductInfo pInfo { get; set; }    
     IngameScoreManager scoreManager;
     private bool warningOn = false;
 
@@ -69,6 +74,7 @@ public class PlayerController : MonoBehaviour {
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
         icm.productResources.food.food += icm.hq_tier_1.product.food;
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
+        
     }
 
     private void ClickButton(Buttons btn) {
