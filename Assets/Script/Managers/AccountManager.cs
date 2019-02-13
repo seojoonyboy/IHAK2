@@ -406,7 +406,7 @@ public partial class AccountManager {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
                     Card card = buildingObject.data.card;
-                    if (card.unit.id != 0) tileGroup.units.Add(card.unit);
+                    if (card.unit.id != null) tileGroup.units.Add(card.unit);
                     if (card.activeSkill.Length != 0) {
                         foreach (Skill skill in card.activeSkill) {
                             tileGroup.activeSkills.Add(skill);

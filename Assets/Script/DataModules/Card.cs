@@ -16,11 +16,10 @@ namespace DataModules {
         public string name;
         public string type;
         public string prodType;
-        public int rareity;
+        public int rarity;
         public Cost product;
         public int hitPoint;
         public int placementLimit;
-        public bool canAttack;
         public AttackInfo attackInfo;
         public Skill[] activeSkill;
         public Skill[] productSkills;
@@ -31,11 +30,12 @@ namespace DataModules {
 
     [System.Serializable]
     public class Unit {
-        public int id;
+        public string id;
         public string name;
         public Cost cost;
         public int coolTime;
         public int size;
+        public int count;
         public int power;
         public float attackSpeed;
         public int detectRange;
