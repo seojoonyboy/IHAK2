@@ -673,33 +673,35 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             GameObject tile = tileGroup.transform.GetChild(i).gameObject;
             if (tile.GetComponent<TileObject>().buildingSet == true && tile.transform.childCount == 1) {
                 GameObject building = tile.transform.GetChild(0).gameObject;
+                BuildingObject buildingObject = building.GetComponent<BuildingObject>();
+                Building buildingData = buildingObject.data;
 
-                if(building.GetComponent<BuildingObject>().data.card.activeSkill.Length >= 1) {
+                if (buildingData.card.activeSkill.Length != 0) {
                     activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = buildingData.id;
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
-                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.activeSkill[0].name;
+                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = buildingData.card.activeSkill[0].name;
+                    slotNum++;
+                }
+                else if(buildingData.card.unit.id != "") {
+                    activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = buildingData.id;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
+                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = buildingData.card.unit.name;
+                    slotNum++;
+
+                }
+                else if(buildingData.card.productSkills.Length != 0) {
+                    activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = buildingData.id;
+                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
+                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = buildingData.card.productSkills[0].name;
                     slotNum++;
                 }
 
-                if(building.GetComponent<BuildingObject>().data.card.productSkills.Length >= 1) {
-                    activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
-                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.productSkills[0].name;
-                    slotNum++;
-                }
-
-                if(building.GetComponent<BuildingObject>().data.card.unit.id != "0") {
-                    activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
-                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.unit.name;
-                    slotNum++;
-                }
             }
         }
     }
@@ -752,43 +754,46 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void AddActiveSlot(GameObject _building) {
+        
         //드랍 핸들러에서, 건물 배치 조건이 될 시에, 건물을 받아서 액티브 슬롯에 추가.
         GameObject slot = FindActiveNullSlot();
-        GameObject building = _building;      
-
-
-        if(slot != null) {
-            if (building.GetComponent<BuildingObject>().data.card.activeSkill.Length >= 1) {
-                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
-                slot.GetComponent<ActiveSlot>()._object = building;
-                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.activeSkill[0].name;
+        ActiveSlot activeSlot = slot.GetComponent<ActiveSlot>();
+        BuildingObject buildingObject = _building.GetComponent<BuildingObject>();
+        Building buildingData = buildingObject.data;
+        
+        
+        if (activeSlot != null) {
+            if (buildingData.card.activeSkill.Length != 0) {
+                slot.GetComponent<Image>().sprite = buildingObject.mainSprite;
+                activeSlot.id = buildingData.id;
+                activeSlot._object = _building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = buildingData.card.activeSkill[0].name;
                 slot.SetActive(true);
-                slot = FindActiveNullSlot();
+            }
+            
+            else if (buildingData.card.unit.id != "") {
+                slot.GetComponent<Image>().sprite = buildingObject.mainSprite;
+                activeSlot.id = buildingData.id;
+                activeSlot._object = _building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = buildingData.card.unit.name;
+                slot.SetActive(true);
             }
 
-            if (building.GetComponent<BuildingObject>().data.card.productSkills.Length >= 1 && slot != null) {
-                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
-                slot.GetComponent<ActiveSlot>()._object = building;
-                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.productSkills[0].name;
+            else if (buildingData.card.productSkills.Length != 0) {
+                slot.GetComponent<Image>().sprite = buildingObject.mainSprite;
+                activeSlot.id = buildingData.id;
+                activeSlot._object = _building;
+                slot.transform.GetChild(0).GetComponent<Text>().text = buildingData.card.productSkills[0].name;
                 slot.SetActive(true);
-                slot = FindActiveNullSlot();
             }
 
-            if (building.GetComponent<BuildingObject>().data.card.unit.id != "0" && slot != null) {
-                slot.GetComponent<Image>().sprite = building.GetComponent<BuildingObject>().mainSprite;
-                slot.GetComponent<ActiveSlot>().id = building.GetComponent<BuildingObject>().data.id;
-                slot.GetComponent<ActiveSlot>()._object = building;
-                slot.transform.GetChild(0).GetComponent<Text>().text = building.GetComponent<BuildingObject>().data.card.unit.name;
-                slot.SetActive(true);
-                slot = FindActiveNullSlot();
-            }
-        } 
+        }
+
+
     }
     private void SetColor(GameObject setBuilding, Color color) {
         SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
-        if(spriteRenderer != null) {
+        if (spriteRenderer != null) {
             spriteRenderer.color = color;
         }
         else {
