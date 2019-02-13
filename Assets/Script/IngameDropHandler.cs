@@ -19,92 +19,88 @@ public class IngameDropHandler : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        cam = Camera.main;
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        cam = GameObject.Find("TerritoryCamera").GetComponent<Camera>();
     }
 
     public void OnDrop() {
+        if (ingameCityManager.CurrentView == 0) {
+            Debug.Log("아군 지역입니다 카드 사용을 취소합니다.");
+            return;
+        }
+        
+        if(!IsCardDropOK()) return;
+
+        IngameCard card = selectedObject.GetComponent<IngameCard>();
+        object data = card.data;
+        if(data.GetType() == typeof(Skill)) SkillActive(data);
+        else if(data.GetType() == typeof(Unit)) UnitSummon(data);
+    }
+
+    private bool IsCardDropOK() {
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
         PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
         m_PointEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
-        if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
+
+        const string StrB = "Horizontal Scroll Snap";
+        return results[0].gameObject.name.CompareTo(StrB) == 0;
+    }
+
+    private void UnitSummon(object data) {
+        Unit unit = (Unit)data;
+        if (!CheckResouceOK(unit.cost)) return;
+
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
-        foreach(RaycastHit2D hit in hits) {
-            Debug.Log(hit.collider.tag);
-            Debug.Log(hit.collider.name);
-            IngameCard card = selectedObject.GetComponent<IngameCard>();
-            object data = card.data;
+        foreach(RaycastHit2D hit in hits)
+            if (hit.collider.tag == "EnemyBuilding")
+                return;
 
-            if (hit.collider.tag == "BackGroundTile") {
-                if (ingameCityManager.CurrentView == 0) {
-                    Debug.Log("아군 도시에는 유닛생산 불가");
-                    return;
-                }
-                //Debug.Log(hit.collider.name);
-                var tmp = ingameCityManager.eachPlayersTileGroups;
-                
-                if(data.GetType() == typeof(Unit)) {
-                    Unit unit = (Unit)data;
-                    if (playerController.isEnoughResources(unit.cost)) {
-                        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-                        wolf.transform.position = hit.point + new Vector2(0f, 50f);//hit.transform.position;
+        //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
+        var tmp = ingameCityManager.eachPlayersTileGroups;
+        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
+        wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
 
-                        playerController.resourceClass.gold -= unit.cost.gold;
-                        playerController.resourceClass.food -= unit.cost.food;
-                        playerController.resourceClass.environment -= unit.cost.environment;
+        UseResource(unit.cost);
+        IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
+        playerController.PrintResource();
+        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+    }
 
-                        IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
-
-                        playerController.PrintResource();
-                        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
-                    }
-                    else {
-                        Debug.Log("자원 부족");
-                    }
-                }
-            }
-
-            if(data.GetType() == typeof(Skill)) {
-                if (ingameCityManager.CurrentView == 0) {
-                    Debug.Log("아군 도시에는 스펠 불가");
-                    return;
-                }
-                Debug.Log(canSpell);
-                if (canSpell) {
-                    //Debug.Log("주문 공격");
-                    StartCoroutine(CoolTime());
-
-                    Skill skill = (Skill)data;
-                    if (playerController.isEnoughResources(skill.cost)) {
-                        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
-                        ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
-                        IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
-
-                        playerController.resourceClass.gold -= skill.cost.gold;
-                        playerController.resourceClass.food -= skill.cost.food;
-                        playerController.resourceClass.environment -= skill.cost.environment;
-
-                        playerController.PrintResource();
-
-                        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
-                    }
-                    else {
-                        Debug.Log("자원 부족");
-                    }
-                }
-                else {
-                    Debug.Log("스킬 쿨타임!");
-                }
-            }
+    private void SkillActive(object data) {
+        Skill skill = (Skill)data;
+        if (!CheckResouceOK(skill.cost)) return;
+        if (!canSpell) {
+            Debug.Log("스킬 쿨타임!");
+            return;
         }
+
+        StartCoroutine(CoolTime());
+        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
+        ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
+
+        UseResource(skill.cost);
+        IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+        playerController.PrintResource();
+        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+    }
+
+    private bool CheckResouceOK(Cost cost) {
+        if(playerController.isEnoughResources(cost)) {
+            return true;
+        }
+        else {
+            Debug.Log("자원이 부족합니다.");
+            return false;
+        }
+    }
+
+    private void UseResource(Cost cost) {
+        playerController.resourceClass.gold -= cost.gold;
+        playerController.resourceClass.food -= cost.food;
+        playerController.resourceClass.environment -= cost.environment;
     }
 
     IEnumerator CoolTime() {
