@@ -81,6 +81,7 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
     IngameSceneEventHandler ingameSceneEventHandler;
+    IngameSceneUIController ingameSceneUIController;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -105,6 +106,7 @@ public class IngameCityManager : MonoBehaviour {
     void Start() {
         deck = AccountManager.Instance.decks[0];
         buildingList = deck.coordsSerial;
+        ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
         //    BuildingsInfo bi = new BuildingsInfo();
         //    bi.id = deck.coordsSerial[i];
