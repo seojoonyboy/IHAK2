@@ -407,8 +407,8 @@ public partial class AccountManager {
                     }
                     Card card = buildingObject.data.card;
                     if (card.unit.id != null) tileGroup.units.Add(card.unit);
-                    if (card.activeSkill.Length != 0) {
-                        foreach (Skill skill in card.activeSkill) {
+                    if (card.activeSkills.Length != 0) {
+                        foreach (Skill skill in card.activeSkills) {
                             tileGroup.activeSkills.Add(skill);
                         }
                     }
