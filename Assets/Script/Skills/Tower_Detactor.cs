@@ -59,9 +59,9 @@ public class Tower_Detactor : MonoBehaviour {
 
     private void shootArrow() {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
-        iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
-        towerShellCount--;
+        iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);        
         Destroy(arrow, atkTime * 0.3f);
+        towerShellCount--;
     }
 
     private bool checkEnemyDead() {
