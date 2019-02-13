@@ -81,7 +81,6 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
     IngameSceneEventHandler ingameSceneEventHandler;
-    IngameSceneUIController ingameSceneUIController;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
