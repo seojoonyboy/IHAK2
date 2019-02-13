@@ -18,6 +18,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Transform produceButonList;
     [SerializeField] Text playerName;
     [SerializeField] GameObject playerCity;
+    [SerializeField] GameObject enemyCity;
     [SerializeField] Transform cityPos;
     [SerializeField] Transform lookingCity;
     [SerializeField] Transform switchBtn;
@@ -26,6 +27,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Text ingameTimer;
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] GameObject repairAlert;
+    [SerializeField] Camera territoryCamera;
 
 
     private HorizontalScrollSnap hss;
@@ -43,9 +45,13 @@ public class IngameSceneUIController : MonoBehaviour {
     private void Awake() {
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
         screenRate = baseScreenHeight / (Screen.height);
-        Camera.main.orthographicSize = baseCameraSize / screenRate;
+        enemyCity.transform.position = new Vector3(Screen.width, 0, 0);
+        playerCity.transform.localScale = enemyCity.transform.localScale = playerCity.transform.localScale / 1080 * Screen.width;
+        Camera.main.orthographicSize = territoryCamera.orthographicSize = baseCameraSize / screenRate;
         go.SetActive(true);
         GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
+        territoryCamera.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        transform.GetChild(0).GetComponent<RawImage>().texture = territoryCamera.targetTexture;
 
         foreach(Transform tile in ld.transform) {
             tile.gameObject.layer = 8;
@@ -100,19 +106,19 @@ public class IngameSceneUIController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        ieg = enemyCity.GetComponent<IngameEnemyGenerator>();
         playerName.text = AccountManager.Instance.userInfos.nickname;
-        hss = transform.GetChild(0).GetComponent<HorizontalScrollSnap>();
+        hss = transform.GetChild(1).GetComponent<HorizontalScrollSnap>();
         cityPos.position = new Vector3(cityPos.position.x, cityPos.position.y / screenRate, cityPos.position.z);
         playerCity.transform.GetChild(1).position = cityPos.position;
-        ieg = FindObjectOfType<IngameEnemyGenerator>();
-        ieg.tileGroup.transform.localPosition = playerCity.transform.GetChild(1).localPosition;
-        ieg.tileGroup.transform.localScale = new Vector3(1, 1, 1);
+        enemyCity.transform.GetChild(1).localPosition = playerCity.transform.GetChild(1).localPosition;
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);
         playerRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "Dummy";
         dummyRankBtn.parent.GetChild(1).GetComponent<Text>().text = "Dummy";
         dummyRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = AccountManager.Instance.userInfos.nickname;
         StartCoroutine("EnemyRepair");
+        Debug.Log(hss.transform.GetChild(0).position);
     }
 
     private void Update() {
@@ -138,6 +144,10 @@ public class IngameSceneUIController : MonoBehaviour {
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
         }
+        territoryCamera.transform.position = new Vector3(Screen.width - (hss.transform.GetChild(0).position.x), 0, 0);
+        
+        if (Input.GetKeyDown(KeyCode.Q)) 
+            Debug.Log(hss.transform.GetChild(0).position);
     }
 
     public void SwitchCommand() {
