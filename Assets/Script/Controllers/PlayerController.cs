@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,18 +30,18 @@ public partial class PlayerController : MonoBehaviour {
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
 
-
+    [Header(" - UI")]
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
+    public PlayerResource resourceClass;
+
+    [Header(" - ResourceText")]
     [SerializeField] Text goldValue;
     [SerializeField] Text foodValue;
     [SerializeField] Text turnValue;
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
     [SerializeField] GameObject hqUpgradeWnd;
-
-    public PlayerResource resourceClass;
-
     public IngameCityManager IngameCityManager {
         get { return icm; }
     }
@@ -68,9 +67,11 @@ public partial class PlayerController : MonoBehaviour {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
-
-    public ProductInfo pInfo { get; set; }
+    [Header (" - Player")]
     public int hqLevel;
+
+    
+    public ProductInfo pInfo { get; set; }    
     IngameScoreManager scoreManager;
     private bool warningOn = false;
 
@@ -97,6 +98,7 @@ public partial class PlayerController : MonoBehaviour {
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
         icm.productResources.food.food += icm.hq_tier_1.product.food;
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
+        
     }
 
     private void OnMouseDown() {
@@ -177,7 +179,10 @@ public partial class PlayerController : MonoBehaviour {
         goldValue.text = Gold.ToString();
         foodValue.text = Food.ToString();
         turnValue.text = resourceClass.turn.ToString();
-        envValue.fillAmount = Env / 300.0f;
+        envValue.fillAmount = resourceClass.environment / 300.0f;
+
+        Text envText = envValue.transform.parent.GetChild(2).GetComponent<Text>();
+        envText.text = Mathf.RoundToInt(envValue.fillAmount * 100.0f).ToString() + "%" ;
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
