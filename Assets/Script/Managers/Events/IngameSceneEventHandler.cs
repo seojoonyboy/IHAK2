@@ -59,6 +59,8 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
     public enum EVENT_TYPE {
         NONE,
         TAKE_DAMAGE,
-        HQ_UPGRADE
+        HQ_UPGRADE,
+        RESOURCE_CHANGE,
+        MY_BUILDINGS_INFO_ADDED
     }
 }
