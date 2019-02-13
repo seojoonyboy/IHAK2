@@ -43,7 +43,7 @@ public class TileGroup : MonoBehaviour {
                 continue;
 
             BuildingObject buildingObject = building.GetComponent<BuildingObject>();
-            if (building != null && buildingObject.data.card.type == "military" && buildingObject.data.card.canAttack == true && buildingObject.data.card.attackInfo.id > 0)
+            if (building != null && buildingObject.data.card.type == "military" &&  buildingObject.data.card.attackInfo.id > 0)
                 attackingTowerLocation.Add(tile.GetComponent<TileObject>().tileNum);
         }
     }
