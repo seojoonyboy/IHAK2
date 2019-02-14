@@ -334,6 +334,11 @@ public partial class PlayerController {
         GetComponent<UpgradableBuildingGetter>().CloseModal();
         spritePanel.SetActive(false);
         isUpgradeModalActivated = false;
+
+        var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();
+        horizontalScrollSnap.enabled = true;
+        var scrollRect = transform.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
+        scrollRect.enabled = true;
     }
 
     public bool isUpgradeModalActivate() {
