@@ -9,6 +9,8 @@ using System.Text;
 public class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
     [SerializeField] PlayerController playerController;
+    IngameSceneEventHandler eventHandler;
+
     List<GameObject> cards;
     [SerializeField] GameObject 
         unitCardPref,
@@ -24,6 +26,8 @@ public class IngameDeckShuffler : MonoBehaviour {
     TileGroup tileGroup;
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
+        eventHandler = IngameSceneEventHandler.Instance;
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
     }
 
     void Start() {
@@ -36,6 +40,19 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         //UseCard(0);
         //UseCard(1);
+    }
+
+    private void OnUnitUpgraded(Enum Event_Type, Component Sender, object Param) {
+        //Unit targetUnit = (Unit)Param;
+        //foreach(GameObject card in cards) {
+        //    object data = card.GetComponent<IngameCard>().data;
+        //    if(data.GetType() == typeof(Unit)) {
+        //        Unit unit = (Unit)data;
+        //        if(unit.id == targetUnit.id) {
+        //            card.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = targetUnit.lv.ToString();
+        //        }
+        //    }
+        //}
     }
 
     public void Clear() {
