@@ -15,11 +15,11 @@ public class UnitAI : MonoBehaviour {
 	private timeUpdate update;
 	private Transform healthBar;
 	private BuildingObject target;
-	private float maxHealth;
-    public float health;
+	private float maxHealth = 0;
+    public float health = 0;
 	private float moveSpeed;
 	private float currentTime;
-	private Unit unit;
+	public Unit unit;
 
 	private static IngameCityManager cityManager;
 
@@ -30,11 +30,7 @@ public class UnitAI : MonoBehaviour {
     public GameObject ontile;
 
 	void Start () {
-		SearchUnitData();
 		healthBar = transform.GetChild(1).GetChild(1);
-		moveSpeed = unit.moveSpeed;
-		maxHealth = unit.hitPoint;
-        health = unit.hitPoint;
 
 		skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 		spineAnimationState = skeletonAnimation.AnimationState;
@@ -46,12 +42,13 @@ public class UnitAI : MonoBehaviour {
 	/// <summary>
 	/// 임시여서 나중에는 제대로 된 unit입력을 받아야함.
 	/// </summary>
-	private void SearchUnitData() {
-		TileGroup[] list = FindObjectsOfType<TileGroup>();
-		foreach(TileGroup tilegroup in list) {
-            if (tilegroup.gameObject.name.CompareTo("TileGroup_DummyEnemy(Clone)") != 0)
-                unit = tilegroup.units[0];
-		}
+	private void SetUnitData(Unit unit) {
+		this.unit = unit;
+		moveSpeed = unit.moveSpeed;
+		float temphealth = unit.hitPoint - maxHealth;
+		maxHealth = unit.hitPoint;
+        health += temphealth;
+		
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
 	}
 
@@ -156,7 +153,7 @@ public class UnitAI : MonoBehaviour {
 		calculateHealthBar();
 		if(health <= 0) {            
             //ontile.GetComponent<TileCollision>().count--;
-            if (ontile.GetComponent<TileCollision>().count <= 0)
+            if (ontile != null && ontile.GetComponent<TileCollision>().count <= 0)
                 ontile.GetComponent<TileCollision>().check = false;
             Destroy(gameObject);
 		}

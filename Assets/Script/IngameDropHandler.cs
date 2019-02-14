@@ -60,8 +60,13 @@ public class IngameDropHandler : MonoBehaviour {
 
         //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
         var tmp = ingameCityManager.eachPlayersTileGroups;
-        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-        wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
+        for(int i = 0; i < unit.size; i++) {
+            float randomPosX = Random.Range(-50f, 50f);
+            float randomPosY = Random.Range(-50f, 50f);
+            GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
+            wolf.GetComponent<UnitAI>().unit = unit;
+            wolf.transform.position = ray.origin + new Vector2(randomPosX, 50f + randomPosY);//hit.transform.position;
+        }
 
         UseResource(unit.cost);
         IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
