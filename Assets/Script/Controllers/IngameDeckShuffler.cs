@@ -102,7 +102,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void InitUnitCard() {
         foreach (Unit unit in tileGroup.units) {
 
-            if (unit.name == "") continue;
+            //if (unit.name == "") continue;
             GameObject card = Instantiate(unitCardPref, cardParent);
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             card.GetComponent<IngameCard>().data = unit;
