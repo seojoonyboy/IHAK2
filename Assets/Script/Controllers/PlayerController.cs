@@ -342,17 +342,12 @@ public partial class PlayerController {
 
     public bool Upgrade(GameObject obj) {
         if (obj == null) return false;
-        BuildingObject bo = obj.GetComponent<BuildingObject>();
-        var origin_productPower = bo.data.card.product;
-        int lv = bo.data.card.lv;
-        int tier = bo.data.card.rarity;
-        UpgradableBuildingGetter ubg = GetComponent<UpgradableBuildingGetter>();
-        Resource resource = ubg.CalcCost(lv, tier);
-        if (!ubg.isEnoughResource(resource)) return false;
+        IngameUpgradeCard ingameUpgradeCard = obj.GetComponent<IngameUpgradeCard>();
+        if (ingameUpgradeCard == null) return false;
 
-        int foodChange = System.Convert.ToInt32(origin_productPower.food * (lv / 10.0f + tier / 10.0f));
-        int envChange = System.Convert.ToInt32(origin_productPower.environment * (lv / 10.0f + tier / 10.0f));
-        int goldChange = System.Convert.ToInt32(origin_productPower.gold * (lv / 10.0f + tier / 10.0f));
+        int foodChange = ingameUpgradeCard.newProductPower.food;
+        int envChange = ingameUpgradeCard.newProductPower.environment;
+        int goldChange = ingameUpgradeCard.newProductPower.gold;
 
         icm.productResources.food.food += foodChange;
         icm.productResources.gold.food += foodChange;
@@ -366,12 +361,17 @@ public partial class PlayerController {
         icm.productResources.gold.gold += goldChange;
         icm.productResources.env.gold += goldChange;
 
+        BuildingObject bo = ingameUpgradeCard.targetBuilding.GetComponent<BuildingObject>();
+
         bo.data.card.product.food += foodChange;
         bo.data.card.product.gold += goldChange;
         bo.data.card.product.environment += envChange;
 
-        bo.data.card.lv = ++lv;
-
+        bo.data.card.lv = ++ingameUpgradeCard.lv;
+        if(bo.data.card.id == "primal_town_center") {
+            hqLevel++;
+        }
+        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         return true;
     }
 }

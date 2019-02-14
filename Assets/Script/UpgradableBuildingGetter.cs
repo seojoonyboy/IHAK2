@@ -111,6 +111,21 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             else {
                 availableItems.Add(item);
             }
+
+            Button upgradeBtn = costArea.Find("Button").GetComponent<Button>();
+            upgradeBtn.onClick.AddListener(() => Modal.instantiate(
+                Name.text + "를 업그레이드 하시겠습니까?", 
+                Modal.Type.YESNO, 
+                () => {
+                    playerController.Upgrade(item);
+                }
+            ));
+
+            ingameUpgradeCard.lv = card.lv;
+            ingameUpgradeCard.newProductPower = new Resource();
+            ingameUpgradeCard.newProductPower.food = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newProductPower.gold = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newProductPower.environment = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
         }
 
         unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
