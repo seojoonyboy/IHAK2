@@ -64,7 +64,7 @@ public class IngameDropHandler : MonoBehaviour {
             float randomPosX = Random.Range(-50f, 50f);
             float randomPosY = Random.Range(-50f, 50f);
             GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-            wolf.GetComponent<UnitAI>().unit = unit;
+            wolf.GetComponent<UnitAI>().SetUnitData(unit);
             wolf.transform.position = ray.origin + new Vector2(randomPosX, 50f + randomPosY);//hit.transform.position;
         }
 

@@ -54,6 +54,7 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void ResetTileGroupFinished(Enum Event_Type, Component Sender, object Param) {
+        //TODO : 건물이 세개나 생성이 되는 이유를 알아야함
         foreach(Transform tf in leaderDeck.transform) {
             Destroy(tf.gameObject);
         }
@@ -64,12 +65,31 @@ public class MenuSceneController : MonoBehaviour {
 
         foreach(Transform tile in lo.transform) {
             if(tile.childCount > 1) {
-                for(int i= 1; i<tile.childCount; i++) {
+                SetSortingOrder(tile.GetChild(tile.childCount -1), GetSortingOrder(tile.GetChild(0)));
+                for(int i= 0; i < tile.childCount - 1; i++) {
                     Destroy(tile.GetChild(i).gameObject);
                 }
             }
         }
         go.SetActive(false);
+    }
+
+    private void SetSortingOrder(Transform tile, int order) {
+        if(tile.GetComponent<SpriteRenderer>() != null) {
+            tile.GetComponent<SpriteRenderer>().sortingOrder = order;
+        }
+        else {
+            tile.GetComponent<MeshRenderer>().sortingOrder = order;
+        }
+    }
+
+    private int GetSortingOrder(Transform tile) {
+        if(tile.GetComponent<SpriteRenderer>() != null) {
+            return tile.GetComponent<SpriteRenderer>().sortingOrder;
+        }
+        else {
+            return tile.GetComponent<MeshRenderer>().sortingOrder;
+        }
     }
 
     // Use this for initialization
