@@ -44,6 +44,8 @@ namespace DataModules {
         public float moveSpeed;
         public int tearNeed;
         public string imageName;
+
+        public int lv = 1;
     }
 
     [System.Serializable]

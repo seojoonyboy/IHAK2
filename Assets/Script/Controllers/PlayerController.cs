@@ -380,6 +380,9 @@ public partial class PlayerController {
             DataModules.Unit unit = bo.data.card.unit;
             unit.hitPoint = GetNewHp(unit.hitPoint, lv, rarity);
             unit.power = GetNewAttack(unit.hitPoint, lv, rarity);
+            unit.lv += 1;
+
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, this, unit);
         }
 
         bo.data.card.lv = ++ingameUpgradeCard.lv;
