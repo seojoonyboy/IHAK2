@@ -73,6 +73,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             GameObject item = Instantiate(upgradeModal_content_item_pref, upgradeModal_content);
             item.transform.localScale = new Vector3(1, 1, 1);
+            IngameUpgradeCard ingameUpgradeCard = item.AddComponent<IngameUpgradeCard>();
+            ingameUpgradeCard.targetBuilding = building;
 
             Transform newDataArea = item.transform.Find("Data/NewData").transform;
             Text Name = newDataArea.Find("Name/Val").GetComponent<Text>();
@@ -95,13 +97,13 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             else lv = card.lv;
 
             Resource costs = CalcCost(lv, card.rarity);
+            ingameUpgradeCard.cost = costs;
+
             CostFood.text = costs.food.ToString();
             CostGold.text = costs.gold.ToString();
             CostEco.text = costs.environment.ToString();
 
             Name.text = buildingObject.data.card.name;
-
-            item.AddComponent<Index>().Id = costs.gold;
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
@@ -111,12 +113,12 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             }
         }
 
-        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach (GameObject building in unavailableItems) {
             building.transform.SetAsFirstSibling();
         }
 
-        availableItems = availableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        availableItems = availableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach(GameObject building in availableItems) {
             building.transform.SetAsFirstSibling();
         }
