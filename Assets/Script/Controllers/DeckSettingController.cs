@@ -693,16 +693,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     slotNum++;
 
                 }
-                /*
-                else if(buildingData.card.passiveSkills.Length != 0) {
-                    activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = buildingData.id;
-                    activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>()._object = building;
-                    activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = buildingData.card.passiveSkills[0].name;
-                    slotNum++;
-                }
-                */
             }
         }
     }
