@@ -18,6 +18,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     [SerializeField] GameObject upgradeModal_content_item_pref;
     List<GameObject> buildingInfos;
 
+    private const int MAX_LV = 3;
+
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, OnResourceChange);
@@ -88,14 +90,17 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             Text CostGold = costArea.Find("Data/Gold/Val").GetComponent<Text>();
             Text CostEco = costArea.Find("Data/Eco/Val").GetComponent<Text>();
 
+            Text Lv = item.transform.Find("Image/Lv").GetComponent<Text>();
             int lv = 0;
 
             if(card.id == "primal_town_center") {
-                lv = card.lv + 1;
+                if (card.lv == MAX_LV) lv = card.lv;
+                else lv = card.lv + 1;
                 hqItem = item;
             }
             else lv = card.lv;
 
+            Lv.text = "Lv " + lv;
             Resource costs = CalcCost(lv, card.rarity);
             ingameUpgradeCard.cost = costs;
 
@@ -107,6 +112,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
+
+
             }
             else {
                 availableItems.Add(item);
@@ -199,6 +206,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         if (building.data.card.rarity > playerController.hqLevel) return false;
+        if (building.data.card.lv >= 3) return false;
         return isEnoughResource(resource);
     }
 
