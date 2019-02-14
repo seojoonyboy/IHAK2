@@ -18,6 +18,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     [SerializeField] GameObject upgradeModal_content_item_pref;
     List<GameObject> buildingInfos;
 
+    private const int MAX_LV = 3;
+
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, OnResourceChange);
@@ -73,6 +75,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             GameObject item = Instantiate(upgradeModal_content_item_pref, upgradeModal_content);
             item.transform.localScale = new Vector3(1, 1, 1);
+            IngameUpgradeCard ingameUpgradeCard = item.AddComponent<IngameUpgradeCard>();
+            ingameUpgradeCard.targetBuilding = building;
 
             Transform newDataArea = item.transform.Find("Data/NewData").transform;
             Text Name = newDataArea.Find("Name/Val").GetComponent<Text>();
@@ -86,37 +90,59 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             Text CostGold = costArea.Find("Data/Gold/Val").GetComponent<Text>();
             Text CostEco = costArea.Find("Data/Eco/Val").GetComponent<Text>();
 
+            Text Lv = item.transform.Find("Image/Lv").GetComponent<Text>();
             int lv = 0;
 
             if(card.id == "primal_town_center") {
-                lv = card.lv + 1;
+                if (card.lv == MAX_LV) lv = card.lv;
+                else lv = card.lv + 1;
                 hqItem = item;
             }
             else lv = card.lv;
 
+            Lv.text = "Lv " + lv;
             Resource costs = CalcCost(lv, card.rarity);
+            ingameUpgradeCard.cost = costs;
+
             CostFood.text = costs.food.ToString();
             CostGold.text = costs.gold.ToString();
             CostEco.text = costs.environment.ToString();
 
             Name.text = buildingObject.data.card.name;
-
-            item.AddComponent<Index>().Id = costs.gold;
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
+
+
             }
             else {
                 availableItems.Add(item);
             }
+
+            Button upgradeBtn = costArea.Find("Button").GetComponent<Button>();
+            upgradeBtn.onClick.AddListener(() => Modal.instantiate(
+                Name.text + "를 업그레이드 하시겠습니까?", 
+                Modal.Type.YESNO, 
+                () => {
+                    playerController.Upgrade(item);
+                }
+            ));
+
+            ingameUpgradeCard.lv = card.lv;
+            ingameUpgradeCard.newIncreasePower = new Resource();
+            ingameUpgradeCard.newIncreasePower.food = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newIncreasePower.gold = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newIncreasePower.environment = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
+
+            ingameUpgradeCard.newHp = Convert.ToInt32(card.hitPoint * (1 + (lv / 10.0f) + (card.rarity / 10.0f)));
         }
 
-        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach (GameObject building in unavailableItems) {
             building.transform.SetAsFirstSibling();
         }
 
-        availableItems = availableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        availableItems = availableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach(GameObject building in availableItems) {
             building.transform.SetAsFirstSibling();
         }
@@ -180,6 +206,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         if (building.data.card.rarity > playerController.hqLevel) return false;
+        if (building.data.card.lv >= 3) return false;
         return isEnoughResource(resource);
     }
 
