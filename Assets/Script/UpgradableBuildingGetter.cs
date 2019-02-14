@@ -73,6 +73,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             GameObject item = Instantiate(upgradeModal_content_item_pref, upgradeModal_content);
             item.transform.localScale = new Vector3(1, 1, 1);
+            IngameUpgradeCard ingameUpgradeCard = item.AddComponent<IngameUpgradeCard>();
+            ingameUpgradeCard.targetBuilding = building;
 
             Transform newDataArea = item.transform.Find("Data/NewData").transform;
             Text Name = newDataArea.Find("Name/Val").GetComponent<Text>();
@@ -95,13 +97,13 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             else lv = card.lv;
 
             Resource costs = CalcCost(lv, card.rarity);
+            ingameUpgradeCard.cost = costs;
+
             CostFood.text = costs.food.ToString();
             CostGold.text = costs.gold.ToString();
             CostEco.text = costs.environment.ToString();
 
             Name.text = buildingObject.data.card.name;
-
-            item.AddComponent<Index>().Id = costs.gold;
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
@@ -109,14 +111,29 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             else {
                 availableItems.Add(item);
             }
+
+            Button upgradeBtn = costArea.Find("Button").GetComponent<Button>();
+            upgradeBtn.onClick.AddListener(() => Modal.instantiate(
+                Name.text + "를 업그레이드 하시겠습니까?", 
+                Modal.Type.YESNO, 
+                () => {
+                    playerController.Upgrade(item);
+                }
+            ));
+
+            ingameUpgradeCard.lv = card.lv;
+            ingameUpgradeCard.newProductPower = new Resource();
+            ingameUpgradeCard.newProductPower.food = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newProductPower.gold = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
+            ingameUpgradeCard.newProductPower.environment = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
         }
 
-        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach (GameObject building in unavailableItems) {
             building.transform.SetAsFirstSibling();
         }
 
-        availableItems = availableItems.OrderBy(x => x.GetComponent<Index>().Id).ToList();
+        availableItems = availableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach(GameObject building in availableItems) {
             building.transform.SetAsFirstSibling();
         }
