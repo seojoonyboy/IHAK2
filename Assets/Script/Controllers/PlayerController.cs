@@ -345,9 +345,9 @@ public partial class PlayerController {
         IngameUpgradeCard ingameUpgradeCard = obj.GetComponent<IngameUpgradeCard>();
         if (ingameUpgradeCard == null) return false;
 
-        int foodChange = ingameUpgradeCard.newProductPower.food;
-        int envChange = ingameUpgradeCard.newProductPower.environment;
-        int goldChange = ingameUpgradeCard.newProductPower.gold;
+        int foodChange = ingameUpgradeCard.newIncreasePower.food;
+        int envChange = ingameUpgradeCard.newIncreasePower.environment;
+        int goldChange = ingameUpgradeCard.newIncreasePower.gold;
 
         icm.productResources.food.food += foodChange;
         icm.productResources.gold.food += foodChange;
@@ -367,11 +367,31 @@ public partial class PlayerController {
         bo.data.card.product.gold += goldChange;
         bo.data.card.product.environment += envChange;
 
+        int lv = bo.data.card.lv;
+        int rarity = bo.data.card.rarity;
+
+        bo.data.card.hitPoint = ingameUpgradeCard.newHp;
+        if (!string.IsNullOrEmpty(bo.data.card.unit.name)) {
+            DataModules.Unit unit = bo.data.card.unit;
+            unit.hitPoint = GetNewHp(unit.hitPoint, lv, rarity);
+            unit.power = GetNewAttack(unit.hitPoint, lv, rarity);
+        }
+
         bo.data.card.lv = ++ingameUpgradeCard.lv;
         if(bo.data.card.id == "primal_town_center") {
             hqLevel++;
         }
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         return true;
+    }
+
+    public int GetNewHp(int prevHp, int lv, int rarity) {
+        int newHp = System.Convert.ToInt32(prevHp * (1 + lv / 16.0f) + (rarity / 16.0f));
+        return newHp;
+    }
+
+    public int GetNewAttack(int prevHp, int lv, int rarity) {
+        int newAmount = System.Convert.ToInt32(prevHp * (1 + (((lv + rarity) / 2.0f) / 12.0f)));
+        return newAmount;
     }
 }
