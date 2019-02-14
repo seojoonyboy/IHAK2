@@ -20,8 +20,13 @@ public class TileSpineAnimation : MonoBehaviour {
 		items = skeleton.GetSkeletonData(false).Animations.Items;
         ani.skeletonDataAsset = skeleton;
         ani.Initialize(false);
-		ani.skeleton.SetAttachment("tile", null);
         ani.AnimationState.SetAnimation(0, items[level], true);
+		try {
+			ani.skeleton.SetAttachment("tile", null);
+		} 
+		catch (System.Exception error) {
+			Debug.Log(error + "\n이 스파인은 바닥이 없는 스파인입니다.");
+		}
 	}
 
 	public void Upgrade() {
