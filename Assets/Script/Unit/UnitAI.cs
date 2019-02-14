@@ -19,7 +19,8 @@ public class UnitAI : MonoBehaviour {
     public float health = 0;
 	private float moveSpeed;
 	private float currentTime;
-	public Unit unit;
+	[SerializeField]
+	private Unit unit;
 
 	private static IngameCityManager cityManager;
 
@@ -31,7 +32,7 @@ public class UnitAI : MonoBehaviour {
 
 	void Start () {
 		healthBar = transform.GetChild(1).GetChild(1);
-
+		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
 		skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
@@ -39,17 +40,13 @@ public class UnitAI : MonoBehaviour {
 		searchBuilding();
 		setState(enemyState.MOVE);
 	}
-	/// <summary>
-	/// 임시여서 나중에는 제대로 된 unit입력을 받아야함.
-	/// </summary>
-	private void SetUnitData(Unit unit) {
+
+	public void SetUnitData(Unit unit) {
 		this.unit = unit;
 		moveSpeed = unit.moveSpeed;
 		float temphealth = unit.hitPoint - maxHealth;
 		maxHealth = unit.hitPoint;
         health += temphealth;
-		
-		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
 	}
 
 	private void setState(enemyState state) {
