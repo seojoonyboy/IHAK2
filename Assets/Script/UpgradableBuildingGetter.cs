@@ -207,6 +207,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         if (building.data.card.rarity > playerController.hqLevel) return false;
         if (building.data.card.lv >= 3) return false;
+        if (building.data.card.id == "primal_town_center" && building.data.card.lv + 1 == MAX_LV) return false;
         return isEnoughResource(resource);
     }
 
