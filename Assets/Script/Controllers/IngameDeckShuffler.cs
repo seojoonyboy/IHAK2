@@ -141,7 +141,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             GameObject card = Instantiate(spellCardPref, cardParent);
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             card.GetComponent<IngameCard>().data = skill;
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.imageName);
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
 
             if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
             if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
