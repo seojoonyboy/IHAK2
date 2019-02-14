@@ -754,12 +754,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 activeSlotUI.transform.GetChild(0).GetComponent<ActiveSlot>()._object = slot.GetComponent<ActiveSlot>()._object;
                 activeSlotUI.transform.GetChild(0).GetComponent<Image>().sprite = slot.GetComponent<Image>().sprite;
                 activeSlotUI.transform.GetChild(0).gameObject.SetActive(true);
-                slot.GetComponent<Image>().sprite = null;
-                slot.GetComponent<ActiveSlot>().id = 0;
-                slot.GetComponent<ActiveSlot>()._object = null;
-                slot.transform.GetChild(0).GetComponent<Text>().text = " ";
-                slot.SetActive(false);
-                continue;
             }
             
             slot.GetComponent<Image>().sprite = null;
