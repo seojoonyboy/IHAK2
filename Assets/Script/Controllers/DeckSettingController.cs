@@ -684,7 +684,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     activeSlotUI.transform.GetChild(slotNum).GetChild(0).GetComponent<Text>().text = buildingData.card.activeSkills[0].name;
                     slotNum++;
                 }
-                else if(buildingData.card.unit.id != "") {
+                else if(buildingData.card.unit.id != null && buildingData.card.unit.id != "") {
                     activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<ActiveSlot>().id = buildingData.id;
@@ -772,22 +772,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 slot.SetActive(true);
             }
             
-            else if (buildingData.card.unit.id != "") {
+            else if (buildingData.card.unit.id != null && buildingData.card.unit.id != "") {
                 slot.GetComponent<Image>().sprite = buildingObject.mainSprite;
                 activeSlot.id = buildingData.id;
                 activeSlot._object = _building;
                 slot.transform.GetChild(0).GetComponent<Text>().text = buildingData.card.unit.name;
                 slot.SetActive(true);
             }
-            /*
-            else if (buildingData.card.passiveSkills.Length != 0) {
-                slot.GetComponent<Image>().sprite = buildingObject.mainSprite;
-                activeSlot.id = buildingData.id;
-                activeSlot._object = _building;
-                slot.transform.GetChild(0).GetComponent<Text>().text = buildingData.card.passiveSkills[0].name;
-                slot.SetActive(true);
-            }
-            */
         }
 
 
