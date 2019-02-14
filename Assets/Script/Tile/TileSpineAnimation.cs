@@ -5,18 +5,31 @@ using Spine;
 using Spine.Unity;
 
 public class TileSpineAnimation : MonoBehaviour {
-
+	
+	SkeletonAnimation ani;
+	SkeletonDataAsset skeleton;
+	Spine.Animation[] items;
+	int level = 0;
 	// Use this for initialization
 	IEnumerator Start() {
-		SkeletonAnimation ani = GetComponent<SkeletonAnimation>();
+		ani = GetComponent<SkeletonAnimation>();
 		if(ani == null) yield break;
-		SkeletonDataAsset skeleton = GetComponent<BuildingObject>().spine;
+		skeleton = GetComponent<BuildingObject>().spine;
 		skeleton.GetSkeletonData(false);
 		yield return new WaitForSeconds(0.1f);
-		var data = skeleton.GetSkeletonData(false).Animations.Items[0];
+		items = skeleton.GetSkeletonData(false).Animations.Items;
         ani.skeletonDataAsset = skeleton;
         ani.Initialize(false);
 		ani.skeleton.SetAttachment("tile", null);
-        ani.AnimationState.SetAnimation(0, data, true);
+        ani.AnimationState.SetAnimation(0, items[level], true);
+	}
+
+	public void Upgrade() {
+		level++;
+		if(items.Length <= level) {
+			Debug.Log(name+"의 해당 레벨의 이미지는 존재하지 않습니다.");
+			return;
+		}
+		ani.AnimationState.SetAnimation(0, items[level], true);
 	}
 }
