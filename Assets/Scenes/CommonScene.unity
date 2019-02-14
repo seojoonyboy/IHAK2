@@ -4165,6 +4165,16 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingSpines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4197,6 +4207,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9de613076d75ba440a4f0676fe9270cd,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 707b118d148cf474094893e75c805e86,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce557b7215875644cbcb66d7840140f2,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingSpines.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ce557b7215875644cbcb66d7840140f2,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
   m_IsPrefabAsset: 0
