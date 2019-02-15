@@ -388,6 +388,7 @@ public partial class PlayerController {
         bo.data.card.lv = ++ingameUpgradeCard.lv;
         if(bo.data.card.id == "primal_town_center") {
             hqLevel++;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
         if(bo.spine != null) bo.GetComponent<TileSpineAnimation>().Upgrade();
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);

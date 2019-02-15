@@ -112,8 +112,6 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
-
-
             }
             else {
                 availableItems.Add(item);
@@ -130,11 +128,29 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             ingameUpgradeCard.lv = card.lv;
             ingameUpgradeCard.newIncreasePower = new Resource();
-            ingameUpgradeCard.newIncreasePower.food = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
-            ingameUpgradeCard.newIncreasePower.gold = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
-            ingameUpgradeCard.newIncreasePower.environment = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
 
-            ingameUpgradeCard.newHp = Convert.ToInt32(card.hitPoint * (1 + (lv / 10.0f) + (card.rarity / 10.0f)));
+            int foodIncreaseAmount = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
+            int goldIncreaseAmount = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
+            int envIncreaseAmount = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
+
+            ingameUpgradeCard.newIncreasePower.food = foodIncreaseAmount;
+            ingameUpgradeCard.newIncreasePower.gold = goldIncreaseAmount;
+            ingameUpgradeCard.newIncreasePower.environment = envIncreaseAmount;
+
+            //Todo : 생산력 표기
+            if (foodIncreaseAmount >= 0) Food.text = "+" + foodIncreaseAmount;
+            else Food.text = foodIncreaseAmount.ToString();
+            if (goldIncreaseAmount >= 0) Gold.text = "+" + goldIncreaseAmount;
+            else Gold.text = goldIncreaseAmount.ToString();
+            if (envIncreaseAmount >= 0) Eco.text = "+" + envIncreaseAmount;
+            else Eco.text = envIncreaseAmount.ToString();
+
+            int newHp = Convert.ToInt32(card.hitPoint * (1 + (lv / 10.0f) + (card.rarity / 10.0f)));
+            int HpIncreaseAmount = newHp - card.hitPoint;
+            if (HpIncreaseAmount > 0) Hp.text = "+" + HpIncreaseAmount;
+            else Hp.text = HpIncreaseAmount.ToString();
+            
+            ingameUpgradeCard.newHp = newHp;
         }
 
         unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
@@ -205,7 +221,8 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     }
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
-        if (building.data.card.rarity > playerController.hqLevel) return false;
+        Debug.Log(playerController.hqLevel);
+        if (building.data.card.rarity > playerController.hqLevel - 1) return false;
         if (building.data.card.lv >= 3) return false;
         if (building.data.card.id == "primal_town_center" && building.data.card.lv + 1 == MAX_LV) return false;
         return isEnoughResource(resource);
