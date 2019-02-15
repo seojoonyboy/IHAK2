@@ -149,9 +149,27 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             ingameUpgradeCard.lv = card.lv;
             ingameUpgradeCard.newIncreasePower = new Resource();
 
-            int foodIncreaseAmount = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
-            int goldIncreaseAmount = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
-            int envIncreaseAmount = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
+            int foodIncreaseAmount = 0;
+            int goldIncreaseAmount = 0;
+            int envIncreaseAmount = 0;
+            if (card.id == "primal_town_center") {
+                if(playerController.hqLevel == 1) {
+                    foodIncreaseAmount = icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
+                    goldIncreaseAmount = icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
+                    envIncreaseAmount = icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                }
+                else if(playerController.hqLevel == 2) {
+                    foodIncreaseAmount = icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
+                    goldIncreaseAmount = icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
+                    envIncreaseAmount = icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                }
+            }
+            else {
+                foodIncreaseAmount = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
+                goldIncreaseAmount = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
+                envIncreaseAmount = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
+            }
+            
 
             ingameUpgradeCard.newIncreasePower.food = foodIncreaseAmount;
             ingameUpgradeCard.newIncreasePower.gold = goldIncreaseAmount;
