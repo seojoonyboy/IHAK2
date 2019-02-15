@@ -115,7 +115,6 @@ public partial class PlayerController : MonoBehaviour {
                 if (env + icm.productResources.gold.environment > 0) {
                     if (icm.productResources.gold.gold > 0) {
                         Gold += icm.productResources.gold.gold;
-                        Gold += 1000;
                         Food += icm.productResources.gold.food;
                         Env += icm.productResources.gold.environment;
                         resourceClass.turn--;
@@ -137,7 +136,6 @@ public partial class PlayerController : MonoBehaviour {
                     if (icm.productResources.food.food > 0) {
                         Gold += icm.productResources.food.gold;
                         Food += icm.productResources.food.food;
-                        Food += 1000;
                         Env += icm.productResources.food.environment;
                         resourceClass.turn--;
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
