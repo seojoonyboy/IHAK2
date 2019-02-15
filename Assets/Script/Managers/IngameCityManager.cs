@@ -80,6 +80,7 @@ public class IngameCityManager : MonoBehaviour {
     [Space(10)]
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
+    [SerializeField] private SkeletonDataAsset wreckSpine;
     IngameSceneEventHandler ingameSceneEventHandler;
 
     void Awake() {
@@ -106,6 +107,7 @@ public class IngameCityManager : MonoBehaviour {
         deck = AccountManager.Instance.decks[0];
         buildingList = deck.coordsSerial;
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
+        wreckSpine.GetSkeletonData(false);
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
         //    BuildingsInfo bi = new BuildingsInfo();
         //    bi.id = deck.coordsSerial[i];
@@ -422,7 +424,7 @@ public class IngameCityManager : MonoBehaviour {
                 float enemyHpScaleX = enemyHp / enemyMaxHP;
                 enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(enemyHpScaleX, 1, 1);
                 enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                enemyBuilding.gameObject.GetComponent<SpriteRenderer>().sprite = enemyBuilding.gameObject.GetComponent<BuildingObject>().mainSprite;
+                SetReviveImage(enemyBuilding.gameObject);
                 enemyBuilding.activate = true;
 
                 //전체체력게이지
@@ -610,7 +612,7 @@ public class IngameCityManager : MonoBehaviour {
         buildingInfo.hp = 0;
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
-        buildingInfo.gameObject.GetComponent<SpriteRenderer>().sprite = wreckSprite;
+        SetWreck(buildingInfo.gameObject);
 
         if (buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
@@ -804,6 +806,34 @@ public class IngameCityManager : MonoBehaviour {
         }
         else {
             setBuilding.GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
+        }
+    }
+
+    private void SetWreck(GameObject setBuilding) {
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) {
+            spriteRenderer.sprite = wreckSprite;
+        }
+        else {
+            SkeletonAnimation skeleton = setBuilding.GetComponent<SkeletonAnimation>();
+            skeleton.skeletonDataAsset = wreckSpine;
+            skeleton.skeleton.SetAttachment("tile", null);
+            skeleton.AnimationState.SetAnimation(0, "animation", true);
+        }
+    }
+
+    private void SetReviveImage(GameObject setBuilding) {
+        BuildingObject buildingObject = setBuilding.GetComponent<BuildingObject>();
+        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
+        if(spriteRenderer != null) {
+            spriteRenderer.sprite = buildingObject.mainSprite;
+        }
+        else {
+            SkeletonAnimation ani = setBuilding.GetComponent<SkeletonAnimation>();
+            buildingObject.spine.GetSkeletonData(false);
+            ani.skeletonDataAsset = buildingObject.spine;
+            ani.skeleton.SetAttachment("tile", null);
+            ani.AnimationState.SetAnimation(0, ani.skeletonDataAsset.GetSkeletonData(false).Animations.Items[0], true);
         }
     }
 

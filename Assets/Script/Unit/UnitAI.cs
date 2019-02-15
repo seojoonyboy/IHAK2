@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using DataModules;
+using System;
 
 public class UnitAI : MonoBehaviour {
 	public enum enemyState {
@@ -39,15 +40,28 @@ public class UnitAI : MonoBehaviour {
 
 		searchBuilding();
 		setState(enemyState.MOVE);
+
+		IngameSceneEventHandler.Instance.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
 	}
 
-	public void SetUnitData(Unit unit) {
+	private void OnDestroy() {
+		IngameSceneEventHandler.Instance.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
+	}
+
+    public void SetUnitData(Unit unit) {
 		this.unit = unit;
 		moveSpeed = unit.moveSpeed;
 		float temphealth = unit.hitPoint - maxHealth;
 		maxHealth = unit.hitPoint;
         health += temphealth;
 	}
+
+    private void UnitUpgrade(Enum Event_Type, Component Sender, object Param) {
+        Unit unit = (Unit)Param;
+		if(this.unit.id.CompareTo(unit.id) != 0) return;
+		SetUnitData(unit);
+		calculateHealthBar();
+    }
 
 	private void setState(enemyState state) {
 		update = null;

@@ -60,7 +60,10 @@ public class Temple_Damager : MonoBehaviour {
             magmaObject.transform.SetParent(pos, false);
             SpriteRenderer magmaRender = magmaObject.AddComponent<SpriteRenderer>();
             magmaRender.sprite = magma;
-            magmaRender.sortingOrder = pos.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            if(pos.GetComponent<SpriteRenderer>() != null)
+                magmaRender.sortingOrder = pos.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            else
+                magmaRender.sortingOrder = pos.GetComponent<MeshRenderer>().sortingOrder + 1;
             Destroy(magmaObject, 1f);
         }
         
