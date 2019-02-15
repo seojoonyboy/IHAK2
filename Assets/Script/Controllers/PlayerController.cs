@@ -18,7 +18,7 @@ public partial class PlayerController : MonoBehaviour {
     public class PlayerResource {
         public int gold = 50;
         public int food = 50;
-        public int turn = 600;
+        public int turn = 250;
         public int environment = 300;
     }
 
