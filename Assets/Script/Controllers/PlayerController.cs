@@ -5,6 +5,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public partial class PlayerController : MonoBehaviour {
 
@@ -72,6 +73,9 @@ public partial class PlayerController : MonoBehaviour {
     }
     [Header (" - Player")]
     public int hqLevel;
+    [Header(" - Spine")]
+    [SerializeField] private SkeletonDataAsset coinAni;
+    [SerializeField] private Material coinAniMaterial;
 
     
     public ProductInfo pInfo { get; set; }    
@@ -101,6 +105,8 @@ public partial class PlayerController : MonoBehaviour {
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
         icm.productResources.food.food += icm.hq_tier_1.product.food;
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
+
+        coinAni.GetSkeletonData(false);
         
     }
 
@@ -118,6 +124,7 @@ public partial class PlayerController : MonoBehaviour {
                         Food += icm.productResources.gold.food;
                         Env += icm.productResources.gold.environment;
                         resourceClass.turn--;
+                        ShowCoinAnimation(1);
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
                             icm.DecideUnActiveBuilding();
                     }
@@ -138,6 +145,7 @@ public partial class PlayerController : MonoBehaviour {
                         Food += icm.productResources.food.food;
                         Env += icm.productResources.food.environment;
                         resourceClass.turn--;
+                        ShowCoinAnimation(0);
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
                             icm.DecideUnActiveBuilding();
                     }
@@ -158,6 +166,7 @@ public partial class PlayerController : MonoBehaviour {
                             Gold += icm.productResources.env.gold;
                             Food += icm.productResources.env.food;
                             Env += icm.productResources.env.environment;
+                            ShowCoinAnimation(2);
                             if (Env > 300) {
                                 scoreManager.AddScore(icm.productResources.env.environment - (Env - 300), IngameScoreManager.ScoreType.Product);
                                 Env = 300;
@@ -172,10 +181,20 @@ public partial class PlayerController : MonoBehaviour {
                 }
                 break;
             case Buttons.REPAIR:
+                ShowCoinAnimation(3);
                 resourceClass.turn--;
                 break;
         }
         PrintResource();
+    }
+
+    private void ShowCoinAnimation(int num) {
+        SkeletonGraphic ani = SkeletonGraphic.NewSkeletonGraphicGameObject(coinAni, transform, coinAniMaterial);
+        ani.GetComponent<RectTransform>().position = Input.mousePosition;
+        ani.Initialize(false);
+        ani.raycastTarget = false;
+        ani.AnimationState.SetAnimation(0, coinAni.GetSkeletonData(false).Animations.Items[num], false);
+        Destroy(ani.gameObject, 1f);
     }
 
     public void PrintResource() {
