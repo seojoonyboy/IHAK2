@@ -69,7 +69,7 @@ public class OwnCardGenerator : MonoBehaviour {
     }
 
     private void ShowDetail(BuildingObject buildingObject) {
-        if (buildingObject.data.card.unit == null) {
+        if(string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);
 
