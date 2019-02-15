@@ -40,7 +40,15 @@ public class EditScenePanel : MonoBehaviour {
                 return;
 
             for (int i = 0; i < content.childCount; i++) 
-                iTween.MoveTo(content.GetChild(i).gameObject, iTween.Hash("x", content.GetChild(i).position.x + Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+                iTween.MoveTo(content.GetChild(i).gameObject, iTween.Hash(
+                    "x", content.GetChild(i).position.x + Screen.width, 
+                    "time", 0.4f, 
+                    "delay", 0, 
+                    "easetype", iTween.EaseType.easeInOutQuart,
+                    "onstarttarget", gameObject,
+                    "onstart", "DisableArrowButtons",
+                    "oncompletetarget", gameObject,
+                    "oncomplete", "EnableArrowButtons"));
 
             page--;
         }
@@ -49,10 +57,27 @@ public class EditScenePanel : MonoBehaviour {
                 return;
 
             for (int i = 0; i < content.childCount; i++) 
-                iTween.MoveTo(content.GetChild(i).gameObject, iTween.Hash("x", content.GetChild(i).position.x - Screen.width, "time", 0.4f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+                iTween.MoveTo(content.GetChild(i).gameObject, iTween.Hash("x", content.GetChild(i).position.x - Screen.width, 
+                "time", 0.4f, 
+                "delay", 0, 
+                "easetype", iTween.EaseType.easeInOutQuart,
+                "onstarttarget", gameObject,
+                "onstart", "DisableArrowButtons",
+                "oncompletetarget", gameObject,
+                "oncomplete", "EnableArrowButtons"));
 
             page++;
         }
         pageText.text = (page + 1) + " / " + content.childCount;
+    }
+
+    private void DisableArrowButtons() {
+        leftBtn.GetComponent<Button>().interactable = false;
+        rightBtn.GetComponent<Button>().interactable = false;
+    }
+
+    private void EnableArrowButtons() {
+        leftBtn.GetComponent<Button>().interactable = true;
+        rightBtn.GetComponent<Button>().interactable = true;
     }
 }
