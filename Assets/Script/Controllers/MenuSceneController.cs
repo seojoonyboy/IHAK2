@@ -65,8 +65,8 @@ public class MenuSceneController : MonoBehaviour {
 
         foreach(Transform tile in lo.transform) {
             if(tile.childCount > 1) {
-                SetSortingOrder(tile.GetChild(tile.childCount -1), GetSortingOrder(tile.GetChild(0)));
-                for(int i= 0; i < tile.childCount - 1; i++) {
+                SetSpineAnimation(tile.GetChild(0));
+                for(int i= 1; i < tile.childCount; i++) {
                     Destroy(tile.GetChild(i).gameObject);
                 }
             }
@@ -74,23 +74,13 @@ public class MenuSceneController : MonoBehaviour {
         go.SetActive(false);
     }
 
-    private void SetSortingOrder(Transform tile, int order) {
-        if(tile.GetComponent<SpriteRenderer>() != null) {
-            tile.GetComponent<SpriteRenderer>().sortingOrder = order;
-        }
-        else {
-            tile.GetComponent<MeshRenderer>().sortingOrder = order;
-        }
+    private void SetSpineAnimation(Transform aniTransform) {
+        Spine.Unity.SkeletonAnimation ani = aniTransform.GetComponent<Spine.Unity.SkeletonAnimation>();
+        if(ani == null) return;
+        ani.enabled = true;
+        ani.GetComponent<TileSpineAnimation>().enabled = true;
     }
-
-    private int GetSortingOrder(Transform tile) {
-        if(tile.GetComponent<SpriteRenderer>() != null) {
-            return tile.GetComponent<SpriteRenderer>().sortingOrder;
-        }
-        else {
-            return tile.GetComponent<MeshRenderer>().sortingOrder;
-        }
-    }
+    
 
     // Use this for initialization
     void Start() {
