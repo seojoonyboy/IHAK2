@@ -50,6 +50,7 @@ public partial class PlayerController : MonoBehaviour {
         get { return resourceClass.food; }
         set {
             resourceClass.food = value;
+            PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
@@ -57,6 +58,7 @@ public partial class PlayerController : MonoBehaviour {
         get { return resourceClass.gold; }
         set {
             resourceClass.gold = value;
+            PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
@@ -64,6 +66,7 @@ public partial class PlayerController : MonoBehaviour {
         get { return resourceClass.environment; }
         set {
             resourceClass.environment = value;
+            PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
@@ -112,6 +115,7 @@ public partial class PlayerController : MonoBehaviour {
                 if (env + icm.productResources.gold.environment > 0) {
                     if (icm.productResources.gold.gold > 0) {
                         Gold += icm.productResources.gold.gold;
+                        Gold += 1000;
                         Food += icm.productResources.gold.food;
                         Env += icm.productResources.gold.environment;
                         resourceClass.turn--;
@@ -133,6 +137,7 @@ public partial class PlayerController : MonoBehaviour {
                     if (icm.productResources.food.food > 0) {
                         Gold += icm.productResources.food.gold;
                         Food += icm.productResources.food.food;
+                        Food += 1000;
                         Env += icm.productResources.food.environment;
                         resourceClass.turn--;
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
@@ -239,17 +244,20 @@ public partial class PlayerController {
                 icm.hq_tier_2.upgradeCost.gold < Gold &&
                 icm.hq_tier_2.upgradeCost.env < Env) {
                 Debug.Log("2단계 업글");
+                hqLevel++;
+
                 icm.productResources.gold.gold += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
                 icm.productResources.food.food += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
                 icm.productResources.env.environment += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+
                 Food -= icm.hq_tier_2.upgradeCost.food;
                 Gold -= icm.hq_tier_2.upgradeCost.gold;
                 Env -= icm.hq_tier_2.upgradeCost.env;
-                hqLevel++;
+                
                 resourceClass.turn--;
-                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
                 OpenHqUpgrageInfo(false);
                 icm.DecideUnActiveBuilding();
+                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
             }
             else {
                 if (!warningOn)
@@ -261,16 +269,19 @@ public partial class PlayerController {
                 icm.hq_tier_3.upgradeCost.gold < Gold &&
                 icm.hq_tier_3.upgradeCost.env < Env) {
                 Debug.Log("3단계 업글");
+                hqLevel++;
+
                 icm.productResources.gold.gold += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
                 icm.productResources.food.food += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
                 icm.productResources.env.environment += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+
                 Food -= icm.hq_tier_3.upgradeCost.food;
                 Gold -= icm.hq_tier_3.upgradeCost.gold;
                 Env -= icm.hq_tier_3.upgradeCost.env;
-                hqLevel++;
+                
                 resourceClass.turn--;
-                commandButtons.parent.GetChild(2).GetComponent<Image>().enabled = false;
-                commandButtons.parent.GetChild(2).GetChild(1).gameObject.SetActive(false);
+                //commandButtons.parent.GetChild(2).GetComponent<Image>().enabled = false;
+                //commandButtons.parent.GetChild(2).GetChild(1).gameObject.SetActive(false);
                 IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
                 hqUpgradeWnd.SetActive(false);
             }
@@ -318,16 +329,6 @@ public partial class PlayerController {
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
     }
 
-    public void OnUpgradeBtnClicked() {
-        if (Upgrade(selectedObj)) {
-            CloseUpgradeModal();
-        }
-        else {
-            //업그레이드 불가하다는 알림
-
-        }
-    }
-
     public void CloseUpgradeModal() {
         //modal 비활성화
         //scroll 활성화
@@ -345,7 +346,7 @@ public partial class PlayerController {
         return isUpgradeModalActivated;
     }
 
-    public bool Upgrade(GameObject obj) {
+    public bool Upgrade(GameObject obj, Resource costs) {
         if (obj == null) return false;
         IngameUpgradeCard ingameUpgradeCard = obj.GetComponent<IngameUpgradeCard>();
         if (ingameUpgradeCard == null) return false;
@@ -365,6 +366,10 @@ public partial class PlayerController {
         icm.productResources.food.gold += goldChange;
         icm.productResources.gold.gold += goldChange;
         icm.productResources.env.gold += goldChange;
+
+        Food -= costs.food;
+        Gold -= costs.gold;
+        Env -= costs.environment;
 
         BuildingObject bo = ingameUpgradeCard.targetBuilding.GetComponent<BuildingObject>();
 
@@ -386,10 +391,6 @@ public partial class PlayerController {
         }
 
         bo.data.card.lv = ++ingameUpgradeCard.lv;
-        if(bo.data.card.id == "primal_town_center") {
-            hqLevel++;
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
-        }
         if(bo.spine != null) bo.GetComponent<TileSpineAnimation>().Upgrade();
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         return true;

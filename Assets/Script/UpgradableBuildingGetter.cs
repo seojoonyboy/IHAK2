@@ -38,13 +38,13 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     float time = 0;
 
     void Update() {
-        if (!canInvoke) {
-            time += Time.deltaTime;
-            if (time > coolTime) {
-                canInvoke = true;
-                time = 0;
-            }
-        }
+        //if (!canInvoke) {
+        //    time += Time.deltaTime;
+        //    if (time > coolTime) {
+        //        canInvoke = true;
+        //        time = 0;
+        //    }
+        //}
     }
 
     void OnDestroy() {
@@ -58,7 +58,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
     private void OnResourceChange(Enum Event_Type, Component Sender, object Param) {
         if (!playerController.isUpgradeModalActivate()) return;
-        if (!canInvoke) return;
+        //if (!canInvoke) return;
 
         ClearList();
         var playerResource = (PlayerController.PlayerResource)Param;
@@ -94,14 +94,29 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             int lv = 0;
 
             if(card.id == "primal_town_center") {
-                if (card.lv == MAX_LV) lv = card.lv;
-                else lv = card.lv + 1;
+                if (card.lv == MAX_LV) lv = playerController.hqLevel;
+                else lv = playerController.hqLevel;
                 hqItem = item;
             }
             else lv = card.lv;
 
             Lv.text = "Lv " + lv;
-            Resource costs = CalcCost(lv, card.rarity);
+            Resource costs = new Resource();
+            if (card.id == "primal_town_center") {
+                if(playerController.hqLevel == 1) {
+                    costs.food = icm.hq_tier_2.upgradeCost.food;
+                    costs.gold = icm.hq_tier_2.upgradeCost.gold;
+                    costs.environment = icm.hq_tier_2.upgradeCost.env;
+                }
+                else if(playerController.hqLevel == 2) {
+                    costs.food = icm.hq_tier_3.upgradeCost.food;
+                    costs.gold = icm.hq_tier_3.upgradeCost.gold;
+                    costs.environment = icm.hq_tier_3.upgradeCost.env;
+                }
+            }
+            else {
+                costs = CalcCost(lv, card.rarity);
+            }
             ingameUpgradeCard.cost = costs;
 
             CostFood.text = costs.food.ToString();
@@ -122,7 +137,11 @@ public class UpgradableBuildingGetter : MonoBehaviour {
                 Name.text + "를 업그레이드 하시겠습니까?", 
                 Modal.Type.YESNO, 
                 () => {
-                    playerController.Upgrade(item);
+                    if(card.id == "primal_town_center") {
+                        GetComponent<PlayerController>().HqUpgrade();
+                        card.lv += 1;
+                    }
+                    else playerController.Upgrade(item, costs);
                 }
             ));
 
@@ -222,9 +241,10 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         Debug.Log(playerController.hqLevel);
-        if (building.data.card.rarity > playerController.hqLevel - 1) return false;
+        if (building.data.card.rarity >= playerController.hqLevel) return false;
+        if (building.data.card.lv >= playerController.hqLevel) return false;
         if (building.data.card.lv >= 3) return false;
-        if (building.data.card.id == "primal_town_center" && building.data.card.lv + 1 == MAX_LV) return false;
+        if (building.data.card.id == "primal_town_center" && playerController.hqLevel == MAX_LV) return false;
         return isEnoughResource(resource);
     }
 
