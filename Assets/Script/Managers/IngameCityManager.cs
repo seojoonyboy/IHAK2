@@ -815,10 +815,8 @@ public class IngameCityManager : MonoBehaviour {
             spriteRenderer.sprite = wreckSprite;
         }
         else {
-            SkeletonAnimation skeleton = setBuilding.GetComponent<SkeletonAnimation>();
-            skeleton.skeletonDataAsset = wreckSpine;
-            skeleton.skeleton.SetAttachment("tile", null);
-            skeleton.AnimationState.SetAnimation(0, "animation", true);
+            SkeletonAnimation ani = setBuilding.GetComponent<SkeletonAnimation>();
+            StartCoroutine(SetAnimationTile(ani, wreckSpine));
         }
     }
 
@@ -830,11 +828,17 @@ public class IngameCityManager : MonoBehaviour {
         }
         else {
             SkeletonAnimation ani = setBuilding.GetComponent<SkeletonAnimation>();
-            buildingObject.spine.GetSkeletonData(false);
-            ani.skeletonDataAsset = buildingObject.spine;
-            ani.skeleton.SetAttachment("tile", null);
-            ani.AnimationState.SetAnimation(0, ani.skeletonDataAsset.GetSkeletonData(false).Animations.Items[0], true);
+            StartCoroutine(SetAnimationTile(ani, buildingObject.spine));
         }
+    }
+
+    private IEnumerator SetAnimationTile(SkeletonAnimation ani, SkeletonDataAsset skeleton) {
+        skeleton.GetSkeletonData(false);
+        ani.ClearState();
+        yield return new WaitForSeconds(0.01f);
+        ani.skeletonDataAsset = skeleton;
+        ani.Initialize(true);
+        ani.AnimationState.SetAnimation(0, skeleton.GetSkeletonData(false).Animations.Items[0], true);
     }
 
 
