@@ -26,7 +26,7 @@ public class MenuSceneController : MonoBehaviour {
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
-    private static int pageNum = 1;
+    private static int pageNum = 2;
 
     MenuSceneEventHandler eventHandler;
 
@@ -104,8 +104,7 @@ public class MenuSceneController : MonoBehaviour {
                 buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
                 buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
                 break;
-            
-            case 2:
+            case 3:
                 buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true);
                 buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(false);
                 break;
