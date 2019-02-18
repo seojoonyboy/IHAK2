@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class OwnCardGenerator : MonoBehaviour {
     private ConstructManager constructManager;
+    public EditScenePanel editScenePanel;
     public GameObject
         pageObject,
         slotObject,
@@ -22,6 +23,7 @@ public class OwnCardGenerator : MonoBehaviour {
     void Start() {
         constructManager = ConstructManager.Instance;
         buildings = constructManager.GetBuildingObjects();
+        editScenePanel = transform.parent.GetComponent<EditScenePanel>();
         
 
         SetPage(buildings.Count, NUM_PER_PAGE);
@@ -39,6 +41,9 @@ public class OwnCardGenerator : MonoBehaviour {
             GameObject setPage = Instantiate(pageObject, transform);
             setPage.transform.localPosition += new Vector3(i * 1080f, 0);
         }
+
+        editScenePanel.maxPage = page;
+        editScenePanel.SavePagePosition();
     }
 
     private void SetCards() {
