@@ -94,7 +94,7 @@ public class IngameDeckShuffler : MonoBehaviour {
                 object data = card.GetComponent<IngameCard>().data;
                 if (data.GetType() == typeof(Unit)) {
                     Unit unit = (Unit)data;
-                    if (unit.name == "늑대" && playerController.hqLevel >= unit.tearNeed) {
+                    if (unit.name == "늑대" && playerController.hqLevel >= unit.tierNeed) {
                         card.SetActive(true);
                     }
                 }
@@ -127,9 +127,9 @@ public class IngameDeckShuffler : MonoBehaviour {
 
             if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
             if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
-            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tearNeed.ToString();
+            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
             Debug.Log(playerController.hqLevel);
-            if (unit.tearNeed > playerController.hqLevel) {
+            if (unit.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
             cards.Add(card);

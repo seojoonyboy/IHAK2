@@ -42,7 +42,7 @@ namespace DataModules {
         public int attackRange;
         public int hitPoint;
         public float moveSpeed;
-        public int tearNeed;
+        public int tierNeed;
         public string imageName;
 
         public int lv = 1;

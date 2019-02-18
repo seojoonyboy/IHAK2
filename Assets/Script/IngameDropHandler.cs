@@ -69,7 +69,7 @@ public class IngameDropHandler : MonoBehaviour {
         }
 
         UseResource(unit.cost);
-        IngameScoreManager.Instance.AddScore(unit.tearNeed, IngameScoreManager.ScoreType.ActiveCard);
+        IngameScoreManager.Instance.AddScore(unit.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
     }

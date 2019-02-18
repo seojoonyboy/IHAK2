@@ -73,7 +73,7 @@ public class OwnCardGenerator : MonoBehaviour {
     }
 
     private void ShowDetail(BuildingObject buildingObject) {
-        if(string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+        if(buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);
 
@@ -113,7 +113,7 @@ public class OwnCardGenerator : MonoBehaviour {
             Card card = buildingObject.data.card;
             Unit unit = card.unit;
 
-            tier.text = unit.tearNeed + " 등급";
+            tier.text = unit.tierNeed + " 등급";
             header.text = card.name;
 
             unitName.text = "유닛생산 " + unit.name;
@@ -127,7 +127,7 @@ public class OwnCardGenerator : MonoBehaviour {
                 + "공격 속도 : " + unit.attackSpeed + "\n"
                 + "공격 범위 : " + unit.attackRange + "\n"
                 + "이동 속도 : " + unit.moveSpeed + "\n"
-                + "요구 레벨 : " + unit.tearNeed;
+                + "요구 레벨 : " + unit.tierNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
