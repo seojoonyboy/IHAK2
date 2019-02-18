@@ -123,6 +123,9 @@ public partial class PlayerController : MonoBehaviour {
                         Gold += icm.productResources.gold.gold;
                         Food += icm.productResources.gold.food;
                         Env += icm.productResources.gold.environment;
+#if HACK_PRODUCT_POWER
+                        Gold += 1000;
+#endif
                         resourceClass.turn--;
                         ShowCoinAnimation(1);
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
@@ -144,6 +147,9 @@ public partial class PlayerController : MonoBehaviour {
                         Gold += icm.productResources.food.gold;
                         Food += icm.productResources.food.food;
                         Env += icm.productResources.food.environment;
+#if HACK_PRODUCT_POWER
+                        Food += 1000;
+#endif
                         resourceClass.turn--;
                         ShowCoinAnimation(0);
                         if (Env < 100 && icm.unactiveBuildingIndex == 100)
