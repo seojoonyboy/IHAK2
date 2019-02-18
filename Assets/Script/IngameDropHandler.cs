@@ -60,7 +60,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
         var tmp = ingameCityManager.eachPlayersTileGroups;
-        for(int i = 0; i < unit.size; i++) {
+        for(int i = 0; i < unit.count; i++) {
             float randomPosX = Random.Range(-50f, 50f);
             float randomPosY = Random.Range(-50f, 50f);
             GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
