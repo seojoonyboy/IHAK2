@@ -4,7 +4,7 @@
 //  Lunar Unity Mobile Console
 //  https://github.com/SpaceMadness/lunar-unity-console
 //
-//  Copyright 2018 Alex Lementuev, SpaceMadness.
+//  Copyright 2019 Alex Lementuev, SpaceMadness.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -241,8 +241,11 @@ namespace LunarConsolePlugin
 
                         Application.logMessageReceivedThreaded += OnLogMessageReceived;
 
+                        #if LUNAR_CONSOLE_FULL
                         ResolveVariables();
                         LoadVariables();
+                        #endif // LUNAR_CONSOLE_FULL
+
                         return true;
                     }
                 }
@@ -328,27 +331,53 @@ namespace LunarConsolePlugin
         private void ResolveVariables()
         {
             try
-            {
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {   
+                foreach (var assembly in ListAssemblies())
                 {
-                    var containerTypes = ReflectionUtils.FindAttributeTypes<CVarContainerAttribute>(assembly);
-                    foreach (var type in containerTypes)
+                    Log.dev("Checking '{0}'...", assembly);
+
+                    try
                     {
-                        RegisterVariables(type);
+                        var containerTypes = ReflectionUtils.FindAttributeTypes<CVarContainerAttribute>(assembly);
+                        foreach (var type in containerTypes)
+                        {
+                            RegisterVariables(type);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e(e, "Unable to register variables from assembly: {0}", assembly);
                     }
                 }
             }
             catch (Exception e)
             {
-                Debug.LogError("Unable to resolve variables: " + e.Message);
+                Log.e(e, "Unable to register variables");
             }
+        }
+
+        private static IList<Assembly> ListAssemblies()
+        {
+            return ReflectionUtils.ListAssemblies((assembly) =>
+            {
+                var assemblyName = assembly.FullName;
+                return !assemblyName.StartsWith("Unity") &&
+                       !assemblyName.StartsWith("System") &&
+                       !assemblyName.StartsWith("Microsoft") &&
+                       !assemblyName.StartsWith("SyntaxTree") &&
+                       !assemblyName.StartsWith("Mono") &&
+                       !assemblyName.StartsWith("ExCSS") &&
+                       !assemblyName.StartsWith("nunit") &&
+                       !assemblyName.StartsWith("netstandard") &&
+                       !assemblyName.StartsWith("mscorlib");
+            });
         }
 
         private void RegisterVariables(Type type)
         {
             try
             {
-                var fields = type.GetFields(BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic);
+                var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 if (fields != null && fields.Length > 0)
                 {
                     foreach (var field in fields)
@@ -1646,6 +1675,8 @@ namespace LunarConsolePluginInternal
 
     #endif // UNITY_EDITOR
 
+    #pragma warning disable 0618
+
     /// <summary>
     /// Class for collecting anonymous usage statistics
     /// </summary>
@@ -1739,4 +1770,6 @@ namespace LunarConsolePluginInternal
             #endif // LUNAR_CONSOLE_ANALYTICS_ENABLED
         }
     }
+
+    #pragma warning restore 0618
 }
