@@ -72,7 +72,7 @@ public partial class PlayerController : MonoBehaviour {
         }
     }
     [Header (" - Player")]
-    public int hqLevel;
+    public int hqLevel = 1;
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
     [SerializeField] private Material coinAniMaterial;
@@ -94,7 +94,6 @@ public partial class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         PrintResource();
-        hqLevel = 1;
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
