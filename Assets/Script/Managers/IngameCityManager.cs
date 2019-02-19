@@ -167,7 +167,6 @@ public class IngameCityManager : MonoBehaviour {
         //StartCoroutine("Damage");
         SetHQ();
         SetEnemyTotalHP();
-        StartCoroutine("HQDamage");
         StartCoroutine("Repair");
     }
 
