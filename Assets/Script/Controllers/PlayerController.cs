@@ -128,7 +128,9 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(1);
-                        if (Env < 100 && icm.unactiveBuildingIndex == 100)
+                        if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
+                            icm.DecideUnActiveBuilding();
+                        if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
                             icm.DecideUnActiveBuilding();
                     }
                 }
@@ -152,7 +154,9 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(0);
-                        if (Env < 100 && icm.unactiveBuildingIndex == 100)
+                        if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
+                            icm.DecideUnActiveBuilding();
+                        if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
                             icm.DecideUnActiveBuilding();
                     }
                 }
@@ -179,8 +183,10 @@ public partial class PlayerController : MonoBehaviour {
                             }
                             else
                                 scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
-                            if (Env >= 100 && icm.unactiveBuildingIndex != 100)
-                                icm.CancleUnActiveBuilding();
+                            if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
+                                icm.DecideUnActiveBuilding();
+                            if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
+                                icm.DecideUnActiveBuilding();
                             resourceClass.turn--;
                         }
                     }
@@ -210,7 +216,7 @@ public partial class PlayerController : MonoBehaviour {
         envValue.fillAmount = resourceClass.environment / 300.0f;
 
         Text envText = envValue.transform.parent.GetChild(2).GetComponent<Text>();
-        envText.text = Mathf.RoundToInt(envValue.fillAmount * 100.0f).ToString() + "%" ;
+        envText.text = resourceClass.environment.ToString();
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
@@ -313,7 +319,9 @@ public partial class PlayerController {
                     StartCoroutine(HqUpgradeWarning());
             }
         }
-        if (Env >= 100 && icm.unactiveBuildingIndex != 100)
+        if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
+            icm.CancleUnActiveBuilding();
+        if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
             icm.CancleUnActiveBuilding();
         commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
