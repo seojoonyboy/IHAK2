@@ -78,6 +78,12 @@ public class IngameCityManager : MonoBehaviour {
     private bool unActiveAlert = false;
 
     [Space(10)]
+    [Header(" - HQBuildingObject")]
+    public BuildingInfo playerHQ;
+    public BuildingInfo enemyHQ;
+
+
+    [Space(10)]
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
@@ -159,7 +165,9 @@ public class IngameCityManager : MonoBehaviour {
         //skillDetail.args = "5,6,1,15";
         //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
         //StartCoroutine("Damage");
+        SetHQ();
         SetEnemyTotalHP();
+        StartCoroutine("HQDamage");
         StartCoroutine("Repair");
     }
 
@@ -507,6 +515,9 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.hp = 0;
                     BuildingDestroyed(enemyBuilding);
+
+                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                        DestroyEnemy();
                 }
 
                 if (enemyCurrentTotalHP < 0) {
@@ -620,7 +631,11 @@ public class IngameCityManager : MonoBehaviour {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
             }
         }
+        /*
+        if(buildingInfo.cardInfo.id == -1) {
 
+        }
+        */
         buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -776,18 +791,6 @@ public class IngameCityManager : MonoBehaviour {
         Destroy(time);
     }
 
-
-    /*
-    IEnumerator Damage() {
-        while (transform.parent.parent.parent.parent.GetComponent<IngameSceneUIController>().isPlaying == true) {
-            yield return new WaitForSeconds(1f);
-            for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
-                TakeDamage(Target.ENEMY_1, i, 20);
-            }
-        }
-    }
-    */
-
     public void SetEnemyTotalHP() {
         for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
             BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == i);
@@ -839,6 +842,32 @@ public class IngameCityManager : MonoBehaviour {
         ani.skeletonDataAsset = skeleton;
         ani.Initialize(true);
         ani.AnimationState.SetAnimation(0, skeleton.GetSkeletonData(false).Animations.Items[0], true);
+    }
+
+    public void SetHQ() {
+        enemyHQ = enemyBuildingsInfo.Find(x => x.tileNum == enemyBuildingsInfo.Count / 2);
+        playerHQ = myBuildingsInfo.Find(x => x.tileNum == 12);
+
+        Debug.Log(enemyHQ.cardInfo.name);
+        Debug.Log(enemyHQ.hp);
+        Debug.Log(playerHQ.cardInfo.name);
+        Debug.Log(playerHQ.hp);
+    }
+
+    public void DestroyEnemy() {
+        if(enemyHQ.hp == 0 && enemyHQ.activate == false) {
+            enemyCurrentTotalHP = 0;
+            enemyTotalHPGauge.GetComponent<Image>().fillAmount = 0f;
+            enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 0.ToString() + " % ";
+            StopCoroutine("Repair");
+        }
+    }
+
+    IEnumerator HQDamage() {
+        while (ingameSceneUIController.isPlaying == true) {
+            yield return new WaitForSeconds(1f);
+            TakeDamage(Target.ENEMY_1, 12, 100);
+        }
     }
 
 
