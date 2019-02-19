@@ -57,7 +57,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-
+        DEVICEID = "11113";
         eventHandler = MenuSceneEventHandler.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
     }
@@ -364,9 +364,6 @@ public partial class AccountManager {
             TileGroup tileGroup = transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
             int tileCount = transform.GetChild(0).GetChild(i).childCount - 1;
 
-            tileGroup.units = new List<Unit>();
-            tileGroup.activeSkills = new List<Skill>();
-
             for (int j = 0; j < tileCount; j++) {
                 targetTile = transform.GetChild(0).GetChild(i).GetChild(j).gameObject;
                 //HQ 설정
@@ -406,15 +403,35 @@ public partial class AccountManager {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
                     Card card = buildingObject.data.card;
-                    if (card.unit.id != null && card.unit.name != "") tileGroup.units.Add(card.unit);
-                    if (card.activeSkills.Length != 0) {
-                        foreach (Skill skill in card.activeSkills) {
-                            tileGroup.activeSkills.Add(skill);
-                        }
+
+                    if (!string.IsNullOrEmpty(card.unit.name)) {
+                        Debug.Log(targetTile.transform.GetChild(0).gameObject);
+                        ActiveCard activeCard = new ActiveCard();
+                        activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                        activeCard.unit = card.unit;
+                        tileGroup.units.Add(activeCard);
                     }
+                    //if (!string.IsNullOrEmpty(card.unit.name)) {
+                    //    GameObject comp = new GameObject();
+                    //    ActiveCard activeCard = comp.AddComponent<ActiveCard>();
+                    //    activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                    //    activeCard.unit = card.unit;
+                    //    tileGroup.units.Add(activeCard);
+                    //    //tileGroup.units.Add(new ActiveCard(targetBuilding, card.unit));
+                    //}
+                    //if (card.activeSkills.Length != 0) {
+                    //    foreach (Skill skill in card.activeSkills) {
+                    //        GameObject comp = new GameObject();
+                    //        ActiveCard activeCard = comp.AddComponent<ActiveCard>();
+                    //        activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                    //        activeCard.skill = skill;
+                    //        tileGroup.spells.Add(activeCard);
+                    //    }
+                    //}
                 }
             }
         }
+        Debug.Log("!!!");
     }
 
     public void SetTileObjects(int num) {
@@ -507,17 +524,6 @@ public partial class AccountManager {
             else if (decks[num].coordsSerial[i] <= 0)
                 targetTile.GetComponent<TileObject>().buildingSet = false;
         }
-    }
-
-    public void RemoveTileObjects(int num) {
-        Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
-        foreach (Transform tile in targetTileGroup) {
-            tile.GetComponent<TileObject>().buildingSet = false;
-            foreach (Transform data in tile) {
-                Destroy(data.gameObject);
-            }
-        }
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
     }
 
     public GameObject FindBuildingWithID(int ID) {

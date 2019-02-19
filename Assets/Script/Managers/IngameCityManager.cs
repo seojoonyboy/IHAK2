@@ -82,6 +82,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
     IngameSceneEventHandler ingameSceneEventHandler;
+    IngameDeckShuffler ingameDeckShuffler;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -96,7 +97,6 @@ public class IngameCityManager : MonoBehaviour {
 
     private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
         Debug.Log("HQ 업그레이트 이벤트 발생");
-        IngameDeckShuffler ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         ingameDeckShuffler.Clear();
         ingameDeckShuffler.InitUnitCard();
         ingameDeckShuffler.InitSkillCard();
@@ -108,6 +108,7 @@ public class IngameCityManager : MonoBehaviour {
         buildingList = deck.coordsSerial;
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         wreckSpine.GetSkeletonData(false);
+        ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
         //    BuildingsInfo bi = new BuildingsInfo();
         //    bi.id = deck.coordsSerial[i];
@@ -443,11 +444,12 @@ public class IngameCityManager : MonoBehaviour {
                 }
 
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, enemyBuilding.gameObject);
                 }
-                else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, enemyBuilding.gameObject);
                 }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -714,11 +716,12 @@ public class IngameCityManager : MonoBehaviour {
                 break;
             default:
                 BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard("magma_altar");
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
                 }
-                else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard("wolves_den");
+                else {
+                    ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
                 }
                 break;
         }
@@ -755,11 +758,12 @@ public class IngameCityManager : MonoBehaviour {
                 break;
             default:
                 BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("magma_altar");
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, card.gameObject);
                 }
-                if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("wolves_den");
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, card.gameObject);
                 }
                 break;
         }
