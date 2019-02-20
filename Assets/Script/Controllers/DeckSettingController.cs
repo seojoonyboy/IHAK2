@@ -267,8 +267,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                         Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
                 }
             }
-            else
-                playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
+                //playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         }
 
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
@@ -284,7 +283,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
 
         tileGroup.SetActive(false);
-        playerInfosManager.checkDeck(playerInfosManager.selectNumber);
+        //playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 

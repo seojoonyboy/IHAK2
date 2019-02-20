@@ -60,7 +60,7 @@ public class GameSceneManager : MonoBehaviour {
         _wndLoadding.setLoaddingValue(1.0f);
         yield return new WaitForSeconds(0.5f);
         if (state == SceneState.MenuScene)
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, AccountManager.Instance.leaderIndex);
+            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, null, AccountManager.Instance.leaderIndex);
         Destroy(_wndLoadding.gameObject);
         sceneState = state;
         AccountManager.Instance.scenestate = state;
