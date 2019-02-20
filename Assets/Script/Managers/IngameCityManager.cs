@@ -74,7 +74,6 @@ public class IngameCityManager : MonoBehaviour {
     [Space(10)]
     [Header(" - UnActive")]
     public GameObject unactiveImage;
-    [SerializeField] GameObject unactiveGroup;
     public int unactiveBuildingIndex1 = 100;
     public int unactiveBuildingIndex2 = 100;
     private bool unActiveAlert1 = false;
