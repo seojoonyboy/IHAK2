@@ -454,11 +454,8 @@ public class IngameCityManager : MonoBehaviour {
 
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
-                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
-                    ingameDeckShuffler.ActivateCard(id, false, enemyBuilding.gameObject);
-                }
-                else {
-                    ingameDeckShuffler.ActivateCard(id, true, enemyBuilding.gameObject);
+                if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+                    ingameDeckShuffler.ActivateCard(id, enemyBuilding.gameObject);
                 }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -769,11 +766,8 @@ public class IngameCityManager : MonoBehaviour {
                 default:
                     BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
                     string id = buildingObject.data.card.id;
-                    if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
-                        ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
-                    }
-                    else {
-                        ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
+                    if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+                        ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
                     }
                     break;
 
@@ -813,11 +807,8 @@ public class IngameCityManager : MonoBehaviour {
             default:
                 BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
-                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
-                    ingameDeckShuffler.ActivateCard(id, false, card.gameObject);
-                }
-                else {
-                    ingameDeckShuffler.ActivateCard(id, true, card.gameObject);
+                if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+                    ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
                 }
                 break;
         }

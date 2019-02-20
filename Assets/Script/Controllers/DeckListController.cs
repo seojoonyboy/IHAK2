@@ -254,6 +254,15 @@ public partial class DeckListController {
                         activeCard.unit = card.unit;
                         tileGroup.units.Add(activeCard);
                     }
+
+                    if(card.activeSkills.Length != 0) {
+                        foreach(Skill skill in card.activeSkills) {
+                            ActiveCard activeCard = new ActiveCard();
+                            activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                            activeCard.skill = skill;
+                            tileGroup.spells.Add(activeCard);
+                        }
+                    }
                 }
             }
         }
