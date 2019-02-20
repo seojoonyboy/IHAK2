@@ -853,8 +853,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         else return setBuilding.GetComponent<MeshRenderer>().sortingOrder;
     }
 
-    public void DragSwap(GameObject buildingObject) {
-        if(buildingObject == null) {
+    public void DragSwap(GameObject onTilebuildingObject) {
+        if(onTilebuildingObject == null) {
             if (swapTargetBuilding != null)
                 swapTargetBuilding.SetActive(true);
 
@@ -862,10 +862,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
         }
 
-        if (swapTargetBuilding != null && swapTargetBuilding != buildingObject) 
+        if (swapTargetBuilding != null && swapTargetBuilding != onTilebuildingObject) 
             swapTargetBuilding.SetActive(true);            
         
-        swapTargetBuilding = buildingObject;
+        swapTargetBuilding = onTilebuildingObject;
         swapTargetBuilding.SetActive(false);
     }
 
