@@ -11,11 +11,11 @@ public class TileGroup : MonoBehaviour {
     public List<int> attackingTowerLocation;
     public int tileCount;
 
-    [Header (" - Active or Unit")]
+    [Header(" - Active or Unit")]
     //보유중인 유닛카드 정보
-    public List<DataModules.Unit> units;
+    public List<ActiveCard> units = new List<ActiveCard>();
     //보유중인 액티브 스킬정보 (예 : 마그마)
-    public List<Skill> activeSkills;
+    public List<ActiveCard> spells = new List<ActiveCard>();
 
     [Header(" - Flag")]
     public bool isGame = false;
@@ -25,7 +25,7 @@ public class TileGroup : MonoBehaviour {
 
 
     private void Start() {
-        tileCount = transform.childCount - 1;        
+        tileCount = transform.childCount - 1;
         SettingBuildingForGame();
         CheckingAttackBuilding();
         SetAmmo();

@@ -36,7 +36,7 @@ public class Modal : MonoBehaviour {
             Debug.LogError("no Canvas");
             return;
         }
-        Instantiate(modal).GetComponent<Modal>().setData(text, function, type, title);
+        Instantiate(modal).GetComponent<Modal>().SetData(text, function, type, title);
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, function, type);
 	}
     /// <summary>
@@ -59,7 +59,7 @@ public class Modal : MonoBehaviour {
             return null;
         }
         GameObject tmp = Instantiate(modal);
-        tmp.GetComponent<Modal>().setData(text, descText, inputText, function);
+        tmp.GetComponent<Modal>().SetData(text, descText, inputText, function);
         return tmp;
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
@@ -84,24 +84,24 @@ public class Modal : MonoBehaviour {
             return null;
         }
         GameObject tmp = Instantiate(modal);
-        tmp.GetComponent<Modal>().setData(text, descText, inputText, function, true);
+        tmp.GetComponent<Modal>().SetData(text, descText, inputText, function, true);
         return tmp;
         //Instantiate(modal, canvas.transform, false).GetComponent<Modal>().setData(text, inputText, function);
 	}
-	public void setData(string text, UnityAction function, Type type, string title = null) {
+	public void SetData(string text, UnityAction function, Type type, string title = null) {
 		if(type == Type.CHECK) {
 			noButton.gameObject.SetActive(false);
 			yesButton.GetComponentInChildren<Text>().text = "확인";
 		}
 		insertTitle.text = title;
 		describe.text = text;
-		yesButton.onClick.AddListener(closeButton);
+		yesButton.onClick.AddListener(CloseButton);
 		closeBtn.gameObject.SetActive(false);
 		if(function == null) return;
 		yesButton.onClick.AddListener(function);
 	}
 
-	public void setData(string text, string descText, string inputText, UnityAction<string> function, bool closeExist = false) {
+	public void SetData(string text, string descText, string inputText, UnityAction<string> function, bool closeExist = false) {
 		describe.gameObject.SetActive(false);
 		inputGameObject.SetActive(true);
 		noButton.gameObject.SetActive(false);
@@ -109,25 +109,35 @@ public class Modal : MonoBehaviour {
 		insertTitle.text = text;
 		inputField.GetComponentInChildren<Text>().text = descText;
         inputField.text = inputText;
+		inputField.onValidateInput += delegate(string input, int charIndex, char addedChar) { return MyValidate(addedChar);};
 		closeBtn.gameObject.SetActive(closeExist);
-        yesButton.onClick.AddListener(() => {checkInputText(inputField.text, function);});
+        yesButton.onClick.AddListener(() => {CheckInputText(inputField.text, function);});
 	}
 
-	private void checkInputText(string text, UnityAction<string> function) {
+	private void CheckInputText(string text, UnityAction<string> function) {
 		if(string.IsNullOrEmpty(text)) {
-			instantiate("내용이 비어있습니다\n내용을 채워주세요", Type.CHECK);
+			//instantiate("내용이 비어있습니다\n내용을 채워주세요", Type.CHECK);
+			Text warning = inputGameObject.transform.GetChild(1).GetComponent<Text>();
+			warning.color = Color.red;
+			warning.fontSize = 40;
+			Handheld.Vibrate();
 			return;
 		}
 		function(text);
-		closeButton();
+		CloseButton();
 	}
 
 	private void Start() {
-		noButton.onClick.AddListener(closeButton);
-		closeBtn.onClick.AddListener(closeButton);
+		noButton.onClick.AddListener(CloseButton);
+		closeBtn.onClick.AddListener(CloseButton);
 	}
 
-	private void closeButton() {
+	private void CloseButton() {
 		Destroy(gameObject);
+	}
+
+	private char MyValidate(char charToValidate) {
+		if(charToValidate == ' ') charToValidate = '\0';
+		return charToValidate;
 	}
 }

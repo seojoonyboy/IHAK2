@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using Spine.Unity;
+using TMPro;
 
 public class IngameCityManager : MonoBehaviour {
     [System.Serializable]
@@ -74,8 +75,10 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - UnActive")]
     public GameObject unactiveImage;
     [SerializeField] GameObject unactiveGroup;
-    public int unactiveBuildingIndex = 100;
-    private bool unActiveAlert = false;
+    public int unactiveBuildingIndex1 = 100;
+    public int unactiveBuildingIndex2 = 100;
+    private bool unActiveAlert1 = false;
+    private bool unActiveAlert2 = false;
 
     [Space(10)]
     [Header(" - HQBuildingObject")]
@@ -88,6 +91,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
     IngameSceneEventHandler ingameSceneEventHandler;
+    IngameDeckShuffler ingameDeckShuffler;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -102,7 +106,6 @@ public class IngameCityManager : MonoBehaviour {
 
     private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
         Debug.Log("HQ 업그레이트 이벤트 발생");
-        IngameDeckShuffler ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         ingameDeckShuffler.Clear();
         ingameDeckShuffler.InitUnitCard();
         ingameDeckShuffler.InitSkillCard();
@@ -114,6 +117,7 @@ public class IngameCityManager : MonoBehaviour {
         buildingList = deck.coordsSerial;
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         wreckSpine.GetSkeletonData(false);
+        ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
         //    BuildingsInfo bi = new BuildingsInfo();
         //    bi.id = deck.coordsSerial[i];
@@ -450,11 +454,12 @@ public class IngameCityManager : MonoBehaviour {
                 }
 
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, enemyBuilding.gameObject);
                 }
-                else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, enemyBuilding.gameObject);
                 }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -677,76 +682,115 @@ public class IngameCityManager : MonoBehaviour {
                 continue;
             if (myBuildingsInfo[num].activate == false)
                 continue;
+            if (unactiveBuildingIndex1 == num)
+                continue;
             else {
-                unactiveBuildingIndex = num;
-                SetColor(myBuildingsInfo[num].gameObject, Color.red);
+                if (unactiveBuildingIndex1 == 100) {
+                    unactiveBuildingIndex1 = num;
+                    unActiveAlert1 = true;
+                    StartCoroutine(StartAlert1());
+                }
+                else {
+                    unactiveBuildingIndex2 = num;
+                    unActiveAlert2 = true;
+                    StartCoroutine(StartAlert2());
+                }
+                //SetColor(myBuildingsInfo[num].gameObject, Color.red);
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
-                unActiveAlert = true;
-                StartCoroutine(StartAlert());
+                
                 return;
             }
         }
     }
 
-    IEnumerator StartAlert() {
-        int index = unactiveBuildingIndex;
-        while (unActiveAlert) {
-            if (unActiveAlert)
+    IEnumerator StartAlert1() {
+        int index = unactiveBuildingIndex1;
+        while (unActiveAlert1) {
+            if (unActiveAlert1)
                 SetColor(myBuildingsInfo[index].gameObject, Color.red);
             yield return new WaitForSeconds(0.4f);
-            if (unActiveAlert)
+            if (unActiveAlert1)
+                SetColor(myBuildingsInfo[index].gameObject, Color.white);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+    IEnumerator StartAlert2() {
+        int index = unactiveBuildingIndex2;
+        while (unActiveAlert2) {
+            if (unActiveAlert2)
+                SetColor(myBuildingsInfo[index].gameObject, Color.red);
+            yield return new WaitForSeconds(0.4f);
+            if (unActiveAlert2)
                 SetColor(myBuildingsInfo[index].gameObject, Color.white);
             yield return new WaitForSeconds(0.2f);
         }
     }
 
     public void CancleUnActiveBuilding() {
-        unActiveAlert = false;
-        SetColor(myBuildingsInfo[unactiveBuildingIndex].gameObject, Color.white);
-        Debug.Log(myBuildingsInfo[unactiveBuildingIndex].cardInfo.name + " 비활성화 예정 해제");
-        unactiveBuildingIndex = 100;
+        
+        if (unactiveBuildingIndex2 == 100) {
+            unActiveAlert1 = false;
+            SetColor(myBuildingsInfo[unactiveBuildingIndex1].gameObject, Color.white);
+            Debug.Log(myBuildingsInfo[unactiveBuildingIndex1].cardInfo.name + " 비활성화 예정 해제");
+            unactiveBuildingIndex1 = 100;
+        }
+        else {
+            unActiveAlert2 = false;
+            SetColor(myBuildingsInfo[unactiveBuildingIndex2].gameObject, Color.white);
+            Debug.Log(myBuildingsInfo[unactiveBuildingIndex2].cardInfo.name + " 비활성화 예정 해제");
+            unactiveBuildingIndex2 = 100;
+        }
+        
     }
 
     public void SetUnactiveBuilding() {
-        BuildingInfo bi = myBuildingsInfo[unactiveBuildingIndex];
-        bi.activate = false;
-        switch (bi.cardInfo.prodType) {
-            case "gold":
-                productResources.gold.food -= bi.cardInfo.product.food;
-                productResources.gold.gold -= bi.cardInfo.product.gold;
-                productResources.gold.environment -= bi.cardInfo.product.environment;
-                break;
-            case "food":
-                productResources.food.food -= bi.cardInfo.product.food;
-                productResources.food.gold -= bi.cardInfo.product.gold;
-                productResources.food.environment -= bi.cardInfo.product.environment;
-                break;
-            case "env":
-                productResources.env.food -= bi.cardInfo.product.food;
-                productResources.env.gold -= bi.cardInfo.product.gold;
-                productResources.env.environment -= bi.cardInfo.product.environment;
-                break;
-            default:
-                BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard("magma_altar");
-                }
-                else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().DeactiveCard("wolves_den");
-                }
-                break;
+        BuildingInfo bi = new BuildingInfo();
+        for (int i = 0; i < 2; i++) {
+            if (i == 0)
+                bi = myBuildingsInfo[unactiveBuildingIndex1];
+            else
+                bi = myBuildingsInfo[unactiveBuildingIndex2];
+            bi.activate = false;
+            switch (bi.cardInfo.prodType) {
+                case "gold":
+                    productResources.gold.food -= bi.cardInfo.product.food;
+                    productResources.gold.gold -= bi.cardInfo.product.gold;
+                    productResources.gold.environment -= bi.cardInfo.product.environment;
+                    break;
+                case "food":
+                    productResources.food.food -= bi.cardInfo.product.food;
+                    productResources.food.gold -= bi.cardInfo.product.gold;
+                    productResources.food.environment -= bi.cardInfo.product.environment;
+                    break;
+                case "env":
+                    productResources.env.food -= bi.cardInfo.product.food;
+                    productResources.env.gold -= bi.cardInfo.product.gold;
+                    productResources.env.environment -= bi.cardInfo.product.environment;
+                    break;
+                default:
+                    BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+                    string id = buildingObject.data.card.id;
+                    if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                        ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
+                    }
+                    else {
+                        ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
+                    }
+                    break;
+
+            }
+            Debug.Log(bi.cardInfo.name + " 비활성화");
+            StartCoroutine(UnActivateForTime(bi));
         }
-        Debug.Log(bi.cardInfo.name + " 비활성화");
-        unActiveAlert = false;
-        unactiveBuildingIndex = 100;
-        StartCoroutine(UnActivateForTime(bi));
+        unActiveAlert1 = unActiveAlert2 = false;
+        unactiveBuildingIndex1 = unactiveBuildingIndex2 = 100;
     }
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
-        StartCoroutine(UnActivateTimer());
+        StartCoroutine(UnActivateTimer(card.gameObject));
         SetColor(card.gameObject, Color.red);
         yield return new WaitForSeconds(1.0f);
-        SetColor(card.gameObject, Color.gray);
+        SetColor(card.gameObject, Color.black);
         yield return new WaitForSeconds(29.0f);
         card.activate = true;
         SetColor(card.gameObject, Color.white);
@@ -769,23 +813,25 @@ public class IngameCityManager : MonoBehaviour {
                 break;
             default:
                 BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("magma_altar");
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, card.gameObject);
                 }
-                if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("wolves_den");
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, card.gameObject);
                 }
                 break;
         }
     }
 
-    IEnumerator UnActivateTimer() {
-        GameObject time = Instantiate(unactiveImage, unactiveGroup.transform);
+    IEnumerator UnActivateTimer(GameObject building) {
+        GameObject time = Instantiate(unactiveImage, transform);
+        time.transform.position = building.transform.position;
         int leftTime = 30;
         while (leftTime >= 1) {
             yield return new WaitForSeconds(1.0f);
             leftTime--;
-            time.transform.GetChild(0).GetComponent<Text>().text = leftTime.ToString();
+            time.transform.GetChild(1).GetComponent<TextMeshPro>().text = leftTime.ToString();
         }
         Destroy(time);
     }

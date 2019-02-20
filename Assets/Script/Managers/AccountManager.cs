@@ -57,15 +57,9 @@ public partial class AccountManager : Singleton<AccountManager> {
         _networkManager = NetworkManager.Instance;
         wallet = new Wallet();
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
-
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, OnDeckListChanged);
-    }
 
-    private void Start() {
-        //deviceID = "11231234";
-        if (deckGroup != null)
-            Instantiate(deckGroup, transform);
+        ReqUserInfo();
     }
 
     public string DEVICEID { get; private set; }
@@ -150,13 +144,6 @@ public partial class AccountManager : Singleton<AccountManager> {
 /// 플레이어 덱 관련 처리 (삭제, 수정, 추가)
 /// </summary>
 public partial class AccountManager {
-    private void OnDeckListChanged(Enum Event_Type, Component Sender, object Param) {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/" + DEVICEID + "/decks");
-        _networkManager.request("GET", url.ToString(), OnMyDeckLoaded, false);
-    }
-
     public void RemoveDeck(int id, GameObject obj) {
         Deck deck = decks.Find(x => x.id == id);
         StringBuilder url = new StringBuilder();
@@ -186,7 +173,7 @@ public partial class AccountManager {
                 Destroy(transform.GetChild(0).GetChild(slotNum).gameObject);
                 Instantiate(defaultTileGroup, transform.GetChild(0)).SetActive(false);
             }
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this);
+            eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
         }
     }
 
@@ -254,30 +241,19 @@ public partial class AccountManager {
             .Append("/decks/change_represent/")
             .Append(id.ToString());
         WWWForm form = new WWWForm();
+        Debug.Log(url.ToString());
         _networkManager.request("PUT", url.ToString(), "asd", ChangeLeaderDeckCallback);
     }
 
     private void ChangeLeaderDeckCallback(HttpResponse response) {
         if (response.responseCode == 200) {
-            if (response.data != null) {
-                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
-            }
-            else {
-                decks = new List<Deck>();
-            }
-            SetBuildingToTiles();
-            SetTileGroups(ref decks);
-
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
+            eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
         }
     }
 
     private void AddDeckCallback(HttpResponse response) {
         if (response.responseCode != 200) return;
-        Deck deck = JsonReader.Read<Deck>(response.data);
-        decks.Add(deck);
-
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
+        eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
     }
 
     private void ModifyDeckCallback(HttpResponse response) {
@@ -287,37 +263,13 @@ public partial class AccountManager {
         deck.name = tmpData.name;
         deck.coordsSerial = tmpData.coordsSerial;
         deck.coords = tmpData.coords;
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.REQUEST_MY_DECKS, this, leaderIndex);
+
+        eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
     }
 
     public Deck FindDeck(int id) {
         Deck deck = decks.Find(x => x.id == id);
         return deck;
-    }
-
-    private void OnMyDeckLoaded(HttpResponse response) {
-        if (response.responseCode == 200) {
-            if (response.data != null) {
-                decks = JsonReader.Read<List<Deck>>(response.data.ToString());
-            }
-            else {
-                decks = new List<Deck>();
-            }
-            SetBuildingToTiles();
-            foreach (Deck deck in decks) {
-                if (deck.isRepresent) {
-                    IngameSceneUIController.deckId = deck.id;
-                }
-            }
-            SetTileGroups(ref decks);
-            MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
-        }
-        else if (response.responseCode == 404) {
-            Debug.Log("페이지를 찾을 수 없습니다");
-        }
-        else {
-            Debug.Log("알 수 없는 Server 오류");
-        }
     }
 }
 
@@ -325,214 +277,58 @@ public partial class AccountManager {
 /// 플레이어 대표 덱 메인화면에 표시하기 위한 처리. 기타 건물 타일 관련 처리
 /// </summary>
 public partial class AccountManager {
-    private void SetTileGroups(ref List<Deck> decks) {
-        Transform tileGroups = transform.GetChild(0);
+    //public void checkDeck(int num) {
+    //    if (decks == null)
+    //        return;
 
-        int leaderIndex = 0;
-        for (int i = 0; i < decks.Count; i++) {
-            Transform tileGroup = tileGroups.GetChild(i);
+    //    if (num > decks.Count - 1)
+    //        return;
 
-            Deck deck = decks[i];
-            int[] coords = deck.coordsSerial;
-            if (deck.isRepresent) leaderIndex = i;
+    //    ConstructManager cm = ConstructManager.Instance;
+    //    GameObject constructManager = cm.transform.gameObject;
+    //    GameObject targetBuilding;
+    //    GameObject targetTile;
+    //    int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
 
-            for (int j = 0; j < coords.Length; j++) {
-                if (coords[j] != 0 && coords[j] != -1) {
-                    Transform tile = tileGroup.GetChild(j);
-                    foreach (Transform child in tile) {
-                        Destroy(child.gameObject);
-                    }
-                    Instantiate(FindBuildingWithID(coords[j]), tile);
-                }
-            }
-        }
-        //eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, leaderIndex);
-    }
+    //    for (int i = 0; i < tileCount; i++) {
+    //        targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
 
-    /// <summary>
-    /// Server의 Data로 건물 타일을 각각 GameObject로 만드는 함수
-    /// </summary>
-    public void SetBuildingToTiles() {
-        if (decks == null)
-            return;
-        ConstructManager cm = ConstructManager.Instance;
-        GameObject constructManager = cm.transform.gameObject;
-        GameObject targetTile;
-        GameObject targetBuilding;
-
-        for (int i = 0; i < decks.Count; i++) {
-            TileGroup tileGroup = transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
-            int tileCount = transform.GetChild(0).GetChild(i).childCount - 1;
-
-            tileGroup.units = new List<Unit>();
-            tileGroup.activeSkills = new List<Skill>();
-
-            for (int j = 0; j < tileCount; j++) {
-                targetTile = transform.GetChild(0).GetChild(i).GetChild(j).gameObject;
-                //HQ 설정
-                if (j == tileCount / 2) {
-                    targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                    if (targetBuilding != null && targetTile.transform.childCount == 0) {
-                        GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                        targetTile.GetComponent<TileObject>().buildingSet = true;
-                        setBuild.transform.position = targetTile.transform.position;
-                        setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                        if (setBuild.GetComponent<SpriteRenderer>() != null) {
-                            setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                            setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                        }
-                        else {
-                            setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                        }
-                    }
-                    continue;
-                }
-                targetBuilding = FindBuildingWithID(decks[i].coordsSerial[j]);
-                //그 외
-                if (targetBuilding != null) {
-
-                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-
-                    targetTile.GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = targetTile.transform.position;
-
-                    BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
-                    buildingObject.setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                    if (setBuild.GetComponent<SpriteRenderer>() != null) {
-                        setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                        setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    }
-                    else {
-                        setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    }
-                    Card card = buildingObject.data.card;
-                    if (card.unit.id != null && card.unit.name != "") tileGroup.units.Add(card.unit);
-                    if (card.activeSkills.Length != 0) {
-                        foreach (Skill skill in card.activeSkills) {
-                            tileGroup.activeSkills.Add(skill);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void SetTileObjects(int num) {
-        if (decks == null)
-            return;
-
-        ConstructManager cm = ConstructManager.Instance;
-        GameObject constructManager = cm.transform.gameObject;
-        GameObject targetBuilding;
-        GameObject targetTile;
-        int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
-
-        for (int i = 0; i < tileCount; i++) {
-            targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
-            if (i == tileCount / 2) {
-                targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                if (targetBuilding != null && targetTile.transform.childCount == 0) {
-                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                    targetTile.GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = targetTile.transform.position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.AddComponent<LayoutGroup>();
-                }
-                continue;
-            }
-
-            targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
-            if (targetBuilding != null) {
-                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                targetTile.GetComponent<TileObject>().buildingSet = true;
-                setBuild.transform.position = targetTile.transform.position;
-                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                setBuild.AddComponent<LayoutGroup>();
-            }
-        }
-    }
-
-    public void checkDeck(int num) {
-        if (decks == null)
-            return;
-
-        if (num > decks.Count - 1)
-            return;
-
-        ConstructManager cm = ConstructManager.Instance;
-        GameObject constructManager = cm.transform.gameObject;
-        GameObject targetBuilding;
-        GameObject targetTile;
-        int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
-
-        for (int i = 0; i < tileCount; i++) {
-            targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
-
-            if (i == tileCount / 2) {
-                targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                if (targetBuilding != null && targetTile.transform.childCount == 0) {
-                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                    targetTile.GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = targetTile.transform.position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.AddComponent<LayoutGroup>();
-                }
-                continue;
-            }
+    //        if (i == tileCount / 2) {
+    //            targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
+    //            if (targetBuilding != null && targetTile.transform.childCount == 0) {
+    //                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+    //                targetTile.GetComponent<TileObject>().buildingSet = true;
+    //                setBuild.transform.position = targetTile.transform.position;
+    //                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
+    //                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+    //                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+    //                setBuild.AddComponent<LayoutGroup>();
+    //            }
+    //            continue;
+    //        }
 
 
-            if (decks[num].coordsSerial[i] != 0 && targetTile.transform.childCount == 0) {
-                targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
-                if (targetBuilding != null) {
-                    GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                    targetTile.GetComponent<TileObject>().buildingSet = true;
-                    setBuild.transform.position = targetTile.transform.position;
-                    setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                    setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    setBuild.AddComponent<LayoutGroup>();
-                }
-            }
-            else if (decks[num].coordsSerial[i] == 0 && targetTile.transform.childCount != 0)
-                Destroy(targetTile.transform.GetChild(0).gameObject);
-            if (decks[num].coordsSerial[i] != 0) {
-                targetTile.GetComponent<TileObject>().buildingSet = true;
-            }
-            else if (decks[num].coordsSerial[i] <= 0)
-                targetTile.GetComponent<TileObject>().buildingSet = false;
-        }
-    }
-
-    public void RemoveTileObjects(int num) {
-        Transform targetTileGroup = gameObject.transform.GetChild(0).GetChild(num);
-        foreach (Transform tile in targetTileGroup) {
-            tile.GetComponent<TileObject>().buildingSet = false;
-            foreach (Transform data in tile) {
-                Destroy(data.gameObject);
-            }
-        }
-        MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.RESET_DECK_LISTS, null);
-    }
-
-    public GameObject FindBuildingWithID(int ID) {
-
-        GameObject buildingGroup = FindObjectOfType<ConstructManager>().transform.GetChild(0).gameObject;
-        GameObject targetBuilding;
-
-        for (int i = 0; i < buildingGroup.transform.childCount; i++) {
-            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().data.id == ID) {
-                targetBuilding = buildingGroup.transform.GetChild(i).gameObject;
-                return targetBuilding;
-            }
-        }
-        return null;
-    }
+    //        if (decks[num].coordsSerial[i] != 0 && targetTile.transform.childCount == 0) {
+    //            targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
+    //            if (targetBuilding != null) {
+    //                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
+    //                targetTile.GetComponent<TileObject>().buildingSet = true;
+    //                setBuild.transform.position = targetTile.transform.position;
+    //                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
+    //                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
+    //                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+    //                setBuild.AddComponent<LayoutGroup>();
+    //            }
+    //        }
+    //        else if (decks[num].coordsSerial[i] == 0 && targetTile.transform.childCount != 0)
+    //            Destroy(targetTile.transform.GetChild(0).gameObject);
+    //        if (decks[num].coordsSerial[i] != 0) {
+    //            targetTile.GetComponent<TileObject>().buildingSet = true;
+    //        }
+    //        else if (decks[num].coordsSerial[i] <= 0)
+    //            targetTile.GetComponent<TileObject>().buildingSet = false;
+    //    }
+    //}
 
     public void SetHQ(int num) {
 
