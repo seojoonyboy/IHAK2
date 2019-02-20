@@ -3506,14 +3506,122 @@ MonoBehaviour:
     isRepresent: 0
     coordsSerial: 
     cards: []
+    productResources:
+      food:
+        id: 0
+        food: 0
+        gold: 0
+        environment: 0
+      gold:
+        id: 0
+        food: 0
+        gold: 0
+        environment: 0
+      env:
+        id: 0
+        food: 0
+        gold: 0
+        environment: 0
   myBuildingsInfo: []
   enemyBuildingsInfo: []
   buildingList: 
-  unactiveImage: {fileID: 1706033081576888, guid: c0778df27922b0d4d9cc38055597a697,
+  unactiveImage: {fileID: 1706033081576888, guid: c9fdbd74db90ea44dad19863d3d09d44,
     type: 2}
   unactiveGroup: {fileID: 1307168624}
   unactiveBuildingIndex1: 100
   unactiveBuildingIndex2: 100
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
 --- !u!223 &364303841

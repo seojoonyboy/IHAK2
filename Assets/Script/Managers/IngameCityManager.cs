@@ -744,34 +744,43 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public void SetUnactiveBuilding() {
-        BuildingInfo bi = myBuildingsInfo[unactiveBuildingIndex];
-        bi.activate = false;
-        switch (bi.cardInfo.prodType) {
-            case "gold":
-                productResources.gold.food -= bi.cardInfo.product.food;
-                productResources.gold.gold -= bi.cardInfo.product.gold;
-                productResources.gold.environment -= bi.cardInfo.product.environment;
-                break;
-            case "food":
-                productResources.food.food -= bi.cardInfo.product.food;
-                productResources.food.gold -= bi.cardInfo.product.gold;
-                productResources.food.environment -= bi.cardInfo.product.environment;
-                break;
-            case "env":
-                productResources.env.food -= bi.cardInfo.product.food;
-                productResources.env.gold -= bi.cardInfo.product.gold;
-                productResources.env.environment -= bi.cardInfo.product.environment;
-                break;
-            default:
-                BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-                string id = buildingObject.data.card.id;
-                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
-                    ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
-                }
-                else {
-                    ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
-                }
-                break;
+        BuildingInfo bi = new BuildingInfo();
+        for (int i = 0; i < 2; i++) {
+            if (i == 0)
+                bi = myBuildingsInfo[unactiveBuildingIndex1];
+            else
+                bi = myBuildingsInfo[unactiveBuildingIndex2];
+            bi.activate = false;
+            switch (bi.cardInfo.prodType) {
+                case "gold":
+                    productResources.gold.food -= bi.cardInfo.product.food;
+                    productResources.gold.gold -= bi.cardInfo.product.gold;
+                    productResources.gold.environment -= bi.cardInfo.product.environment;
+                    break;
+                case "food":
+                    productResources.food.food -= bi.cardInfo.product.food;
+                    productResources.food.gold -= bi.cardInfo.product.gold;
+                    productResources.food.environment -= bi.cardInfo.product.environment;
+                    break;
+                case "env":
+                    productResources.env.food -= bi.cardInfo.product.food;
+                    productResources.env.gold -= bi.cardInfo.product.gold;
+                    productResources.env.environment -= bi.cardInfo.product.environment;
+                    break;
+                default:
+                    BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+                    string id = buildingObject.data.card.id;
+                    if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                        ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
+                    }
+                    else {
+                        ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
+                    }
+                    break;
+
+            }
+            Debug.Log(bi.cardInfo.name + " 비활성화");
+            StartCoroutine(UnActivateForTime(bi));
         }
         unActiveAlert1 = unActiveAlert2 = false;
         unactiveBuildingIndex1 = unactiveBuildingIndex2 = 100;
