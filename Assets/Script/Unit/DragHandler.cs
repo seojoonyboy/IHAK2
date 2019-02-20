@@ -52,11 +52,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         glg.SetLayoutHorizontal();
         glg.SetLayoutVertical();
         canDrag = false;
-        dropHandler.OnDrop();
+        
 
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
+        
         if (1 - deckSettingController.OnTileBuildingCount(setObject) > 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
             transform.GetChild(1).GetComponent<Text>().color = Color.white;
@@ -67,6 +68,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             transform.GetChild(1).GetComponent<Text>().color = Color.gray;
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;
         }
+        dropHandler.OnDrop();
     }
 
     public void OnDrag(PointerEventData eventData) {

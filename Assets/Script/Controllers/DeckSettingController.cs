@@ -47,6 +47,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public Vector3 startEditPosition;
     [SerializeField] public bool picking = false;
     [SerializeField] public int startSortingOrder = 0;
+    [SerializeField] public GameObject swapTargetBuilding;
 
     [Header(" - Flag")]
     [SerializeField] public bool reset = false;
@@ -228,7 +229,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     private void Return() {
         prevData = null;
-
+        
         if (reset == false) {
             for (int i = 0; i < tileCount; i++) {
                 if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
@@ -270,7 +271,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             else
                 playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
         }
-
+        
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
 
         /*
@@ -396,18 +397,24 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     buildingPosition.z = 0;
                     selectBuilding.transform.position = buildingPosition;
                     SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum + 1);
-                    if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier)
+                    if ((targetTile.GetComponent<TileObject>().buildingSet == false || selectBuilding.transform.parent.gameObject == targetTile) && playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier) {
+                        DragSwap(null);
                         SetColor(selectBuilding, Color.green);
-                    else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier < targetTile.GetComponent<TileObject>().Tier)
+                    }
+                    else if (targetTile.GetComponent<TileObject>().buildingSet == true || playerInfosManager.userTier < targetTile.GetComponent<TileObject>().Tier) {
+                        DragSwap(targetTile.transform.GetChild(0).gameObject);
                         SetColor(selectBuilding, Color.red);
+                    }
                 }
                 else {
                     targetTile = null;
+                    DragSwap(null);
                     SetColor(selectBuilding, Color.white);
                     selectBuilding.transform.position = mousePosition;
                 }
             }
             else if (hit.collider.tag == "Building") {
+                DragSwap(hit.collider.gameObject);
                 targetTile = hit.transform.parent.gameObject;
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
@@ -417,6 +424,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
             else if(hit.collider.tag == "BackGroundTile") {
                 targetTile = null;
+                DragSwap(null);
                 SetColor(selectBuilding, Color.white);
                 selectBuilding.transform.position = mousePosition;
             }
@@ -435,8 +443,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (selectBuilding == null)
             return;
         if(targetTile != null) {
-            if (targetTile.GetComponent<TileObject>().buildingSet == false) {
-                if (playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier) {
+            if (playerInfosManager.userTier >= targetTile.GetComponent<TileObject>().Tier) {
+                if (targetTile.GetComponent<TileObject>().buildingSet == false) {
                     Vector3 position = targetTile.transform.position;
                     position.z = 0;
                     tileSetList[targetTile.GetComponent<TileObject>().tileNum] = tileSetList[selectBuilding.transform.parent.GetComponent<TileObject>().tileNum];
@@ -447,12 +455,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                 }
-                else
-                    DeleteBuilding();
+                else {
+                    DropSwap(swapTargetBuilding, selectBuilding);
+                }
             }
             else {
-                selectBuilding.transform.position = startEditPosition;
-                SetSortingOrder(selectBuilding, startSortingOrder);
+                DeleteBuilding();
             }
         }
         else {
@@ -468,6 +476,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         picking = false;
         SetColor(selectBuilding, Color.white);
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
+        swapTargetBuilding = null;
         selectBuilding = null;
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;        
     }
@@ -507,6 +516,42 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         saveSelectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
         gameObject.transform.GetChild(3).gameObject.SetActive(false);
         Destroy(saveSelectBuilding);
+    }
+    
+
+    public void DeleteBuilding(GameObject building) {
+        if (building == null)
+            return;
+
+        if (building.GetComponent<BuildingObject>().data.id == -1)
+            return;
+
+        GameObject card = FindCard(building.GetComponent<BuildingObject>().data.id);
+        int count = 1 - OnTileBuildingCount(building);
+        count++;
+
+        if (count > 0) {
+            card.GetComponent<Image>().color = Color.white;
+            card.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+            card.transform.GetChild(1).GetComponent<Text>().color = Color.white;
+            card.transform.GetChild(2).GetComponent<Text>().color = Color.white;
+        }
+
+        //card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
+        card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+
+        GameObject ActiveSkillUISlot = FindActiveSlot(building.GetComponent<BuildingObject>().data.id);
+        if (ActiveSkillUISlot != null) {
+            ClearActiveSlot(ActiveSkillUISlot);
+        }
+
+        Cost cost = building.GetComponent<BuildingObject>().data.card.product;
+        MinusSliderValue(cost);
+
+        tileSetList[building.transform.parent.GetComponent<TileObject>().tileNum] = 0;
+        building.transform.parent.GetComponent<TileObject>().buildingSet = false;
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        Destroy(building);
     }
 
     public void ShowBuildingStatus() {
@@ -807,6 +852,62 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
         if(spriteRenderer != null) return spriteRenderer.sortingOrder;
         else return setBuilding.GetComponent<MeshRenderer>().sortingOrder;
+    }
+
+    public void DragSwap(GameObject buildingObject) {
+        if(buildingObject == null) {
+            if (swapTargetBuilding != null)
+                swapTargetBuilding.SetActive(true);
+
+            swapTargetBuilding = null;
+            return;
+        }
+
+        if (swapTargetBuilding != null && swapTargetBuilding != buildingObject) 
+            swapTargetBuilding.SetActive(true);            
+        
+        swapTargetBuilding = buildingObject;
+        swapTargetBuilding.SetActive(false);
+    }
+
+    public void DropSwap(GameObject swapBuilding, GameObject pickBuilding) {
+        if (swapBuilding == null || pickBuilding == null)
+            return;
+
+        if (swapBuilding.GetComponent<BuildingObject>().data.id == -1) {
+            SetSortingOrder(pickBuilding, startSortingOrder);
+            pickBuilding.transform.position = startEditPosition;
+            swapBuilding.SetActive(true);
+            return;
+        }
+
+        GameObject swapTile;
+        GameObject recentTile;
+
+        int swapOrder;
+        int recentOrder;
+
+        swapBuilding.SetActive(true);
+
+        swapTile = swapBuilding.transform.parent.gameObject;
+        recentTile = pickBuilding.transform.parent.gameObject;
+
+        swapOrder = GetSortingOrder(swapBuilding);
+        recentOrder = startSortingOrder;
+
+        pickBuilding.transform.SetParent(swapTile.transform);
+        swapBuilding.transform.SetParent(recentTile.transform);
+
+        pickBuilding.transform.position = swapTile.transform.position;
+        swapBuilding.transform.position = recentTile.transform.position;
+
+        int temp = tileSetList[recentTile.GetComponent<TileObject>().tileNum];
+        tileSetList[recentTile.GetComponent<TileObject>().tileNum] = tileSetList[swapTile.GetComponent<TileObject>().tileNum];
+        tileSetList[swapTile.GetComponent<TileObject>().tileNum] = temp;
+
+
+        SetSortingOrder(pickBuilding, swapOrder);
+        SetSortingOrder(swapBuilding, recentOrder);
     }
 
 }
