@@ -32,10 +32,8 @@ public class MenuSceneController : MonoBehaviour {
 
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
-
-        eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, AccountManager.Instance.leaderIndex);
     }
 
     private void SetLeaderDeckTouchPower(Enum Event_Type, Component Sender, object Param) {
@@ -49,12 +47,11 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, ResetTileGroupFinished);
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
     }
 
-    private void ResetTileGroupFinished(Enum Event_Type, Component Sender, object Param) {
-        //TODO : 건물이 세개나 생성이 되는 이유를 알아야함
+    private void SetLeaderTileGroup(Enum Event_Type, Component Sender, object Param) {
         foreach(Transform tf in leaderDeck.transform) {
             Destroy(tf.gameObject);
         }
@@ -64,12 +61,7 @@ public class MenuSceneController : MonoBehaviour {
         GameObject lo = Instantiate(go, leaderDeck.transform);
 
         foreach(Transform tile in lo.transform) {
-            if(tile.childCount > 1) {
-                SetSpineAnimation(tile.GetChild(0));
-                for(int i= 1; i < tile.childCount; i++) {
-                    Destroy(tile.GetChild(i).gameObject);
-                }
-            }
+            if(tile.childCount > 1) SetSpineAnimation(tile.GetChild(0));
         }
         go.SetActive(false);
     }

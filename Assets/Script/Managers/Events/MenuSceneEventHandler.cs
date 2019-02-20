@@ -58,9 +58,8 @@ public class MenuSceneEventHandler : Singleton<MenuSceneEventHandler>, IEventHan
 
     public enum EVENT_TYPE {
         NONE,
-        REQUEST_MY_DECKS,
-        RESET_DECK_LISTS,
-        CHANGE_MAINSCENE_TILE_GROUP,
-        SET_LEADER_DECK_TOUCH_POWER
+        SET_LEADER_DECK_TOUCH_POWER,
+        INITIALIZE_DECK,
+        INITIALIZE_DECK_FINISHED
     }
 }

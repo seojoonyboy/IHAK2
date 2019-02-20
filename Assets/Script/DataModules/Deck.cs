@@ -11,6 +11,7 @@ namespace DataModules {
         public int[] coordsSerial;
         public int[,] coords;
         public Card[] cards;
+        public ProductResources productResources;
     }
 
     public class DeckPostForm {
@@ -30,7 +31,6 @@ namespace DataModules {
 
     [System.Serializable]
     public class DeckDetail : Deck {
-        public ProductResources productResources;
     }
 
     [System.Serializable]

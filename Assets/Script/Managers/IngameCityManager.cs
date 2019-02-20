@@ -91,6 +91,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
     IngameSceneEventHandler ingameSceneEventHandler;
+    IngameDeckShuffler ingameDeckShuffler;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -105,7 +106,6 @@ public class IngameCityManager : MonoBehaviour {
 
     private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
         Debug.Log("HQ 업그레이트 이벤트 발생");
-        IngameDeckShuffler ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         ingameDeckShuffler.Clear();
         ingameDeckShuffler.InitUnitCard();
         ingameDeckShuffler.InitSkillCard();
@@ -117,6 +117,7 @@ public class IngameCityManager : MonoBehaviour {
         buildingList = deck.coordsSerial;
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         wreckSpine.GetSkeletonData(false);
+        ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
         //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
         //    BuildingsInfo bi = new BuildingsInfo();
         //    bi.id = deck.coordsSerial[i];
@@ -453,11 +454,12 @@ public class IngameCityManager : MonoBehaviour {
                 }
 
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, enemyBuilding.gameObject);
                 }
-                else if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard(buildingObject.data.card.id);
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, enemyBuilding.gameObject);
                 }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -742,41 +744,34 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public void SetUnactiveBuilding() {
-        BuildingInfo bi = new BuildingInfo();
-        for (int i = 0; i < 2; i++) {
-            if (i == 0)
-                bi = myBuildingsInfo[unactiveBuildingIndex1];
-            else
-                bi = myBuildingsInfo[unactiveBuildingIndex2];
-            bi.activate = false;
-            switch (bi.cardInfo.prodType) {
-                case "gold":
-                    productResources.gold.food -= bi.cardInfo.product.food;
-                    productResources.gold.gold -= bi.cardInfo.product.gold;
-                    productResources.gold.environment -= bi.cardInfo.product.environment;
-                    break;
-                case "food":
-                    productResources.food.food -= bi.cardInfo.product.food;
-                    productResources.food.gold -= bi.cardInfo.product.gold;
-                    productResources.food.environment -= bi.cardInfo.product.environment;
-                    break;
-                case "env":
-                    productResources.env.food -= bi.cardInfo.product.food;
-                    productResources.env.gold -= bi.cardInfo.product.gold;
-                    productResources.env.environment -= bi.cardInfo.product.environment;
-                    break;
-                default:
-                    BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-                    if (buildingObject.data.card.id == "magma_altar") {
-                        GetComponent<IngameDeckShuffler>().DeactiveCard("magma_altar");
-                    }
-                    else if (buildingObject.data.card.id == "wolves_den") {
-                        GetComponent<IngameDeckShuffler>().DeactiveCard("wolves_den");
-                    }
-                    break;
-            }
-            Debug.Log(bi.cardInfo.name + " 비활성화");
-            StartCoroutine(UnActivateForTime(bi));
+        BuildingInfo bi = myBuildingsInfo[unactiveBuildingIndex];
+        bi.activate = false;
+        switch (bi.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food -= bi.cardInfo.product.food;
+                productResources.gold.gold -= bi.cardInfo.product.gold;
+                productResources.gold.environment -= bi.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food -= bi.cardInfo.product.food;
+                productResources.food.gold -= bi.cardInfo.product.gold;
+                productResources.food.environment -= bi.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food -= bi.cardInfo.product.food;
+                productResources.env.gold -= bi.cardInfo.product.gold;
+                productResources.env.environment -= bi.cardInfo.product.environment;
+                break;
+            default:
+                BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.DeactiveCard(id, false, bi.gameObject);
+                }
+                else {
+                    ingameDeckShuffler.DeactiveCard(id, true, bi.gameObject);
+                }
+                break;
         }
         unActiveAlert1 = unActiveAlert2 = false;
         unactiveBuildingIndex1 = unactiveBuildingIndex2 = 100;
@@ -809,11 +804,12 @@ public class IngameCityManager : MonoBehaviour {
                 break;
             default:
                 BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
-                if (buildingObject.data.card.id == "magma_altar") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("magma_altar");
+                string id = buildingObject.data.card.id;
+                if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+                    ingameDeckShuffler.ActivateCard(id, false, card.gameObject);
                 }
-                if (buildingObject.data.card.id == "wolves_den") {
-                    GetComponent<IngameDeckShuffler>().ActivateCard("wolves_den");
+                else {
+                    ingameDeckShuffler.ActivateCard(id, true, card.gameObject);
                 }
                 break;
         }

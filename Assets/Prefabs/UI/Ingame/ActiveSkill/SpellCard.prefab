@@ -123,9 +123,9 @@ GameObject:
   - component: {fileID: 224487475254686734}
   - component: {fileID: 222647027173131156}
   - component: {fileID: 114207720664300664}
-  - component: {fileID: 114996558907037656}
   - component: {fileID: 114552227282482330}
   - component: {fileID: 114226506936609272}
+  - component: {fileID: 114382370195586036}
   m_Layer: 0
   m_Name: SpellCard
   m_TagString: Untagged
@@ -306,6 +306,51 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1
+--- !u!114 &114382370195586036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508483023320674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d176f3e3d430f441bbd0b7a8767be9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentBuilding: {fileID: 0}
+  unit:
+    id: 
+    name: 
+    cost:
+      food: 0
+      gold: 0
+      environment: 0
+    coolTime: 0
+    size: 0
+    count: 0
+    power: 0
+    attackSpeed: 0
+    detectRange: 0
+    attackRange: 0
+    hitPoint: 0
+    moveSpeed: 0
+    tierNeed: 0
+    imageName: 
+    lv: 1
+  skill:
+    cost:
+      food: 0
+      gold: 0
+      environment: 0
+    id: 0
+    name: 
+    method:
+      id: 0
+      methodName: 
+      args: 
+    tierNeed: 0
+    desc: 
+    imageName: 
 --- !u!114 &114391406430395826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -551,17 +596,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114996558907037656
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1508483023320674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3d4581e893be974db6987db13cb1195, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &222102743125237536
 CanvasRenderer:
   m_ObjectHideFlags: 1
