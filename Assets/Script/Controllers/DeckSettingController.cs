@@ -175,7 +175,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (prevData == null) {
                 saveBtnClick = true;
                 GameObject modal = Modal.instantiateWithClose("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
-                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 16;
                 modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
             }
             else {
@@ -186,7 +186,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     str = name.Substring(0, 8);
                 }
                 GameObject modal = Modal.instantiateWithClose("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
-                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 8;
+                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 16;
                 modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
             }
         }

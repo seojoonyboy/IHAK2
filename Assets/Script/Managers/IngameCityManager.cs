@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using Spine.Unity;
+using TMPro;
 
 public class IngameCityManager : MonoBehaviour {
     [System.Serializable]
@@ -74,8 +75,16 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - UnActive")]
     public GameObject unactiveImage;
     [SerializeField] GameObject unactiveGroup;
-    public int unactiveBuildingIndex = 100;
-    private bool unActiveAlert = false;
+    public int unactiveBuildingIndex1 = 100;
+    public int unactiveBuildingIndex2 = 100;
+    private bool unActiveAlert1 = false;
+    private bool unActiveAlert2 = false;
+
+    [Space(10)]
+    [Header(" - HQBuildingObject")]
+    public BuildingInfo playerHQ;
+    public BuildingInfo enemyHQ;
+
 
     [Space(10)]
     [Header(" - Other")]
@@ -160,6 +169,7 @@ public class IngameCityManager : MonoBehaviour {
         //skillDetail.args = "5,6,1,15";
         //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
         //StartCoroutine("Damage");
+        SetHQ();
         SetEnemyTotalHP();
         StartCoroutine("Repair");
     }
@@ -509,6 +519,9 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.hp = 0;
                     BuildingDestroyed(enemyBuilding);
+
+                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                        DestroyEnemy();
                 }
 
                 if (enemyCurrentTotalHP < 0) {
@@ -622,7 +635,11 @@ public class IngameCityManager : MonoBehaviour {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
             }
         }
+        /*
+        if(buildingInfo.cardInfo.id == -1) {
 
+        }
+        */
         buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -665,34 +682,65 @@ public class IngameCityManager : MonoBehaviour {
                 continue;
             if (myBuildingsInfo[num].activate == false)
                 continue;
+            if (unactiveBuildingIndex1 == num)
+                continue;
             else {
-                unactiveBuildingIndex = num;
-                SetColor(myBuildingsInfo[num].gameObject, Color.red);
+                if (unactiveBuildingIndex1 == 100) {
+                    unactiveBuildingIndex1 = num;
+                    unActiveAlert1 = true;
+                    StartCoroutine(StartAlert1());
+                }
+                else {
+                    unactiveBuildingIndex2 = num;
+                    unActiveAlert2 = true;
+                    StartCoroutine(StartAlert2());
+                }
+                //SetColor(myBuildingsInfo[num].gameObject, Color.red);
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
-                unActiveAlert = true;
-                StartCoroutine(StartAlert());
+                
                 return;
             }
         }
     }
 
-    IEnumerator StartAlert() {
-        int index = unactiveBuildingIndex;
-        while (unActiveAlert) {
-            if (unActiveAlert)
+    IEnumerator StartAlert1() {
+        int index = unactiveBuildingIndex1;
+        while (unActiveAlert1) {
+            if (unActiveAlert1)
                 SetColor(myBuildingsInfo[index].gameObject, Color.red);
             yield return new WaitForSeconds(0.4f);
-            if (unActiveAlert)
+            if (unActiveAlert1)
+                SetColor(myBuildingsInfo[index].gameObject, Color.white);
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+    IEnumerator StartAlert2() {
+        int index = unactiveBuildingIndex2;
+        while (unActiveAlert2) {
+            if (unActiveAlert2)
+                SetColor(myBuildingsInfo[index].gameObject, Color.red);
+            yield return new WaitForSeconds(0.4f);
+            if (unActiveAlert2)
                 SetColor(myBuildingsInfo[index].gameObject, Color.white);
             yield return new WaitForSeconds(0.2f);
         }
     }
 
     public void CancleUnActiveBuilding() {
-        unActiveAlert = false;
-        SetColor(myBuildingsInfo[unactiveBuildingIndex].gameObject, Color.white);
-        Debug.Log(myBuildingsInfo[unactiveBuildingIndex].cardInfo.name + " 비활성화 예정 해제");
-        unactiveBuildingIndex = 100;
+        
+        if (unactiveBuildingIndex2 == 100) {
+            unActiveAlert1 = false;
+            SetColor(myBuildingsInfo[unactiveBuildingIndex1].gameObject, Color.white);
+            Debug.Log(myBuildingsInfo[unactiveBuildingIndex1].cardInfo.name + " 비활성화 예정 해제");
+            unactiveBuildingIndex1 = 100;
+        }
+        else {
+            unActiveAlert2 = false;
+            SetColor(myBuildingsInfo[unactiveBuildingIndex2].gameObject, Color.white);
+            Debug.Log(myBuildingsInfo[unactiveBuildingIndex2].cardInfo.name + " 비활성화 예정 해제");
+            unactiveBuildingIndex2 = 100;
+        }
+        
     }
 
     public void SetUnactiveBuilding() {
@@ -725,17 +773,15 @@ public class IngameCityManager : MonoBehaviour {
                 }
                 break;
         }
-        Debug.Log(bi.cardInfo.name + " 비활성화");
-        unActiveAlert = false;
-        unactiveBuildingIndex = 100;
-        StartCoroutine(UnActivateForTime(bi));
+        unActiveAlert1 = unActiveAlert2 = false;
+        unactiveBuildingIndex1 = unactiveBuildingIndex2 = 100;
     }
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
-        StartCoroutine(UnActivateTimer());
+        StartCoroutine(UnActivateTimer(card.gameObject));
         SetColor(card.gameObject, Color.red);
         yield return new WaitForSeconds(1.0f);
-        SetColor(card.gameObject, Color.gray);
+        SetColor(card.gameObject, Color.black);
         yield return new WaitForSeconds(29.0f);
         card.activate = true;
         SetColor(card.gameObject, Color.white);
@@ -769,28 +815,17 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    IEnumerator UnActivateTimer() {
-        GameObject time = Instantiate(unactiveImage, unactiveGroup.transform);
+    IEnumerator UnActivateTimer(GameObject building) {
+        GameObject time = Instantiate(unactiveImage, transform);
+        time.transform.position = building.transform.position;
         int leftTime = 30;
         while (leftTime >= 1) {
             yield return new WaitForSeconds(1.0f);
             leftTime--;
-            time.transform.GetChild(0).GetComponent<Text>().text = leftTime.ToString();
+            time.transform.GetChild(1).GetComponent<TextMeshPro>().text = leftTime.ToString();
         }
         Destroy(time);
     }
-
-
-    /*
-    IEnumerator Damage() {
-        while (transform.parent.parent.parent.parent.GetComponent<IngameSceneUIController>().isPlaying == true) {
-            yield return new WaitForSeconds(1f);
-            for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
-                TakeDamage(Target.ENEMY_1, i, 20);
-            }
-        }
-    }
-    */
 
     public void SetEnemyTotalHP() {
         for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
@@ -843,6 +878,32 @@ public class IngameCityManager : MonoBehaviour {
         ani.skeletonDataAsset = skeleton;
         ani.Initialize(true);
         ani.AnimationState.SetAnimation(0, skeleton.GetSkeletonData(false).Animations.Items[0], true);
+    }
+
+    public void SetHQ() {
+        enemyHQ = enemyBuildingsInfo.Find(x => x.tileNum == enemyBuildingsInfo.Count / 2);
+        playerHQ = myBuildingsInfo.Find(x => x.tileNum == 12);
+
+        Debug.Log(enemyHQ.cardInfo.name);
+        Debug.Log(enemyHQ.hp);
+        Debug.Log(playerHQ.cardInfo.name);
+        Debug.Log(playerHQ.hp);
+    }
+
+    public void DestroyEnemy() {
+        if(enemyHQ.hp == 0 && enemyHQ.activate == false) {
+            enemyCurrentTotalHP = 0;
+            enemyTotalHPGauge.GetComponent<Image>().fillAmount = 0f;
+            enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 0.ToString() + " % ";
+            StopCoroutine("Repair");
+        }
+    }
+
+    IEnumerator HQDamage() {
+        while (ingameSceneUIController.isPlaying == true) {
+            yield return new WaitForSeconds(1f);
+            TakeDamage(Target.ENEMY_1, 12, 100);
+        }
     }
 
 

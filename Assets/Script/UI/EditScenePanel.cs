@@ -73,7 +73,6 @@ public class EditScenePanel : MonoBehaviour {
                 //"oncomplete", "EnableArrowButtons"));
             
         }
-        Debug.Log(content.GetChild(0).position);
         pageText.text = (page + 1) + " / " + content.childCount;
     }
 
