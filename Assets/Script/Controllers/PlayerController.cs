@@ -182,10 +182,10 @@ public partial class PlayerController : MonoBehaviour {
                             }
                             else
                                 scoreManager.AddScore(icm.productResources.env.environment, IngameScoreManager.ScoreType.Product);
-                            if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
-                                icm.DecideUnActiveBuilding();
-                            if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
-                                icm.DecideUnActiveBuilding();
+                            if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
+                                icm.CancleUnActiveBuilding();
+                            if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
+                                icm.CancleUnActiveBuilding();
                             resourceClass.turn--;
                         }
                     }
