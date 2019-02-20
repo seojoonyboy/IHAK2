@@ -30,10 +30,9 @@ public class IngameDropHandler : MonoBehaviour {
         
         if(!IsCardDropOK()) return;
 
-        IngameCard card = selectedObject.GetComponent<IngameCard>();
-        object data = card.data;
-        if(data.GetType() == typeof(Skill)) SkillActive(data);
-        else if(data.GetType() == typeof(Unit)) UnitSummon(data);
+        ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
+        if(!string.IsNullOrEmpty(card.data.skill.name)) SkillActive(card.data.skill);
+        else if(!string.IsNullOrEmpty(card.data.unit.name)) UnitSummon(card.data.unit);
     }
 
     private bool IsCardDropOK() {
@@ -47,9 +46,8 @@ public class IngameDropHandler : MonoBehaviour {
         return results[0].gameObject.name.CompareTo(StrB) == 0;
     }
 
-    private void UnitSummon(object data) {
-        Unit unit = (Unit)data;
-        if (!CheckResouceOK(unit.cost)) return;
+    private void UnitSummon(Unit data) {
+        if (!CheckResouceOK(data.cost)) return;
 
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
@@ -60,34 +58,33 @@ public class IngameDropHandler : MonoBehaviour {
 
         //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
         var tmp = ingameCityManager.eachPlayersTileGroups;
-        for(int i = 0; i < unit.count; i++) {
+        for(int i = 0; i < data.count; i++) {
             float randomPosX = Random.Range(-50f, 50f);
             float randomPosY = Random.Range(-50f, 50f);
             GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[0]).transform);
-            wolf.GetComponent<UnitAI>().SetUnitData(unit);
+            wolf.GetComponent<UnitAI>().SetUnitData(data);
             wolf.transform.position = ray.origin + new Vector2(randomPosX, 50f + randomPosY);//hit.transform.position;
         }
 
-        UseResource(unit.cost);
-        IngameScoreManager.Instance.AddScore(unit.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+        UseResource(data.cost);
+        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
     }
 
-    private void SkillActive(object data) {
-        Skill skill = (Skill)data;
-        if (!CheckResouceOK(skill.cost)) return;
+    private void SkillActive(Skill data) {
+        if (!CheckResouceOK(data.cost)) return;
         if (!canSpell) {
             Debug.Log("스킬 쿨타임!");
             return;
         }
 
         StartCoroutine(CoolTime());
-        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(skill.method);
+        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method);
         ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
 
-        UseResource(skill.cost);
-        IngameScoreManager.Instance.AddScore(skill.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+        UseResource(data.cost);
+        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
     }
