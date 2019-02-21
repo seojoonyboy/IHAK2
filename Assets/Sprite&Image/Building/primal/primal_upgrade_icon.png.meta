@@ -1,40 +1,27 @@
 fileFormatVersion: 2
-guid: 7b1cfb1cfdbf7fc45a23f90301bb3603
+guid: 2317cb552894dc54da24a09a53a35e19
 TextureImporter:
   fileIDToRecycleName:
-    21300000: n_s_0201
-    21300002: n_s_0102
-    21300004: n_s_0202
-    21300006: n_u_0101
-    21300008: IngameUpgrade_4
-    21300010: IngameUpgrade_5
-    21300012: IngameUpgrade_6
-    21300014: IngameUpgrade_7
-    21300016: n_f_0301
-    21300018: n_g_0301
-    21300020: IngameUpgrade_10
-    21300022: n_e_0201
-    21300024: n_s_0101
-    21300026: n_s_0104
-    21300028: n_d_0201
-    21300030: n_m_0101
-    21300032: n_s_0201
-    21300034: n_s_0102
-    21300036: n_s_0202
-    21300038: n_u_0101
-    21300040: primal_building_upgrade_4
-    21300042: hq_lv1
-    21300044: hq_lv2
-    21300046: primal_building_upgrade_7
-    21300048: n_f_0301
-    21300050: n_g_0301
-    21300052: primal_building_upgrade_10
-    21300054: n_e_0201
-    21300056: n_s_0101
-    21300058: primal_building_upgrade_13
-    21300060: primal_building_upgrade_14
-    21300062: primal_building_upgrade_15
-    21300064: primal_hq
+    21300000: n_hq_0011234123
+    21300002: primal_upgrade_icon_1
+    21300004: n_u_0101
+    21300006: n_u_0301
+    21300008: n_u_0202
+    21300010: n_s_0201
+    21300012: n_f_0201
+    21300014: primal_upgrade_icon_7
+    21300016: primal_upgrade_icon_8
+    21300018: n_hq_0001
+    21300020: n_hq_0002
+    21300022: n_a_0202
+    21300024: primal_upgrade_icon_12
+    21300026: primal_upgrade_icon_13
+    21300028: n_g_0201
+    21300030: primal_upgrade_icon_15
+    21300032: n_e_0201
+    21300034: primal_upgrade_icon_17
+    21300036: primal_upgrade_icon_18
+    21300038: n_m_0101
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -128,6 +115,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: n_hq_0011234123
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1701
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f9514830d7a4d649a15e1551d8ed19d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: primal_upgrade_icon_1
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1699
+        width: 201
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d0da63a612bb0649a40b9fcb728875b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: n_u_0101
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1484
+        width: 201
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 214a8951bbdc0f8438c73f0d09e38e6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: n_u_0301
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 1483
+        width: 201
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65f15f52d9d4f7444a098ae5a2d8673b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: n_u_0202
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 1481
+        width: 201
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8021a6c7c8e344b851d58bc61d6e60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: n_s_0201
       rect:
         serializedVersion: 2
@@ -142,17 +229,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02da65ad07c8c40478145f022a250f88
+      spriteID: 9d76ba58bf0cdb04793e03841572e415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_s_0102
+      name: n_f_0201
       rect:
         serializedVersion: 2
-        x: 40
-        y: 998
+        x: 279
+        y: 1238
         width: 201
         height: 200
       alignment: 0
@@ -162,13 +249,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d590cac4f06a41469c9c247cd694c91
+      spriteID: f87d4fe0b7abff846ba50e322c8a4f99
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_s_0202
+      name: primal_upgrade_icon_7
       rect:
         serializedVersion: 2
         x: 290
@@ -182,18 +269,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00e98c018da5ee244a7e412c92ff3500
+      spriteID: 13a406c2e2c21e8429f20446417412e8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_u_0101
+      name: primal_upgrade_icon_8
       rect:
         serializedVersion: 2
-        x: 539
-        y: 998
-        width: 201
+        x: 541
+        y: 991
+        width: 200
         height: 200
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -202,33 +289,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 050c3cf79fd576c4889774bce4bc9533
+      spriteID: 74f08914464721a4e9dbbfbca18cc7c3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: primal_building_upgrade_4
-      rect:
-        serializedVersion: 2
-        x: 788
-        y: 998
-        width: 201
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d31fea3d13b824a4798d0f0d9a89ac52
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: primal_hq
+      name: n_hq_0001
       rect:
         serializedVersion: 2
         x: 40
@@ -242,13 +309,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cbd1a4677c41cb40a66d7127d617240
+      spriteID: d54c9f93e7db9044facc3940a91b1dd7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hq_lv2
+      name: n_hq_0002
       rect:
         serializedVersion: 2
         x: 284
@@ -262,13 +329,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8eb5c1c0e66098f4ba5f728cd4bd0d3e
+      spriteID: 4e5e52bbf2e124040b4d693b268f3e77
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: primal_building_upgrade_7
+      name: n_a_0202
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 750
+        width: 203
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62401c56c943a94468059b79906e04c6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: primal_upgrade_icon_12
       rect:
         serializedVersion: 2
         x: 770
@@ -282,13 +369,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0abe6015db2b5954ebbc44fa73e15ac0
+      spriteID: 9f9b540f30fbdbd498c01c66f596e3eb
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_f_0301
+      name: primal_upgrade_icon_13
       rect:
         serializedVersion: 2
         x: 36
@@ -302,13 +389,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3eb2406d4432e814b91b0175b8c8103b
+      spriteID: 7740d3fbc49f6d4458280348f49e55a3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_g_0301
+      name: n_g_0201
       rect:
         serializedVersion: 2
         x: 284
@@ -322,18 +409,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3db1be20f0432a429fd4ac58f24f742
+      spriteID: 78fc1ed381af36b4db41e6da02c0bbaa
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: primal_building_upgrade_10
+      name: primal_upgrade_icon_15
       rect:
         serializedVersion: 2
-        x: 533
-        y: 506
-        width: 200
+        x: 534
+        y: 504
+        width: 201
         height: 200
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -342,7 +429,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05863831c6751384a9b18f384d9b6a37
+      spriteID: b725f7d51f7ac494bba8795e5f528dc7
       vertices: []
       indices: 
       edges: []
@@ -362,13 +449,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 518fa5ece06c99f4e9c743d6ccc60176
+      spriteID: ac0099aeae009414fa44b3b73036652b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_s_0101
+      name: primal_upgrade_icon_17
       rect:
         serializedVersion: 2
         x: 40
@@ -382,13 +469,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23e0747a4f5806243b787473d1a5e81a
+      spriteID: 9bf8fb1859d18874f9f2e472af27ddf1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: n_s_0104
+      name: primal_upgrade_icon_18
       rect:
         serializedVersion: 2
         x: 291
@@ -402,27 +489,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 105f4c3682732424c819edcdac2778d9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: n_d_0201
-      rect:
-        serializedVersion: 2
-        x: 541
-        y: 240
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8fc61e5482d30445b6739742eac5a74
+      spriteID: 37ebb94ea90029244b5b4bd5a5939d3f
       vertices: []
       indices: 
       edges: []
@@ -431,7 +498,7 @@ TextureImporter:
       name: n_m_0101
       rect:
         serializedVersion: 2
-        x: 791
+        x: 539
         y: 240
         width: 201
         height: 200
@@ -442,7 +509,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c6f17943979e1048abcdd09d7a3a8f0
+      spriteID: 94078cc65755a63479a83282199c17e8
       vertices: []
       indices: 
       edges: []
@@ -450,7 +517,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 9a7edc1ff8db212488132db888bc3d58
+    spriteID: 0ebf3b77bb6fa424d966c05d3f40a7de
     vertices: []
     indices: 
     edges: []
