@@ -1544,6 +1544,7 @@ GameObject:
   - component: {fileID: 210519646}
   - component: {fileID: 210519647}
   - component: {fileID: 210519648}
+  - component: {fileID: 210519649}
   m_Layer: 0
   m_Name: EnemyCity
   m_TagString: Untagged
@@ -1606,6 +1607,107 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &210519649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 210519645}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59207b40acb8a534880ba6de6f22a05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveInfos:
+  - intervals:
+      min: 1
+      sec: 30
+    wave:
+      sets:
+      - genLocation: 0
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
+      - genLocation: 1
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
+  - intervals:
+      min: 2
+      sec: 30
+    wave:
+      sets:
+      - genLocation: 1
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
+      - genLocation: 1
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 2
+      - genLocation: 2
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
+      - genLocation: 2
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 2
+  - intervals:
+      min: 4
+      sec: 0
+    wave:
+      sets:
+      - genLocation: 4
+        type: 1
+        Prefab: {fileID: 0}
+        num: 1
+      - genLocation: 1
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 2
+      - genLocation: 3
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 2
+  - intervals:
+      min: 4
+      sec: 30
+    wave:
+      sets:
+      - genLocation: 0
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 1
+      - genLocation: 2
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 1
+      - genLocation: 2
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
+      - genLocation: 3
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 1
+      - genLocation: 3
+        type: 0
+        Prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+          type: 2}
+        num: 3
 --- !u!1 &235691231
 GameObject:
   m_ObjectHideFlags: 0
