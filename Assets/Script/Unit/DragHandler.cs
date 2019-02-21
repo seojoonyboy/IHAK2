@@ -15,6 +15,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public bool canDrag = false;
     public DeckSettingController deckSettingController;
     public AccountManager accountManager;
+    private int buildingMaxCount;
 
     public void BeginDrag() {
         canDrag = true;
@@ -23,6 +24,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
     private void Start() {
         dropHandler = GetComponentInParent<DropHandler>();
+        buildingMaxCount = setObject.GetComponent<BuildingObject>().data.card.placementLimit;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
@@ -32,9 +34,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
-        if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
+        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         dropHandler.setObject = setObject;
+        dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
         camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
@@ -58,12 +61,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
         
-        if (1 - deckSettingController.OnTileBuildingCount(setObject) > 0) {
+        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
             transform.GetChild(1).GetComponent<Text>().color = Color.white;
             transform.GetChild(2).GetComponent<Text>().color = Color.white;
         }
-        else if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) {
+        else if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.gray;
             transform.GetChild(1).GetComponent<Text>().color = Color.gray;
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;
@@ -72,7 +75,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (1 - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
+        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);

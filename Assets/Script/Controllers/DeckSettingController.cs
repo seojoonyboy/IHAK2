@@ -488,7 +488,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
 
         GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().data.id);
-        int count = 1 - OnTileBuildingCount(saveSelectBuilding);
+        int maxbuildCount = saveSelectBuilding.GetComponent<BuildingObject>().data.card.placementLimit;
+        int count = maxbuildCount - OnTileBuildingCount(saveSelectBuilding);
         count++;
 
         if(count > 0) {
@@ -499,7 +500,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
 
         //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
-        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + maxbuildCount.ToString();
 
         GameObject ActiveSkillUISlot = FindActiveSlot(saveSelectBuilding.GetComponent<BuildingObject>().data.id);
         if(ActiveSkillUISlot != null) {
@@ -526,7 +527,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
 
         GameObject card = FindCard(building.GetComponent<BuildingObject>().data.id);
-        int count = 1 - OnTileBuildingCount(building);
+        int maxbuildCount = building.GetComponent<BuildingObject>().data.card.placementLimit;
+        int count = maxbuildCount - OnTileBuildingCount(building);
         count++;
 
         if (count > 0) {
@@ -537,7 +539,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
 
         //card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
-        card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+        card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + maxbuildCount.ToString();
 
         GameObject ActiveSkillUISlot = FindActiveSlot(building.GetComponent<BuildingObject>().data.id);
         if (ActiveSkillUISlot != null) {
@@ -594,7 +596,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             {
                 GameObject slot = cardsContent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
-                int count = 1 - OnTileBuildingCount(slot.GetComponent<DragHandler>().setObject);
+                int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit;
+                int count = maxBuildCount - OnTileBuildingCount(slot.GetComponent<DragHandler>().setObject);
                 if (count == 0) {
                     slot.GetComponent<Image>().color = Color.grey;
                     slot.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
@@ -602,7 +605,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     slot.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
                 }
 
-                slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+                slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + maxBuildCount.ToString();
             }
         }
     }
@@ -617,11 +620,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             for (int j = 0; j < cardsContent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
             {
                 GameObject slot = cardsContent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
+                int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit;
                 //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
                 slot.GetComponent<Image>().color = Color.white;
                 slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
                 slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
-                slot.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
+                slot.transform.GetChild(2).GetComponent<Text>().text = maxBuildCount.ToString() + " / " + maxBuildCount.ToString();
                 slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
             }
         }
@@ -874,6 +878,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
 
         if (swapBuilding.GetComponent<BuildingObject>().data.id == -1) {
+            SetSortingOrder(pickBuilding, startSortingOrder);
+            pickBuilding.transform.position = startEditPosition;
+            swapBuilding.SetActive(true);
+            return;
+        }
+
+        if(swapBuilding.GetComponent<BuildingObject>().data.id == pickBuilding.GetComponent<BuildingObject>().data.id) {
             SetSortingOrder(pickBuilding, startSortingOrder);
             pickBuilding.transform.position = startEditPosition;
             swapBuilding.SetActive(true);

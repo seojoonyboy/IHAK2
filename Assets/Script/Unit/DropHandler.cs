@@ -13,6 +13,7 @@ public class DropHandler : MonoBehaviour {
     public float camSize;
     Camera cam;
     public DeckSettingController deckSettingController;
+    public int buildingMaxCount;
     public int setCount = 0;
 
     private void Start() {
@@ -36,7 +37,7 @@ public class DropHandler : MonoBehaviour {
 
             if (targetTile.GetComponent<TileObject>().buildingSet == false && targetTile != null) {
                 //if (setObject.GetComponent<BuildingObject>().data.card.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
-                if (1 - deckSettingController.OnTileBuildingCount(setObject) > 0) {
+                if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
                     if (targetTile.GetComponent<TileObject>().Tier <= AccountManager.Instance.userTier) {
                         SettingBuilding(setObject);
                     }
@@ -78,7 +79,7 @@ public class DropHandler : MonoBehaviour {
 
         if (card != null) {
             //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
-            int count = 1 - deckSettingController.OnTileBuildingCount(card.GetComponent<DragHandler>().setObject) - setCount;
+            int count = buildingMaxCount - deckSettingController.OnTileBuildingCount(card.GetComponent<DragHandler>().setObject) - setCount;
             if (count <= 0) {
                 card.GetComponent<Image>().color = Color.gray;
                 card.transform.GetChild(0).GetComponent<Image>().color = Color.gray;
@@ -92,7 +93,7 @@ public class DropHandler : MonoBehaviour {
                 card.transform.GetChild(2).GetComponent<Text>().color = Color.white;
             }
 
-            card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + 1;
+            card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + buildingMaxCount.ToString();
         }
         deckSettingController.AddActiveSlot(selectBuilding);
         string prodType = buildingObject.data.card.prodType;
@@ -104,6 +105,9 @@ public class DropHandler : MonoBehaviour {
 
     public void CardBuildingSwap() {   
         if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().data.id == -1)
+            return;
+
+        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().data.id == setObject.GetComponent<BuildingObject>().data.id)
             return;
 
         GameObject targetTileBuilding = targetTile.transform.GetChild(0).gameObject;
