@@ -29,7 +29,6 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] GameObject repairAlert;
     [SerializeField] Camera territoryCamera;
 
-
     private HorizontalScrollSnap hss;
     private GameObject city;
     private IngameEnemyGenerator ieg;
@@ -60,6 +59,15 @@ public class IngameSceneUIController : MonoBehaviour {
             }
         }
         ProductResources touchProdPower = ld.GetComponent<TileGroup>().touchPerProdPower;
+
+        //Transform target = playerCity.transform.GetChild(1).Find("Tile[2,2]");
+        //Vector2 hqPos = target.localPosition;
+        //enemyCity.GetComponent<IngameEnemyUnitGenerator>().SetLocations(new Vector2[4] {
+        //    new Vector2(hqPos.x - 60, hqPos.y + 60),
+        //    new Vector2(hqPos.x + 60, hqPos.y + 60),
+        //    new Vector2(hqPos.x - 60, hqPos.y - 60),
+        //    new Vector2(hqPos.x + 60, hqPos.y - 60)
+        //}, target.parent);
 
         ld.transform.localScale = new Vector3(1, 1, 1);
         playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);

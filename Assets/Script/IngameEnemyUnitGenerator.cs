@@ -7,6 +7,12 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     public List<WaveInfo> waveInfos;
     public int CurrentWave { get; set; }
 
+    Dictionary<LOCATION, Vector2> locations;
+    private Transform parent;
+
+    private bool isTileSet = false;
+    private const float TARGET_LOCATION_NUM = 4;
+
     IEnumerator 
         coroutine,
         innerCoroutine;
@@ -24,6 +30,16 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
         if(coroutine != null) StopCoroutine(coroutine);
     }
 
+    public void SetLocations(Vector2[] targets, Transform parent) {
+        if (targets.Length != TARGET_LOCATION_NUM) return;
+        locations = new Dictionary<LOCATION, Vector2>();
+        for (int i = 0; i < TARGET_LOCATION_NUM; i++) {
+            locations[(LOCATION)i] = targets[i];
+        }
+        this.parent = parent;
+        isTileSet = true;
+    }
+
     IEnumerator Spawing() {
         while(CurrentWave <= waveInfos.Count) {
             WaveInfo waveInfo = waveInfos[CurrentWave];
@@ -36,7 +52,8 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
             yield return new WaitForSeconds(waitingSecs);
 
             foreach (WaveSet set in waveInfo.wave.sets) {
-                GameObject unit = Instantiate(set.Prefab);
+                GameObject unit = Instantiate(set.Prefab, parent);
+                unit.transform.localPosition = locations[set.genLocation];
                 yield return new WaitForSeconds(0.3f);
             }
 
