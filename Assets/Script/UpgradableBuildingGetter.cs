@@ -89,8 +89,9 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             Text CostFood = costArea.Find("Data/Food/Val").GetComponent<Text>();
             Text CostGold = costArea.Find("Data/Gold/Val").GetComponent<Text>();
             Text CostEco = costArea.Find("Data/Eco/Val").GetComponent<Text>();
-
-            Text Lv = item.transform.Find("Image/Lv").GetComponent<Text>();
+            //GameObject.Find("ConstructManager").GetComponent<ConstructManager>().GetComponent<BuildingImages>().GetImage("primal", "upgrade", buildingObject.data)
+            Image UpgradeImg = item.transform.Find("Image").GetComponent<Image>();
+            //Text Lv = item.transform.Find("Image/Lv").GetComponent<Text>();
             int lv = 0;
 
             if(card.id == "primal_town_center") {
@@ -100,7 +101,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             }
             else lv = card.lv;
 
-            Lv.text = "Lv " + lv;
+            //Lv.text = "Lv " + lv;
             Resource costs = new Resource();
             if (card.id == "primal_town_center") {
                 if(playerController.hqLevel == 1) {
@@ -122,8 +123,9 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             CostFood.text = costs.food.ToString();
             CostGold.text = costs.gold.ToString();
             CostEco.text = costs.environment.ToString();
+            UpgradeImg.sprite = buildingObject.upgradeIcon;
 
-            Name.text = buildingObject.data.card.name;
+            Name.text = buildingObject.data.card.name + " Lv." + lv;
             if (!CanUpgrade(buildingObject, costs)) {
                 item.transform.Find("Deactive").gameObject.SetActive(true);
                 unavailableItems.Add(item);
