@@ -591,7 +591,7 @@ public class IngameCityManager : MonoBehaviour {
                         */
                 }
 
-                if (myBuilding.hp < 0) {
+                if (cityHP < 0) {
                     float hpScaleX = playerHp / playerMaxHp;
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
