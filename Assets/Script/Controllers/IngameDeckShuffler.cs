@@ -63,57 +63,55 @@ public class IngameDeckShuffler : MonoBehaviour {
         }
     }
 
-    public void DeactiveCard(string id, bool isUnit, GameObject parentBuilding) {
-        if (isUnit) {
-            GameObject card = cards.Find(x => x.GetComponent<ActiveCard>().parentBuilding == parentBuilding);
-        }
+    public void DeactiveCard(string id, GameObject parentBuilding) {
+        GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        card.SetActive(false);
     }
 
-    public void ActivateCard(string id, bool isUnit, GameObject parentBuilding) {
-        if (isUnit) {
-            GameObject card = cards.Find(x => x.GetComponent<ActiveCard>().parentBuilding == parentBuilding);
-        }
+    public void ActivateCard(string id, GameObject parentBuilding) {
+        GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        card.SetActive(true);
     }
 
     public void InitUnitCard() {
-        //foreach (ActiveCard unitCard in tileGroup.units) {
-        //    Unit unit = unitCard.unit;
-        //    GameObject card = Instantiate(unitCardPref, cardParent);
-        //    card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
-        //    ActiveCard ingameCard = card.GetComponent<ActiveCardInfo>().data;
-        //    card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
-        //    ingameCard = unitCard;
+        foreach (ActiveCard unitCard in tileGroup.units) {
+            Unit unit = unitCard.unit;
+            GameObject card = Instantiate(unitCardPref, cardParent);
+            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
+            ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+            activeCardInfo.data = unitCard;
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
 
-        //    if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
-        //    if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
-        //    card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
-        //    Debug.Log(playerController.hqLevel);
-        //    if (unit.tierNeed > playerController.hqLevel) {
-        //        card.SetActive(false);
-        //    }
-        //    cards.Add(card);
-        //}
+            if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
+            if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
+            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
+            Debug.Log(playerController.hqLevel);
+            if (unit.tierNeed > playerController.hqLevel) {
+                card.SetActive(false);
+            }
+            cards.Add(card);
+        }
     }
 
     public void InitSkillCard() {
-        //foreach (ActiveCard spellCard in tileGroup.spells) {
-        //    Skill skill = spellCard.skill;
-        //    GameObject card = Instantiate(spellCardPref, cardParent);
-        //    card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
-        //    ActiveCard ingameCard = card.GetComponent<ActiveCardInfo>().data;
-        //    ingameCard = spellCard;
+        foreach (ActiveCard spellCard in tileGroup.spells) {
+            Skill skill = spellCard.skill;
+            GameObject card = Instantiate(spellCardPref, cardParent);
+            card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
+            ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+            activeCardInfo.data = spellCard;
 
-        //    card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
+            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
 
-        //    if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
-        //    if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
-        //    card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
-        //    Debug.Log(playerController.hqLevel);
-        //    if (skill.tierNeed > playerController.hqLevel) {
-        //        card.SetActive(false);
-        //    }
-        //    cards.Add(card);
-        //}
+            if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
+            if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
+            card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
+            Debug.Log(playerController.hqLevel);
+            if (skill.tierNeed > playerController.hqLevel) {
+                card.SetActive(false);
+            }
+            cards.Add(card);
+        }
     }
 
     //initialize

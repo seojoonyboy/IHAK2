@@ -63,6 +63,11 @@ public class MenuSceneController : MonoBehaviour {
         foreach(Transform tile in lo.transform) {
             if(tile.childCount > 1) SetSpineAnimation(tile.GetChild(0));
         }
+        Transform background = lo.transform.Find("Background");
+        foreach(Transform bg in background) {
+            if (bg.name == "Dissolve") continue;
+            bg.gameObject.SetActive(false);
+        }
         go.SetActive(false);
     }
 
