@@ -50,7 +50,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private int enemyTotalHP;
     [SerializeField] public int enemyCurrentTotalHP;
     [SerializeField] public int cityHP = 0;
-    [SerializeField] private int cityMaxHP = 0;
+    [SerializeField] public int cityMaxHP = 0;
 
     [Space(10)]
 
@@ -117,17 +117,6 @@ public class IngameCityManager : MonoBehaviour {
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         wreckSpine.GetSkeletonData(false);
         ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
-        //for (int i = 0; i < deck.coordsSerial.Length - 1; i++) {
-        //    BuildingsInfo bi = new BuildingsInfo();
-        //    bi.id = deck.coordsSerial[i];
-        //    bi.activate = true;
-        //    if (i != deck.coordsSerial.Length / 2) {
-        //        bi.cardInfo = transform.GetChild(1).GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card;
-        //        bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
-        //        cityHP += bi.hp;
-        //    }
-        //    buildingsInfo.Add(bi);
-        //}
 
         for (int i = 0; i < demoTileIndex.Length; i++) {    // 3x3 마을용 연산
             BuildingInfo bi = new BuildingInfo();
@@ -155,22 +144,11 @@ public class IngameCityManager : MonoBehaviour {
 
         productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
 
-
-        //TakeDamage(Target.ENEMY_1, 6, 20);
-        //TakeDamage(Target.ENEMY_1, 6, 80);
-        //RepairBuilding(Target.ENEMY_1, 6);
-        //TakeDamage(Target.ENEMY_1, 7, 100);
-        //RepairBuilding(Target.ENEMY_1, 7);
-        //테스트
-        //SkillDetail skillDetail = new SkillDetail();
-        //skillDetail.id = 1;
-        //skillDetail.methodName = "마그마 스킬";
-        //skillDetail.args = "5,6,1,15";
-        //gameObject.AddComponent<Temple_Damager>().GenerateAttack(skillDetail);
-        //StartCoroutine("Damage");
+        
         SetHQ();
         SetEnemyTotalHP();
-        StartCoroutine("Repair");
+        //StartCoroutine("TakingDamage");
+        //StartCoroutine("Repaircity");
     }
 
     private void Update() {
@@ -287,28 +265,51 @@ public class IngameCityManager : MonoBehaviour {
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-
-
-
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
                 break;
+
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
-                if (myBuilding == null) return false;
-                if (myBuilding.activate == false) return false;
+                if (myBuilding == null) return false;                
+                if (myBuilding.hp >= myBuilding.maxHp) return false;
+                if (myBuilding.activate == false) {
+                    SetReviveImage(myBuilding.gameObject);
+                    myBuilding.activate = true;
+                }
+
 
                 float playerMaxHp = myBuilding.maxHp;
-                int playerAmount = Mathf.RoundToInt(playerMaxHp * 0.2f);
-                myBuilding.hp += playerAmount;
+                int amount = Mathf.RoundToInt(playerMaxHp * 0.04f);
+                myBuilding.hp += amount;
+                cityHP += amount;
+
+                int overHP;
+                if (myBuilding.hp > myBuilding.maxHp) {
+                    overHP = myBuilding.hp - myBuilding.maxHp;
+                    cityHP -= overHP;
+                }
+
                 float playerHp = myBuilding.hp;
                 float playerHpScaleX = playerHp / playerMaxHp;
                 myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(playerHpScaleX, 1, 1);
 
 
-                if (myBuilding.hp > myBuilding.maxHp) {
+                float cityTotalHP = cityMaxHP;
+                float cityCurrentHP = cityHP;
+                float cityHPpercent = cityCurrentHP / cityTotalHP;
+                hpValue.text = Mathf.RoundToInt(cityHPpercent * 100f).ToString() + "%";
+                hpValueBar.GetComponent<Image>().fillAmount = cityHPpercent;
+
+                if (myBuilding.hp >= myBuilding.maxHp) {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
                     myBuilding.hp = myBuilding.maxHp;
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
+                }
+
+                if (cityCurrentHP > cityTotalHP) {
+                    cityCurrentHP = cityTotalHP;
+                    hpValue.text = 100.ToString() + "%";
+                    hpValueBar.fillAmount = 1f;
                 }
 
                 if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
@@ -316,10 +317,7 @@ public class IngameCityManager : MonoBehaviour {
         }
         return true;
     }
-
-
-
-
+    
     public bool RepairBuilding(Target target, int tileNum, int amount) {
         switch (target) {
             case Target.ENEMY_1:
@@ -327,6 +325,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == false) return false;
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
+
 
                 //회복연산
                 float enemyMaxHP = enemyBuilding.maxHp;
@@ -358,31 +357,55 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
                 }
 
-                if (enemyCurrentTotalHP > enemyTotalHP) {
+                if (enemyCurrentTotalHP >= enemyTotalHP) {
                     enemyCurrentTotalHP = enemyTotalHP;
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
 
                 if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
-
                 break;
 
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (myBuilding == null) return false;
-                if (myBuilding.activate == false) return false;
+                if (myBuilding.hp >= myBuilding.maxHp) return false;
+                if (myBuilding.activate == false) {
+                    SetReviveImage(myBuilding.gameObject);
+                    myBuilding.activate = true;
+                }
 
                 float playerMaxHp = myBuilding.maxHp;
                 myBuilding.hp += amount;
+                cityHP += amount;
+
+                int overHP;
+                if(myBuilding.hp > myBuilding.maxHp) {
+                    overHP = myBuilding.hp - myBuilding.maxHp;
+                    cityHP -= overHP;
+                }                
+                
                 float playerHp = myBuilding.hp;
                 float playerHpScaleX = playerHp / playerMaxHp;
                 myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(playerHpScaleX, 1, 1);
+
+
+                float cityTotalHP = cityMaxHP;
+                float cityCurrentHP = cityHP;
+                float cityHPpercent = cityCurrentHP / cityTotalHP;
+                hpValue.text = Mathf.RoundToInt(cityHPpercent * 100f).ToString() + "%";
+                hpValueBar.GetComponent<Image>().fillAmount = cityHPpercent;
 
                 if (myBuilding.hp > myBuilding.maxHp) {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
                     myBuilding.hp = myBuilding.maxHp;
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(1, 1, 1);
+                }
+
+                if (cityCurrentHP > cityTotalHP) {
+                    cityCurrentHP = cityTotalHP;
+                    hpValue.text = 100.ToString() + "%";
+                    hpValueBar.fillAmount = 1f;
                 }
 
                 if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
@@ -530,13 +553,42 @@ public class IngameCityManager : MonoBehaviour {
             case Target.ME:
                 BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
                 if (myBuilding == null) return false;
+                if (myBuilding.hp <= 0) return false;
+
                 myBuilding.hp -= amount;
+                cityHP -= amount;
                 float playerHp = myBuilding.hp;
                 float playerMaxHp = myBuilding.maxHp;
+                
+
+                int overDamage;
+                if(myBuilding.hp < 0) {
+                    overDamage = 0 - myBuilding.hp;
+                    cityHP += overDamage;
+                }
+
+                float cityTotalHP = cityMaxHP;
+                float cityCurrentHP = cityHP;
+                float cityHPpercent = cityCurrentHP / cityTotalHP;
+                hpValue.text = Mathf.RoundToInt(cityHPpercent * 100f).ToString() + "%";
+                hpValueBar.GetComponent<Image>().fillAmount = cityHPpercent;
+
                 if (myBuilding.hp < myBuilding.maxHp) {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
                     float hpScaleX = playerHp / playerMaxHp;
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                }
+
+                if (myBuilding.hp <= 0) {
+                    float hpScaleX = playerHp / playerMaxHp;
+                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    myBuilding.hp = 0;
+                    BuildingDestroyed(myBuilding);
+                    /*
+                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                        DestroyEnemy();
+                        */
                 }
 
                 if (myBuilding.hp < 0) {
@@ -898,10 +950,47 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    IEnumerator HQDamage() {
+    public void RepairPlayerCity() {
+        for(int i = 0; i < demoTileIndex.Length; i++) {
+            RepairBuilding(Target.ME, demoTileIndex[i]);
+        }
+    }
+
+    public int CityDestroyBuildingCount() {
+        int count = 0;
+        BuildingInfo myBuilding;
+        for (int i = 0; i < demoTileIndex.Length; i++) {
+            myBuilding = myBuildingsInfo.Find(x => x.tileNum == demoTileIndex[i]);
+            if (myBuilding.activate == false)
+                count++;
+        }
+        return count;
+    }
+
+    public int CityTotalTileCount() {
+        int count = 0;
+        for(int i = 0; i< demoTileIndex.Length; i++) 
+            count++;      
+
+        return count;
+    }
+
+
+    IEnumerator TakingDamage() {
         while (ingameSceneUIController.isPlaying == true) {
             yield return new WaitForSeconds(1f);
-            TakeDamage(Target.ENEMY_1, 12, 100);
+            TakeDamage(Target.ME, 6, 10 );
+            TakeDamage(Target.ME, 7, 10);
+            TakeDamage(Target.ME, 8, 10);
+            TakeDamage(Target.ME, 13, 5);
+        }
+    }
+
+    IEnumerator Repaircity() {
+        while (ingameSceneUIController.isPlaying == true) {
+            yield return new WaitForSeconds(2f);
+            RepairBuilding(Target.ME, 6);
+            RepairBuilding(Target.ME, 13);
         }
     }
 

@@ -73,6 +73,9 @@ public partial class PlayerController : MonoBehaviour {
     }
     [Header (" - Player")]
     public int hqLevel = 1;
+    public int tileCount;
+    private int MaxHpMulti;
+    public int goldConsume;
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
     [SerializeField] private Material coinAniMaterial;
@@ -98,7 +101,7 @@ public partial class PlayerController : MonoBehaviour {
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
         commandButtons.GetChild(2).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.ENVIRONMENT));
-        //commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => gameTurn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
+        commandButtons.GetChild(3).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
 
         icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
@@ -106,7 +109,7 @@ public partial class PlayerController : MonoBehaviour {
         icm.productResources.env.environment += icm.hq_tier_1.product.env;
 
         coinAni.GetSkeletonData(false);
-        
+        SetPlayerConsumeResource();
     }
 
     private void OnMouseDown() {
@@ -191,9 +194,17 @@ public partial class PlayerController : MonoBehaviour {
                     }
                 }
                 break;
-            case Buttons.REPAIR:
-                ShowCoinAnimation(3);
-                resourceClass.turn--;
+            case Buttons.REPAIR:                
+                float destroyCount = icm.CityDestroyBuildingCount();
+                float calculate = MaxHpMulti * ((1f + (0.02f * destroyCount)) * (tileCount + hqLevel) / (tileCount * 1.5f));
+                goldConsume = Mathf.RoundToInt(calculate);
+
+                if (Gold >= 0 + goldConsume) {
+                    ShowCoinAnimation(3);
+                    icm.RepairPlayerCity();
+                    Gold -= goldConsume;
+                    resourceClass.turn--;
+                }
                 break;
         }
         PrintResource();
@@ -435,4 +446,11 @@ public partial class PlayerController {
         int newAmount = System.Convert.ToInt32(prevHp * (1 + (((lv + rarity) / 2.0f) / 12.0f)));
         return newAmount;
     }
+
+    public void SetPlayerConsumeResource() {
+        float hp = icm.cityMaxHP;
+        MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
+        tileCount = icm.CityTotalTileCount();
+    }
+
 }
