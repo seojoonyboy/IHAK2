@@ -724,6 +724,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 BuildingObject buildingObject = building.GetComponent<BuildingObject>();
                 Building buildingData = buildingObject.data;
 
+                if (buildingObject.data.id == -1)
+                    continue;
+
+
                 if (buildingData.card.activeSkills.Length != 0) {
                     activeSlotUI.transform.GetChild(slotNum).gameObject.SetActive(true);
                     activeSlotUI.transform.GetChild(slotNum).GetComponent<Image>().sprite = buildingObject.mainSprite;
@@ -784,7 +788,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         GameObject slot;
         for (int i = 0; i < activeSlotUI.transform.childCount; i++) {
             slot = activeSlotUI.transform.GetChild(i).gameObject;
-
+            /*
             if (slot.GetComponent<ActiveSlot>().id == -1) {
                 if (i == 0)  continue;
                 //HQ처리
@@ -793,7 +797,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 activeSlotUI.transform.GetChild(0).GetComponent<Image>().sprite = slot.GetComponent<Image>().sprite;
                 activeSlotUI.transform.GetChild(0).gameObject.SetActive(true);
             }
-            
+            */
             slot.GetComponent<Image>().sprite = null;
             slot.GetComponent<ActiveSlot>().id = 0;
             slot.GetComponent<ActiveSlot>()._object = null;
