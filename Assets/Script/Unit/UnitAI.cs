@@ -4,6 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 using DataModules;
 using System;
+using PolyNav;
 
 public class UnitAI : MonoBehaviour {
 	public enum enemyState {
@@ -30,6 +31,7 @@ public class UnitAI : MonoBehaviour {
     public Spine.Skeleton skeleton;
 
     public GameObject ontile;
+	private PolyNavAgent agent;
 
 	void Start () {
 		healthBar = transform.GetChild(1).GetChild(1);
@@ -37,7 +39,7 @@ public class UnitAI : MonoBehaviour {
 		skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
-
+		agent = GetComponent<PolyNavAgent>();
 		searchBuilding();
 		setState(enemyState.MOVE);
 
@@ -54,6 +56,7 @@ public class UnitAI : MonoBehaviour {
 		float temphealth = unit.hitPoint - maxHealth;
 		maxHealth = unit.hitPoint;
         health += temphealth;
+		//agent.maxSpeed = moveSpeed;
 	}
 
     private void UnitUpgrade(Enum Event_Type, Component Sender, object Param) {
@@ -74,6 +77,8 @@ public class UnitAI : MonoBehaviour {
 			case enemyState.MOVE :
 			spineAnimationState.SetAnimation(0, "run", true);
 			update = moveUpdate;
+			agent.SetDestination(target.transform.parent.position);
+			Debug.Log(target.transform.parent.parent);
 			break;
 			case enemyState.ATTACK :
 			spineAnimationState.SetAnimation(0, "stand", true);
@@ -101,11 +106,13 @@ public class UnitAI : MonoBehaviour {
 		setFlip(distance);
 		if(isBuildingClose(length)) {
 			setState(enemyState.ATTACK);
+			agent.Stop();
 			return;
 		}
-		Vector3 force = distance.normalized * moveSpeed * time;
-		transform.Translate(force.x, force.y, 0f);
+		//Vector3 force = distance.normalized * moveSpeed * time;
+		//transform.Translate(force.x, force.y, 0f);
 		if(currentTime < 2f) return;
+		agent.SetDestination(target.transform.parent.position);
 		currentTime = 0f;
 		searchBuilding();
 	}
