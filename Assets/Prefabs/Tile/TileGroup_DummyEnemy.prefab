@@ -9000,7 +9000,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3a0026f98d0a14e528c15f864d5b5abf, type: 2}
+  - {fileID: 2100000, guid: 6460a8f844f1c4c9c923893eb1a6f138, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9070,7 +9070,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3a0026f98d0a14e528c15f864d5b5abf, type: 2}
+  - {fileID: 2100000, guid: 6460a8f844f1c4c9c923893eb1a6f138, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9140,7 +9140,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: bc3fa2598a6b241f79a9e7de51f704b8, type: 2}
+  - {fileID: 2100000, guid: 380c5861d49e8479db46e52bfe21909a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9175,7 +9175,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: bc3fa2598a6b241f79a9e7de51f704b8, type: 2}
+  - {fileID: 2100000, guid: 380c5861d49e8479db46e52bfe21909a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9245,7 +9245,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3cb4fd545eb8a401f98631d7fe5d9e8a, type: 2}
+  - {fileID: 2100000, guid: cc03d052e885e403fbd90351f63ddb4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9315,7 +9315,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3a0026f98d0a14e528c15f864d5b5abf, type: 2}
+  - {fileID: 2100000, guid: 6460a8f844f1c4c9c923893eb1a6f138, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9350,7 +9350,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: bc3fa2598a6b241f79a9e7de51f704b8, type: 2}
+  - {fileID: 2100000, guid: 380c5861d49e8479db46e52bfe21909a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15400,8 +15400,8 @@ MonoBehaviour:
         power: 23
         attackSpeed: 1.4
         attackRange: 40
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -15418,8 +15418,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
@@ -15469,8 +15470,8 @@ MonoBehaviour:
         power: 8
         attackSpeed: 0.6
         attackRange: 40
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -15487,8 +15488,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
@@ -15524,7 +15526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -15539,8 +15541,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waitting
+  loop: 1
   timeScale: 1
 --- !u!114 &114034067191484090
 MonoBehaviour:
@@ -15605,8 +15607,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -15623,12 +15625,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
-  spine: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  spine: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   setTileLocation: -1
 --- !u!114 &114071521084031174
 MonoBehaviour:
@@ -15661,8 +15664,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -15679,8 +15682,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
   mainSprite: {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
@@ -15767,8 +15771,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -15785,8 +15789,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
   mainSprite: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
@@ -16039,8 +16044,8 @@ MonoBehaviour:
         power: 8
         attackSpeed: 0.6
         attackRange: 40
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16057,8 +16062,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
@@ -16140,8 +16146,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16158,12 +16164,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
-  spine: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  spine: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   setTileLocation: -1
 --- !u!114 &114272459815259668
 MonoBehaviour:
@@ -16196,8 +16203,8 @@ MonoBehaviour:
         power: 23
         attackSpeed: 1.4
         attackRange: 40
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16214,8 +16221,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
@@ -16252,20 +16260,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills:
-      - cost:
-          food: 0
-          gold: 0
-          environment: 0
-        id: 6
-        name: "\uBC29\uC557\uAC04"
-        method:
-          id: 6
-          methodName: prod_up_with
-          args: waterwheel,2,food,1
-        tierNeed: 1
-        imageName: 
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16282,8 +16278,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
@@ -16314,7 +16311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -16329,8 +16326,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waitting
+  loop: 1
   timeScale: 1
 --- !u!114 &114334134121950932
 MonoBehaviour:
@@ -16363,8 +16360,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16381,12 +16378,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
-  spine: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  spine: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   setTileLocation: -1
 --- !u!114 &114338338050285772
 MonoBehaviour:
@@ -16457,8 +16455,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16475,8 +16473,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
   mainSprite: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
@@ -16641,7 +16640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -16656,8 +16655,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waitting
+  loop: 1
   timeScale: 1
 --- !u!114 &114473327164294584
 MonoBehaviour:
@@ -16690,8 +16689,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16708,12 +16707,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
-  spine: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  spine: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   setTileLocation: -1
 --- !u!114 &114476771052653352
 MonoBehaviour:
@@ -16784,8 +16784,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -16802,12 +16802,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
-  spine: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  spine: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   setTileLocation: -1
 --- !u!114 &114516920581835742
 MonoBehaviour:
@@ -16820,7 +16821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -16835,8 +16836,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waiting
+  loop: 1
   timeScale: 1
 --- !u!114 &114539832355634612
 MonoBehaviour:
@@ -17002,8 +17003,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17020,8 +17021,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
   mainSprite: {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
@@ -17071,8 +17073,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17089,8 +17091,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
   mainSprite: {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
@@ -17238,8 +17241,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17256,8 +17259,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
@@ -17483,8 +17487,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17501,8 +17505,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
   mainSprite: {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
@@ -17602,7 +17607,7 @@ MonoBehaviour:
   attackingTowerLocation: 
   tileCount: 0
   units: []
-  activeSkills: []
+  spells: []
   isGame: 0
   ingameSceneUIController: {fileID: 0}
 --- !u!114 &114785368153715898
@@ -17649,8 +17654,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17667,8 +17672,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
@@ -17730,7 +17736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 4158c2ebe28cf4ef0aea626eb9f2a951, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 578f5f46a6cce418f94db8c28e149295, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -17745,8 +17751,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waitting
+  loop: 1
   timeScale: 1
 --- !u!114 &114878702960785698
 MonoBehaviour:
@@ -17804,7 +17810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -17819,8 +17825,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waiting
+  loop: 1
   timeScale: 1
 --- !u!114 &114896740032127060
 MonoBehaviour:
@@ -17891,8 +17897,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 1
         name: "\uB291\uB300"
@@ -17909,8 +17915,9 @@ MonoBehaviour:
         attackRange: 12
         hitPoint: 45
         moveSpeed: 90
-        tearNeed: 0
+        tierNeed: 0
         imageName: wolf
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
   mainSprite: {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
@@ -17979,8 +17986,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -17997,8 +18004,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
@@ -18015,7 +18023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -18030,8 +18038,8 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
+  _animationName: 1.waiting
+  loop: 1
   timeScale: 1
 --- !u!114 &114941240586249078
 MonoBehaviour:
@@ -18064,8 +18072,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -18082,12 +18090,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
   mainSprite: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
-  spine: {fileID: 11400000, guid: 4158c2ebe28cf4ef0aea626eb9f2a951, type: 2}
+  spine: {fileID: 11400000, guid: 578f5f46a6cce418f94db8c28e149295, type: 2}
   setTileLocation: -1
 --- !u!114 &114941823154818034
 MonoBehaviour:
@@ -18120,8 +18129,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 1
         name: "\uB291\uB300"
@@ -18138,8 +18147,9 @@ MonoBehaviour:
         attackRange: 12
         hitPoint: 45
         moveSpeed: 90
-        tearNeed: 0
+        tierNeed: 0
         imageName: wolf
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
   mainSprite: {fileID: 21300000, guid: 066b1bac814490f4d98de59feefd881c, type: 3}
@@ -18176,20 +18186,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill:
-      - cost:
-          food: 0
-          gold: 0
-          environment: 0
-        id: 2
-        name: "\uC6B4\uC11D"
-        method:
-          id: 2
-          methodName: skill_meteorite
-          args: 5,1,25,2,15
-        tierNeed: 3
-        imageName: 
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -18206,8 +18204,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
@@ -18369,8 +18368,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -18387,12 +18386,13 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
-  spine: {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
+  spine: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
   setTileLocation: -1
 --- !u!114 &114973011730946104
 MonoBehaviour:
@@ -18425,8 +18425,8 @@ MonoBehaviour:
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -18443,8 +18443,9 @@ MonoBehaviour:
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}

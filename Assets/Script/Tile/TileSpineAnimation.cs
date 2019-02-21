@@ -27,6 +27,7 @@ public class TileSpineAnimation : MonoBehaviour {
 		catch (System.Exception error) {
 			Debug.Log(error + "\n이 스파인은 바닥이 없는 스파인입니다.");
 		}
+		transform.localPosition = Vector3.zero;
 	}
 
 	public void Upgrade() {

@@ -143,6 +143,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
                         if (buildingObject.spine != null) buildingObject.GetComponent<TileSpineAnimation>().Upgrade();
                     }
                     else playerController.Upgrade(item, costs);
+                    playerController.resourceClass.turn--;
                 }
             ));
 

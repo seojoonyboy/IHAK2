@@ -149,7 +149,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 0d3744c939b5148a9b43a739022a5291, type: 2}
+  - {fileID: 2100000, guid: 488061c052b3f46bcbe04ec317db9c08, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -234,21 +234,20 @@ MonoBehaviour:
       name: "\uB9C8\uC744\uD68C\uAD00"
       type: HQ
       prodType: 
-      rareity: 1
+      rarity: 0
       product:
         food: 0
         gold: 0
         environment: 0
       hitPoint: 1500
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
@@ -258,17 +257,20 @@ MonoBehaviour:
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
         imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
-  spine: {fileID: 11400000, guid: 17b793da775014544b5b50adaac92437, type: 2}
+  spine: {fileID: 11400000, guid: 8c316330c75004e1da1dac972a439293, type: 2}
   setTileLocation: 0
 --- !u!114 &114905574924728544
 MonoBehaviour:
@@ -281,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 17b793da775014544b5b50adaac92437, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 8c316330c75004e1da1dac972a439293, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
