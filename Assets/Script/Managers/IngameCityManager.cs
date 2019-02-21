@@ -275,6 +275,11 @@ public class IngameCityManager : MonoBehaviour {
                 if (myBuilding.activate == false) {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
+
+                    Card cardInfo = myBuilding.cardInfo;
+                    if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
+                        ingameDeckShuffler.ActivateCard(cardInfo.id, myBuilding.gameObject);
+                    }
                 }
 
 
@@ -373,6 +378,11 @@ public class IngameCityManager : MonoBehaviour {
                 if (myBuilding.activate == false) {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
+
+                    Card cardInfo = myBuilding.cardInfo;
+                    if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
+                        ingameDeckShuffler.ActivateCard(cardInfo.id, myBuilding.gameObject);
+                    }
                 }
 
                 float playerMaxHp = myBuilding.maxHp;
@@ -682,6 +692,11 @@ public class IngameCityManager : MonoBehaviour {
             if (detector != null) {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
             }
+        }
+
+        Card cardInfo = buildingInfo.cardInfo;
+        if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
+            ingameDeckShuffler.DeactiveCard(cardInfo.id, buildingInfo.gameObject);
         }
         /*
         if(buildingInfo.cardInfo.id == -1) {
