@@ -89,6 +89,7 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
+    [SerializeField] PlayerController playerController;
     IngameSceneEventHandler ingameSceneEventHandler;
     IngameDeckShuffler ingameDeckShuffler;
 
@@ -276,10 +277,7 @@ public class IngameCityManager : MonoBehaviour {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
 
-                    Card cardInfo = myBuilding.cardInfo;
-                    if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
-                        ingameDeckShuffler.ActivateCard(cardInfo.id, myBuilding.gameObject);
-                    }
+                    RecoverProductPower(myBuilding);
                 }
 
 
@@ -379,10 +377,7 @@ public class IngameCityManager : MonoBehaviour {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
 
-                    Card cardInfo = myBuilding.cardInfo;
-                    if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
-                        ingameDeckShuffler.ActivateCard(cardInfo.id, myBuilding.gameObject);
-                    }
+                    RecoverProductPower(myBuilding);
                 }
 
                 float playerMaxHp = myBuilding.maxHp;
@@ -694,10 +689,7 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
 
-        Card cardInfo = buildingInfo.cardInfo;
-        if (!string.IsNullOrEmpty(cardInfo.unit.name) || cardInfo.activeSkills.Length != 0) {
-            ingameDeckShuffler.DeactiveCard(cardInfo.id, buildingInfo.gameObject);
-        }
+        ReduceProductPower(buildingInfo);
         /*
         if(buildingInfo.cardInfo.id == -1) {
 
@@ -814,37 +806,69 @@ public class IngameCityManager : MonoBehaviour {
             else
                 bi = myBuildingsInfo[unactiveBuildingIndex2];
             bi.activate = false;
-            switch (bi.cardInfo.prodType) {
-                case "gold":
-                    productResources.gold.food -= bi.cardInfo.product.food;
-                    productResources.gold.gold -= bi.cardInfo.product.gold;
-                    productResources.gold.environment -= bi.cardInfo.product.environment;
-                    break;
-                case "food":
-                    productResources.food.food -= bi.cardInfo.product.food;
-                    productResources.food.gold -= bi.cardInfo.product.gold;
-                    productResources.food.environment -= bi.cardInfo.product.environment;
-                    break;
-                case "env":
-                    productResources.env.food -= bi.cardInfo.product.food;
-                    productResources.env.gold -= bi.cardInfo.product.gold;
-                    productResources.env.environment -= bi.cardInfo.product.environment;
-                    break;
-                default:
-                    BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-                    string id = buildingObject.data.card.id;
-                    if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
-                        ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
-                    }
-                    break;
+            ReduceProductPower(bi);
 
-            }
             Debug.Log(bi.cardInfo.name + " 비활성화");
             StartCoroutine(UnActivateForTime(bi));
         }
         unActiveAlert1 = unActiveAlert2 = false;
         unactiveBuildingIndex1 = unactiveBuildingIndex2 = 100;
     }
+
+    private void ReduceProductPower(BuildingInfo bi) {
+        switch (bi.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food -= bi.cardInfo.product.food;
+                productResources.gold.gold -= bi.cardInfo.product.gold;
+                productResources.gold.environment -= bi.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food -= bi.cardInfo.product.food;
+                productResources.food.gold -= bi.cardInfo.product.gold;
+                productResources.food.environment -= bi.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food -= bi.cardInfo.product.food;
+                productResources.env.gold -= bi.cardInfo.product.gold;
+                productResources.env.environment -= bi.cardInfo.product.environment;
+                break;
+            default:
+                break;
+        }
+        BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+        string id = buildingObject.data.card.id;
+        if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+            ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
+        }
+    }
+
+    private void RecoverProductPower(BuildingInfo bi) {
+        switch (bi.cardInfo.prodType) {
+            case "gold":
+                productResources.gold.food += bi.cardInfo.product.food;
+                productResources.gold.gold += bi.cardInfo.product.gold;
+                productResources.gold.environment += bi.cardInfo.product.environment;
+                break;
+            case "food":
+                productResources.food.food += bi.cardInfo.product.food;
+                productResources.food.gold += bi.cardInfo.product.gold;
+                productResources.food.environment += bi.cardInfo.product.environment;
+                break;
+            case "env":
+                productResources.env.food += bi.cardInfo.product.food;
+                productResources.env.gold += bi.cardInfo.product.gold;
+                productResources.env.environment += bi.cardInfo.product.environment;
+                break;
+            default:
+                break;
+        }
+        BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+        string id = buildingObject.data.card.id;
+        if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+            ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
+        }
+    }
+
 
     IEnumerator UnActivateForTime(BuildingInfo card) {
         StartCoroutine(UnActivateTimer(card.gameObject));
@@ -855,30 +879,8 @@ public class IngameCityManager : MonoBehaviour {
         card.activate = true;
         SetColor(card.gameObject, Color.white);
         Debug.Log(card.cardInfo.name + " 활성화");
-        switch (card.cardInfo.prodType) {
-            case "gold":
-                productResources.gold.food += card.cardInfo.product.food;
-                productResources.gold.gold += card.cardInfo.product.gold;
-                productResources.gold.environment += card.cardInfo.product.environment;
-                break;
-            case "food":
-                productResources.food.food += card.cardInfo.product.food;
-                productResources.food.gold += card.cardInfo.product.gold;
-                productResources.food.environment += card.cardInfo.product.environment;
-                break;
-            case "env":
-                productResources.env.food += card.cardInfo.product.food;
-                productResources.env.gold += card.cardInfo.product.gold;
-                productResources.env.environment += card.cardInfo.product.environment;
-                break;
-            default:
-                BuildingObject buildingObject = card.gameObject.GetComponent<BuildingObject>();
-                string id = buildingObject.data.card.id;
-                if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
-                    ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
-                }
-                break;
-        }
+
+        RecoverProductPower(card);
     }
 
     IEnumerator UnActivateTimer(GameObject building) {
