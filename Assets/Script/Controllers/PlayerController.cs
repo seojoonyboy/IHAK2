@@ -126,7 +126,7 @@ public partial class PlayerController : MonoBehaviour {
                         Gold += 1000;
 #endif
                         resourceClass.turn--;
-                        ShowCoinAnimation(1);
+                        ShowCoinAnimation(0);
                         if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                             icm.DecideUnActiveBuilding();
                         if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -152,7 +152,7 @@ public partial class PlayerController : MonoBehaviour {
                         Food += 1000;
 #endif
                         resourceClass.turn--;
-                        ShowCoinAnimation(0);
+                        ShowCoinAnimation(1);
                         if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                             icm.DecideUnActiveBuilding();
                         if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -201,7 +201,7 @@ public partial class PlayerController : MonoBehaviour {
 
     private void ShowCoinAnimation(int num) {
         SkeletonGraphic ani = SkeletonGraphic.NewSkeletonGraphicGameObject(coinAni, transform, coinAniMaterial);
-        ani.GetComponent<RectTransform>().position = Input.mousePosition;
+        ani.GetComponent<RectTransform>().position = Input.mousePosition + new Vector3(0, 130f, 0f);
         ani.Initialize(false);
         ani.raycastTarget = false;
         ani.AnimationState.SetAnimation(0, coinAni.GetSkeletonData(false).Animations.Items[num], false);
