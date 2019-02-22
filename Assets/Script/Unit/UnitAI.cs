@@ -19,7 +19,8 @@ public class UnitAI : MonoBehaviour {
 	private delegate void timeUpdate(float time);
 	private timeUpdate update;
 	private Transform healthBar;
-	private IngameCityManager.BuildingInfo target;
+	private IngameCityManager.BuildingInfo targetBuilding;
+	private UnitAI targetUnit;
 	private float maxHealth = 0;
     public float health = 0;
 	private float moveSpeed;
@@ -36,6 +37,7 @@ public class UnitAI : MonoBehaviour {
     public GameObject ontile;
 	public bool protecting = false;
 	private PolyNavAgent agent;
+	private CircleCollider2D detectCollider;
 
 	private List<IngameCityManager.BuildingInfo> buildingInfos;
 	private IngameCityManager.Target targetEnum;
@@ -47,18 +49,25 @@ public class UnitAI : MonoBehaviour {
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
 		agent = GetComponent<PolyNavAgent>();
+		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
+		detectCollider.radius = unit.detectRange;
 		if(gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
 			buildingInfos = cityManager.enemyBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
             unitgaugeColor.sprite = playerGauge;
             targetEnum = IngameCityManager.Target.ENEMY_1;
-		}
+			GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("EnemyUnit");
+            GetComponentInChildren<UnitDetector>().gameObject.layer = LayerMask.NameToLayer("PlayerUnit");
+
+        }
 		if(gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
 			buildingInfos = cityManager.myBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
             unitgaugeColor.sprite = enemyGauge;
             targetEnum = IngameCityManager.Target.ME;
-		}
+			GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("PlayerUnit");
+            GetComponentInChildren<UnitDetector>().gameObject.layer = LayerMask.NameToLayer("EnemyUnit");
+        }
 		if(searchTarget())
 			setState(aiState.MOVE);
 		else
@@ -96,9 +105,8 @@ public class UnitAI : MonoBehaviour {
 			break;
 			case aiState.MOVE :
 			spineAnimationState.SetAnimation(0, "run", true);
+			agent.maxSpeed = unit.moveSpeed;
 			update = moveUpdate;
-			agent.SetDestination(target.gameObject.transform.parent.position);
-			Debug.Log(target.gameObject.transform.parent.parent);
 			break;
 			case aiState.ATTACK :
 			spineAnimationState.SetAnimation(0, "stand", true);
@@ -115,47 +123,91 @@ public class UnitAI : MonoBehaviour {
 	}
 
 	void noneUpdate(float time) {
+		currentTime += time;
+		if((int)currentTime % 3 == 2)
+			if(searchTarget()) setState(aiState.MOVE);
+		if(currentTime < 10f) return;
+		Destroy(gameObject);
 		return;
 	}
 
 	void moveUpdate(float time) {
 		currentTime += time;
-        Vector3 buildingPos = target.gameObject.transform.parent.localPosition;
-		Vector3 distance = buildingPos - transform.localPosition;
-        float length = Vector3.Distance(transform.localPosition, buildingPos);
+		Transform target;
+		if(targetUnit == null) {
+			if(targetBuilding == null) {
+				if(!searchTarget()) setState(aiState.NONE);
+				return;
+			}
+        	target = targetBuilding.gameObject.transform.parent;
+		}
+		else {
+			if(targetUnit == null) {
+				if(!searchTarget()) setState(aiState.NONE);
+				return;
+			}
+			target = targetUnit.gameObject.transform;
+		}
+		Vector3 distance = target.localPosition - transform.localPosition;
+        float length = Vector3.Distance(transform.localPosition, target.localPosition);
 		setFlip(distance);
-		if(isBuildingClose(length)) {
+		if(isTargetClose(length)) {
 			setState(aiState.ATTACK);
 			agent.Stop();
+			agent.maxSpeed = 0f;
 			return;
 		}
-		//Vector3 force = distance.normalized * moveSpeed * time;
-		//transform.Translate(force.x, force.y, 0f);
+		agent.SetDestination(target.position);
 		if(currentTime < 2f) return;
-		agent.SetDestination(target.gameObject.transform.parent.position);
 		currentTime = 0f;
-		searchBuilding();
+		searchTarget();
 	}
 
 	void attackUpdate(float time) {
 		currentTime += time;
-		IngameCityManager.BuildingInfo building = target;
 		if(currentTime < unit.attackSpeed) return;
 		currentTime = 0f;
-		cityManager.TakeDamage(targetEnum, target.tileNum, unit.power);
-		if(building.hp <= 0) {
-            target = null;
+		if(targetUnit != null)
+			attackUnit();
+		else if(targetBuilding != null)
+			attackBuilding();
+		else if(targetUnit == null && targetBuilding == null) {
+			detectCollider.enabled = true;
+			if(searchTarget()) 
+				setState(aiState.MOVE);
+			else
+				setState(aiState.NONE);
+		}
+		
+		spineAnimationState.SetAnimation(0, "attack", false);
+		spineAnimationState.AddAnimation(0, "stand", true, 0);
+	}
+
+	private void attackBuilding() {
+		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, unit.power);
+		if(targetBuilding.hp <= 0) {
+            targetBuilding = null;
 			if(searchTarget())
 				setState(aiState.MOVE);
 			else
 				setState(aiState.NONE);
 		}
-		spineAnimationState.SetAnimation(0, "attack", false);
-		spineAnimationState.AddAnimation(0, "stand", true, 0);
 	}
 
-	private bool isBuildingClose(float distance) {
-		if(target == null) {
+	private void attackUnit() {
+		targetUnit.damaged(unit.power);
+		if(targetUnit.health <= 0f) {
+			targetUnit = null;
+			detectCollider.enabled = true;
+			if(searchTarget())
+				setState(aiState.MOVE);
+			else
+				setState(aiState.NONE);
+		}
+	}
+
+	private bool isTargetClose(float distance) {
+		if(targetBuilding == null && targetUnit == null) {
 			searchTarget();
 			return false;
 		}
@@ -166,11 +218,32 @@ public class UnitAI : MonoBehaviour {
 
 	private bool searchTarget() {
 		if(protecting) {
-			return false;
+			searchUnit();
+			return targetUnit != null;
 		}
 		else {
 			searchBuilding();
-			return target != null;
+			return targetBuilding != null;
+		}
+	}
+
+	private void searchUnit() {
+		float distance = 0f;
+		UnitAI[] units = transform.parent.GetComponentsInChildren<UnitAI>();
+		foreach(UnitAI unit in units) {
+			if(unit.gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) continue;
+			Vector3 UnitPos = unit.gameObject.transform.position;
+			float length = Vector3.Distance(transform.position, UnitPos);
+			if(targetUnit == null) {
+				targetUnit = unit;
+				distance = length;
+				continue;
+			}
+			if(distance > length) {
+				targetUnit = unit;
+				distance = length;
+				continue;
+			}
 		}
 	}
 
@@ -181,13 +254,13 @@ public class UnitAI : MonoBehaviour {
 			
 			Vector3 buildingPos = target.gameObject.transform.parent.position;
 			float length = Vector3.Distance(transform.position, buildingPos);
-			if(this.target == null) {
-				this.target = target;
+			if(this.targetBuilding == null) {
+				this.targetBuilding = target;
 				distance = length;
 				continue;
 			}
 			if(distance > length) {
-				this.target = target;
+				this.targetBuilding = target;
 				distance = length;
 				continue;
 			}
@@ -238,5 +311,10 @@ public class UnitAI : MonoBehaviour {
             }
         }
     }
+
+	public void NearEnemy(Collider2D other) {
+		targetUnit = other.GetComponent<UnitAI>();
+		targetBuilding = null;
+	}
 
 }
