@@ -306,13 +306,13 @@ MonoBehaviour:
   decelerationRate: 5
   lookAheadDistance: 0.41
   avoidRadius: 20
-  avoidanceConsiderStuckedTime: 1
-  avoidanceConsiderReachedDistance: 21
+  avoidanceConsiderStuckedTime: 10
+  avoidanceConsiderReachedDistance: 50
   rotateTransform: 0
   rotateSpeed: 350
   centerOffset: {x: 0, y: 0}
   repath: 1
-  restrict: 0
+  restrict: 1
   closerPointOnInvalid: 1
   debugPath: 1
 --- !u!114 &114862925840933516

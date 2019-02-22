@@ -54,6 +54,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
             foreach (WaveSet set in waveInfo.wave.sets) {
                 GameObject unit = Instantiate(set.Prefab, parent);
                 unit.transform.localPosition = locations[set.genLocation];
+                unit.layer = LayerMask.NameToLayer("EnemyUnit");
                 yield return new WaitForSeconds(0.3f);
             }
 
