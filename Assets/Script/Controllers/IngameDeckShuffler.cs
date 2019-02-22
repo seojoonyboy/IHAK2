@@ -73,19 +73,17 @@ public class IngameDeckShuffler : MonoBehaviour {
         GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
 
-        BuildingObject buildingObject = card.GetComponent<BuildingObject>();
-        if (buildingObject == null) return;
-        Card _card = buildingObject.data.card;
-        if (string.IsNullOrEmpty(_card.unit.name)) {
-            if(_card.unit.tierNeed <= playerController.hqLevel) {
+        ActiveCardInfo activeCardInfo = card.GetComponent<ActiveCardInfo>();
+        if (activeCardInfo == null) return;
+        if (!string.IsNullOrEmpty(activeCardInfo.data.unit.name)) {
+            Debug.Log(activeCardInfo.data.unit.name + "활성화 ");
+            if(activeCardInfo.data.unit.tierNeed <= playerController.hqLevel) {
                 card.SetActive(true);
             } 
         }
-        if(_card.activeSkills.Length != 0) {
-            foreach(Skill skill in _card.activeSkills) {
-                if (skill.tierNeed <= playerController.hqLevel) {
-                    card.SetActive(true);
-                }
+        if(activeCardInfo.data.skill != null) {
+            if (activeCardInfo.data.skill.tierNeed <= playerController.hqLevel) {
+                card.SetActive(true);
             }
         }
     }

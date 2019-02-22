@@ -438,7 +438,10 @@ public class IngameCityManager : MonoBehaviour {
                     BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
                     if (myBuilding == null) return false;
                     myBuilding.hp += amount;
-                    if (myBuilding.hp > 0) myBuilding.hp = myBuilding.maxHp;
+                    if (myBuilding.hp > 0) {
+                        myBuilding.hp = myBuilding.maxHp;
+                        RecoverProductPower(myBuilding);
+                    }
                 }
                 break;
         }
@@ -750,8 +753,6 @@ public class IngameCityManager : MonoBehaviour {
                 bi = myBuildingsInfo[unactiveBuildingIndex2];
             bi.activate = false;
             ReduceProductPower(bi);
-
-            Debug.Log(bi.cardInfo.name + " 비활성화");
             StartCoroutine(UnActivateForTime(bi));
         }
         unActiveAlert1 = unActiveAlert2 = false;
