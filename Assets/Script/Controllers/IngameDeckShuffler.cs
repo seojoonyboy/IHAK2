@@ -72,7 +72,22 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void ActivateCard(string id, GameObject parentBuilding) {
         GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
-        card.SetActive(true);
+
+        BuildingObject buildingObject = card.GetComponent<BuildingObject>();
+        if (buildingObject == null) return;
+        Card _card = buildingObject.data.card;
+        if (string.IsNullOrEmpty(_card.unit.name)) {
+            if(_card.unit.tierNeed <= playerController.hqLevel) {
+                card.SetActive(true);
+            } 
+        }
+        if(_card.activeSkills.Length != 0) {
+            foreach(Skill skill in _card.activeSkills) {
+                if (skill.tierNeed <= playerController.hqLevel) {
+                    card.SetActive(true);
+                }
+            }
+        }
     }
 
     public void InitUnitCard() {
