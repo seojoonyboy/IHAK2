@@ -140,11 +140,15 @@ public class UpgradableBuildingGetter : MonoBehaviour {
                 Modal.Type.YESNO, 
                 () => {
                     if(card.id == "primal_town_center") {
+                        if (playerController.resourceClass.turn <= 0) return;
                         GetComponent<PlayerController>().HqUpgrade();
                         card.lv += 1;
                         if (buildingObject.spine != null) buildingObject.GetComponent<TileSpineAnimation>().Upgrade();
                     }
-                    else playerController.Upgrade(item, costs);
+                    else {
+                        if (playerController.resourceClass.turn <= 0) return;
+                        playerController.Upgrade(item, costs);
+                    }
                     playerController.resourceClass.turn--;
                 }
             ));

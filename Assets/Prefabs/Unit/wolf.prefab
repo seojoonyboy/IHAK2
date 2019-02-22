@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 114862925840933516}
   - component: {fileID: 61600329227709166}
   - component: {fileID: 50790466705561782}
+  - component: {fileID: 114506199402651224}
   m_Layer: 10
   m_Name: wolf
   m_TagString: Unit
@@ -101,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835397233811550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.97, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4656852050040714}
@@ -285,6 +286,35 @@ MonoBehaviour:
   _animationName: run
   loop: 1
   timeScale: 1
+--- !u!114 &114506199402651224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569794317466014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _map: {fileID: 0}
+  maxSpeed: 90
+  mass: 20
+  stoppingDistance: 0.1
+  slowingDistance: 1
+  accelerationRate: 5
+  decelerationRate: 5
+  lookAheadDistance: 0.41
+  avoidRadius: 20
+  avoidanceConsiderStuckedTime: 1
+  avoidanceConsiderReachedDistance: 21
+  rotateTransform: 0
+  rotateSpeed: 350
+  centerOffset: {x: 0, y: 0}
+  repath: 1
+  restrict: 0
+  closerPointOnInvalid: 1
+  debugPath: 1
 --- !u!114 &114862925840933516
 MonoBehaviour:
   m_ObjectHideFlags: 1

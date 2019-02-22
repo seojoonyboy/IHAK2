@@ -23,10 +23,10 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     public void OnDrop() {
-        if (ingameCityManager.CurrentView == 0) {
-            Debug.Log("아군 지역입니다 카드 사용을 취소합니다.");
-            return;
-        }
+        //if (ingameCityManager.CurrentView == 0) {
+        //    Debug.Log("아군 지역입니다 카드 사용을 취소합니다.");
+        //    return;
+        //}
         
         if(!IsCardDropOK()) return;
 
