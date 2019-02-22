@@ -140,7 +140,7 @@ public class IngameSceneUIController : MonoBehaviour {
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
 
-            if(ieg.ingameCityManager.myBuildingsInfo[ieg.ingameCityManager.myBuildingsInfo.Capacity / 2].hp < 1) {
+            if(ieg.ingameCityManager.myBuildingsInfo[4].hp < 1) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }
