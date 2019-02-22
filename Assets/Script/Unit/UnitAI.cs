@@ -13,6 +13,9 @@ public class UnitAI : MonoBehaviour {
 		ATTACK,
 		DEAD
 	};
+    public Sprite enemyGauge;
+    public Sprite playerGauge;
+
 	private delegate void timeUpdate(float time);
 	private timeUpdate update;
 	private Transform healthBar;
@@ -46,11 +49,15 @@ public class UnitAI : MonoBehaviour {
 		agent = GetComponent<PolyNavAgent>();
 		if(gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
 			buildingInfos = cityManager.enemyBuildingsInfo;
-			targetEnum = IngameCityManager.Target.ENEMY_1;
+            SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
+            unitgaugeColor.sprite = playerGauge;
+            targetEnum = IngameCityManager.Target.ENEMY_1;
 		}
 		if(gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
 			buildingInfos = cityManager.myBuildingsInfo;
-			targetEnum = IngameCityManager.Target.ME;
+            SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
+            unitgaugeColor.sprite = enemyGauge;
+            targetEnum = IngameCityManager.Target.ME;
 		}
 		if(searchTarget())
 			setState(aiState.MOVE);
