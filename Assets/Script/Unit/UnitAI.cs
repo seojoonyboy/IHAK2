@@ -7,7 +7,7 @@ using System;
 using PolyNav;
 
 public class UnitAI : MonoBehaviour {
-	public enum enemyState {
+	public enum aiState {
 		NONE,
 		MOVE,
 		ATTACK,
@@ -31,6 +31,7 @@ public class UnitAI : MonoBehaviour {
     public Spine.Skeleton skeleton;
 
     public GameObject ontile;
+	public bool protecting = false;
 	private PolyNavAgent agent;
 
 	void Start () {
@@ -40,8 +41,8 @@ public class UnitAI : MonoBehaviour {
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
 		agent = GetComponent<PolyNavAgent>();
-		searchBuilding();
-		setState(enemyState.MOVE);
+		searchTarget();
+		setState(aiState.MOVE);
 
 		IngameSceneEventHandler.Instance.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
 	}
@@ -66,25 +67,25 @@ public class UnitAI : MonoBehaviour {
 		calculateHealthBar();
     }
 
-	private void setState(enemyState state) {
+	private void setState(aiState state) {
 		update = null;
 		currentTime = 0f;
 		switch(state) {
-			case enemyState.NONE :
+			case aiState.NONE :
 			spineAnimationState.SetAnimation(0, "stand", true);
 			update = noneUpdate;
 			break;
-			case enemyState.MOVE :
+			case aiState.MOVE :
 			spineAnimationState.SetAnimation(0, "run", true);
 			update = moveUpdate;
 			agent.SetDestination(target.transform.parent.position);
 			Debug.Log(target.transform.parent.parent);
 			break;
-			case enemyState.ATTACK :
+			case aiState.ATTACK :
 			spineAnimationState.SetAnimation(0, "stand", true);
 			update = attackUpdate;
 			break;
-			case enemyState.DEAD :
+			case aiState.DEAD :
 			update = noneUpdate;
 			break;
 		}
@@ -105,7 +106,7 @@ public class UnitAI : MonoBehaviour {
         float length = Vector3.Distance(transform.localPosition, buildingPos);
 		setFlip(distance);
 		if(isBuildingClose(length)) {
-			setState(enemyState.ATTACK);
+			setState(aiState.ATTACK);
 			agent.Stop();
 			return;
 		}
@@ -126,15 +127,15 @@ public class UnitAI : MonoBehaviour {
 		cityManager.TakeDamage(IngameCityManager.Target.ENEMY_1, tileNum, unit.power);
 		if(enemy.hp <= 0) {
             target = null;
-			searchBuilding(); 
-			setState(enemyState.MOVE);};
+			searchTarget();
+			setState(aiState.MOVE);};
 		spineAnimationState.SetAnimation(0, "attack", false);
 		spineAnimationState.AddAnimation(0, "stand", true, 0);
 	}
 
 	private bool isBuildingClose(float distance) {
 		if(target == null) {
-			searchBuilding();
+			searchTarget();
 			return false;
 		}
 		if(distance <= unit.attackRange) 
@@ -142,10 +143,19 @@ public class UnitAI : MonoBehaviour {
 		return false;
 	}
 
+	private void searchTarget() {
+		if(protecting) {
+
+		}
+		else {
+			searchBuilding();
+		}
+	}
+
 	private void searchBuilding() {
 		BuildingObject[] buildings = FindObjectsOfType<BuildingObject>();
 		if(buildings.Length == 0) {
-			setState(enemyState.NONE);
+			setState(aiState.NONE);
 		}
 		float distance = 0f;
 		foreach(BuildingObject target in buildings) {
