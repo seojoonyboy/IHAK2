@@ -16,7 +16,7 @@ public class UnitAI : MonoBehaviour {
 	private delegate void timeUpdate(float time);
 	private timeUpdate update;
 	private Transform healthBar;
-	private BuildingObject target;
+	private IngameCityManager.BuildingInfo target;
 	private float maxHealth = 0;
     public float health = 0;
 	private float moveSpeed;
@@ -34,6 +34,9 @@ public class UnitAI : MonoBehaviour {
 	public bool protecting = false;
 	private PolyNavAgent agent;
 
+	private List<IngameCityManager.BuildingInfo> buildingInfos;
+	private IngameCityManager.Target targetEnum;
+
 	void Start () {
 		healthBar = transform.GetChild(1).GetChild(1);
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
@@ -41,9 +44,18 @@ public class UnitAI : MonoBehaviour {
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
 		agent = GetComponent<PolyNavAgent>();
-		searchTarget();
-		setState(aiState.MOVE);
-
+		if(gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
+			buildingInfos = cityManager.enemyBuildingsInfo;
+			targetEnum = IngameCityManager.Target.ENEMY_1;
+		}
+		if(gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
+			buildingInfos = cityManager.myBuildingsInfo;
+			targetEnum = IngameCityManager.Target.ME;
+		}
+		if(searchTarget())
+			setState(aiState.MOVE);
+		else
+			setState(aiState.NONE);
 		IngameSceneEventHandler.Instance.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
 	}
 
@@ -78,8 +90,8 @@ public class UnitAI : MonoBehaviour {
 			case aiState.MOVE :
 			spineAnimationState.SetAnimation(0, "run", true);
 			update = moveUpdate;
-			agent.SetDestination(target.transform.parent.position);
-			Debug.Log(target.transform.parent.parent);
+			agent.SetDestination(target.gameObject.transform.parent.position);
+			Debug.Log(target.gameObject.transform.parent.parent);
 			break;
 			case aiState.ATTACK :
 			spineAnimationState.SetAnimation(0, "stand", true);
@@ -101,7 +113,7 @@ public class UnitAI : MonoBehaviour {
 
 	void moveUpdate(float time) {
 		currentTime += time;
-        Vector3 buildingPos = target.transform.parent.localPosition;
+        Vector3 buildingPos = target.gameObject.transform.parent.localPosition;
 		Vector3 distance = buildingPos - transform.localPosition;
         float length = Vector3.Distance(transform.localPosition, buildingPos);
 		setFlip(distance);
@@ -113,22 +125,24 @@ public class UnitAI : MonoBehaviour {
 		//Vector3 force = distance.normalized * moveSpeed * time;
 		//transform.Translate(force.x, force.y, 0f);
 		if(currentTime < 2f) return;
-		agent.SetDestination(target.transform.parent.position);
+		agent.SetDestination(target.gameObject.transform.parent.position);
 		currentTime = 0f;
 		searchBuilding();
 	}
 
 	void attackUpdate(float time) {
 		currentTime += time;
-		int tileNum = target.GetComponentInParent<TileObject>().tileNum;
-		IngameCityManager.BuildingInfo enemy = cityManager.enemyBuildingsInfo[tileNum];
+		IngameCityManager.BuildingInfo building = target;
 		if(currentTime < unit.attackSpeed) return;
 		currentTime = 0f;
-		cityManager.TakeDamage(IngameCityManager.Target.ENEMY_1, tileNum, unit.power);
-		if(enemy.hp <= 0) {
+		cityManager.TakeDamage(targetEnum, target.tileNum, unit.power);
+		if(building.hp <= 0) {
             target = null;
-			searchTarget();
-			setState(aiState.MOVE);};
+			if(searchTarget())
+				setState(aiState.MOVE);
+			else
+				setState(aiState.NONE);
+		}
 		spineAnimationState.SetAnimation(0, "attack", false);
 		spineAnimationState.AddAnimation(0, "stand", true, 0);
 	}
@@ -143,25 +157,22 @@ public class UnitAI : MonoBehaviour {
 		return false;
 	}
 
-	private void searchTarget() {
+	private bool searchTarget() {
 		if(protecting) {
-
+			return false;
 		}
 		else {
 			searchBuilding();
+			return target != null;
 		}
 	}
 
 	private void searchBuilding() {
-		BuildingObject[] buildings = FindObjectsOfType<BuildingObject>();
-		if(buildings.Length == 0) {
-			setState(aiState.NONE);
-		}
 		float distance = 0f;
-		foreach(BuildingObject target in buildings) {
-			int num = target.transform.GetComponentInParent<TileObject>().tileNum;
-			if(cityManager.enemyBuildingsInfo[num].hp <= 0) continue;
-			Vector3 buildingPos = target.transform.parent.position;
+		foreach(IngameCityManager.BuildingInfo target in buildingInfos) {
+			if(target.hp <= 0) continue;
+			
+			Vector3 buildingPos = target.gameObject.transform.parent.position;
 			float length = Vector3.Distance(transform.position, buildingPos);
 			if(this.target == null) {
 				this.target = target;
