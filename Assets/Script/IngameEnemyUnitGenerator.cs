@@ -7,6 +7,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     public List<WaveInfo> waveInfos;
     public int CurrentWave { get; set; }
 
+    [SerializeField] Sprite magma;
     Dictionary<LOCATION, Vector2> locations;
     private Transform parent;
 
@@ -54,7 +55,10 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
             foreach (WaveSet set in waveInfo.wave.sets) {
                 if(set.type == TYPE.SPELL) {
                     SkillDetail method = set.Prefab.GetComponent<BuildingObject>().data.card.activeSkills[0].method;
-                    GetComponent<IngameEnemyGenerator>().ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(method, IngameCityManager.Target.ME);
+                    var ingameCityManager = GetComponent<IngameEnemyGenerator>();
+                    ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(method, IngameCityManager.Target.ME);
+                    ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
+
                 }
                 else if(set.type == TYPE.UNIT) {
                     GameObject unit = Instantiate(set.Prefab, parent);

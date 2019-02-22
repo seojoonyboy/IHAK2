@@ -612,70 +612,8 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public bool TakeDamage(Target target, List<int> numbers, int amount) {
-        switch (target) {
-            case Target.ENEMY_1:
-                foreach (int tileNum in numbers) {
-                    //Debug.Log(tileNum + "에 데미지");
-                    BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == tileNum);
-                    if (enemyBuilding == null) return false;
-                    if (enemyBuilding.hp <= 0) return false;
-                    enemyBuilding.hp -= amount;
-                    enemyCurrentTotalHP -= amount;
-                    int minusHp;
-                    if (enemyBuilding.hp < 0) {
-                        minusHp = 0 - enemyBuilding.hp;
-                        enemyCurrentTotalHP += minusHp;
-                    }
-                    float enemyHp = enemyBuilding.hp;
-                    float enemyMaxHp = enemyBuilding.maxHp;
-
-                    float totalHp = enemyCurrentTotalHP;
-                    float totalMaxHp = enemyTotalHP;
-                    float percent = totalHp / totalMaxHp;
-                    enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
-                    enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
-
-                    if (enemyBuilding.hp < enemyBuilding.maxHp) {
-                        enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = enemyHp / enemyMaxHp;
-                        enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
-                    }
-                    if (enemyBuilding.hp <= 0) {
-                        float hpScaleX = enemyHp / enemyMaxHp;
-                        enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                        enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        enemyBuilding.hp = 0;
-                        BuildingDestroyed(enemyBuilding);
-                    }
-
-                    if (enemyCurrentTotalHP < 0) {
-                        enemyTotalHPGauge.GetComponent<Image>().fillAmount = 0;
-                        enemyCurrentTotalHP = 0;
-                        enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 0.ToString() + "%";
-                    }
-                }
-                break;
-            case Target.ME:
-                foreach (int tileNum in numbers) {
-                    BuildingInfo myBuilding = myBuildingsInfo.Find(x => x.tileNum == tileNum);
-                    if (myBuilding == null) return false;
-                    myBuilding.hp -= amount;
-                    float playerHp = myBuilding.hp;
-                    float playerMaxHp = myBuilding.maxHp;
-                    if (myBuilding.hp < myBuilding.maxHp) {
-                        myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = playerHp / playerMaxHp;
-                        myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
-                    }
-
-                    if (myBuilding.hp < 0) {
-                        float hpScaleX = playerHp / playerMaxHp;
-                        myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                        myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        BuildingDestroyed(myBuilding);
-                    }
-                }
-                break;
+        for(int i=0; i<numbers.Count; i++) {
+            TakeDamage(target, numbers[i], amount);
         }
         return true;
     }
