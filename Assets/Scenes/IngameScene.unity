@@ -1620,8 +1620,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveInfos:
   - intervals:
-      min: 0
-      sec: 10
+      min: 1
+      sec: 30
     wave:
       sets:
       - genLocation: 0
@@ -1637,8 +1637,8 @@ MonoBehaviour:
         num: 3
         id: n_u_0101
   - intervals:
-      min: 0
-      sec: 15
+      min: 2
+      sec: 40
     wave:
       sets:
       - genLocation: 1
@@ -1666,8 +1666,8 @@ MonoBehaviour:
         num: 2
         id: n_u_0202
   - intervals:
-      min: 0
-      sec: 20
+      min: 4
+      sec: 0
     wave:
       sets:
       - genLocation: 4
@@ -1689,8 +1689,8 @@ MonoBehaviour:
         num: 2
         id: n_u_0201
   - intervals:
-      min: 0
-      sec: 25
+      min: 4
+      sec: 30
     wave:
       sets:
       - genLocation: 0
