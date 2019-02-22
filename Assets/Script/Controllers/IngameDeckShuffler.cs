@@ -76,10 +76,10 @@ public class IngameDeckShuffler : MonoBehaviour {
         ActiveCardInfo activeCardInfo = card.GetComponent<ActiveCardInfo>();
         if (activeCardInfo == null) return;
         if (!string.IsNullOrEmpty(activeCardInfo.data.unit.name)) {
-            Debug.Log(activeCardInfo.data.unit.name + "활성화 ");
             if(activeCardInfo.data.unit.tierNeed <= playerController.hqLevel) {
                 card.SetActive(true);
-            } 
+            }
+            return;
         }
         if(activeCardInfo.data.skill != null) {
             if (activeCardInfo.data.skill.tierNeed <= playerController.hqLevel) {
@@ -101,10 +101,10 @@ public class IngameDeckShuffler : MonoBehaviour {
             if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
             card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
             Debug.Log(playerController.hqLevel);
+            cards.Add(card);
             if (unit.tierNeed > playerController.hqLevel) {
                 card.SetActive(false);
             }
-            cards.Add(card);
         }
     }
 
