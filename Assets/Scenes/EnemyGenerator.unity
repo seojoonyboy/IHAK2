@@ -183,16 +183,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
   - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
   - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  primal_upgrade_buildingIcons: []
   primal_product_buildingSpines:
-  - {fileID: 11400000, guid: f0413cec7bf9843838f4e53040feba29, type: 2}
-  - {fileID: 11400000, guid: 37f44ed153c984e4f836e365d876a7c8, type: 2}
-  - {fileID: 11400000, guid: c51fda97559f441c2ac4c3e950560b37, type: 2}
-  - {fileID: 11400000, guid: 4158c2ebe28cf4ef0aea626eb9f2a951, type: 2}
-  - {fileID: 11400000, guid: 24365531d5762478c9c9d7d67e415330, type: 2}
-  - {fileID: 11400000, guid: 2b60aa3cc28524eccac2920ebb6c7e7a, type: 2}
-  - {fileID: 11400000, guid: b25e97fa615b54e0fbaeeb13d465e7ed, type: 2}
-  - {fileID: 11400000, guid: 8c90ecece47a44199bd046574d768a07, type: 2}
-  - {fileID: 11400000, guid: 9d57efc392ac747b4a05b478ca7f7315, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  primal_other_buildingSpines: []
   defaultImage: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   defaultIcon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
 --- !u!114 &80702854
@@ -233,6 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 100066699}
   - component: {fileID: 100066698}
+  - component: {fileID: 100066700}
   m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
@@ -246,7 +249,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 100066697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d9bcfcc17abd8b4d82c0b3c883a1e80, type: 3}
   m_Name: 
@@ -266,6 +269,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &100066700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 100066697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c74c6e0b675574c9d3f7a791753945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileGroup: {fileID: 519734697}
+  HpGauge: {fileID: 1877220338478122, guid: fe1c74e31cc80504896365668378ef12, type: 2}
+  player: {fileID: 21300002, guid: 4281d1f936e54264ea18416cf14e8683, type: 3}
+  enemy: {fileID: 21300008, guid: 4281d1f936e54264ea18416cf14e8683, type: 3}
 --- !u!1 &132075856
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,41 +769,43 @@ MonoBehaviour:
       name: "\uCC44\uC11D\uC7A5"
       type: prod
       prodType: gold
-      rareity: 2
+      rarity: 0
       product:
-        id: 5
         food: 0
         gold: 15
         environment: -1
       hitPoint: 250
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &499496623
@@ -1015,9 +1035,114 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 33086347489208520, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33170708693372722, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33960055068013768, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33081665775212798, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33383330158698776, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33709897073377270, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33706675568336762, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33765642492193258, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33632696758194040, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33956829531031018, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33958601709532246, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 33229788862144250, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114567670865184396, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114567670865184396, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114196372008439100, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114196372008439100, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949620544277388, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949620544277388, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114707090718281646, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114707090718281646, guid: 282cc32bf111a50468290ed5aab824f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &519734697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 519734696}
 --- !u!1 &572406426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,8 +1491,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.857143, y: 19.214285}
+    pivot: {x: 0.5, y: 0.45}
+    oldSize: {x: 22.461538, y: 20.692308}
     newSize: {x: 20.857143, y: 19.214285}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1398,41 +1523,43 @@ MonoBehaviour:
       name: "\uBCBC\uB18D\uC7A5"
       type: prod
       prodType: food
-      rareity: 2
+      rarity: 0
       product:
-        id: 3
         food: 15
         gold: 0
         environment: -1
       hitPoint: 250
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &906437922
@@ -1560,41 +1687,43 @@ MonoBehaviour:
       name: "\uC2E0\uBE44\uC758 \uB3D9\uAD74"
       type: prod
       prodType: gold
-      rareity: 3
+      rarity: 0
       product:
-        id: 6
         food: 0
         gold: 20
         environment: -3
       hitPoint: 320
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
   mainSprite: {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &950754711
@@ -1752,41 +1881,43 @@ MonoBehaviour:
       name: "\uAC1C\uAD6C\uB9AC\uC5F0\uBABB"
       type: prod
       prodType: env
-      rareity: 2
+      rarity: 0
       product:
-        id: 1
         food: -2
         gold: -2
         environment: 8
       hitPoint: 235
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &1133522938
@@ -2019,41 +2150,43 @@ MonoBehaviour:
       name: "\uB291\uB300 \uC0AC\uC721\uC7A5"
       type: military
       prodType: 
-      rareity: 1
+      rarity: 0
       product:
-        id: 7
         food: 0
         gold: 0
         environment: 0
       hitPoint: 150
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 1
         name: "\uB291\uB300"
         cost:
-          id: 9
           food: 150
           gold: 0
           environment: 0
         coolTime: 0
         size: 4
+        count: 0
         power: 13
         attackSpeed: 1.2
         detectRange: 25
         attackRange: 5
         hitPoint: 45
         moveSpeed: 1.2
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &1258976065
@@ -2211,41 +2344,43 @@ MonoBehaviour:
       name: "\uACE0\uAE30\uCC3D\uACE0"
       type: prod
       prodType: food
-      rareity: 3
+      rarity: 0
       product:
-        id: 4
         food: 20
         gold: 0
         environment: -3
       hitPoint: 320
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
   mainSprite: {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &1372624194
@@ -2373,48 +2508,43 @@ MonoBehaviour:
       name: "\uB9C8\uADF8\uB9C8\uC81C\uB2E8"
       type: military
       prodType: 
-      rareity: 1
+      rarity: 0
       product:
-        id: 8
         food: 0
         gold: 0
         environment: 0
       hitPoint: 60
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill:
-      - id: 1
-        name: "\uB9C8\uADF8\uB9C8"
-        method:
-          id: 1
-          methodName: skill_magma
-          args: 5,6,1,15
-        tierNeed: 2
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &1458375769
@@ -2722,41 +2852,43 @@ MonoBehaviour:
       name: "\uC628\uCC9C"
       type: prod
       prodType: env
-      rareity: 3
+      rarity: 0
       product:
-        id: 2
         food: -1
         gold: -4
         environment: 15
       hitPoint: 280
       placementLimit: 1
-      canAttack: 0
       attackInfo:
         id: 0
         power: 0
         attackSpeed: 0
         attackRange: 0
-      activeSkill: []
-      productSkills: []
+      activeSkills: []
+      passiveSkills: []
       unit:
         id: 0
         name: 
         cost:
-          id: 0
           food: 0
           gold: 0
           environment: 0
         coolTime: 0
         size: 0
+        count: 0
         power: 0
         attackSpeed: 0
         detectRange: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tearNeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
   icon: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
   mainSprite: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
 --- !u!1 &1548636277

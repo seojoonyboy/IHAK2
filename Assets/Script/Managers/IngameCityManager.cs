@@ -147,6 +147,7 @@ public class IngameCityManager : MonoBehaviour {
         
         SetHQ();
         SetEnemyTotalHP();
+        StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
         //StartCoroutine("Repaircity");
     }
@@ -472,6 +473,8 @@ public class IngameCityManager : MonoBehaviour {
                     GameObject detector = enemyBuilding.gameObject.transform.Find("Detector").gameObject;
                     if (detector != null) {
                         detector.GetComponent<Tower_Detactor>().enabled = true;
+                        if(detector.GetComponent<Tower_Detactor>().towerShellCount < detector.GetComponent<Tower_Detactor>().towerMaxShell)
+                            enemyBuilding.gameObject.transform.GetChild(2).gameObject.SetActive(true);
                     }
                 }
 
@@ -681,6 +684,7 @@ public class IngameCityManager : MonoBehaviour {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
             if (detector != null) {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
+                buildingInfo.gameObject.transform.GetChild(2).gameObject.SetActive(false);
             }
         }
         /*

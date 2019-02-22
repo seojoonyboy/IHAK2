@@ -65,11 +65,13 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     public void DeactiveCard(string id, GameObject parentBuilding) {
         GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        if (card == null) return;
         card.SetActive(false);
     }
 
     public void ActivateCard(string id, GameObject parentBuilding) {
         GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        if (card == null) return;
         card.SetActive(true);
     }
 
