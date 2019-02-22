@@ -42,7 +42,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     }
 
     IEnumerator Spawing() {
-        while(CurrentWave <= waveInfos.Count) {
+        while(CurrentWave < waveInfos.Count) {
             WaveInfo waveInfo = waveInfos[CurrentWave];
             MS_Time ms = waveInfo.intervals;
             int waitingSecs = ms.min * 60 + ms.sec;
@@ -75,9 +75,11 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     }
 
     private void SetUnitData(WaveSet set) {
+        Card card = AccountManager.Instance.GetCardData(set.id);
+        if (card == null) return;
+
         GameObject unit = Instantiate(set.Prefab, parent);
         UnitAI unitAI = unit.GetComponent<UnitAI>();
-        Card card = AccountManager.Instance.GetCardData(set.id);
         unitAI.SetUnitData(card.unit);
         unit.transform.localPosition = locations[set.genLocation];
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
