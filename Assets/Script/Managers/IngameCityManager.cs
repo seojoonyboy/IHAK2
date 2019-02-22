@@ -278,7 +278,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (myBuilding.activate == false) {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
-
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     RecoverProductPower(myBuilding);
                 }
 
@@ -330,6 +330,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (enemyBuilding == null) return false;
                 if (enemyBuilding.activate == false) return false;
                 if (enemyBuilding.hp >= enemyBuilding.maxHp) return false;
+                
 
 
                 //회복연산
@@ -378,7 +379,7 @@ public class IngameCityManager : MonoBehaviour {
                 if (myBuilding.activate == false) {
                     SetReviveImage(myBuilding.gameObject);
                     myBuilding.activate = true;
-
+                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     RecoverProductPower(myBuilding);
                 }
 
