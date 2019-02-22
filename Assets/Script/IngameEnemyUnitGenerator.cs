@@ -46,7 +46,10 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
             WaveInfo waveInfo = waveInfos[CurrentWave];
             MS_Time ms = waveInfo.intervals;
             int waitingSecs = ms.min * 60 + ms.sec;
-
+            if (CurrentWave > 0) {
+                MS_Time prev_ms = waveInfos[CurrentWave - 1].intervals;
+                waitingSecs -= prev_ms.min * 60 + prev_ms.sec;
+            }
             innerCoroutine = RemainTime(waitingSecs);
             StartCoroutine(innerCoroutine);
 
