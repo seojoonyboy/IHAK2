@@ -1613,15 +1613,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 210519645}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59207b40acb8a534880ba6de6f22a05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waveInfos:
   - intervals:
-      min: 1
-      sec: 30
+      min: 0
+      sec: 10
     wave:
       sets:
       - genLocation: 0
@@ -1635,8 +1635,8 @@ MonoBehaviour:
           type: 2}
         num: 3
   - intervals:
-      min: 2
-      sec: 30
+      min: 0
+      sec: 15
     wave:
       sets:
       - genLocation: 1
@@ -1660,13 +1660,14 @@ MonoBehaviour:
           type: 2}
         num: 2
   - intervals:
-      min: 4
-      sec: 0
+      min: 0
+      sec: 20
     wave:
       sets:
       - genLocation: 4
         type: 1
-        Prefab: {fileID: 0}
+        Prefab: {fileID: 1475577926390512, guid: ee2dc70ddc232f940b6548ace31b3b17,
+          type: 2}
         num: 1
       - genLocation: 1
         type: 0
@@ -7072,6 +7073,8 @@ MonoBehaviour:
   icm: {fileID: 364303840}
   hqUpgradeWnd: {fileID: 1300248408}
   hqLevel: 1
+  tileCount: 0
+  goldConsume: 0
   coinAni: {fileID: 11400000, guid: 2b5517e3c41964ebf94e9cc93c4b1a88, type: 2}
   coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}
 --- !u!114 &807158604
