@@ -22,6 +22,9 @@ public partial class AccountManager : Singleton<AccountManager> {
     public int selectNumber;
     public GameSceneManager.SceneState scenestate;
 
+    //내 계정에서 사용가능한 카드뿐만 아니라 게임에 존재하는 모든 카드들의 정보
+    public List<Card> allCards;
+
     public class UserClassInput {
         public string nickname;
         public string deviceId;
@@ -60,6 +63,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         eventHandler = MenuSceneEventHandler.Instance;
 
         ReqUserInfo();
+        GetAllCards();
     }
 
     public string DEVICEID { get; private set; }
@@ -84,6 +88,25 @@ public partial class AccountManager : Singleton<AccountManager> {
             GetUserInfo();
             Debug.Log("저장 성공");
         }
+    }
+
+    public void GetAllCards() {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/cards");
+        _networkManager.request("GET", url.ToString(), GetAllCardsCallback, false);
+    }
+
+    private void GetAllCardsCallback(HttpResponse response) {
+        if(response.responseCode == 200) {
+            List<Card> cards = JsonReader.Read<List<Card>>(response.data);
+            allCards = cards;
+        }
+    }
+
+    public Card GetCardData(string id) {
+        Card card = allCards.Find(x => x.id == id);
+        return card;
     }
 
     public int GetGold() {

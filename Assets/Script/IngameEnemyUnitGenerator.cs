@@ -74,7 +74,8 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     private void SetUnitData(WaveSet set) {
         GameObject unit = Instantiate(set.Prefab, parent);
         UnitAI unitAI = unit.GetComponent<UnitAI>();
-        unitAI.SetUnitData(ConstructManager.Instance.GetBuildingObjectById(set.id).GetComponent<BuildingObject>().data.card.unit);
+        Card card = AccountManager.Instance.GetCardData(set.id);
+        unitAI.SetUnitData(card.unit);
         unit.transform.localPosition = locations[set.genLocation];
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
     }
