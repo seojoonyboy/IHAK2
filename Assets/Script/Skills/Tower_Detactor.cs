@@ -36,6 +36,7 @@ public class Tower_Detactor : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.layer == 10) {
             if (isAttacking) return;
+            if(other.name.CompareTo("Skeleton")== 0) return;
             isAttacking = true;
             //enemy = other.transform.parent;
             enemy = other.transform;
@@ -52,7 +53,7 @@ public class Tower_Detactor : MonoBehaviour {
         if (time < atkTime) return;
         if (towerShellCount <= 0) return;
         time -= atkTime;
-        enemy.SendMessage("damaged", damage, SendMessageOptions.DontRequireReceiver);
+        enemy.GetComponent<UnitAI>().damaged(damage);
         shootArrow();
     }
 
