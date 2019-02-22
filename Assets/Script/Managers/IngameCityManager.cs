@@ -149,6 +149,7 @@ public class IngameCityManager : MonoBehaviour {
         
         SetHQ();
         SetEnemyTotalHP();
+        StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
         //StartCoroutine("Repaircity");
     }
@@ -478,9 +479,11 @@ public class IngameCityManager : MonoBehaviour {
                     GameObject detector = enemyBuilding.gameObject.transform.Find("Detector").gameObject;
                     if (detector != null) {
                         detector.GetComponent<Tower_Detactor>().enabled = true;
+                        if(detector.GetComponent<Tower_Detactor>().towerShellCount < detector.GetComponent<Tower_Detactor>().towerMaxShell)
+                            enemyBuilding.gameObject.transform.GetChild(2).gameObject.SetActive(true);
                     }
                 }
-                enemyBuilding.gameObject.GetComponent<PolyNavObstacle>().enabled = true;
+                enemyBuilding.gameObject.transform.parent.GetComponent<PolyNavObstacle>().enabled = true;
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
                 if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
@@ -682,12 +685,13 @@ public class IngameCityManager : MonoBehaviour {
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         SetWreck(buildingInfo.gameObject);
-        buildingInfo.gameObject.GetComponent<PolyNavObstacle>().enabled = false;
+        buildingInfo.gameObject.transform.parent.GetComponent<PolyNavObstacle>().enabled = false;
 
         if (buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
             if (detector != null) {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
+                buildingInfo.gameObject.transform.GetChild(2).gameObject.SetActive(false);
             }
         }
 
