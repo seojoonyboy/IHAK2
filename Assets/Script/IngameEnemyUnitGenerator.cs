@@ -61,7 +61,9 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
 
                 }
                 else if(set.type == TYPE.UNIT) {
-                    SetUnitData(set);
+                    for(int i=0; i<set.num; i++) {
+                        SetUnitData(set);
+                    }
                 }
                 yield return new WaitForSeconds(0.3f);
             }
@@ -107,7 +109,7 @@ namespace DataModules {
         public TYPE type;
         public GameObject Prefab;
         public int num;
-        public int id = 34;
+        public string id = "n_u_0101";
     }
 
     [System.Serializable]
