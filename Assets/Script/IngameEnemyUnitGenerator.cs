@@ -1,6 +1,7 @@
 using DataModules;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class IngameEnemyUnitGenerator : MonoBehaviour {
@@ -83,6 +84,11 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
         unitAI.SetUnitData(card.unit);
         unit.transform.localPosition = locations[set.genLocation];
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
+        if(card.id != "n_u_0101") {
+            GameObject name = unit.transform.Find("Name").gameObject;
+            name.SetActive(true);
+            name.GetComponent<TextMeshPro>().text = card.unit.name;
+        }
     }
 
     IEnumerator RemainTime(int waitingSecs) {
