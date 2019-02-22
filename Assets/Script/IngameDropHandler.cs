@@ -31,7 +31,7 @@ public class IngameDropHandler : MonoBehaviour {
         if(!IsCardDropOK()) return;
 
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
-        if(!string.IsNullOrEmpty(card.data.skill.name)) SkillActive(card.data.skill);
+        if(!string.IsNullOrEmpty(card.data.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.skill);
         else if(!string.IsNullOrEmpty(card.data.unit.name)) UnitSummon(card.data.unit);
     }
 
@@ -87,7 +87,7 @@ public class IngameDropHandler : MonoBehaviour {
         }
 
         StartCoroutine(CoolTime());
-        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method);
+        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method, IngameCityManager.Target.ENEMY_1);
         ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
 
         UseResource(data.cost);

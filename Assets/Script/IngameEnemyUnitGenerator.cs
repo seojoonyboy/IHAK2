@@ -52,12 +52,17 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
             yield return new WaitForSeconds(waitingSecs);
 
             foreach (WaveSet set in waveInfo.wave.sets) {
-                GameObject unit = Instantiate(set.Prefab, parent);
-                unit.transform.localPosition = locations[set.genLocation];
-                unit.layer = LayerMask.NameToLayer("EnemyUnit");
+                if(set.type == TYPE.SPELL) {
+                    SkillDetail method = set.Prefab.GetComponent<BuildingObject>().data.card.activeSkills[0].method;
+                    GetComponent<IngameEnemyGenerator>().ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(method, IngameCityManager.Target.ME);
+                }
+                else if(set.type == TYPE.UNIT) {
+                    GameObject unit = Instantiate(set.Prefab, parent);
+                    unit.transform.localPosition = locations[set.genLocation];
+                    unit.layer = LayerMask.NameToLayer("EnemyUnit");
+                }
                 yield return new WaitForSeconds(0.3f);
             }
-
             CurrentWave++;
         }
     }

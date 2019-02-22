@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1475577926390512}
+  m_IsPrefabAsset: 1
+--- !u!1 &1475577926390512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4040142906453300}
+  - component: {fileID: 114047863422464936}
+  m_Layer: 0
+  m_Name: SkillMagma
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4040142906453300
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475577926390512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1075.3104, y: 840.40674, z: -34.793587}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114047863422464936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475577926390512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    id: 0
+    card:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills:
+      - cost:
+          food: 0
+          gold: 0
+          environment: 0
+        id: 0
+        name: "\uB9C8\uADF8\uB9C8"
+        method:
+          id: 0
+          methodName: skill_magma
+          args: 5,6,1,15
+        tierNeed: 0
+        desc: "\uB79C\uB364 \uD0C0\uC77C 5\uAC1C\uC5D0 \uB9C8\uADF8\uB9C8\uB97C \uBD84\uCD9C\uC2DC\uCF1C
+          \uD574\uB2F9 \uC704\uCE58\uC758 \uC720\uB2DB/\uD0C0\uC77C\uC5D0 6\uCD08\uAC04
+          \uCD08\uB2F9 15 \uB370\uBBF8\uC9C0\uB97C \uC90C\\n\uB3C4\uC2DC \uBC14\uAE65\uCABD
+          \uBE48 \uB545\uC5D0 \uBC1C\uC0DD\uD55C \uB9C8\uADF8\uB9C8\uB294 \uB3C4\uC2DC\uC5D0
+          \uD53C\uD574\uB97C \uC8FC\uC9C0 \uC54A\uC74C"
+        imageName: 
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+  icon: {fileID: 0}
+  mainSprite: {fileID: 0}
+  upgradeIcon: {fileID: 0}
+  spine: {fileID: 0}
+  setTileLocation: 0
