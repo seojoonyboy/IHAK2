@@ -61,9 +61,12 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
 
                 }
                 else if(set.type == TYPE.UNIT) {
-                    GameObject unit = Instantiate(set.Prefab, parent);
-                    unit.transform.localPosition = locations[set.genLocation];
-                    unit.layer = LayerMask.NameToLayer("EnemyUnit");
+                    for(int i=0; i<set.num; i++) {
+                        GameObject unit = Instantiate(set.Prefab, parent);
+                        Debug.Log(locations[set.genLocation]);
+                        unit.transform.localPosition = locations[set.genLocation];
+                        unit.layer = LayerMask.NameToLayer("EnemyUnit");
+                    }
                 }
                 yield return new WaitForSeconds(0.3f);
             }
