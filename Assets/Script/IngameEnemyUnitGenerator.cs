@@ -62,16 +62,21 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
                 }
                 else if(set.type == TYPE.UNIT) {
                     for(int i=0; i<set.num; i++) {
-                        GameObject unit = Instantiate(set.Prefab, parent);
-                        Debug.Log(locations[set.genLocation]);
-                        unit.transform.localPosition = locations[set.genLocation];
-                        unit.layer = LayerMask.NameToLayer("EnemyUnit");
+                        SetUnitData(set);
                     }
                 }
                 yield return new WaitForSeconds(0.3f);
             }
             CurrentWave++;
         }
+    }
+
+    private void SetUnitData(WaveSet set) {
+        GameObject unit = Instantiate(set.Prefab, parent);
+        UnitAI unitAI = unit.GetComponent<UnitAI>();
+        unitAI.SetUnitData(ConstructManager.Instance.GetBuildingObjectById(set.id).GetComponent<BuildingObject>().data.card.unit);
+        unit.transform.localPosition = locations[set.genLocation];
+        unit.layer = LayerMask.NameToLayer("EnemyUnit");
     }
 
     IEnumerator RemainTime(int waitingSecs) {
@@ -104,6 +109,7 @@ namespace DataModules {
         public TYPE type;
         public GameObject Prefab;
         public int num;
+        public string id = "n_u_0101";
     }
 
     [System.Serializable]
