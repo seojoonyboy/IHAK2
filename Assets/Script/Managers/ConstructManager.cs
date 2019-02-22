@@ -36,9 +36,25 @@ public class ConstructManager : Singleton<ConstructManager> {
         return result;
     }
 
+    /// <summary>
+    /// 내 인벤토리의 카드를 찾는 용도
+    /// </summary>
+    /// <param name="id">내 인벤토리의 카드 번호</param>
+    /// <returns></returns>
     public GameObject GetBuildingObjectById(int id) {
         var buildings = GetBuildingObjects();
         var result = buildings.Find(x => x.GetComponent<BuildingObject>().data.id == id);
+        return result;
+    }
+
+    /// <summary>
+    /// ConstructManager의 특정 BuildingObject를 찾는 용도
+    /// </summary>
+    /// <param name="id">건물의 고유 식별번호</param>
+    /// <returns></returns>
+    public GameObject GetBuildingObjectById(string id) {
+        var buildings = GetBuildingObjects();
+        var result = buildings.Find(x => x.GetComponent<BuildingObject>().data.card.id == id);
         return result;
     }
 
