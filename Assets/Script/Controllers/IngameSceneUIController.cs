@@ -139,6 +139,12 @@ public class IngameSceneUIController : MonoBehaviour {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
+
+            if(ieg.ingameCityManager.myBuildingsInfo[ieg.ingameCityManager.myBuildingsInfo.Capacity / 2].hp < 1) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+            }
+
         }
         territoryCamera.transform.position = new Vector3(Screen.width - (hss.transform.GetChild(0).position.x), 0, 0);
         

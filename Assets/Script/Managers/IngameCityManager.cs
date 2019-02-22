@@ -507,8 +507,6 @@ public class IngameCityManager : MonoBehaviour {
         return true;
     }
 
-
-
     public bool TakeDamage(Target target, int tileNum, int amount) {
         switch (target) {
             case Target.ENEMY_1:
@@ -594,10 +592,10 @@ public class IngameCityManager : MonoBehaviour {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     myBuilding.hp = 0;
                     BuildingDestroyed(myBuilding);
-                    /*
-                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
-                        DestroyEnemy();
-                        */
+                    
+                    if (myBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                        DestroyCity();
+                        
                 }
 
                 if (cityHP < 0) {
@@ -909,6 +907,16 @@ public class IngameCityManager : MonoBehaviour {
             enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 0.ToString() + " % ";
             StopCoroutine("Repair");
         }
+    }
+
+    public void DestroyCity() {
+        if(playerHQ.hp == 0 && playerHQ.activate == false) {
+            cityHP = 0;
+            hpValueBar.fillAmount = 0f;
+            hpValue.text = 0.ToString() + " % ";
+            StopCoroutine("Repair");
+        }
+
     }
 
     public void RepairPlayerCity() {
