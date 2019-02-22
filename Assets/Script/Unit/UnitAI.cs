@@ -120,7 +120,11 @@ public class UnitAI : MonoBehaviour {
 
 	void Update() {
 		update(Time.deltaTime);
-	}
+
+        if (health <= 0) {
+            DestoryEnemy();
+        }
+    }
 
 	void noneUpdate(float time) {
 		currentTime += time;
@@ -269,13 +273,7 @@ public class UnitAI : MonoBehaviour {
 
 	public void damaged(int damage) {
 		health -= damage;
-		calculateHealthBar();
-		if(health <= 0) {            
-            //ontile.GetComponent<TileCollision>().count--;
-            if (ontile != null && ontile.GetComponent<TileCollision>().count <= 0)
-                ontile.GetComponent<TileCollision>().check = false;
-            Destroy(gameObject);
-		}
+		calculateHealthBar();		
 	}
 
 	private void calculateHealthBar() {
@@ -288,30 +286,23 @@ public class UnitAI : MonoBehaviour {
         skeleton.ScaleX = move.x < 0 ? 1f: -1f;
 	}
 
-    public void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.tag == "Tile")
-            coll.GetComponent<TileCollision>().count++;
-    }
-
-
-    public void OnTriggerStay2D(Collider2D coll) {
-        if (coll.gameObject.tag == "Tile") {
-            ontile = coll.gameObject;
-            ontile.GetComponent<TileCollision>().check = true;
+    public void DestoryEnemy() {
+        if (ontile== null) {
+            ontile = null;
         }
-    }
+        else if (ontile.GetComponent<TileCollision>() != null && ontile.GetComponent<TileCollision>().count > 0) {
+            ontile.GetComponent<TileCollision>().count--;
 
-    public void OnTriggerExit2D(Collider2D coll) {
-        if (coll.gameObject.tag == "Tile") {
-            if (coll.GetComponent<TileCollision>().count > 0) {
-                coll.GetComponent<TileCollision>().count--;
-
-                if (coll.GetComponent<TileCollision>().count == 0)
-                    coll.GetComponent<TileCollision>().check = false;
+            if (ontile.GetComponent<TileCollision>().count <= 0) {
+                ontile.GetComponent<TileCollision>().count = 0;
+                ontile.GetComponent<TileCollision>().check = false;
             }
         }
+        
+        Destroy(gameObject);
+    
     }
-
+   
 	public void NearEnemy(Collider2D other) {
 		targetUnit = other.GetComponent<UnitAI>();
 		targetBuilding = null;
