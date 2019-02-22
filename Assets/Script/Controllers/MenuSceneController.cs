@@ -19,6 +19,7 @@ public class MenuSceneController : MonoBehaviour {
 
     [SerializeField] Transform buttonSelect;
     [SerializeField] Transform buttonList;
+    [SerializeField] Transform selectArrow; 
     [SerializeField] GameObject switchButtons;
     [SerializeField] Text userNickname;
     [SerializeField] GameObject leaderDeck;
@@ -27,6 +28,7 @@ public class MenuSceneController : MonoBehaviour {
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
     private static int pageNum = 2;
+    private bool movingSelect = false;
 
     MenuSceneEventHandler eventHandler;
 
@@ -89,7 +91,12 @@ public class MenuSceneController : MonoBehaviour {
     }
 
     public void switchButton() {
+        iTween.MoveTo(selectArrow.gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.3f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
         iTween.MoveTo(buttonSelect.GetChild(1).gameObject, iTween.Hash("x", buttonList.GetChild(hss.CurrentPage).position.x, "time", 0.3f, "delay", 0, "easetype", iTween.EaseType.easeInOutQuart));
+        if (pageNum != 3 && !movingSelect) {
+            movingSelect = true;
+            buttonList.GetChild(pageNum).GetChild(0).GetComponent<ButtonAniSet>().SetState(ButtonAniSet.ButtonState.Inactive); //이미지(버튼 아님)의 스켈레톤 애니메이션
+        }
         pageNum = hss.CurrentPage;
         StartCoroutine(HideButton());
     }
@@ -98,17 +105,21 @@ public class MenuSceneController : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         switch (pageNum) {
             case 0:
-                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
-                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
+                selectArrow.GetChild(0).gameObject.SetActive(false); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 0번째 자식)
+                selectArrow.GetChild(1).gameObject.SetActive(true); // 왼쪽 화살표 (MenuCanvas/MainButtons/SelectedButton/ -> 1번째 자식)
                 break;
             case 3:
-                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true);
-                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(false);
+                selectArrow.GetChild(0).gameObject.SetActive(true);
+                selectArrow.GetChild(1).gameObject.SetActive(false);
                 break;
             default :
-                buttonSelect.GetChild(1).GetChild(0).gameObject.SetActive(true);
-                buttonSelect.GetChild(1).GetChild(1).gameObject.SetActive(true);
+                selectArrow.GetChild(0).gameObject.SetActive(true);
+                selectArrow.GetChild(1).gameObject.SetActive(true);
                 break;
+        }
+        if (pageNum != 3 && movingSelect) {
+            buttonList.GetChild(pageNum).GetChild(0).GetComponent<ButtonAniSet>().SetState(ButtonAniSet.ButtonState.touch); //이미지(버튼 아님)의 스켈레톤 애니메이션
+            movingSelect = false;
         }
     }
 
@@ -117,7 +128,7 @@ public class MenuSceneController : MonoBehaviour {
         switchButton();
     }
 
-    public void OpenOption() {
+        public void OpenOption() {
         OptionController oc = FindObjectOfType<OptionController>();
         oc.EnterOptionWindow(true);
     }
