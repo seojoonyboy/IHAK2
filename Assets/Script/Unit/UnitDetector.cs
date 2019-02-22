@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitDetector : MonoBehaviour {
 	private UnitAI unitAI;
-	public int detectingLayer;
+	[HideInInspector] public int detectingLayer;
 	private void Start() {
 		unitAI = GetComponentInParent<UnitAI>();
 	}
