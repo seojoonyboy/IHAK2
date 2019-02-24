@@ -268,7 +268,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-                if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+                if (enemyBuilding.hp < 0) BuildingDestroyed(target, enemyBuilding);
                 break;
 
             case Target.ME:
@@ -317,7 +317,7 @@ public class IngameCityManager : MonoBehaviour {
                     hpValueBar.fillAmount = 1f;
                 }
 
-                if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                if (myBuilding.hp < 0) BuildingDestroyed(target, myBuilding);
                 break;
         }
         return true;
@@ -369,7 +369,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
 
-                if (enemyBuilding.hp < 0) BuildingDestroyed(enemyBuilding);
+                if (enemyBuilding.hp < 0) BuildingDestroyed(target, enemyBuilding);
                 break;
 
             case Target.ME:
@@ -416,7 +416,7 @@ public class IngameCityManager : MonoBehaviour {
                     hpValueBar.fillAmount = 1f;
                 }
 
-                if (myBuilding.hp < 0) BuildingDestroyed(myBuilding);
+                if (myBuilding.hp < 0) BuildingDestroyed(target, myBuilding);
                 break;
         }
         return true;
@@ -548,7 +548,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.hp = 0;
-                    BuildingDestroyed(enemyBuilding);
+                    BuildingDestroyed(target, enemyBuilding);
 
                     if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
                         DestroyEnemy();
@@ -595,7 +595,7 @@ public class IngameCityManager : MonoBehaviour {
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     myBuilding.hp = 0;
-                    BuildingDestroyed(myBuilding);
+                    BuildingDestroyed(target, myBuilding);
                     
                     if (myBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
                         DestroyCity();
@@ -606,7 +606,7 @@ public class IngameCityManager : MonoBehaviour {
                     float hpScaleX = playerHp / playerMaxHp;
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    BuildingDestroyed(myBuilding);
+                    BuildingDestroyed(target, myBuilding);
                 }
                 break;
         }
@@ -620,7 +620,7 @@ public class IngameCityManager : MonoBehaviour {
         return true;
     }
 
-    private void BuildingDestroyed(BuildingInfo buildingInfo) {
+    private void BuildingDestroyed(Target target, BuildingInfo buildingInfo) {
         buildingInfo.hp = 0;
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
@@ -635,7 +635,8 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
 
-        ReduceProductPower(buildingInfo);
+        if(target == Target.ME)
+            ReduceProductPower(buildingInfo);
         /*
         if(buildingInfo.cardInfo.id == -1) {
 
