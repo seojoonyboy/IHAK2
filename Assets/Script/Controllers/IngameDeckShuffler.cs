@@ -145,7 +145,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         var choice = @where[choiceIndex];
         @where.RemoveAt(choiceIndex);
         Hand.Add(choice);
-        if (Grave.Count <= 0) return;
+        if (Deck.Count > 0) return;
         Deck.AddRange(Grave);
         Grave.Clear();
     }
