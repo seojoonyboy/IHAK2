@@ -13,6 +13,7 @@ public class ButtonAniSet : MonoBehaviour {
     private SkeletonGraphic skeletonAnimation;
     public Spine.AnimationState spineAnimationState;
     public Spine.Skeleton skeleton;
+    ButtonState nowState;
 
     private void Awake() {
 
@@ -22,6 +23,7 @@ public class ButtonAniSet : MonoBehaviour {
         skeletonAnimation = GetComponentInChildren<SkeletonGraphic>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
+        nowState = ButtonState.Inactive;
     }
 
     public void SetState(ButtonState state) {
@@ -34,8 +36,9 @@ public class ButtonAniSet : MonoBehaviour {
                 spineAnimationState.SetAnimation(0, "2.Inactive", false);
                 break;
             case ButtonState.activation:
-                spineAnimationState.SetAnimation(0, "3.activation", true);
+                spineAnimationState.AddAnimation(0, "3.activation", true, 0.8f);
                 break;
         }
     }
+
 }
