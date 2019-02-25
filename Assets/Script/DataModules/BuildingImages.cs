@@ -48,10 +48,11 @@ public class BuildingImages : MonoBehaviour {
         switch (race) {
             case "primal" :
                 if (type == "prod") sprites = primal_product_buildingImages;
-                if (type == "upgrade") sprites = primal_upgrade_buildingIcons;
+                else if (type == "upgrade") sprites = primal_upgrade_buildingIcons;
                 else sprites = primal_other_buildingImages;
                 foreach (Sprite sprite in sprites) {
                     if (sprite.name == id) {
+                        Debug.Log(sprite.name);
                         return sprite;
                     }
                 }
