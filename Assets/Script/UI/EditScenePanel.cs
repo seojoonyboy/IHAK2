@@ -32,8 +32,8 @@ public class EditScenePanel : MonoBehaviour {
         var upStream = content.gameObject.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0)).Select(_ => Input.mousePosition.x);
         var dragStream = content.gameObject.UpdateAsObservable().SkipUntil(downStream).TakeUntil(upStream).RepeatUntilDestroy(this);
 
-        //dragStream.Where(_=> mouseDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_=> switchButton(true));
-        //dragStream.Where(_ => mouseDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
+        dragStream.Where(_=> mouseDownPosition - Input.mousePosition.x < -500).ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_=> switchButton(true));
+        dragStream.Where(_ => mouseDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
     }
 
     public void switchButton(bool left) {
