@@ -70,9 +70,9 @@ namespace DataModules {
         public string name;
         public SkillDetail method;
         public int tierNeed;
+        public int coolTime;
         public string desc;
         public string imageName;
-        public int coolTime;
     }
 
     [System.Serializable]

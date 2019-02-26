@@ -99,7 +99,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
         Debug.Log(waitingSecs);
         while(time > 0) {
             time -= 1;
-            Debug.Log("적 Wave까지 남은 시간 : " + time);
+            //Debug.Log("적 Wave까지 남은 시간 : " + time);
             yield return new WaitForSeconds(1.0f);
         }
         yield return 0;
