@@ -72,6 +72,7 @@ namespace DataModules {
         public int tierNeed;
         public string desc;
         public string imageName;
+        public int coolTime;
     }
 
     [System.Serializable]

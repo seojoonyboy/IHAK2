@@ -194,8 +194,15 @@ public class IngameDeckShuffler : MonoBehaviour {
         RefillCard();
         MakeCardPrefab();
 
-        ActiveCardCoolTime cooltimeComp = selectedObject.GetComponent<ActiveCardInfo>().data.parentBuilding.AddComponent<ActiveCardCoolTime>();
-        cooltimeComp.coolTime = 10.0f;
+        ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
+        ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+
+        if (!string.IsNullOrEmpty(activeCard.unit.name)) {
+            cooltimeComp.coolTime = activeCard.unit.coolTime;
+        }
+        else if (!string.IsNullOrEmpty(activeCard.skill.name)) {
+            cooltimeComp.coolTime = activeCard.skill.coolTime;
+        }
         cooltimeComp.Hand = Hand;
         cooltimeComp.StartCool();
     }
