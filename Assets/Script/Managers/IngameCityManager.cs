@@ -97,19 +97,10 @@ public class IngameCityManager : MonoBehaviour {
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
-        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
     }
 
     void OnDestroy() {
         ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
-        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
-    }
-
-    private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
-        Debug.Log("HQ 업그레이트 이벤트 발생");
-        ingameDeckShuffler.Clear();
-        ingameDeckShuffler.InitUnitCard();
-        ingameDeckShuffler.InitSkillCard();
     }
 
     // Use this for initialization

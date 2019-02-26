@@ -76,7 +76,9 @@ public class IngameDropHandler : MonoBehaviour {
         UseResource(data.cost);
         IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
         playerController.PrintResource();
-        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+        ingameDeckShuffler.UseCard(selectedObject);
+
+        Debug.Log(selectedObject.transform.GetSiblingIndex());
     }
 
     private void SkillActive(Skill data) {
@@ -93,7 +95,8 @@ public class IngameDropHandler : MonoBehaviour {
         UseResource(data.cost);
         IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
         playerController.PrintResource();
-        ingameDeckShuffler.UseCard(selectedObject.GetComponent<Index>().Id);
+        ingameDeckShuffler.UseCard(selectedObject);
+        Debug.Log(selectedObject.transform.GetSiblingIndex());
     }
 
     private bool CheckResouceOK(Cost cost) {
