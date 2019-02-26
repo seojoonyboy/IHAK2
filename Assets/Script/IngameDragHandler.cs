@@ -50,6 +50,11 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         hlg.SetLayoutHorizontal();
         hlg.SetLayoutVertical();
 
+        ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
+        if (coolComp != null) {
+            Debug.Log("쿨타임! 사용불가");
+            return;
+        }
         dropHandler.OnDrop();
     }
 }
