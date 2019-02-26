@@ -4,6 +4,7 @@ using UnityEngine;
 using DataModules;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class IngameDropHandler : MonoBehaviour {
     public GameObject selectedObject;
@@ -69,6 +70,11 @@ public class IngameDropHandler : MonoBehaviour {
             //wolf.layer = layer;
             UnitAI unitAI = wolf.GetComponent<UnitAI>();
             unitAI.SetUnitData(data);
+            if(data.id != "n_uu_0101") {
+                GameObject Name = wolf.transform.Find("Name").gameObject;
+                Name.SetActive(true);
+                Name.GetComponent<TextMeshPro>().text = data.name;
+            }
             unitAI.protecting = summonPos == 1;
             wolf.transform.position = ray.origin + new Vector2(randomPosX, 50f + randomPosY);//hit.transform.position;
         }
