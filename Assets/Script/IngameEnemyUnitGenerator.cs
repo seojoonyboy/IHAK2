@@ -76,13 +76,16 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
     }
 
     private void SetUnitData(WaveSet set) {
+        float randomPosX = Random.Range(-10f, 10f);
+        float randomPosY = Random.Range(-10f, 10f);
+
         Card card = AccountManager.Instance.GetCardData(set.id);
         if (card == null) return;
 
         GameObject unit = Instantiate(set.Prefab, parent);
         UnitAI unitAI = unit.GetComponent<UnitAI>();
         unitAI.SetUnitData(card.unit);
-        unit.transform.localPosition = locations[set.genLocation];
+        unit.transform.localPosition = locations[set.genLocation] + new Vector2(randomPosX, randomPosY);
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
         if(card.id != "n_u_0101") {
             GameObject name = unit.transform.Find("Name").gameObject;
