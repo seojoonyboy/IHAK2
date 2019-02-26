@@ -163,8 +163,6 @@ public class IngameDeckShuffler : MonoBehaviour {
                 if (!building.activate) card.SetActive(false);
             }
             index++;
-
-
         }
     }
 

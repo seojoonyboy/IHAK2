@@ -22,6 +22,10 @@ public class ActiveCardCoolTime : CoolTime {
 
     public override void OnTime() {
         base.OnTime();
+        if (card == null) {
+            Destroy(GetComponent<ActiveCardCoolTime>());
+            return;
+        }
         GameObject deactive = card.transform.Find("Deactive").gameObject;
         Image image = deactive.GetComponent<Image>();
         image.fillAmount = 1;
