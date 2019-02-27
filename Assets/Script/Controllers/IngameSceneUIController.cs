@@ -178,12 +178,10 @@ public class IngameSceneUIController : MonoBehaviour {
         
         if (hss.CurrentPage != 0) {
             ShutProductButtons(true);
-            commandBar.transform.GetChild(0).gameObject.SetActive(false);
             playerRankBtn.GetChild(0).gameObject.SetActive(false);
         }
         else {
             ShutProductButtons(false);
-            commandBar.transform.GetChild(0).gameObject.SetActive(true);
             dummyRankBtn.GetChild(0).gameObject.SetActive(false);
         }
         
