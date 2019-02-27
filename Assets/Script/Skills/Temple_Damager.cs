@@ -15,9 +15,11 @@ public class Temple_Damager : MonoBehaviour {
     private int[] rndTargets;
     private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     private int[] myTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
+    private IngameCityManager cityManager;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
+        cityManager = GetComponent<IngameCityManager>();
     }
 
     public void GenerateAttack(DataModules.SkillDetail detail, IngameCityManager.Target target) {
@@ -45,6 +47,15 @@ public class Temple_Damager : MonoBehaviour {
     }
 
     IEnumerator Damage(float interval = 1.0f, int loopCount = 0, IngameCityManager.Target target = IngameCityManager.Target.ENEMY_1) {
+        GameObject usingSkill = new GameObject();
+        usingSkill.name = "UsingSkill";
+        Transform parent;
+        if(target == IngameCityManager.Target.ENEMY_1)
+            parent = cityManager.enemyBuildingsInfo[0].gameObject.transform.parent.parent;
+        else
+            parent = cityManager.myBuildingsInfo[0].gameObject.transform.parent.parent;
+        usingSkill.transform.SetParent(parent);
+        usingSkill.transform.SetAsLastSibling();
         int count = loopCount;
         while (count > 0) {
             yield return new WaitForSeconds(interval);
@@ -57,10 +68,11 @@ public class Temple_Damager : MonoBehaviour {
             count--;
         }
         Destroy(GetComponent<Temple_Damager>());
+        Destroy(usingSkill);
     }
 
     private void GenerateSprite(int[] parm, IngameCityManager.Target target) {
-        var cityManager = FindObjectOfType<IngameCityManager>();
+        cityManager = GetComponent<IngameCityManager>();
         for(int i = 0; i < parm.Length; i++) {
             Transform pos = cityManager.enemyBuildingsInfo[parm[i]].gameObject.transform;
             switch (target) {
