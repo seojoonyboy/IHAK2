@@ -884,11 +884,6 @@ public class IngameCityManager : MonoBehaviour {
     public void SetHQ() {
         enemyHQ = enemyBuildingsInfo.Find(x => x.tileNum == enemyBuildingsInfo.Count / 2);
         playerHQ = myBuildingsInfo.Find(x => x.tileNum == 12);
-
-        Debug.Log(enemyHQ.cardInfo.name);
-        Debug.Log(enemyHQ.hp);
-        Debug.Log(playerHQ.cardInfo.name);
-        Debug.Log(playerHQ.hp);
     }
 
     public void DestroyEnemy() {
