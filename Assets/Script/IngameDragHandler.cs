@@ -17,7 +17,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData) {
         dropHandler.selectedObject = gameObject;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = false;
-        GetComponent<DataModules.Index>().Id = transform.GetSiblingIndex();
         startPosition = transform.position;
         startScale = transform.localScale;
     }
@@ -51,6 +50,11 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         hlg.SetLayoutHorizontal();
         hlg.SetLayoutVertical();
 
+        ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
+        if (coolComp != null) {
+            Debug.Log("쿨타임! 사용불가");
+            return;
+        }
         dropHandler.OnDrop();
     }
 }

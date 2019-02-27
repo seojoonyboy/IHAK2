@@ -20,8 +20,8 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     private int handCount;
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
-    public List<GameObject> Deck;                           //덱 뭉치
-    public List<GameObject> Hand;                           //핸드
+    public List<GameObject> Deck = new List<GameObject>();  //덱 뭉치
+    public List<GameObject> Hand = new List<GameObject>();  //핸드
     public List<GameObject> Grave = new List<GameObject>(); //무덤
 
     TileGroup tileGroup;
@@ -29,6 +29,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         ingameCityManager = GetComponent<IngameCityManager>();
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
     }
 
     void Start() {
@@ -38,9 +39,10 @@ public class IngameDeckShuffler : MonoBehaviour {
         InitSkillCard();
 
         HandDeck(cards);
+    }
 
-        //UseCard(0);
-        //UseCard(1);
+    void OnDestroy() {
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnHqUpgraded);
     }
 
     private void OnUnitUpgraded(Enum Event_Type, Component Sender, object Param) {
@@ -56,54 +58,45 @@ public class IngameDeckShuffler : MonoBehaviour {
         //}
     }
 
-    public void Clear() {
-        foreach (Transform card in cardParent.transform) {
-            cards.Remove(card.gameObject);
-            Destroy(card.gameObject);
-        }
+    private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
+        Hand.Clear();
+        Deck.Clear();
+
+        InitUnitCard();
+        InitSkillCard();
+        MakeCardPrefab();
     }
 
     public void DeactiveCard(string id, GameObject parentBuilding) {
-        GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        GameObject card = Hand.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
+
         card.SetActive(false);
     }
 
     public void ActivateCard(string id, GameObject parentBuilding) {
-        GameObject card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        GameObject card = Hand.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
 
-        ActiveCardInfo activeCardInfo = card.GetComponent<ActiveCardInfo>();
-        if (activeCardInfo == null) return;
-        if (!string.IsNullOrEmpty(activeCardInfo.data.unit.name)) {
-            if(activeCardInfo.data.unit.tierNeed <= playerController.hqLevel) {
-                card.SetActive(true);
-            }
-            return;
-        }
-        if(activeCardInfo.data.skill != null) {
-            if (activeCardInfo.data.skill.tierNeed <= playerController.hqLevel) {
-                card.SetActive(true);
-            }
-        }
+        card.SetActive(true);
     }
 
     public void InitUnitCard() {
         foreach (ActiveCard unitCard in tileGroup.units) {
             Unit unit = unitCard.unit;
-            GameObject card = Instantiate(unitCardPref, cardParent);
-            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
-            ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
-            activeCardInfo.data = unitCard;
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+            if (unit.tierNeed <= playerController.hqLevel) {
+                GameObject card = Instantiate(unitCardPref, cardParent);
+                card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
+                ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+                activeCardInfo.data = unitCard;
+                card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
 
-            if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
-            if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
-            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
-            Debug.Log(playerController.hqLevel);
-            cards.Add(card);
-            if (unit.tierNeed > playerController.hqLevel) {
-                card.SetActive(false);
+                if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
+                if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
+                card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
+
+                if (Hand.Count < 5) Hand.Add(card);
+                else Deck.Add(card);
             }
         }
     }
@@ -111,29 +104,71 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void InitSkillCard() {
         foreach (ActiveCard spellCard in tileGroup.spells) {
             Skill skill = spellCard.skill;
-            GameObject card = Instantiate(spellCardPref, cardParent);
-            card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
-            ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
-            activeCardInfo.data = spellCard;
+            if (skill.tierNeed <= playerController.hqLevel) {
+                GameObject card = Instantiate(spellCardPref, cardParent);
+                card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
+                ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+                activeCardInfo.data = spellCard;
 
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
+                card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
 
-            if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
-            if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
-            card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
-            Debug.Log(playerController.hqLevel);
-            if (skill.tierNeed > playerController.hqLevel) {
-                card.SetActive(false);
+                if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
+                if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
+                card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
+
+                if (Hand.Count < 5) Hand.Add(card);
+                else Deck.Add(card);
             }
-            cards.Add(card);
+        }
+    }
+
+    public void MakeCardPrefab() {
+        foreach(Transform item in cardParent) {
+            Destroy(item.gameObject);
+        }
+        int index = 0;
+        foreach(GameObject gameObject in Hand) {
+            ActiveCard activeCard = gameObject.GetComponent<ActiveCardInfo>().data;
+            if (!string.IsNullOrEmpty(activeCard.unit.name)) {
+                GameObject card = Instantiate(unitCardPref, cardParent);
+                Hand[index] = card;
+                Unit unit = activeCard.unit;
+                card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
+                ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+                activeCardInfo.data = activeCard;
+                card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+
+                if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
+                if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
+                card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
+
+                IngameCityManager.BuildingInfo building = ingameCityManager.myBuildingsInfo.Find(x => x.gameObject == gameObject.GetComponent<ActiveCardInfo>().data.parentBuilding);
+                if (!building.activate) card.SetActive(false);
+            }
+            else {
+                GameObject card = Instantiate(spellCardPref, cardParent);
+                Hand[index] = card;
+                Skill skill = activeCard.skill;
+                card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
+                ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
+                activeCardInfo.data = activeCard;
+
+                card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
+
+                if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
+                if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
+                card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
+
+                IngameCityManager.BuildingInfo building = ingameCityManager.myBuildingsInfo.Find(x => x.gameObject == gameObject.GetComponent<ActiveCardInfo>().data.parentBuilding);
+                if (!building.activate) card.SetActive(false);
+            }
+            index++;
         }
     }
 
     //initialize
     public void HandDeck(List<GameObject> cards, int handCount = 5) {
         this.handCount = handCount;
-        Deck = new List<GameObject>(cards);
-        Hand = new List<GameObject>(handCount);
         for (int i = 0; Deck.Count > 0 && i < handCount; i++) {
             RefillCard();
         }
@@ -145,17 +180,30 @@ public class IngameDeckShuffler : MonoBehaviour {
         var choice = @where[choiceIndex];
         @where.RemoveAt(choiceIndex);
         Hand.Add(choice);
-        if (Grave.Count <= 0) return;
+        if (Deck.Count > 0) return;
         Deck.AddRange(Grave);
         Grave.Clear();
     }
 
     //card use
-    public void UseCard(int handIndex) {
-        //Debug.Log(Hand[handIndex].GetComponent<IngameCard>().data.GetType());
+    public void UseCard(GameObject selectedObject) {
+        int handIndex = selectedObject.transform.GetSiblingIndex();
         Grave.Add(Hand[handIndex]);
         Hand.RemoveAt(handIndex);
 
         RefillCard();
+        MakeCardPrefab();
+
+        ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
+        ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+
+        if (!string.IsNullOrEmpty(activeCard.unit.name)) {
+            cooltimeComp.coolTime = activeCard.unit.coolTime;
+        }
+        else if (!string.IsNullOrEmpty(activeCard.skill.name)) {
+            cooltimeComp.coolTime = activeCard.skill.coolTime;
+        }
+        cooltimeComp.Hand = Hand;
+        cooltimeComp.StartCool();
     }
 }

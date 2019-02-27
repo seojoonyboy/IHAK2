@@ -4,7 +4,6 @@ using UnityEngine;
 using Spine.Unity;
 using DataModules;
 using System;
-using PolyNav;
 
 public class UnitAI : MonoBehaviour {
 	public enum aiState {
@@ -36,7 +35,6 @@ public class UnitAI : MonoBehaviour {
 
     public GameObject ontile;
 	public bool protecting = false;
-	private PolyNavAgent agent;
 	private CircleCollider2D detectCollider;
 
 	private List<IngameCityManager.BuildingInfo> buildingInfos;
@@ -48,9 +46,9 @@ public class UnitAI : MonoBehaviour {
 		skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 		spineAnimationState = skeletonAnimation.AnimationState;
 		skeleton = skeletonAnimation.Skeleton;
-		agent = GetComponent<PolyNavAgent>();
 		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
 		detectCollider.radius = unit.detectRange;
+		if(protecting) detectCollider.enabled = false;
 		if(gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
 			buildingInfos = cityManager.enemyBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
@@ -105,7 +103,6 @@ public class UnitAI : MonoBehaviour {
 			break;
 			case aiState.MOVE :
 			spineAnimationState.SetAnimation(0, "run", true);
-			agent.maxSpeed = unit.moveSpeed;
 			update = moveUpdate;
 			break;
 			case aiState.ATTACK :
@@ -157,11 +154,9 @@ public class UnitAI : MonoBehaviour {
 		setFlip(distance);
 		if(isTargetClose(length)) {
 			setState(aiState.ATTACK);
-			agent.Stop();
-			agent.maxSpeed = 0f;
 			return;
 		}
-		agent.SetDestination(target.position);
+		transform.Translate(distance.normalized * time * unit.moveSpeed);
 		if(currentTime < 2f) return;
 		currentTime = 0f;
 		searchTarget();
@@ -171,24 +166,26 @@ public class UnitAI : MonoBehaviour {
 		currentTime += time;
 		if(currentTime < unit.attackSpeed) return;
 		currentTime = 0f;
-		if(targetUnit != null)
+		if(targetUnit != null) {
 			attackUnit();
-		else if(targetBuilding != null)
+		}
+		else if(targetBuilding != null) {
 			attackBuilding();
+		}
 		else if(targetUnit == null && targetBuilding == null) {
 			detectCollider.enabled = true;
 			if(searchTarget()) 
 				setState(aiState.MOVE);
 			else
 				setState(aiState.NONE);
+			return;
 		}
-		
-		spineAnimationState.SetAnimation(0, "attack", false);
-		spineAnimationState.AddAnimation(0, "stand", true, 0);
 	}
 
 	private void attackBuilding() {
 		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, unit.power);
+		spineAnimationState.SetAnimation(0, "attack", false);
+		spineAnimationState.AddAnimation(0, "stand", true, 0);
 		if(targetBuilding.hp <= 0) {
             targetBuilding = null;
 			if(searchTarget())
@@ -200,6 +197,8 @@ public class UnitAI : MonoBehaviour {
 
 	private void attackUnit() {
 		targetUnit.damaged(unit.power);
+		spineAnimationState.SetAnimation(0, "attack", false);
+		spineAnimationState.AddAnimation(0, "stand", true, 0);
 		if(targetUnit.health <= 0f) {
 			targetUnit = null;
 			detectCollider.enabled = true;
