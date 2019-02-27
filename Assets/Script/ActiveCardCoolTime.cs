@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActiveCardCoolTime : CoolTime {
-    public List<GameObject> Hand;
+    public List<GameObject> 
+        Hand,
+        Deck;
+
     public GameObject card;
     public override void Work() {
         card = Hand.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
 
         if (card == null) {
-            Destroy(GetComponent<ActiveCardCoolTime>());
-            return;
+            Deck.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
+
+            if(Deck == null) {
+                Destroy(GetComponent<ActiveCardCoolTime>());
+                return;
+            }
         }
 
         GameObject deactive = card.transform.Find("Deactive").gameObject;
