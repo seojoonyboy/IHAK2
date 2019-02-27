@@ -40,6 +40,7 @@ public class DropHandler : MonoBehaviour {
                 if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
                     if (targetTile.GetComponent<TileObject>().Tier <= AccountManager.Instance.userTier) {
                         SettingBuilding(setObject);
+                        deckSettingController.picking = false;
                     }
                     else
                         return;
@@ -53,6 +54,7 @@ public class DropHandler : MonoBehaviour {
                 return;
             }
         }
+        
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
         
     }

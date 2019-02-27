@@ -19,13 +19,14 @@ public class EditScenePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public int maxPage;
     public bool pointerInside = false;
 
+    public DeckSettingController deckSettingController;
     private float mouseDownPosition;
 
     public List<Vector3> pageLocation;
 
     private void Start() {
         page = 0;
-
+        deckSettingController = transform.parent.GetComponent<DeckSettingController>();
 
         leftBtn.GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(true));
         rightBtn.GetComponent<Button>().OnClickAsObservable().ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
@@ -38,11 +39,10 @@ public class EditScenePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         dragStream.Where(_ => mouseDownPosition - Input.mousePosition.x > 500).ThrottleFirst(TimeSpan.FromMilliseconds(500)).Subscribe(_ => switchButton(false));
 
         leftBtn.gameObject.SetActive(false);
-
     }
 
     public void switchButton(bool left) {
-        if (pointerInside == true) {
+        if (deckSettingController.picking == false) {
             if (left) {
                 if (page == 0)
                     return;
