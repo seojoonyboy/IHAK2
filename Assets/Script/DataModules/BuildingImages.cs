@@ -52,7 +52,7 @@ public class BuildingImages : MonoBehaviour {
                 else sprites = primal_other_buildingImages;
                 foreach (Sprite sprite in sprites) {
                     if (sprite.name == id) {
-                        Debug.Log(sprite.name);
+                        //Debug.Log(sprite.name);
                         return sprite;
                     }
                 }

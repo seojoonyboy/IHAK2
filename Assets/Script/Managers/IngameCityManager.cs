@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using System.Linq;
 using Spine.Unity;
 using TMPro;
-using PolyNav;
 
 public class IngameCityManager : MonoBehaviour {
     [System.Serializable]
@@ -97,19 +96,10 @@ public class IngameCityManager : MonoBehaviour {
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
-        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
     }
 
     void OnDestroy() {
         ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
-        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgrade);
-    }
-
-    private void OnHqUpgrade(Enum Event_Type, Component Sender, object Param) {
-        Debug.Log("HQ 업그레이트 이벤트 발생");
-        ingameDeckShuffler.Clear();
-        ingameDeckShuffler.InitUnitCard();
-        ingameDeckShuffler.InitSkillCard();
     }
 
     // Use this for initialization
@@ -487,7 +477,6 @@ public class IngameCityManager : MonoBehaviour {
                             enemyBuilding.gameObject.transform.GetChild(2).gameObject.SetActive(true);
                     }
                 }
-                enemyBuilding.gameObject.transform.parent.GetComponent<PolyNavObstacle>().enabled = true;
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
                 if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
@@ -625,7 +614,6 @@ public class IngameCityManager : MonoBehaviour {
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         SetWreck(buildingInfo.gameObject);
-        buildingInfo.gameObject.transform.parent.GetComponent<PolyNavObstacle>().enabled = false;
 
         if (buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
