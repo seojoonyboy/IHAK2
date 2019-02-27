@@ -198,18 +198,39 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             ingameUpgradeCard.newHp = newHp;
         }
 
-        unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
+        //unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
+
+        unavailableItems = Filter(unavailableItems);
+
         foreach (GameObject building in unavailableItems) {
             building.transform.SetAsFirstSibling();
         }
 
+        availableItems = Filter(availableItems);
 
-        availableItems = availableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
         foreach (GameObject building in availableItems) {
             building.transform.SetAsFirstSibling();
         }
 
         if(hqItem != null) hqItem.transform.SetAsFirstSibling();
+    }
+
+    private List<GameObject> Filter(List<GameObject> data) {
+        var groupByGold = data
+            .OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold)
+            .GroupBy(group => group.GetComponent<IngameUpgradeCard>().cost.gold)
+            .ToList();
+        data.Clear();
+
+        foreach (var result in groupByGold) {
+            List<GameObject> list = result.ToList();
+            list.Sort((x, y) => x.GetComponent<IngameUpgradeCard>().targetBuilding.GetComponent<BuildingObject>().data.card.name.CompareTo(
+                y.GetComponent<IngameUpgradeCard>().targetBuilding.GetComponent<BuildingObject>().data.card.name)
+            );
+            data.AddRange(list);
+        }
+
+        return data;
     }
 
     private void ClearList() {
@@ -267,7 +288,6 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     }
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
-        Debug.Log(playerController.hqLevel);
         if (building.data.card.lv >= playerController.hqLevel) return false;
         if (building.data.card.lv >= 3) return false;
         if (building.data.card.id == "primal_town_center" && playerController.hqLevel == MAX_LV) return false;
