@@ -28,6 +28,9 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] GameObject repairAlert;
     [SerializeField] Camera territoryCamera;
+    [SerializeField] Text turn;
+    [SerializeField] Transform attackCard;
+    
 
     private HorizontalScrollSnap hss;
     private GameObject city;
@@ -142,6 +145,27 @@ public class IngameSceneUIController : MonoBehaviour {
             if(ieg.ingameCityManager.myBuildingsInfo[4].hp < 1) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+            }
+            if(turn.text == "0") {
+                if (enemyCity.transform.GetChild(1).childCount == 26) {
+                    PlayerController pc = gameObject.GetComponent<PlayerController>();
+                    bool end = true;
+                    for (int i = 0; i < attackCard.childCount; i++) {
+                        ActiveCardInfo ac = attackCard.GetChild(i).GetComponent<ActiveCardInfo>();
+                        if (ac.data.unit.id != null && pc.isEnoughResources(ac.data.unit.cost)) {
+                            end = false;
+                            break;
+                        }
+                        else if (ac.data.skill.id != 0 && pc.isEnoughResources(ac.data.skill.cost)) {
+                            end = false;
+                            break;
+                        }
+                    }
+                    if (end) {
+                        isPlaying = false;
+                        resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+                    }
+                }
             }
         }
         territoryCamera.transform.position = new Vector3(Screen.width - (hss.transform.GetChild(0).position.x), 0, 0);
