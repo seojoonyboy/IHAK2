@@ -208,6 +208,11 @@ public partial class PlayerController : MonoBehaviour {
                 break;
         }
         PrintResource();
+        //if (resourceClass.turn == 0) {
+        //    IngameSceneUIController isc = gameObject.GetComponent<IngameSceneUIController>();
+        //    isc.isPlaying = false;
+            
+        //}
     }
 
     private void ShowCoinAnimation(int num) {

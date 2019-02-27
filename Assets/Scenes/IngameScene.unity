@@ -6984,6 +6984,8 @@ MonoBehaviour:
   resultManager: {fileID: 1567472046}
   repairAlert: {fileID: 1774411434}
   territoryCamera: {fileID: 746492823}
+  turn: {fileID: 1194451107}
+  attackCard: {fileID: 1589755684}
   isPlaying: 1
 --- !u!114 &807158599
 MonoBehaviour:
@@ -13652,7 +13654,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD0C0\uC77C\uBC1C\uC804"
+  m_Text: "\uD0C0\uC77C \uBC1C\uC804"
 --- !u!222 &1569420863
 CanvasRenderer:
   m_ObjectHideFlags: 0
