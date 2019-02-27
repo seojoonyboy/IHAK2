@@ -57,6 +57,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         glg.SetLayoutVertical();
         canDrag = false;
         deckSettingController.picking = false;
+        deckSettingController.clicktime = 0f;
 
         GetComponent<Image>().enabled = true;
         transform.Find("Name").GetComponent<Text>().enabled = true;

@@ -6863,6 +6863,8 @@ MonoBehaviour:
   pageText: {fileID: 1278258306}
   page: 0
   maxPage: 0
+  pointerInside: 0
+  deckSettingController: {fileID: 0}
   pageLocation: []
 --- !u!1 &990078988
 GameObject:
@@ -9263,6 +9265,7 @@ MonoBehaviour:
   startCamSize: 0
   camSize: 0
   deckSettingController: {fileID: 1909547847}
+  buildingMaxCount: 0
   setCount: 0
 --- !u!114 &1359430377
 MonoBehaviour:
@@ -9277,8 +9280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pageObject: {fileID: 1723172687633890, guid: 68e55042cd67925478ac6df94c396ed9, type: 2}
   slotObject: {fileID: 1628502088265602, guid: 9550d1d0397ff4141971fbb29505c9cf, type: 2}
-  prodDetailModal: {fileID: 1995726371}
-  unitGenDetailModal: {fileID: 851502089}
   cardPanels:
   - {fileID: 21300070, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
   - {fileID: 21300072, guid: 463cd4acc5df9e84aa8e2d5e3bde7ac7, type: 3}
@@ -12073,6 +12074,8 @@ MonoBehaviour:
   cardsContent: {fileID: 0}
   activeSlotUI: {fileID: 0}
   resetButton: {fileID: 1856610770}
+  prodDetailModal: {fileID: 1995726371}
+  unitGenDetailModal: {fileID: 851502089}
   modalHeader: {fileID: 475413629}
   content: {fileID: 74268605}
   speciesPortraits:

@@ -28,6 +28,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public GameObject cardsContent;
     [SerializeField] public GameObject activeSlotUI;
     [SerializeField] public Button resetButton;
+    [SerializeField] public GameObject prodDetailModal;
+    [SerializeField] public GameObject unitGenDetailModal;
 
     public Text
         modalHeader,
@@ -62,6 +64,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [Header(" - UserData")]
     private int speciesId = 0;
     private int deckCount;
+
+    [Header(" - Time")]
+    public float clicktime = 0f;
+    public float requireClickTime = 1f;
     
     public int SpeciesId {
         get {
@@ -80,7 +86,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
         var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
-        var dragStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButton(0));
+        var dragStream = Observable.EveryUpdate().Where(_=>Input.GetMouseButton(0));
         var upStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0));
         playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
         tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
@@ -91,15 +97,14 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         DeckActiveCheck();
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
-
-        /* 테스트용
-        downStream.Subscribe(_ => Debug.Log("원클릭"));
-        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => Debug.Log("FromMillSecond500클릭"));
-        */
+        
 
         downStream.Subscribe(_ => PickEditBuilding());
-        dragStream.Delay(TimeSpan.FromMilliseconds(500)).Subscribe(_ => MoveEditBuilding());
-        upStream.Subscribe(_ => DropEditBuilding());
+        dragStream.Where(_ => (clicktime < requireClickTime) && (picking== true || selectBuilding != null)).Subscribe(_ => clicktime += Time.deltaTime);
+        dragStream.Where(_=>clicktime >= requireClickTime).Subscribe(_ => MoveEditBuilding());
+        upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_=> ShowDetail(selectBuilding.GetComponent<BuildingObject>()));
+        upStream.Where(_=> clicktime >= requireClickTime).Subscribe(_ => DropEditBuilding());
+        upStream.Subscribe(_ => clicktime = 0f);
         
         chooseSpeciesBtn.onClick
             .AsObservable()
@@ -362,8 +367,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if (selectBuilding != null) {
                 selectBuilding.GetComponent<PolygonCollider2D>().enabled = false;
                 startEditPosition = selectBuilding.transform.position;
-            }
-            ShowBuildingStatus();           
+            } 
         }
         /*
         else
@@ -418,7 +422,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 Vector3 buildingPosition = targetTile.transform.position;
                 buildingPosition.z = 0;
                 selectBuilding.transform.position = buildingPosition;
-                SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum + 1);
+                SetSortingOrder(selectBuilding, 60);
                 SetColor(selectBuilding, Color.red);
             }
             else if(hit.collider.tag == "BackGroundTile") {
@@ -472,6 +476,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
         }
 
+        clicktime = 0f;
         picking = false;
         SetColor(selectBuilding, Color.white);
         selectBuilding.GetComponent<PolygonCollider2D>().enabled = true;
@@ -878,6 +883,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void DropSwap(GameObject swapBuilding, GameObject pickBuilding) {
+        if(swapBuilding == null && pickBuilding != null) {
+            SetSortingOrder(pickBuilding, startSortingOrder);
+            return;
+        }
+
         if (swapBuilding == null || pickBuilding == null)
             return;
 
@@ -924,4 +934,71 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         SetSortingOrder(swapBuilding, recentOrder);
     }
 
+    private void ShowDetail(BuildingObject buildingObject) {
+        if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+            prodDetailModal.SetActive(true);
+            Transform innerModal = prodDetailModal.transform.GetChild(0);
+
+            Text hp = innerModal.Find("DataArea/UpperBody/HP/Value").GetComponent<Text>();
+            Text header = innerModal.Find("Header/Text").GetComponent<Text>();
+            Text limitCount = innerModal.Find("Upper/LimitCount/Value").GetComponent<Text>();
+            Text tier = innerModal.Find("Upper/DataArea/Header/TierName").GetComponent<Text>();
+
+            Text food = innerModal.Find("DataArea/UpperBody/Food/Value").GetComponent<Text>();
+            Text env = innerModal.Find("DataArea/UpperBody/Env/Value").GetComponent<Text>();
+            Text gold = innerModal.Find("DataArea/UpperBody/Gold/Value").GetComponent<Text>();
+
+            Card card = buildingObject.data.card;
+            hp.text = card.hitPoint.ToString();
+            header.text = card.name;
+            limitCount.text = "한도 " + card.placementLimit.ToString();
+
+            tier.text = card.rarity + " 등급";
+            food.text = card.product.food.ToString();
+            gold.text = card.product.gold.ToString();
+            env.text = card.product.environment.ToString();
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+        }
+        else {
+            unitGenDetailModal.SetActive(true);
+            Transform innerModal = unitGenDetailModal.transform.GetChild(0);
+
+            Text tier = innerModal.Find("Upper/DataArea/Header/TierName").GetComponent<Text>();
+            Text header = innerModal.Find("Header/Text").GetComponent<Text>();
+
+            Text unitName = innerModal.Find("DataArea/UpperBody/Text").GetComponent<Text>();
+            Text needResources = innerModal.Find("DataArea/UpperBody/NeedResource").GetComponent<Text>();
+            Text unitSpec = innerModal.Find("DataArea/BottomBody/UnitSpec").GetComponent<Text>();
+
+            Card card = buildingObject.data.card;
+            DataModules.Unit unit = card.unit;
+
+            tier.text = unit.tierNeed + " 등급";
+            header.text = card.name;
+
+            unitName.text = "유닛생산 " + unit.name;
+            Debug.Log(tier.text);
+            needResources.text = "식량 : " + unit.cost.food + "\n"
+                + "골드 : " + unit.cost.gold + "\n"
+                + "환경 : " + unit.cost.environment + "\n";
+
+            unitSpec.text = "체력 : " + unit.hitPoint + "\n"
+                + "공격력 : " + unit.power + "\n"
+                + "공격 속도 : " + unit.attackSpeed + "\n"
+                + "공격 범위 : " + unit.attackRange + "\n"
+                + "이동 속도 : " + unit.moveSpeed + "\n"
+                + "요구 레벨 : " + unit.tierNeed;
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+        }
+        selectBuilding = null;
+    }
+
+    public void TimeCounting() {
+        
+
+    }
 }
