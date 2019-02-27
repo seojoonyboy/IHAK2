@@ -148,8 +148,10 @@ public class UpgradableBuildingGetter : MonoBehaviour {
                     else {
                         if (playerController.resourceClass.turn <= 0) return;
                         playerController.Upgrade(item, costs);
+
+                        playerController.resourceClass.turn--;
+                        playerController.PrintResource();
                     }
-                    playerController.resourceClass.turn--;
                 }
             ));
 
