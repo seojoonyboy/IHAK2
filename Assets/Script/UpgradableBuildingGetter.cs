@@ -203,8 +203,9 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             building.transform.SetAsFirstSibling();
         }
 
+
         availableItems = availableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
-        foreach(GameObject building in availableItems) {
+        foreach (GameObject building in availableItems) {
             building.transform.SetAsFirstSibling();
         }
 
@@ -272,6 +273,25 @@ public class UpgradableBuildingGetter : MonoBehaviour {
         if (building.data.card.id == "primal_town_center" && playerController.hqLevel == MAX_LV) return false;
         return isEnoughResource(resource);
     }
+    /*
+    public void SameSorting(List<GameObject> upgradeList) {
+        int maxCount = upgradeList.Capacity;
+        int pivot = 0;
+        int targetLocation = 0;
+        GameObject tempLocation;
+
+        for (int i = 0; i<maxCount; i++) {
+            pivot = upgradeList.BinarySearch(upgradeList[i]);
+
+            for(int j = pivot + 1; j < maxCount; j++) {
+                if(upgradeList[i].GetComponent<IngameUpgradeCard>().name == upgradeList[j].GetComponent<IngameUpgradeCard>().name) {
+                    targetLocation = upgradeList.BinarySearch(upgradeList[j]);
+
+                }
+            }
+        }
+    }
+    */
 
     public class MyComparer : IComparer<int> {
         public int Compare(int x, int y) {
