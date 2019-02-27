@@ -22,7 +22,6 @@ public class IngameDeckShuffler : MonoBehaviour {
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
     public List<GameObject> Deck = new List<GameObject>();  //덱 뭉치
     public List<GameObject> Hand = new List<GameObject>();  //핸드
-    public List<GameObject> Grave = new List<GameObject>(); //무덤
 
     TileGroup tileGroup;
     void Awake() {
@@ -175,20 +174,16 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     public void RefillCard() {
-        var @where = Deck.Count > 0 ? Deck : Grave;
-        var choiceIndex = rand.Next(@where.Count);
-        var choice = @where[choiceIndex];
-        @where.RemoveAt(choiceIndex);
+        var choiceIndex = rand.Next(Deck.Count);
+        var choice = Deck[choiceIndex];
+        Deck.RemoveAt(choiceIndex);
         Hand.Add(choice);
-        if (Deck.Count > 0) return;
-        Deck.AddRange(Grave);
-        Grave.Clear();
     }
 
     //card use
     public void UseCard(GameObject selectedObject) {
         int handIndex = selectedObject.transform.GetSiblingIndex();
-        Grave.Add(Hand[handIndex]);
+        Deck.Add(Hand[handIndex]);
         Hand.RemoveAt(handIndex);
 
         RefillCard();
@@ -204,6 +199,17 @@ public class IngameDeckShuffler : MonoBehaviour {
             cooltimeComp.coolTime = activeCard.skill.coolTime;
         }
         cooltimeComp.Hand = Hand;
+        cooltimeComp.Deck = Deck;
         cooltimeComp.StartCool();
+    }
+
+    //(핸드)카드 교체 기능
+    public void HandReset() {
+        List<GameObject> tmp = new List<GameObject>();
+        tmp = Hand;
+        Hand = Deck;
+        Deck = tmp;
+
+        MakeCardPrefab();
     }
 }
