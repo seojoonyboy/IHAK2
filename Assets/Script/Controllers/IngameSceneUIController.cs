@@ -129,7 +129,6 @@ public class IngameSceneUIController : MonoBehaviour {
                 isPlaying = false;
                 IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
-
             }
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
                 isPlaying = false;
@@ -144,7 +143,6 @@ public class IngameSceneUIController : MonoBehaviour {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }
-
         }
         territoryCamera.transform.position = new Vector3(Screen.width - (hss.transform.GetChild(0).position.x), 0, 0);
         
