@@ -30,6 +30,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public Button resetButton;
     [SerializeField] public GameObject prodDetailModal;
     [SerializeField] public GameObject unitGenDetailModal;
+    [SerializeField] private EditScenePanel editScenePanel;
 
     public Text
         modalHeader,
@@ -935,6 +936,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     private void ShowDetail(BuildingObject buildingObject) {
+        if (!editScenePanel.cool) return;
+
         if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);

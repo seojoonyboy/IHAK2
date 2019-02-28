@@ -23,6 +23,10 @@ public class EditScenePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private float mouseDownPosition;
 
     public List<Vector3> pageLocation;
+    public Vector2 
+        downPos,
+        upPos;
+    public bool cool = false;
 
     private void Start() {
         page = 0;
@@ -38,7 +42,22 @@ public class EditScenePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         dragStream.Where(_ => mouseDownPosition - Input.mousePosition.x < -Screen.width/5.0f).ThrottleFirst(TimeSpan.FromMilliseconds(250)).Subscribe(_ => switchButton(true));
         dragStream.Where(_ => mouseDownPosition - Input.mousePosition.x > Screen.width/5.0f).ThrottleFirst(TimeSpan.FromMilliseconds(250)).Subscribe(_ => switchButton(false));
 
+        downStream.Subscribe(_ => downPos = Input.mousePosition);
+        dragStream.Subscribe(_ => upPos = Input.mousePosition);
+        upStream.Subscribe(_ => Calc());
+
+
         leftBtn.gameObject.SetActive(false);
+    }
+
+    private void Calc() {
+        float gap = Math.Abs(downPos.x - upPos.x);
+        if (gap < 200) {
+            cool = true;
+        }
+        else cool = false;
+
+        Debug.Log(gap);
     }
 
     public void switchButton(bool left) {
