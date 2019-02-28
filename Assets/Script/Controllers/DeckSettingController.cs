@@ -80,7 +80,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     private void Start() {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
-        cardsContent = transform.GetChild(0).GetChild(0).gameObject; // Canvas => UnitScrollPanel => Content;
+        cardsContent = transform.GetChild(0).GetChild(1).gameObject; // Canvas => UnitScrollPanel => Content;
         activeSlotUI = transform.GetChild(4).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
