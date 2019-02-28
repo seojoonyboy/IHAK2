@@ -10,7 +10,10 @@ public class OwnCardGenerator : MonoBehaviour {
         slotObject;
 
     [Header("UI")]
-    public Sprite[] cardPanels;
+    public Sprite[]
+        cardPanels,
+        markIcons,
+        passiveSkillIcons;
 
     List<GameObject> buildings;
 
@@ -54,6 +57,8 @@ public class OwnCardGenerator : MonoBehaviour {
 
             slotData.GetComponent<Image>().sprite = cardPanels[info.data.card.rarity - 1];
 
+            slotData.transform.Find("FirstMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
+            slotData.transform.Find("SecondMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
             slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
             slotData.transform.Find("Name").GetComponent<Text>().text = info.name;
             //slotData.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + buildings[i].GetComponent<BuildingObject>().data.card.placementLimit.ToString(); //슬롯데이터중, 건물의 갯수 표기;
