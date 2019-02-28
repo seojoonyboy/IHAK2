@@ -60,6 +60,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         deckSettingController.clicktime = 0f;
 
         GetComponent<Image>().enabled = true;
+
+        transform.Find("FirstMark").gameObject.SetActive(true);
+        transform.Find("SecondMark").gameObject.SetActive(true);
+
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
         
@@ -88,10 +92,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
                 GameObject tile = hit.transform.gameObject;
                 if (accountManager.userTier >= tile.GetComponent<TileObject>().Tier) {
 
-                    transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
+                    transform.localScale = new Vector3(startScale.x + camMagnification, startScale.y + camMagnification);
                     transform.position = cam.WorldToScreenPoint(tile.transform.position);
 
                     GetComponent<Image>().enabled = false;
+                    transform.Find("FirstMark").gameObject.SetActive(false);
+                    transform.Find("SecondMark").gameObject.SetActive(false);
                     transform.Find("Name").GetComponent<Text>().enabled = false;
                     transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
 
