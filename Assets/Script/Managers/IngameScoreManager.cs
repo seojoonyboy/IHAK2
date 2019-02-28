@@ -33,25 +33,25 @@ public class IngameScoreManager : Singleton<IngameScoreManager> {
 	/// <param name="type">ScoreType.종류</param>
 	/// <param name="gametime">게임 시간</param>
     // Use this for initialization
-    public void AddScore(int num, ScoreType type, int gametime = 0) {
+    public void AddScore(int num, ScoreType type, int gametime = 0, int rarity = 0) {
         switch (type) {
             case ScoreType.Product: //생산량을 num으로 받음
                 playerScore += num;
                 break;
             case ScoreType.ActiveCard:
-                playerScore += (20 * num);
+                playerScore += 20 * (1 + rarity + (num / 2));
                 break;
             case ScoreType.Attack:
-                playerScore += num * 5;
+                playerScore += num * 2;
                 break;
             case ScoreType.DestroyUnit:
-                playerScore += num * 80;
+                playerScore += 70 * (1 + rarity + (num / 2));
                 break;
             case ScoreType.DestroyBuilding:
-                playerScore += num * 150;
+                playerScore += 100 * (1 + rarity + (num / 2));
                 break;
             case ScoreType.DestroyCity:
-                playerScore += num * gametime + 100;
+                playerScore += 60 * (rarity + gametime + (num / 2));
                 break;
 
 
