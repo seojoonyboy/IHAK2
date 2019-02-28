@@ -10,7 +10,10 @@ public class OwnCardGenerator : MonoBehaviour {
         slotObject;
 
     [Header("UI")]
-    public Sprite[] cardPanels;
+    public Sprite[]
+        cardPanels,
+        markIcons,
+        passiveSkillIcons;
 
     List<GameObject> buildings;
 
@@ -52,17 +55,12 @@ public class OwnCardGenerator : MonoBehaviour {
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
 
-            if (info.data.card.type == "prod")
-                slotData.GetComponent<Image>().sprite = cardPanels[0];
-            else if (info.data.card.type == "military")
-                slotData.GetComponent<Image>().sprite = cardPanels[3];
-            else if (info.data.card.type == "special")
-                slotData.GetComponent<Image>().sprite = cardPanels[2];
-            else
-                slotData.GetComponent<Image>().sprite = cardPanels[1];
+            slotData.GetComponent<Image>().sprite = cardPanels[info.data.card.rarity - 1];
 
+            slotData.transform.Find("FirstMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
+            slotData.transform.Find("SecondMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
             slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
-            slotData.transform.Find("Name").GetComponent<Text>().text = info.name;
+            slotData.transform.Find("Name").GetComponent<Text>().text = "Lv" + info.data.card.rarity + " " + info.name;
             //slotData.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + buildings[i].GetComponent<BuildingObject>().data.card.placementLimit.ToString(); //슬롯데이터중, 건물의 갯수 표기;
             slotData.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             slotData.GetComponent<LongClickButton>().requiredHoldTime = 0.3f;

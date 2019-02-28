@@ -4168,12 +4168,12 @@ Prefab:
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_other_buildingIcons.Array.size
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_other_buildingImages.Array.size
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
@@ -4183,7 +4183,7 @@ Prefab:
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_product_buildingIcons.Array.size
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
@@ -4193,7 +4193,7 @@ Prefab:
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_product_buildingImages.Array.size
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4553109808846016, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
       propertyPath: m_LocalPosition.x
@@ -4315,7 +4315,7 @@ Prefab:
         type: 2}
       propertyPath: primal_product_buildingIcons.Array.data[6]
       value: 
-      objectReference: {fileID: 21300000, guid: ad67ecca51c44174a8a50e4b84f4752e,
+      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
         type: 3}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
@@ -4333,25 +4333,271 @@ Prefab:
         type: 2}
       propertyPath: primal_product_buildingImages.Array.data[6]
       value: 
-      objectReference: {fileID: 21300000, guid: ad67ecca51c44174a8a50e4b84f4752e,
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
         type: 3}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_product_buildingImages.Array.data[9]
       value: 
-      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
         type: 3}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_other_buildingImages.Array.data[11]
       value: 
-      objectReference: {fileID: 21300000, guid: 09f341c3f2d7afe4abcdf3f727dd031c,
+      objectReference: {fileID: 21300022, guid: 12e749289eeb9a545b8b67e891ca5ab9,
         type: 3}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_other_buildingImages.Array.data[12]
       value: 
-      objectReference: {fileID: 21300006, guid: 2317cb552894dc54da24a09a53a35e19,
+      objectReference: {fileID: 21300022, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300024, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300036, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300030, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300012, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300020, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[11]
+      value: 
+      objectReference: {fileID: 21300028, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[13]
+      value: 
+      objectReference: {fileID: 21300022, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300014, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300028, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingImages.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300022, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300026, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300034, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300002, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingImages.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300010, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300028, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300024, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingIcons.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300022, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300036, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300030, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300026, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300034, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300014, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300020, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300002, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300012, guid: 12e749289eeb9a545b8b67e891ca5ab9,
+        type: 3}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_other_buildingIcons.Array.data[10]
+      value: 
+      objectReference: {fileID: 21300010, guid: 12e749289eeb9a545b8b67e891ca5ab9,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}

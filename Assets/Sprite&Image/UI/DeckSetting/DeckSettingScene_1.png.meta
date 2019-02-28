@@ -4,6 +4,13 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: activeslot_icon
     21300002: activeSlot_background
+    21300004: DeckSetting_return
+    21300006: DeckSetting_Save
+    21300008: DeckSetting_buttom_ui
+    21300010: DeckSetting_leftArrow
+    21300012: DeckSetting_RightArrow
+    21300014: DeckSetting_buttomTab_chosen
+    21300016: DeckSetting_buttomTab
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -127,7 +134,7 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,13 +154,153 @@ TextureImporter:
         width: 920
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: f5dff427142dff142b3f227dec3f3e39
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_return
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 832
+        width: 106
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f18977b39f8d405a8fc0e096ea7f2cc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_Save
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 832
+        width: 108
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d2204a0fa2154c9a8fb40f1e5ad2a41
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_buttom_ui
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1024
+        height: 700
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87573dd01485742649fd699d5db8e834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_leftArrow
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 750
+        width: 61
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0ce7b77638d94196b1b85856fe13ad0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_RightArrow
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 750
+        width: 61
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7f3154db5d14f638bba42d15f6f224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_buttomTab_chosen
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 718
+        width: 272
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1255a705e6d0a428180607345e2e3614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSetting_buttomTab
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 718
+        width: 270
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8ebd32f5a526436fbb14277a0f8a50c
       vertices: []
       indices: 
       edges: []

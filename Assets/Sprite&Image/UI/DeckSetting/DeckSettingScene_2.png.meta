@@ -1,17 +1,30 @@
 fileFormatVersion: 2
-guid: e453a2c4d74aa7f409b9963d52b08021
+guid: 2cb49c5b9d0f2bb4bb016d1a4e100d70
 TextureImporter:
   fileIDToRecycleName:
-    21300000: foodIcon
-    21300002: environment_icon
-    21300004: gold_icon
-    21300006: gauge_background
-    21300008: food_gauge
-    21300010: environment_gauge
-    21300012: gold_gauge
-    21300014: card_1
-    21300016: card_2
-    21300018: card_3
+    21300000: DeckSettingScene_2_0
+    21300002: DeckSettingScene_2_1
+    21300004: DeckSettingScene_2_2
+    21300006: Gage_bg
+    21300008: icon_Unit
+    21300010: Food_Icon
+    21300012: icon_Gold
+    21300014: Food_gage
+    21300016: icon_Env
+    21300018: Env_gage
+    21300020: Env_Icon
+    21300022: icon_Spell
+    21300024: icon_Food
+    21300026: Gold_gage
+    21300028: Gold_Icon
+    21300030: icon_Defence
+    21300032: DeckSettingScene_2_16
+    21300034: Rarity_1_Mark
+    21300036: Rarity_2_Mark
+    21300038: Rarity_3_Mark
+    21300040: Rarity_1
+    21300042: Rarity_2
+    21300044: Rarity_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -127,71 +140,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: foodIcon
+      name: Gage_bg
       rect:
         serializedVersion: 2
-        x: 346
-        y: 1406
-        width: 87
-        height: 92
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 06cf4e87d278d3c47af446e6b370a129
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: environment_icon
-      rect:
-        serializedVersion: 2
-        x: 350
-        y: 1295
-        width: 86
-        height: 93
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9b84b2583e6a20f4896ede4a82a87687
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gold_icon
-      rect:
-        serializedVersion: 2
-        x: 349
-        y: 1186
-        width: 85
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 760f98f9dd957ae4a820608fc64446e7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gauge_background
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 1503
+        x: 129
+        y: 969
         width: 258
         height: 64
       alignment: 0
@@ -201,18 +154,78 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09885c54ff92050409a3c2ed010f8b58
+      spriteID: a21cb61e53122e846a2243c4473a5a93
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_gauge
+      name: icon_Unit
       rect:
         serializedVersion: 2
-        x: 38
-        y: 1405
-        width: 246
+        x: 623
+        y: 982
+        width: 45
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 464b4a9dd57e64249b7bf0267043357b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Food_Icon
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 874
+        width: 86
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c92c63df44815246b105d7de80d3b7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_Gold
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 931
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d000cbf8467c9148830fd321c3dedfc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Food_gage
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 871
+        width: 245
         height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -221,18 +234,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90ed76312f4ac7c4bb4ae924f52527cf
+      spriteID: 28c1817e945390f4eb226e382103cab7
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: environment_gauge
+      name: icon_Env
       rect:
         serializedVersion: 2
-        x: 39
-        y: 1321
-        width: 246
+        x: 628
+        y: 876
+        width: 44
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33cc68352ecefd74f8bb4043f445f62f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Env_gage
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 786
+        width: 245
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d2c79decee8583408966ac90181c681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Env_Icon
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 760
+        width: 88
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09aa481059d95c74782392975cbdd8cd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_Spell
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 816
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9b6a9f2373d6649894070a20f8e611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icon_Food
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 757
+        width: 45
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0267d210adc5b494594010ee949b1038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gold_gage
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 703
+        width: 245
         height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -241,19 +354,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd39b528c8dff9c459a25e4c146f7a3d
+      spriteID: d596026a433bdc44fb52997b0b009f75
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gold_gauge
+      name: Gold_Icon
       rect:
         serializedVersion: 2
-        x: 39
-        y: 1237
-        width: 246
-        height: 51
+        x: 446
+        y: 652
+        width: 86
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -261,19 +374,119 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2a7589cf726ee5408b6c29ad39f43dc
+      spriteID: 9b185f505721d744bb327dccb4b44412
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: card_1
+      name: icon_Defence
       rect:
         serializedVersion: 2
-        x: 30
-        y: 1645
+        x: 632
+        y: 701
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7d0b2dd47e57084e9812a20c14a116f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DeckSettingScene_2_16
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 656
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f1f786a450a6043bb0f912e307df6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rarity_1_Mark
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 594
+        width: 48
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e849a1822ecffd44ae6b8ef46159d6c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rarity_2_Mark
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 591
+        width: 48
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdfe61e4d2afd3b48a61c86cf527a7e0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rarity_3_Mark
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 591
+        width: 48
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 940b0a022c08d04439f21f99f1857d0a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rarity_1
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 293
         width: 212
-        height: 290
+        height: 291
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,19 +494,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cb6718e4b7a16f45812964288afe603
+      spriteID: d3c8bff223ab35e478d73f911a563d19
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: card_2
+      name: Rarity_2
       rect:
         serializedVersion: 2
-        x: 326
-        y: 1642
-        width: 212
-        height: 290
+        x: 403
+        y: 291
+        width: 213
+        height: 291
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -301,17 +514,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b480d5ec91fa82c49a4b807b8c850f32
+      spriteID: ae58e531ea9aca94491dce5fa9d960f8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: card_3
+      name: Rarity_3
       rect:
         serializedVersion: 2
-        x: 590
-        y: 1640
+        x: 678
+        y: 292
         width: 209
         height: 290
       alignment: 0
@@ -321,7 +534,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a4112b11683c984999ed808ceb73437
+      spriteID: 43afe73a64e7d3c4bb85d71b94f8bc05
       vertices: []
       indices: 
       edges: []
@@ -329,7 +542,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 462f644bce850444f8a61f59921941a4
+    spriteID: 89b4c00268ab0c942bf0b57ba76f8f7c
     vertices: []
     indices: 
     edges: []
