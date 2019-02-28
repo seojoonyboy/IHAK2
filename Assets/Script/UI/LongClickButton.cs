@@ -24,6 +24,7 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
             if (pointerDownTimer >= requiredHoldTime && onLongClick != null) {
                 onLongClick.Invoke();
+                transform.position = Input.mousePosition;
             }
         }
     }
