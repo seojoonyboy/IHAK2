@@ -93,6 +93,9 @@ public class IngameCityManager : MonoBehaviour {
     IngameSceneEventHandler ingameSceneEventHandler;
     IngameDeckShuffler ingameDeckShuffler;
 
+    private IEnumerator firstAlert;
+    private IEnumerator secondAlert;
+
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
@@ -678,12 +681,14 @@ public class IngameCityManager : MonoBehaviour {
                 if (unactiveBuildingIndex1 == 100) {
                     unactiveBuildingIndex1 = num;
                     unActiveAlert1 = true;
-                    StartCoroutine(StartAlert1());
+                    firstAlert = StartAlert1();
+                    StartCoroutine(firstAlert);
                 }
                 else {
                     unactiveBuildingIndex2 = num;
                     unActiveAlert2 = true;
-                    StartCoroutine(StartAlert2());
+                    secondAlert = StartAlert2();
+                    StartCoroutine(secondAlert);
                 }
                 //SetColor(myBuildingsInfo[num].gameObject, Color.red);
                 Debug.Log(myBuildingsInfo[num].cardInfo.name + " 비활성화 예정");
@@ -720,12 +725,14 @@ public class IngameCityManager : MonoBehaviour {
         
         if (unactiveBuildingIndex2 == 100) {
             unActiveAlert1 = false;
+            StopCoroutine(firstAlert);
             SetColor(myBuildingsInfo[unactiveBuildingIndex1].gameObject, Color.white);
             Debug.Log(myBuildingsInfo[unactiveBuildingIndex1].cardInfo.name + " 비활성화 예정 해제");
             unactiveBuildingIndex1 = 100;
         }
         else {
             unActiveAlert2 = false;
+            StopCoroutine(secondAlert);
             SetColor(myBuildingsInfo[unactiveBuildingIndex2].gameObject, Color.white);
             Debug.Log(myBuildingsInfo[unactiveBuildingIndex2].cardInfo.name + " 비활성화 예정 해제");
             unactiveBuildingIndex2 = 100;
