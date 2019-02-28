@@ -67,7 +67,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - Time")]
     public float clicktime = 0f;
-    public float requireClickTime = 1f;
+    public float requireClickTime = 0.3f;
     
     public int SpeciesId {
         get {
@@ -960,6 +960,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
+            prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => prodDetailModal.SetActive(false));
         }
         else {
             unitGenDetailModal.SetActive(true);
@@ -993,7 +995,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
+            unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => unitGenDetailModal.SetActive(false));
         }
+        Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);
+        
+
         selectBuilding = null;
     }
 
