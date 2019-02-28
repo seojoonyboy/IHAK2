@@ -17,6 +17,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         unitCardPref,
         spellCardPref;
     [SerializeField] Transform cardParent;
+    [SerializeField] GameObject refreshCardBtn;
 
     private int handCount;
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
@@ -174,6 +175,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     public void RefillCard() {
+        if (Deck.Count == 0) return;
         var choiceIndex = rand.Next(Deck.Count);
         var choice = Deck[choiceIndex];
         Deck.RemoveAt(choiceIndex);
@@ -204,11 +206,36 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     //(핸드)카드 교체 기능
+    //쿨타임 30초
     public void HandReset() {
+        //쿨타임이면 return 
+        IngameHandChangeCoolTime prevComp = playerController.gameObject.GetComponent<IngameHandChangeCoolTime>();
+        if (prevComp != null) return;
+
         List<GameObject> tmp = new List<GameObject>();
-        tmp = Hand;
-        Hand = Deck;
-        Deck = tmp;
+        foreach(GameObject item in Hand) {
+            tmp.Add(item);
+        }
+        Hand.Clear();
+        for(int i = 0; i < 5; i++) {
+            RefillCard();
+        }
+
+        int count = Hand.Count;
+        if(count < 5) {
+            Deck.AddRange(tmp);
+            for(int i = 0; i < 5 - count; i++) {
+                RefillCard();
+            }
+        }
+
+        playerController.resourceClass.turn--;
+        playerController.PrintResource();
+
+        IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
+        coolComp.coolTime = 30;
+        coolComp.Btn = refreshCardBtn;
+        coolComp.StartCool();
 
         MakeCardPrefab();
     }
