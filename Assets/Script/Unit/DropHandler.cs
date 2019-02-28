@@ -60,6 +60,7 @@ public class DropHandler : MonoBehaviour {
     }
 
     public void SettingBuilding(GameObject building) {
+        if (building == null) return;
         GameObject selectBuilding = Instantiate(building);
         int tileNum = targetTile.GetComponent<TileObject>().tileNum;
         transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = building.GetComponent<BuildingObject>().data.id;

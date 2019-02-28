@@ -74,6 +74,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;
         }
         dropHandler.OnDrop();
+        dropHandler.setObject = null;
     }
 
     public void OnDrag(PointerEventData eventData) {
