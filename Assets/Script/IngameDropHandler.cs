@@ -32,8 +32,9 @@ public class IngameDropHandler : MonoBehaviour {
         if(!IsCardDropOK()) return;
 
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
-        if(!string.IsNullOrEmpty(card.data.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.skill);
-        else if(!string.IsNullOrEmpty(card.data.unit.name)) UnitSummon(card.data.unit);
+        int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().data.card.rarity;
+        if(!string.IsNullOrEmpty(card.data.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.skill, rarity);
+        else if(!string.IsNullOrEmpty(card.data.unit.name)) UnitSummon(card.data.unit, rarity);
     }
 
     private bool IsCardDropOK() {
@@ -47,7 +48,7 @@ public class IngameDropHandler : MonoBehaviour {
         return results[0].gameObject.name.CompareTo(StrB) == 0;
     }
 
-    private void UnitSummon(Unit data) {
+    private void UnitSummon(Unit data, int rarity) {
         if (!CheckResouceOK(data.cost)) return;
 
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -80,14 +81,14 @@ public class IngameDropHandler : MonoBehaviour {
         }
         
         UseResource(data.cost);
-        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject);
 
         Debug.Log(selectedObject.transform.GetSiblingIndex());
     }
 
-    private void SkillActive(Skill data) {
+    private void SkillActive(Skill data, int rarity) {
         if (!CheckResouceOK(data.cost)) return;
         if (!canSpell) {
             Debug.Log("스킬 쿨타임!");
@@ -99,7 +100,7 @@ public class IngameDropHandler : MonoBehaviour {
         ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
 
         UseResource(data.cost);
-        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard);
+        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject);
         Debug.Log(selectedObject.transform.GetSiblingIndex());
