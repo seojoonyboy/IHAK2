@@ -9436,6 +9436,7 @@ GameObject:
   - component: {fileID: 1278258305}
   - component: {fileID: 1278258307}
   - component: {fileID: 1278258306}
+  - component: {fileID: 1278258308}
   m_Layer: 5
   m_Name: PageText
   m_TagString: Untagged
@@ -9458,8 +9459,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 19.6}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -0.000061035, y: 33.7}
+  m_SizeDelta: {x: 199.91, y: 37.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1278258306
 MonoBehaviour:
@@ -9493,7 +9494,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1 \uD398\uC774\uC9C0"
+  m_Text: 1 PAGE
 --- !u!222 &1278258307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9501,6 +9502,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1278258304}
   m_CullTransparentMesh: 0
+--- !u!114 &1278258308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1278258304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1302595795
 GameObject:
   m_ObjectHideFlags: 0
