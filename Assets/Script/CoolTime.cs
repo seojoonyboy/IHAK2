@@ -15,10 +15,10 @@ public class CoolTime : MonoBehaviour {
 
     IEnumerator Cool(float coolTime) {
         while(currTime < coolTime) {
-            currTime += 1;
+            currTime += 0.5f;
             Work();
             Debug.Log("Cool 남은 시간 " + (coolTime - currTime) + "초");
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.5f);
         }
         OnTime();
     }
