@@ -30,6 +30,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public Button resetButton;
     [SerializeField] public GameObject prodDetailModal;
     [SerializeField] public GameObject unitGenDetailModal;
+    [SerializeField] private EditScenePanel editScenePanel;
 
     public Text
         modalHeader,
@@ -560,15 +561,20 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Destroy(building);
     }
 
-    public void ShowBuildingStatus() {
+    public void ShowBuildingStatus(GameObject cardSetObject) {
         //오른쪽 위에 빌딩 정보를 띄우는 함수
-        if (saveSelectBuilding == null)
+        if (cardSetObject == null)
             return;
 
-        gameObject.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
-        gameObject.transform.GetChild(3).GetChild(1).GetChild(1).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
-        gameObject.transform.GetChild(3).gameObject.SetActive(true);
+        GameObject informationObject = transform.GetChild(3).gameObject;
 
+        informationObject.transform.GetChild(0).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
+        informationObject.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
+        informationObject.gameObject.SetActive(true);
+    }
+
+    public void CloseBuildingStatus() {
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public int OnTileBuildingCount(GameObject _building) {
@@ -935,6 +941,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     private void ShowDetail(BuildingObject buildingObject) {
+        if (!editScenePanel.cool) return;
+
         if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);
@@ -960,6 +968,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
             prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
             prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => prodDetailModal.SetActive(false));
         }
@@ -995,6 +1004,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
             unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
             unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => unitGenDetailModal.SetActive(false));
         }

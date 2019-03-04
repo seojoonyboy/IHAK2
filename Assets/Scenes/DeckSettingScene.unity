@@ -7090,6 +7090,9 @@ MonoBehaviour:
   pointerInside: 0
   deckSettingController: {fileID: 0}
   pageLocation: []
+  downPos: {x: 0, y: 0}
+  upPos: {x: 0, y: 0}
+  cool: 0
 --- !u!1 &990078988
 GameObject:
   m_ObjectHideFlags: 0
@@ -13000,6 +13003,7 @@ MonoBehaviour:
   resetButton: {fileID: 1856610770}
   prodDetailModal: {fileID: 1995726371}
   unitGenDetailModal: {fileID: 851502089}
+  editScenePanel: {fileID: 987118992}
   modalHeader: {fileID: 475413629}
   content: {fileID: 74268605}
   speciesPortraits:
@@ -13025,7 +13029,7 @@ MonoBehaviour:
   - {fileID: 2106643451}
   - {fileID: 864193329}
   clicktime: 0
-  requireClickTime: 1
+  requireClickTime: 0.3
 --- !u!1 &1915366578
 GameObject:
   m_ObjectHideFlags: 0
