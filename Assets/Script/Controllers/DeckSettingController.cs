@@ -561,15 +561,20 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Destroy(building);
     }
 
-    public void ShowBuildingStatus() {
+    public void ShowBuildingStatus(GameObject cardSetObject) {
         //오른쪽 위에 빌딩 정보를 띄우는 함수
-        if (saveSelectBuilding == null)
+        if (cardSetObject == null)
             return;
 
-        gameObject.transform.GetChild(3).GetChild(0).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
-        gameObject.transform.GetChild(3).GetChild(1).GetChild(1).GetComponent<Text>().text = saveSelectBuilding.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
-        gameObject.transform.GetChild(3).gameObject.SetActive(true);
+        GameObject informationObject = transform.GetChild(3).gameObject;
 
+        informationObject.transform.GetChild(0).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
+        informationObject.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
+        informationObject.gameObject.SetActive(true);
+    }
+
+    public void CloseBuildingStatus() {
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public int OnTileBuildingCount(GameObject _building) {

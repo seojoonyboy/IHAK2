@@ -41,6 +41,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         startPosition = transform.position;        
         camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
         deckSettingController.picking = true;
+        deckSettingController.ShowBuildingStatus(setObject);
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
     }
 
@@ -58,6 +59,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         canDrag = false;
         deckSettingController.picking = false;
         deckSettingController.clicktime = 0f;
+        deckSettingController.CloseBuildingStatus();
 
         GetComponent<Image>().enabled = true;
 
