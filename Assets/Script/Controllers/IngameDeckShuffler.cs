@@ -56,17 +56,25 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
-        for(int i=Hand.Count; i<HAND_MAX_COUNT; i++) {
-            RefillCard();
-        }
+        InitCard();
     }
 
     public void DeactiveCard(string id, GameObject parentBuilding) {
-
+        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        if (card == null) return;
+        int index = card.GetComponent<Index>().Id;
+        Deck.Remove(index);
+        Hand.Remove(index);
+        card.SetActive(false);
     }
 
     public void ActivateCard(string id, GameObject parentBuilding) {
+        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        if (card == null) return;
+        int index = card.GetComponent<Index>().Id;
+        Deck.Add(index);
 
+        RefillCard(index);
     }
 
     public void InitCard() {
@@ -112,32 +120,36 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     //initialize
     public void HandDeck() {
-        IEnumerable<int> query =
-            from x in origin
-            select x.GetComponent<Index>().Id;
-        var pool = query.ToList();
-        foreach(int asdsa in query) {
-            Debug.Log(asdsa);
+        List<int> pool = new List<int>();
+        foreach(GameObject item in origin) {
+            ActiveCardInfo info = item.GetComponent<ActiveCardInfo>();
+            if(canUseCard(info)) pool.Add(item.GetComponent<Index>().Id);
         }
-        int[] rndNums = RndNumGenerator.getRandomInt(HAND_MAX_COUNT, pool.ToArray());
+        //IEnumerable<int> query =
+        //    from x in origin
+        //    select x.GetComponent<Index>().Id;
+        //var pool = query.ToList();
+        //foreach(int asdsa in query) {
+        //    Debug.Log(asdsa);
+        //}
+        int[] rndNums = null;
+        if (pool.Count > HAND_MAX_COUNT) {
+            rndNums = RndNumGenerator.getRandomInt(HAND_MAX_COUNT, pool.ToArray());
+        }
+        else rndNums = pool.ToArray();
 
         Deck.Clear();
         Hand.Clear();
 
-        for(int i=0; i<rndNums.Length; i++) {
+        for (int i = 0; i < rndNums.Length; i++) {
             Hand.Add(rndNums[i]);
             origin[rndNums[i]].SetActive(true);
-            pool.Remove(rndNums[i]);
-        }
-
-        foreach(int index in pool) {
-            Deck.Add(index);
-            origin[index].SetActive(false);
         }
     }
 
-    public void RefillCard() {
-        if (Deck.Count == 0) return;
+    public void RefillCard(int id) {
+        if (Hand.Count == HAND_MAX_COUNT) return;
+        if (Deck.Count == 0) Deck.Add(id);
         var choiceIndex = rand.Next(Deck.Count);
         var choice = Deck[choiceIndex];
 
@@ -153,12 +165,26 @@ public class IngameDeckShuffler : MonoBehaviour {
         int id = selectedObject.GetComponent<Index>().Id;
         //Debug.Log("ID : " + id);
 
-        var match = origin.Find(x =>id == x.GetComponent<Index>().Id);
+        var match = origin.Find(x => id == x.GetComponent<Index>().Id);
+        if (match == null) return;
+
         match.SetActive(false);
         Hand.Remove(id);
 
-        RefillCard();
-        Deck.Add(id);
+        RefillCard(id);
+
+        ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
+        ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+        cooltimeComp.cards = origin;
+
+        if (!string.IsNullOrEmpty(activeCard.unit.name)) {
+            cooltimeComp.coolTime = activeCard.unit.coolTime;
+        }
+        else if (!string.IsNullOrEmpty(activeCard.skill.name)) {
+            cooltimeComp.coolTime = activeCard.skill.coolTime;
+        }
+
+        cooltimeComp.StartCool();
     }
 
     private bool canUseCard(ActiveCardInfo data) {
