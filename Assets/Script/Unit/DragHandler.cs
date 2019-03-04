@@ -142,4 +142,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             transform.localScale = startScale;
         }
     }
+
+    public void showStatus() {
+        dropHandler.ShowDetail(setObject.GetComponent<BuildingObject>());
+    }
+
 }

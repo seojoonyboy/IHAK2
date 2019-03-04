@@ -15,23 +15,41 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public UnityEvent onLongClick;
     public UnityEvent onPointerUp;
     public UnityEvent onShortClick;
+
+    [SerializeField]
+    public Vector3 clickLocation;
+    [SerializeField]
+    public bool move = false;
     // Update is called once pe r frame
 
     private void Update() {
+        
         if (pointerDown && pointerInside) {
+            /*
             if (pointerDownTimer <= requiredHoldTime)
+                
+                */ 
+
+            if (clickLocation != Input.mousePosition)
+                move = true;
+
+            if(move == false)
                 pointerDownTimer += Time.deltaTime;
 
-            if (pointerDownTimer >= requiredHoldTime && onLongClick != null) {
-                onLongClick.Invoke();
-                transform.position = Input.mousePosition;
+            if (pointerDownTimer <= requiredHoldTime && onShortClick != null) {
+                onShortClick.Invoke();
             }
-        }
+
+            if (move == false && pointerDownTimer >= requiredHoldTime && onLongClick != null) {
+                onLongClick.Invoke();
+            }
+        } 
     }
 
 
     public void OnPointerDown(PointerEventData eventData) {
         pointerDown = true;
+        clickLocation = Input.mousePosition;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData) {
@@ -44,9 +62,10 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        if(pointerDownTimer < requiredHoldTime && onShortClick != null) {
-            onShortClick.Invoke();
-        }
+        /*
+        if(pointerDownTimer >= requiredHoldTime && onLongClick != null) {
+            onLongClick.Invoke();
+        }*/
         onPointerUp.Invoke();
         Reset();
     }
@@ -54,5 +73,7 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Reset() {
         pointerDown = false;
         pointerDownTimer = 0;
+        clickLocation = Vector3.zero;
+        move = false;
     }
 }

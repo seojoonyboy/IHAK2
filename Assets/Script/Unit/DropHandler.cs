@@ -16,10 +16,16 @@ public class DropHandler : MonoBehaviour {
     public int buildingMaxCount;
     public int setCount = 0;
 
+    [Header (" - Status" )]
+    [SerializeField] public GameObject prodDetailModal;
+    [SerializeField] public GameObject unitGenDetailModal;
+
     private void Start() {
         cam = Camera.main;
         startCamSize = cam.orthographicSize;
         var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize).Subscribe(_ => camSize = cam.orthographicSize);
+        prodDetailModal = deckSettingController.prodDetailModal;
+        unitGenDetailModal = deckSettingController.unitGenDetailModal;
     }
 
     public void OnDrop() {
@@ -117,6 +123,74 @@ public class DropHandler : MonoBehaviour {
         deckSettingController.DeleteBuilding(targetTileBuilding);
         setCount = 1;
         SettingBuilding(setObject);
+    }
+
+
+    public void ShowDetail(BuildingObject buildingObject) {
+        if (buildingObject == null) return;
+
+        if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+            prodDetailModal.SetActive(true);
+            Transform innerModal = prodDetailModal.transform.GetChild(0);
+
+            Text hp = innerModal.Find("DataArea/UpperBody/HP/Value").GetComponent<Text>();
+            Text header = innerModal.Find("Header/Text").GetComponent<Text>();
+            Text limitCount = innerModal.Find("Upper/LimitCount/Value").GetComponent<Text>();
+            Text tier = innerModal.Find("Upper/DataArea/Header/TierName").GetComponent<Text>();
+
+            Text food = innerModal.Find("DataArea/UpperBody/Food/Value").GetComponent<Text>();
+            Text env = innerModal.Find("DataArea/UpperBody/Env/Value").GetComponent<Text>();
+            Text gold = innerModal.Find("DataArea/UpperBody/Gold/Value").GetComponent<Text>();
+
+            Card card = buildingObject.data.card;
+            hp.text = card.hitPoint.ToString();
+            header.text = card.name;
+            limitCount.text = "한도 " + card.placementLimit.ToString();
+
+            tier.text = card.rarity + " 등급";
+            food.text = card.product.food.ToString();
+            gold.text = card.product.gold.ToString();
+            env.text = card.product.environment.ToString();
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
+        }
+        else {
+            unitGenDetailModal.SetActive(true);
+            Transform innerModal = unitGenDetailModal.transform.GetChild(0);
+
+            Text tier = innerModal.Find("Upper/DataArea/Header/TierName").GetComponent<Text>();
+            Text header = innerModal.Find("Header/Text").GetComponent<Text>();
+
+            Text unitName = innerModal.Find("DataArea/UpperBody/Text").GetComponent<Text>();
+            Text needResources = innerModal.Find("DataArea/UpperBody/NeedResource").GetComponent<Text>();
+            Text unitSpec = innerModal.Find("DataArea/BottomBody/UnitSpec").GetComponent<Text>();
+
+            Card card = buildingObject.data.card;
+            DataModules.Unit unit = card.unit;
+
+            tier.text = unit.tierNeed + " 등급";
+            header.text = card.name;
+
+            unitName.text = "유닛생산 " + unit.name;
+            Debug.Log(tier.text);
+            needResources.text = "식량 : " + unit.cost.food + "\n"
+                + "골드 : " + unit.cost.gold + "\n"
+                + "환경 : " + unit.cost.environment + "\n";
+
+            unitSpec.text = "체력 : " + unit.hitPoint + "\n"
+                + "공격력 : " + unit.power + "\n"
+                + "공격 속도 : " + unit.attackSpeed + "\n"
+                + "공격 범위 : " + unit.attackRange + "\n"
+                + "이동 속도 : " + unit.moveSpeed + "\n"
+                + "요구 레벨 : " + unit.tierNeed;
+
+            Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
+        }
+        Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);
     }
 
 
