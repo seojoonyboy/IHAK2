@@ -251,7 +251,7 @@ public partial class PlayerController : MonoBehaviour {
 
     public bool isEnoughResources(DataModules.Cost cost) {
         if (Gold < cost.gold) return false;
-        if (Env < cost.environment) return false;
+        //if (Env < cost.environment) return false;
         if (Food < cost.food) return false;
         return true;
     }
@@ -341,27 +341,22 @@ public partial class PlayerController {
         int hq_lv_index = hqLevel - 1;
 
         if (icm.upgradeInfos[hq_lv_index].upgradeCost.food < Food &&
-                icm.upgradeInfos[hq_lv_index].upgradeCost.gold < Gold &&
-                icm.upgradeInfos[hq_lv_index].upgradeCost.env < Env) {
+                icm.upgradeInfos[hq_lv_index].upgradeCost.gold < Gold) {
             Debug.Log("2단계 업글");
             hqLevel++;
 
             if(hq_lv_index == 0) {
                 icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold;
                 icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food;
-                icm.productResources.env.environment += icm.upgradeInfos[hq_lv_index].product.env;
             }
             else {
                 icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold - icm.upgradeInfos[hq_lv_index - 1].product.gold;
                 icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food - icm.upgradeInfos[hq_lv_index - 1].product.food;
-                icm.productResources.env.environment += icm.upgradeInfos[hq_lv_index].product.env - icm.upgradeInfos[hq_lv_index - 1].product.env;
             }
 
             Food -= icm.upgradeInfos[hq_lv_index].upgradeCost.food;
             Gold -= icm.upgradeInfos[hq_lv_index].upgradeCost.gold;
-            Env -= icm.upgradeInfos[hq_lv_index].upgradeCost.env;
 
-            resourceClass.turn--;
             icm.DecideUnActiveBuilding();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
