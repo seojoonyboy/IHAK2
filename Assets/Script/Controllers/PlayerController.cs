@@ -266,18 +266,18 @@ public partial class PlayerController : MonoBehaviour {
                 StartCoroutine(efct5);
             }
         }
-        if (Env > -1100) {
+        else if (Env > -1100) {
             if (envEfctOn) {
                 envEfctOn = !envEfctOn;
                 StopCoroutine(efct3);
                 StopCoroutine(efct5);
             }
         }
-        if (Env < 400)
+        else if (Env < 400)
             envBonusProduce = 1.0f;
-        if (Env >= 400)
+        else if (Env >= 400)
             envBonusProduce = 1.1f;
-        if (Env >= 700 && Env < 1100) {
+        else if (Env >= 700 && Env < 1100) {
             envBonusProduce = 1.25f;
             if (envEfctOn) {
                 envEfctOn = !envEfctOn;
@@ -285,7 +285,7 @@ public partial class PlayerController : MonoBehaviour {
                 StopCoroutine(efct5);
             }
         }
-        if (Env >= 1100) {
+        else if (Env >= 1100) {
             if (!envEfctOn) {
                 envEfctOn = !envEfctOn;
                 efct3 = Efct3Second(true);
