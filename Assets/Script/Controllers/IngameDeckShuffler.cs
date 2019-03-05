@@ -74,10 +74,16 @@ public class IngameDeckShuffler : MonoBehaviour {
         int index = card.GetComponent<Index>().Id;
         Deck.Add(index);
 
-        RefillCard(index);
+        RefillCard();
     }
 
     public void InitCard() {
+        foreach(GameObject card in origin) {
+            Destroy(card);
+        }
+        origin.Clear();
+
+
         int index = 0;
         foreach (ActiveCard unitCard in tileGroup.units) {
             Unit unit = unitCard.unit;
@@ -144,12 +150,18 @@ public class IngameDeckShuffler : MonoBehaviour {
         for (int i = 0; i < rndNums.Length; i++) {
             Hand.Add(rndNums[i]);
             origin[rndNums[i]].SetActive(true);
+            origin[rndNums[i]].transform.SetAsLastSibling();
+            pool.Remove(rndNums[i]);
+        }
+
+        for(int i=0; i<pool.Count; i++) {
+            Deck.Add(pool[i]);
         }
     }
 
-    public void RefillCard(int id) {
+    public void RefillCard() {
         if (Hand.Count == HAND_MAX_COUNT) return;
-        if (Deck.Count == 0) Deck.Add(id);
+        if (Deck.Count == 0) return;
         var choiceIndex = rand.Next(Deck.Count);
         var choice = Deck[choiceIndex];
 
@@ -169,9 +181,10 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (match == null) return;
 
         match.SetActive(false);
+        Deck.Add(id);
         Hand.Remove(id);
 
-        RefillCard(id);
+        RefillCard();
 
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
         ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
@@ -205,35 +218,26 @@ public class IngameDeckShuffler : MonoBehaviour {
     //(핸드)카드 교체 기능
     //쿨타임 30초
     public void HandReset() {
-        //쿨타임이면 return 
-        //IngameHandChangeCoolTime prevComp = playerController.gameObject.GetComponent<IngameHandChangeCoolTime>();
-        //if (prevComp != null) return;
+        //쿨타임이면 return
+        IngameHandChangeCoolTime prevComp = playerController.gameObject.GetComponent<IngameHandChangeCoolTime>();
+        if (prevComp != null) return;
 
-        //List<GameObject> tmp = new List<GameObject>();
-        //foreach(GameObject item in Hand) {
-        //    tmp.Add(item);
-        //}
-        //Hand.Clear();
-        //for(int i = 0; i < 5; i++) {
-        //    RefillCard();
-        //}
+        foreach (int index in Hand) {
+            Deck.Add(index);
+            origin[index].SetActive(false);
+        }
+        Hand.Clear();
 
-        //int count = Hand.Count;
-        //if(count < 5) {
-        //    Deck.AddRange(tmp);
-        //    for(int i = 0; i < 5 - count; i++) {
-        //        RefillCard();
-        //    }
-        //}
+        playerController.resourceClass.turn--;
+        playerController.PrintResource();
 
-        //playerController.resourceClass.turn--;
-        //playerController.PrintResource();
+        IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
+        coolComp.coolTime = 30;
+        coolComp.Btn = refreshCardBtn;
+        coolComp.StartCool();
 
-        //IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
-        //coolComp.coolTime = 30;
-        //coolComp.Btn = refreshCardBtn;
-        //coolComp.StartCool();
-
-        //MakeCardPrefab();
+        for (int i = 0; i < HAND_MAX_COUNT; i++) {
+            RefillCard();
+        }
     }
 }
