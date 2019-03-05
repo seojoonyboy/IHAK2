@@ -60,7 +60,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - UISlider")]
     public Slider[] sliders;
-
+    public GameObject radialfillGauge;
 
     [Header(" - UserData")]
     private int speciesId = 0;

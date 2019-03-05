@@ -20,21 +20,31 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public Vector3 clickLocation;
     [SerializeField]
     public bool move = false;
+    [SerializeField]
+    public DeckSettingController deckSettingController;
+    [SerializeField]
+    public GameObject fillGauge;
     // Update is called once pe r frame
+
+    private void Start() {
+        deckSettingController = DeckSettingController.Instance;
+        fillGauge = deckSettingController.radialfillGauge;
+    }
 
     private void Update() {
         
         if (pointerDown && pointerInside) {
-            /*
-            if (pointerDownTimer <= requiredHoldTime)
-                
-                */ 
 
-            if (clickLocation != Input.mousePosition)
+            if (clickLocation != Input.mousePosition) {
                 move = true;
+                fillGauge.SetActive(false);
+            }
+       
 
-            if(move == false)
+            if (move == false) {
                 pointerDownTimer += Time.deltaTime;
+                fillGauge.GetComponent<Image>().fillAmount = pointerDownTimer / requiredHoldTime;
+            }
 
             if (pointerDownTimer <= requiredHoldTime && onShortClick != null) {
                 onShortClick.Invoke();
@@ -42,6 +52,7 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
             if (move == false && pointerDownTimer >= requiredHoldTime && onLongClick != null) {
                 onLongClick.Invoke();
+                fillGauge.SetActive(false);
             }
         } 
     }
@@ -50,6 +61,8 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerDown(PointerEventData eventData) {
         pointerDown = true;
         clickLocation = Input.mousePosition;
+        fillGauge.SetActive(true);
+        fillGauge.transform.position = clickLocation;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData) {
@@ -75,5 +88,7 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         pointerDownTimer = 0;
         clickLocation = Vector3.zero;
         move = false;
+        fillGauge.SetActive(false);
+        fillGauge.GetComponent<Image>().fillAmount = 0f;
     }
 }
