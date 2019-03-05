@@ -918,6 +918,12 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
+    public void DamagePlayerCity(int damage) {
+        for (int i = 0; i < demoTileIndex.Length; i++) {
+            TakeDamage(Target.ME, demoTileIndex[i], damage);
+        }
+    }
+
     public int CityDestroyBuildingCount() {
         int count = 0;
         BuildingInfo myBuilding;
