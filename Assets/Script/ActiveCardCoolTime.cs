@@ -4,18 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ActiveCardCoolTime : CoolTime {
-    public List<GameObject> 
-        Hand,
-        Deck;
+    public List<GameObject> cards;
 
     public GameObject card;
     public override void Work() {
-        card = Hand.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
+        card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
 
         if (card == null) {
-            Deck.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
+            cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
 
-            if(Deck == null) {
+            if(cards == null) {
                 Destroy(GetComponent<ActiveCardCoolTime>());
                 return;
             }
