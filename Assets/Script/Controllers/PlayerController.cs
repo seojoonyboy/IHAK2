@@ -104,9 +104,9 @@ public partial class PlayerController : MonoBehaviour {
         commandButtons.GetChild(3).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
 
 
-        icm.productResources.gold.gold += icm.hq_tier_1.product.gold;
-        icm.productResources.food.food += icm.hq_tier_1.product.food;
-        icm.productResources.env.environment += icm.hq_tier_1.product.env;
+        icm.productResources.gold.gold += icm.upgradeInfos[0].product.gold;
+        icm.productResources.food.food += icm.upgradeInfos[0].product.food;
+        icm.productResources.env.environment += icm.upgradeInfos[0].product.env;
 
         coinAni.GetSkeletonData(false);
         SetPlayerConsumeResource();
@@ -230,8 +230,8 @@ public partial class PlayerController : MonoBehaviour {
         turnValue.text = resourceClass.turn.ToString();
         envValue.fillAmount = resourceClass.environment / 300.0f;
 
-        Text envText = envValue.transform.parent.GetChild(2).GetComponent<Text>();
-        envText.text = resourceClass.environment.ToString();
+        //Text envText = envValue.transform.parent.GetChild(2).GetComponent<Text>();
+        //envText.text = resourceClass.environment.ToString();
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
@@ -248,92 +248,39 @@ public partial class PlayerController : MonoBehaviour {
 public partial class PlayerController {
     private bool isUpgradeModalActivated = false;
 
-    public void OpenHqUpgrageInfo(bool open) {
-        if (hqLevel < 3)
-            hqUpgradeWnd.SetActive(open);
-        if (open) {
-            hqUpgradeWnd.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = "Lv." + hqLevel.ToString() + " 업그레이드";
-            if (hqLevel == 1) {
-                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.gold.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.food - icm.hq_tier_1.product.food).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.food.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.product.env - icm.hq_tier_1.product.env).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.product.env.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_2.hp - icm.hq_tier_1.hp).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_1.hp.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(0).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.gold.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.food.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Text>().text = icm.hq_tier_2.upgradeCost.env.ToString();
-            }
-            if (hqLevel == 2) {
-                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.gold.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.food - icm.hq_tier_2.product.food).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(4).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.food.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.product.env - icm.hq_tier_2.product.env).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(5).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.product.env.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Text>().text = "+" + (icm.hq_tier_3.hp - icm.hq_tier_2.hp).ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(6).GetChild(1).GetComponent<Text>().text = "+" + icm.hq_tier_2.hp.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(0).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.gold.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(1).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.food.ToString();
-                hqUpgradeWnd.transform.GetChild(0).GetChild(7).GetChild(2).GetChild(0).GetComponent<Text>().text = icm.hq_tier_3.upgradeCost.env.ToString();
-            }
-        }
-    }
-
     public void HqUpgrade() {
-        if (hqLevel == 1) {
-            if (icm.hq_tier_2.upgradeCost.food < Food &&
-                icm.hq_tier_2.upgradeCost.gold < Gold &&
-                icm.hq_tier_2.upgradeCost.env < Env) {
-                Debug.Log("2단계 업글");
-                hqLevel++;
+        int hq_lv_index = hqLevel - 1;
 
-                icm.productResources.gold.gold += icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
-                icm.productResources.food.food += icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
-                icm.productResources.env.environment += icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+        if (icm.upgradeInfos[hq_lv_index].upgradeCost.food < Food &&
+                icm.upgradeInfos[hq_lv_index].upgradeCost.gold < Gold &&
+                icm.upgradeInfos[hq_lv_index].upgradeCost.env < Env) {
+            Debug.Log("2단계 업글");
+            hqLevel++;
 
-                Food -= icm.hq_tier_2.upgradeCost.food;
-                Gold -= icm.hq_tier_2.upgradeCost.gold;
-                Env -= icm.hq_tier_2.upgradeCost.env;
-                
-                resourceClass.turn--;
-                OpenHqUpgrageInfo(false);
-                icm.DecideUnActiveBuilding();
-                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
+            if(hq_lv_index == 0) {
+                icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold;
+                icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food;
+                icm.productResources.env.environment += icm.upgradeInfos[hq_lv_index].product.env;
             }
             else {
-                if (!warningOn)
-                    StartCoroutine(HqUpgradeWarning());
+                icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold - icm.upgradeInfos[hq_lv_index - 1].product.gold;
+                icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food - icm.upgradeInfos[hq_lv_index - 1].product.food;
+                icm.productResources.env.environment += icm.upgradeInfos[hq_lv_index].product.env - icm.upgradeInfos[hq_lv_index - 1].product.env;
             }
-        }
-        else if (hqLevel == 2) {
-            if (icm.hq_tier_3.upgradeCost.food < Food &&
-                icm.hq_tier_3.upgradeCost.gold < Gold &&
-                icm.hq_tier_3.upgradeCost.env < Env) {
-                Debug.Log("3단계 업글");
-                hqLevel++;
 
-                icm.productResources.gold.gold += icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
-                icm.productResources.food.food += icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
-                icm.productResources.env.environment += icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+            Food -= icm.upgradeInfos[hq_lv_index].upgradeCost.food;
+            Gold -= icm.upgradeInfos[hq_lv_index].upgradeCost.gold;
+            Env -= icm.upgradeInfos[hq_lv_index].upgradeCost.env;
 
-                Food -= icm.hq_tier_3.upgradeCost.food;
-                Gold -= icm.hq_tier_3.upgradeCost.gold;
-                Env -= icm.hq_tier_3.upgradeCost.env;
-                
-                resourceClass.turn--;
-                //commandButtons.parent.GetChild(2).GetComponent<Image>().enabled = false;
-                //commandButtons.parent.GetChild(2).GetChild(1).gameObject.SetActive(false);
-                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
-                hqUpgradeWnd.SetActive(false);
-            }
-            else {
-                if (!warningOn)
-                    StartCoroutine(HqUpgradeWarning());
-            }
+            resourceClass.turn--;
+            icm.DecideUnActiveBuilding();
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
+        else {
+            if (!warningOn)
+                StartCoroutine(HqUpgradeWarning());
+        }
+
         if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
             icm.CancleUnActiveBuilding();
         if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
