@@ -3575,9 +3575,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentView: 0
-  hq_tier_1: {fileID: 11400000, guid: 1e7ea0a2f4e53744fa935f8e5708e138, type: 2}
-  hq_tier_2: {fileID: 11400000, guid: 0d44c1c600de9834789bd44a69066fd8, type: 2}
-  hq_tier_3: {fileID: 11400000, guid: aa84a1710db493647adbe47a2d138129, type: 2}
+  upgradeInfos:
+  - {fileID: 11400000, guid: 1e7ea0a2f4e53744fa935f8e5708e138, type: 2}
+  - {fileID: 11400000, guid: 0d44c1c600de9834789bd44a69066fd8, type: 2}
+  - {fileID: 11400000, guid: aa84a1710db493647adbe47a2d138129, type: 2}
+  - {fileID: 11400000, guid: 0496afdd28a4af74eb912818060ab0f7, type: 2}
   hpValueBar: {fileID: 1784039172}
   hpValue: {fileID: 993183136}
   enemyTotalHPGauge: {fileID: 1211720891}
@@ -3781,8 +3783,9 @@ MonoBehaviour:
     type: 2}
   cardParent: {fileID: 1589755684}
   refreshCardBtn: {fileID: 834451397}
-  Deck: []
-  Hand: []
+  origin: []
+  Deck: 
+  Hand: 
 --- !u!1 &396523339
 GameObject:
   m_ObjectHideFlags: 0

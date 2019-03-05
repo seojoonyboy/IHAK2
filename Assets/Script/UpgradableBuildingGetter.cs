@@ -18,7 +18,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     [SerializeField] GameObject upgradeModal_content_item_pref;
     List<GameObject> buildingInfos;
 
-    private const int MAX_LV = 3;
+    private const int MAX_LV = 4;
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
@@ -103,17 +103,18 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             //Lv.text = "Lv " + lv;
             Resource costs = new Resource();
+
+            int hq_info_index = playerController.hqLevel;
+            if (hq_info_index == MAX_LV) {
+                hq_info_index -= 1;
+            }
+            DataModules.Resources hq_upCosts = icm.upgradeInfos[hq_info_index].upgradeCost;
+            DataModules.Resources next_product_power = icm.upgradeInfos[hq_info_index].product;
+
             if (card.id == "primal_town_center") {
-                if(playerController.hqLevel == 1) {
-                    costs.food = icm.hq_tier_2.upgradeCost.food;
-                    costs.gold = icm.hq_tier_2.upgradeCost.gold;
-                    costs.environment = icm.hq_tier_2.upgradeCost.env;
-                }
-                else if(playerController.hqLevel == 2) {
-                    costs.food = icm.hq_tier_3.upgradeCost.food;
-                    costs.gold = icm.hq_tier_3.upgradeCost.gold;
-                    costs.environment = icm.hq_tier_3.upgradeCost.env;
-                }
+                costs.food = icm.upgradeInfos[hq_info_index].upgradeCost.food;
+                costs.gold = icm.upgradeInfos[hq_info_index].upgradeCost.gold;
+                costs.environment = icm.upgradeInfos[hq_info_index].upgradeCost.env;
             }
             else {
                 costs = CalcCost(lv, card.rarity);
@@ -162,15 +163,18 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             int goldIncreaseAmount = 0;
             int envIncreaseAmount = 0;
             if (card.id == "primal_town_center") {
-                if(playerController.hqLevel == 1) {
-                    foodIncreaseAmount = icm.hq_tier_2.product.food - icm.hq_tier_1.product.food;
-                    goldIncreaseAmount = icm.hq_tier_2.product.gold - icm.hq_tier_1.product.gold;
-                    envIncreaseAmount = icm.hq_tier_2.product.env - icm.hq_tier_1.product.env;
+                if(hq_info_index == 0) {
+                    foodIncreaseAmount = next_product_power.food;
+                    goldIncreaseAmount = next_product_power.gold;
+                    envIncreaseAmount = next_product_power.env;
                 }
-                else if(playerController.hqLevel == 2) {
-                    foodIncreaseAmount = icm.hq_tier_3.product.food - icm.hq_tier_2.product.food;
-                    goldIncreaseAmount = icm.hq_tier_3.product.gold - icm.hq_tier_2.product.gold;
-                    envIncreaseAmount = icm.hq_tier_3.product.env - icm.hq_tier_2.product.env;
+                else {
+                    DataModules.Resources prev_upCosts = icm.upgradeInfos[hq_info_index - 1].upgradeCost;
+                    DataModules.Resources prev_product_power = icm.upgradeInfos[hq_info_index - 1].product;
+
+                    foodIncreaseAmount = next_product_power.food - prev_product_power.food;
+                    goldIncreaseAmount = next_product_power.gold - prev_product_power.gold;
+                    envIncreaseAmount = next_product_power.env - prev_product_power.env;
                 }
             }
             else {
@@ -199,9 +203,6 @@ public class UpgradableBuildingGetter : MonoBehaviour {
             
             ingameUpgradeCard.newHp = newHp;
         }
-
-        //unavailableItems = unavailableItems.OrderBy(x => x.GetComponent<IngameUpgradeCard>().cost.gold).ToList();
-
         unavailableItems = Filter(unavailableItems);
 
         foreach (GameObject building in unavailableItems) {
@@ -244,29 +245,6 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     public void CloseModal() {
         upgradeModal.SetActive(false);
     }
-    //public List<GameObject> GetUpgradableBuildingList() {
-    //    //HQ의 LV 이하까지 업그레이드 가능
-    //    List<GameObject> list = new List<GameObject>();
-    //    foreach (IngameCityManager.BuildingInfo info in icm.myBuildingsInfo) {
-    //        list.Add(info.gameObject);
-    //    }
-    //    //List<GameObject> exceptList = list.FindAll(x => x.GetComponent<BuildingObject>().data.card.rareity > playerController.hqLevel);
-    //    //list.Except(exceptList, new MyEqualityComparere());
-    //    list.RemoveAll(x => x.GetComponent<BuildingObject>().data.card.rareity > playerController.hqLevel);
-
-    //    foreach (GameObject building in list.ToList()) {
-    //        BuildingObject buildingObject = building.GetComponent<BuildingObject>();
-
-    //        int lv = buildingObject.data.card.lv;
-    //        int rarerity = buildingObject.data.card.rareity;
-
-    //        Resource resource = CalcCost(lv, rarerity);
-    //        if (!isEnoughResource(resource)) {
-    //            list.Remove(building);
-    //        }
-    //    }
-    //    return list;
-    //}
 
     public Resource CalcCost(int lv, int rarerity) {
         Resource resources = new Resource();
@@ -291,7 +269,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
     public bool CanUpgrade(BuildingObject building, Resource resource) {
         if (building.data.card.lv >= playerController.hqLevel) return false;
-        if (building.data.card.lv >= 3) return false;
+        if (building.data.card.lv >= MAX_LV) return false;
         if (building.data.card.id == "primal_town_center" && playerController.hqLevel == MAX_LV) return false;
         return isEnoughResource(resource);
     }

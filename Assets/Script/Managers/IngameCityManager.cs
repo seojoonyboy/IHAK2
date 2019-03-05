@@ -33,10 +33,7 @@ public class IngameCityManager : MonoBehaviour {
     public int CurrentView;
     public ArrayList eachPlayersTileGroups = new ArrayList();
 
-    public UpgradeInfo
-        hq_tier_1,
-        hq_tier_2,
-        hq_tier_3;
+    public List<UpgradeInfo> upgradeInfos = new List<UpgradeInfo>();
 
     [Header(" - TotalHPUI")]
     [SerializeField] private Image hpValueBar;
