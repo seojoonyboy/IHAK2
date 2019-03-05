@@ -60,7 +60,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - UISlider")]
     public Slider[] sliders;
-
+    public GameObject radialfillGauge;
 
     [Header(" - UserData")]
     private int speciesId = 0;
@@ -968,6 +968,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
             prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
             prodDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => prodDetailModal.SetActive(false));
         }
@@ -1003,6 +1004,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
             unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => DeleteBuilding(saveSelectBuilding));
             unitGenDetailModal.transform.GetChild(0).GetChild(4).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => unitGenDetailModal.SetActive(false));
         }

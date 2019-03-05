@@ -285,7 +285,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114447343365011374}
-        m_MethodName: BeginDrag
+        m_MethodName: showStatus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -315,9 +315,24 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onShortClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114447343365011374}
+        m_MethodName: BeginDrag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  clickLocation: {x: 0, y: 0, z: 0}
+  move: 0
+  deckSettingController: {fileID: 0}
+  fillGauge: {fileID: 0}
 --- !u!114 &114447343365011374
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -15,23 +15,54 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public UnityEvent onLongClick;
     public UnityEvent onPointerUp;
     public UnityEvent onShortClick;
+
+    [SerializeField]
+    public Vector3 clickLocation;
+    [SerializeField]
+    public bool move = false;
+    [SerializeField]
+    public DeckSettingController deckSettingController;
+    [SerializeField]
+    public GameObject fillGauge;
     // Update is called once pe r frame
 
-    private void Update() {
-        if (pointerDown && pointerInside) {
-            if (pointerDownTimer <= requiredHoldTime)
-                pointerDownTimer += Time.deltaTime;
+    private void Start() {
+        deckSettingController = DeckSettingController.Instance;
+        fillGauge = deckSettingController.radialfillGauge;
+    }
 
-            if (pointerDownTimer >= requiredHoldTime && onLongClick != null) {
-                onLongClick.Invoke();
-                transform.position = Input.mousePosition;
+    private void Update() {
+        
+        if (pointerDown && pointerInside) {
+
+            if (clickLocation != Input.mousePosition) {
+                move = true;
+                fillGauge.SetActive(false);
             }
-        }
+       
+
+            if (move == false) {
+                pointerDownTimer += Time.deltaTime;
+                fillGauge.GetComponent<Image>().fillAmount = pointerDownTimer / requiredHoldTime;
+            }
+
+            if (pointerDownTimer <= requiredHoldTime && onShortClick != null) {
+                onShortClick.Invoke();
+            }
+
+            if (move == false && pointerDownTimer >= requiredHoldTime && onLongClick != null) {
+                onLongClick.Invoke();
+                fillGauge.SetActive(false);
+            }
+        } 
     }
 
 
     public void OnPointerDown(PointerEventData eventData) {
         pointerDown = true;
+        clickLocation = Input.mousePosition;
+        fillGauge.SetActive(true);
+        fillGauge.transform.position = clickLocation;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData) {
@@ -44,9 +75,10 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        if(pointerDownTimer < requiredHoldTime && onShortClick != null) {
-            onShortClick.Invoke();
-        }
+        /*
+        if(pointerDownTimer >= requiredHoldTime && onLongClick != null) {
+            onLongClick.Invoke();
+        }*/
         onPointerUp.Invoke();
         Reset();
     }
@@ -54,5 +86,9 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Reset() {
         pointerDown = false;
         pointerDownTimer = 0;
+        clickLocation = Vector3.zero;
+        move = false;
+        fillGauge.SetActive(false);
+        fillGauge.GetComponent<Image>().fillAmount = 0f;
     }
 }
