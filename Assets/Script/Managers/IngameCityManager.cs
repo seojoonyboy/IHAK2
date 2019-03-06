@@ -131,24 +131,22 @@ public class IngameCityManager : MonoBehaviour {
 
         //myBuildingsInfo.Clear();
         List<BuildingInfo> tmp = new List<BuildingInfo>();
-        int key_index = 0;
-        int value_index = 0;
+        int count = 0;
         foreach (var group in queryGroups) {
             List<BuildingInfo> list = group.ToList();
             list = list.OrderBy(x => x.cardInfo.prodType).ToList();
+            string prev_sub_key = null;
+            if(group.Key != "prod") myBuildingsInfo_Keys.Add(group.Key, count);
             foreach (BuildingInfo info in list) {
+                if(group.Key == "prod" && prev_sub_key != info.cardInfo.prodType) {
+                    myBuildingsInfo_Keys.Add(group.Key + "-" + info.cardInfo.prodType, count);
+                    prev_sub_key = info.cardInfo.prodType;
+                }
                 tmp.Add(info);
-                value_index++;
+                count++;
             }
-            if (key_index == 0) myBuildingsInfo_Keys.Add(group.Key, 0);
-            else myBuildingsInfo_Keys.Add(group.Key, value_index);
-            key_index++;
         }
         myBuildingsInfo = tmp;
-
-        foreach(BuildingInfo info in myBuildingsInfo) {
-            Debug.Log(info.cardInfo.type + ", " + info.cardInfo.prodType);
-        }
 
         IEnumerable <GameObject> gameObjects =
             from x in myBuildingsInfo
