@@ -5757,7 +5757,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 509295130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1517911908}
+        m_MethodName: OnAddBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &509295130
@@ -10569,7 +10580,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 917597829}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1176340569}
+        m_MethodName: OnAddBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &917597829
@@ -12802,6 +12824,8 @@ MonoBehaviour:
   slider: {fileID: 847609925}
   decreaseBtn: {fileID: 1057623578}
   increaseBtn: {fileID: 917597828}
+  ingameCityManager: {fileID: 364303840}
+  playerController: {fileID: 807158603}
 --- !u!114 &1176340570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14032,7 +14056,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1229729076}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1856559268}
+        m_MethodName: OnAddBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1229729076
@@ -17417,6 +17452,8 @@ MonoBehaviour:
   slider: {fileID: 1207272631}
   decreaseBtn: {fileID: 1203904153}
   increaseBtn: {fileID: 509295129}
+  ingameCityManager: {fileID: 364303840}
+  playerController: {fileID: 807158603}
 --- !u!114 &1517911909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19016,9 +19053,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: {fileID: 1812503981}
-  slider: {fileID: 1112009848}
+  slider: {fileID: 1183758330}
   decreaseBtn: {fileID: 1498900575}
   increaseBtn: {fileID: 1680278598}
+  ingameCityManager: {fileID: 364303840}
+  playerController: {fileID: 807158603}
 --- !u!114 &1637860203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19791,7 +19830,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1680278599}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1637860202}
+        m_MethodName: OnAddBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1680278599
@@ -22335,9 +22385,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: {fileID: 707548489}
-  slider: {fileID: 1269045804}
+  slider: {fileID: 613949244}
   decreaseBtn: {fileID: 628422411}
   increaseBtn: {fileID: 1229729075}
+  ingameCityManager: {fileID: 364303840}
+  playerController: {fileID: 807158603}
 --- !u!114 &1856559269
 MonoBehaviour:
   m_ObjectHideFlags: 0

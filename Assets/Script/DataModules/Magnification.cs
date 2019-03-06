@@ -3,6 +3,7 @@ namespace DataModules{
     public class Magnification {
         public string key;
         public float current_mag = 1.0f;
+        public int current_point = 0;
         public float mag;
         public float max_mag;
         public int max_point;

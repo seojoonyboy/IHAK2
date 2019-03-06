@@ -78,8 +78,9 @@ public partial class PlayerController : MonoBehaviour {
     public int Point {
         get { return point; }
         set {
-            point -= value;
-            Debug.Log("포인트 소모");
+            point = value;
+            point_val.text = point.ToString();
+            Debug.Log("포인트 " + point);
         }
     }
     [Header(" - Player")]
