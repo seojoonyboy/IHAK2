@@ -9,6 +9,7 @@ using Spine.Unity;
 using TMPro;
 
 public class IngameCityManager : MonoBehaviour {
+
     [System.Serializable]
     public class BuildingInfo {
         public int tileNum;
@@ -61,6 +62,7 @@ public class IngameCityManager : MonoBehaviour {
     [SerializeField] private Deck deck;
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
+    public Dictionary<string, int> myBuildingsInfo_Keys = new Dictionary<string, int>();
 
     [Space(10)]
     [Header(" - PlayerDeck")]
@@ -121,7 +123,32 @@ public class IngameCityManager : MonoBehaviour {
             myBuildingsInfo.Add(bi);
         }
 
-        IEnumerable<GameObject> gameObjects =
+        var queryGroups =
+            from bulding in myBuildingsInfo
+            group bulding by bulding.cardInfo.type into newGroup
+            orderby newGroup.Key
+            select newGroup;
+
+        //myBuildingsInfo.Clear();
+        List<BuildingInfo> tmp = new List<BuildingInfo>();
+        int count = 0;
+        foreach (var group in queryGroups) {
+            List<BuildingInfo> list = group.ToList();
+            list = list.OrderBy(x => x.cardInfo.prodType).ToList();
+            string prev_sub_key = null;
+            if(group.Key != "prod") myBuildingsInfo_Keys.Add(group.Key, count);
+            foreach (BuildingInfo info in list) {
+                if(group.Key == "prod" && prev_sub_key != info.cardInfo.prodType) {
+                    myBuildingsInfo_Keys.Add(group.Key + "-" + info.cardInfo.prodType, count);
+                    prev_sub_key = info.cardInfo.prodType;
+                }
+                tmp.Add(info);
+                count++;
+            }
+        }
+        myBuildingsInfo = tmp;
+
+        IEnumerable <GameObject> gameObjects =
             from x in myBuildingsInfo
             select x.gameObject;
 
@@ -168,35 +195,6 @@ public class IngameCityManager : MonoBehaviour {
             cityHP -= 100;
             hpValue.text = cityHP.ToString();
             hpValueBar.fillAmount = cityHP / cityMaxHP;
-        }
-    }
-
-    private void InitProduction() {
-        PlayerController pc = FindObjectOfType<PlayerController>();
-        foreach (BuildingInfo bi in myBuildingsInfo) {
-            if (bi.cardInfo == null)
-                continue;
-            if (bi.cardInfo.type == "prod" && bi.activate) {
-                switch (bi.cardInfo.prodType) {
-                    case "gold":
-                        pc.pInfo.clickGold[0] += bi.cardInfo.product.gold;
-                        pc.pInfo.clickGold[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickGold[2] += bi.cardInfo.product.environment;
-                        break;
-                    case "food":
-                        pc.pInfo.clickFood[0] += bi.cardInfo.product.gold;
-                        pc.pInfo.clickFood[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickFood[2] += bi.cardInfo.product.environment;
-                        break;
-                    case "env":
-                        pc.pInfo.clickEnvironment[0] += bi.cardInfo.product.gold;
-                        pc.pInfo.clickEnvironment[1] += bi.cardInfo.product.food;
-                        pc.pInfo.clickEnvironment[2] += bi.cardInfo.product.environment;
-                        break;
-                    case "all":
-                        break;
-                }
-            }
         }
     }
 
