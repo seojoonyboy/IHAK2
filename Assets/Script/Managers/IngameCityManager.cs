@@ -139,7 +139,7 @@ public class IngameCityManager : MonoBehaviour {
             if(group.Key != "prod") myBuildingsInfo_Keys.Add(group.Key, count);
             foreach (BuildingInfo info in list) {
                 if(group.Key == "prod" && prev_sub_key != info.cardInfo.prodType) {
-                    myBuildingsInfo_Keys.Add(group.Key + "-" + info.cardInfo.prodType, count);
+                    myBuildingsInfo_Keys.Add(info.cardInfo.prodType, count);
                     prev_sub_key = info.cardInfo.prodType;
                 }
                 tmp.Add(info);
@@ -148,14 +148,10 @@ public class IngameCityManager : MonoBehaviour {
         }
         myBuildingsInfo = tmp;
 
-        foreach(var key in myBuildingsInfo_Keys) {
-            if(key.Key == "military") {
-                myBuildings_mags.Add(new Magnification(key.Key, 0.075f, 1.75f, 10));
-            }
-            else {
-                myBuildings_mags.Add(new Magnification(key.Key, 0.1f, 2.0f, 10));
-            }
-        }
+        myBuildings_mags.Add(new Magnification("military", 0.075f, 1.75f, 10));
+        myBuildings_mags.Add(new Magnification("food", 0.1f, 2.0f, 10));
+        myBuildings_mags.Add(new Magnification("gold", 0.1f, 2.0f, 10));
+        myBuildings_mags.Add(new Magnification("env", 0.1f, 2.0f, 10));
 
         IEnumerable <GameObject> gameObjects =
             from x in myBuildingsInfo
