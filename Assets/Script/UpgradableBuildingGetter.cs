@@ -141,16 +141,12 @@ public class UpgradableBuildingGetter : MonoBehaviour {
                 Modal.Type.YESNO, 
                 () => {
                     if(card.id == "primal_town_center") {
-                        if (playerController.resourceClass.turn <= 0) return;
                         GetComponent<PlayerController>().HqUpgrade();
                         card.lv += 1;
                         if (buildingObject.spine != null) buildingObject.GetComponent<TileSpineAnimation>().Upgrade();
                     }
                     else {
-                        if (playerController.resourceClass.turn <= 0) return;
                         playerController.Upgrade(item, costs);
-
-                        playerController.resourceClass.turn--;
                         playerController.PrintResource();
                     }
                 }
@@ -161,12 +157,10 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
             int foodIncreaseAmount = 0;
             int goldIncreaseAmount = 0;
-            int envIncreaseAmount = 0;
             if (card.id == "primal_town_center") {
                 if(hq_info_index == 0) {
                     foodIncreaseAmount = next_product_power.food;
                     goldIncreaseAmount = next_product_power.gold;
-                    envIncreaseAmount = next_product_power.env;
                 }
                 else {
                     DataModules.Resources prev_upCosts = icm.upgradeInfos[hq_info_index - 1].upgradeCost;
@@ -174,28 +168,22 @@ public class UpgradableBuildingGetter : MonoBehaviour {
 
                     foodIncreaseAmount = next_product_power.food - prev_product_power.food;
                     goldIncreaseAmount = next_product_power.gold - prev_product_power.gold;
-                    envIncreaseAmount = next_product_power.env - prev_product_power.env;
                 }
             }
             else {
                 foodIncreaseAmount = Convert.ToInt32(card.product.food * (lv / 13.0f + card.rarity / 13.0f));
                 goldIncreaseAmount = Convert.ToInt32(card.product.gold * (lv / 13.0f + card.rarity / 13.0f));
-                envIncreaseAmount = Convert.ToInt32(card.product.environment * (lv / 13.0f + card.rarity / 13.0f));
             }
             
 
             ingameUpgradeCard.newIncreasePower.food = foodIncreaseAmount;
             ingameUpgradeCard.newIncreasePower.gold = goldIncreaseAmount;
-            ingameUpgradeCard.newIncreasePower.environment = envIncreaseAmount;
 
             //Todo : 생산력 표기
             if (foodIncreaseAmount >= 0) Food.text = "+" + foodIncreaseAmount;
             else Food.text = foodIncreaseAmount.ToString();
             if (goldIncreaseAmount >= 0) Gold.text = "+" + goldIncreaseAmount;
             else Gold.text = goldIncreaseAmount.ToString();
-            if (envIncreaseAmount >= 0) Eco.text = "+" + envIncreaseAmount;
-            else Eco.text = envIncreaseAmount.ToString();
-
             int newHp = Convert.ToInt32(card.hitPoint * (1 + (lv / 10.0f) + (card.rarity / 10.0f)));
             int HpIncreaseAmount = newHp - card.hitPoint;
             if (HpIncreaseAmount > 0) Hp.text = "+" + HpIncreaseAmount;
@@ -263,7 +251,7 @@ public class UpgradableBuildingGetter : MonoBehaviour {
     public bool isEnoughResource(Resource resource) {
         if (playerController.resourceClass.food < resource.food) return false;
         if (playerController.resourceClass.gold < resource.gold) return false;
-        if (playerController.resourceClass.environment < resource.environment) return false;
+        //if (playerController.resourceClass.environment < resource.environment) return false;
         return true;
     }
 
