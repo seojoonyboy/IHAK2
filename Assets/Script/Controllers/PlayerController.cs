@@ -43,6 +43,8 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
     [SerializeField] GameObject hqUpgradeWnd;
+
+    int point;
     public IngameCityManager IngameCityManager {
         get { return icm; }
     }
@@ -69,6 +71,14 @@ public partial class PlayerController : MonoBehaviour {
             resourceClass.environment = value;
             PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+        }
+    }
+
+    public int Point {
+        get { return point; }
+        set {
+            point -= value;
+            Debug.Log("포인트 소모");
         }
     }
     [Header(" - Player")]
