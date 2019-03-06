@@ -9,7 +9,6 @@ using Spine.Unity;
 using TMPro;
 
 public class IngameCityManager : MonoBehaviour {
-
     [System.Serializable]
     public class BuildingInfo {
         public int tileNum;
@@ -63,6 +62,7 @@ public class IngameCityManager : MonoBehaviour {
     public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
     public Dictionary<string, int> myBuildingsInfo_Keys = new Dictionary<string, int>();
+    public List<Magnification> myBuildings_mags = new List<Magnification>();
 
     [Space(10)]
     [Header(" - PlayerDeck")]
@@ -147,6 +147,10 @@ public class IngameCityManager : MonoBehaviour {
             }
         }
         myBuildingsInfo = tmp;
+
+        foreach(var key in myBuildingsInfo_Keys) {
+            myBuildings_mags.Add(new Magnification(key.Key, 1.0f));
+        }
 
         IEnumerable <GameObject> gameObjects =
             from x in myBuildingsInfo
