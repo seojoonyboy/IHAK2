@@ -34,6 +34,7 @@ public partial class PlayerController : MonoBehaviour {
     [Header(" - UI")]
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
+    [SerializeField] Transform productResource;
     public PlayerResource resourceClass;
 
     [Header(" - ResourceText")]
@@ -147,6 +148,7 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(0);
+                        PrintProduct(1);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -176,6 +178,7 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(1);
+                        PrintProduct(2);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -212,6 +215,7 @@ public partial class PlayerController : MonoBehaviour {
                             //if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
                             //    icm.CancleUnActiveBuilding();
                             resourceClass.turn--;
+                            PrintProduct(3);
                         }
                     }
                 }
@@ -257,6 +261,29 @@ public partial class PlayerController : MonoBehaviour {
         envBar.localPosition = new Vector3(((float)Env / 1250.0f) * 540, 0, 0);
         Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
         envText.text = Env.ToString();
+    }
+
+    public void PrintProduct(int num) {
+        switch (num) {
+            case 1:
+                productResource.GetChild(0).GetComponent<Text>().text = "금생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.gold.gold + " + " + (int)Mathf.Round((float)icm.productResources.gold.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.gold.food+ " + " + (int)Mathf.Round((float)icm.productResources.gold.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.gold.environment + " + " + (int)Mathf.Round((float)icm.productResources.gold.environment * (envBonusProduce - 1.0f));
+                break;
+            case 2:
+                productResource.GetChild(0).GetComponent<Text>().text = "음식생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.food.gold + " + " + (int)Mathf.Round((float)icm.productResources.food.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.food.food + " + " + (int)Mathf.Round((float)icm.productResources.food.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.food.environment + " + " + (int)Mathf.Round((float)icm.productResources.food.environment * (envBonusProduce - 1.0f));
+                break;
+            case 3:
+                productResource.GetChild(0).GetComponent<Text>().text = "환경생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.env.gold + " + " + (int)Mathf.Round((float)icm.productResources.env.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.env.food + " + " + (int)Mathf.Round((float)icm.productResources.env.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.env.environment + " + " + (int)Mathf.Round((float)icm.productResources.env.environment * (envBonusProduce - 1.0f));
+                break;
+        }
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
