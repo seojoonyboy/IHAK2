@@ -21,14 +21,11 @@ public class LongClickButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField]
     public bool move = false;
     [SerializeField]
-    public DeckSettingController deckSettingController;
-    [SerializeField]
     public GameObject fillGauge;
     // Update is called once pe r frame
 
     private void Start() {
-        deckSettingController = DeckSettingController.Instance;
-        fillGauge = deckSettingController.radialfillGauge;
+        fillGauge = DeckSettingController.Instance.radialfillGauge;
     }
 
     private void Update() {

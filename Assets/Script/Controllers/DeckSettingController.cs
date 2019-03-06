@@ -69,6 +69,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [Header(" - Time")]
     public float clicktime = 0f;
     public float requireClickTime = 0.3f;
+
+    [Header(" - ResourceState")]
+    public int food;
+    public int environment;
+    public int gold;
     
     public int SpeciesId {
         get {
@@ -296,8 +301,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     public void TilebuildingList() {
         for (int i = 0; i < tileCount; i++) {
-            if (tileGroup.transform.GetChild(i).childCount != 0)
+            if (tileGroup.transform.GetChild(i).childCount != 0) {
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
+                ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card.product);
+            }
             else
                 tileSetList.Add(0);
         }
@@ -661,45 +668,56 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
 
     public void ChangeSliderValue(Cost cost) {
-        sliders[0].value += cost.environment;
-        sliders[3].value += cost.gold;
-        sliders[1].value += cost.food;
+        food += cost.food;
+        environment += cost.environment;
+        gold += cost.gold;
+
+        if (environment > 0)
+            sliders[0].value = environment;
+        else
+            sliders[0].value = 0;
+
+        if (gold > 0)
+            sliders[3].value = gold;
+        else
+            sliders[3].value = 0;
+
+        if (food > 0)
+            sliders[1].value = food;
+        else
+            sliders[1].value = 0;
     }
 
     public void MinusSliderValue(Cost cost) {
 
-        if (cost.environment > 0) {
-            if (sliders[0].value > 0)
-                sliders[0].value -= cost.environment;
-        }
-        else {
-            if (sliders[0].value > 0)
-                sliders[0].value += cost.environment;
-        }
+        environment -= cost.environment;
+        gold -= cost.gold;
+        food -= cost.food;
 
-        if (cost.gold > 0) {
-            if (sliders[3].value > 0)
-                sliders[3].value -= cost.gold;
-        }
-        else {
-            if (sliders[3].value > 0)
-                sliders[3].value += cost.gold;
-        }
+        if (environment > 0)
+            sliders[0].value = environment;
+        else
+            sliders[0].value = 0;
 
-        if (cost.food > 0) {
-            if (sliders[1].value > 0)
-                sliders[1].value -= cost.food;
-        }
-        else {
-            if (sliders[1].value > 0)
-                sliders[1].value += cost.food;
-        }
+        if (gold > 0)
+            sliders[3].value = gold;
+        else
+            sliders[3].value = 0;
+
+        if (food > 0)
+            sliders[1].value = food;
+        else
+            sliders[1].value = 0;
     }
 
     public void ResetAllSliderValues() {
         for(int i=0; i<sliders.Length; i++) {
             sliders[i].value = 0;
         }
+
+        food = 0;
+        environment = 0;
+        gold = 0;
     }
 
     public void OnSliderValueChanged(GameObject slider) {
