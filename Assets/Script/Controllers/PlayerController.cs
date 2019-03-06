@@ -312,9 +312,9 @@ public partial class PlayerController : MonoBehaviour {
         }
         if (Env < 400)
             envBonusProduce = 1.0f;
-        else if (Env >= 400)
+        if (Env >= 400)
             envBonusProduce = 1.1f;
-        else if (Env >= 700 && Env < 1100) {
+        if (Env >= 700 && Env < 1100) {
             envBonusProduce = 1.25f;
             if (envEfctOn) {
                 envEfctOn = !envEfctOn;
@@ -376,9 +376,9 @@ public partial class PlayerController {
 
     [Header(" - UpgradeModal")]
     [SerializeField] Transform innerModal;
-    [SerializeField] Transform point_val;
-    [SerializeField] Transform cost_gold_val;
-    [SerializeField] Transform cost_food_val;
+    [SerializeField] Text point_val;
+    [SerializeField] Text cost_gold_val;
+    [SerializeField] Text cost_food_val;
     [Tooltip("분야별 배율 관련 영역")]
     [SerializeField] IngameUpgradeHandler[] magnifications;
 
@@ -444,6 +444,12 @@ public partial class PlayerController {
 
         //upgrade 가능한 빌딩 order 변경
         isUpgradeModalActivated = true;
+        point_val.text = Point.ToString();
+        
+        foreach(IngameUpgradeHandler handler in magnifications) {
+            handler.Init(icm.myBuildings_mags);
+        }
+
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
     }
 
