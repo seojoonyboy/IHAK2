@@ -396,13 +396,9 @@ public partial class PlayerController {
     }
 
     private GameObject selectedObj;
-    GameObject spritePanel;
 
     public void OnUpgradeModal() {
-        spritePanel = icm.transform.GetChild(1).Find("Background/Dissolve").gameObject;
-        GameObject uiPanel = transform.Find("UIDissolve").gameObject;
-
-        spritePanel.SetActive(true);
+        GameObject uiPanel = transform.Find("UpgradeModal").gameObject;
         uiPanel.SetActive(true);
 
         //scroll 비활성화
@@ -420,7 +416,6 @@ public partial class PlayerController {
         //modal 비활성화
         //scroll 활성화
         GetComponent<UpgradableBuildingGetter>().CloseModal();
-        spritePanel.SetActive(false);
         isUpgradeModalActivated = false;
 
         var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();

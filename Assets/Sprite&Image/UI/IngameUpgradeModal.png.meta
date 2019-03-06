@@ -1,19 +1,24 @@
 fileFormatVersion: 2
-guid: ec64e909390b6b248ab6915ec153a059
+guid: fb6b75c6086a27f4ba44b52669b8a03a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: HqUpgradeModal_HqImage
-    21300002: HqUpgradeModal_ExitBtn
-    21300004: HqUpgradeModal_Window
-    21300006: HqUpgradeModal_Bar
-    21300008: HqUpgradeModal_HpIcon
-    21300010: HqUpgradeModal_FoodIcon
-    21300012: HqUpgradeModal_EnvIcon
-    21300014: HqUpgradeModal_BuilBtn
-    21300016: HqUpgradeModal_GoldBtn
-    21300018: HqUpgradeModal_EnvImg
-    21300020: HqUpgradeModal_FoodImg
-    21300022: HqUpgradeModal_GoldImg
+    21300000: Magnfication_bg
+    21300002: Food_icon
+    21300004: Point_icon
+    21300006: Env_icon
+    21300008: Military_icon
+    21300010: Gold_icon
+    21300012: MinusBtn
+    21300014: PlusBtn
+    21300016: Hp_icon
+    21300018: ProductPower_icon
+    21300020: GageBg
+    21300022: GageActivate
+    21300024: GageActivate_Arrow
+    21300026: Button
+    21300028: IngameUpgradeModal_17
+    21300030: Cost_Food
+    21300032: Cost_Gold
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -104,29 +109,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
-    buildTarget: tvOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: Windows Store Apps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -151,13 +134,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HqUpgradeModal_HqImage
+      name: Magnfication_bg
       rect:
         serializedVersion: 2
-        x: 342
-        y: 1663
-        width: 370
-        height: 365
+        x: 68
+        y: 1491
+        width: 197
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,58 +148,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c1d2486c49bbb045bb4f448e3000c42
+      spriteID: b69e593bd050aaf4b9944b6bd4757c12
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_ExitBtn
+      name: Food_icon
       rect:
         serializedVersion: 2
-        x: 808
-        y: 1621
-        width: 65
-        height: 75
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4f3f63cfd7db6c43897a91acf3d3029
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HqUpgradeModal_Window
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 538
-        width: 766
-        height: 1042
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 40, y: 57, z: 40, w: 104}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9325c497fde6c094987596c9d5b5954a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HqUpgradeModal_Bar
-      rect:
-        serializedVersion: 2
-        x: 161
-        y: 394
-        width: 701
+        x: 65
+        y: 1378
+        width: 75
         height: 74
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -225,19 +168,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4589b9fa0bdfdf943839e4489571a433
+      spriteID: f3c9238f4f5559946be1e0be06b8dc1c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_HpIcon
+      name: Point_icon
       rect:
         serializedVersion: 2
-        x: 158
-        y: 261
-        width: 76
-        height: 75
+        x: 172
+        y: 1379
+        width: 75
+        height: 74
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,17 +188,37 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 760a9774a956380479bb08f2d8812fd4
+      spriteID: 994ce8cefd289cb47bbc4b34eca02bc9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_FoodIcon
+      name: Env_icon
       rect:
         serializedVersion: 2
-        x: 270
-        y: 261
+        x: 278
+        y: 1379
+        width: 75
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e2e60dc4c5048b4a85c5b4f90b0d5a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Military_icon
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 1377
         width: 76
         height: 76
       alignment: 0
@@ -265,18 +228,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 644f8da391a950c4387939f859041bb1
+      spriteID: fe86fd8baa7bebf4a9a33f590aa9bd65
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_EnvIcon
+      name: Gold_icon
       rect:
         serializedVersion: 2
-        x: 383
-        y: 261
-        width: 75
+        x: 494
+        y: 1377
+        width: 77
         height: 76
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -285,19 +248,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a2882ab6a29d064e879f0b7965bc707
+      spriteID: 51a3d5856c142d943a49525f20df7959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_BuilBtn
+      name: MinusBtn
       rect:
         serializedVersion: 2
-        x: 488
-        y: 243
-        width: 384
-        height: 120
+        x: 65
+        y: 1247
+        width: 59
+        height: 63
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -305,19 +268,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ab83a22a3577fb4b8f7746dda311818
+      spriteID: 0bf685f9bdb1bf34cb6f6d09980fdc46
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_GoldBtn
+      name: PlusBtn
       rect:
         serializedVersion: 2
-        x: 159
-        y: 163
+        x: 180
+        y: 1247
+        width: 59
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deaba97b463322948821d548a9326148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hp_icon
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 1258
         width: 75
-        height: 77
+        height: 74
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,19 +308,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7d1680f7bfe2d942b58477b476620cc
+      spriteID: 5c092588490730f42ab345c717e15de2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_EnvImg
+      name: ProductPower_icon
       rect:
         serializedVersion: 2
-        x: 489
-        y: 146
-        width: 42
-        height: 40
+        x: 498
+        y: 1259
+        width: 74
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -345,19 +328,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dda1f4abd211d7f47b380307ab5f5a3d
+      spriteID: a709dfd88324ba848bfdd67dc134a699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_FoodImg
+      name: GageBg
       rect:
         serializedVersion: 2
-        x: 556
-        y: 146
-        width: 40
-        height: 40
+        x: 62
+        y: 1101
+        width: 468
+        height: 98
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -365,19 +348,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02c1919e3a623544394de467d4146df2
+      spriteID: c691dab8ae4ebad4586c16839144cc63
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HqUpgradeModal_GoldImg
+      name: GageActivate
       rect:
         serializedVersion: 2
-        x: 621
-        y: 146
-        width: 38
-        height: 38
+        x: 69
+        y: 1000
+        width: 33
+        height: 46
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -385,7 +368,107 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b88f06c9f8a3a834fa476e7b78658dfd
+      spriteID: 1d28ef18055e69444b2e1b802c779709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GageActivate_Arrow
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 978
+        width: 77
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9247c2e892c44ec44a5105cc54449b83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 831
+        width: 250
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 26, y: 20, z: 20, w: 11}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8ba002194bbe1a4385b9e873f9bd765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IngameUpgradeModal_17
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 220
+        width: 364
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07fd9a51d45d7e748890046a76c6a094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cost_Food
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 996
+        width: 46
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b67e3e6943aad8e42b61c00799270257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cost_Gold
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 996
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fdf034470c8ada459d14c7df62c1f07
       vertices: []
       indices: 
       edges: []
@@ -393,7 +476,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d65465a6305160b48b086690b95f1a7e
+    spriteID: b07e07517fa22db428e7b210c145f3d7
     vertices: []
     indices: 
     edges: []
