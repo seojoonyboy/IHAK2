@@ -433,53 +433,11 @@ public partial class PlayerController {
         return isUpgradeModalActivated;
     }
 
-    public bool Upgrade(GameObject obj, Resource costs) {
-        if (obj == null) return false;
-        IngameUpgradeCard ingameUpgradeCard = obj.GetComponent<IngameUpgradeCard>();
-        if (ingameUpgradeCard == null) return false;
-
-        int foodChange = ingameUpgradeCard.newIncreasePower.food;
-        int envChange = ingameUpgradeCard.newIncreasePower.environment;
-        int goldChange = ingameUpgradeCard.newIncreasePower.gold;
-
-        icm.productResources.food.food += foodChange;
-        icm.productResources.gold.food += foodChange;
-        icm.productResources.env.food += foodChange;
-
-        icm.productResources.food.environment += envChange;
-        icm.productResources.gold.environment += envChange;
-        icm.productResources.env.environment += envChange;
-
-        icm.productResources.food.gold += goldChange;
-        icm.productResources.gold.gold += goldChange;
-        icm.productResources.env.gold += goldChange;
-
-        Food -= costs.food;
-        Gold -= costs.gold;
-        Env -= costs.environment;
-
-        BuildingObject bo = ingameUpgradeCard.targetBuilding.GetComponent<BuildingObject>();
-
-        bo.data.card.product.food += foodChange;
-        bo.data.card.product.gold += goldChange;
-        bo.data.card.product.environment += envChange;
-
-        int lv = bo.data.card.lv;
-        int rarity = bo.data.card.rarity;
-
-        bo.data.card.hitPoint = ingameUpgradeCard.newHp;
-        if (!string.IsNullOrEmpty(bo.data.card.unit.name)) {
-            DataModules.Unit unit = bo.data.card.unit;
-            unit.hitPoint = GetNewHp(unit.hitPoint, lv, rarity);
-            unit.power = GetNewAttack(unit.hitPoint, lv, rarity);
-            unit.lv += 1;
-
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, this, unit);
+    public bool Upgrade() {
+        if(Point <= 0) {
+            Debug.Log("포인트가 없습니다.");
+            return false;
         }
-
-        bo.data.card.lv = ++ingameUpgradeCard.lv;
-        if (bo.spine != null) bo.GetComponent<TileSpineAnimation>().Upgrade();
-        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         return true;
     }
 

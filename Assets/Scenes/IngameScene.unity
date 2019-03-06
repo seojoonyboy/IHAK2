@@ -3537,6 +3537,7 @@ GameObject:
   - component: {fileID: 364303840}
   - component: {fileID: 364303842}
   - component: {fileID: 364303841}
+  - component: {fileID: 364303843}
   m_Layer: 0
   m_Name: PlayerCity
   m_TagString: Untagged
@@ -3645,6 +3646,7 @@ MonoBehaviour:
         environment: 0
   myBuildingsInfo: []
   enemyBuildingsInfo: []
+  myBuildings_mags: []
   buildingList: 
   unactiveImage: {fileID: 1706033081576888, guid: c9fdbd74db90ea44dad19863d3d09d44,
     type: 2}
@@ -3786,6 +3788,17 @@ MonoBehaviour:
   origin: []
   Deck: 
   Hand: 
+--- !u!114 &364303843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 364303838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02d69dec6d9da9439e69cabbcfab8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &396523339
 GameObject:
   m_ObjectHideFlags: 0
