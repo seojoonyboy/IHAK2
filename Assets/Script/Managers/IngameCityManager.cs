@@ -149,7 +149,12 @@ public class IngameCityManager : MonoBehaviour {
         myBuildingsInfo = tmp;
 
         foreach(var key in myBuildingsInfo_Keys) {
-            myBuildings_mags.Add(new Magnification(key.Key, 1.0f));
+            if(key.Key == "military") {
+                myBuildings_mags.Add(new Magnification(key.Key, 0.075f, 1.75f, 10));
+            }
+            else {
+                myBuildings_mags.Add(new Magnification(key.Key, 0.1f, 2.0f, 10));
+            }
         }
 
         IEnumerable <GameObject> gameObjects =
