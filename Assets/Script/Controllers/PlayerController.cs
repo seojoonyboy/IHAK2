@@ -347,6 +347,14 @@ public partial class PlayerController : MonoBehaviour {
 public partial class PlayerController {
     private bool isUpgradeModalActivated = false;
 
+    [Header(" - UpgradeModal")]
+    [SerializeField] Transform innerModal;
+    [SerializeField] Transform point_val;
+    [SerializeField] Transform cost_gold_val;
+    [SerializeField] Transform cost_food_val;
+    [Tooltip("분야별 배율 관련 영역")]
+    [SerializeField] IngameUpgradeHandler[] magnifications;
+
     public void HqUpgrade() {
         int hq_lv_index = hqLevel - 1;
 
@@ -415,7 +423,6 @@ public partial class PlayerController {
     public void CloseUpgradeModal() {
         //modal 비활성화
         //scroll 활성화
-        GetComponent<UpgradableBuildingGetter>().CloseModal();
         isUpgradeModalActivated = false;
 
         var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();

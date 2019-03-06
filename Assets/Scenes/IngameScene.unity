@@ -3929,7 +3929,6 @@ GameObject:
   - component: {fileID: 364303840}
   - component: {fileID: 364303842}
   - component: {fileID: 364303841}
-  - component: {fileID: 364303843}
   m_Layer: 0
   m_Name: PlayerCity
   m_TagString: Untagged
@@ -4180,17 +4179,6 @@ MonoBehaviour:
   origin: []
   Deck: 
   Hand: 
---- !u!114 &364303843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 364303838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c02d69dec6d9da9439e69cabbcfab8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &365927192
 GameObject:
   m_ObjectHideFlags: 0
@@ -5570,7 +5558,7 @@ GameObject:
   - component: {fileID: 527740121}
   - component: {fileID: 527740120}
   m_Layer: 0
-  m_Name: Value (1)
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8885,6 +8873,15 @@ MonoBehaviour:
   goldConsume: 0
   coinAni: {fileID: 11400000, guid: 2b5517e3c41964ebf94e9cc93c4b1a88, type: 2}
   coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}
+  innerModal: {fileID: 1450786564}
+  point_val: {fileID: 860929827}
+  cost_gold_val: {fileID: 1005587369}
+  cost_food_val: {fileID: 527740119}
+  magnifications:
+  - {fileID: 1517911908}
+  - {fileID: 1856559268}
+  - {fileID: 1176340569}
+  - {fileID: 1637860202}
 --- !u!114 &807158604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8893,10 +8890,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 807158597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7256b21883894054ebe2ebe73bfbe337, type: 3}
+  m_Script: {fileID: 11500000, guid: c02d69dec6d9da9439e69cabbcfab8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeModal: {fileID: 206780471}
+  playerController: {fileID: 807158603}
 --- !u!1 &820021119
 GameObject:
   m_ObjectHideFlags: 0
@@ -12335,6 +12332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1176340568}
+  - component: {fileID: 1176340569}
   m_Layer: 0
   m_Name: Env_Type
   m_TagString: Untagged
@@ -12363,6 +12361,21 @@ RectTransform:
   m_AnchoredPosition: {x: 524.4, y: -288.24237}
   m_SizeDelta: {x: 961.1, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1176340569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1176340567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b8b45a99ece6849938f20cda389102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: {fileID: 2093794090}
+  slider: {fileID: 847609925}
+  decreaseBtn: {fileID: 1057623578}
+  increaseBtn: {fileID: 917597828}
 --- !u!1 &1180173147
 GameObject:
   m_ObjectHideFlags: 0
@@ -16783,6 +16796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517911907}
+  - component: {fileID: 1517911908}
   m_Layer: 0
   m_Name: Gold_Type
   m_TagString: Untagged
@@ -16811,6 +16825,21 @@ RectTransform:
   m_AnchoredPosition: {x: 524.4, y: -62}
   m_SizeDelta: {x: 961.1, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1517911908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1517911906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b8b45a99ece6849938f20cda389102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: {fileID: 444531130}
+  slider: {fileID: 1207272631}
+  decreaseBtn: {fileID: 1203904153}
+  increaseBtn: {fileID: 509295129}
 --- !u!1 &1539058154
 GameObject:
   m_ObjectHideFlags: 0
@@ -18356,6 +18385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1637860201}
+  - component: {fileID: 1637860202}
   m_Layer: 0
   m_Name: Military_Type
   m_TagString: Untagged
@@ -18384,6 +18414,21 @@ RectTransform:
   m_AnchoredPosition: {x: 524.4, y: -401.36356}
   m_SizeDelta: {x: 961.1, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1637860202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1637860200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b8b45a99ece6849938f20cda389102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: {fileID: 1812503981}
+  slider: {fileID: 1112009848}
+  decreaseBtn: {fileID: 1498900575}
+  increaseBtn: {fileID: 1680278598}
 --- !u!1 &1645776509
 GameObject:
   m_ObjectHideFlags: 0
@@ -21609,6 +21654,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1856559267}
+  - component: {fileID: 1856559268}
   m_Layer: 0
   m_Name: Food_Type
   m_TagString: Untagged
@@ -21637,6 +21683,21 @@ RectTransform:
   m_AnchoredPosition: {x: 524.4, y: -175.12119}
   m_SizeDelta: {x: 961.1, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1856559268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1856559266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b8b45a99ece6849938f20cda389102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: {fileID: 707548489}
+  slider: {fileID: 1269045804}
+  decreaseBtn: {fileID: 628422411}
+  increaseBtn: {fileID: 1229729075}
 --- !u!1 &1858660722
 GameObject:
   m_ObjectHideFlags: 0
