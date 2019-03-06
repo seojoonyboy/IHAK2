@@ -111,8 +111,8 @@ public partial class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        PrimalEnvEfct();
         PrintResource();
+        PrimalEnvEfct();
 
         commandButtons.GetChild(0).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.GOLD));
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
@@ -283,7 +283,7 @@ public partial class PlayerController : MonoBehaviour {
                 StopCoroutine(efct5);
             }
         }
-        else if (Env < 400)
+        if (Env < 400)
             envBonusProduce = 1.0f;
         else if (Env >= 400)
             envBonusProduce = 1.1f;
