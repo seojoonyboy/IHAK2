@@ -17,6 +17,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public AccountManager accountManager;
     private int buildingMaxCount;
 
+    [Header(" - PageSave")]
+    public GameObject parentPageObject;
+    public int sibilingData;
+
     public void BeginDrag() {
         canDrag = true;
         OnBeginDrag(null);

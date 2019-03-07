@@ -836,7 +836,7 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public void SetEnemyTotalHP() {
-        for (int i = 0; i < enemyBuildingsInfo.Count; i++) {
+        for (int i = 0; i < 25; i++) {
             BuildingInfo enemyBuilding = enemyBuildingsInfo.Find(x => x.tileNum == i);
             if (enemyBuilding == null) continue;
             enemyTotalHP += enemyBuilding.hp;

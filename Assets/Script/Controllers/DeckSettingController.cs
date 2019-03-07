@@ -74,7 +74,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     public int food;
     public int environment;
     public int gold;
-    
+
+    [Header(" - CardSort")]
+    public List<GameObject> totalCard;
+    public GameObject UnpopCardPage;
+    public GameObject cardContent;
+    private const int NUM_PER_PAGE = 8;
+
     public int SpeciesId {
         get {
             return speciesId;
@@ -87,7 +93,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         playerInfosManager = AccountManager.Instance;
         constructManager = ConstructManager.Instance;
         cardsContent = transform.GetChild(0).GetChild(1).gameObject; // Canvas => UnitScrollPanel => Content;
-        activeSlotUI = transform.GetChild(4).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
+        activeSlotUI = transform.GetChild(3).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
@@ -363,12 +369,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                         selectBuilding = null;
                 }
                 else {
-                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(2).gameObject.SetActive(false);
                     return;
                 }
             }
             else if (hit.collider.tag == "BackGroundTile") {
-                gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 return;
             }
 
@@ -527,7 +533,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         tileSetList[saveSelectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         saveSelectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
-        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
         Destroy(saveSelectBuilding);
     }
     
@@ -564,7 +570,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         tileSetList[building.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         building.transform.parent.GetComponent<TileObject>().buildingSet = false;
-        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
         Destroy(building);
     }
 
@@ -573,7 +579,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (cardSetObject == null)
             return;
 
-        GameObject informationObject = transform.GetChild(3).gameObject;
+        GameObject informationObject = transform.GetChild(2).gameObject;
 
         informationObject.transform.GetChild(0).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.name; // 이름부분 (canvas => buildingStatus => BuildingName)
         informationObject.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = cardSetObject.GetComponent<BuildingObject>().data.card.hitPoint.ToString(); // 이름부분 (canvas => buildingStatus => 체력부분)
@@ -581,7 +587,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void CloseBuildingStatus() {
-        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     public int OnTileBuildingCount(GameObject _building) {
@@ -1031,6 +1037,53 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         selectBuilding = null;
     }
+    /*
+    public void ClickTotalTap() {
+        for(int i = 0; i < totalCard.Count; i++) {
+            GameObject card = totalCard[i];
+            GameObject pageObject = card.GetComponent<DragHandler>().parentPageObject;
+            card.transform.SetParent(pageObject.transform);
+            card.transform.SetSiblingIndex(card.GetComponent<DragHandler>().sibilingData);
+            card.SetActive(true);
+        }     
+
+    }
+
+    public void ClickProdTap() {
+        SetCardSort("prod");
+    }
+
+    public void ClickMilitaryTap() {
+        SetCardSort("military");
+    }
+
+    public void ClickSpecialTap() {
+        SetCardSort("special");
+    }
+
+    public void SetCardSort(string productType) {
+        int count = 0;
+        int page = 0;
+        for (int i = 0; i < totalCard.Count; i++) {
+            GameObject card = totalCard[i];
+            BuildingObject buildingObject = card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>();
+            Transform pageTransform = cardContent.transform.GetChild(page);
+
+            if (buildingObject.data.card.type == productType) {
+                card.transform.SetParent(pageTransform);
+                card.SetActive(true);
+                count++;
+                if(count == NUM_PER_PAGE) {
+                    count = 0;
+                    page++;
+                }
+            }
+            else {
+                card.transform.SetParent(UnpopCardPage.transform);
+                card.SetActive(false);
+            }
+        }
+    }*/
 
     public void TimeCounting() {
         
