@@ -69,13 +69,37 @@ public class IngameUpgradeStream : MonoBehaviour {
         foreach (KeyValuePair<string, int> pair in newRequests) {
             var item = list.Find(x => x.key == pair.Key);
             if (item == null) return;
+
+            int prev_rest = item.current_point / 5;
             item.current_mag += item.mag * pair.Value;
             item.current_point += pair.Value;
+            int new_rest = item.current_point / 5;
+
+            if (prev_rest != new_rest) ChangeBuildingSpineAnim(pair.Key);
+
             for(int i=0; i<pair.Value; i++) {
                 playerController.Point--;
             }
         }
         playerController.CloseUpgradeModal();
         playerController.ChangeBtnMagText();
+    }
+
+    private void ChangeBuildingSpineAnim(string key) {
+        Debug.Log(key);
+        var buildings = icm.myBuildingsInfo;
+
+        List<IngameCityManager.BuildingInfo> result = null;
+        if(key != "military") {
+            result = buildings.FindAll(x => x.cardInfo.prodType == key);
+        }
+        else {
+            result = buildings.FindAll(x => x.cardInfo.type == key);
+        }
+
+        if (result == null) return;
+        foreach(IngameCityManager.BuildingInfo building in result) {
+            building.gameObject.GetComponent<TileSpineAnimation>().Upgrade();
+        }
     }
 }
