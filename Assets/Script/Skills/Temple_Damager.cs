@@ -62,7 +62,7 @@ public class Temple_Damager : MonoBehaviour {
             object[] parms = new object[3];
             parms[0] = target;
             parms[1] = rndTargets;
-            parms[2] = damageAmount * cityManager.myBuildings_mags[0].current_mag;
+            parms[2] = (int)Mathf.Round(damageAmount * cityManager.myBuildings_mags[0].current_mag);
             GenerateSprite(rndTargets, target);
             ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, null, parms);
             count--;
@@ -74,10 +74,13 @@ public class Temple_Damager : MonoBehaviour {
     private void GenerateSprite(int[] parm, IngameCityManager.Target target) {
         cityManager = GetComponent<IngameCityManager>();
         for(int i = 0; i < parm.Length; i++) {
-            Transform pos = cityManager.enemyBuildingsInfo[parm[i]].gameObject.transform;
+            var result = cityManager.myBuildingsInfo.Find(x => x.tileNum == parm[i]);
+            if (result == null) return;
+
+            Transform pos = result.gameObject.transform;
             switch (target) {
                 case IngameCityManager.Target.ENEMY_1:
-                    pos = cityManager.enemyBuildingsInfo[parm[i]].gameObject.transform;
+                    pos = cityManager.enemyBuildingsInfo.Find(x => x.tileNum == parm[i]).gameObject.transform;
                     break;
                 case IngameCityManager.Target.ME:
                     pos = cityManager.myBuildingsInfo.Find(x => x.tileNum == parm[i]).gameObject.transform;
