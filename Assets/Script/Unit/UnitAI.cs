@@ -39,10 +39,6 @@ public class UnitAI : MonoBehaviour {
 	private UnitSpine unitSpine;
 
 	void Start () {
-		healthBar = transform.GetChild(1).GetChild(1);
-		unitSpine = GetComponentInChildren<UnitSpine>();
-		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
-		unitMagnificate = cityManager.SearchMags("military");
 		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
 		detectCollider.radius = unit.detectRange;
 		if(protecting) detectCollider.enabled = false;
@@ -74,11 +70,20 @@ public class UnitAI : MonoBehaviour {
 		IngameSceneEventHandler.Instance.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
 	}
 
+	private void Init() {
+		if(healthBar != null) return;
+		healthBar = transform.GetChild(1).GetChild(1);
+		unitSpine = GetComponentInChildren<UnitSpine>();
+		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
+		if(unitMagnificate == null) unitMagnificate = cityManager.SearchMags("military");
+	}
+
     public void SetUnitData(Unit unit) {
+		Init();
 		this.unit = unit;
 		moveSpeed = unit.moveSpeed;
 		float temphealth = unit.hitPoint - maxHealth;
-		maxHealth = unit.hitPoint * unitMagnificate.mag;
+		maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.current_mag : 1f);
         health += temphealth;
 		//agent.maxSpeed = moveSpeed;
 	}
@@ -188,7 +193,7 @@ public class UnitAI : MonoBehaviour {
 	}
 
 	private void attackBuilding() {
-		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.mag));
+		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.current_mag));
 		unitSpine.Attack();
 		if(targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -200,7 +205,7 @@ public class UnitAI : MonoBehaviour {
 	}
 
 	private void attackUnit() {
-		targetUnit.damaged(Mathf.RoundToInt(unit.power * unitMagnificate.mag));
+		targetUnit.damaged(Mathf.RoundToInt(unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ?unitMagnificate.current_mag : 1f)));
 		unitSpine.Attack();
 		if(targetUnit.health <= 0f) {
 			targetUnit = null;
