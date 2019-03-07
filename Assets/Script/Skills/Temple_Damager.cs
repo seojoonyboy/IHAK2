@@ -62,7 +62,7 @@ public class Temple_Damager : MonoBehaviour {
             object[] parms = new object[3];
             parms[0] = target;
             parms[1] = rndTargets;
-            parms[2] = damageAmount;
+            parms[2] = damageAmount * cityManager.myBuildings_mags[0].current_mag;
             GenerateSprite(rndTargets, target);
             ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, null, parms);
             count--;
