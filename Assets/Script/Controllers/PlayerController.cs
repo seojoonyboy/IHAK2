@@ -202,7 +202,7 @@ public partial class PlayerController : MonoBehaviour {
                         if (Gold + icm.productResources.env.gold >= 0 && Food + icm.productResources.env.food >= 0) {
                             Gold += (int)Mathf.Round((float)icm.productResources.env.gold * envBonusProduce * icm.myBuildings_mags[3].current_mag);
                             Food += (int)Mathf.Round((float)icm.productResources.env.food * envBonusProduce * icm.myBuildings_mags[3].current_mag);
-                            Env += (int)Mathf.Round(intEnv * icm.myBuildings_mags[3].current_mag);
+                            Env += (int)Mathf.Round((float)icm.productResources.env.environment * envBonusProduce * icm.myBuildings_mags[3].current_mag);
                             ShowCoinAnimation(2);
                             if (Env > 1250) {
                                 scoreManager.AddScore(intEnv - (Env - 1250), IngameScoreManager.ScoreType.Product);
@@ -266,24 +266,23 @@ public partial class PlayerController : MonoBehaviour {
     public void PrintProduct(int num) {
         switch (num) {
             case 1:
-                productResource.GetChild(0).GetComponent<Text>().text = "금생산량";
-                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.gold.gold + " + " + (int)Mathf.Round((float)icm.productResources.gold.gold * (envBonusProduce - 1.0f));
-                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.gold.food+ " + " + (int)Mathf.Round((float)icm.productResources.gold.food * (envBonusProduce - 1.0f));
-                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.gold.environment + " + " + (int)Mathf.Round((float)icm.productResources.gold.environment * (envBonusProduce - 1.0f));
+                showResource("음식생산량", icm.productResources.gold, icm.myBuildings_mags[2].current_mag);
                 break;
             case 2:
-                productResource.GetChild(0).GetComponent<Text>().text = "음식생산량";
-                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.food.gold + " + " + (int)Mathf.Round((float)icm.productResources.food.gold * (envBonusProduce - 1.0f));
-                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.food.food + " + " + (int)Mathf.Round((float)icm.productResources.food.food * (envBonusProduce - 1.0f));
-                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.food.environment + " + " + (int)Mathf.Round((float)icm.productResources.food.environment * (envBonusProduce - 1.0f));
+                showResource("식량생산량", icm.productResources.food, icm.myBuildings_mags[1].current_mag);
                 break;
             case 3:
-                productResource.GetChild(0).GetComponent<Text>().text = "환경생산량";
-                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.env.gold + " + " + (int)Mathf.Round((float)icm.productResources.env.gold * (envBonusProduce - 1.0f));
-                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.env.food + " + " + (int)Mathf.Round((float)icm.productResources.env.food * (envBonusProduce - 1.0f));
-                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.env.environment + " + " + (int)Mathf.Round((float)icm.productResources.env.environment * (envBonusProduce - 1.0f));
+                showResource("환경생산량", icm.productResources.env, icm.myBuildings_mags[3].current_mag);
                 break;
         }
+    }
+
+    private void showResource(string title, Resource resource, float mag) {
+        
+        productResource.GetChild(0).GetComponent<Text>().text = title;
+        productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.gold * envBonusProduce * mag).ToString();
+        productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.food * envBonusProduce * mag).ToString();
+        productResource.GetChild(3).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.environment * envBonusProduce * mag).ToString();        
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
