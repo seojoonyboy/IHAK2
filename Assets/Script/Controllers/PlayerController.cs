@@ -80,7 +80,6 @@ public partial class PlayerController : MonoBehaviour {
         set {
             point = value;
             point_val.text = point.ToString();
-            Debug.Log("포인트 " + point);
         }
     }
     [Header(" - Player")]
@@ -377,7 +376,7 @@ public partial class PlayerController {
 
     [Header(" - UpgradeModal")]
     [SerializeField] Transform innerModal;
-    [SerializeField] Text point_val;
+    [SerializeField] public Text point_val;
     [SerializeField] Text cost_gold_val;
     [SerializeField] Text cost_food_val;
     [SerializeField] Text hq_lv_val;
@@ -386,6 +385,7 @@ public partial class PlayerController {
     [SerializeField] IngameUpgradeHandler[] magnifications;
 
     public void HqUpgrade() {
+        Debug.Log("HQ LV : " + hqLevel);
         if (hqLevel == 4) return;
         int hq_scriptable_index = hqLevel - 1;
         if (icm.upgradeInfos[hq_scriptable_index].upgradeCost.food < Food &&
@@ -417,6 +417,7 @@ public partial class PlayerController {
             }
 
             Point += 10;
+            GetComponent<IngameUpgradeStream>().Point += 10;
             hq_lv_val.text = "Lv" + hqLevel;
             //icm.DecideUnActiveBuilding();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
@@ -466,9 +467,16 @@ public partial class PlayerController {
         foreach(IngameUpgradeHandler handler in magnifications) {
             handler.Init(icm.myBuildings_mags);
         }
+        GetComponent<IngameUpgradeStream>().Init();
 
-        cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
-        cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
+        if(hqLevel == 4) {
+            cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
+            cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
+        }
+        else {
+            cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
+            cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
+        }
 
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
     }

@@ -7110,7 +7110,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 628422412}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1856559268}
+        m_MethodName: OnRemoveBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &628422412
@@ -9225,6 +9236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 807158603}
+  icm: {fileID: 364303840}
 --- !u!1 &820021119
 GameObject:
   m_ObjectHideFlags: 0
@@ -11666,7 +11678,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1041130641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 807158604}
+        m_MethodName: OnCancelButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1041130641
@@ -11777,7 +11800,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1057623579}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1176340569}
+        m_MethodName: OnRemoveBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1057623579
@@ -12827,6 +12861,7 @@ MonoBehaviour:
   increaseBtn: {fileID: 917597828}
   ingameCityManager: {fileID: 364303840}
   playerController: {fileID: 807158603}
+  stream: {fileID: 807158604}
 --- !u!114 &1176340570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13451,7 +13486,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1203904154}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1517911908}
+        m_MethodName: OnRemoveBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1203904154
@@ -15865,7 +15911,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1355630370}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 807158604}
+        m_MethodName: OnCirmButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1355630370
@@ -17416,7 +17473,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1498900576}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1637860202}
+        m_MethodName: OnRemoveBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1498900576
@@ -17508,6 +17576,7 @@ MonoBehaviour:
   increaseBtn: {fileID: 509295129}
   ingameCityManager: {fileID: 364303840}
   playerController: {fileID: 807158603}
+  stream: {fileID: 807158604}
 --- !u!114 &1517911909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19112,6 +19181,7 @@ MonoBehaviour:
   increaseBtn: {fileID: 1680278598}
   ingameCityManager: {fileID: 364303840}
   playerController: {fileID: 807158603}
+  stream: {fileID: 807158604}
 --- !u!114 &1637860203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22444,6 +22514,7 @@ MonoBehaviour:
   increaseBtn: {fileID: 1229729075}
   ingameCityManager: {fileID: 364303840}
   playerController: {fileID: 807158603}
+  stream: {fileID: 807158604}
 --- !u!114 &1856559269
 MonoBehaviour:
   m_ObjectHideFlags: 0
