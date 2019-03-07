@@ -40,6 +40,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public void OnBeginDrag (PointerEventData eventData) {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
+        if (deckSettingController.picking == true) return;
         dropHandler.setObject = setObject;
         dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
