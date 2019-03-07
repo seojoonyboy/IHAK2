@@ -436,6 +436,8 @@ public partial class PlayerController {
             GetComponent<IngameUpgradeStream>().Point += 10;
             hq_lv_val.text = "Lv" + hqLevel;
             SetHQSpecChangeText(hqLevel);
+
+            icm.myBuildingsInfo.Find(x => x.cardInfo.type == "HQ").gameObject.GetComponent<TileSpineAnimation>().Upgrade();
             //icm.DecideUnActiveBuilding();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
