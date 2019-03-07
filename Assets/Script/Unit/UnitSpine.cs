@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using Spine;
 
 public class UnitSpine : MonoBehaviour {
     [SpineAnimation]
@@ -25,16 +26,12 @@ public class UnitSpine : MonoBehaviour {
 
     private SkeletonAnimation skeletonAnimation;
     private Spine.AnimationState spineAnimationState;
-    private Spine.Skeleton skeleton;
-    
-    [SerializeField]
-    private float overrideMixDuration = 0.15f;
+    private Skeleton skeleton;
 
     private void Awake() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
-        spineAnimationState.Data.DefaultMix = overrideMixDuration;
     }
 
     public void Idle() {
@@ -55,14 +52,19 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void Hitted() {
-        spineAnimationState.SetEmptyAnimation(1, 0);
-        if(isUp) spineAnimationState.AddAnimation(0, hitUpAnimationName, true, 0f);
-        else spineAnimationState.AddAnimation(0, hitDownAnimationName, true, 0f);
-        spineAnimationState.AddEmptyAnimation(1, overrideMixDuration, 0);
+        if(isUp) spineAnimationState.SetAnimation(1, hitUpAnimationName, false);
+        else spineAnimationState.SetAnimation(1, hitDownAnimationName, false);
+        StartCoroutine("SetColor");
     }
 
     public void SetDirection(Vector2 direction) {
         skeleton.ScaleX = direction.x < 0 ? -1f: 1f;
         isUp = direction.y > 0;
-    }	
+    }
+
+    IEnumerator SetColor() {
+        skeleton.SetColor(Color.red);
+        yield return new WaitForSeconds(0.25f);
+        skeleton.SetColor(Color.white);
+    }
 }
