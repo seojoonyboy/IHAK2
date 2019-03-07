@@ -41,7 +41,7 @@ public class IngameUpgradeHandler : MonoBehaviour {
         value.text = "x " + str;
 
         //test
-        playerController.Point += 10;
+        //playerController.Point += 10;
     }
 
     public void OnAddBtnClick() {
