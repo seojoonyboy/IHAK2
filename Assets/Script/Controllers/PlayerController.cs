@@ -377,9 +377,20 @@ public partial class PlayerController {
     [Header(" - UpgradeModal")]
     [SerializeField] Transform innerModal;
     [SerializeField] public Text point_val;
+
     [SerializeField] Text cost_gold_val;
     [SerializeField] Text cost_food_val;
     [SerializeField] Text hq_lv_val;
+
+    [SerializeField] Text hq_current_hp_val;
+    [SerializeField] Text hq_current_food_val;
+    [SerializeField] Text hq_current_gold_val;
+    [SerializeField] Text hq_current_env_val;
+
+    [SerializeField] Text hq_hpChange_val;
+    [SerializeField] Text hq_foodChange_val;
+    [SerializeField] Text hq_goldChange_val;
+    [SerializeField] Text hq_envChange_val;
 
     [Tooltip("분야별 배율 관련 영역")]
     [SerializeField] IngameUpgradeHandler[] magnifications;
@@ -408,8 +419,9 @@ public partial class PlayerController {
 
             //업그레이드 비용 표시
             if (hqLevel == 4) {
-                cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
-                cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
+                cost_food_val.text = "000";
+                cost_gold_val.text = "000";
+                cost_food_val.transform.parent.parent.Find("Text").GetComponent<Text>().text = "최대 레벨 도달";
             } 
             else {
                 cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
@@ -419,6 +431,7 @@ public partial class PlayerController {
             Point += 10;
             GetComponent<IngameUpgradeStream>().Point += 10;
             hq_lv_val.text = "Lv" + hqLevel;
+            SetHQSpecChangeText(hqLevel);
             //icm.DecideUnActiveBuilding();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
@@ -472,13 +485,38 @@ public partial class PlayerController {
         if(hqLevel == 4) {
             cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
             cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
+            
         }
         else {
             cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
             cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
         }
 
+        SetHQSpecChangeText(hqLevel);
+
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
+    }
+
+    /// <summary>
+    /// HQ 업그레이드시 Spec 변화 UI 처리
+    /// </summary>
+    /// <param name="lv">HQ Lv</param>
+    private void SetHQSpecChangeText(int lv) {
+        int index = lv - 1;
+        hq_current_food_val.text = icm.upgradeInfos[index].product.food.ToString();
+        hq_current_gold_val.text = icm.upgradeInfos[index].product.gold.ToString();
+        hq_current_hp_val.text = icm.upgradeInfos[index].hp.ToString();
+
+        if(lv == 4) {
+            hq_goldChange_val.text = "";
+            hq_foodChange_val.text = "";
+            hq_hpChange_val.text = "";
+        }
+        else {
+            hq_goldChange_val.text = (icm.upgradeInfos[index + 1].product.gold - icm.upgradeInfos[index].product.gold).ToString();
+            hq_foodChange_val.text = (icm.upgradeInfos[index + 1].product.food - icm.upgradeInfos[index].product.food).ToString();
+            hq_hpChange_val.text = (icm.upgradeInfos[index + 1].hp - icm.upgradeInfos[index].hp).ToString();
+        }
     }
 
     public void CloseUpgradeModal() {

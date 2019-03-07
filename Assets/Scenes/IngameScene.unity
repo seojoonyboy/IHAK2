@@ -9219,6 +9219,14 @@ MonoBehaviour:
   cost_gold_val: {fileID: 1005587371}
   cost_food_val: {fileID: 527740121}
   hq_lv_val: {fileID: 1896251088}
+  hq_current_hp_val: {fileID: 549335229}
+  hq_current_food_val: {fileID: 1576578008}
+  hq_current_gold_val: {fileID: 1779862108}
+  hq_current_env_val: {fileID: 1116078489}
+  hq_hpChange_val: {fileID: 588017317}
+  hq_foodChange_val: {fileID: 1193089640}
+  hq_goldChange_val: {fileID: 489307379}
+  hq_envChange_val: {fileID: 1650256546}
   magnifications:
   - {fileID: 1517911908}
   - {fileID: 1856559268}
@@ -19558,7 +19566,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +10
+  m_Text: +00
 --- !u!222 &1650256547
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20808,7 +20816,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300004, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
