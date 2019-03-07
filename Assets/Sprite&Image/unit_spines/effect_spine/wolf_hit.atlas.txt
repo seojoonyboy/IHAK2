@@ -1,0 +1,46 @@
+
+wolf_hit.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ellipse
+  rotate: false
+  xy: 0, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+wolf_hit2.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+right(2)
+  rotate: false
+  xy: 0, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+wolf_hit3.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+right(1)
+  rotate: true
+  xy: 0, 0
+  size: 256, 289
+  orig: 256, 289
+  offset: 0, 0
+  index: -1
+star(1)
+  rotate: false
+  xy: 289, 127
+  size: 129, 129
+  orig: 129, 129
+  offset: 0, 0
+  index: -1

@@ -23,6 +23,7 @@ public class UnitSpine : MonoBehaviour {
     public string hitDownAnimationName;
 
     private bool isUp;
+    private Transform hitEffect;
 
     private SkeletonAnimation skeletonAnimation;
     private Spine.AnimationState spineAnimationState;
@@ -32,6 +33,7 @@ public class UnitSpine : MonoBehaviour {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
+        hitEffect = transform.parent.Find("wolf_hit");
     }
 
     public void Idle() {
@@ -63,8 +65,11 @@ public class UnitSpine : MonoBehaviour {
     }
 
     IEnumerator SetColor() {
+        hitEffect.gameObject.SetActive(true);
         skeleton.SetColor(Color.red);
         yield return new WaitForSeconds(0.25f);
         skeleton.SetColor(Color.white);
+        yield return new WaitForSeconds(0.25f);
+        hitEffect.gameObject.SetActive(false);
     }
 }
