@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class OwnCardGenerator : MonoBehaviour {
     private ConstructManager constructManager;
+    public DeckSettingController deckSettingController;
     public GameObject
         pageObject,
         slotObject;
@@ -21,6 +22,7 @@ public class OwnCardGenerator : MonoBehaviour {
     // Use this for initialization
     void Start() {
         constructManager = ConstructManager.Instance;
+        deckSettingController = DeckSettingController.Instance;
         buildings = constructManager.GetBuildingObjects();
         
 
@@ -47,13 +49,16 @@ public class OwnCardGenerator : MonoBehaviour {
 
     private void SetCards() {
         int page = 0;
-
+        int count = 0;
         for (int i = 0; i < constructManager.GetBuildingObjects().Count; i++) {
-            if (i != 0 && i % NUM_PER_PAGE == 0)
+            if (i != 0 && i % NUM_PER_PAGE == 0) {
                 page++;
+                count = 0;
+            }
             GameObject slotData = Instantiate(slotObject, transform.GetChild(page));
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
+            deckSettingController.totalCard.Add(slotData);
 
             slotData.GetComponent<Image>().sprite = cardPanels[info.data.card.rarity - 1];
 
@@ -68,6 +73,7 @@ public class OwnCardGenerator : MonoBehaviour {
                     _type = info.data.card.prodType;
                 }
 
+
                 if (info.data.card.unit != null && !string.IsNullOrEmpty(info.data.card.unit.name)) {
                     Debug.Log(info.data.card.unit.name);
                     _type = "unit";
@@ -77,11 +83,12 @@ public class OwnCardGenerator : MonoBehaviour {
                     _type = "spell";
                 }
             }
-            slotData.transform.Find("SecondMark/Image").GetComponent<Image>().sprite = GetIcon(_type);
-            //slotData.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + buildings[i].GetComponent<BuildingObject>().data.card.placementLimit.ToString(); //슬롯데이터중, 건물의 갯수 표기;
+            count++;
+            slotData.transform.Find("SecondMark/Image").GetComponent<Image>().sprite = GetIcon(_type);          
             slotData.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             slotData.GetComponent<LongClickButton>().requiredHoldTime = 0.3f;
-            //slotData.GetComponentInChildren<LongClickButton>().onShortClick.AddListener(() => ShowDetail(buildingObject.GetComponent<BuildingObject>()));
+            slotData.GetComponent<DragHandler>().parentPageObject = transform.GetChild(page).gameObject;
+            slotData.GetComponent<DragHandler>().sibilingData = count;
         }
     }
 
