@@ -28,6 +28,7 @@ public class UnitAI : MonoBehaviour {
 	private Unit unit;
 
 	private static IngameCityManager cityManager;
+	private static Magnification unitMagnificate;
 
     public GameObject ontile;
 	public bool protecting = false;
@@ -41,6 +42,7 @@ public class UnitAI : MonoBehaviour {
 		healthBar = transform.GetChild(1).GetChild(1);
 		unitSpine = GetComponentInChildren<UnitSpine>();
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
+		unitMagnificate = cityManager.SearchMags("military");
 		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
 		detectCollider.radius = unit.detectRange;
 		if(protecting) detectCollider.enabled = false;
@@ -76,7 +78,7 @@ public class UnitAI : MonoBehaviour {
 		this.unit = unit;
 		moveSpeed = unit.moveSpeed;
 		float temphealth = unit.hitPoint - maxHealth;
-		maxHealth = unit.hitPoint;
+		maxHealth = unit.hitPoint * unitMagnificate.mag;
         health += temphealth;
 		//agent.maxSpeed = moveSpeed;
 	}
@@ -186,7 +188,7 @@ public class UnitAI : MonoBehaviour {
 	}
 
 	private void attackBuilding() {
-		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, unit.power);
+		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.mag));
 		unitSpine.Attack();
 		if(targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -198,7 +200,7 @@ public class UnitAI : MonoBehaviour {
 	}
 
 	private void attackUnit() {
-		targetUnit.damaged(unit.power);
+		targetUnit.damaged(Mathf.RoundToInt(unit.power * unitMagnificate.mag));
 		unitSpine.Attack();
 		if(targetUnit.health <= 0f) {
 			targetUnit = null;

@@ -1,3 +1,4 @@
+using DataModules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,27 @@ using UnityEngine;
 /// </summary>
 public class IngameUpgradeStream : MonoBehaviour {
     Dictionary<string, int> newRequests;        //새로운 할당 요청 <타입, 포인트>
-    Dictionary<string, int> prevData;           //이전 할당 정보
     [SerializeField] PlayerController playerController;
+    [SerializeField] IngameCityManager icm;
 
-    private void OnEnable() {
-        Init();
+    List<Magnification> magnifications = new List<Magnification>();
+
+    int point;
+    public int Point {
+        get { return point; }
+        set {
+            point = value;
+            playerController.point_val.text = point.ToString();
+        }
     }
 
     public void Init() {
         newRequests = new Dictionary<string, int>();
-        prevData = new Dictionary<string, int>();
+
+        magnifications = icm.myBuildings_mags;
+        Point = playerController.Point;
+        Debug.Log("Point : " + Point);
+        playerController.point_val.text = Point.ToString();
     }
 
     public void Add(string key) {
@@ -27,11 +39,67 @@ public class IngameUpgradeStream : MonoBehaviour {
             newRequests[key] += 1;
         }
 
+        Point--;
         //Debug.Log(key + " : " + newRequests[key]);
     }
 
     public void Remove(string key) {
         if (newRequests[key] == 1) newRequests.Remove(key);
         else newRequests[key] -= 1;
+
+        Point++;
+    }
+
+    public void OnCancelButtonClicked() {
+        Modal.instantiate("저장하지 않고 나갈시, 할당된 포인트가 초기화됩니다.\n정말 나가시겠습니까?", Modal.Type.YESNO, () => Cancel());
+    }
+
+    //최종 취소 버튼
+    public void Cancel() {
+        playerController.CloseUpgradeModal();
+    }
+
+    public void OnCirmButtonClicked() {
+        Modal.instantiate("포인트를 적용하시겠습니까?", Modal.Type.YESNO, () => Confirm());
+    }
+
+    //최종 저장 버튼
+    public void Confirm() {
+        var list = icm.myBuildings_mags;
+        foreach (KeyValuePair<string, int> pair in newRequests) {
+            var item = list.Find(x => x.key == pair.Key);
+            if (item == null) return;
+
+            int prev_rest = item.current_point / 5;
+            item.current_mag += item.mag * pair.Value;
+            item.current_point += pair.Value;
+            int new_rest = item.current_point / 5;
+
+            if (prev_rest != new_rest) ChangeBuildingSpineAnim(pair.Key);
+
+            for(int i=0; i<pair.Value; i++) {
+                playerController.Point--;
+            }
+        }
+        playerController.CloseUpgradeModal();
+        playerController.ChangeBtnMagText();
+    }
+
+    private void ChangeBuildingSpineAnim(string key) {
+        Debug.Log(key);
+        var buildings = icm.myBuildingsInfo;
+
+        List<IngameCityManager.BuildingInfo> result = null;
+        if(key != "military") {
+            result = buildings.FindAll(x => x.cardInfo.prodType == key);
+        }
+        else {
+            result = buildings.FindAll(x => x.cardInfo.type == key);
+        }
+
+        if (result == null) return;
+        foreach(IngameCityManager.BuildingInfo building in result) {
+            building.gameObject.GetComponent<TileSpineAnimation>().Upgrade();
+        }
     }
 }
