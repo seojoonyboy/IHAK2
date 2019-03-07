@@ -139,10 +139,10 @@ public partial class PlayerController : MonoBehaviour {
                 int goldEnv = (int)Mathf.Round((float)icm.productResources.gold.environment * envBonusProduce);
                 if (Env + goldEnv >= -1250 && Env + goldEnv <= 1250) {
                     if (icm.productResources.gold.gold > 0) {
-                        Gold += (int)Mathf.Round((float)icm.productResources.gold.gold * envBonusProduce);
-                        Food += (int)Mathf.Round((float)icm.productResources.gold.food * envBonusProduce);
+                        Gold += (int)Mathf.Round((float)icm.productResources.gold.gold * envBonusProduce * icm.myBuildings_mags[2].current_mag);
+                        Food += (int)Mathf.Round((float)icm.productResources.gold.food * envBonusProduce * icm.myBuildings_mags[2].current_mag);
                         if (Env >= -1250 && Env <= 1250)
-                            Env += goldEnv;
+                            Env += (int)Mathf.Round(goldEnv * icm.myBuildings_mags[2].current_mag);
 #if HACK_PRODUCT_POWER
                         Gold += 1000;
 #endif
@@ -169,10 +169,10 @@ public partial class PlayerController : MonoBehaviour {
                 int foodEnv = (int)Mathf.Round((float)icm.productResources.food.environment * envBonusProduce);
                 if (Env + foodEnv >= -1250 && Env + foodEnv <= 1250) {
                     if (icm.productResources.food.food > 0) {
-                        Gold += (int)Mathf.Round((float)icm.productResources.food.gold * envBonusProduce);
-                        Food += (int)Mathf.Round((float)icm.productResources.food.food * envBonusProduce);
+                        Gold += (int)Mathf.Round((float)icm.productResources.food.gold * envBonusProduce * icm.myBuildings_mags[1].current_mag);
+                        Food += (int)Mathf.Round((float)icm.productResources.food.food * envBonusProduce * icm.myBuildings_mags[1].current_mag);
                         if (Env >= -1250 && Env <= 1250)
-                            Env += foodEnv;
+                            Env += (int)Mathf.Round(foodEnv * icm.myBuildings_mags[1].current_mag);
 #if HACK_PRODUCT_POWER
                         Food += 1000;
 #endif
@@ -200,9 +200,9 @@ public partial class PlayerController : MonoBehaviour {
                 if (Env >= -1250 && Env <= 1250) {
                     if (icm.productResources.env.environment > 0) {
                         if (Gold + icm.productResources.env.gold >= 0 && Food + icm.productResources.env.food >= 0) {
-                            Gold += (int)Mathf.Round((float)icm.productResources.env.gold * envBonusProduce);
-                            Food += (int)Mathf.Round((float)icm.productResources.env.food * envBonusProduce);
-                            Env += intEnv;
+                            Gold += (int)Mathf.Round((float)icm.productResources.env.gold * envBonusProduce * icm.myBuildings_mags[3].current_mag);
+                            Food += (int)Mathf.Round((float)icm.productResources.env.food * envBonusProduce * icm.myBuildings_mags[3].current_mag);
+                            Env += (int)Mathf.Round(intEnv * icm.myBuildings_mags[3].current_mag);
                             ShowCoinAnimation(2);
                             if (Env > 1250) {
                                 scoreManager.AddScore(intEnv - (Env - 1250), IngameScoreManager.ScoreType.Product);
