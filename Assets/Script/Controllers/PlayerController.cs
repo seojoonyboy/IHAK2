@@ -392,6 +392,10 @@ public partial class PlayerController {
     [SerializeField] Text hq_goldChange_val;
     [SerializeField] Text hq_envChange_val;
 
+    [SerializeField] Text gold_btn_mag;
+    [SerializeField] Text food_btn_mag;
+    [SerializeField] Text env_btn_mag;
+
     [Tooltip("분야별 배율 관련 영역")]
     [SerializeField] IngameUpgradeHandler[] magnifications;
 
@@ -560,5 +564,10 @@ public partial class PlayerController {
         MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
         tileCount = icm.CityTotalTileCount();
     }
-
+    
+    public void ChangeBtnMagText() {
+        gold_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[2].current_mag);
+        food_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[1].current_mag);
+        env_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[3].current_mag);
+    }
 }
