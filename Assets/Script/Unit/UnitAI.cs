@@ -29,23 +29,18 @@ public class UnitAI : MonoBehaviour {
 
 	private static IngameCityManager cityManager;
 
-	private SkeletonAnimation skeletonAnimation;
-	public Spine.AnimationState spineAnimationState;
-    public Spine.Skeleton skeleton;
-
     public GameObject ontile;
 	public bool protecting = false;
 	private CircleCollider2D detectCollider;
 
 	private List<IngameCityManager.BuildingInfo> buildingInfos;
 	private IngameCityManager.Target targetEnum;
+	private UnitSpine unitSpine;
 
 	void Start () {
 		healthBar = transform.GetChild(1).GetChild(1);
+		unitSpine = GetComponentInChildren<UnitSpine>();
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
-		skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
-		spineAnimationState = skeletonAnimation.AnimationState;
-		skeleton = skeletonAnimation.Skeleton;
 		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
 		detectCollider.radius = unit.detectRange;
 		if(protecting) detectCollider.enabled = false;
@@ -98,15 +93,18 @@ public class UnitAI : MonoBehaviour {
 		currentTime = 0f;
 		switch(state) {
 			case aiState.NONE :
-			spineAnimationState.SetAnimation(0, "stand", true);
+			unitSpine.Idle();
 			update = noneUpdate;
 			break;
 			case aiState.MOVE :
-			spineAnimationState.SetAnimation(0, "run", true);
+			Transform target = GetTarget();
+			Vector3 distance = target.localPosition - transform.localPosition;
+			unitSpine.SetDirection(distance);
+			unitSpine.Move();
 			update = moveUpdate;
 			break;
 			case aiState.ATTACK :
-			spineAnimationState.SetAnimation(0, "stand", true);
+			unitSpine.Idle();
 			update = attackUpdate;
 			break;
 			case aiState.DEAD :
@@ -134,24 +132,10 @@ public class UnitAI : MonoBehaviour {
 
 	void moveUpdate(float time) {
 		currentTime += time;
-		Transform target;
-		if(targetUnit == null) {
-			if(targetBuilding == null) {
-				if(!searchTarget()) setState(aiState.NONE);
-				return;
-			}
-        	target = targetBuilding.gameObject.transform.parent;
-		}
-		else {
-			if(targetUnit == null) {
-				if(!searchTarget()) setState(aiState.NONE);
-				return;
-			}
-			target = targetUnit.gameObject.transform;
-		}
+		Transform target = GetTarget();
+		if(target == null) return;
 		Vector3 distance = target.localPosition - transform.localPosition;
         float length = Vector3.Distance(transform.localPosition, target.localPosition);
-		setFlip(distance);
 		if(isTargetClose(length)) {
 			setState(aiState.ATTACK);
 			return;
@@ -160,6 +144,25 @@ public class UnitAI : MonoBehaviour {
 		if(currentTime < 2f) return;
 		currentTime = 0f;
 		searchTarget();
+	}
+
+	private Transform GetTarget() {
+		Transform target;
+		if(targetUnit == null) {
+			if(targetBuilding == null) {
+				if(!searchTarget()) setState(aiState.NONE);
+				return null;
+			}
+        	target = targetBuilding.gameObject.transform.parent;
+		}
+		else {
+			if(targetUnit == null) {
+				if(!searchTarget()) setState(aiState.NONE);
+				return null;
+			}
+			target = targetUnit.gameObject.transform;
+		}
+		return target;	
 	}
 
 	void attackUpdate(float time) {
@@ -184,8 +187,7 @@ public class UnitAI : MonoBehaviour {
 
 	private void attackBuilding() {
 		cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, unit.power);
-		spineAnimationState.SetAnimation(0, "attack", false);
-		spineAnimationState.AddAnimation(0, "stand", true, 0);
+		unitSpine.Attack();
 		if(targetBuilding.hp <= 0) {
             targetBuilding = null;
 			if(searchTarget())
@@ -197,8 +199,7 @@ public class UnitAI : MonoBehaviour {
 
 	private void attackUnit() {
 		targetUnit.damaged(unit.power);
-		spineAnimationState.SetAnimation(0, "attack", false);
-		spineAnimationState.AddAnimation(0, "stand", true, 0);
+		unitSpine.Attack();
 		if(targetUnit.health <= 0f) {
 			targetUnit = null;
 			detectCollider.enabled = true;
@@ -272,6 +273,7 @@ public class UnitAI : MonoBehaviour {
 
 	public void damaged(int damage) {
 		health -= damage;
+		unitSpine.Hitted();
 		calculateHealthBar();		
 	}
 
@@ -279,10 +281,6 @@ public class UnitAI : MonoBehaviour {
 		if(!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
 		float percent = (float)health / maxHealth;
 		healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
-	}
-
-	void setFlip(Vector2 move) {
-        skeleton.ScaleX = move.x < 0 ? 1f: -1f;
 	}
 
     public void DestoryEnemy() {

@@ -2,10 +2,11 @@ namespace DataModules{
     [System.Serializable]
     public class Magnification {
         public string key;
+        public float current_mag = 1.0f;
+        public int current_point = 0;
         public float mag;
         public float max_mag;
         public int max_point;
-
         /// <summary>
         /// 업그레이드시 분야별 배율
         /// </summary>
@@ -17,6 +18,7 @@ namespace DataModules{
             this.key = key;
             this.mag = mag;
             this.max_mag = max_mag;
+            this.max_point = max_point;
         }
     }
 }

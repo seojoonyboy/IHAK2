@@ -34,6 +34,7 @@ public partial class PlayerController : MonoBehaviour {
     [Header(" - UI")]
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
+    [SerializeField] Transform productResource;
     public PlayerResource resourceClass;
 
     [Header(" - ResourceText")]
@@ -77,8 +78,9 @@ public partial class PlayerController : MonoBehaviour {
     public int Point {
         get { return point; }
         set {
-            point -= value;
-            Debug.Log("포인트 소모");
+            point = value;
+            point_val.text = point.ToString();
+            Debug.Log("포인트 " + point);
         }
     }
     [Header(" - Player")]
@@ -147,6 +149,7 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(0);
+                        PrintProduct(1);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -176,6 +179,7 @@ public partial class PlayerController : MonoBehaviour {
 #endif
                         resourceClass.turn--;
                         ShowCoinAnimation(1);
+                        PrintProduct(2);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -212,6 +216,7 @@ public partial class PlayerController : MonoBehaviour {
                             //if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
                             //    icm.CancleUnActiveBuilding();
                             resourceClass.turn--;
+                            PrintProduct(3);
                         }
                     }
                 }
@@ -259,6 +264,29 @@ public partial class PlayerController : MonoBehaviour {
         envText.text = Env.ToString();
     }
 
+    public void PrintProduct(int num) {
+        switch (num) {
+            case 1:
+                productResource.GetChild(0).GetComponent<Text>().text = "금생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.gold.gold + " + " + (int)Mathf.Round((float)icm.productResources.gold.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.gold.food+ " + " + (int)Mathf.Round((float)icm.productResources.gold.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.gold.environment + " + " + (int)Mathf.Round((float)icm.productResources.gold.environment * (envBonusProduce - 1.0f));
+                break;
+            case 2:
+                productResource.GetChild(0).GetComponent<Text>().text = "음식생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.food.gold + " + " + (int)Mathf.Round((float)icm.productResources.food.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.food.food + " + " + (int)Mathf.Round((float)icm.productResources.food.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.food.environment + " + " + (int)Mathf.Round((float)icm.productResources.food.environment * (envBonusProduce - 1.0f));
+                break;
+            case 3:
+                productResource.GetChild(0).GetComponent<Text>().text = "환경생산량";
+                productResource.GetChild(1).GetComponent<Text>().text = icm.productResources.env.gold + " + " + (int)Mathf.Round((float)icm.productResources.env.gold * (envBonusProduce - 1.0f));
+                productResource.GetChild(2).GetComponent<Text>().text = icm.productResources.env.food + " + " + (int)Mathf.Round((float)icm.productResources.env.food * (envBonusProduce - 1.0f));
+                productResource.GetChild(3).GetComponent<Text>().text = icm.productResources.env.environment + " + " + (int)Mathf.Round((float)icm.productResources.env.environment * (envBonusProduce - 1.0f));
+                break;
+        }
+    }
+
     public bool isEnoughResources(DataModules.Cost cost) {
         if (Gold < cost.gold) return false;
         //if (Env < cost.environment) return false;
@@ -285,9 +313,9 @@ public partial class PlayerController : MonoBehaviour {
         }
         if (Env < 400)
             envBonusProduce = 1.0f;
-        else if (Env >= 400)
+        if (Env >= 400)
             envBonusProduce = 1.1f;
-        else if (Env >= 700 && Env < 1100) {
+        if (Env >= 700 && Env < 1100) {
             envBonusProduce = 1.25f;
             if (envEfctOn) {
                 envEfctOn = !envEfctOn;
@@ -347,6 +375,14 @@ public partial class PlayerController : MonoBehaviour {
 public partial class PlayerController {
     private bool isUpgradeModalActivated = false;
 
+    [Header(" - UpgradeModal")]
+    [SerializeField] Transform innerModal;
+    [SerializeField] Text point_val;
+    [SerializeField] Text cost_gold_val;
+    [SerializeField] Text cost_food_val;
+    [Tooltip("분야별 배율 관련 영역")]
+    [SerializeField] IngameUpgradeHandler[] magnifications;
+
     public void HqUpgrade() {
         int hq_lv_index = hqLevel - 1;
 
@@ -396,13 +432,9 @@ public partial class PlayerController {
     }
 
     private GameObject selectedObj;
-    GameObject spritePanel;
 
     public void OnUpgradeModal() {
-        spritePanel = icm.transform.GetChild(1).Find("Background/Dissolve").gameObject;
-        GameObject uiPanel = transform.Find("UIDissolve").gameObject;
-
-        spritePanel.SetActive(true);
+        GameObject uiPanel = transform.Find("UpgradeModal").gameObject;
         uiPanel.SetActive(true);
 
         //scroll 비활성화
@@ -413,14 +445,18 @@ public partial class PlayerController {
 
         //upgrade 가능한 빌딩 order 변경
         isUpgradeModalActivated = true;
+        point_val.text = Point.ToString();
+        
+        foreach(IngameUpgradeHandler handler in magnifications) {
+            handler.Init(icm.myBuildings_mags);
+        }
+
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
     }
 
     public void CloseUpgradeModal() {
         //modal 비활성화
         //scroll 활성화
-        GetComponent<UpgradableBuildingGetter>().CloseModal();
-        spritePanel.SetActive(false);
         isUpgradeModalActivated = false;
 
         var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();
@@ -433,53 +469,11 @@ public partial class PlayerController {
         return isUpgradeModalActivated;
     }
 
-    public bool Upgrade(GameObject obj, Resource costs) {
-        if (obj == null) return false;
-        IngameUpgradeCard ingameUpgradeCard = obj.GetComponent<IngameUpgradeCard>();
-        if (ingameUpgradeCard == null) return false;
-
-        int foodChange = ingameUpgradeCard.newIncreasePower.food;
-        int envChange = ingameUpgradeCard.newIncreasePower.environment;
-        int goldChange = ingameUpgradeCard.newIncreasePower.gold;
-
-        icm.productResources.food.food += foodChange;
-        icm.productResources.gold.food += foodChange;
-        icm.productResources.env.food += foodChange;
-
-        icm.productResources.food.environment += envChange;
-        icm.productResources.gold.environment += envChange;
-        icm.productResources.env.environment += envChange;
-
-        icm.productResources.food.gold += goldChange;
-        icm.productResources.gold.gold += goldChange;
-        icm.productResources.env.gold += goldChange;
-
-        Food -= costs.food;
-        Gold -= costs.gold;
-        Env -= costs.environment;
-
-        BuildingObject bo = ingameUpgradeCard.targetBuilding.GetComponent<BuildingObject>();
-
-        bo.data.card.product.food += foodChange;
-        bo.data.card.product.gold += goldChange;
-        bo.data.card.product.environment += envChange;
-
-        int lv = bo.data.card.lv;
-        int rarity = bo.data.card.rarity;
-
-        bo.data.card.hitPoint = ingameUpgradeCard.newHp;
-        if (!string.IsNullOrEmpty(bo.data.card.unit.name)) {
-            DataModules.Unit unit = bo.data.card.unit;
-            unit.hitPoint = GetNewHp(unit.hitPoint, lv, rarity);
-            unit.power = GetNewAttack(unit.hitPoint, lv, rarity);
-            unit.lv += 1;
-
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, this, unit);
+    public bool Upgrade() {
+        if(Point <= 0) {
+            Debug.Log("포인트가 없습니다.");
+            return false;
         }
-
-        bo.data.card.lv = ++ingameUpgradeCard.lv;
-        if (bo.spine != null) bo.GetComponent<TileSpineAnimation>().Upgrade();
-        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         return true;
     }
 
