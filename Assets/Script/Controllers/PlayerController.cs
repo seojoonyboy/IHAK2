@@ -80,7 +80,6 @@ public partial class PlayerController : MonoBehaviour {
         set {
             point = value;
             point_val.text = point.ToString();
-            Debug.Log("포인트 " + point);
         }
     }
     [Header(" - Player")]
@@ -377,45 +376,63 @@ public partial class PlayerController {
 
     [Header(" - UpgradeModal")]
     [SerializeField] Transform innerModal;
-    [SerializeField] Text point_val;
+    [SerializeField] public Text point_val;
     [SerializeField] Text cost_gold_val;
     [SerializeField] Text cost_food_val;
+    [SerializeField] Text hq_lv_val;
+
     [Tooltip("분야별 배율 관련 영역")]
     [SerializeField] IngameUpgradeHandler[] magnifications;
 
     public void HqUpgrade() {
-        int hq_lv_index = hqLevel - 1;
-
-        if (icm.upgradeInfos[hq_lv_index].upgradeCost.food < Food &&
-                icm.upgradeInfos[hq_lv_index].upgradeCost.gold < Gold) {
-            Debug.Log("2단계 업글");
+        Debug.Log("HQ LV : " + hqLevel);
+        if (hqLevel == 4) return;
+        int hq_scriptable_index = hqLevel - 1;
+        if (icm.upgradeInfos[hq_scriptable_index].upgradeCost.food < Food &&
+                icm.upgradeInfos[hq_scriptable_index].upgradeCost.gold < Gold) {
             hqLevel++;
 
-            if(hq_lv_index == 0) {
-                icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold;
-                icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food;
+            //생산량 변동
+            if(hq_scriptable_index == 0) {
+                icm.productResources.gold.gold += icm.upgradeInfos[hq_scriptable_index].product.gold;
+                icm.productResources.food.food += icm.upgradeInfos[hq_scriptable_index].product.food;
             }
             else {
-                icm.productResources.gold.gold += icm.upgradeInfos[hq_lv_index].product.gold - icm.upgradeInfos[hq_lv_index - 1].product.gold;
-                icm.productResources.food.food += icm.upgradeInfos[hq_lv_index].product.food - icm.upgradeInfos[hq_lv_index - 1].product.food;
+                icm.productResources.gold.gold += icm.upgradeInfos[hq_scriptable_index].product.gold - icm.upgradeInfos[hq_scriptable_index - 1].product.gold;
+                icm.productResources.food.food += icm.upgradeInfos[hq_scriptable_index].product.food - icm.upgradeInfos[hq_scriptable_index - 1].product.food;
             }
 
-            Food -= icm.upgradeInfos[hq_lv_index].upgradeCost.food;
-            Gold -= icm.upgradeInfos[hq_lv_index].upgradeCost.gold;
+            //자원 소비
+            Food -= icm.upgradeInfos[hq_scriptable_index].upgradeCost.food;
+            Gold -= icm.upgradeInfos[hq_scriptable_index].upgradeCost.gold;
 
-            icm.DecideUnActiveBuilding();
+            //업그레이드 비용 표시
+            if (hqLevel == 4) {
+                cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
+                cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
+            } 
+            else {
+                cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
+                cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
+            }
+
+            Point += 10;
+            GetComponent<IngameUpgradeStream>().Point += 10;
+            hq_lv_val.text = "Lv" + hqLevel;
+            //icm.DecideUnActiveBuilding();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
         else {
-            if (!warningOn)
-                StartCoroutine(HqUpgradeWarning());
+            Debug.Log("HQ 업그레이드를 위한 자원 부족");
+            //if (!warningOn)
+            //    StartCoroutine(HqUpgradeWarning());
         }
 
-        if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
-            icm.CancleUnActiveBuilding();
-        if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
-            icm.CancleUnActiveBuilding();
-        commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
+        //if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
+        //    icm.CancleUnActiveBuilding();
+        //if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
+        //    icm.CancleUnActiveBuilding();
+        //commandButtons.parent.GetChild(2).GetChild(2).GetComponent<Text>().text = hqLevel.ToString() + ".Lv";
         PrintResource();
     }
 
@@ -450,6 +467,16 @@ public partial class PlayerController {
         foreach(IngameUpgradeHandler handler in magnifications) {
             handler.Init(icm.myBuildings_mags);
         }
+        GetComponent<IngameUpgradeStream>().Init();
+
+        if(hqLevel == 4) {
+            cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
+            cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
+        }
+        else {
+            cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
+            cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
+        }
 
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
     }
@@ -463,6 +490,9 @@ public partial class PlayerController {
         horizontalScrollSnap.enabled = true;
         var scrollRect = transform.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
         scrollRect.enabled = true;
+
+        GameObject uiPanel = transform.Find("UpgradeModal").gameObject;
+        uiPanel.SetActive(false);
     }
 
     public bool isUpgradeModalActivate() {
