@@ -176,6 +176,12 @@ public class IngameCityManager : MonoBehaviour {
         //StartCoroutine("Repaircity");
     }
 
+    public Magnification SearchMags(string key) {
+        Magnification result = null;
+        myBuildings_mags.ForEach(x => { if(x.key.CompareTo(key)==0) result = x; });
+        return result;
+    }
+
     private void Update() {
         //if (Input.GetMouseButtonDown(0)) {
         //    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
