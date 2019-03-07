@@ -76,5 +76,6 @@ public class IngameUpgradeStream : MonoBehaviour {
             }
         }
         playerController.CloseUpgradeModal();
+        playerController.ChangeBtnMagText();
     }
 }
