@@ -441,6 +441,7 @@ public partial class PlayerController {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
         else {
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             Debug.Log("HQ 업그레이드를 위한 자원 부족");
             //if (!warningOn)
             //    StartCoroutine(HqUpgradeWarning());
