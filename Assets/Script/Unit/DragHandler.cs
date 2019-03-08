@@ -40,7 +40,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public void OnBeginDrag (PointerEventData eventData) {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
-        if (deckSettingController.picking == true) return;
+        if (dropHandler.setObject != null) return;
         dropHandler.setObject = setObject;
         dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
@@ -91,6 +91,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public void OnDrag(PointerEventData eventData) {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
+        if (dropHandler.setObject != setObject) return;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
