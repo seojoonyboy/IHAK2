@@ -35,12 +35,13 @@ public class IngameSceneUIController : MonoBehaviour {
     private HorizontalScrollSnap hss;
     private GameObject city;
     private IngameEnemyGenerator ieg;
-    [HideInInspector]
     public bool isPlaying = true;
     private float time = 300;
     private float baseCameraSize = 957.0f;
     private float baseScreenHeight = 1920.0f;
     private float screenRate;
+    [SerializeField] IngameCityManager.BuildingInfo enemyHQ;
+    [SerializeField] IngameCityManager.BuildingInfo playerHQ;
 
     public static int deckId;
 
@@ -118,6 +119,8 @@ public class IngameSceneUIController : MonoBehaviour {
         dummyRankBtn.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = AccountManager.Instance.userInfos.nickname;
         StartCoroutine("EnemyRepair");
         Debug.Log(hss.transform.GetChild(0).position);
+        enemyHQ = ieg.ingameCityManager.enemyHQ;
+        playerHQ = ieg.ingameCityManager.playerHQ;
     }
 
     private void Update() {
@@ -137,12 +140,11 @@ public class IngameSceneUIController : MonoBehaviour {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
-            if (ieg.ingameCityManager.enemyBuildingsInfo[4].hp < 1) {
+            if (enemyHQ.hp < 1) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
-
-            if(ieg.ingameCityManager.myBuildingsInfo[4].hp < 1) {
+            if(playerHQ.hp < 1) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }

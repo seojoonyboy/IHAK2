@@ -172,7 +172,7 @@ public class IngameCityManager : MonoBehaviour {
         SetHQ();
         SetEnemyTotalHP();
         StartCoroutine("Repair");
-        //StartCoroutine("TakingDamage");
+        StartCoroutine("TakingDamage");
         //StartCoroutine("Repaircity");
     }
 
@@ -895,7 +895,7 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     public void SetHQ() {
-        enemyHQ = enemyBuildingsInfo.Find(x => x.tileNum == enemyBuildingsInfo.Count / 2);
+        enemyHQ = enemyBuildingsInfo.Find(x => x.tileNum == 12);
         playerHQ = myBuildingsInfo.Find(x => x.tileNum == 12);
     }
 
@@ -953,10 +953,10 @@ public class IngameCityManager : MonoBehaviour {
     IEnumerator TakingDamage() {
         while (ingameSceneUIController.isPlaying == true) {
             yield return new WaitForSeconds(1f);
-            TakeDamage(Target.ME, 6, 10 );
-            TakeDamage(Target.ME, 7, 10);
-            TakeDamage(Target.ME, 8, 10);
-            TakeDamage(Target.ME, 13, 5);
+            TakeDamage(Target.ME, 12, 100 );
+            TakeDamage(Target.ME, 18, 10);
+            //TakeDamage(Target.ME, 8, 10);
+            //TakeDamage(Target.ME, 13, 5);
         }
     }
 
