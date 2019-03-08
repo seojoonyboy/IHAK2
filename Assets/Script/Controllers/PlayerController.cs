@@ -402,8 +402,8 @@ public partial class PlayerController {
         Debug.Log("HQ LV : " + hqLevel);
         if (hqLevel == 4) return;
         int hq_scriptable_index = hqLevel - 1;
-        if (icm.upgradeInfos[hq_scriptable_index].upgradeCost.food < Food &&
-                icm.upgradeInfos[hq_scriptable_index].upgradeCost.gold < Gold) {
+        if (icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food < Food &&
+                icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold < Gold) {
             hqLevel++;
 
             //생산량 변동
@@ -417,9 +417,11 @@ public partial class PlayerController {
             }
 
             //자원 소비
-            Food -= icm.upgradeInfos[hq_scriptable_index].upgradeCost.food;
-            Gold -= icm.upgradeInfos[hq_scriptable_index].upgradeCost.gold;
+            Food -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food;
+            Gold -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold;
 
+            Debug.Log(icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food + " 식량 소모");
+            Debug.Log(icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold + " 골드 소모");
             //업그레이드 비용 표시
             if (hqLevel == 4) {
                 cost_food_val.text = "000";
@@ -438,6 +440,7 @@ public partial class PlayerController {
 
             icm.myBuildingsInfo.Find(x => x.cardInfo.type == "HQ").gameObject.GetComponent<TileSpineAnimation>().Upgrade();
             //icm.DecideUnActiveBuilding();
+            PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, null);
         }
         else {
