@@ -71,6 +71,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.3f);
             }
+            IngameAlarm.instance.SetAlarm("적의 Wave가 출현합니다!");
             CurrentWave++;
         }
     }
