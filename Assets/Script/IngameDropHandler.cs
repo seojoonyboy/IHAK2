@@ -91,6 +91,7 @@ public class IngameDropHandler : MonoBehaviour {
     private void SkillActive(Skill data, int rarity) {
         if (!CheckResouceOK(data.cost)) return;
         if (!canSpell) {
+            IngameAlarm.instance.SetAlarm("스킬 쿨타임입니다!");
             Debug.Log("스킬 쿨타임!");
             return;
         }
@@ -112,6 +113,7 @@ public class IngameDropHandler : MonoBehaviour {
         }
         else {
             Debug.Log("자원이 부족합니다.");
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             return false;
         }
     }
