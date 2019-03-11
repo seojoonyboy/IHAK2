@@ -172,7 +172,7 @@ public class IngameCityManager : MonoBehaviour {
         SetHQ();
         SetEnemyTotalHP();
         StartCoroutine("Repair");
-        StartCoroutine("TakingDamage");
+        //StartCoroutine("TakingDamage");
         //StartCoroutine("Repaircity");
     }
 
@@ -948,10 +948,18 @@ public class IngameCityManager : MonoBehaviour {
     IEnumerator TakingDamage() {
         while (ingameSceneUIController.isPlaying == true) {
             yield return new WaitForSeconds(1f);
-            TakeDamage(Target.ME, 16, 20);
-            TakeDamage(Target.ME, 18, 10);
-            //TakeDamage(Target.ME, 8, 10);
-            //TakeDamage(Target.ME, 13, 5);
+            //TakeDamage(Target.ME, 11, 50);
+            //TakeDamage(Target.ME, 13, 50);
+            //TakeDamage(Target.ME, 12, 50 );
+            
+            //TakeDamage(Target.ME, 6, 50);
+            //TakeDamage(Target.ME, 7, 50);
+            //TakeDamage(Target.ME, 8, 50);
+
+            //TakeDamage(Target.ME, 18, 50);
+            //TakeDamage(Target.ME, 17, 50);
+            //TakeDamage(Target.ME, 16, 50);
+
         }
     }
 
