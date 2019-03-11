@@ -72,6 +72,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         else {
             Hand.Add(index);
             origin[index].SetActive(true);
+            origin[index].transform.SetAsLastSibling();
         }
     }
 
