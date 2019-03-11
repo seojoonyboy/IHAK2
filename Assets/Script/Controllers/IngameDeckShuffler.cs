@@ -24,6 +24,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     [SerializeField] List<GameObject> origin = new List<GameObject>();    //원본 액티브 카드 리스트
     [SerializeField] List<int> Deck = new List<int>();  //덱 인덱스 리스트
     [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
+    [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
 
     TileGroup tileGroup;
     void Awake() {
@@ -39,7 +40,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnHqUpgraded);
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
     }
 
     private void OnUnitUpgraded(Enum Event_Type, Component Sender, object Param) {
@@ -68,6 +69,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         int index = card.GetComponent<Index>().Id;
         Deck.Remove(index);
         Hand.Remove(index);
+        Grave.Add(index);
         card.SetActive(false);
     }
 
@@ -76,8 +78,15 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (card == null) return;
         
         int index = card.GetComponent<Index>().Id;
+        Grave.Remove(index);
         Deck.Add(index);
-        RefillCard();
+
+        int num = HAND_MAX_COUNT - Hand.Count;
+        for(int i=0; i<num; i++) {
+            DrawCard();
+        }
+
+        card.GetComponent<IngameDragHandler>().CanvaseUpdate();
     }
 
     public void InitCard() {
@@ -85,7 +94,8 @@ public class IngameDeckShuffler : MonoBehaviour {
             Destroy(card);
         }
         origin.Clear();
-
+        Deck.Clear();
+        Hand.Clear();
 
         int index = 0;
         foreach (ActiveCard unitCard in tileGroup.units) {
@@ -103,6 +113,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.AddComponent<Index>().Id = index;
             card.SetActive(false);
             origin.Add(card);
+            Deck.Add(index);
             index++;
         }
         foreach (ActiveCard spellCard in tileGroup.spells) {
@@ -120,59 +131,31 @@ public class IngameDeckShuffler : MonoBehaviour {
 
             card.AddComponent<Index>().Id = index;
             origin.Add(card);
+            Deck.Add(index);
             card.SetActive(false);
             index++;
         }
 
-        HandDeck();
+        for(int i=0; i<HAND_MAX_COUNT; i++) {
+            DrawCard();
+        }
     }
 
-    //initialize
-    public void HandDeck() {
+    //카드 뽑기
+    public void DrawCard() {
         List<int> pool = new List<int>();
-        foreach(GameObject item in origin) {
-            ActiveCardInfo info = item.GetComponent<ActiveCardInfo>();
-            if(canUseCard(info)) pool.Add(item.GetComponent<Index>().Id);
+        foreach (int item in Deck) {
+            ActiveCardInfo info = origin[item].GetComponent<ActiveCardInfo>();
+            if (canUseCard(info)) pool.Add(origin[item].GetComponent<Index>().Id);
         }
-        //IEnumerable<int> query =
-        //    from x in origin
-        //    select x.GetComponent<Index>().Id;
-        //var pool = query.ToList();
-        //foreach(int asdsa in query) {
-        //    Debug.Log(asdsa);
-        //}
-        int[] rndNums = null;
-        if (pool.Count > HAND_MAX_COUNT) {
-            rndNums = RndNumGenerator.getRandomInt(HAND_MAX_COUNT, pool.ToArray());
-        }
-        else rndNums = pool.ToArray();
+        if (pool.Count == 0) return;
 
-        Deck.Clear();
-        Hand.Clear();
-
-        for (int i = 0; i < rndNums.Length; i++) {
-            Hand.Add(rndNums[i]);
-            origin[rndNums[i]].SetActive(true);
-            origin[rndNums[i]].transform.SetAsLastSibling();
-            pool.Remove(rndNums[i]);
-        }
-
-        for(int i=0; i<pool.Count; i++) {
-            Deck.Add(pool[i]);
-        }
-    }
-
-    public void RefillCard() {
-        if (Hand.Count == HAND_MAX_COUNT) return;
-        if (Deck.Count == 0) return;
-        var choiceIndex = rand.Next(Deck.Count);
-        var choice = Deck[choiceIndex];
-
-        //Debug.Log("Choice : " + choice);
-        Deck.RemoveAt(choiceIndex);
-        Hand.Add(choice);
-        origin[choice].SetActive(true);
-        origin[choice].transform.SetAsLastSibling();
+        int selectedIndex = rand.Next(0, Deck.Count);
+        Hand.Add(Deck[selectedIndex]);
+        Debug.Log(Deck[selectedIndex]);
+        origin[Deck[selectedIndex]].SetActive(true);
+        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
+        Deck.RemoveAt(selectedIndex);
     }
 
     //card use
@@ -187,7 +170,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         Deck.Add(id);
         Hand.Remove(id);
 
-        RefillCard();
+        DrawCard();
 
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
         ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
@@ -240,7 +223,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         coolComp.StartCool();
 
         for (int i = 0; i < HAND_MAX_COUNT; i++) {
-            RefillCard();
+            DrawCard();
         }
     }
 }

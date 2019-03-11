@@ -16,21 +16,23 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void CancelDrag() {
+        if (dropHandler == null || dropHandler.selectedObject == null) return; 
         transform.position = startPosition;
         transform.localScale = startScale;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
 
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+        OnEndDrag(null);
+    }
 
+    public void CanvaseUpdate() {
         Canvas.ForceUpdateCanvases();
         var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
         hlg.CalculateLayoutInputHorizontal();
         hlg.CalculateLayoutInputVertical();
         hlg.SetLayoutHorizontal();
         hlg.SetLayoutVertical();
-
-        OnEndDrag(null);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -56,19 +58,15 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        if (eventData == null) return;
         transform.position = startPosition;
         transform.localScale = startScale;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
         transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
-        Canvas.ForceUpdateCanvases();
-        var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
-        hlg.CalculateLayoutInputHorizontal();
-        hlg.CalculateLayoutInputVertical();
-        hlg.SetLayoutHorizontal();
-        hlg.SetLayoutVertical();
+
+        CanvaseUpdate();
+        if (eventData == null) return;
 
         ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolComp != null) {
