@@ -783,9 +783,6 @@ public class IngameCityManager : MonoBehaviour {
         }
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
-        if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
-            ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
-        }
     }
 
     private void RecoverProductPower(BuildingInfo bi) {
@@ -808,11 +805,9 @@ public class IngameCityManager : MonoBehaviour {
             default:
                 break;
         }
+
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
-        if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
-            ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
-        }
     }
 
 
@@ -953,7 +948,7 @@ public class IngameCityManager : MonoBehaviour {
     IEnumerator TakingDamage() {
         while (ingameSceneUIController.isPlaying == true) {
             yield return new WaitForSeconds(1f);
-            TakeDamage(Target.ME, 12, 100 );
+            TakeDamage(Target.ME, 16, 20);
             TakeDamage(Target.ME, 18, 10);
             //TakeDamage(Target.ME, 8, 10);
             //TakeDamage(Target.ME, 13, 5);

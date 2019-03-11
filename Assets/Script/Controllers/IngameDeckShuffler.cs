@@ -167,7 +167,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (match == null) return;
 
         match.SetActive(false);
-        Deck.Add(id);
+        //Deck.Add(id);
         Hand.Remove(id);
 
         DrawCard();
