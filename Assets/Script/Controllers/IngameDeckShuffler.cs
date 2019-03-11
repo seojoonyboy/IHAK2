@@ -62,6 +62,9 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void DeactiveCard(string id, GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
+
+        card.GetComponent<IngameDragHandler>().CancelDrag();
+
         int index = card.GetComponent<Index>().Id;
         Deck.Remove(index);
         Hand.Remove(index);
@@ -71,9 +74,9 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void ActivateCard(string id, GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
+        
         int index = card.GetComponent<Index>().Id;
         Deck.Add(index);
-
         RefillCard();
     }
 
@@ -88,7 +91,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         foreach (ActiveCard unitCard in tileGroup.units) {
             Unit unit = unitCard.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
-            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
+            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name + unitCard.parentBuilding.transform.parent.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
