@@ -63,6 +63,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         if(isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
             comp.coolTime = card.GetComponent<ActiveCardInfo>().data.baseSpec.unit.coolTime;
+            comp.cards = origin;
             comp.StartCool();
         }
 
@@ -193,17 +194,13 @@ public class IngameDeckShuffler : MonoBehaviour {
         DrawCard();
 
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
-        ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
-        cooltimeComp.cards = origin;
 
-        if (!string.IsNullOrEmpty(activeCard.baseSpec.unit.name)) {
-            cooltimeComp.coolTime = activeCard.baseSpec.unit.coolTime;
-        }
-        else if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+        if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+            ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+            cooltimeComp.cards = origin;
             cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
+            cooltimeComp.StartCool();
         }
-
-        cooltimeComp.StartCool();
     }
 
     private bool canUseCard(ActiveCardInfo data) {
