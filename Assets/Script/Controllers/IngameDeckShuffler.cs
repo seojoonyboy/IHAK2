@@ -56,6 +56,19 @@ public class IngameDeckShuffler : MonoBehaviour {
         //}
     }
 
+    public void HeroReturn(GameObject parentBuilding) {
+        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+
+        int index = card.GetComponent<Index>().Id;
+        if (Hand.Count == HAND_MAX_COUNT) {
+            Deck.Add(index);
+        }
+        else {
+            Hand.Add(index);
+            origin[index].SetActive(true);
+        }
+    }
+
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
         InitCard();
     }
