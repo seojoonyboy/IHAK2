@@ -56,10 +56,16 @@ public class IngameDeckShuffler : MonoBehaviour {
         //}
     }
 
-    public void HeroReturn(GameObject parentBuilding) {
+    public void HeroReturn(GameObject parentBuilding, bool isDead) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
 
         int index = card.GetComponent<Index>().Id;
+        if(isDead) {
+            ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            comp.coolTime = card.GetComponent<ActiveCardInfo>().data.unit.coolTime;
+            comp.StartCool();
+        }
+
         if (Hand.Count == HAND_MAX_COUNT) {
             Deck.Add(index);
         }
