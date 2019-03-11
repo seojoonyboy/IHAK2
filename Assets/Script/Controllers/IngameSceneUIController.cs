@@ -29,7 +29,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] GameObject repairAlert;
     [SerializeField] Camera territoryCamera;
     [SerializeField] Text turn;
-    [SerializeField] Transform attackCard;
+    [SerializeField] public Transform attackCard;
     
 
     private HorizontalScrollSnap hss;

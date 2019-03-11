@@ -9,7 +9,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     Vector3 startScale;
     Vector3 startPosition;
     Camera cam;
-    bool canDrag = true;
 
     void Start() {
         dropHandler = GetComponentInParent<IngameDropHandler>();
@@ -17,13 +16,24 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void CancelDrag() {
-        canDrag = false;
+        transform.position = startPosition;
+        transform.localScale = startScale;
+        dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
+
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+
+        Canvas.ForceUpdateCanvases();
+        var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
+        hlg.CalculateLayoutInputHorizontal();
+        hlg.CalculateLayoutInputVertical();
+        hlg.SetLayoutHorizontal();
+        hlg.SetLayoutVertical();
+
+        OnEndDrag(null);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        canDrag = true;
         dropHandler.selectedObject = gameObject;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = false;
         startPosition = transform.position;
@@ -31,11 +41,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (!canDrag) {
-            OnEndDrag(eventData);
-            eventData.pointerDrag = null;
-        }
-
         transform.position = Input.mousePosition;
 
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
@@ -51,6 +56,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (eventData == null) return;
         transform.position = startPosition;
         transform.localScale = startScale;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
@@ -69,6 +75,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
             Debug.Log("쿨타임! 사용불가");
             return;
         }
+
         dropHandler.OnDrop();
     }
 }
