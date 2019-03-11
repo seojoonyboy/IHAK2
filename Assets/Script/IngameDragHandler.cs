@@ -9,12 +9,21 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     Vector3 startScale;
     Vector3 startPosition;
     Camera cam;
+    bool canDrag = true;
+
     void Start() {
         dropHandler = GetComponentInParent<IngameDropHandler>();
         cam = Camera.main;
     }
 
+    public void CancelDrag() {
+        canDrag = false;
+        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
+        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+    }
+
     public void OnBeginDrag(PointerEventData eventData) {
+        canDrag = true;
         dropHandler.selectedObject = gameObject;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = false;
         startPosition = transform.position;
@@ -22,6 +31,11 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (!canDrag) {
+            OnEndDrag(eventData);
+            eventData.pointerDrag = null;
+        }
+
         transform.position = Input.mousePosition;
 
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
@@ -29,10 +43,10 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         m_PointEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
-        if(results[0].gameObject.name.CompareTo("Horizontal Scroll Snap")!=0) return;
+        if (results[0].gameObject.name.CompareTo("Horizontal Scroll Snap") != 0) return;
 
         transform.GetComponent<Image>().enabled = false;
-        foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
+        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = false;
     }
 
