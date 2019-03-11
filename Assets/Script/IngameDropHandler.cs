@@ -34,7 +34,8 @@ public class IngameDropHandler : MonoBehaviour {
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
         int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().data.card.rarity;
         if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.baseSpec.skill, rarity);
-        else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data.baseSpec.unit, rarity);
+        else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data.parentBuilding, card.data.baseSpec.unit, rarity);
+        
     }
 
     private bool IsCardDropOK() {
@@ -48,7 +49,7 @@ public class IngameDropHandler : MonoBehaviour {
         return results[0].gameObject.name.CompareTo(StrB) == 0;
     }
 
-    private void UnitSummon(Unit data, int rarity) {
+    private void UnitSummon(GameObject parentBuilding, Unit data, int rarity) {
         if (!CheckResouceOK(data.cost)) return;
 
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -70,7 +71,7 @@ public class IngameDropHandler : MonoBehaviour {
             GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[summonPos]).transform);
             //wolf.layer = layer;
             UnitAI unitAI = wolf.GetComponent<UnitAI>();
-            unitAI.SetUnitData(data);
+            unitAI.SetUnitData(data, parentBuilding);
             if(data.id != "n_uu_0101") {
                 GameObject Name = wolf.transform.Find("Name").gameObject;
                 Name.SetActive(true);

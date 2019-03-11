@@ -29,6 +29,7 @@ public class UnitAI : MonoBehaviour {
 
 	private static IngameCityManager cityManager;
 	private static Magnification unitMagnificate;
+	private static IngameDeckShuffler ingameDeckShuffler;
 
     public GameObject ontile;
 	public bool protecting = false;
@@ -37,6 +38,7 @@ public class UnitAI : MonoBehaviour {
 	private List<IngameCityManager.BuildingInfo> buildingInfos;
 	private IngameCityManager.Target targetEnum;
 	private UnitSpine unitSpine;
+	private GameObject parentBuildingObject;
 
 	void Start () {
 		detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
@@ -75,16 +77,20 @@ public class UnitAI : MonoBehaviour {
 		healthBar = transform.GetChild(1).GetChild(1);
 		unitSpine = GetComponentInChildren<UnitSpine>();
 		if(cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
+		if(ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
 		if(unitMagnificate == null) unitMagnificate = cityManager.SearchMags("military");
+		
 	}
 
-    public void SetUnitData(Unit unit) {
+    public void SetUnitData(Unit unit, GameObject parentBuildingObject = null) {
 		Init();
 		this.unit = unit;
 		moveSpeed = unit.moveSpeed;
 		float temphealth = unit.hitPoint - maxHealth;
 		maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.current_mag : 1f);
         health += temphealth;
+		if(parentBuildingObject != null)
+			this.parentBuildingObject = parentBuildingObject;
 		//agent.maxSpeed = moveSpeed;
 	}
 
@@ -302,10 +308,15 @@ public class UnitAI : MonoBehaviour {
                 ontile.GetComponent<TileCollision>().check = false;
             }
         }
-        
+        ingameDeckShuffler.HeroReturn(parentBuildingObject, true);
         Destroy(gameObject);
     
     }
+
+	public void ReturnDeck() {
+		ingameDeckShuffler.HeroReturn(parentBuildingObject, false);
+		Destroy(gameObject);
+	}
    
 	public void NearEnemy(Collider2D other) {
 		targetUnit = other.GetComponent<UnitAI>();
