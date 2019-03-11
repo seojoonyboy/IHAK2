@@ -251,7 +251,7 @@ public partial class DeckListController {
                     if (!string.IsNullOrEmpty(card.unit.name)) {
                         ActiveCard activeCard = new ActiveCard();
                         activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                        activeCard.unit = card.unit;
+                        activeCard.baseSpec.unit = card.unit;
                         tileGroup.units.Add(activeCard);
                     }
 
@@ -259,7 +259,7 @@ public partial class DeckListController {
                         foreach(Skill skill in card.activeSkills) {
                             ActiveCard activeCard = new ActiveCard();
                             activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                            activeCard.skill = skill;
+                            activeCard.baseSpec.skill = skill;
                             tileGroup.spells.Add(activeCard);
                         }
                     }
