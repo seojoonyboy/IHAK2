@@ -64,6 +64,8 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+
+        CanvaseUpdate();
         if (eventData == null) return;
 
         ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
