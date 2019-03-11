@@ -62,7 +62,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         int index = card.GetComponent<Index>().Id;
         if(isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-            comp.coolTime = card.GetComponent<ActiveCardInfo>().data.unit.coolTime;
+            comp.coolTime = card.GetComponent<ActiveCardInfo>().data.baseSpec.unit.coolTime;
             comp.StartCool();
         }
 
@@ -119,7 +119,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         int index = 0;
         foreach (ActiveCard unitCard in tileGroup.units) {
-            Unit unit = unitCard.unit;
+            Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name + unitCard.parentBuilding.transform.parent.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -137,7 +137,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             index++;
         }
         foreach (ActiveCard spellCard in tileGroup.spells) {
-            Skill skill = spellCard.skill;
+            Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, cardParent);
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -196,20 +196,20 @@ public class IngameDeckShuffler : MonoBehaviour {
         ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
         cooltimeComp.cards = origin;
 
-        if (!string.IsNullOrEmpty(activeCard.unit.name)) {
-            cooltimeComp.coolTime = activeCard.unit.coolTime;
+        if (!string.IsNullOrEmpty(activeCard.baseSpec.unit.name)) {
+            cooltimeComp.coolTime = activeCard.baseSpec.unit.coolTime;
         }
-        else if (!string.IsNullOrEmpty(activeCard.skill.name)) {
-            cooltimeComp.coolTime = activeCard.skill.coolTime;
+        else if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+            cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
         }
 
         cooltimeComp.StartCool();
     }
 
     private bool canUseCard(ActiveCardInfo data) {
-        Cost cost = data.data.unit.cost;
-        Unit unit = data.data.unit;
-        Skill skill = data.data.skill;
+        Cost cost = data.data.baseSpec.unit.cost;
+        Unit unit = data.data.baseSpec.unit;
+        Skill skill = data.data.baseSpec.skill;
 
         if (!string.IsNullOrEmpty(unit.name)) {
             if (playerController.hqLevel >= unit.tierNeed) return true;

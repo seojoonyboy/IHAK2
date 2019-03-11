@@ -154,11 +154,11 @@ public class IngameSceneUIController : MonoBehaviour {
                     bool end = true;
                     for (int i = 0; i < attackCard.childCount; i++) {
                         ActiveCardInfo ac = attackCard.GetChild(i).GetComponent<ActiveCardInfo>();
-                        if (!string.IsNullOrEmpty(ac.data.unit.id) && pc.isEnoughResources(ac.data.unit.cost)) {
+                        if (!string.IsNullOrEmpty(ac.data.baseSpec.unit.id) && pc.isEnoughResources(ac.data.baseSpec.unit.cost)) {
                             end = false;
                             break;
                         }
-                        else if (ac.data.skill.id != 0 && pc.isEnoughResources(ac.data.skill.cost)) {
+                        else if (ac.data.baseSpec.skill.id != 0 && pc.isEnoughResources(ac.data.baseSpec.skill.cost)) {
                             end = false;
                             break;
                         }
