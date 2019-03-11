@@ -62,6 +62,8 @@ public class IngameDeckShuffler : MonoBehaviour {
     public void DeactiveCard(string id, GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
+
+        card.GetComponent<IngameDragHandler>().CancelDrag();
         int index = card.GetComponent<Index>().Id;
         Deck.Remove(index);
         Hand.Remove(index);
