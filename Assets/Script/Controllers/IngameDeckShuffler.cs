@@ -58,12 +58,15 @@ public class IngameDeckShuffler : MonoBehaviour {
 
     public void HeroReturn(GameObject parentBuilding, bool isDead) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x => x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
+        
 
         int index = card.GetComponent<Index>().Id;
-        if(isDead) {
+        buildingInfos.activate = true;
+        if (isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
             comp.coolTime = card.GetComponent<ActiveCardInfo>().data.baseSpec.unit.coolTime;
-            comp.cards = origin;
+            comp.cards = origin;            
             comp.StartCool();
         }
 
@@ -192,19 +195,20 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (match == null) return;
 
         match.SetActive(false);
-        //Deck.Add(id);
         Hand.Remove(id);
 
-        DrawCard();
-
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
-
+        //spell은 쿨타임
+        //유닛은 핸드, 덱에서 제거
         if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+            Deck.Add(id);
+
             ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
             cooltimeComp.cards = origin;
             cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
             cooltimeComp.StartCool();
         }
+        DrawCard();
     }
 
     private bool canUseCard(ActiveCardInfo data) {

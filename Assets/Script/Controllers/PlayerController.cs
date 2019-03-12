@@ -6,6 +6,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
+using System;
 
 public partial class PlayerController : MonoBehaviour {
 
@@ -14,11 +15,12 @@ public partial class PlayerController : MonoBehaviour {
         FOOD = 1,
         ENVIRONMENT = 2,
         REPAIR = 3,
+        MILITARY = 4
     }
 
     public class PlayerResource {
-        public int gold = 50;
-        public int food = 50;
+        public uint gold = 50;
+        public uint food = 50;
         public int turn = 500;
         public int environment = 0;
     }
@@ -52,7 +54,7 @@ public partial class PlayerController : MonoBehaviour {
         get { return icm; }
     }
 
-    public int Food {
+    public uint Food {
         get { return resourceClass.food; }
         set {
             resourceClass.food = value;
@@ -60,7 +62,7 @@ public partial class PlayerController : MonoBehaviour {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
-    public int Gold {
+    public uint Gold {
         get { return resourceClass.gold; }
         set {
             resourceClass.gold = value;
@@ -74,14 +76,6 @@ public partial class PlayerController : MonoBehaviour {
             resourceClass.environment = value;
             PrintResource();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
-        }
-    }
-
-    public int Point {
-        get { return point; }
-        set {
-            point = value;
-            point_val.text = point.ToString();
         }
     }
     [Header(" - Player")]
@@ -123,7 +117,7 @@ public partial class PlayerController : MonoBehaviour {
         commandButtons.GetChild(1).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.FOOD));
         commandButtons.GetChild(2).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.ENVIRONMENT));
         commandButtons.GetChild(3).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.REPAIR));
-
+        commandButtons.GetChild(4).GetComponent<Button>().OnClickAsObservable().Where(_ => resourceClass.turn > 0).Subscribe(_ => ClickButton(Buttons.MILITARY));
 
         icm.productResources.gold.gold += icm.upgradeInfos[0].product.gold;
         icm.productResources.food.food += icm.upgradeInfos[0].product.food;
@@ -133,122 +127,45 @@ public partial class PlayerController : MonoBehaviour {
         SetPlayerConsumeResource();
         playing = true;
         StartCoroutine(AoutomaticSystem());
-    }
 
-    private void OnMouseDown() {
-        Debug.Log("클릭!");
+        //Food = 10000;
+        //Gold = 10000;
+
+        UpdateUpgradeCost();
     }
 
     private void ClickButton(Buttons btn) { //생산 업그레이드
+        bool result = false;
         switch (btn) {
             case Buttons.GOLD:
-                int goldEnv = (int)Mathf.Round((float)icm.productResources.gold.environment * envBonusProduce);
-                if (Env + goldEnv >= -1250 && Env + goldEnv <= 1250) {
-                    if (icm.productResources.gold.gold > 0) {
-                        Gold += (int)Mathf.Round((float)icm.productResources.gold.gold * envBonusProduce * icm.myBuildings_mags[2].current_mag);
-                        Food += (int)Mathf.Round((float)icm.productResources.gold.food * envBonusProduce * icm.myBuildings_mags[2].current_mag);
-                        if (Env >= -1250 && Env <= 1250)
-                            Env += (int)Mathf.Round(goldEnv * icm.myBuildings_mags[2].current_mag);
-#if HACK_PRODUCT_POWER
-                        Gold += 1000;
-#endif
-                        resourceClass.turn--;
-                        //ShowCoinAnimation(0);
-                        ShowUpgradeAnimation(0);
-                        //PrintProduct(1);
-                        //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
-                        //    icm.DecideUnActiveBuilding();
-                        //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
-                        //    icm.DecideUnActiveBuilding();
-                        scoreManager.AddScore(icm.productResources.gold.gold, IngameScoreManager.ScoreType.Product);
-                    }
-                }
-                //else {
-                //    Gold += icm.productResources.gold.gold;
-                //    Food += icm.productResources.gold.food;
-                //    //Env = 300;
-                //    //icm.SetUnactiveBuilding();
-                //    resourceClass.turn--;
-                //}
-                //scoreManager.AddScore(icm.productResources.gold.gold, IngameScoreManager.ScoreType.Product);
+                result = CanUpgrade(icm.myBuildings_mags[0]);
+                ShowUpgradeAnimation(0);
                 break;
             case Buttons.FOOD:
-                int foodEnv = (int)Mathf.Round((float)icm.productResources.food.environment * envBonusProduce);
-                if (Env + foodEnv >= -1250 && Env + foodEnv <= 1250) {
-                    if (icm.productResources.food.food > 0) {
-                        Gold += (int)Mathf.Round((float)icm.productResources.food.gold * envBonusProduce * icm.myBuildings_mags[1].current_mag);
-                        Food += (int)Mathf.Round((float)icm.productResources.food.food * envBonusProduce * icm.myBuildings_mags[1].current_mag);
-                        if (Env >= -1250 && Env <= 1250)
-                            Env += (int)Mathf.Round(foodEnv * icm.myBuildings_mags[1].current_mag);
-#if HACK_PRODUCT_POWER
-                        Food += 1000;
-#endif
-                        resourceClass.turn--;
-                        //ShowCoinAnimation(1);
-                        ShowUpgradeAnimation(1);
-                        //PrintProduct(2);
-                        //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
-                        //    icm.DecideUnActiveBuilding();
-                        //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
-                        //    icm.DecideUnActiveBuilding();
-                        scoreManager.AddScore(icm.productResources.food.food, IngameScoreManager.ScoreType.Product);
-                    }
-                }
-                //else {
-                //    Gold += icm.productResources.food.gold;
-                //    Food += icm.productResources.food.food;
-                //    //Env = 300;
-                //    //icm.SetUnactiveBuilding();
-                //    resourceClass.turn--;
-                //}
-                //scoreManager.AddScore(icm.productResources.food.food, IngameScoreManager.ScoreType.Product);
+                result = CanUpgrade(icm.myBuildings_mags[1]);
+                ShowUpgradeAnimation(1);
                 break;
             case Buttons.ENVIRONMENT:
-                int intEnv = (int)Mathf.Round((float)icm.productResources.env.environment * envBonusProduce);
-                if (Env >= -1250 && Env <= 1250) {
-                    if (icm.productResources.env.environment > 0) {
-                        if (Gold + icm.productResources.env.gold >= 0 && Food + icm.productResources.env.food >= 0) {
-                            Gold += (int)Mathf.Round((float)icm.productResources.env.gold * envBonusProduce * icm.myBuildings_mags[3].current_mag);
-                            Food += (int)Mathf.Round((float)icm.productResources.env.food * envBonusProduce * icm.myBuildings_mags[3].current_mag);
-                            Env += (int)Mathf.Round((float)icm.productResources.env.environment * envBonusProduce * icm.myBuildings_mags[3].current_mag);
-                            //ShowCoinAnimation(2);
-                            ShowUpgradeAnimation(2);
-                            if (Env > 1250) {
-                                scoreManager.AddScore(intEnv - (Env - 1250), IngameScoreManager.ScoreType.Product);
-                                Env = 1250;
-                            }
-                            else
-                                scoreManager.AddScore(intEnv, IngameScoreManager.ScoreType.Product);
-                            //if (Env >= 200 && icm.unactiveBuildingIndex1 != 100)
-                            //    icm.CancleUnActiveBuilding();
-                            //if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
-                            //    icm.CancleUnActiveBuilding();
-                            resourceClass.turn--;
-                            //PrintProduct(3);
-                        }
-                    }
-                }
+                result = CanUpgrade(icm.myBuildings_mags[2]);
+                ShowUpgradeAnimation(2);
+                break;
+            case Buttons.MILITARY:
+                result = CanUpgrade(icm.myBuildings_mags[3]);
+                ShowUpgradeAnimation(4);
                 break;
             case Buttons.REPAIR:
-                float destroyCount = icm.CityDestroyBuildingCount();
-                float calculate = MaxHpMulti * ((1f + (0.02f * destroyCount)) * (tileCount + hqLevel) / (tileCount * 1.5f));
-                goldConsume = Mathf.RoundToInt(calculate);
-
-                if (Gold >= 0 + goldConsume) {
-                    ShowCoinAnimation(3);
-                    icm.RepairPlayerCity();
-                    Gold -= goldConsume;
-                    resourceClass.turn--;
-                }
+                result = true;
+                ShowCoinAnimation(3);
                 break;
         }
-        PrimalEnvEfct();
-        PrintResource();
-        //if (resourceClass.turn == 0) {
-        //    IngameSceneUIController isc = gameObject.GetComponent<IngameSceneUIController>();
-        //    isc.isPlaying = false;
+        if (!result) {
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            return;
+        }
+        Upgrade(btn);
 
-        //}
+        PrintResource();
+        PrimalEnvEfct();
     }
 
     private void ShowCoinAnimation(int num) {
@@ -376,8 +293,8 @@ public partial class PlayerController : MonoBehaviour {
         while (positive) {
             yield return new WaitForSeconds(3.0f);
             //icm.DamagePlayerCity((int)Mathf.Round((15 / 2)));
-            Food += (int)Mathf.Round(Env / 5);
-            Gold -= (int)Mathf.Round(Env / 5);
+            Food += (uint)Mathf.Round(Env / 5);
+            Gold -= (uint)Mathf.Round(Env / 5);
         }
     }
 
@@ -414,10 +331,10 @@ public partial class PlayerController : MonoBehaviour {
                 ingameTimer.text += "0";
             ingameTimer.text += ((int)(time % 60)).ToString();
 
-            Gold += (int)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[2].current_mag);
-            Food += (int)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[2].current_mag);
+            Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication);
+            Food += (uint)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication);
             if (Env >= -600 && Env <= 600) {
-                Env += (int)Mathf.Round((float)icm.productResources.all.environment);
+                Env += (int)Mathf.Round((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication);
                 Env -= (int)Mathf.Round((icm.productResources.all.gold + icm.productResources.all.food) / time);
                 if (Env < -600)
                     Env = -600;
@@ -442,31 +359,96 @@ public partial class PlayerController : MonoBehaviour {
 /// </summary>
 public partial class PlayerController {
     private bool isUpgradeModalActivated = false;
+    [Header("- Upgrade")]
+    [SerializeField] Text IndustryUpgradeCost;
+    [SerializeField] Text FarmUpgradeCost;
+    [SerializeField] Text EnvUpgradeCost;
+    [SerializeField] Text MilitaryUpgradeCost;
 
-    [Header(" - UpgradeModal")]
-    [SerializeField] Transform innerModal;
-    [SerializeField] public Text point_val;
+    private bool CanUpgrade(Magnification magnification) {
+        if (magnification.foodCost > Food) return false;
+        if (magnification.goldCost > Gold) return false;
+        return true;
+    }
 
-    [SerializeField] Text cost_gold_val;
-    [SerializeField] Text cost_food_val;
-    [SerializeField] Text hq_lv_val;
+    private void Upgrade(Buttons btn) {
+        switch (btn) {
+            case Buttons.GOLD:
+                icm.myBuildings_mags[0].magnfication = icm.myBuildings_mags[0].lv * 1.8f;
+                icm.myBuildings_mags[0].lv++;
 
-    [SerializeField] Text hq_current_hp_val;
-    [SerializeField] Text hq_current_food_val;
-    [SerializeField] Text hq_current_gold_val;
-    [SerializeField] Text hq_current_env_val;
+                Food -= icm.myBuildings_mags[0].foodCost;
+                break;
+            case Buttons.FOOD:
+                icm.myBuildings_mags[1].magnfication = icm.myBuildings_mags[1].lv * 1.8f;
+                icm.myBuildings_mags[1].lv++;
 
-    [SerializeField] Text hq_hpChange_val;
-    [SerializeField] Text hq_foodChange_val;
-    [SerializeField] Text hq_goldChange_val;
-    [SerializeField] Text hq_envChange_val;
+                Gold -= icm.myBuildings_mags[1].goldCost;
+                break;
+            case Buttons.ENVIRONMENT:
+                icm.myBuildings_mags[2].magnfication = icm.myBuildings_mags[2].lv * 2.0f;
+                icm.myBuildings_mags[2].lv++;
 
-    [SerializeField] Text gold_btn_mag;
-    [SerializeField] Text food_btn_mag;
-    [SerializeField] Text env_btn_mag;
+                Food -= icm.myBuildings_mags[2].foodCost;
+                Gold -= icm.myBuildings_mags[2].goldCost;
+                break;
 
-    [Tooltip("분야별 배율 관련 영역")]
-    [SerializeField] IngameUpgradeHandler[] magnifications;
+            case Buttons.MILITARY:
+                icm.myBuildings_mags[3].magnfication = icm.myBuildings_mags[3].lv * 1.45f;
+                icm.myBuildings_mags[3].lv++;
+
+                Food -= icm.myBuildings_mags[3].foodCost;
+                Gold -= icm.myBuildings_mags[3].goldCost;
+                break;
+        }
+        UpdateUpgradeCost(btn);
+    }
+
+    private void UpdateUpgradeCost(Buttons btn) {
+        switch (btn) {
+            case Buttons.GOLD:
+                uint Industry_FoodCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[0].lv, 1.15f), 0, MidpointRounding.AwayFromZero);
+
+                icm.myBuildings_mags[0].foodCost = Industry_FoodCost;
+                icm.myBuildings_mags[0].goldCost = 0;
+
+                IndustryUpgradeCost.text = "비용\n식량 " + icm.myBuildings_mags[0].foodCost;
+                break;
+            case Buttons.FOOD:
+                uint Farm_GoldCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[1].lv, 1.15f), 0, MidpointRounding.AwayFromZero);
+
+                icm.myBuildings_mags[1].foodCost = 0;
+                icm.myBuildings_mags[1].goldCost = Farm_GoldCost;
+
+                FarmUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[1].goldCost;
+                break;
+            case Buttons.ENVIRONMENT:
+                uint Env_FoodCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[2].lv, 1.08f), 0, MidpointRounding.AwayFromZero);
+                uint Env_GoldCost = Env_FoodCost;
+
+                icm.myBuildings_mags[2].foodCost = Env_FoodCost;
+                icm.myBuildings_mags[2].goldCost = Env_GoldCost;
+
+                EnvUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[2].goldCost + "\n" + "식량" + icm.myBuildings_mags[2].foodCost;
+                break;
+            case Buttons.MILITARY:
+                uint Military_FoodCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[3].lv, 1.08f), 0, MidpointRounding.AwayFromZero);
+                uint Military_GoldCost = Military_FoodCost;
+
+                icm.myBuildings_mags[3].foodCost = Military_FoodCost;
+                icm.myBuildings_mags[3].goldCost = Military_GoldCost;
+
+                MilitaryUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[3].goldCost + "\n" + "식량" + icm.myBuildings_mags[3].foodCost;
+                break;
+        }
+    }
+
+    private void UpdateUpgradeCost() {
+        UpdateUpgradeCost(Buttons.GOLD);
+        UpdateUpgradeCost(Buttons.FOOD);
+        UpdateUpgradeCost(Buttons.ENVIRONMENT);
+        UpdateUpgradeCost(Buttons.MILITARY);
+    }
 
     public void HqUpgrade() {
         Debug.Log("HQ LV : " + hqLevel);
@@ -487,26 +469,24 @@ public partial class PlayerController {
             }
 
             //자원 소비
-            Food -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food;
-            Gold -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold;
+            //Food -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food;
+            //Gold -= icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold;
 
             Debug.Log(icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.food + " 식량 소모");
             Debug.Log(icm.upgradeInfos[hq_scriptable_index + 1].upgradeCost.gold + " 골드 소모");
             //업그레이드 비용 표시
             if (hqLevel == 4) {
-                cost_food_val.text = "000";
-                cost_gold_val.text = "000";
-                cost_food_val.transform.parent.parent.Find("Text").GetComponent<Text>().text = "최대 레벨 도달";
+                //cost_food_val.text = "000";
+                //cost_gold_val.text = "000";
+                //cost_food_val.transform.parent.parent.Find("Text").GetComponent<Text>().text = "최대 레벨 도달";
             } 
             else {
-                cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
-                cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
+                //cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
+                //cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
             }
 
-            Point += 10;
-            GetComponent<IngameUpgradeStream>().Point += 10;
-            hq_lv_val.text = "Lv" + hqLevel;
-            SetHQSpecChangeText(hqLevel);
+            //Point += 10;
+            //hq_lv_val.text = "Lv" + hqLevel;
 
             icm.myBuildingsInfo.Find(x => x.cardInfo.type == "HQ").gameObject.GetComponent<TileSpineAnimation>().Upgrade();
             //icm.DecideUnActiveBuilding();
@@ -542,62 +522,6 @@ public partial class PlayerController {
 
     private GameObject selectedObj;
 
-    public void OnUpgradeModal() {
-        GameObject uiPanel = transform.Find("UpgradeModal").gameObject;
-        uiPanel.SetActive(true);
-
-        //scroll 비활성화
-        var horizontalScrollSnap = transform.Find("Horizontal Scroll Snap").GetComponent<UnityEngine.UI.Extensions.HorizontalScrollSnap>();
-        horizontalScrollSnap.enabled = false;
-        var scrollRect = transform.Find("Horizontal Scroll Snap").GetComponent<ScrollRect>();
-        scrollRect.enabled = false;
-
-        //upgrade 가능한 빌딩 order 변경
-        isUpgradeModalActivated = true;
-        point_val.text = Point.ToString();
-        
-        foreach(IngameUpgradeHandler handler in magnifications) {
-            handler.Init(icm.myBuildings_mags);
-        }
-        GetComponent<IngameUpgradeStream>().Init();
-
-        if(hqLevel == 4) {
-            cost_food_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.food.ToString();
-            cost_gold_val.text = icm.upgradeInfos[hqLevel - 1].upgradeCost.gold.ToString();
-            
-        }
-        else {
-            cost_food_val.text = icm.upgradeInfos[hqLevel].upgradeCost.food.ToString();
-            cost_gold_val.text = icm.upgradeInfos[hqLevel].upgradeCost.gold.ToString();
-        }
-
-        SetHQSpecChangeText(hqLevel);
-
-        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
-    }
-
-    /// <summary>
-    /// HQ 업그레이드시 Spec 변화 UI 처리
-    /// </summary>
-    /// <param name="lv">HQ Lv</param>
-    private void SetHQSpecChangeText(int lv) {
-        int index = lv - 1;
-        hq_current_food_val.text = icm.upgradeInfos[index].product.food.ToString();
-        hq_current_gold_val.text = icm.upgradeInfos[index].product.gold.ToString();
-        hq_current_hp_val.text = icm.upgradeInfos[index].hp.ToString();
-
-        if(lv == 4) {
-            hq_goldChange_val.text = "";
-            hq_foodChange_val.text = "";
-            hq_hpChange_val.text = "";
-        }
-        else {
-            hq_goldChange_val.text = (icm.upgradeInfos[index + 1].product.gold - icm.upgradeInfos[index].product.gold).ToString();
-            hq_foodChange_val.text = (icm.upgradeInfos[index + 1].product.food - icm.upgradeInfos[index].product.food).ToString();
-            hq_hpChange_val.text = (icm.upgradeInfos[index + 1].hp - icm.upgradeInfos[index].hp).ToString();
-        }
-    }
-
     public void CloseUpgradeModal() {
         //modal 비활성화
         //scroll 활성화
@@ -616,14 +540,6 @@ public partial class PlayerController {
         return isUpgradeModalActivated;
     }
 
-    public bool Upgrade() {
-        if(Point <= 0) {
-            Debug.Log("포인트가 없습니다.");
-            return false;
-        }
-        return true;
-    }
-
     public int GetNewHp(int prevHp, int lv, int rarity) {
         int newHp = System.Convert.ToInt32(prevHp * (1 + lv / 16.0f) + (rarity / 16.0f));
         return newHp;
@@ -638,11 +554,5 @@ public partial class PlayerController {
         float hp = icm.cityMaxHP;
         MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
         tileCount = icm.CityTotalTileCount();
-    }
-    
-    public void ChangeBtnMagText() {
-        gold_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[2].current_mag);
-        food_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[1].current_mag);
-        env_btn_mag.text = "x" + string.Format("{0:0.00}", icm.myBuildings_mags[3].current_mag);
     }
 }
