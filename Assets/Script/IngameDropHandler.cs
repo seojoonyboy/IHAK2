@@ -119,8 +119,8 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     private void UseResource(Cost cost) {
-        playerController.resourceClass.gold -= cost.gold;
-        playerController.resourceClass.food -= cost.food;
+        playerController.resourceClass.gold -= (uint)cost.gold;
+        playerController.resourceClass.food -= (uint)cost.food;
         playerController.resourceClass.environment -= cost.environment;
     }
 

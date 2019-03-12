@@ -1,24 +1,10 @@
 namespace DataModules{
     [System.Serializable]
     public class Magnification {
-        public string key;
-        public float current_mag = 1.0f;
-        public int current_point = 0;
-        public float mag;
-        public float max_mag;
-        public int max_point;
-        /// <summary>
-        /// 업그레이드시 분야별 배율
-        /// </summary>
-        /// <param name="key">분야</param>
-        /// <param name="mag">1포인트당 배율 증가량</param>
-        /// <param name="max_mag">최대 배율</param>
-        /// <param name="max_point">포인트 투자 한계량</param>
-        public Magnification(string key, float mag, float max_mag, int max_point) {
-            this.key = key;
-            this.mag = mag;
-            this.max_mag = max_mag;
-            this.max_point = max_point;
-        }
+        public string key;          //타입명
+        public int lv = 1;          //현재 배율 레벨 (1부터 시작)
+        public uint foodCost;       //업그레이드 비용(식량)
+        public uint goldCost;       //업그레이드 비용(골드)
+        public float magnfication;   //최종 배율
     }
 }

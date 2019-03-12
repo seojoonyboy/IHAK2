@@ -195,19 +195,20 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (match == null) return;
 
         match.SetActive(false);
-        //Deck.Add(id);
         Hand.Remove(id);
 
-        DrawCard();
-
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
-
+        //spell은 쿨타임
+        //유닛은 핸드, 덱에서 제거
         if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+            Deck.Add(id);
+
             ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
             cooltimeComp.cards = origin;
             cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
             cooltimeComp.StartCool();
         }
+        DrawCard();
     }
 
     private bool canUseCard(ActiveCardInfo data) {
