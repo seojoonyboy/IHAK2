@@ -29,7 +29,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] GameObject repairAlert;
     [SerializeField] Camera territoryCamera;
     [SerializeField] Text turn;
-    [SerializeField] Transform attackCard;
+    [SerializeField] public Transform attackCard;
     
 
     private HorizontalScrollSnap hss;
@@ -125,17 +125,17 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void Update() {
         if (isPlaying) {
-            //time -= Time.deltaTime;
-            //ingameTimer.text = ((int)(time / 60)).ToString() + ":";
-            //if (((int)(time % 60)) < 10)
-            //    ingameTimer.text += "0";
-            //ingameTimer.text += ((int)(time % 60)).ToString();
-            //if (time < 0) {
-            //    ingameTimer.text = "0:00";
-            //    isPlaying = false;
-            //    IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
-            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
-            //}
+            time -= Time.deltaTime;
+            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
+            if (((int)(time % 60)) < 10)
+                ingameTimer.text += "0";
+            ingameTimer.text += ((int)(time % 60)).ToString();
+            if (time < 0) {
+                ingameTimer.text = "0:00";
+                isPlaying = false;
+                IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
+            }
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
@@ -148,27 +148,27 @@ public class IngameSceneUIController : MonoBehaviour {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }
-            //if(turn.text == "0") {
-            //    if (enemyCity.transform.GetChild(1).childCount == 26) {
-            //        PlayerController pc = gameObject.GetComponent<PlayerController>();
-            //        bool end = true;
-            //        for (int i = 0; i < attackCard.childCount; i++) {
-            //            ActiveCardInfo ac = attackCard.GetChild(i).GetComponent<ActiveCardInfo>();
-            //            if (!string.IsNullOrEmpty(ac.data.unit.id) && pc.isEnoughResources(ac.data.unit.cost)) {
-            //                end = false;
-            //                break;
-            //            }
-            //            else if (ac.data.skill.id != 0 && pc.isEnoughResources(ac.data.skill.cost)) {
-            //                end = false;
-            //                break;
-            //            }
-            //        }
-            //        if (end) {
-            //            isPlaying = false;
-            //            resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
-            //        }
-            //    }
-            //}
+            if(turn.text == "0") {
+                if (enemyCity.transform.GetChild(1).childCount == 26) {
+                    PlayerController pc = gameObject.GetComponent<PlayerController>();
+                    bool end = true;
+                    for (int i = 0; i < attackCard.childCount; i++) {
+                        ActiveCardInfo ac = attackCard.GetChild(i).GetComponent<ActiveCardInfo>();
+                        if (!string.IsNullOrEmpty(ac.data.baseSpec.unit.id) && pc.isEnoughResources(ac.data.baseSpec.unit.cost)) {
+                            end = false;
+                            break;
+                        }
+                        else if (ac.data.baseSpec.skill.id != 0 && pc.isEnoughResources(ac.data.baseSpec.skill.cost)) {
+                            end = false;
+                            break;
+                        }
+                    }
+                    if (end) {
+                        isPlaying = false;
+                        resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+                    }
+                }
+            }
         }
         territoryCamera.transform.position = new Vector3(Screen.width - (hss.transform.GetChild(0).position.x), 0, 0);
         
