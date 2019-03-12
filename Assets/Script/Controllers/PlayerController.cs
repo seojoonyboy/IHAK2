@@ -193,7 +193,7 @@ public partial class PlayerController : MonoBehaviour {
         //envValue.fillAmount = resourceClass.environment / 300.0f;
 
         Transform envBar = envValue.transform.parent.GetChild(1);
-        envBar.localPosition = new Vector3(((float)Env / 1250.0f) * 540, 0, 0);
+        envBar.localPosition = new Vector3(((float)Env / 600.0f) * 540, 0, 0);
         Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
         envText.text = Env.ToString();
         showResource();
@@ -227,41 +227,59 @@ public partial class PlayerController : MonoBehaviour {
     }
 
     private void PrimalEnvEfct() {
-        if (Env <= -1100) {
+        //if (Env <= -1100) {
+        //    if (!envEfctOn) {
+        //        envEfctOn = !envEfctOn;
+        //        efct3 = Efct3Second(false);
+        //        efct5 = Efct5Second(false);
+        //        StartCoroutine(efct3);
+        //        StartCoroutine(efct5);
+        //    }
+        //}
+        //else if (Env > -1100) {
+        //    if (envEfctOn) {
+        //        envEfctOn = !envEfctOn;
+        //        StopCoroutine(efct3);
+        //        StopCoroutine(efct5);
+        //    }
+        //}
+        //if (Env < 400)
+        //    envBonusProduce = 1.0f;
+        //if (Env >= 400)
+        //    envBonusProduce = 1.1f;
+        //if (Env >= 700 && Env < 1100) {
+        //    envBonusProduce = 1.25f;
+        //    if (envEfctOn) {
+        //        envEfctOn = !envEfctOn;
+        //        StopCoroutine(efct3);
+        //        StopCoroutine(efct5);
+        //    }
+        //}
+        //else if (Env >= 1100) {
+        //    if (!envEfctOn) {
+        //        envEfctOn = !envEfctOn;
+        //        efct3 = Efct3Second(true);
+        //        efct5 = Efct5Second(true);
+        //        StartCoroutine(efct3);
+        //        StartCoroutine(efct5);
+        //    }
+        //}
+        if (Env < -299) {
             if (!envEfctOn) {
                 envEfctOn = !envEfctOn;
                 efct3 = Efct3Second(false);
-                efct5 = Efct5Second(false);
                 StartCoroutine(efct3);
-                StartCoroutine(efct5);
-            }
+            }   
         }
-        else if (Env > -1100) {
-            if (envEfctOn) {
-                envEfctOn = !envEfctOn;
+        if (Env >= -299 && Env <= 299) {
+            if(efct3 != null)
                 StopCoroutine(efct3);
-                StopCoroutine(efct5);
-            }
         }
-        if (Env < 400)
-            envBonusProduce = 1.0f;
-        if (Env >= 400)
-            envBonusProduce = 1.1f;
-        if (Env >= 700 && Env < 1100) {
-            envBonusProduce = 1.25f;
-            if (envEfctOn) {
-                envEfctOn = !envEfctOn;
-                StopCoroutine(efct3);
-                StopCoroutine(efct5);
-            }
-        }
-        else if (Env >= 1100) {
+        if (Env > 299) {
             if (!envEfctOn) {
                 envEfctOn = !envEfctOn;
                 efct3 = Efct3Second(true);
-                efct5 = Efct5Second(true);
                 StartCoroutine(efct3);
-                StartCoroutine(efct5);
             }
         }
     }
@@ -269,11 +287,14 @@ public partial class PlayerController : MonoBehaviour {
     private IEnumerator Efct3Second(bool positive) {
         while (!positive) {
             yield return new WaitForSeconds(3.0f);
-            icm.DamagePlayerCity(15 / 2);
+            Food -= (int)Mathf.Round(Env / 5);
+            Gold += (int)Mathf.Round(Env / 5);
         }
         while (positive) {
             yield return new WaitForSeconds(3.0f);
-            icm.DamagePlayerCity((int)Mathf.Round((15 / 2)));
+            //icm.DamagePlayerCity((int)Mathf.Round((15 / 2)));
+            Food += (uint)Mathf.Round(Env / 5);
+            Gold -= (uint)Mathf.Round(Env / 5);
         }
     }
 
@@ -310,19 +331,20 @@ public partial class PlayerController : MonoBehaviour {
                 ingameTimer.text += "0";
             ingameTimer.text += ((int)(time % 60)).ToString();
 
-            int allEnv = (int)Mathf.Round((float)icm.productResources.all.environment * envBonusProduce);
-            if (Env + allEnv >= -600 && Env + allEnv <= 600) {
-                if (icm.productResources.gold.gold > 0) {
-                    Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * envBonusProduce * icm.myBuildings_mags[0].magnfication);
-                    Food += (uint)Mathf.Round((float)icm.productResources.all.food * envBonusProduce * icm.myBuildings_mags[1].magnfication);
-
-                    if (Env >= -600 && Env <= 600)
-                        Env += (int)Mathf.Round(allEnv * icm.myBuildings_mags[2].magnfication);
-                    scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
-                    scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
-                    scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
-                }
+            Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication);
+            Food += (uint)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication);
+            if (Env >= -600 && Env <= 600) {
+                Env += (int)Mathf.Round((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication);
+                Env -= (int)Mathf.Round((icm.productResources.all.gold + icm.productResources.all.food) / time);
+                if (Env < -600)
+                    Env = -600;
+                if (Env > 600)
+                    Env = 600;
             }
+            scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
+            scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
+            scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
+
             PrintResource();
         }
     }
