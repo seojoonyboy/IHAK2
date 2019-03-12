@@ -62,6 +62,7 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
         HQ_UPGRADE,
         RESOURCE_CHANGE,
         MY_BUILDINGS_INFO_ADDED,
-        UNIT_UPGRADED
+        UNIT_UPGRADED,
+        ORDER_UNIT_RETURN
     }
 }

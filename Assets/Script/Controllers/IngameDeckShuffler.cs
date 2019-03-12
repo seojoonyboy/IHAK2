@@ -77,6 +77,10 @@ public class IngameDeckShuffler : MonoBehaviour {
         }
     }
 
+    public void HeroReturnBtnClicked() {
+        eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, this);
+    }
+
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
         InitCard();
     }
