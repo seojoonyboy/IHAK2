@@ -128,8 +128,8 @@ public partial class PlayerController : MonoBehaviour {
         playing = true;
         StartCoroutine(AoutomaticSystem());
 
-        Food = 10000;
-        Gold = 10000;
+        //Food = 10000;
+        //Gold = 10000;
 
         UpdateUpgradeCost();
     }
