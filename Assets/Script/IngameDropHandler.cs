@@ -76,7 +76,10 @@ public class IngameDropHandler : MonoBehaviour {
         }
         unitAI.protecting = summonPos == 1;
         wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
-        
+
+        IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
+        buildingInfos.activate = false;
+
         UseResource(data.cost);
         IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
         playerController.PrintResource();
