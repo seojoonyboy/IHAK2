@@ -48,8 +48,9 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] IngameCityManager icm;
     [SerializeField] GameObject hqUpgradeWnd;
 
-    int point;
     private bool playing = false;
+    private int tech_lv;
+
     public IngameCityManager IngameCityManager {
         get { return icm; }
     }
@@ -78,17 +79,27 @@ public partial class PlayerController : MonoBehaviour {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
         }
     }
+    public int TechLv {
+        get { return tech_lv; }
+        set {
+            tech_lv = value;
+        }
+    }
     [Header(" - Player")]
     public int hqLevel = 1;
     public int tileCount;
     private int MaxHpMulti;
     public int goldConsume;
+
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
     [SerializeField] private SkeletonDataAsset upgrageAni;
     [SerializeField] private Material coinAniMaterial;
     [SerializeField] private Material upgradeAniMaterial;
 
+    [Header(" - SpineChange Standards")]
+    public List<int> standards;
+    public List<int> HQ_standards;
 
     public ProductInfo pInfo { get; set; }
     IngameScoreManager scoreManager;
@@ -166,6 +177,8 @@ public partial class PlayerController : MonoBehaviour {
 
         PrintResource();
         PrimalEnvEfct();
+
+        UpdateBuildingImages();
     }
 
     private void ShowCoinAnimation(int num) {
@@ -184,6 +197,23 @@ public partial class PlayerController : MonoBehaviour {
         ani.raycastTarget = false;
         ani.AnimationState.SetAnimation(1, "1.Level Up", false);
         Destroy(ani.gameObject, 1f);
+    }
+
+    private void UpdateBuildingImages() {
+        var buildings = icm.myBuildingsInfo;
+        if (HQ_standards.Count != 0 && HQ_standards[0] == TechLv) {
+            foreach(IngameCityManager.BuildingInfo building in buildings) {
+                if (building.cardInfo.type == "HQ") building.gameObject.GetComponent<TileSpineAnimation>().Upgrade();
+            }
+            HQ_standards.RemoveAt(0);
+        }
+
+        if(standards.Count != 0 && standards[0] == TechLv) {
+            foreach (IngameCityManager.BuildingInfo building in buildings) {
+                if (building.cardInfo.type != "HQ") building.gameObject.GetComponent<TileSpineAnimation>().Upgrade();
+            }
+            standards.RemoveAt(0);
+        }
     }
 
     public void PrintResource() {
@@ -401,6 +431,7 @@ public partial class PlayerController {
                 Gold -= icm.myBuildings_mags[3].goldCost;
                 break;
         }
+        TechLv++;
         UpdateUpgradeCost(btn);
     }
 
