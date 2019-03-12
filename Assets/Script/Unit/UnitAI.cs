@@ -22,6 +22,8 @@ public class UnitAI : MonoBehaviour {
     private UnitAI targetUnit;
     private float maxHealth = 0;
     public float health = 0;
+    private float power = 0;
+    private float defense = 0;
     private float moveSpeed;
     private float currentTime;
     private ActiveCard unitCard;
@@ -90,8 +92,13 @@ public class UnitAI : MonoBehaviour {
         this.unitCard = card;
         Unit unit = card.baseSpec.unit;
         moveSpeed = unit.moveSpeed;
-        float temphealth = unit.hitPoint - maxHealth;
-        maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f);
+        power = unit.power;
+        SetMaxHP(unit.hitPoint);
+    }
+
+    private void SetMaxHP(int maxHP) {
+        float temphealth = maxHP - maxHealth;
+        maxHealth = maxHP;
         health += temphealth;
     }
 
@@ -172,6 +179,7 @@ public class UnitAI : MonoBehaviour {
         currentTime += time;
         if (currentTime < unitCard.baseSpec.unit.attackSpeed) return;
         currentTime = 0f;
+        ExpGain(CalPower());
         if (targetUnit != null) {
             attackUnit();
         }
@@ -189,7 +197,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackBuilding() {
-        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unitCard.baseSpec.unit.power * unitMagnificate.magnfication));
+        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, CalPower());
         unitSpine.Attack();
         if (targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -201,7 +209,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackUnit() {
-        targetUnit.damaged(Mathf.RoundToInt(unitCard.baseSpec.unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f)));
+        targetUnit.damaged(CalPower());
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
             targetUnit = null;
@@ -276,6 +284,7 @@ public class UnitAI : MonoBehaviour {
 
     public void damaged(int damage) {
         health -= damage;
+        ExpGain(damage);
         unitSpine.Hitted();
         calculateHealthBar();
         if(health <= 0) DestoryEnemy();
@@ -312,6 +321,39 @@ public class UnitAI : MonoBehaviour {
     public void NearEnemy(Collider2D other) {
         targetUnit = other.GetComponent<UnitAI>();
         targetBuilding = null;
+    }
+
+    private void ExpGain(int exp) {
+        exp = Mathf.RoundToInt(exp * 0.2f);
+        unitCard.ev.exp += exp;
+        CheckLv();
+    }
+
+    private void CheckLv() {
+        int lv = unitCard.ev.lv;
+        bool isLvUp = (lv * 1.5 * 100) <= unitCard.ev.exp;
+        if(isLvUp) ChangeStat();
+    }
+
+    private void ChangeStat() {
+        if(unitCard.ev.lv >= 10) return;
+        unitCard.ev.lv++;
+        power = PowerUP(power);
+        int maxHP = PowerUP(maxHealth);
+        SetMaxHP(maxHP);
+        Debug.Log(name+" 레벨업!");
+    }
+
+    private int PowerUP(float stat) {
+        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
+    }
+
+    private int PowerUP(int stat) {
+        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
+    }
+
+    private int CalPower() {
+        return Mathf.RoundToInt(power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f));
     }
 
 }

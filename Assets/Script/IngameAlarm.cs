@@ -10,7 +10,7 @@ public class IngameAlarm : MonoBehaviour {
 			if(_instance == null) {
 				_instance = (IngameAlarm) FindObjectOfType(typeof(IngameAlarm));
 				if(_instance == null) {
-					//Debug.LogError("인게임 씬이 아닙니다.");
+					Debug.LogWarning("아직 준비가 안됐습니다. 양해바랍니다.");
 				}
 			}
 			return _instance;
