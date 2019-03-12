@@ -317,8 +317,8 @@ public partial class PlayerController : MonoBehaviour {
     private IEnumerator Efct3Second(bool positive) {
         while (!positive) {
             yield return new WaitForSeconds(3.0f);
-            Food -= (int)Mathf.Round(Env / 5);
-            Gold += (int)Mathf.Round(Env / 5);
+            Food -= (uint)Mathf.Round(Env / 5);
+            Gold += (uint)Mathf.Round(Env / 5);
         }
         while (positive) {
             yield return new WaitForSeconds(3.0f);
