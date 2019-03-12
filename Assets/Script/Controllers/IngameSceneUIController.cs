@@ -125,17 +125,17 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void Update() {
         if (isPlaying) {
-            time -= Time.deltaTime;
-            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
-            if (((int)(time % 60)) < 10)
-                ingameTimer.text += "0";
-            ingameTimer.text += ((int)(time % 60)).ToString();
-            if (time < 0) {
-                ingameTimer.text = "0:00";
-                isPlaying = false;
-                IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
-            }
+            //time -= Time.deltaTime;
+            //ingameTimer.text = ((int)(time / 60)).ToString() + ":";
+            //if (((int)(time % 60)) < 10)
+            //    ingameTimer.text += "0";
+            //ingameTimer.text += ((int)(time % 60)).ToString();
+            //if (time < 0) {
+            //    ingameTimer.text = "0:00";
+            //    isPlaying = false;
+            //    IngameScoreManager.Instance.AddScore(playerCity.GetComponent<IngameCityManager>().cityHP, IngameScoreManager.ScoreType.Health);
+            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.SURVIVE);
+            //}
             if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
                 isPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
