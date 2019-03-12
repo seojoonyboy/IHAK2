@@ -148,10 +148,6 @@ public class IngameCityManager : MonoBehaviour {
         }
         myBuildingsInfo = tmp;
 
-        myBuildings_mags.Add(new Magnification("military", 0.075f, 1.75f, 10));
-        myBuildings_mags.Add(new Magnification("food", 0.1f, 2.0f, 10));
-        myBuildings_mags.Add(new Magnification("gold", 0.1f, 2.0f, 10));
-        myBuildings_mags.Add(new Magnification("env", 0.1f, 2.0f, 10));
 
         IEnumerable <GameObject> gameObjects =
             from x in myBuildingsInfo

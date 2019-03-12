@@ -94,7 +94,7 @@ public class UnitAI : MonoBehaviour {
         this.unit = unit;
         moveSpeed = unit.moveSpeed;
         float temphealth = unit.hitPoint - maxHealth;
-        maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.current_mag : 1f);
+        maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f);
         health += temphealth;
         if (parentBuildingObject != null)
             this.parentBuildingObject = parentBuildingObject;
@@ -206,7 +206,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackBuilding() {
-        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.current_mag));
+        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.magnfication));
         unitSpine.Attack();
         if (targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -218,7 +218,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackUnit() {
-        targetUnit.damaged(Mathf.RoundToInt(unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.current_mag : 1f)));
+        targetUnit.damaged(Mathf.RoundToInt(unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f)));
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
             targetUnit = null;
