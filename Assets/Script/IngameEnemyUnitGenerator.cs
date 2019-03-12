@@ -24,7 +24,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
         CurrentWave = 0;
 
         coroutine = Spawing();
-        StartCoroutine(coroutine);
+        //StartCoroutine(coroutine); //적 유닛 생산 보류
     }
 
     void OnDestroy() {
@@ -85,7 +85,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
 
         GameObject unit = Instantiate(set.Prefab, parent);
         UnitAI unitAI = unit.GetComponent<UnitAI>();
-        unitAI.SetUnitData(card.unit);
+        //unitAI.SetUnitData(card.unit);//유닛 생산 보류
         unit.transform.localPosition = locations[set.genLocation] + new Vector2(randomPosX, randomPosY);
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
         if(card.id != "n_u_0101") {

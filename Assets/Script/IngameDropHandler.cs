@@ -34,7 +34,7 @@ public class IngameDropHandler : MonoBehaviour {
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
         int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().data.card.rarity;
         if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.baseSpec.skill, rarity);
-        else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data.parentBuilding, card.data.baseSpec.unit, rarity);
+        else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data, rarity);
         
     }
 
@@ -49,9 +49,9 @@ public class IngameDropHandler : MonoBehaviour {
         return results[0].gameObject.name.CompareTo(StrB) == 0;
     }
 
-    private void UnitSummon(GameObject parentBuilding, Unit data, int rarity) {
-        if (!CheckResouceOK(data.cost)) return;
-
+    private void UnitSummon(ActiveCard card, int rarity) {
+        if (!CheckResouceOK(card.baseSpec.unit.cost)) return;
+        Unit data = card.baseSpec.unit;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
@@ -68,7 +68,7 @@ public class IngameDropHandler : MonoBehaviour {
         GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[summonPos]).transform);
         //wolf.layer = layer;
         UnitAI unitAI = wolf.GetComponent<UnitAI>();
-        unitAI.SetUnitData(data, parentBuilding);
+        unitAI.SetUnitData(card);
         if(data.id != "n_uu_0101") {
             GameObject Name = wolf.transform.Find("Name").gameObject;
             Name.SetActive(true);
@@ -77,7 +77,7 @@ public class IngameDropHandler : MonoBehaviour {
         unitAI.protecting = summonPos == 1;
         wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
 
-        IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
+        IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == card.parentBuilding.GetComponent<BuildingObject>().setTileLocation);
         buildingInfos.activate = false;
 
         UseResource(data.cost);

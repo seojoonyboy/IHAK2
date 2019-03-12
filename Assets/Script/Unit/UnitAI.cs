@@ -24,8 +24,7 @@ public class UnitAI : MonoBehaviour {
     public float health = 0;
     private float moveSpeed;
     private float currentTime;
-    [SerializeField]
-    private Unit unit;
+    private ActiveCard unitCard;
 
     private static IngameCityManager cityManager;
     private static Magnification unitMagnificate;
@@ -38,7 +37,6 @@ public class UnitAI : MonoBehaviour {
     private List<IngameCityManager.BuildingInfo> buildingInfos;
     private IngameCityManager.Target targetEnum;
     private UnitSpine unitSpine;
-    private GameObject parentBuildingObject;
     private IngameSceneEventHandler eventHandler;
 
     void Awake() {
@@ -47,7 +45,7 @@ public class UnitAI : MonoBehaviour {
 
     void Start() {
         detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
-        detectCollider.radius = unit.detectRange;
+        detectCollider.radius = unitCard.baseSpec.unit.detectRange;
         if (protecting) detectCollider.enabled = false;
         if (gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
             buildingInfos = cityManager.enemyBuildingsInfo;
@@ -71,12 +69,10 @@ public class UnitAI : MonoBehaviour {
         else
             setState(aiState.NONE);
 
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
     private void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, UnitUpgrade);
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
@@ -86,26 +82,17 @@ public class UnitAI : MonoBehaviour {
         unitSpine = GetComponentInChildren<UnitSpine>();
         if (cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
-        if (unitMagnificate == null) unitMagnificate = cityManager.SearchMags("military");
+        if (unitMagnificate == null) unitMagnificate = cityManager.SearchMags("Military");
     }
 
-    public void SetUnitData(Unit unit, GameObject parentBuildingObject = null) {
+    public void SetUnitData(ActiveCard card) {
         Init();
-        this.unit = unit;
+        this.unitCard = card;
+        Unit unit = card.baseSpec.unit;
         moveSpeed = unit.moveSpeed;
         float temphealth = unit.hitPoint - maxHealth;
         maxHealth = unit.hitPoint * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f);
         health += temphealth;
-        if (parentBuildingObject != null)
-            this.parentBuildingObject = parentBuildingObject;
-        //agent.maxSpeed = moveSpeed;
-    }
-
-    private void UnitUpgrade(Enum Event_Type, Component Sender, object Param) {
-        Unit unit = (Unit)Param;
-        if (this.unit.id.CompareTo(unit.id) != 0) return;
-        SetUnitData(unit);
-        calculateHealthBar();
     }
 
     private void setState(aiState state) {
@@ -135,10 +122,6 @@ public class UnitAI : MonoBehaviour {
 
     void Update() {
         update(Time.deltaTime);
-
-        if (health <= 0) {
-            DestoryEnemy();
-        }
     }
 
     void noneUpdate(float time) {
@@ -160,7 +143,7 @@ public class UnitAI : MonoBehaviour {
             setState(aiState.ATTACK);
             return;
         }
-        transform.Translate(distance.normalized * time * unit.moveSpeed);
+        transform.Translate(distance.normalized * time * unitCard.baseSpec.unit.moveSpeed);
         if (currentTime < 2f) return;
         currentTime = 0f;
         searchTarget();
@@ -187,7 +170,7 @@ public class UnitAI : MonoBehaviour {
 
     void attackUpdate(float time) {
         currentTime += time;
-        if (currentTime < unit.attackSpeed) return;
+        if (currentTime < unitCard.baseSpec.unit.attackSpeed) return;
         currentTime = 0f;
         if (targetUnit != null) {
             attackUnit();
@@ -206,7 +189,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackBuilding() {
-        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unit.power * unitMagnificate.magnfication));
+        cityManager.TakeDamage(targetEnum, targetBuilding.tileNum, Mathf.RoundToInt(unitCard.baseSpec.unit.power * unitMagnificate.magnfication));
         unitSpine.Attack();
         if (targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -218,7 +201,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private void attackUnit() {
-        targetUnit.damaged(Mathf.RoundToInt(unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f)));
+        targetUnit.damaged(Mathf.RoundToInt(unitCard.baseSpec.unit.power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f)));
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
             targetUnit = null;
@@ -235,7 +218,7 @@ public class UnitAI : MonoBehaviour {
             searchTarget();
             return false;
         }
-        if (distance <= unit.attackRange)
+        if (distance <= unitCard.baseSpec.unit.attackRange)
             return true;
         return false;
     }
@@ -295,6 +278,7 @@ public class UnitAI : MonoBehaviour {
         health -= damage;
         unitSpine.Hitted();
         calculateHealthBar();
+        if(health <= 0) DestoryEnemy();
     }
 
     private void calculateHealthBar() {
@@ -315,13 +299,13 @@ public class UnitAI : MonoBehaviour {
                 ontile.GetComponent<TileCollision>().check = false;
             }
         }
-        ingameDeckShuffler.HeroReturn(parentBuildingObject, true);
+        ingameDeckShuffler.HeroReturn(unitCard. parentBuilding, true);
         Destroy(gameObject);
 
     }
 
     public void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
-        ingameDeckShuffler.HeroReturn(parentBuildingObject, false);
+        ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);
     }
 
