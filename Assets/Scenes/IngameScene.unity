@@ -3116,22 +3116,22 @@ MonoBehaviour:
     lv: 1
     foodCost: 0
     goldCost: 0
-    magnfication: 0
+    magnfication: 1
   - key: Farm
     lv: 1
     foodCost: 0
     goldCost: 0
-    magnfication: 0
+    magnfication: 1
   - key: Env
     lv: 1
     foodCost: 0
     goldCost: 0
-    magnfication: 0
+    magnfication: 1
   - key: Military
     lv: 1
     foodCost: 0
     goldCost: 0
-    magnfication: 0
+    magnfication: 1
   buildingList: 
   unactiveImage: {fileID: 1706033081576888, guid: c9fdbd74db90ea44dad19863d3d09d44,
     type: 2}
@@ -6374,6 +6374,8 @@ MonoBehaviour:
   upgrageAni: {fileID: 11400000, guid: 54c912a1000ee6440baa5ee0b98ad068, type: 2}
   coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}
   upgradeAniMaterial: {fileID: 2100000, guid: 00e9eae2576a6e94aa55844f2dc721cd, type: 2}
+  standards: 4b000000e1000000
+  HQ_standards: 960000002c010000
   IndustryUpgradeCost: {fileID: 1392922625}
   FarmUpgradeCost: {fileID: 728963858}
   EnvUpgradeCost: {fileID: 972145407}
