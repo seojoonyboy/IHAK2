@@ -35,6 +35,7 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] Transform commandButtons;
     [SerializeField] Transform playerResource;
     [SerializeField] Transform productResource;
+    [SerializeField] Text ingameTimer;
     public PlayerResource resourceClass;
 
     [Header(" - ResourceText")]
@@ -46,6 +47,7 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] GameObject hqUpgradeWnd;
 
     int point;
+    private bool playing = false;
     public IngameCityManager IngameCityManager {
         get { return icm; }
     }
@@ -89,7 +91,9 @@ public partial class PlayerController : MonoBehaviour {
     public int goldConsume;
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
+    [SerializeField] private SkeletonDataAsset upgrageAni;
     [SerializeField] private Material coinAniMaterial;
+    [SerializeField] private Material upgradeAniMaterial;
 
 
     public ProductInfo pInfo { get; set; }
@@ -127,13 +131,15 @@ public partial class PlayerController : MonoBehaviour {
 
         coinAni.GetSkeletonData(false);
         SetPlayerConsumeResource();
+        playing = true;
+        StartCoroutine(AoutomaticSystem());
     }
 
     private void OnMouseDown() {
         Debug.Log("클릭!");
     }
 
-    private void ClickButton(Buttons btn) {
+    private void ClickButton(Buttons btn) { //생산 업그레이드
         switch (btn) {
             case Buttons.GOLD:
                 int goldEnv = (int)Mathf.Round((float)icm.productResources.gold.environment * envBonusProduce);
@@ -147,8 +153,9 @@ public partial class PlayerController : MonoBehaviour {
                         Gold += 1000;
 #endif
                         resourceClass.turn--;
-                        ShowCoinAnimation(0);
-                        PrintProduct(1);
+                        //ShowCoinAnimation(0);
+                        ShowUpgradeAnimation(0);
+                        //PrintProduct(1);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -177,8 +184,9 @@ public partial class PlayerController : MonoBehaviour {
                         Food += 1000;
 #endif
                         resourceClass.turn--;
-                        ShowCoinAnimation(1);
-                        PrintProduct(2);
+                        //ShowCoinAnimation(1);
+                        ShowUpgradeAnimation(1);
+                        //PrintProduct(2);
                         //if (Env < 200 && icm.unactiveBuildingIndex1 == 100)
                         //    icm.DecideUnActiveBuilding();
                         //if (Env < 100 && icm.unactiveBuildingIndex2 == 100)
@@ -203,7 +211,8 @@ public partial class PlayerController : MonoBehaviour {
                             Gold += (int)Mathf.Round((float)icm.productResources.env.gold * envBonusProduce * icm.myBuildings_mags[3].current_mag);
                             Food += (int)Mathf.Round((float)icm.productResources.env.food * envBonusProduce * icm.myBuildings_mags[3].current_mag);
                             Env += (int)Mathf.Round((float)icm.productResources.env.environment * envBonusProduce * icm.myBuildings_mags[3].current_mag);
-                            ShowCoinAnimation(2);
+                            //ShowCoinAnimation(2);
+                            ShowUpgradeAnimation(2);
                             if (Env > 1250) {
                                 scoreManager.AddScore(intEnv - (Env - 1250), IngameScoreManager.ScoreType.Product);
                                 Env = 1250;
@@ -215,7 +224,7 @@ public partial class PlayerController : MonoBehaviour {
                             //if (Env >= 100 && icm.unactiveBuildingIndex2 != 100)
                             //    icm.CancleUnActiveBuilding();
                             resourceClass.turn--;
-                            PrintProduct(3);
+                            //PrintProduct(3);
                         }
                     }
                 }
@@ -251,6 +260,15 @@ public partial class PlayerController : MonoBehaviour {
         Destroy(ani.gameObject, 1f);
     }
 
+    private void ShowUpgradeAnimation(int num) {
+        SkeletonGraphic ani = SkeletonGraphic.NewSkeletonGraphicGameObject(upgrageAni, transform, coinAniMaterial);
+        ani.GetComponent<RectTransform>().position = commandButtons.GetChild(num).GetChild(2).position;
+        ani.Initialize(false);
+        ani.raycastTarget = false;
+        ani.AnimationState.SetAnimation(1, "1.Level Up", false);
+        Destroy(ani.gameObject, 1f);
+    }
+
     public void PrintResource() {
         goldValue.text = Gold.ToString();
         foodValue.text = Food.ToString();
@@ -261,28 +279,27 @@ public partial class PlayerController : MonoBehaviour {
         envBar.localPosition = new Vector3(((float)Env / 1250.0f) * 540, 0, 0);
         Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
         envText.text = Env.ToString();
+        showResource();
     }
 
-    public void PrintProduct(int num) {
-        switch (num) {
-            case 1:
-                showResource("음식생산량", icm.productResources.gold, icm.myBuildings_mags[2].current_mag);
-                break;
-            case 2:
-                showResource("식량생산량", icm.productResources.food, icm.myBuildings_mags[1].current_mag);
-                break;
-            case 3:
-                showResource("환경생산량", icm.productResources.env, icm.myBuildings_mags[3].current_mag);
-                break;
-        }
-    }
+    //public void PrintProduct(int num) {
+    //    switch (num) {
+    //        case 1:
+    //            showResource(icm.productResources.gold, icm.myBuildings_mags[2].current_mag);
+    //            break;
+    //        case 2:
+    //            showResource(icm.productResources.food, icm.myBuildings_mags[1].current_mag);
+    //            break;
+    //        case 3:
+    //            showResource(icm.productResources.env, icm.myBuildings_mags[3].current_mag);
+    //            break;
+    //    }
+    //}
 
-    private void showResource(string title, Resource resource, float mag) {
-        
-        productResource.GetChild(0).GetComponent<Text>().text = title;
-        productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.gold * envBonusProduce * mag).ToString();
-        productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.food * envBonusProduce * mag).ToString();
-        productResource.GetChild(3).GetComponent<Text>().text = Mathf.RoundToInt((float)resource.environment * envBonusProduce * mag).ToString();        
+    private void showResource() {
+        productResource.GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.gold).ToString();
+        productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.food).ToString();
+        productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.environment).ToString();        
     }
 
     public bool isEnoughResources(DataModules.Cost cost) {
@@ -364,6 +381,36 @@ public partial class PlayerController : MonoBehaviour {
                 Food = 0;
             resourceClass.turn--;
         }
+    }
+
+    private IEnumerator AoutomaticSystem() {
+        int time = 300;
+        while (playing) {
+            yield return new WaitForSeconds(1.0f);
+            time--;
+            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
+            if (((int)(time % 60)) < 10)
+                ingameTimer.text += "0";
+            ingameTimer.text += ((int)(time % 60)).ToString();
+
+            int allEnv = (int)Mathf.Round((float)icm.productResources.all.environment * envBonusProduce);
+            if (Env + allEnv >= -600 && Env + allEnv <= 600) {
+                if (icm.productResources.gold.gold > 0) {
+                    Gold += (int)Mathf.Round((float)icm.productResources.all.gold * envBonusProduce * icm.myBuildings_mags[2].current_mag);
+                    Food += (int)Mathf.Round((float)icm.productResources.all.food * envBonusProduce * icm.myBuildings_mags[2].current_mag);
+                    if (Env >= -600 && Env <= 600)
+                        Env += (int)Mathf.Round(allEnv * icm.myBuildings_mags[2].current_mag);
+                    scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
+                    scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
+                    scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
+                }
+            }
+            PrintResource();
+        }
+    }
+
+    private void TimeController() {
+
     }
 }
 

@@ -38,6 +38,7 @@ namespace DataModules {
         public Resource food;
         public Resource gold;
         public Resource env;
+        public Resource all;
     }
 
     [System.Serializable]
