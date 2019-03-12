@@ -217,11 +217,14 @@ public class IngameDeckShuffler : MonoBehaviour {
         Skill skill = data.data.baseSpec.skill;
 
         if (!string.IsNullOrEmpty(unit.name)) {
+            Debug.Log("Unit : " + unit.name + ", Tier : " + unit.tierNeed);
             if (playerController.hqLevel >= unit.tierNeed) return true;
         }
-
-        else if (!string.IsNullOrEmpty(skill.name)) {
-            if (playerController.hqLevel >= skill.tierNeed) return true;
+        else {
+            if ((!string.IsNullOrEmpty(skill.name))) {
+                Debug.Log("Skill : " + skill.name + ", Tier : " + skill.tierNeed);
+                if (playerController.hqLevel >= skill.tierNeed) return true;
+            }
         }
         return false;
     }
