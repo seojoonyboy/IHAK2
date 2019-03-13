@@ -47,7 +47,8 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
     [SerializeField] GameObject hqUpgradeWnd;
-
+    
+    int point;
     private bool playing = false;
     private int tech_lv;
 
@@ -90,7 +91,9 @@ public partial class PlayerController : MonoBehaviour {
     public int tileCount;
     private int MaxHpMulti;
     public int goldConsume;
-
+    public bool activeRepair = false;
+    public float repairTimer;
+    
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
     [SerializeField] private SkeletonDataAsset upgrageAni;
@@ -138,11 +141,20 @@ public partial class PlayerController : MonoBehaviour {
         SetPlayerConsumeResource();
         playing = true;
         StartCoroutine(AoutomaticSystem());
+        Observable.EveryUpdate().Where(_ => activeRepair == true).Subscribe(_ => repairTimer += Time.deltaTime);
+        Observable.EveryUpdate().Where(_ => activeRepair == true).Where(_=>repairTimer >= 2).Subscribe(_ => icm.RepairPlayerCity());
+        Observable.EveryUpdate().Where(_ => repairTimer >= 2).Subscribe(_ => repairTimer = 0);
+        Observable.EveryUpdate().Where(_ => activeRepair == false).Subscribe(_ => repairTimer = 0);
+
 
         //Food = 10000;
         //Gold = 10000;
 
         UpdateUpgradeCost();
+    }
+    
+    private void OnMouseDown() {
+        Debug.Log("클릭!"); 
     }
 
     private void ClickButton(Buttons btn) { //생산 업그레이드
@@ -165,12 +177,43 @@ public partial class PlayerController : MonoBehaviour {
                 ShowUpgradeAnimation(4);
                 break;
             case Buttons.REPAIR:
-                result = true;
-                ShowCoinAnimation(3);
+                /*
+                float destroyCount = icm.CityDestroyBuildingCount();
+                float calculate = MaxHpMulti * ((1f + (0.02f * destroyCount)) * (tileCount + hqLevel) / (tileCount * 1.5f));
+                goldConsume = Mathf.RoundToInt(calculate);
+
+                if (Gold >= 0 + goldConsume) {
+                    ShowCoinAnimation(3);
+                    icm.RepairPlayerCity();
+                    Gold -= goldConsume;
+                    resourceClass.turn--;
+                }
+                */
+                if(activeRepair == false) {
+                    activeRepair = true;
+
+                    if (icm.productResources.all.gold != icm.goldGenerate)
+                        icm.productResources.all.gold = icm.goldGenerate;
+
+                    if (icm.productResources.all.environment != icm.envGenerate)
+                        icm.productResources.all.environment = icm.envGenerate;
+
+                    if (icm.productResources.all.food != icm.foodGenerate)
+                        icm.productResources.all.food = icm.foodGenerate;
+
+                    icm.productResources.all.gold = Mathf.RoundToInt(icm.productResources.all.gold * 0.2f);
+                    icm.productResources.all.environment = Mathf.RoundToInt(icm.productResources.all.environment * 0.2f);
+                    icm.productResources.all.food = Mathf.RoundToInt(icm.productResources.all.food * 0.2f);
+                    ShowCoinAnimation(3);
+                }
+                else if(activeRepair == true) {
+                    activeRepair = false;
+                    icm.ResetProductPower();
+                }
                 break;
         }
         if (!result) {
-            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            //IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             return;
         }
         Upgrade(btn);

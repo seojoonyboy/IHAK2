@@ -52,8 +52,10 @@ public class IngameCityManager : MonoBehaviour {
     [Space(10)]
 
     [Header(" - ProductResource")]
-    public ProductResources productResources;
-    public ProductResources unActiveResources;
+    [SerializeField] public ProductResources productResources;
+    [SerializeField] public int goldGenerate;
+    [SerializeField] public int envGenerate;
+    [SerializeField] public int foodGenerate;
 
     [Space(10)]
 
@@ -83,12 +85,18 @@ public class IngameCityManager : MonoBehaviour {
     public BuildingInfo playerHQ;
     public BuildingInfo enemyHQ;
 
+    [Space(10)]
+    [Header(" - RepairStatus")]
+    [SerializeField] public int repairCount = 0;
+    [SerializeField] public float repairAmount = 0;
+    [SerializeField] public bool enoughRepairSource = true;
 
     [Space(10)]
     [Header(" - Other")]
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
     [SerializeField] PlayerController playerController;
+    
     IngameSceneEventHandler ingameSceneEventHandler;
     IngameDeckShuffler ingameDeckShuffler;
 
@@ -163,12 +171,16 @@ public class IngameCityManager : MonoBehaviour {
         //InitProduction();
 
         productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
+        goldGenerate = productResources.all.gold;
+        foodGenerate = productResources.all.food;
+        envGenerate = productResources.all.environment;
 
         
         SetHQ();
         SetEnemyTotalHP();
         StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
+        TakeDamage();
         //StartCoroutine("Repaircity");
     }
 
@@ -280,6 +292,12 @@ public class IngameCityManager : MonoBehaviour {
 
                 float playerMaxHp = myBuilding.maxHp;
                 int amount = Mathf.RoundToInt(playerMaxHp * 0.04f);
+                repairAmount += amount;
+                
+                if(playerController.Gold <= (float)(amount / 10)) {
+                    enoughRepairSource = false;
+                    return false;                    
+                }
                 myBuilding.hp += amount;
                 cityHP += amount;
 
@@ -313,6 +331,7 @@ public class IngameCityManager : MonoBehaviour {
                 }
 
                 if (myBuilding.hp < 0) BuildingDestroyed(target, myBuilding);
+                repairCount++;
                 break;
         }
         return true;
@@ -499,7 +518,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 100.ToString() + "%";
                     enemyTotalHPGauge.GetComponent<Image>().fillAmount = 1f;
                 }
-
+                
                 break;
         }
         return true;
@@ -918,7 +937,25 @@ public class IngameCityManager : MonoBehaviour {
     public void RepairPlayerCity() {
         for(int i = 0; i < demoTileIndex.Length; i++) {
             RepairBuilding(Target.ME, demoTileIndex[i]);
+            
+            if (enoughRepairSource == false) {
+                playerController.activeRepair = false;
+                break;
+            }
+            
         }
+
+        if (repairCount != 0) {
+            uint consume = (uint)(Mathf.RoundToInt(repairAmount / repairCount) / 10);
+            Debug.Log(consume);
+            playerController.Gold -= consume;
+        }
+        else if(repairCount == 0) {
+            playerController.activeRepair = false;
+        }
+        repairAmount = 0;
+        repairCount = 0;
+        enoughRepairSource = true;
     }
 
     public void DamagePlayerCity(int damage) {
@@ -950,19 +987,33 @@ public class IngameCityManager : MonoBehaviour {
     IEnumerator TakingDamage() {
         while (ingameSceneUIController.isPlaying == true) {
             yield return new WaitForSeconds(1f);
-            //TakeDamage(Target.ME, 11, 50);
-            //TakeDamage(Target.ME, 13, 50);
-            //TakeDamage(Target.ME, 12, 50 );
+            TakeDamage(Target.ME, 11, 10);
+            TakeDamage(Target.ME, 13, 10);
+            TakeDamage(Target.ME, 12, 10 );
             
-            //TakeDamage(Target.ME, 6, 50);
-            //TakeDamage(Target.ME, 7, 50);
-            //TakeDamage(Target.ME, 8, 50);
+            TakeDamage(Target.ME, 6, 10);
+            TakeDamage(Target.ME, 7, 10);
+            TakeDamage(Target.ME, 8, 10);
 
-            //TakeDamage(Target.ME, 18, 50);
-            //TakeDamage(Target.ME, 17, 50);
-            //TakeDamage(Target.ME, 16, 50);
+            TakeDamage(Target.ME, 18, 10);
+            TakeDamage(Target.ME, 17, 10);
+            TakeDamage(Target.ME, 16, 10);
 
         }
+    }
+
+    public void TakeDamage() {
+        TakeDamage(Target.ME, 11, 50);
+        TakeDamage(Target.ME, 13, 50);
+        TakeDamage(Target.ME, 12, 1000);
+
+        TakeDamage(Target.ME, 6, 50);
+        TakeDamage(Target.ME, 7, 50);
+        TakeDamage(Target.ME, 8, 50);
+
+        TakeDamage(Target.ME, 18, 50);
+        TakeDamage(Target.ME, 17, 50);
+        TakeDamage(Target.ME, 16, 50);
     }
 
     IEnumerator Repaircity() {
@@ -971,6 +1022,11 @@ public class IngameCityManager : MonoBehaviour {
             RepairBuilding(Target.ME, 6);
             RepairBuilding(Target.ME, 13);
         }
+    }
+    public void ResetProductPower() {
+        productResources.all.food = foodGenerate;
+        productResources.all.environment = envGenerate;
+        productResources.all.gold = goldGenerate;
     }
 
 
