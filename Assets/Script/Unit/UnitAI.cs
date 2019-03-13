@@ -308,12 +308,14 @@ public class UnitAI : MonoBehaviour {
                 ontile.GetComponent<TileCollision>().check = false;
             }
         }
+        unitCard.ev.hp = 0;
         ingameDeckShuffler.HeroReturn(unitCard. parentBuilding, true);
         Destroy(gameObject);
 
     }
 
     public void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
+        unitCard.ev.hp = (int)health;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);
     }
