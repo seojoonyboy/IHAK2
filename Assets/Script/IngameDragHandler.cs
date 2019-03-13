@@ -16,23 +16,14 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void CancelDrag() {
-        if (dropHandler == null || dropHandler.selectedObject == null) return; 
         transform.position = startPosition;
-        transform.localScale = startScale;
+        transform.localScale = new Vector3(1, 1, 1);
+        if (dropHandler == null || dropHandler.selectedObject == null) return;
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
 
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
         OnEndDrag(null);
-    }
-
-    public void CanvaseUpdate() {
-        Canvas.ForceUpdateCanvases();
-        var hlg = transform.parent.GetComponent<HorizontalLayoutGroup>();
-        hlg.CalculateLayoutInputHorizontal();
-        hlg.CalculateLayoutInputVertical();
-        hlg.SetLayoutHorizontal();
-        hlg.SetLayoutVertical();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -59,13 +50,12 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
-        transform.localScale = startScale;
+        transform.localScale = new Vector3(1, 1, 1);
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
         transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
 
-        CanvaseUpdate();
         if (eventData == null) return;
 
         ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();

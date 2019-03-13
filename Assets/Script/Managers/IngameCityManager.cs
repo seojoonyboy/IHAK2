@@ -779,6 +779,9 @@ public class IngameCityManager : MonoBehaviour {
         }
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
+        if (buildingObject.data.card.activeSkills.Length != 0) {
+            ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
+        }
     }
 
     private void RecoverProductPower(BuildingInfo bi) {
@@ -804,6 +807,9 @@ public class IngameCityManager : MonoBehaviour {
 
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
+        if (buildingObject.data.card.activeSkills.Length != 0) {
+            ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
+        }
     }
 
 
