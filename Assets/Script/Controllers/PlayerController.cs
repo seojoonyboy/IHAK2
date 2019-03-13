@@ -92,6 +92,7 @@ public partial class PlayerController : MonoBehaviour {
     private int MaxHpMulti;
     public int goldConsume;
     public bool activeRepair;
+    public float repairTimer;
     
     [Header(" - Spine")]
     [SerializeField] private SkeletonDataAsset coinAni;
@@ -140,13 +141,17 @@ public partial class PlayerController : MonoBehaviour {
         SetPlayerConsumeResource();
         playing = true;
         StartCoroutine(AoutomaticSystem());
-        Observable.Interval(System.TimeSpan.FromMilliseconds(2000)).Where(_ => activeRepair == true).Subscribe(_ =>icm.RepairPlayerCity());      
-    }
+        Observable.EveryUpdate().Where(_ => activeRepair == true).Subscribe(_ => repairTimer += Time.deltaTime);
+        Observable.EveryUpdate().Where(_ => activeRepair == true).Where(_=>repairTimer >= 2).Subscribe(_ => icm.RepairPlayerCity());
+        Observable.EveryUpdate().Where(_ => repairTimer >= 2).Subscribe(_ => repairTimer = 0);
+        Observable.EveryUpdate().Where(_ => activeRepair == false).Subscribe(_ => repairTimer = 0);
+
 
         //Food = 10000;
         //Gold = 10000;
 
         UpdateUpgradeCost();
+    }
     
     private void OnMouseDown() {
         Debug.Log("클릭!"); 
