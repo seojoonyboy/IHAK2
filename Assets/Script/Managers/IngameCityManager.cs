@@ -503,9 +503,6 @@ public class IngameCityManager : MonoBehaviour {
                 }
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
-                if (!string.IsNullOrEmpty(buildingObject.data.card.unit.name) || buildingObject.data.card.activeSkills.Length != 0) {
-                    ingameDeckShuffler.ActivateCard(enemyBuilding.gameObject);
-                }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
