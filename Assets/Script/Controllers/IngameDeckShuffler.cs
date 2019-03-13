@@ -88,7 +88,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         InitCard();
     }
 
-    public void DeactiveCard(string id, GameObject parentBuilding) {
+    public void DeactiveCard(GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
 
@@ -98,7 +98,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         card.transform.Find("Deactive").gameObject.SetActive(true);
     }
 
-    public void ActivateCard(string id, GameObject parentBuilding) {
+    public void ActivateCard(GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
         
@@ -150,6 +150,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.AddComponent<Index>().Id = index;
             origin.Add(card);
             Deck.Add(index);
+            if (skill.method.methodName != "skill_magma") DeactiveCard(activeCardInfo.data.parentBuilding);
             card.SetActive(false);
             index++;
         }
@@ -168,12 +169,12 @@ public class IngameDeckShuffler : MonoBehaviour {
         }
         if (pool.Count == 0) return;
 
-        int selectedIndex = rand.Next(0, Deck.Count);
-        Hand.Add(Deck[selectedIndex]);
-        Debug.Log(Deck[selectedIndex]);
-        origin[Deck[selectedIndex]].SetActive(true);
-        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
-        Deck.RemoveAt(selectedIndex);
+        int selectedIndex = rand.Next(0, pool.Count);
+        Hand.Add(pool[selectedIndex]);
+        Debug.Log(pool[selectedIndex]);
+        origin[pool[selectedIndex]].SetActive(true);
+        origin[pool[selectedIndex]].transform.SetAsFirstSibling();
+        Deck.Remove(pool[selectedIndex]);
     }
 
     //card use
@@ -207,13 +208,13 @@ public class IngameDeckShuffler : MonoBehaviour {
         Skill skill = data.data.baseSpec.skill;
 
         if (!string.IsNullOrEmpty(unit.name)) {
-            //Debug.Log("Unit : " + unit.name + ", Tier : " + unit.tierNeed);
             if (playerController.hqLevel >= unit.tierNeed) return true;
+            else return false;
         }
         else {
             if ((!string.IsNullOrEmpty(skill.name))) {
-                //Debug.Log("Skill : " + skill.name + ", Tier : " + skill.tierNeed);
                 if (playerController.hqLevel >= skill.tierNeed) return true;
+                else return false;
             }
         }
         return false;
