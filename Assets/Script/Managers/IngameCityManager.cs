@@ -178,9 +178,9 @@ public class IngameCityManager : MonoBehaviour {
         
         SetHQ();
         SetEnemyTotalHP();
-        StartCoroutine("Repair");
+        //StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
-        TakeDamage();
+        //TakeDamage();
         //StartCoroutine("Repaircity");
     }
 
@@ -503,7 +503,7 @@ public class IngameCityManager : MonoBehaviour {
                 }
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
-                if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
+                if (!string.IsNullOrEmpty(buildingObject.data.card.unit.name) || buildingObject.data.card.activeSkills.Length != 0) {
                     ingameDeckShuffler.ActivateCard(enemyBuilding.gameObject);
                 }
 
