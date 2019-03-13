@@ -7051,14 +7051,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: e8522973b7744430085b65b86c2a16c6, type: 2}
-  - {fileID: 2100000, guid: 78debd1555ccb4f54b4d8e1fa304c24f, type: 2}
-  - {fileID: 2100000, guid: e8522973b7744430085b65b86c2a16c6, type: 2}
-  - {fileID: 2100000, guid: 78debd1555ccb4f54b4d8e1fa304c24f, type: 2}
-  - {fileID: 2100000, guid: e8522973b7744430085b65b86c2a16c6, type: 2}
-  - {fileID: 2100000, guid: 78debd1555ccb4f54b4d8e1fa304c24f, type: 2}
-  - {fileID: 2100000, guid: e8522973b7744430085b65b86c2a16c6, type: 2}
-  - {fileID: 2100000, guid: 78debd1555ccb4f54b4d8e1fa304c24f, type: 2}
+  - {fileID: 2100000, guid: 81dd7fa1db247465287de7d01f6ba978, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7268,7 +7261,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6460a8f844f1c4c9c923893eb1a6f138, type: 2}
+  - {fileID: 2100000, guid: 38013fb39c28fb947a0924e51bce1378, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7303,7 +7296,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 380c5861d49e8479db46e52bfe21909a, type: 2}
+  - {fileID: 2100000, guid: 96233e70c277a534eb2b37594506a6d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13816,7 +13809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: f109a7683e8f46c458b13acb4818f2a8, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -14014,7 +14007,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   upgradeIcon: {fileID: 0}
-  spine: {fileID: 11400000, guid: d65202cbf41c2443e852e2bd0f68aef9, type: 2}
+  spine: {fileID: 11400000, guid: f109a7683e8f46c458b13acb4818f2a8, type: 2}
   setTileLocation: -1
 --- !u!114 &114518385575363076
 MonoBehaviour:
@@ -14275,7 +14268,7 @@ MonoBehaviour:
   icon: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   upgradeIcon: {fileID: 21300028, guid: 2317cb552894dc54da24a09a53a35e19, type: 3}
-  spine: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
+  spine: {fileID: 11400000, guid: 2232c71799c43d847bac94bba84a6ab2, type: 2}
   setTileLocation: -1
 --- !u!114 &114594401491074450
 MonoBehaviour:
@@ -14465,7 +14458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: cff8ad66cf3a147aba77a2af90d3597a, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 2232c71799c43d847bac94bba84a6ab2, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -14749,6 +14742,11 @@ MonoBehaviour:
       gold: 0
       environment: 0
     env:
+      id: 0
+      food: 0
+      gold: 0
+      environment: 0
+    all:
       id: 0
       food: 0
       gold: 0
