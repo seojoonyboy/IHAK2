@@ -65,7 +65,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         buildingInfos.activate = true;
         if (isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-            comp.coolTime = card.GetComponent<ActiveCardInfo>().data.baseSpec.unit.coolTime;
+            comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
             comp.cards = origin;            
             comp.StartCool();
         }
@@ -78,6 +78,12 @@ public class IngameDeckShuffler : MonoBehaviour {
             origin[index].SetActive(true);
             origin[index].transform.SetAsLastSibling();
         }
+    }
+
+    private float CalculateHeroCoolTime(ActiveCardInfo card) {
+        float baseCool = card.data.baseSpec.unit.coolTime;
+        float magLv = card.data.ev.lv;
+        return baseCool * ((100f + magLv * 8f) / 100f);
     }
 
     public void HeroReturnBtnClicked() {
