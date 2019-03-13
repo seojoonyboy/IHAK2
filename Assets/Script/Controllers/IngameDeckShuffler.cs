@@ -93,12 +93,9 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (card == null) return;
 
         card.GetComponent<IngameDragHandler>().CancelDrag();
-
+        card.GetComponent<IngameDragHandler>().enabled = false;
         int index = card.GetComponent<Index>().Id;
-        Deck.Remove(index);
-        Hand.Remove(index);
-        Grave.Add(index);
-        card.SetActive(false);
+        card.transform.Find("Deactive").gameObject.SetActive(true);
     }
 
     public void ActivateCard(string id, GameObject parentBuilding) {
@@ -106,15 +103,8 @@ public class IngameDeckShuffler : MonoBehaviour {
         if (card == null) return;
         
         int index = card.GetComponent<Index>().Id;
-        Grave.Remove(index);
-        Deck.Add(index);
-
-        int num = HAND_MAX_COUNT - Hand.Count;
-        for(int i=0; i<num; i++) {
-            DrawCard();
-        }
-
-        card.GetComponent<IngameDragHandler>().CanvaseUpdate();
+        card.GetComponent<IngameDragHandler>().enabled = true;
+        card.transform.Find("Deactive").gameObject.SetActive(false);
     }
 
     public void InitCard() {
@@ -174,7 +164,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         List<int> pool = new List<int>();
         foreach (int item in Deck) {
             ActiveCardInfo info = origin[item].GetComponent<ActiveCardInfo>();
-            if (canUseCard(info)) pool.Add(origin[item].GetComponent<Index>().Id);
+            if (CanUseCard(info)) pool.Add(origin[item].GetComponent<Index>().Id);
         }
         if (pool.Count == 0) return;
 
@@ -211,7 +201,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         DrawCard();
     }
 
-    private bool canUseCard(ActiveCardInfo data) {
+    private bool CanUseCard(ActiveCardInfo data) {
         Cost cost = data.data.baseSpec.unit.cost;
         Unit unit = data.data.baseSpec.unit;
         Skill skill = data.data.baseSpec.skill;
