@@ -395,6 +395,10 @@ public partial class PlayerController {
     [SerializeField] Text FarmUpgradeCost;
     [SerializeField] Text EnvUpgradeCost;
     [SerializeField] Text MilitaryUpgradeCost;
+    [SerializeField] Text IndustryLv;
+    [SerializeField] Text FarmLv;
+    [SerializeField] Text EnvLv;
+    [SerializeField] Text MilitaryLv;
 
     private bool CanUpgrade(Magnification magnification) {
         if (magnification.foodCost > Food) return false;
@@ -445,6 +449,7 @@ public partial class PlayerController {
                 icm.myBuildings_mags[0].goldCost = 0;
 
                 IndustryUpgradeCost.text = "비용\n식량 " + icm.myBuildings_mags[0].foodCost;
+                IndustryLv.text = "Lv " + icm.myBuildings_mags[0].lv;
                 break;
             case Buttons.FOOD:
                 uint Farm_GoldCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[1].lv, 1.15f), 0, MidpointRounding.AwayFromZero);
@@ -453,6 +458,7 @@ public partial class PlayerController {
                 icm.myBuildings_mags[1].goldCost = Farm_GoldCost;
 
                 FarmUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[1].goldCost;
+                FarmLv.text = "Lv " + icm.myBuildings_mags[1].lv;
                 break;
             case Buttons.ENVIRONMENT:
                 uint Env_FoodCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[2].lv, 1.08f), 0, MidpointRounding.AwayFromZero);
@@ -462,6 +468,7 @@ public partial class PlayerController {
                 icm.myBuildings_mags[2].goldCost = Env_GoldCost;
 
                 EnvUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[2].goldCost + "\n" + "식량" + icm.myBuildings_mags[2].foodCost;
+                EnvLv.text = "Lv " + icm.myBuildings_mags[2].lv;
                 break;
             case Buttons.MILITARY:
                 uint Military_FoodCost = (uint)Math.Round(50.0f * Mathf.Pow(1 + icm.myBuildings_mags[3].lv, 1.08f), 0, MidpointRounding.AwayFromZero);
@@ -471,6 +478,7 @@ public partial class PlayerController {
                 icm.myBuildings_mags[3].goldCost = Military_GoldCost;
 
                 MilitaryUpgradeCost.text = "비용\n골드 " + icm.myBuildings_mags[3].goldCost + "\n" + "식량" + icm.myBuildings_mags[3].foodCost;
+                MilitaryLv.text = "Lv " + icm.myBuildings_mags[3].lv; 
                 break;
         }
     }
