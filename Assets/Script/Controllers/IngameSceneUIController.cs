@@ -196,21 +196,21 @@ public class IngameSceneUIController : MonoBehaviour {
             playerCity.GetComponent<IngameCityManager>().CurrentView = 1;
             Color shutColor = new Color(255, 255, 255, 0.3f);
             produceButonList.GetComponent<Image>().color = shutColor;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 produceButonList.GetChild(i).GetComponent<Image>().color = shutColor;
                 produceButonList.GetChild(i).GetChild(0).GetComponent<Text>().color = shutColor;
             }
-            produceButonList.GetChild(4).gameObject.SetActive(true);
+            produceButonList.GetChild(5).gameObject.SetActive(true);
         }
         else {
             playerCity.GetComponent<IngameCityManager>().CurrentView = 0;
             Color onColor = new Color(255, 255, 255, 1.0f);
             produceButonList.GetComponent<Image>().color = onColor;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 produceButonList.GetChild(i).GetComponent<Image>().color = onColor;
                 produceButonList.GetChild(i).GetChild(0).GetComponent<Text>().color = onColor;
             }
-            produceButonList.GetChild(4).gameObject.SetActive(false);
+            produceButonList.GetChild(5).gameObject.SetActive(false);
         }
     }
 

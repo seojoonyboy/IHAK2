@@ -503,7 +503,7 @@ public class IngameCityManager : MonoBehaviour {
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
                 string id = buildingObject.data.card.id;
                 if (buildingObject.data.card.unit != null || buildingObject.data.card.activeSkills.Length != 0) {
-                    ingameDeckShuffler.ActivateCard(id, enemyBuilding.gameObject);
+                    ingameDeckShuffler.ActivateCard(enemyBuilding.gameObject);
                 }
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
@@ -798,7 +798,7 @@ public class IngameCityManager : MonoBehaviour {
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
         if (buildingObject.data.card.activeSkills.Length != 0) {
-            ingameDeckShuffler.DeactiveCard(id, buildingObject.gameObject);
+            ingameDeckShuffler.DeactiveCard(buildingObject.gameObject);
         }
     }
 
@@ -826,7 +826,7 @@ public class IngameCityManager : MonoBehaviour {
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
         string id = buildingObject.data.card.id;
         if (buildingObject.data.card.activeSkills.Length != 0) {
-            ingameDeckShuffler.ActivateCard(id, buildingObject.gameObject);
+            ingameDeckShuffler.ActivateCard(buildingObject.gameObject);
         }
     }
 
