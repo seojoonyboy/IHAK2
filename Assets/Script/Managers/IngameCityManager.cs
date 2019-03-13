@@ -293,7 +293,8 @@ public class IngameCityManager : MonoBehaviour {
                 float playerMaxHp = myBuilding.maxHp;
                 int amount = Mathf.RoundToInt(playerMaxHp * 0.04f);
                 repairAmount += amount;
-                if(playerController.Gold <= repairAmount) {
+                
+                if(playerController.Gold <= (float)(amount / 10)) {
                     enoughRepairSource = false;
                     return false;                    
                 }
@@ -936,11 +937,12 @@ public class IngameCityManager : MonoBehaviour {
     public void RepairPlayerCity() {
         for(int i = 0; i < demoTileIndex.Length; i++) {
             RepairBuilding(Target.ME, demoTileIndex[i]);
-
+            
             if (enoughRepairSource == false) {
                 playerController.activeRepair = false;
                 break;
             }
+            
         }
 
         if (repairCount != 0) {

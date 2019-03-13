@@ -91,7 +91,7 @@ public partial class PlayerController : MonoBehaviour {
     public int tileCount;
     private int MaxHpMulti;
     public int goldConsume;
-    public bool activeRepair;
+    public bool activeRepair = false;
     public float repairTimer;
     
     [Header(" - Spine")]
@@ -213,7 +213,7 @@ public partial class PlayerController : MonoBehaviour {
                 break;
         }
         if (!result) {
-            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            //IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             return;
         }
         Upgrade(btn);
