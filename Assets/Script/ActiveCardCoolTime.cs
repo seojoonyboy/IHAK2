@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class ActiveCardCoolTime : CoolTime {
     public List<GameObject> cards;
 
     public GameObject card;
+    public uint cancelCooltimeCost;
+
     public override void Work() {
         card = cards.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == gameObject);
 
@@ -19,10 +22,20 @@ public class ActiveCardCoolTime : CoolTime {
             }
         }
 
+        ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
+        int tier = cardInfo.data.baseSpec.unit.tierNeed;
+        int lv = cardInfo.data.ev.lv;
+        cancelCooltimeCost = (uint)(Math.Round(
+            (100.0f * (tier * lv / 25.0f)) * (coolTime - currTime),
+            0,
+            MidpointRounding.AwayFromZero));
+
         GameObject deactive = card.transform.Find("Deactive").gameObject;
         deactive.SetActive(true);
         Image image = deactive.GetComponent<Image>();
         image.fillAmount = 1 - currTime / coolTime;
+
+        deactive.transform.Find("Button/Val").GetComponent<Text>().text = "비용 : " + cancelCooltimeCost;
     }
 
     public override void OnTime() {
