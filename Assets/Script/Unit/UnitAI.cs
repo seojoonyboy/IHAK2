@@ -95,9 +95,11 @@ public class UnitAI : MonoBehaviour {
         moveSpeed = unit.moveSpeed;
         power = unit.power;
         if(card.ev.lv <= 0) card.ev.lv = 1;
-        if(health == 0) health = card.ev.hp;
         SetMaxHP();
+        if(health == 0) health = card.ev.hp;
         if(health == 0) health = maxHealth;
+        else health += HealTime();
+        if(health > maxHealth) health = maxHealth;
         calculateHealthBar();
         calculateExpBar();
         ChangeLvText();
@@ -332,6 +334,7 @@ public class UnitAI : MonoBehaviour {
 
     public void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
         unitCard.ev.hp = (int)health;
+        unitCard.ev.time = (int)Time.realtimeSinceStartup;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);
     }
@@ -344,8 +347,8 @@ public class UnitAI : MonoBehaviour {
     private void ExpGain(int exp) {
         exp = Mathf.RoundToInt(exp * 0.2f);
         unitCard.ev.exp += exp;
-        calculateExpBar();
         CheckLv();
+        calculateExpBar();
     }
 
     private float ExpNeed() {
@@ -376,6 +379,12 @@ public class UnitAI : MonoBehaviour {
 
     private int CalPower() {
         return Mathf.RoundToInt(power * (gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? unitMagnificate.magnfication : 1f));
+    }
+
+    private float HealTime() {
+        int totalTime = (int)Time.realtimeSinceStartup - unitCard.ev.time;
+        float healed = maxHealth * totalTime * 0.03f; 
+        return healed;
     }
 
 }

@@ -23,4 +23,5 @@ public class Ev {
     public int lv;
     public int exp;
     public int hp;
+    public int time;
 }
