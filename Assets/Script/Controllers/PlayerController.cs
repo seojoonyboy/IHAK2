@@ -161,22 +161,23 @@ public partial class PlayerController : MonoBehaviour {
 
     private void ClickButton(Buttons btn) { //생산 업그레이드
         bool result = false;
+        int animIndex = 0;
         switch (btn) {
             case Buttons.GOLD:
                 result = CanUpgrade(icm.myBuildings_mags[0]);
-                ShowUpgradeAnimation(0);
+                animIndex = 0;
                 break;
             case Buttons.FOOD:
                 result = CanUpgrade(icm.myBuildings_mags[1]);
-                ShowUpgradeAnimation(1);
+                animIndex = 1;
                 break;
             case Buttons.ENVIRONMENT:
                 result = CanUpgrade(icm.myBuildings_mags[2]);
-                ShowUpgradeAnimation(2);
+                animIndex = 2;
                 break;
             case Buttons.MILITARY:
                 result = CanUpgrade(icm.myBuildings_mags[3]);
-                ShowUpgradeAnimation(4);
+                animIndex = 4;
                 break;
             case Buttons.REPAIR:
                 /*
@@ -217,6 +218,7 @@ public partial class PlayerController : MonoBehaviour {
             //IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             return;
         }
+        ShowUpgradeAnimation(animIndex);
         Upgrade(btn);
 
         PrintResource();
