@@ -96,6 +96,8 @@ public class UnitAI : MonoBehaviour {
         if(card.ev.lv <= 0) card.ev.lv = 1;
         if(health == 0) health = card.ev.hp;
         SetMaxHP();
+        if(health == 0) health = maxHealth;
+        calculateHealthBar();
     }
 
     private void LvUpHP() { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
@@ -352,11 +354,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     private int PowerUP(float stat) {
-        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
-    }
-
-    private int PowerUP(int stat) {
-        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
+        return Mathf.RoundToInt(((100f + unitCard.ev.lv * 15f) / 100f) * stat);
     }
 
     private int CalPower() {
