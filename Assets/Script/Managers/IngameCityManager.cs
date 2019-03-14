@@ -945,7 +945,11 @@ public class IngameCityManager : MonoBehaviour {
         if (repairCount != 0) {
             uint consume = (uint)(Mathf.RoundToInt(repairAmount / repairCount) / 10);
             Debug.Log(consume);
-            playerController.Gold -= consume;
+            if (playerController.Gold < consume)
+                playerController.Gold = 0;
+            else
+                playerController.Gold -= consume;
+ 
         }
         else if(repairCount == 0) {
             playerController.activeRepair = false;

@@ -4,6 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 using DataModules;
 using System;
+using TMPro;
 
 public class UnitAI : MonoBehaviour {
     public enum aiState {
@@ -12,12 +13,12 @@ public class UnitAI : MonoBehaviour {
         ATTACK,
         DEAD
     };
-    public Sprite enemyGauge;
-    public Sprite playerGauge;
 
     private delegate void timeUpdate(float time);
     private timeUpdate update;
     private Transform healthBar;
+    private Transform expBar;
+    private TextMeshPro LvText;
     private IngameCityManager.BuildingInfo targetBuilding;
     private UnitAI targetUnit;
     private float maxHealth = 0;
@@ -26,7 +27,7 @@ public class UnitAI : MonoBehaviour {
     private float defense = 0;
     private float moveSpeed;
     private float currentTime;
-    private ActiveCard unitCard;
+    [SerializeField] private ActiveCard unitCard;
 
     private static IngameCityManager cityManager;
     private static Magnification unitMagnificate;
@@ -52,7 +53,6 @@ public class UnitAI : MonoBehaviour {
         if (gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
             buildingInfos = cityManager.enemyBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
-            unitgaugeColor.sprite = playerGauge;
             targetEnum = IngameCityManager.Target.ENEMY_1;
             GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("EnemyUnit");
             GetComponentInChildren<UnitDetector>().gameObject.layer = LayerMask.NameToLayer("PlayerUnit");
@@ -61,7 +61,6 @@ public class UnitAI : MonoBehaviour {
         if (gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
             buildingInfos = cityManager.myBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
-            unitgaugeColor.sprite = enemyGauge;
             targetEnum = IngameCityManager.Target.ME;
             GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("PlayerUnit");
             GetComponentInChildren<UnitDetector>().gameObject.layer = LayerMask.NameToLayer("EnemyUnit");
@@ -80,7 +79,9 @@ public class UnitAI : MonoBehaviour {
 
     private void Init() {
         if (healthBar != null) return;
-        healthBar = transform.GetChild(1).GetChild(1);
+        healthBar = transform.Find("UnitBar/HP");
+        expBar = transform.Find("UnitBar/Exp");
+        LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         if (cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
@@ -93,13 +94,24 @@ public class UnitAI : MonoBehaviour {
         Unit unit = card.baseSpec.unit;
         moveSpeed = unit.moveSpeed;
         power = unit.power;
-        SetMaxHP(unit.hitPoint);
+        if(card.ev.lv <= 0) card.ev.lv = 1;
+        if(health == 0) health = card.ev.hp;
+        SetMaxHP();
+        if(health == 0) health = maxHealth;
+        calculateHealthBar();
+        calculateExpBar();
+        ChangeLvText();
     }
 
-    private void SetMaxHP(int maxHP) {
-        float temphealth = maxHP - maxHealth;
-        maxHealth = maxHP;
-        health += temphealth;
+    private void LvUpHP() { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
+        float beforeMax = maxHealth;
+        SetMaxHP();
+        beforeMax = maxHealth - beforeMax;
+        health += beforeMax;
+    }
+
+    private void SetMaxHP() {
+        maxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
     }
 
     private void setState(aiState state) {
@@ -296,6 +308,11 @@ public class UnitAI : MonoBehaviour {
         healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
     }
 
+    private void calculateExpBar() {
+        float percent = (float)unitCard.ev.exp / ExpNeed();
+        expBar.transform.localScale = new Vector3(percent, 1f, 1f);
+    }
+
     public void DestoryEnemy() {
         if (ontile == null) {
             ontile = null;
@@ -311,7 +328,6 @@ public class UnitAI : MonoBehaviour {
         unitCard.ev.hp = 0;
         ingameDeckShuffler.HeroReturn(unitCard. parentBuilding, true);
         Destroy(gameObject);
-
     }
 
     public void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
@@ -328,12 +344,16 @@ public class UnitAI : MonoBehaviour {
     private void ExpGain(int exp) {
         exp = Mathf.RoundToInt(exp * 0.2f);
         unitCard.ev.exp += exp;
+        calculateExpBar();
         CheckLv();
     }
 
+    private float ExpNeed() {
+        return unitCard.ev.lv * 1.5f * 100;
+    }
+
     private void CheckLv() {
-        int lv = unitCard.ev.lv;
-        bool isLvUp = (lv * 1.5 * 100) <= unitCard.ev.exp;
+        bool isLvUp = ExpNeed() <= unitCard.ev.exp;
         if(isLvUp) ChangeStat();
     }
 
@@ -341,17 +361,16 @@ public class UnitAI : MonoBehaviour {
         if(unitCard.ev.lv >= 10) return;
         unitCard.ev.lv++;
         power = PowerUP(power);
-        int maxHP = PowerUP(maxHealth);
-        SetMaxHP(maxHP);
-        Debug.Log(name+" 레벨업!");
+        LvUpHP();
+        ChangeLvText();
+    }
+
+    private void ChangeLvText() {
+        LvText.text = unitCard.ev.lv.ToString();
     }
 
     private int PowerUP(float stat) {
-        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
-    }
-
-    private int PowerUP(int stat) {
-        return Mathf.RoundToInt(stat * ((100f + (unitCard.ev.lv * 15f) / 100f)));
+        return Mathf.RoundToInt(((100f + unitCard.ev.lv * 15f) / 100f) * stat);
     }
 
     private int CalPower() {
