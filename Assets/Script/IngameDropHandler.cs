@@ -81,6 +81,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == card.parentBuilding.GetComponent<BuildingObject>().setTileLocation);
         buildingInfos.activate = false;
+        buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(false);
 
         UseResource(data.cost);
         IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);

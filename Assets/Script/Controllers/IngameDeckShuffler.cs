@@ -67,6 +67,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         int index = card.GetComponent<Index>().Id;
         buildingInfos.activate = true;
+        buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
             comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
