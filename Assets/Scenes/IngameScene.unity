@@ -1806,10 +1806,10 @@ MonoBehaviour:
   Pagination: {fileID: 0}
   PrevButton: {fileID: 0}
   NextButton: {fileID: 0}
-  transitionSpeed: 7500
+  transitionSpeed: 10
   UseFastSwipe: 1
-  FastSwipeThreshold: 5
-  SwipeVelocityThreshold: 10000
+  FastSwipeThreshold: 50
+  SwipeVelocityThreshold: 500
   MaskArea: {fileID: 0}
   MaskBuffer: 1
   JumpOnEnable: 0
