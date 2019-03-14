@@ -98,9 +98,21 @@ public class IngameDeckShuffler : MonoBehaviour {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
 
-        card.GetComponent<IngameDragHandler>().CancelDrag();
-        card.GetComponent<IngameDragHandler>().enabled = false;
-        card.transform.Find("Deactive").gameObject.SetActive(true);
+        Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
+
+        if(card.GetComponent<IngameDragHandler>() == null) {
+            if (!string.IsNullOrEmpty(skill.name)) {
+                if (skill.method.methodName == "skill_unit_heal") {
+                    card.GetComponent<HealArea>().CancelDrag();
+                    card.GetComponent<HealArea>().enabled = false;
+                }
+            }
+        }
+        else {
+            card.GetComponent<IngameDragHandler>().CancelDrag();
+            card.GetComponent<IngameDragHandler>().enabled = false;
+            card.transform.Find("Deactive").gameObject.SetActive(true);
+        }
         card.transform.Find("Deactive/Button").gameObject.SetActive(false);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
@@ -114,10 +126,15 @@ public class IngameDeckShuffler : MonoBehaviour {
         card.SetActive(true);
         Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
         if (!string.IsNullOrEmpty(skill.name)) {
-            if (skill.method.methodName != "skill_magma") {
+            if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
                 card.GetComponent<IngameDragHandler>().enabled = false;
                 card.transform.Find("Deactive").gameObject.SetActive(true);
                 card.transform.Find("Deactive/Button").gameObject.SetActive(false);
+            }
+            else if(skill.method.methodName == "skill_unit_heal") {
+                card.GetComponent<HealArea>().enabled = true;
+                card.transform.Find("Deactive").gameObject.SetActive(false);
+                card.transform.Find("Deactive/Button").gameObject.SetActive(true);
             }
         }
         else {
@@ -177,7 +194,14 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.AddComponent<Index>().Id = index;
             origin.Add(card);
             Deck.Add(index);
-            if (skill.method.methodName != "skill_magma") DeactiveCard(activeCardInfo.data.parentBuilding);
+            if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
+                DeactiveCard(activeCardInfo.data.parentBuilding);
+            }
+            else if(skill.method.methodName == "skill_unit_heal") {
+                card.AddComponent<HealArea>();
+                Destroy(card.GetComponent<IngameDragHandler>());
+            }
+                
             card.SetActive(false);
             index++;
         }
