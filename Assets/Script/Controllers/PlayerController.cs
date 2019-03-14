@@ -359,7 +359,7 @@ public partial class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(3.0f);
             //icm.DamagePlayerCity((int)Mathf.Round((15 / 2)));
             Food += (uint)Mathf.Round(Env / 5);
-            Gold -= (uint)Mathf.Round(Env / 5);
+            Gold = CheckResourceFlow(Gold, (uint)Mathf.Round(Env / 5), false);
         }
     }
 
@@ -417,6 +417,8 @@ public partial class PlayerController : MonoBehaviour {
     private void TimeController() {
 
     }
+
+    
 }
 
 /// <summary>
@@ -445,14 +447,14 @@ public partial class PlayerController {
             case Buttons.GOLD:
                 icm.myBuildings_mags[0].magnfication = icm.myBuildings_mags[0].lv * 1.8f;
                 icm.myBuildings_mags[0].lv++;
-
+                
                 Food -= icm.myBuildings_mags[0].foodCost;
                 break;
             case Buttons.FOOD:
                 icm.myBuildings_mags[1].magnfication = icm.myBuildings_mags[1].lv * 1.8f;
                 icm.myBuildings_mags[1].lv++;
 
-                Gold -= icm.myBuildings_mags[1].goldCost;
+                Gold = CheckResourceFlow(Gold, icm.myBuildings_mags[1].goldCost, false);
                 break;
             case Buttons.ENVIRONMENT:
                 icm.myBuildings_mags[2].magnfication = icm.myBuildings_mags[2].lv * 2.0f;
@@ -578,5 +580,23 @@ public partial class PlayerController {
         float hp = icm.cityMaxHP;
         MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
         tileCount = icm.CityTotalTileCount();
+    }
+
+    public uint CheckResourceFlow(uint target, uint am1, bool sum) {
+        int targetSource, amount;
+        targetSource = (int)target;
+        amount = (int)am1;
+        
+
+        if (sum == true)
+            targetSource += amount;
+        else if (sum == false)
+            targetSource -= amount;
+
+        if (targetSource > 0) {
+            return (uint)targetSource;
+        }
+        else
+            return 0;
     }
 }
