@@ -97,14 +97,16 @@ public class IngameDropHandler : MonoBehaviour {
         }
 
         StartCoroutine(CoolTime());
-        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method, IngameCityManager.Target.ENEMY_1);
-        ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
+
+        if(data.method.methodName == "skill_magma") {
+            ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method, IngameCityManager.Target.ENEMY_1);
+            ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
+        }
 
         UseResource(data.cost);
         IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
         playerController.PrintResource();
         ingameDeckShuffler.UseCard(selectedObject);
-        Debug.Log(selectedObject.transform.GetSiblingIndex());
     }
 
     private bool CheckResouceOK(Cost cost) {
