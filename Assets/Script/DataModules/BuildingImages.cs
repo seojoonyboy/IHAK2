@@ -10,8 +10,7 @@ public class BuildingImages : MonoBehaviour {
         primal_product_buildingImages,
         primal_other_buildingImages,
         primal_product_buildingIcons,
-        primal_other_buildingIcons,
-        primal_upgrade_buildingIcons;
+        primal_other_buildingIcons;
     
     public SkeletonDataAsset[] 
         primal_product_buildingSpines,
@@ -29,7 +28,7 @@ public class BuildingImages : MonoBehaviour {
             Card card = bo.data.card;
             bo.mainSprite = GetImage(card.race, card.type, card.id);
             bo.icon = GetIcon(card.race, card.type, card.id);
-            bo.upgradeIcon = GetImage(card.race, "upgrade", card.id);
+            bo.upgradeIcon = GetIcon(card.race, "upgrade", card.id);
             bo.spine = GetSpine(card.race, card.type, card.id);
 
             if(bo.spine == null) { 
@@ -48,7 +47,6 @@ public class BuildingImages : MonoBehaviour {
         switch (race) {
             case "primal" :
                 if (type == "prod") sprites = primal_product_buildingImages;
-                else if (type == "upgrade") sprites = primal_upgrade_buildingIcons;
                 else sprites = primal_other_buildingImages;
                 foreach (Sprite sprite in sprites) {
                     if (sprite.name == id) {

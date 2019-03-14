@@ -585,25 +585,47 @@ MonoBehaviour:
   enemyGauge: {fileID: 21300008, guid: 4281d1f936e54264ea18416cf14e8683, type: 3}
   playerGauge: {fileID: 21300002, guid: 4281d1f936e54264ea18416cf14e8683, type: 3}
   health: 0
-  unit:
-    id: 
-    name: 
-    cost:
-      food: 0
-      gold: 0
-      environment: 0
-    coolTime: 0
-    size: 0
-    count: 0
-    power: 0
-    attackSpeed: 0
-    detectRange: 0
-    attackRange: 0
-    hitPoint: 0
-    moveSpeed: 0
-    tierNeed: 0
-    imageName: 
-    lv: 1
+  unitCard:
+    parentBuilding: {fileID: 0}
+    baseSpec:
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      skill:
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        id: 0
+        name: 
+        method:
+          id: 0
+          methodName: 
+          args: 
+        tierNeed: 0
+        coolTime: 0
+        desc: 
+        imageName: 
+    ev:
+      lv: 0
+      exp: 0
+      hp: 0
   ontile: {fileID: 0}
   protecting: 0
 --- !u!114 &114889295075393478
