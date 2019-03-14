@@ -210,7 +210,6 @@ public partial class PlayerController : MonoBehaviour {
         Upgrade(btn);
 
         PrintResource();
-        PrimalEnvEfct();
 
         UpdateBuildingImages();
     }
@@ -411,6 +410,7 @@ public partial class PlayerController : MonoBehaviour {
             scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
 
             PrintResource();
+            PrimalEnvEfct();
         }
     }
 
