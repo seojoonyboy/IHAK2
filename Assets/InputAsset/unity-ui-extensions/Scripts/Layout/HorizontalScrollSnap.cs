@@ -35,7 +35,7 @@ namespace UnityEngine.UI.Extensions
             }
             else if (_lerp)
             {
-                _screensContainer.localPosition = Vector3.MoveTowards(_screensContainer.localPosition, _lerp_target, transitionSpeed * Time.deltaTime);
+                _screensContainer.localPosition = Vector3.Lerp(_screensContainer.localPosition, _lerp_target, transitionSpeed * Time.deltaTime);
                 if (Vector3.Distance(_screensContainer.localPosition, _lerp_target) < 0.1f)
                 {
                     _screensContainer.localPosition = _lerp_target;
@@ -74,11 +74,7 @@ namespace UnityEngine.UI.Extensions
             int _offset = 0;
             float _dimension = 0;
             float currentXPosition = 0;
-
-
-            //지정한 spread만큼 패널의 넓이의 스크롤 공간 좌우로 확장
-            int spread = 1;
-            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? spread : PageStep);
+            var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 3 : PageStep);
 
 
             for (int i = 0; i < _screensContainer.transform.childCount; i++)
@@ -241,8 +237,8 @@ namespace UnityEngine.UI.Extensions
             _pointerDown = false;
 
             if (_scroll_rect.horizontal)
-            {
-                var distance = Vector3.Distance(_startPosition, _screensContainer.localPosition);
+            {              
+                var distance = Vector3.Distance(_startPosition, _screensContainer.localPosition);   
                 if (UseFastSwipe && distance < panelDimensions.width && distance >= FastSwipeThreshold)
                 {
                     _scroll_rect.velocity = Vector3.zero;
