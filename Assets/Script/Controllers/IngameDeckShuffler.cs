@@ -100,17 +100,32 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         card.GetComponent<IngameDragHandler>().CancelDrag();
         card.GetComponent<IngameDragHandler>().enabled = false;
-        int index = card.GetComponent<Index>().Id;
         card.transform.Find("Deactive").gameObject.SetActive(true);
+        card.transform.Find("Deactive/Button").gameObject.SetActive(false);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
+        card.SetActive(false);
     }
 
     public void ActivateCard(GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
-        
-        int index = card.GetComponent<Index>().Id;
-        card.GetComponent<IngameDragHandler>().enabled = true;
-        card.transform.Find("Deactive").gameObject.SetActive(false);
+
+        card.SetActive(true);
+        Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
+        if (!string.IsNullOrEmpty(skill.name)) {
+            if (skill.method.methodName != "skill_magma") {
+                card.GetComponent<IngameDragHandler>().enabled = false;
+                card.transform.Find("Deactive").gameObject.SetActive(true);
+                card.transform.Find("Deactive/Button").gameObject.SetActive(false);
+            }
+        }
+        else {
+            card.GetComponent<IngameDragHandler>().enabled = true;
+            card.transform.Find("Deactive").gameObject.SetActive(false);
+            card.transform.Find("Deactive/Button").gameObject.SetActive(true);
+        }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
     public void InitCard() {
@@ -125,6 +140,9 @@ public class IngameDeckShuffler : MonoBehaviour {
         foreach (ActiveCard unitCard in tileGroup.units) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
+            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
+                () => CancelCoolTimeBtnClicked(card));
+
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name + unitCard.parentBuilding.transform.parent.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
@@ -143,6 +161,9 @@ public class IngameDeckShuffler : MonoBehaviour {
         foreach (ActiveCard spellCard in tileGroup.spells) {
             Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, cardParent);
+            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
+                () => CancelCoolTimeBtnClicked(card));
+
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = spellCard;
@@ -250,5 +271,25 @@ public class IngameDeckShuffler : MonoBehaviour {
         for (int i = 0; i < HAND_MAX_COUNT; i++) {
             DrawCard();
         }
+    }
+
+    /// <summary>
+    /// 쿨타임 제거 버튼
+    /// </summary>
+    public void CancelCoolTimeBtnClicked(GameObject card) {
+        ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
+        int tier = cardInfo.data.baseSpec.unit.tierNeed;
+        int lv = cardInfo.data.ev.lv;
+        ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
+        if (coolTime == null) return;
+        uint cost = coolTime.cancelCooltimeCost;
+        if (cost > playerController.Gold) return;
+        if (cost > playerController.Food) return;
+
+        playerController.Gold -= cost;
+        playerController.Food -= cost;
+        playerController.PrintResource();
+
+        coolTime.OnTime();
     }
 }
