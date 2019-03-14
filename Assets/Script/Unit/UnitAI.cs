@@ -360,6 +360,7 @@ public class UnitAI : MonoBehaviour {
     private void ChangeStat() {
         if(unitCard.ev.lv >= 10) return;
         unitCard.ev.lv++;
+        unitCard.ev.exp = 0;
         power = PowerUP(power);
         LvUpHP();
         ChangeLvText();
