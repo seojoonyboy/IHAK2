@@ -102,23 +102,30 @@ public class IngameDeckShuffler : MonoBehaviour {
         card.GetComponent<IngameDragHandler>().enabled = false;
         card.transform.Find("Deactive").gameObject.SetActive(true);
         card.transform.Find("Deactive/Button").gameObject.SetActive(false);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
+        card.SetActive(false);
     }
 
     public void ActivateCard(GameObject parentBuilding) {
         GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         if (card == null) return;
 
+        card.SetActive(true);
         Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
         if (!string.IsNullOrEmpty(skill.name)) {
             if (skill.method.methodName != "skill_magma") {
                 card.GetComponent<IngameDragHandler>().enabled = false;
+                card.transform.Find("Deactive").gameObject.SetActive(true);
+                card.transform.Find("Deactive/Button").gameObject.SetActive(false);
             }
         }
         else {
             card.GetComponent<IngameDragHandler>().enabled = true;
+            card.transform.Find("Deactive").gameObject.SetActive(false);
+            card.transform.Find("Deactive/Button").gameObject.SetActive(true);
         }
-        card.transform.Find("Deactive").gameObject.SetActive(false);
-        card.transform.Find("Deactive/Button").gameObject.SetActive(true);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
     public void InitCard() {
