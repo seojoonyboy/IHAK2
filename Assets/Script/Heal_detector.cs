@@ -25,7 +25,7 @@ public class Heal_detector : MonoBehaviour {
         foreach (GameObject obj in targets) {
             UnitAI unitAI = obj.GetComponent<UnitAI>();
             if (unitAI != null) {
-                Debug.Log(obj.name + "체력 회복");
+                IngameAlarm.instance.SetAlarm("체력 회복 +" + healAmount);
                 unitAI.health += healAmount;
             }
         }

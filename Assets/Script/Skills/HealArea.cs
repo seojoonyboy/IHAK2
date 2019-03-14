@@ -78,7 +78,7 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolComp != null) {
-            Debug.Log("쿨타임! 사용불가");
+            IngameAlarm.instance.SetAlarm("쿨타임이라 사용이 불가합니다.");
             return;
         }
 
