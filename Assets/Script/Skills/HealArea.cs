@@ -71,7 +71,10 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
 
-        if (eventData == null) return;
+        if (eventData == null) {
+            Destroy(detector);
+            return;
+        }
 
         ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolComp != null) {
