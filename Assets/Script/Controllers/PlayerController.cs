@@ -179,18 +179,6 @@ public partial class PlayerController : MonoBehaviour {
                 ShowUpgradeAnimation(4);
                 break;
             case Buttons.REPAIR:
-                /*
-                float destroyCount = icm.CityDestroyBuildingCount();
-                float calculate = MaxHpMulti * ((1f + (0.02f * destroyCount)) * (tileCount + hqLevel) / (tileCount * 1.5f));
-                goldConsume = Mathf.RoundToInt(calculate);
-
-                if (Gold >= 0 + goldConsume) {
-                    ShowCoinAnimation(3);
-                    icm.RepairPlayerCity();
-                    Gold -= goldConsume;
-                    resourceClass.turn--;
-                }
-                */
                 if(activeRepair == false) {
                     if (icm.cityHP == icm.cityMaxHP) {
                         activeRepair = false;
