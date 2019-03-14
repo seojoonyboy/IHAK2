@@ -29,7 +29,7 @@ public class Heal_detector : MonoBehaviour {
                 unitAI.health += healAmount;
             }
         }
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     public void Init(DataModules.Skill skill) {
