@@ -94,13 +94,15 @@ public class UnitAI : MonoBehaviour {
         moveSpeed = unit.moveSpeed;
         power = unit.power;
         if(card.ev.lv <= 0) card.ev.lv = 1;
-        LvUpHP(unit.hitPoint);
+        if(health == 0) health = card.ev.hp;
+        SetMaxHP();
     }
 
-    private void LvUpHP(int maxHP) { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
-        float temphealth = maxHP - maxHealth;
-        maxHealth = maxHP;
-        health += temphealth;
+    private void LvUpHP() { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
+        float beforeMax = maxHealth;
+        SetMaxHP();
+        beforeMax = maxHealth - beforeMax;
+        health += beforeMax;
     }
 
     private void SetMaxHP() {
@@ -316,7 +318,6 @@ public class UnitAI : MonoBehaviour {
         unitCard.ev.hp = 0;
         ingameDeckShuffler.HeroReturn(unitCard. parentBuilding, true);
         Destroy(gameObject);
-
     }
 
     public void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
@@ -346,8 +347,7 @@ public class UnitAI : MonoBehaviour {
         if(unitCard.ev.lv >= 10) return;
         unitCard.ev.lv++;
         power = PowerUP(power);
-        int maxHP = PowerUP(maxHealth);
-        LvUpHP(maxHP);
+        LvUpHP();
         Debug.Log(name+" 레벨업!");
     }
 
