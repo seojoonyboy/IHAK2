@@ -143,6 +143,8 @@ public partial class PlayerController : MonoBehaviour {
         StartCoroutine(AoutomaticSystem());
         Observable.EveryUpdate().Where(_ => activeRepair == true).Subscribe(_ => repairTimer += Time.deltaTime);
         Observable.EveryUpdate().Where(_ => activeRepair == true).Where(_=>repairTimer >= 2).Subscribe(_ => icm.RepairPlayerCity());
+        Observable.EveryUpdate().Where(_ => activeRepair == true && icm.cityHP == icm.cityMaxHP).Subscribe(_ => icm.ResetProductPower());
+        Observable.EveryUpdate().Where(_ => activeRepair == true && icm.cityHP == icm.cityMaxHP).Subscribe(_ => activeRepair = false);
         Observable.EveryUpdate().Where(_ => repairTimer >= 2).Subscribe(_ => repairTimer = 0);
         Observable.EveryUpdate().Where(_ => activeRepair == false).Subscribe(_ => repairTimer = 0);
 
@@ -190,21 +192,20 @@ public partial class PlayerController : MonoBehaviour {
                 }
                 */
                 if(activeRepair == false) {
-                    activeRepair = true;
-
-                    if (icm.productResources.all.gold != icm.goldGenerate)
-                        icm.productResources.all.gold = icm.goldGenerate;
-
-                    if (icm.productResources.all.environment != icm.envGenerate)
-                        icm.productResources.all.environment = icm.envGenerate;
-
-                    if (icm.productResources.all.food != icm.foodGenerate)
-                        icm.productResources.all.food = icm.foodGenerate;
-
-                    icm.productResources.all.gold = Mathf.RoundToInt(icm.productResources.all.gold * 0.2f);
-                    icm.productResources.all.environment = Mathf.RoundToInt(icm.productResources.all.environment * 0.2f);
-                    icm.productResources.all.food = Mathf.RoundToInt(icm.productResources.all.food * 0.2f);
-                    ShowCoinAnimation(3);
+                    if (icm.cityHP == icm.cityMaxHP) {
+                        activeRepair = false;
+                        icm.ResetProductPower();
+                    }
+                    else {
+                        activeRepair = true;
+                        icm.goldGenerate = icm.productResources.all.gold;
+                        icm.envGenerate = icm.productResources.all.environment;
+                        icm.foodGenerate = icm.productResources.all.food;
+                        icm.productResources.all.gold = Mathf.RoundToInt(icm.productResources.all.gold * 0.2f);
+                        icm.productResources.all.environment = Mathf.RoundToInt(icm.productResources.all.environment * 0.2f);
+                        icm.productResources.all.food = Mathf.RoundToInt(icm.productResources.all.food * 0.2f);
+                        ShowCoinAnimation(3);
+                    }
                 }
                 else if(activeRepair == true) {
                     activeRepair = false;

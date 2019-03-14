@@ -180,7 +180,7 @@ public class IngameCityManager : MonoBehaviour {
         SetEnemyTotalHP();
         //StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
-        //TakeDamage();
+        TakeDamage();
         //StartCoroutine("Repaircity");
     }
 
