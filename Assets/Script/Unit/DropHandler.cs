@@ -153,7 +153,7 @@ public class DropHandler : MonoBehaviour {
             env.text = card.product.environment.ToString();
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
             prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         else {
@@ -187,7 +187,7 @@ public class DropHandler : MonoBehaviour {
                 + "요구 레벨 : " + unit.tierNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetImage(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
             unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);
