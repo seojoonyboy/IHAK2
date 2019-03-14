@@ -27,6 +27,10 @@ public class IngameDeckShuffler : MonoBehaviour {
     [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
 
     TileGroup tileGroup;
+
+    [SerializeField] GameObject healPref;
+    [SerializeField] Camera camera;
+
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
         eventHandler = IngameSceneEventHandler.Instance;
@@ -198,7 +202,10 @@ public class IngameDeckShuffler : MonoBehaviour {
                 DeactiveCard(activeCardInfo.data.parentBuilding);
             }
             else if(skill.method.methodName == "skill_unit_heal") {
-                card.AddComponent<HealArea>();
+                HealArea healArea = card.AddComponent<HealArea>();
+                healArea.pref = healPref;
+                healArea.cam = camera;
+
                 Destroy(card.GetComponent<IngameDragHandler>());
             }
                 

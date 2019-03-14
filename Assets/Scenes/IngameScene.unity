@@ -3380,6 +3380,8 @@ MonoBehaviour:
   Deck: 
   Hand: 
   Grave: 
+  healPref: {fileID: 1838264511753094, guid: 85116fb7b6570e74ba811753d8f24599, type: 2}
+  camera: {fileID: 746492823}
 --- !u!1 &377650262
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,6 +6478,8 @@ MonoBehaviour:
   hqLevel: 1
   tileCount: 0
   goldConsume: 0
+  activeRepair: 0
+  repairTimer: 0
   coinAni: {fileID: 11400000, guid: 2b5517e3c41964ebf94e9cc93c4b1a88, type: 2}
   upgrageAni: {fileID: 11400000, guid: 54c912a1000ee6440baa5ee0b98ad068, type: 2}
   coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}

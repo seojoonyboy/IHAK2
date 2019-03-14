@@ -8,59 +8,21 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     IngameDropHandler dropHandler;
     Vector3 startScale;
     Vector3 startPosition;
-    Camera cam;
-
-    CircleCollider2D collider;
-    List<GameObject> targets;
-
-    int healAmount = 0;
-    int range = 0;
+    public Camera cam;
+    public GameObject pref;
+    GameObject detector;
     // Use this for initialization
     void Start() {
         dropHandler = GetComponentInParent<IngameDropHandler>();
-        cam = Camera.main;
-
-        targets = new List<GameObject>();
     }
 
-    public void OnDetector() {
+    void OnDetector() {
         var skill = GetComponent<ActiveCardInfo>().data.baseSpec.skill;
-        Init(skill);
+        GameObject collObj = new GameObject();
 
-        collider = gameObject.AddComponent<CircleCollider2D>();
-        collider.radius = range * 10;
-    }
-
-    private void Init(DataModules.Skill skill) {
-        string[] args = skill.method.args.Split(',');
-
-        int.TryParse(args[0], out range);
-        int.TryParse(args[1], out healAmount);
-    }
-
-    public void OffDetector() {
-        Destroy(collider);
-    }
-
-    void OnTriggerStay2D(Collider2D collision) {
-        Debug.Log(collider.gameObject.name + "감지됨");
-        if (collision.gameObject.layer == 10) {
-            targets.Add(collision.gameObject);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision) {
-        if(collision.gameObject.layer == 10) {
-            targets.Remove(collision.gameObject);
-        }
-    }
-
-    public void ActivateSpell() {
-        OffDetector();
-        foreach(GameObject obj in targets) {
-            UnitAI unitAI = obj.GetComponent<UnitAI>();
-            if (unitAI != null) unitAI.health += healAmount;
-        }
+        detector = Instantiate(pref);
+        detector.name = "heal_detector";
+        detector.GetComponent<Heal_detector>().Init(skill);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -84,6 +46,9 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     public void OnDrag(PointerEventData eventData) {
+        Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
+        detector.transform.position = new Vector3(origin.x, origin.y, 0);
+
         transform.position = Input.mousePosition;
 
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
@@ -99,8 +64,6 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        OffDetector();
-
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
         dropHandler.selectedObject.GetComponent<Image>().raycastTarget = true;
@@ -115,7 +78,8 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Debug.Log("쿨타임! 사용불가");
             return;
         }
-        ActivateSpell();
+
+        detector.GetComponent<Heal_detector>().ActivateSpell();
         dropHandler.OnDrop();
     }
 }
