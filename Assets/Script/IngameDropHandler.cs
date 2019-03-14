@@ -50,7 +50,9 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     private void UnitSummon(ActiveCard card, int rarity) {
+        if (ingameCityManager.CurrentView == 0) return;
         if (!CheckResouceOK(card.baseSpec.unit.cost)) return;
+        
         Unit data = card.baseSpec.unit;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
