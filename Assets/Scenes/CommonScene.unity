@@ -4225,12 +4225,12 @@ Prefab:
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_product_buildingIcons.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_product_buildingSpines.Array.size
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
@@ -4351,7 +4351,7 @@ Prefab:
         type: 2}
       propertyPath: primal_product_buildingIcons.Array.data[9]
       value: 
-      objectReference: {fileID: 21300000, guid: 97beef470ba030e4a91ef72796cf0e32,
+      objectReference: {fileID: 21300006, guid: f14f5dbc8ef6e7d44b27103ace897720,
         type: 3}
     - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
@@ -4658,6 +4658,24 @@ Prefab:
       propertyPath: primal_product_buildingSpines.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: 689ed99684e47fc4bbd02a4e4a152797,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 46b1c665a3e9a7144b692fb33d508796,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: a8654aa2950462149a87dcc2da405e3d,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: primal_product_buildingSpines.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: eaca8c992e595514193cd243fee9d606,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
