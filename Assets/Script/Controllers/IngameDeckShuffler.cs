@@ -67,6 +67,7 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         int index = card.GetComponent<Index>().Id;
         buildingInfos.activate = true;
+        buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
             ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
             comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
@@ -164,7 +165,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
                 () => CancelCoolTimeBtnClicked(card));
 
-            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name + unitCard.parentBuilding.transform.parent.name;
+            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);

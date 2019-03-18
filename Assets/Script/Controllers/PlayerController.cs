@@ -203,14 +203,13 @@ public partial class PlayerController : MonoBehaviour {
                 break;
         }
         if (!result) {
-            //IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
             return;
         }
         ShowUpgradeAnimation(animIndex);
         Upgrade(btn);
 
         PrintResource();
-        PrimalEnvEfct();
 
         UpdateBuildingImages();
     }
@@ -411,6 +410,7 @@ public partial class PlayerController : MonoBehaviour {
             scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
 
             PrintResource();
+            PrimalEnvEfct();
         }
     }
 
