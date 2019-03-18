@@ -331,7 +331,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   clickLocation: {x: 0, y: 0, z: 0}
   move: 0
-  deckSettingController: {fileID: 0}
   fillGauge: {fileID: 0}
 --- !u!114 &114447343365011374
 MonoBehaviour:
@@ -348,6 +347,8 @@ MonoBehaviour:
   canDrag: 0
   deckSettingController: {fileID: 0}
   accountManager: {fileID: 0}
+  parentPageObject: {fileID: 0}
+  sibilingData: 0
 --- !u!114 &114545903793418602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -677,8 +678,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000094175, y: 58.32}
-  m_SizeDelta: {x: 176.96, y: 162.41}
+  m_AnchoredPosition: {x: 1, y: 45}
+  m_SizeDelta: {x: 160, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224917104324134138
 RectTransform:

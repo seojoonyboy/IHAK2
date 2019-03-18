@@ -39,7 +39,7 @@ public class OwnCardGenerator : MonoBehaviour {
 
         for (int i = 0; i < page; i++) {
             GameObject setPage = Instantiate(pageObject, transform);
-            setPage.transform.localPosition += new Vector3(i * 1080f, 0);
+            setPage.transform.localPosition += new Vector3(i * 1920f, 0);
         }
 
         EditScenePanel editScenePanel = transform.parent.GetComponent<EditScenePanel>();
