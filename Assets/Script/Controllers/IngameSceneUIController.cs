@@ -73,7 +73,7 @@ public class IngameSceneUIController : MonoBehaviour {
             new Vector2(hqPos.x + 60, hqPos.y - 60)
         }, target.parent);
 
-        ld.transform.localScale = new Vector3(1, 1, 1);
+        ld.transform.localScale = new Vector3(3, 3, 1);
         playerCity.GetComponent<IngameCityManager>().eachPlayersTileGroups.Add(ld);
         go.SetActive(false);
     }
@@ -110,7 +110,7 @@ public class IngameSceneUIController : MonoBehaviour {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         hss = transform.GetChild(1).GetComponent<HorizontalScrollSnap>();
         cityPos.position = new Vector3(cityPos.position.x, cityPos.position.y / screenRate, cityPos.position.z);
-        playerCity.transform.GetChild(1).position = cityPos.position;
+        playerCity.transform.GetChild(1).position = cityPos.position + Vector3.down * 100f;
         enemyCity.transform.GetChild(1).localPosition = playerCity.transform.GetChild(1).localPosition;
         lookingCity.GetChild(hss.CurrentPage).localScale = new Vector3(1.5f, 1.5f, 1);
         switchBtn.GetChild(0).gameObject.SetActive(false);

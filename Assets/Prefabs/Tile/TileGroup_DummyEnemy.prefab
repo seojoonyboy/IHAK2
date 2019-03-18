@@ -1535,8 +1535,6 @@ GameObject:
   - component: {fileID: 4069930580247828}
   - component: {fileID: 114702807084622772}
   - component: {fileID: 114784401093959224}
-  - component: {fileID: 114642601299897886}
-  - component: {fileID: 60423053862341716}
   m_Layer: 0
   m_Name: TileGroup_DummyEnemy
   m_TagString: TileGroup
@@ -9535,34 +9533,6 @@ PolygonCollider2D:
       - {x: -14.145793, y: 0.0011166763}
       - {x: 0.0059407093, y: -10.842833}
       - {x: 14.152077, y: -0.0005850643}
---- !u!60 &60423053862341716
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1372382854036342}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1009, y: 1000}
-      - {x: -1000, y: 1000}
-      - {x: -1000, y: -1000}
-      - {x: 1000, y: -1000}
 --- !u!60 &60423426984545450
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -13890,23 +13860,6 @@ MonoBehaviour:
     col: 1
   row: 3
   col: 1
---- !u!114 &114642601299897886
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1372382854036342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f01b895e078212419b3a7c52085d19e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstaclesMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  autoRegenerateInterval: 60
-  radiusOffset: 0.1
-  invertMasterPolygon: 0
 --- !u!114 &114650032893435114
 MonoBehaviour:
   m_ObjectHideFlags: 1
