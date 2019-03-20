@@ -246,7 +246,7 @@ public partial class DeckListController {
                     else {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
-                    Card card = buildingObject.data.card;
+                    CardData card = buildingObject.card.data;
 
                     if (!string.IsNullOrEmpty(card.unit.name)) {
                         ActiveCard activeCard = new ActiveCard();
@@ -274,7 +274,7 @@ public partial class DeckListController {
         GameObject targetBuilding;
 
         for (int i = 0; i < buildingGroup.transform.childCount; i++) {
-            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().data.id == ID) {
+            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().card.id == ID) {
                 targetBuilding = buildingGroup.transform.GetChild(i).gameObject;
                 return targetBuilding;
             }

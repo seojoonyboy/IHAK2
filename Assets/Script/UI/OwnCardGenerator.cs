@@ -60,26 +60,26 @@ public class OwnCardGenerator : MonoBehaviour {
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
             deckSettingController.totalCard.Add(slotData);
 
-            slotData.GetComponent<Image>().sprite = cardPanels[info.data.card.rarity - 1];
+            slotData.GetComponent<Image>().sprite = cardPanels[info.card.data.rarity - 1];
 
-            slotData.transform.Find("FirstMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
-            slotData.transform.Find("SecondMark").GetComponent<Image>().sprite = markIcons[info.data.card.rarity - 1];
+            slotData.transform.Find("FirstMark").GetComponent<Image>().sprite = markIcons[info.card.data.rarity - 1];
+            slotData.transform.Find("SecondMark").GetComponent<Image>().sprite = markIcons[info.card.data.rarity - 1];
             slotData.transform.Find("Data").GetComponent<Image>().sprite = info.icon;
             slotData.transform.Find("Name").GetComponent<Text>().text = "Lv1 " + info.name;
 
             string _type = null;
-            if (!string.IsNullOrEmpty(info.data.card.type)) {
-                if (info.data.card.type == "prod") {
-                    _type = info.data.card.prodType;
+            if (!string.IsNullOrEmpty(info.card.data.type)) {
+                if (info.card.data.type == "prod") {
+                    _type = info.card.data.prodType;
                 }
 
 
-                if (info.data.card.unit != null && !string.IsNullOrEmpty(info.data.card.unit.name)) {
-                    Debug.Log(info.data.card.unit.name);
+                if (info.card.data.unit != null && !string.IsNullOrEmpty(info.card.data.unit.name)) {
+                    Debug.Log(info.card.data.unit.name);
                     _type = "unit";
                 }
-                else if (info.data.card.activeSkills.Length != 0) {
-                    Debug.Log(info.data.card.activeSkills[0].name);
+                else if (info.card.data.activeSkills.Length != 0) {
+                    Debug.Log(info.card.data.activeSkills[0].name);
                     _type = "spell";
                 }
             }

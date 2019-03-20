@@ -23,7 +23,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public GameSceneManager.SceneState scenestate;
 
     //내 계정에서 사용가능한 카드뿐만 아니라 게임에 존재하는 모든 카드들의 정보
-    public List<Card> allCards;
+    public List<CardData> allCards;
 
     public class UserClassInput {
         public string nickname;
@@ -99,13 +99,13 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     private void GetAllCardsCallback(HttpResponse response) {
         if(response.responseCode == 200) {
-            List<Card> cards = JsonReader.Read<List<Card>>(response.data);
+            List<CardData> cards = JsonReader.Read<List<CardData>>(response.data);
             allCards = cards;
         }
     }
 
-    public Card GetCardData(string id) {
-        Card card = allCards.Find(x => x.id == id);
+    public CardData GetCardData(string id) {
+        CardData card = allCards.Find(x => x.id == id);
         return card;
     }
 

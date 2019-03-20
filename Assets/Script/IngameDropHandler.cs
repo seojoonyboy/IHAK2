@@ -32,7 +32,7 @@ public class IngameDropHandler : MonoBehaviour {
         if(!IsCardDropOK()) return;
 
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
-        int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().data.card.rarity;
+        int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().card.data.rarity;
         if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.baseSpec.skill, rarity);
         else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data, rarity);
         
