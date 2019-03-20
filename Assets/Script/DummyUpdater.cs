@@ -17,7 +17,7 @@ public class DummyUpdater : MonoBehaviour {
             if(group.transform.GetChild(i).GetComponent<TileObject>().buildingSet == true) {
                 GameObject building;
                 for(int j = 0; j < constructs.transform.GetChild(0).childCount; j++) {
-                    if(group.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id == constructs.transform.GetChild(0).GetChild(j).GetComponent<BuildingObject>().data.id) {
+                    if(group.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id == constructs.transform.GetChild(0).GetChild(j).GetComponent<BuildingObject>().card.id) {
                         building = constructs.transform.GetChild(0).GetChild(j).gameObject;
 
                         Destroy(group.transform.GetChild(i).GetChild(0));

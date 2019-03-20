@@ -43,7 +43,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     /// <returns></returns>
     public GameObject GetBuildingObjectById(int id) {
         var buildings = GetBuildingObjects();
-        var result = buildings.Find(x => x.GetComponent<BuildingObject>().data.id == id);
+        var result = buildings.Find(x => x.GetComponent<BuildingObject>().card.id == id);
         return result;
     }
 
@@ -54,7 +54,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     /// <returns></returns>
     public GameObject GetBuildingObjectById(string id) {
         var buildings = GetBuildingObjects();
-        var result = buildings.Find(x => x.GetComponent<BuildingObject>().data.card.id == id);
+        var result = buildings.Find(x => x.GetComponent<BuildingObject>().card.data.id == id);
         return result;
     }
 
@@ -70,16 +70,16 @@ public class ConstructManager : Singleton<ConstructManager> {
 
     private void OnSetAllBuildingsCallback(HttpResponse response) {
         if (response.responseCode == 200) {
-            var result = JsonReader.Read<List<Building>>(response.data.ToString());
+            var result = Req_cardsInventoryRead.Read<List<Req_cardsInventoryRead.Card>>(response.data.ToString());
 
             buildings = new Dictionary<string, List<GameObject>>();
             List<GameObject> products = new List<GameObject>();
             List<GameObject> militaries = new List<GameObject>();
             List<GameObject> specials = new List<GameObject>();
 
-            foreach (Building item in result) {
+            foreach (Card card in result) {
                 GameObject obj = new GameObject();
-                obj.name = item.card.name;
+                obj.name = card.data.name;
                 obj.transform.SetParent(transform.Find("BuildingObjects").transform);
                 BuildingObject buildingObject = obj.AddComponent<BuildingObject>();
                 obj.GetComponent<BuildingObject>().setTileLocation = -1;
@@ -87,11 +87,11 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.tag = "Building";
                 GameObject gauge = Instantiate(hpGauge, obj.transform);
                 gauge.SetActive(false);
-                buildingObject.data = item;
+                buildingObject.card = card;
 
-                if (item.card.type == "prod") products.Add(obj);
-                else if (item.card.type == "military") militaries.Add(obj);
-                else if (item.card.type == "special") specials.Add(obj);
+                if (card.data.type == "prod") products.Add(obj);
+                else if (card.data.type == "military") militaries.Add(obj);
+                else if (card.data.type == "special") specials.Add(obj);
             }
 
             buildings["prod"] = products;

@@ -58,7 +58,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
 
             foreach (WaveSet set in waveInfo.wave.sets) {
                 if(set.type == TYPE.SPELL) {
-                    SkillDetail method = set.Prefab.GetComponent<BuildingObject>().data.card.activeSkills[0].method;
+                    SkillDetail method = set.Prefab.GetComponent<BuildingObject>().card.data.activeSkills[0].method;
                     var ingameCityManager = GetComponent<IngameEnemyGenerator>();
                     ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(method, IngameCityManager.Target.ME);
                     ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
@@ -80,7 +80,7 @@ public class IngameEnemyUnitGenerator : MonoBehaviour {
         float randomPosX = Random.Range(-10f, 10f);
         float randomPosY = Random.Range(-10f, 10f);
 
-        Card card = AccountManager.Instance.GetCardData(set.id);
+        CardData card = AccountManager.Instance.GetCardData(set.id);
         if (card == null) return;
 
         GameObject unit = Instantiate(set.Prefab, parent);

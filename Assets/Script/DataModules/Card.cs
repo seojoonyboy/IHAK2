@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace DataModules {
     [System.Serializable]
-    public class Building {
+    public class Card {
         public int id;
-        public Card card;
+        public CardData data;
     }
 
     [System.Serializable]
-    public class Card {
+    public class CardData {
         public string id;
         public string race;
         public string name;

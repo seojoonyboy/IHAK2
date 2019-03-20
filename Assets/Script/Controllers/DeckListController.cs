@@ -20,12 +20,17 @@ public partial class DeckListController : MonoBehaviour {
     MenuSceneEventHandler eventHandler;
 
     [SerializeField] private GameObject[] slots;
+    [SerializeField] GameObject deckModifyBtn;
+    [SerializeField] GameObject leaderSetBtn;
+
     private List<GameObject> items;
     public GameObject
         Add,
         Modify;
 
     public GameObject temp;
+    [SerializeField] GameObject speciesSelModal;
+
     private void Awake() {
         _networkManager = NetworkManager.Instance;
         accountManager = AccountManager.Instance;
@@ -89,28 +94,10 @@ public partial class DeckListController : MonoBehaviour {
             try {
                 id = slots[slotNum].transform.GetChild(0).transform.GetComponent<Index>().Id;
             }
-            catch(NullReferenceException e) {
-
-            }
+            catch(NullReferenceException e) { }
         }
         return id;
     }
-
-    //public void Initialize() {
-    //    List<Deck> decks = AccountManager.Instance.decks;
-    //    int leaderIndex = 0;
-    //    foreach (Deck deck in decks) {
-    //        if(deck.isRepresent == true) {
-    //            AccountManager.Instance.leaderIndex = leaderIndex;
-    //            eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_MAINSCENE_TILE_GROUP, null, leaderIndex);
-    //            break;
-    //        }
-    //        leaderIndex++;
-    //    }
-    //    Sort(decks);
-    //    AccountManager.Instance.GetDeckDetail(GetDeckId(leaderIndex));
-    //    //Debug.Log(GetDeckId(leaderIndex));
-    //}
 
     private void Sort(List<Deck> decks) {
         Clear();
@@ -123,49 +110,71 @@ public partial class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
-            //if (i == 0) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
-            if (i == AccountManager.Instance.leaderIndex) newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(true);
-            else newItem.transform.Find("LeaderSetBtn/IsLeader").gameObject.SetActive(false);
-
             int id = decks[i].id;
             newItem.GetComponent<Index>().Id = id;
-            newItem.transform.Find("DeleteBtn").GetComponent<Button>().onClick
+            newItem.GetComponent<Button>()
+                .onClick
                 .AsObservable()
-                .Subscribe(_ => {
-                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 삭제하겠습니까?", Modal.Type.YESNO, () => {
-                        AccountManager.Instance.RemoveDeck(id, newItem);
-                    });
-                });
-            newItem.transform.Find("LeaderSetBtn").GetComponent<Button>().onClick
-                .AsObservable()
-                .Subscribe(_ => {
-                    Modal.instantiate((AccountManager.Instance.FindDeck(id)).name + "덱을 대표 덱으로\n설정하시겠습니까?", Modal.Type.YESNO, () => {
-                        int index = newItem.transform.Find("LeaderSetBtn").parent.parent.GetSiblingIndex();
-                        //AccountManager.Instance.ChangeLeaderDeck(id);
-                        AccountManager.Instance.ChangeLeaderDeck(id);
-                        Sort(AccountManager.Instance.decks);
-                    });
-                });
-            newItem.transform.Find("ModifyBtn").GetComponent<Button>().onClick
-                .AsObservable()
-                .Subscribe(_ => {
-                    moveToDeckSetting(decks.Find(x => x.id == id));
-                    AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
-                });
+                .Subscribe(_ => OnClickSlot(newItem));
             items.Add(newItem);
         }
         for (int i = decks.Count; i < slots.Length; i++) {
             if (slots[i] == null) break;
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
-            newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
-                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
-                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
-                AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
-                AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
-                moveToDeckSetting();
+            newItem.GetComponent<Button>()
+                .onClick
+                .AsObservable()
+                .Subscribe(_ => {
+                    OnClickSlot(newItem);
             });
         }
+
+        GetComponent<Index>().Id = 0;
+        if(decks.Count != 0) OnClickSlot(slots[0].gameObject.transform.GetChild(0).gameObject);
+    }
+
+    public void OnClickSlot(GameObject pref) {
+        if (pref.name.Contains("Add")) {
+            AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
+            AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
+
+            speciesSelModal.GetComponent<SpeciesSelectController>().ToggleModal(true);
+            return;
+        }
+        GetComponent<Index>().Id = pref.transform.parent.GetComponent<Index>().Id;
+        int leaderIndex = AccountManager.Instance.leaderIndex;
+        int slotIndex = pref.transform.parent.GetComponent<Index>().Id;
+
+        //Toggle UI
+        if (slotIndex == leaderIndex) leaderSetBtn.transform.Find("Slot/Check").gameObject.SetActive(true);
+        else leaderSetBtn.transform.Find("Slot/Check").gameObject.SetActive(false);
+
+        for(int i=0; i<accountManager.decks.Count; i++) {
+            if(slots[i].GetComponent<Index>().Id == GetComponent<Index>().Id) {
+                slots[i].transform.GetChild(0).transform.Find("Selected").gameObject.SetActive(true);
+            }
+            else {
+                slots[i].transform.GetChild(0).transform.Find("Selected").gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void OnModifyBtn() {
+        int selectedIndex = GetComponent<Index>().Id;
+        int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
+        Deck deck = accountManager.decks.Find(x => x.id == deckIndex);
+        if (deck == null) return;
+        moveToDeckSetting(deck);
+    }
+
+    public void OnLeaderChangeBtn() {
+        int selectedIndex = GetComponent<Index>().Id;
+        int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
+        Deck deck = accountManager.decks.Find(x => x.id == deckIndex);
+        Modal.instantiate(deck.name + " 덱을 대표덱으로 지정하시겠습니까?", Modal.Type.YESNO, () => {
+            accountManager.ChangeLeaderDeck(deckIndex);
+        });
     }
 
     private void Clear() {
@@ -246,7 +255,7 @@ public partial class DeckListController {
                     else {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
-                    Card card = buildingObject.data.card;
+                    CardData card = buildingObject.card.data;
 
                     if (!string.IsNullOrEmpty(card.unit.name)) {
                         ActiveCard activeCard = new ActiveCard();
@@ -274,7 +283,7 @@ public partial class DeckListController {
         GameObject targetBuilding;
 
         for (int i = 0; i < buildingGroup.transform.childCount; i++) {
-            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().data.id == ID) {
+            if (buildingGroup.transform.GetChild(i).GetComponent<BuildingObject>().card.id == ID) {
                 targetBuilding = buildingGroup.transform.GetChild(i).gameObject;
                 return targetBuilding;
             }
