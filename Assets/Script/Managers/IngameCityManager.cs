@@ -15,11 +15,11 @@ public class IngameCityManager : MonoBehaviour {
         public bool activate;
         public int hp;
         public int maxHp;
-        public Card cardInfo;
+        public CardData cardInfo;
         public GameObject gameObject;
         public BuildingInfo() { }
 
-        public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, Card card, GameObject gameObject) {
+        public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, CardData card, GameObject gameObject) {
             this.tileNum = tileNum;
             this.activate = activate;
             this.hp = hp;
@@ -125,7 +125,7 @@ public class IngameCityManager : MonoBehaviour {
             bi.tileNum = demoTileIndex[i];
             bi.activate = true;
             bi.gameObject = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
-            bi.cardInfo = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().data.card;
+            bi.cardInfo = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().card.data;
             bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
             cityHP += bi.hp;
             myBuildingsInfo.Add(bi);
@@ -493,7 +493,7 @@ public class IngameCityManager : MonoBehaviour {
                 enemyTotalHPGauge.GetComponent<Image>().fillAmount = percent;
 
 
-                if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+                if (enemyBuilding.gameObject.GetComponent<BuildingObject>().card.data.id == "great_power_stone") {
                     GameObject detector = enemyBuilding.gameObject.transform.Find("Detector").gameObject;
                     if (detector != null) {
                         detector.GetComponent<Tower_Detactor>().enabled = true;
@@ -502,7 +502,7 @@ public class IngameCityManager : MonoBehaviour {
                     }
                 }
                 BuildingObject buildingObject = enemyBuilding.gameObject.GetComponent<BuildingObject>();
-                string id = buildingObject.data.card.id;
+                string id = buildingObject.card.data.id;
 
                 if (enemyBuilding.hp > enemyBuilding.maxHp) {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false); // 건물 하위에 있는 체력게이지 활성화.
@@ -560,7 +560,7 @@ public class IngameCityManager : MonoBehaviour {
                     enemyBuilding.hp = 0;
                     BuildingDestroyed(target, enemyBuilding);
 
-                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().card.id == -1)
                         DestroyEnemy();
                 }
 
@@ -607,7 +607,7 @@ public class IngameCityManager : MonoBehaviour {
                     myBuilding.hp = 0;
                     BuildingDestroyed(target, myBuilding);
                     
-                    if (myBuilding.gameObject.GetComponent<BuildingObject>().data.id == -1)
+                    if (myBuilding.gameObject.GetComponent<BuildingObject>().card.id == -1)
                         DestroyCity();
                         
                 }
@@ -636,7 +636,7 @@ public class IngameCityManager : MonoBehaviour {
         buildingInfo.activate = false;
         SetWreck(buildingInfo.gameObject);
 
-        if (buildingInfo.gameObject.GetComponent<BuildingObject>().data.card.id == "great_power_stone") {
+        if (buildingInfo.gameObject.GetComponent<BuildingObject>().card.data.id == "great_power_stone") {
             GameObject detector = buildingInfo.gameObject.transform.Find("Detector").gameObject;
             if (detector != null) {
                 detector.GetComponent<Tower_Detactor>().enabled = false;
@@ -660,7 +660,7 @@ public class IngameCityManager : MonoBehaviour {
                 int tileNum = tile.GetComponent<TileObject>().tileNum;
                 GameObject building = tile.GetChild(0).gameObject;
                 BuildingObject buildingObject = building.GetComponent<BuildingObject>();
-                Card card = buildingObject.data.card;
+                CardData card = buildingObject.card.data;
 
                 BuildingInfo info = new BuildingInfo(
                     tileNum: tileNum,
@@ -794,8 +794,8 @@ public class IngameCityManager : MonoBehaviour {
                 break;
         }
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-        string id = buildingObject.data.card.id;
-        if (buildingObject.data.card.activeSkills.Length != 0) {
+        string id = buildingObject.card.data.id;
+        if (buildingObject.card.data.activeSkills.Length != 0) {
             ingameDeckShuffler.DeactiveCard(buildingObject.gameObject);
         }
     }
@@ -822,8 +822,8 @@ public class IngameCityManager : MonoBehaviour {
         }
 
         BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-        string id = buildingObject.data.card.id;
-        if (buildingObject.data.card.activeSkills.Length != 0) {
+        string id = buildingObject.card.data.id;
+        if (buildingObject.card.data.activeSkills.Length != 0) {
             ingameDeckShuffler.ActivateCard(buildingObject.gameObject);
         }
     }

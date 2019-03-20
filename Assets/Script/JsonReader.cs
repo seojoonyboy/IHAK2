@@ -13,3 +13,10 @@ public class JsonReader {
     //    return (T)Convert.ChangeType(result, typeof(T));
     //}
 }
+
+public class Req_cardsInventoryRead : JsonReader {
+    [System.Serializable]
+    public class Card : DataModules.Card{
+        public DataModules.CardData card { get { return data; } set { data = value; } }
+    }
+}

@@ -25,11 +25,11 @@ public class BuildingImages : MonoBehaviour {
         var lists = dataManager.GetBuildingObjects();
         foreach (GameObject obj in lists) {
             BuildingObject bo = obj.GetComponent<BuildingObject>();
-            Card card = bo.data.card;
-            bo.mainSprite = GetImage(card.race, card.type, card.id);
-            bo.icon = GetIcon(card.race, card.type, card.id);
-            bo.upgradeIcon = GetIcon(card.race, "upgrade", card.id);
-            bo.spine = GetSpine(card.race, card.type, card.id);
+            CardData data = bo.card.data;
+            bo.mainSprite = GetImage(data.race, data.type, data.id);
+            bo.icon = GetIcon(data.race, data.type, data.id);
+            bo.upgradeIcon = GetIcon(data.race, "upgrade", data.id);
+            bo.spine = GetSpine(data.race, data.type, data.id);
 
             if(bo.spine == null) { 
                 SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
