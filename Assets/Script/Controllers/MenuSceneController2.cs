@@ -112,4 +112,9 @@ public class MenuSceneController2 : MonoBehaviour {
         OptionController oc = FindObjectOfType<OptionController>();
         oc.EnterOptionWindow(true);
     }
+
+    public void StartIngame() {
+        GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+        gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
+    }
 }
