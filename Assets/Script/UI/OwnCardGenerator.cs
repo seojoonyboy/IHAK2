@@ -26,7 +26,7 @@ public class OwnCardGenerator : MonoBehaviour {
         buildings = constructManager.GetBuildingObjects();
         
 
-        SetPage(buildings.Count, NUM_PER_PAGE);
+        SetPage();
         SetCards();
     }
 
@@ -47,14 +47,27 @@ public class OwnCardGenerator : MonoBehaviour {
         editScenePanel.SavePagePosition();
     }
 
+    private void SetPage() {
+        GameObject page = transform.GetChild(0).gameObject;
+        RectTransform pageSize = page.GetComponent<RectTransform>();
+        int cardCount = constructManager.GetBuildingObjects().Count;
+        float cardYSize = page.GetComponent<GridLayoutGroup>().cellSize.y;
+        float spaceYSize = page.GetComponent<GridLayoutGroup>().spacing.y;
+
+        float pageYSize = (cardYSize * cardCount) + (spaceYSize * (cardCount + 1));
+        pageSize.sizeDelta = new Vector2(pageSize.sizeDelta.x, pageYSize);
+    }
+
     private void SetCards() {
         int page = 0;
         int count = 0;
         for (int i = 0; i < constructManager.GetBuildingObjects().Count; i++) {
+            /*
             if (i != 0 && i % NUM_PER_PAGE == 0) {
                 page++;
                 count = 0;
             }
+            */
             GameObject slotData = Instantiate(slotObject, transform.GetChild(page));
             GameObject buildingObject = slotData.GetComponentInChildren<DragHandler>().setObject = buildings[i];
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
@@ -83,7 +96,7 @@ public class OwnCardGenerator : MonoBehaviour {
                     _type = "spell";
                 }
             }
-            count++;
+          //count++;
             slotData.transform.Find("SecondMark/Image").GetComponent<Image>().sprite = GetIcon(_type);          
             slotData.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
             slotData.GetComponent<LongClickButton>().requiredHoldTime = 0.3f;
