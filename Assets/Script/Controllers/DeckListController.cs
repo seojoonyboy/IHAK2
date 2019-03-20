@@ -26,6 +26,8 @@ public partial class DeckListController : MonoBehaviour {
         Modify;
 
     public GameObject temp;
+    [SerializeField] GameObject speciesSelModal;
+
     private void Awake() {
         _networkManager = NetworkManager.Instance;
         accountManager = AccountManager.Instance;
@@ -159,8 +161,7 @@ public partial class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
-                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetSiblingIndex();
-                //AccountManager.Instance.selectNumber = newItem.transform.parent.GetComponent<Index>().Id;
+                //speciesSelModal.SetActive(true);
                 AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
                 AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
                 moveToDeckSetting();
