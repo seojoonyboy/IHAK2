@@ -31,7 +31,6 @@ public class SpeciesSelectController : MonoBehaviour {
     }
 
     public void OnConfirmBtn() {
-        AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.DeckSettingScene);
         DeckSettingController.prevData = null;
