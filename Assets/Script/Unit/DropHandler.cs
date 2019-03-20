@@ -107,8 +107,7 @@ public class DropHandler : MonoBehaviour {
         deckSettingController.AddActiveSlot(selectBuilding);
         string prodType = buildingObject.data.card.prodType;
         Cost cost = buildingObject.data.card.product;
-        deckSettingController.buildingCount++;
-        deckSettingController.SetDeckInfo();
+
         deckSettingController.ChangeSliderValue(cost);
     }
 
