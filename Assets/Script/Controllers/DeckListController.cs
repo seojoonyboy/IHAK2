@@ -161,10 +161,10 @@ public partial class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Add, slots[i].transform);
             items.Add(newItem);
             newItem.GetComponent<Button>().onClick.AsObservable().Subscribe(_ => {
-                //speciesSelModal.SetActive(true);
                 AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
                 AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
-                moveToDeckSetting();
+
+                speciesSelModal.GetComponent<SpeciesSelectController>().ToggleModal(true);
             });
         }
     }
