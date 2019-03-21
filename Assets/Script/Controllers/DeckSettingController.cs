@@ -86,8 +86,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - DeckNameEdit")]    
     public Button nameEditBtn;
-    public Button nameSaveBtn;
-    public Button nameReturnBtn;
+    public string changedDeckName;
 
     public int SpeciesId {
         get {
@@ -1134,19 +1133,25 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Text showDeckName = DeckStatusUI.transform.Find("DeckName").GetComponent<Text>();
         Text fieldShowDeckName = nameField.transform.Find("Placeholder").GetComponent<Text>();
         string deckName = nameField.transform.Find("Text").GetComponent<Text>().text;
+        InputField inputFieldText = editPanel.transform.Find("DeckNameInputField").GetComponent<InputField>();
 
         editPanel.SetActive(false);
 
         if (deckName.Length > 0) {
             showDeckName.text = deckName;
             fieldShowDeckName.text = deckName;
+            changedDeckName = deckName;
         }
+        inputFieldText.text = "";
         nameEditing = false;
     }
 
     public void CloseInputField() {
         if (nameEditing == false) return;
         GameObject editPanel = DeckStatusUI.transform.Find("EditField").gameObject;
+        InputField inputFieldText = editPanel.transform.Find("DeckNameInputField").GetComponent<InputField>();
+
+        inputFieldText.text = "";
         editPanel.SetActive(false);
         nameEditing = false;
     }
