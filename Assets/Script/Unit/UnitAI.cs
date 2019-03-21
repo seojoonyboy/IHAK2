@@ -149,8 +149,6 @@ public class UnitAI : MonoBehaviour {
         currentTime += time;
         if ((int)currentTime % 3 == 2)
             if (searchTarget()) setState(aiState.MOVE);
-        if (currentTime < 10f) return;
-        Destroy(gameObject);
         return;
     }
 

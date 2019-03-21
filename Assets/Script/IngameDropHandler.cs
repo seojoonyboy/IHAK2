@@ -24,10 +24,6 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     public void OnDrop() {
-        //if (ingameCityManager.CurrentView == 0) {
-        //    Debug.Log("아군 지역입니다 카드 사용을 취소합니다.");
-        //    return;
-        //}
         
         if(!IsCardDropOK()) return;
 
@@ -44,9 +40,7 @@ public class IngameDropHandler : MonoBehaviour {
         m_PointEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
-
-        const string StrB = "Horizontal Scroll Snap";
-        return results[0].gameObject.name.CompareTo(StrB) == 0;
+        return results.Count == 0;
     }
 
     private void UnitSummon(ActiveCard card, int rarity) {
@@ -62,7 +56,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
         var tmp = ingameCityManager.eachPlayersTileGroups;
-        int summonPos = 0; //아군지역에 소환인지 적군지역에 소환인지
+        int summonPos = 1; //아군지역에 소환인지 적군지역에 소환인지
         //int layer = summonPos == 1 ? LayerMask.NameToLayer("PlayerUnit") : LayerMask.NameToLayer("EnemyUnit");
         //tmp[0] EnemyCity의 TileGroup_DummyEnemy
         //tmp[1] PlayerCity의 TileGroup_Empty_x로 이동 됨

@@ -41,7 +41,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         m_PointEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
-        if (results[0].gameObject.name.CompareTo("Horizontal Scroll Snap") != 0) return;
+        if(results.Count != 0) return;
 
         transform.GetComponent<Image>().enabled = false;
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
