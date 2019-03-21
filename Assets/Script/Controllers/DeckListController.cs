@@ -148,7 +148,8 @@ public partial class DeckListController : MonoBehaviour {
 
             return;
         }
-        GetComponent<Index>().Id = pref.transform.parent.GetComponent<Index>().Id;
+        accountManager.selectNumber = GetComponent<Index>().Id = pref.transform.parent.GetComponent<Index>().Id;
+        
         int leaderIndex = AccountManager.Instance.leaderIndex;
         int slotIndex = pref.transform.parent.GetComponent<Index>().Id;
 
