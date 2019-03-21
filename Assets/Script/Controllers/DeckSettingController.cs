@@ -116,7 +116,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         CheckCardCount();
         ResetActiveSlot();
         DeckActiveCheck();
-        FirstSetDeckInfo();
         resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
@@ -166,6 +165,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     }
                 }
             }
+            FirstSetDeckInfo();
         }
         else
             deckCount++;
