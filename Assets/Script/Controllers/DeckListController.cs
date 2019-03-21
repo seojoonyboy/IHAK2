@@ -193,7 +193,8 @@ public partial class DeckListController : MonoBehaviour {
         int selectedIndex = GetComponent<Index>().Id;
         GameObject seletedItem = slots[selectedIndex].transform.GetChild(0).gameObject;
         int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
-        Modal.instantiate(accountManager.FindDeck(deckIndex).name + "덱을 삭제하시겠습니까?", Modal.Type.YESNO,
+        Modal.instantiate(accountManager.FindDeck(deckIndex).name + 
+            "삭제된 정보는 복구가 불가능합니다.\n덱을 정말 삭제하시겠습니까?", Modal.Type.YESNO,
             () => {
                 accountManager.RemoveDeck(deckIndex, seletedItem);
             });
