@@ -102,8 +102,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         constructManager = ConstructManager.Instance;
         cardsContent = transform.GetChild(0).Find("Content").gameObject; // Canvas => UnitScrollPanel => Content;
         nameEditBtn = DeckStatusUI.transform.Find("DeckNameEditBtn").GetComponent<Button>();
-        nameSaveBtn = DeckStatusUI.transform.Find("EditField").Find("save").GetComponent<Button>();
-        nameReturnBtn = DeckStatusUI.transform.Find("EditField").Find("return").GetComponent<Button>();
         //activeSlotUI = transform.GetChild(3).GetChild(0).gameObject; // Canvas => ActiveEffectPanel => Content;
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
@@ -191,6 +189,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
         int deckNumber = playerInfosManager.selectNumber;
         Text showFieldName = DeckStatusUI.transform.Find("EditField").Find("DeckNameInputField").GetChild(0).GetComponent<Text>();
+        buildingCount--;
 
         deckName.text = playerInfosManager.decks[deckNumber].name;
         showFieldName.text = deckName.text;
@@ -341,7 +340,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id);
                 ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.data.product);
 
-                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id != -1)
+                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id != -1 || tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id != 0)
                     buildingCount++;
                 SetDeckInfo();
             }
@@ -368,6 +367,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
             tileSetList[i] = 0;
         }
+        buildingCount = 0;
+        SetDeckInfo();
         ResetAllSliderValues();
         ResetCardCount();
         ResetActiveSlot();
