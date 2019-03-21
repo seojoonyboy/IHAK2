@@ -135,6 +135,8 @@ public partial class DeckListController : MonoBehaviour {
 
         GetComponent<Index>().Id = 0;
         if(decks.Count != 0) OnClickSlot(slots[0].gameObject.transform.GetChild(0).gameObject);
+
+        tg_clone_tar.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
 
     public void OnClickSlot(GameObject pref) {
@@ -187,11 +189,22 @@ public partial class DeckListController : MonoBehaviour {
         });
     }
 
+    public void OnDeleteBtn() {
+        int selectedIndex = GetComponent<Index>().Id;
+        GameObject seletedItem = slots[selectedIndex].transform.GetChild(0).gameObject;
+        int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
+        Modal.instantiate(accountManager.FindDeck(deckIndex).name + 
+            "삭제된 정보는 복구가 불가능합니다.\n덱을 정말 삭제하시겠습니까?", Modal.Type.YESNO,
+            () => {
+                accountManager.RemoveDeck(deckIndex, seletedItem);
+            });
+    }
+
     private void Clear() {
         foreach (GameObject slot in slots) {
             if (slot == null) return;
             foreach (Transform tf in slot.transform) {
-                Destroy(tf.gameObject);
+                DestroyImmediate(tf.gameObject);
             }
         }
     }
@@ -288,7 +301,7 @@ public partial class DeckListController {
 
         //clone for preview tilegroup
         Transform tar = transform.Find("TileGroupParent");
-        foreach(Transform tf in tar) Destroy(tf.gameObject);
+        foreach(Transform tf in tar) DestroyImmediate(tf.gameObject);
 
         GameObject tg_clone = Instantiate(accountManager.transform.GetChild(0), tar).gameObject;
         tg_clone.transform.localScale = new Vector3(12, 12, 1);
