@@ -69,7 +69,7 @@ public class DropHandler : MonoBehaviour {
         if (building == null) return;
         GameObject selectBuilding = Instantiate(building);
         int tileNum = targetTile.GetComponent<TileObject>().tileNum;
-        transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = building.GetComponent<BuildingObject>().data.id;
+        transform.parent.parent.GetComponent<DeckSettingController>().tileSetList[tileNum] = building.GetComponent<BuildingObject>().card.id;
         Vector3 setLocation = targetTile.transform.position;
         setLocation.z = 0;
         BuildingObject buildingObject = selectBuilding.GetComponent<BuildingObject>();
@@ -84,7 +84,7 @@ public class DropHandler : MonoBehaviour {
             selectBuilding.GetComponent<MeshRenderer>().sortingOrder = (targetTile.transform.parent.childCount - 1) * 2 - targetTile.GetComponent<TileObject>().tileNum;
         }
         targetTile.GetComponent<TileObject>().buildingSet = true;
-        GameObject card = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().data.id);
+        GameObject card = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().card.id);
 
         if (card != null) {
             //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
@@ -105,8 +105,8 @@ public class DropHandler : MonoBehaviour {
             card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + buildingMaxCount.ToString();
         }
         deckSettingController.AddActiveSlot(selectBuilding);
-        string prodType = buildingObject.data.card.prodType;
-        Cost cost = buildingObject.data.card.product;
+        string prodType = buildingObject.card.data.prodType;
+        Cost cost = buildingObject.card.data.product;
         deckSettingController.buildingCount++;
         deckSettingController.SetDeckInfo();
         deckSettingController.ChangeSliderValue(cost);
@@ -114,10 +114,10 @@ public class DropHandler : MonoBehaviour {
 
 
     public void CardBuildingSwap() {   
-        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().data.id == -1)
+        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().card.id == -1)
             return;
 
-        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().data.id == setObject.GetComponent<BuildingObject>().data.id)
+        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().card.id == setObject.GetComponent<BuildingObject>().card.id)
             return;
 
         GameObject targetTileBuilding = targetTile.transform.GetChild(0).gameObject;
@@ -130,7 +130,7 @@ public class DropHandler : MonoBehaviour {
     public void ShowDetail(BuildingObject buildingObject) {
         if (buildingObject == null) return;
 
-        if (buildingObject.data.card.unit == null || string.IsNullOrEmpty(buildingObject.data.card.unit.name)) {
+        if (buildingObject.card.data.unit == null || string.IsNullOrEmpty(buildingObject.card.data.unit.name)) {
             prodDetailModal.SetActive(true);
             Transform innerModal = prodDetailModal.transform.GetChild(0);
 
@@ -143,7 +143,7 @@ public class DropHandler : MonoBehaviour {
             Text env = innerModal.Find("DataArea/UpperBody/Env/Value").GetComponent<Text>();
             Text gold = innerModal.Find("DataArea/UpperBody/Gold/Value").GetComponent<Text>();
 
-            Card card = buildingObject.data.card;
+            CardData card = buildingObject.card.data;
             hp.text = card.hitPoint.ToString();
             header.text = card.name;
             limitCount.text = "한도 " + card.placementLimit.ToString();
@@ -154,7 +154,7 @@ public class DropHandler : MonoBehaviour {
             env.text = card.product.environment.ToString();
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
             prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         else {
@@ -168,7 +168,7 @@ public class DropHandler : MonoBehaviour {
             Text needResources = innerModal.Find("DataArea/UpperBody/NeedResource").GetComponent<Text>();
             Text unitSpec = innerModal.Find("DataArea/BottomBody/UnitSpec").GetComponent<Text>();
 
-            Card card = buildingObject.data.card;
+            CardData card = buildingObject.card.data;
             DataModules.Unit unit = card.unit;
 
             tier.text = unit.tierNeed + " 등급";
@@ -188,7 +188,7 @@ public class DropHandler : MonoBehaviour {
                 + "요구 레벨 : " + unit.tierNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.data.card.race, buildingObject.data.card.type, buildingObject.data.card.id);
+            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
             unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);
