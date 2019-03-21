@@ -12,6 +12,9 @@ public class SpeciesSelectController : MonoBehaviour {
             OnChangeSpecies();
         }
     }
+
+    [SerializeField] DeckListController deckListController;
+
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.MenuScene;
 
     private void OnEnable() {
@@ -20,6 +23,10 @@ public class SpeciesSelectController : MonoBehaviour {
 
     public void ToggleModal(bool toggle) {
         gameObject.SetActive(toggle);
+        deckListController.tg_clone_tar
+            .GetChild(0)
+            .GetChild(deckListController.GetComponent<Index>().Id)
+            .gameObject.SetActive(!toggle);
     }
 
     private void OnChangeSpecies() {
