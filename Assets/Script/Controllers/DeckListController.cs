@@ -23,6 +23,8 @@ public partial class DeckListController : MonoBehaviour {
     [SerializeField] GameObject deckModifyBtn;
     [SerializeField] GameObject leaderSetBtn;
 
+    public Transform tg_clone_tar;
+
     private List<GameObject> items;
     public GameObject
         Add,
@@ -140,11 +142,18 @@ public partial class DeckListController : MonoBehaviour {
             AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
 
             speciesSelModal.GetComponent<SpeciesSelectController>().ToggleModal(true);
+
             return;
         }
         GetComponent<Index>().Id = pref.transform.parent.GetComponent<Index>().Id;
         int leaderIndex = AccountManager.Instance.leaderIndex;
         int slotIndex = pref.transform.parent.GetComponent<Index>().Id;
+
+        foreach(Transform tf in tg_clone_tar.GetChild(0)) {
+            tf.gameObject.SetActive(false);
+        }
+
+        tg_clone_tar.GetChild(0).GetChild(GetComponent<Index>().Id).gameObject.SetActive(true);
 
         //Toggle UI
         if (slotIndex == leaderIndex) leaderSetBtn.transform.Find("Slot/Check").gameObject.SetActive(true);
@@ -275,6 +284,14 @@ public partial class DeckListController {
                 }
             }
         }
+
+        //clone for preview tilegroup
+        Transform tar = transform.Find("TileGroupParent");
+        foreach(Transform tf in tar) Destroy(tf.gameObject);
+
+        GameObject tg_clone = Instantiate(accountManager.transform.GetChild(0), tar).gameObject;
+        tg_clone.transform.localScale = new Vector3(12, 12, 1);
+        tg_clone.transform.localPosition = new Vector3(-270, 80, 1);
     }
 
     public GameObject FindBuildingWithID(int ID) {
