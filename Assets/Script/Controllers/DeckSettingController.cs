@@ -1128,6 +1128,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
         inputFieldText.text = "";
         nameEditing = false;
+
+        AccountManager.Instance.ModifyDeckName(prevData, changedDeckName);
     }
 
     public void CloseInputField() {

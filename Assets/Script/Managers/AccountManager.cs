@@ -237,6 +237,28 @@ public partial class AccountManager {
         tmpData = deck;
     }
 
+    public void ModifyDeckName(Deck deck, string newName) {
+        ModifyDeckPostForm form = new ModifyDeckPostForm();
+        form.Id = deck.id;
+        Debug.Log(deck.id);
+        form.Name = newName;
+        form.Race = "primal";
+        form.IsRepresent = deck.isRepresent;
+        form.CoordsSerial = deck.coordsSerial;
+        var dataPack = JsonConvert.SerializeObject(form);
+
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/decks/")
+            .Append(deck.id.ToString());
+        _networkManager.request("PUT", url.ToString(), dataPack.ToString(), ModifyDeckCallback);
+
+        tmpData = deck;
+    }
+
+
     public void GetDeckDetail(int id) {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
