@@ -189,6 +189,16 @@ public partial class DeckListController : MonoBehaviour {
         });
     }
 
+    public void OnDeleteBtn() {
+        int selectedIndex = GetComponent<Index>().Id;
+        GameObject seletedItem = slots[selectedIndex].transform.GetChild(0).gameObject;
+        int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
+        Modal.instantiate(accountManager.FindDeck(deckIndex).name + "덱을 삭제하시겠습니까?", Modal.Type.YESNO,
+            () => {
+                accountManager.RemoveDeck(deckIndex, seletedItem);
+            });
+    }
+
     private void Clear() {
         foreach (GameObject slot in slots) {
             if (slot == null) return;
