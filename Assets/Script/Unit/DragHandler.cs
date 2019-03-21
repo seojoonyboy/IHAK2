@@ -10,6 +10,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public GameObject setObject;
     Vector3 startScale;
     Vector3 startPosition;
+    Vector3 picturePosition;
     float camMagnification;
     Camera cam;
     public bool canDrag = false;
@@ -35,12 +36,14 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         deckSettingController = DeckSettingController.Instance;
         GetComponent<LongClickButton>().onShortClick.AddListener(() => Debug.Log("Short Button Click"));
         accountManager = AccountManager.Instance;
+        
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         if (dropHandler.setObject != null) return;
+        picturePosition = transform.Find("Data").position;
         dropHandler.setObject = setObject;
         dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
@@ -53,6 +56,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public void OnEndDrag() {
         transform.localPosition = new Vector3(0, 14, 0);
         transform.localScale = startScale;
+        
         //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
 
         Canvas.ForceUpdateCanvases();
@@ -67,7 +71,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         deckSettingController.CloseBuildingStatus();
 
         GetComponent<Image>().enabled = true;
-
+        transform.Find("Data").position = picturePosition;
         transform.Find("FirstMark").gameObject.SetActive(true);
         transform.Find("SecondMark").gameObject.SetActive(true);
 
@@ -109,6 +113,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
                     transform.Find("SecondMark").gameObject.SetActive(false);
                     transform.Find("Name").GetComponent<Text>().enabled = false;
                     transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
+                    transform.Find("Data").position = cam.WorldToScreenPoint(tile.transform.position);
 
                     if (tile.GetComponent<TileObject>().buildingSet == false) {
                         if (AccountManager.Instance.userTier >= tile.GetComponent<TileObject>().Tier)

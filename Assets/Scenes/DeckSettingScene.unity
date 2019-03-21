@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 6042464}
   - component: {fileID: 6042463}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: sort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,11 +196,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: "\uD68D\uB4DD \uC21C"
       m_Image: {fileID: 0}
-    - m_Text: Option B
+    - m_Text: "\uBE44\uC6A9 \uC21C"
       m_Image: {fileID: 0}
-    - m_Text: Option C
+    - m_Text: "\uB4F1\uAE09 \uC21C"
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14445,7 +14445,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Option A
+  m_Text: "\uD68D\uB4DD \uC21C"
 --- !u!222 &1821289844
 CanvasRenderer:
   m_ObjectHideFlags: 0
