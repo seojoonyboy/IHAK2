@@ -226,21 +226,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: -1
-    card:
-      id: primal_town_center
-      race: primal
-      name: "\uB9C8\uC744\uD68C\uAD00"
-      type: HQ
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       prodType: 
       rarity: 0
       product:
         food: 0
         gold: 0
         environment: 0
-      hitPoint: 1500
-      placementLimit: 1
+      hitPoint: 0
+      placementLimit: 0
       attackInfo:
         id: 0
         power: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
         cost:
           food: 0

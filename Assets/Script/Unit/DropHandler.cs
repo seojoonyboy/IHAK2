@@ -42,7 +42,7 @@ public class DropHandler : MonoBehaviour {
                 return;
 
             if (targetTile.GetComponent<TileObject>().buildingSet == false && targetTile != null) {
-                //if (setObject.GetComponent<BuildingObject>().card.data.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
+                //if (setObject.GetComponent<BuildingObject>().data.card.placementLimit - deckSettingController.BuildingCount(setObject) > 0) {
                 if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
                     if (targetTile.GetComponent<TileObject>().Tier <= AccountManager.Instance.userTier) {
                         SettingBuilding(setObject);
@@ -87,7 +87,7 @@ public class DropHandler : MonoBehaviour {
         GameObject card = deckSettingController.FindCard(selectBuilding.GetComponent<BuildingObject>().card.id);
 
         if (card != null) {
-            //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit.ToString();
+            //slot.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>().text = deckSettingController.BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
             int count = buildingMaxCount - deckSettingController.OnTileBuildingCount(card.GetComponent<DragHandler>().setObject) - setCount;
             if (count <= 0) {
                 card.GetComponent<Image>().color = Color.gray;
@@ -107,7 +107,8 @@ public class DropHandler : MonoBehaviour {
         deckSettingController.AddActiveSlot(selectBuilding);
         string prodType = buildingObject.card.data.prodType;
         Cost cost = buildingObject.card.data.product;
-
+        deckSettingController.buildingCount++;
+        deckSettingController.SetDeckInfo();
         deckSettingController.ChangeSliderValue(cost);
     }
 
