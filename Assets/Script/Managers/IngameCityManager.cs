@@ -114,6 +114,8 @@ public class IngameCityManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         deck = AccountManager.Instance.decks[0];
+        enemyTotalHP = 100;
+        enemyCurrentTotalHP = enemyTotalHP;
         buildingList = deck.coordsSerial;
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         wreckSpine.GetSkeletonData(false);
