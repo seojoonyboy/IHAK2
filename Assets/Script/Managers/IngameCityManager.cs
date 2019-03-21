@@ -29,8 +29,6 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    //현재 어떤 화면을 보고 있는지
-    public int CurrentView;
     public ArrayList eachPlayersTileGroups = new ArrayList();
 
     public List<UpgradeInfo> upgradeInfos = new List<UpgradeInfo>();
@@ -70,6 +68,7 @@ public class IngameCityManager : MonoBehaviour {
     [Header(" - PlayerDeck")]
     private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     public int[] buildingList;
+    [SerializeField] private Transform playerCity;
 
 
     [Space(10)]
@@ -124,8 +123,8 @@ public class IngameCityManager : MonoBehaviour {
             BuildingInfo bi = new BuildingInfo();
             bi.tileNum = demoTileIndex[i];
             bi.activate = true;
-            bi.gameObject = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
-            bi.cardInfo = transform.GetChild(1).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().card.data;
+            bi.gameObject = playerCity.GetChild(0).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
+            bi.cardInfo = playerCity.GetChild(0).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().card.data;
             bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
             cityHP += bi.hp;
             myBuildingsInfo.Add(bi);
@@ -170,7 +169,7 @@ public class IngameCityManager : MonoBehaviour {
         hpValueBar.fillAmount = cityHP / cityMaxHP;
         //InitProduction();
 
-        productResources = transform.GetChild(1).GetComponent<TileGroup>().touchPerProdPower;
+        productResources = playerCity.GetChild(0).GetComponent<TileGroup>().touchPerProdPower;
         goldGenerate = productResources.all.gold;
         foodGenerate = productResources.all.food;
         envGenerate = productResources.all.environment;

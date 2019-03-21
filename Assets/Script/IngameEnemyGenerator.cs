@@ -6,6 +6,7 @@ public class IngameEnemyGenerator : MonoBehaviour {
     public GameObject enemyTileGroup;
     public IngameCityManager ingameCityManager;
     public GameObject goblin;
+    public Transform enemyParent;
 
     /*
     public List<int> enemyBuildingList =  new List<int>{ 28, 36, 36, 49 ,47,
@@ -17,11 +18,9 @@ public class IngameEnemyGenerator : MonoBehaviour {
 
     public GameObject tileGroup;
     private void Awake() {
-        tileGroup = Instantiate(enemyTileGroup, transform);
-        tileGroup.transform.localScale = new Vector3Int(3, 3, 1);
-        //tileGroup.transform.localScale = new Vector3(1920 / (float)Screen.height, 1920 / (float)Screen.height, 1);
+        tileGroup = Instantiate(enemyTileGroup, enemyParent);
+        tileGroup.transform.Find("Background").gameObject.SetActive(false);
         ingameCityManager.SetEnemyBuildingLists(ref tileGroup);
-
         ingameCityManager.eachPlayersTileGroups.Add(tileGroup);
     }
 }

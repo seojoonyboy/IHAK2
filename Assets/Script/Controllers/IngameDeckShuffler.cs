@@ -16,6 +16,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         unitCardPref,
         spellCardPref;
     [SerializeField] Transform cardParent;
+    [SerializeField] Transform playerCity;
     [SerializeField] GameObject refreshCardBtn;
 
     private static int HAND_MAX_COUNT = 5;
@@ -29,7 +30,6 @@ public class IngameDeckShuffler : MonoBehaviour {
     TileGroup tileGroup;
 
     [SerializeField] GameObject healPref;
-    [SerializeField] Camera camera;
 
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
@@ -39,7 +39,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     void Start() {
-        tileGroup = transform.GetChild(1).GetComponent<TileGroup>();
+        tileGroup = playerCity.GetChild(0).GetComponent<TileGroup>();
         InitCard();
     }
 
@@ -205,7 +205,7 @@ public class IngameDeckShuffler : MonoBehaviour {
             else if(skill.method.methodName == "skill_unit_heal") {
                 HealArea healArea = card.AddComponent<HealArea>();
                 healArea.pref = healPref;
-                healArea.cam = camera;
+                healArea.cam = Camera.main;
 
                 Destroy(card.GetComponent<IngameDragHandler>());
             }
@@ -292,7 +292,6 @@ public class IngameDeckShuffler : MonoBehaviour {
         }
         Hand.Clear();
 
-        playerController.resourceClass.turn--;
         playerController.PrintResource();
 
         IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();

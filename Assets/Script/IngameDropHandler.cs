@@ -20,7 +20,7 @@ public class IngameDropHandler : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        cam = GameObject.Find("TerritoryCamera").GetComponent<Camera>();
+        cam = Camera.main;
     }
 
     public void OnDrop() {
@@ -33,7 +33,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
         int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().card.data.rarity;
-        if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name) && ingameCityManager.CurrentView != 0) SkillActive(card.data.baseSpec.skill, rarity);
+        if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name)) SkillActive(card.data.baseSpec.skill, rarity);
         else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data, rarity);
         
     }
@@ -50,7 +50,6 @@ public class IngameDropHandler : MonoBehaviour {
     }
 
     private void UnitSummon(ActiveCard card, int rarity) {
-        if (ingameCityManager.CurrentView == 0) return;
         if (!CheckResouceOK(card.baseSpec.unit.cost)) return;
         
         Unit data = card.baseSpec.unit;
@@ -63,7 +62,7 @@ public class IngameDropHandler : MonoBehaviour {
 
         //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
         var tmp = ingameCityManager.eachPlayersTileGroups;
-        int summonPos = ingameCityManager.CurrentView == 0 ? 1 : 0; //아군지역에 소환인지 적군지역에 소환인지
+        int summonPos = 0; //아군지역에 소환인지 적군지역에 소환인지
         //int layer = summonPos == 1 ? LayerMask.NameToLayer("PlayerUnit") : LayerMask.NameToLayer("EnemyUnit");
         //tmp[0] EnemyCity의 TileGroup_DummyEnemy
         //tmp[1] PlayerCity의 TileGroup_Empty_x로 이동 됨
