@@ -129,6 +129,7 @@ public partial class DeckListController : MonoBehaviour {
                 .AsObservable()
                 .Subscribe(_ => {
                     OnClickSlot(newItem);
+                    accountManager.selectNumber = accountManager.decks.Count;
             });
         }
 
