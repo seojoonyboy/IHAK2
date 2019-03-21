@@ -190,7 +190,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Text showFieldName = DeckStatusUI.transform.Find("EditField").Find("DeckNameInputField").GetChild(0).GetComponent<Text>();
         buildingCount--;
 
-        deckName.text = playerInfosManager.decks[deckNumber].name;
+        changedDeckName = deckName.text = playerInfosManager.decks[deckNumber].name;
         showFieldName.text = deckName.text;
         deckBuildingCount.text = buildingCount.ToString() + " / " + 8.ToString();
     }
@@ -217,27 +217,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     public void SettingButton() {
 
-        if (SetAllTileBuildingCheck() == true) {
-            if (prevData == null) {
-                saveBtnClick = true;
-                GameObject modal = Modal.instantiateWithClose("덱 이름 설정", "덱 이름을 입력해주세요", null, Modal.Type.INSERT, OnclickInputConfirm);
-                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 16;
-                modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
-            }
-            else {
-                saveBtnClick = true;
-                string name = prevData.name;
-                string str = name;
-                if (name.Length > 8) {
-                    str = name.Substring(0, 8);
-                }
-                GameObject modal = Modal.instantiateWithClose("덱 이름 설정", null, str, Modal.Type.INSERT, OnclickInputConfirm);
-                modal.transform.Find("ModalWindow/Modal/Top/Insert/InputField").GetComponent<InputField>().characterLimit = 16;
-                modal.AddComponent<Button>().onClick.AddListener(() => Destroy(modal));
-            }
+        if (SetAllTileBuildingCheck()) {
+            OnclickInputConfirm(changedDeckName);
         }
         else
-            Modal.instantiate("갈색 타일내에 건물 배치를 완료해야합니다.", Modal.Type.CHECK);
+            Modal.instantiate("건물을 모두 배치해주세요.", Modal.Type.CHECK);
     }
 
     private void OnclickInputConfirm(string inputText) {
