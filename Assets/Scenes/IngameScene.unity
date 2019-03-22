@@ -5914,12 +5914,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraAxes: 0
   perspectiveZoomMode: 0
-  camZoomMin: 50
-  camZoomMax: 150
-  camOverzoomMargin: 1
-  camOverdragMargin: 5
-  boundaryMin: {x: -150, y: -150}
-  boundaryMax: {x: 600, y: 150}
+  camZoomMin: 75
+  camZoomMax: 75
+  camOverzoomMargin: 0
+  camOverdragMargin: 0
+  boundaryMin: {x: -150, y: 0}
+  boundaryMax: {x: 600, y: 0}
   camFollowFactor: 15
   autoScrollDampMode: 0
   autoScrollDamp: 300
