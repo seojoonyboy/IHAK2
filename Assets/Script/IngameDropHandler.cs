@@ -23,98 +23,98 @@ public class IngameDropHandler : MonoBehaviour {
         cam = Camera.main;
     }
 
-    public void OnDrop() {
+    //public void OnDrop() {
         
-        if(!IsCardDropOK()) return;
+    //    if(!IsCardDropOK()) return;
 
-        ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
-        int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().card.data.rarity;
-        if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name)) SkillActive(card.data.baseSpec.skill, rarity);
-        else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data, rarity);
+    //    ActiveCardInfo card = selectedObject.GetComponent<ActiveCardInfo>();
+    //    int rarity = card.data.parentBuilding.GetComponent<BuildingObject>().card.data.rarity;
+    //    if(!string.IsNullOrEmpty(card.data.baseSpec.skill.name)) SkillActive(card.data.baseSpec.skill, rarity);
+    //    else if(!string.IsNullOrEmpty(card.data.baseSpec.unit.name)) UnitSummon(card.data, rarity);
         
-    }
+    //}
 
-    private bool IsCardDropOK() {
-        GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
-        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
-        m_PointEventData.position = Input.mousePosition;
-        List<RaycastResult> results = new List<RaycastResult>();
-        m_Raycaster.Raycast(m_PointEventData, results);
-        return results.Count == 0;
-    }
+    //private bool IsCardDropOK() {
+    //    GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
+    //    PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+    //    m_PointEventData.position = Input.mousePosition;
+    //    List<RaycastResult> results = new List<RaycastResult>();
+    //    m_Raycaster.Raycast(m_PointEventData, results);
+    //    return results.Count == 0;
+    //}
 
-    private void UnitSummon(ActiveCard card, int rarity) {
-        if (!CheckResouceOK(card.baseSpec.unit.cost)) return;
+    //private void UnitSummon(ActiveCard card, int rarity) {
+    //    if (!CheckResouceOK(card.baseSpec.unit.cost)) return;
         
-        Unit data = card.baseSpec.unit;
-        Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(origin, Vector2.zero);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
-        foreach(RaycastHit2D hit in hits)
-            if (hit.collider.tag == "EnemyBuilding")
-                return;
+    //    Unit data = card.baseSpec.unit;
+    //    Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
+    //    Ray2D ray = new Ray2D(origin, Vector2.zero);
+    //    RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
+    //    foreach(RaycastHit2D hit in hits)
+    //        if (hit.collider.tag == "EnemyBuilding")
+    //            return;
 
-        //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
-        var tmp = ingameCityManager.eachPlayersTileGroups;
-        int summonPos = 1; //아군지역에 소환인지 적군지역에 소환인지
-        //int layer = summonPos == 1 ? LayerMask.NameToLayer("PlayerUnit") : LayerMask.NameToLayer("EnemyUnit");
-        //tmp[0] EnemyCity의 TileGroup_DummyEnemy
-        //tmp[1] PlayerCity의 TileGroup_Empty_x로 이동 됨
-        GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[summonPos]).transform);
-        //wolf.layer = layer;
-        UnitAI unitAI = wolf.GetComponent<UnitAI>();
-        unitAI.SetUnitData(card);
-        if(data.id != "n_uu_0101") {
-            GameObject Name = wolf.transform.Find("Name").gameObject;
-            Name.SetActive(true);
-            Name.GetComponent<TextMeshPro>().text = data.name;
-        }
-        unitAI.protecting = summonPos == 1;
-        wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
+    //    //임시 유닛 소환, 유닛 종류 늘면은 그에 대한 대처가 필요함
+    //    var tmp = ingameCityManager.eachPlayersTileGroups;
+    //    int summonPos = 1; //아군지역에 소환인지 적군지역에 소환인지
+    //    //int layer = summonPos == 1 ? LayerMask.NameToLayer("PlayerUnit") : LayerMask.NameToLayer("EnemyUnit");
+    //    //tmp[0] EnemyCity의 TileGroup_DummyEnemy
+    //    //tmp[1] PlayerCity의 TileGroup_Empty_x로 이동 됨
+    //    GameObject wolf = Instantiate(unitPrefs[0], ((GameObject)tmp[summonPos]).transform);
+    //    //wolf.layer = layer;
+    //    UnitAI unitAI = wolf.GetComponent<UnitAI>();
+    //    unitAI.SetUnitData(card);
+    //    if(data.id != "n_uu_0101") {
+    //        GameObject Name = wolf.transform.Find("Name").gameObject;
+    //        Name.SetActive(true);
+    //        Name.GetComponent<TextMeshPro>().text = data.name;
+    //    }
+    //    unitAI.protecting = summonPos == 1;
+    //    wolf.transform.position = ray.origin + new Vector2(0f, 50f);//hit.transform.position;
 
-        IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == card.parentBuilding.GetComponent<BuildingObject>().setTileLocation);
-        buildingInfos.activate = false;
-        buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(false);
+    //    IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x=>x.tileNum == card.parentBuilding.GetComponent<BuildingObject>().setTileLocation);
+    //    buildingInfos.activate = false;
+    //    buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(false);
 
-        UseResource(data.cost);
-        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
-        playerController.PrintResource();
-        ingameDeckShuffler.UseCard(selectedObject);
+    //    UseResource(data.cost);
+    //    IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
+    //    //playerController.PrintResource();
+    //    ingameDeckShuffler.UseCard(selectedObject);
 
-        Debug.Log(selectedObject.transform.GetSiblingIndex());
-    }
+    //    Debug.Log(selectedObject.transform.GetSiblingIndex());
+    //}
 
-    private void SkillActive(Skill data, int rarity) {
-        if (!CheckResouceOK(data.cost)) return;
-        if (!canSpell) {
-            IngameAlarm.instance.SetAlarm("스킬 쿨타임입니다!");
-            Debug.Log("스킬 쿨타임!");
-            return;
-        }
+    //private void SkillActive(Skill data, int rarity) {
+    //    if (!CheckResouceOK(data.cost)) return;
+    //    if (!canSpell) {
+    //        IngameAlarm.instance.SetAlarm("스킬 쿨타임입니다!");
+    //        Debug.Log("스킬 쿨타임!");
+    //        return;
+    //    }
 
-        StartCoroutine(CoolTime());
+    //    StartCoroutine(CoolTime());
 
-        if(data.method.methodName == "skill_magma") {
-            ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method, IngameCityManager.Target.ENEMY_1);
-            ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
-        }
+    //    if(data.method.methodName == "skill_magma") {
+    //        ingameCityManager.gameObject.AddComponent<Temple_Damager>().GenerateAttack(data.method, IngameCityManager.Target.ENEMY_1);
+    //        ingameCityManager.gameObject.GetComponent<Temple_Damager>().magma = magma;
+    //    }
 
-        UseResource(data.cost);
-        IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
-        playerController.PrintResource();
-        ingameDeckShuffler.UseCard(selectedObject);
-    }
+    //    UseResource(data.cost);
+    //    IngameScoreManager.Instance.AddScore(data.tierNeed, IngameScoreManager.ScoreType.ActiveCard, 0, rarity);
+    //    //playerController.PrintResource();
+    //    ingameDeckShuffler.UseCard(selectedObject);
+    //}
 
-    private bool CheckResouceOK(Cost cost) {
-        if(playerController.isEnoughResources(cost)) {
-            return true;
-        }
-        else {
-            Debug.Log("자원이 부족합니다.");
-            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
-            return false;
-        }
-    }
+    //private bool CheckResouceOK(Cost cost) {
+    //    if(playerController.isEnoughResources(cost)) {
+    //        return true;
+    //    }
+    //    else {
+    //        Debug.Log("자원이 부족합니다.");
+    //        IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+    //        return false;
+    //    }
+    //}
 
     private void UseResource(Cost cost) {
         playerController.resourceClass.gold -= (uint)cost.gold;
