@@ -88,20 +88,20 @@ public class IngameSceneUIController : MonoBehaviour {
     }
 
     private void Update() {
-        if (isPlaying) {
-            if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
-                isPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-            }
-            if (enemyHQ.hp < 1) {
-                isPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-            }
-            if(playerHQ.hp < 1) {
-                isPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
-            }
-        }
+        //if (isPlaying) {
+        //    if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
+        //        isPlaying = false;
+        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+        //    }
+        //    if (enemyHQ.hp < 1) {
+        //        isPlaying = false;
+        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+        //    }
+        //    if(playerHQ.hp < 1) {
+        //        isPlaying = false;
+        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+        //    }
+        //}
     }
 
     public void PopRank(bool player) {
