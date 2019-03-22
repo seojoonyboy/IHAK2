@@ -7,15 +7,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
 using System;
+using Container;
+using Sirenix.OdinInspector;
 
-public partial class PlayerController : MonoBehaviour {
-
-    public class PlayerResource {
-        public uint gold = 50;
-        public uint food = 50;
-        public int environment = 0;
-    }
-
+public partial class PlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
         public int[] clickGold;
         public int[] clickFood;
@@ -27,7 +22,6 @@ public partial class PlayerController : MonoBehaviour {
     [Header(" - UI")]
     [SerializeField] Transform productResource;
     [SerializeField] Text ingameTimer;
-    public PlayerResource resourceClass;
 
     [Header(" - ResourceText")]
     [SerializeField] Text goldValue;
@@ -65,9 +59,12 @@ public partial class PlayerController : MonoBehaviour {
     private IEnumerator efct3;
     private IEnumerator efct5;
 
+    [Header(" - Player Maps")]
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
+    public Dictionary<Player, GameObject> maps;
+
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
-        resourceClass = new PlayerResource();
         pInfo = new ProductInfo();
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
@@ -197,4 +194,30 @@ public partial class PlayerController : MonoBehaviour {
     //    else
     //        return 0;
     //}
+}
+
+/// <summary>
+/// 각각의 컨테이너를 리턴
+/// </summary>
+public partial class PlayerController {
+    public PlayerResource playerResource() {
+        return GetComponent<PlayerResource>();
+    }
+
+    public PlayerBuildings playerBuildings() {
+        return GetComponent<PlayerBuildings>();
+    }
+
+    public PlayerActiveCards playerActiveCards() {
+        return GetComponent<PlayerActiveCards>();
+    }
+}
+
+public partial class PlayerController {
+    public enum Player {
+        PLAYER_1,
+        PLAYER_2,
+        PLAYER_3,
+        PLAYER_4
+    }
 }

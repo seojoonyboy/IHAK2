@@ -6,13 +6,6 @@ public class ActiveCardInfo : MonoBehaviour {
 }
 
 [System.Serializable]
-public class ActiveCard {
-    public GameObject parentBuilding;
-    public BaseSpec baseSpec = new BaseSpec();
-    public Ev ev;
-}
-
-[System.Serializable]
 public class BaseSpec {
     public Unit unit;
     public Skill skill;
