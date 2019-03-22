@@ -292,7 +292,7 @@ public class IngameDeckShuffler : MonoBehaviour {
         }
         Hand.Clear();
 
-        playerController.PrintResource();
+        //playerController.PrintResource();
 
         IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
         coolComp.coolTime = 30;
@@ -314,12 +314,12 @@ public class IngameDeckShuffler : MonoBehaviour {
         ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolTime == null) return;
         uint cost = coolTime.cancelCooltimeCost;
-        if (cost > playerController.Gold) return;
-        if (cost > playerController.Food) return;
+        //if (cost > playerController.Gold) return;
+        //if (cost > playerController.Food) return;
 
-        playerController.Gold -= cost;
-        playerController.Food -= cost;
-        playerController.PrintResource();
+        //playerController.Gold -= cost;
+        //playerController.Food -= cost;
+        //playerController.PrintResource();
 
         coolTime.OnTime();
     }

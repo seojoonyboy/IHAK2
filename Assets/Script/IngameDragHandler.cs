@@ -64,6 +64,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
         }
 
-        dropHandler.OnDrop();
+        //dropHandler.OnDrop();
     }
 }

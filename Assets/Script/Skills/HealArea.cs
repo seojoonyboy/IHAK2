@@ -83,6 +83,6 @@ public class HealArea : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
 
         detector.GetComponent<Heal_detector>().ActivateSpell();
-        dropHandler.OnDrop();
+        //dropHandler.OnDrop();
     }
 }

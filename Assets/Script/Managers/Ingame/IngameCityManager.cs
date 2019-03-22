@@ -295,10 +295,10 @@ public class IngameCityManager : MonoBehaviour {
                 int amount = Mathf.RoundToInt(playerMaxHp * 0.04f);
                 repairAmount += amount;
                 
-                if(playerController.Gold <= (float)(amount / 10)) {
-                    enoughRepairSource = false;
-                    return false;                    
-                }
+                //if(playerController.Gold <= (float)(amount / 10)) {
+                //    enoughRepairSource = false;
+                //    return false;                    
+                //}
                 myBuilding.hp += amount;
                 cityHP += amount;
 
@@ -946,7 +946,7 @@ public class IngameCityManager : MonoBehaviour {
         if (repairCount != 0) {
             uint consume = (uint)(Mathf.RoundToInt(repairAmount / repairCount) / 10);
             Debug.Log(consume);
-            playerController.Gold = playerController.CheckResourceFlow(playerController.Gold, consume, false); 
+            //playerController.Gold = playerController.CheckResourceFlow(playerController.Gold, consume, false); 
         }
         else if(repairCount == 0) {
             playerController.activeRepair = false;

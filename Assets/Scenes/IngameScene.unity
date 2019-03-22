@@ -1207,6 +1207,9 @@ GameObject:
   m_Component:
   - component: {fileID: 282962851}
   - component: {fileID: 282962852}
+  - component: {fileID: 282962853}
+  - component: {fileID: 282962855}
+  - component: {fileID: 282962854}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -1256,6 +1259,41 @@ MonoBehaviour:
   upgradeAniMaterial: {fileID: 2100000, guid: 00e9eae2576a6e94aa55844f2dc721cd, type: 2}
   standards: 4b000000e1000000
   HQ_standards: 960000002c010000
+--- !u!114 &282962853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178b128395858c2489ab2168cd73dfd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold_readonly: 0
+  env_readonly: 0
+--- !u!114 &282962854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9210ea96147c9fa4aa0d03fca9d57a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &282962855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca618ef22ab815e479cfa48e1316657a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4150,59 +4188,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &794615594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 794615595}
-  - component: {fileID: 794615596}
-  m_Layer: 0
-  m_Name: DeckShuffler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &794615595
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 794615594}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 886251235}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &794615596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 794615594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aa605099e0cf7046a93b6c17c7d77df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 282962852}
-  unitCardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa,
-    type: 2}
-  spellCardPref: {fileID: 1508483023320674, guid: df5e88c4511dcd04b8ddfa226685ec26,
-    type: 2}
-  cardParent: {fileID: 1589755684}
-  playerCity: {fileID: 438138127}
-  refreshCardBtn: {fileID: 834451397}
-  origin: []
-  Deck: 
-  Hand: 
-  Grave: 
-  healPref: {fileID: 1838264511753094, guid: 85116fb7b6570e74ba811753d8f24599, type: 2}
 --- !u!1 &799350698
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,7 +4971,6 @@ Transform:
   - {fileID: 1239632113}
   - {fileID: 282962851}
   - {fileID: 310974710}
-  - {fileID: 794615595}
   - {fileID: 1844919644}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -8511,7 +8495,7 @@ MonoBehaviour:
   - {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
   ingameCityManager: {fileID: 310974711}
   playerController: {fileID: 282962852}
-  ingameDeckShuffler: {fileID: 794615596}
+  ingameDeckShuffler: {fileID: 0}
   magma: {fileID: 21300000, guid: a2fc2940eddb68b499606ddac02df3e9, type: 3}
 --- !u!1 &1631827497
 GameObject:
@@ -10079,7 +10063,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 886251235}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1844919645
 MonoBehaviour:

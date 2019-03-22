@@ -37,38 +37,7 @@ public partial class PlayerController : MonoBehaviour {
     [SerializeField] IngameCityManager icm;
     
     private bool playing = false;
-    private int tech_lv;
 
-    public uint Food {
-        get { return resourceClass.food; }
-        set {
-            resourceClass.food = value;
-            PrintResource();
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
-        }
-    }
-    public uint Gold {
-        get { return resourceClass.gold; }
-        set {
-            resourceClass.gold = value;
-            PrintResource();
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
-        }
-    }
-    public int Env {
-        get { return resourceClass.environment; }
-        set {
-            resourceClass.environment = value;
-            PrintResource();
-            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.RESOURCE_CHANGE, this, resourceClass);
-        }
-    }
-    public int TechLv {
-        get { return tech_lv; }
-        set {
-            tech_lv = value;
-        }
-    }
     [Header(" - Player")]
     public int hqLevel = 1;
     public int tileCount;
@@ -107,125 +76,125 @@ public partial class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        PrintResource();
-        PrimalEnvEfct();
+        //PrintResource();
+        //PrimalEnvEfct();
 
-        icm.productResources.gold.gold += icm.upgradeInfos[0].product.gold;
-        icm.productResources.food.food += icm.upgradeInfos[0].product.food;
-        icm.productResources.env.environment += icm.upgradeInfos[0].product.env;
+        //icm.productResources.gold.gold += icm.upgradeInfos[0].product.gold;
+        //icm.productResources.food.food += icm.upgradeInfos[0].product.food;
+        //icm.productResources.env.environment += icm.upgradeInfos[0].product.env;
 
-        coinAni.GetSkeletonData(false);
-        SetPlayerConsumeResource();
-        playing = true;
-        StartCoroutine(AoutomaticSystem());
+        //coinAni.GetSkeletonData(false);
+        //SetPlayerConsumeResource();
+        //playing = true;
+        //StartCoroutine(AoutomaticSystem());
     }
 
-    public void PrintResource() {
-        goldValue.text = Gold.ToString();
-        foodValue.text = Food.ToString();
+    //public void PrintResource() {
+    //    goldValue.text = Gold.ToString();
+    //    foodValue.text = Food.ToString();
 
-        Transform envBar = envValue.transform.parent.GetChild(1);
-        envBar.localPosition = new Vector3(((float)Env / 600.0f) * 540, 0, 0);
-        Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
-        envText.text = Env.ToString();
-        showResource();
-    }
+    //    Transform envBar = envValue.transform.parent.GetChild(1);
+    //    envBar.localPosition = new Vector3(((float)Env / 600.0f) * 540, 0, 0);
+    //    Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
+    //    envText.text = Env.ToString();
+    //    showResource();
+    //}
 
-    private void showResource() {
-        productResource.GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication).ToString();
-        productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication).ToString();
-        productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication).ToString();        
-    }
+    //private void showResource() {
+    //    productResource.GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication).ToString();
+    //    productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication).ToString();
+    //    productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication).ToString();        
+    //}
 
-    public bool isEnoughResources(DataModules.Cost cost) {
-        if (Gold < cost.gold) return false;
-        if (Food < cost.food) return false;
-        return true;
-    }
+    //public bool isEnoughResources(DataModules.Cost cost) {
+    //    if (Gold < cost.gold) return false;
+    //    if (Food < cost.food) return false;
+    //    return true;
+    //}
 
-    private void PrimalEnvEfct() {
-        if (Env < -299) {
-            if (!envEfctOn) {
-                envEfctOn = !envEfctOn;
-                efct3 = Efct3Second(false);
-                StartCoroutine(efct3);
-            }   
-        }
-        if (Env >= -299 && Env <= 299) {
-            if(efct3 != null)
-                StopCoroutine(efct3);
-        }
-        if (Env > 299) {
-            if (!envEfctOn) {
-                envEfctOn = !envEfctOn;
-                efct3 = Efct3Second(true);
-                StartCoroutine(efct3);
-            }
-        }
-    }
+    //private void PrimalEnvEfct() {
+    //    if (Env < -299) {
+    //        if (!envEfctOn) {
+    //            envEfctOn = !envEfctOn;
+    //            efct3 = Efct3Second(false);
+    //            StartCoroutine(efct3);
+    //        }   
+    //    }
+    //    if (Env >= -299 && Env <= 299) {
+    //        if(efct3 != null)
+    //            StopCoroutine(efct3);
+    //    }
+    //    if (Env > 299) {
+    //        if (!envEfctOn) {
+    //            envEfctOn = !envEfctOn;
+    //            efct3 = Efct3Second(true);
+    //            StartCoroutine(efct3);
+    //        }
+    //    }
+    //}
 
-    private IEnumerator Efct3Second(bool positive) {
-        while (!positive) {
-            yield return new WaitForSeconds(3.0f);
-            Food -= (uint)Mathf.Round(Env / 5);
-            Gold += (uint)Mathf.Round(Env / 5);
-        }
-        while (positive) {
-            yield return new WaitForSeconds(3.0f);
-            Food += (uint)Mathf.Round(Env / 5);
-            Gold = CheckResourceFlow(Gold, (uint)Mathf.Round(Env / 5), false);
-        }
-    }
+    //private IEnumerator Efct3Second(bool positive) {
+    //    while (!positive) {
+    //        yield return new WaitForSeconds(3.0f);
+    //        Food -= (uint)Mathf.Round(Env / 5);
+    //        Gold += (uint)Mathf.Round(Env / 5);
+    //    }
+    //    while (positive) {
+    //        yield return new WaitForSeconds(3.0f);
+    //        Food += (uint)Mathf.Round(Env / 5);
+    //        Gold = CheckResourceFlow(Gold, (uint)Mathf.Round(Env / 5), false);
+    //    }
+    //}
 
-    private IEnumerator AoutomaticSystem() {
-        int time = 300;
-        while (playing) {
-            yield return new WaitForSeconds(1.0f);
-            time--;
-            ingameTimer.text = ((int)(time / 60)).ToString() + ":";
-            if (((int)(time % 60)) < 10)
-                ingameTimer.text += "0";
-            ingameTimer.text += ((int)(time % 60)).ToString();
+    //private IEnumerator AoutomaticSystem() {
+    //    int time = 300;
+    //    while (playing) {
+    //        yield return new WaitForSeconds(1.0f);
+    //        time--;
+    //        ingameTimer.text = ((int)(time / 60)).ToString() + ":";
+    //        if (((int)(time % 60)) < 10)
+    //            ingameTimer.text += "0";
+    //        ingameTimer.text += ((int)(time % 60)).ToString();
 
-            Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication);
-            Food += (uint)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication);
-            if (Env >= -600 && Env <= 600) {
-                Env += (int)Mathf.Round((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication);
-                Env -= (int)Mathf.Round((icm.productResources.all.gold + icm.productResources.all.food) / time);
-                if (Env < -600)
-                    Env = -600;
-                if (Env > 600)
-                    Env = 600;
-            }
-            scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
-            scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
-            scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
+    //        Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication);
+    //        Food += (uint)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication);
+    //        if (Env >= -600 && Env <= 600) {
+    //            Env += (int)Mathf.Round((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication);
+    //            Env -= (int)Mathf.Round((icm.productResources.all.gold + icm.productResources.all.food) / time);
+    //            if (Env < -600)
+    //                Env = -600;
+    //            if (Env > 600)
+    //                Env = 600;
+    //        }
+    //        scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
+    //        scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
+    //        scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
 
-            PrintResource();
-            PrimalEnvEfct();
-        }
-    }
-    public void SetPlayerConsumeResource() {
-        float hp = icm.cityMaxHP;
-        MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
-        tileCount = icm.CityTotalTileCount();
-    }
+    //        PrintResource();
+    //        PrimalEnvEfct();
+    //    }
+    //}
+    //public void SetPlayerConsumeResource() {
+    //    float hp = icm.cityMaxHP;
+    //    MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
+    //    tileCount = icm.CityTotalTileCount();
+    //}
 
-    public uint CheckResourceFlow(uint target, uint am1, bool sum) {
-        int targetSource, amount;
-        targetSource = (int)target;
-        amount = (int)am1;
-        
+    //public uint CheckResourceFlow(uint target, uint am1, bool sum) {
+    //    int targetSource, amount;
+    //    targetSource = (int)target;
+    //    amount = (int)am1;
 
-        if (sum == true)
-            targetSource += amount;
-        else if (sum == false)
-            targetSource -= amount;
 
-        if (targetSource > 0) {
-            return (uint)targetSource;
-        }
-        else
-            return 0;
-    }
+    //    if (sum == true)
+    //        targetSource += amount;
+    //    else if (sum == false)
+    //        targetSource -= amount;
+
+    //    if (targetSource > 0) {
+    //        return (uint)targetSource;
+    //    }
+    //    else
+    //        return 0;
+    //}
 }
