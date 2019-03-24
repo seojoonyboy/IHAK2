@@ -8,9 +8,9 @@ namespace Container {
     public class PlayerActiveCards : MonoBehaviour {
         public List<ActiveCard> activeCards;
         [SerializeField] [ReadOnly] TileGroup tileGroup;
-        PlayerController playerController;
+        [SerializeField] [ReadOnly] PlayerController playerController;
 
-        void Start() {
+        public void Init() {
             playerController = GetComponent<PlayerController>();
             try {
                 tileGroup =
@@ -18,25 +18,16 @@ namespace Container {
                 .transform.GetChild(0)
                 .gameObject
                 .GetComponent<TileGroup>();
-
-                Init();
             }
-            catch(NullReferenceException ex) {
+            catch (NullReferenceException ex) {
                 Debug.LogError("TileGroup을 찾을 수 없습니다.");
+                return;
             }
-        }
 
-        public void Init() {
             activeCards = new List<ActiveCard>();
 
             var units = tileGroup.units;
             var spells = tileGroup.spells;
-            foreach(ActiveCard unitCard in units) {
-                unitCard.baseSpec.skill = null;
-            }
-            foreach(ActiveCard spellCard in spells) {
-                spellCard.baseSpec.unit = null;
-            }
             activeCards.AddRange(units);
             activeCards.AddRange(spells);
         }

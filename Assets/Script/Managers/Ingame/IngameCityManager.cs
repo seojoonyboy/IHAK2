@@ -7,27 +7,9 @@ using UnityEngine.UI;
 using System.Linq;
 using Spine.Unity;
 using TMPro;
+using Container;
 
 public class IngameCityManager : MonoBehaviour {
-    [System.Serializable]
-    public class BuildingInfo {
-        public int tileNum;
-        public bool activate;
-        public int hp;
-        public int maxHp;
-        public CardData cardInfo;
-        public GameObject gameObject;
-        public BuildingInfo() { }
-
-        public BuildingInfo(int tileNum, bool activate, int hp, int maxHp, CardData card, GameObject gameObject) {
-            this.tileNum = tileNum;
-            this.activate = activate;
-            this.hp = hp;
-            this.maxHp = maxHp;
-            this.cardInfo = card;
-            this.gameObject = gameObject;
-        }
-    }
 
     public ArrayList eachPlayersTileGroups = new ArrayList();
 
@@ -59,7 +41,6 @@ public class IngameCityManager : MonoBehaviour {
 
     [Header(" - DeckInfo")]
     [SerializeField] private Deck deck;
-    public List<BuildingInfo> myBuildingsInfo = new List<BuildingInfo>();
     public List<BuildingInfo> enemyBuildingsInfo = new List<BuildingInfo>();
     public Dictionary<string, int> myBuildingsInfo_Keys = new Dictionary<string, int>();
     public List<Magnification> myBuildings_mags = new List<Magnification>();
@@ -101,6 +82,7 @@ public class IngameCityManager : MonoBehaviour {
 
     private IEnumerator firstAlert;
     private IEnumerator secondAlert;
+    List<BuildingInfo> myBuildingsInfo;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -113,76 +95,34 @@ public class IngameCityManager : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        deck = AccountManager.Instance.decks[0];
-        enemyTotalHP = 100;
-        enemyCurrentTotalHP = enemyTotalHP;
-        buildingList = deck.coordsSerial;
-        ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
-        wreckSpine.GetSkeletonData(false);
-        ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
+        //deck = AccountManager.Instance.decks[0];
+        //enemyTotalHP = 100;
+        //enemyCurrentTotalHP = enemyTotalHP;
+        //buildingList = deck.coordsSerial;
+        //ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
+        //wreckSpine.GetSkeletonData(false);
+        //ingameDeckShuffler = GetComponent<IngameDeckShuffler>();
 
-        for (int i = 0; i < demoTileIndex.Length; i++) {    // 3x3 마을용 연산
-            BuildingInfo bi = new BuildingInfo();
-            bi.tileNum = demoTileIndex[i];
-            bi.activate = true;
-            bi.gameObject = playerCity.GetChild(0).GetChild(demoTileIndex[i]).GetChild(0).gameObject;
-            bi.cardInfo = playerCity.GetChild(0).GetChild(demoTileIndex[i]).GetChild(0).GetComponent<BuildingObject>().card.data;
-            bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
-            cityHP += bi.hp;
-            myBuildingsInfo.Add(bi);
-        }
-
-        var queryGroups =
-            from bulding in myBuildingsInfo
-            group bulding by bulding.cardInfo.type into newGroup
-            orderby newGroup.Key
-            select newGroup;
-
-        //myBuildingsInfo.Clear();
-        List<BuildingInfo> tmp = new List<BuildingInfo>();
-        int count = 0;
-        foreach (var group in queryGroups) {
-            List<BuildingInfo> list = group.ToList();
-            list = list.OrderBy(x => x.cardInfo.prodType).ToList();
-            string prev_sub_key = null;
-            if(group.Key != "prod") myBuildingsInfo_Keys.Add(group.Key, count);
-            foreach (BuildingInfo info in list) {
-                if(group.Key == "prod" && prev_sub_key != info.cardInfo.prodType) {
-                    myBuildingsInfo_Keys.Add(info.cardInfo.prodType, count);
-                    prev_sub_key = info.cardInfo.prodType;
-                }
-                tmp.Add(info);
-                count++;
-            }
-        }
-        myBuildingsInfo = tmp;
-
-
-        IEnumerable <GameObject> gameObjects =
-            from x in myBuildingsInfo
-            select x.gameObject;
-
-        ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, this, gameObjects.ToList());
-
-        cityMaxHP = cityHP;
+        //cityMaxHP = cityHP;
 
         //maxHp.text = hpValue.text = cityMaxHP.ToString();
-        hpValue.text = ((int)(cityHP / cityMaxHP) * 100).ToString() + "%";
-        hpValueBar.fillAmount = cityHP / cityMaxHP;
+        //hpValue.text = ((int)(cityHP / cityMaxHP) * 100).ToString() + "%";
+        //hpValueBar.fillAmount = cityHP / cityMaxHP;
         //InitProduction();
 
-        productResources = playerCity.GetChild(0).GetComponent<TileGroup>().touchPerProdPower;
-        goldGenerate = productResources.all.gold;
-        foodGenerate = productResources.all.food;
-        envGenerate = productResources.all.environment;
+        //productResources = playerCity.GetChild(0).GetComponent<TileGroup>().touchPerProdPower;
+        //goldGenerate = productResources.all.gold;
+        //foodGenerate = productResources.all.food;
+        //envGenerate = productResources.all.environment;
 
-        
-        SetHQ();
-        SetEnemyTotalHP();
+        //SetHQ();
+        //SetEnemyTotalHP();
         //StartCoroutine("Repair");
         //StartCoroutine("TakingDamage");
         //TakeDamage();
         //StartCoroutine("Repaircity");
+
+        myBuildingsInfo = playerController.playerBuildings().myBuildingsInfo;
     }
 
     public Magnification SearchMags(string key) {

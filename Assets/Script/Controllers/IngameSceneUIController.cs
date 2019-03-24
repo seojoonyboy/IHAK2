@@ -25,8 +25,8 @@ public class IngameSceneUIController : MonoBehaviour {
 
     public bool isPlaying = true;
     private float time = 300;
-    [SerializeField] IngameCityManager.BuildingInfo enemyHQ;
-    [SerializeField] IngameCityManager.BuildingInfo playerHQ;
+    [SerializeField] Container.BuildingInfo enemyHQ;
+    [SerializeField] Container.BuildingInfo playerHQ;
 
     public static int deckId;
 

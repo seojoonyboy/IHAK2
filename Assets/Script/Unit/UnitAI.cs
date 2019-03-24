@@ -19,7 +19,7 @@ public class UnitAI : MonoBehaviour {
     private Transform healthBar;
     private Transform expBar;
     private TextMeshPro LvText;
-    private IngameCityManager.BuildingInfo targetBuilding;
+    private Container.BuildingInfo targetBuilding;
     private UnitAI targetUnit;
     private float maxHealth = 0;
     public float health = 0;
@@ -30,6 +30,7 @@ public class UnitAI : MonoBehaviour {
     [SerializeField] private ActiveCard unitCard;
 
     private static IngameCityManager cityManager;
+    private static PlayerController playerController;
     private static Magnification unitMagnificate;
     private static IngameDeckShuffler ingameDeckShuffler;
 
@@ -37,7 +38,7 @@ public class UnitAI : MonoBehaviour {
     public bool protecting = false;
     private CircleCollider2D detectCollider;
 
-    private List<IngameCityManager.BuildingInfo> buildingInfos;
+    private List<Container.BuildingInfo> buildingInfos;
     private IngameCityManager.Target targetEnum;
     private UnitSpine unitSpine;
     private IngameSceneEventHandler eventHandler;
@@ -59,7 +60,7 @@ public class UnitAI : MonoBehaviour {
 
         }
         if (gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
-            buildingInfos = cityManager.myBuildingsInfo;
+            buildingInfos = playerController.playerBuildings().myBuildingsInfo;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
             targetEnum = IngameCityManager.Target.ME;
             GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("PlayerUnit");
@@ -84,6 +85,7 @@ public class UnitAI : MonoBehaviour {
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         if (cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
+        if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
         if (unitMagnificate == null) unitMagnificate = cityManager.SearchMags("Military");
     }
@@ -276,7 +278,7 @@ public class UnitAI : MonoBehaviour {
 
     private void searchBuilding() {
         float distance = 0f;
-        foreach (IngameCityManager.BuildingInfo target in buildingInfos) {
+        foreach (Container.BuildingInfo target in buildingInfos) {
             if (target.hp <= 0) continue;
 
             Vector3 buildingPos = target.gameObject.transform.parent.position;
