@@ -73,6 +73,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        playerActiveCards().Init();
+        playerBuildings().Init();
+
         //PrintResource();
         //PrimalEnvEfct();
 
