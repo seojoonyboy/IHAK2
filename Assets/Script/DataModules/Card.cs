@@ -49,8 +49,8 @@ namespace DataModules {
 
     [System.Serializable]
     public class Cost {
-        public int gold;
-        public int environment;
+        public decimal gold;
+        public decimal environment;
     }
 
     [System.Serializable]

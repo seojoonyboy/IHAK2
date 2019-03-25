@@ -75,8 +75,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - ResourceState")]
     public int food;
-    public int environment;
-    public int gold;
+    public decimal environment;
+    public decimal gold;
 
     [Header(" - CardSort")]
     public List<GameObject> totalCard;
@@ -703,12 +703,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         gold += cost.gold;
 
         if (environment > 0)
-            sliders[0].value = environment;
+            sliders[0].value = (float)environment;
         else
             sliders[0].value = 0;
 
         if (gold > 0)
-            sliders[3].value = gold;
+            sliders[3].value = (float)gold;
         else
             sliders[3].value = 0;
 
@@ -725,12 +725,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         //food -= cost.food;
 
         if (environment > 0)
-            sliders[0].value = environment;
+            sliders[0].value = (float)environment;
         else
             sliders[0].value = 0;
 
         if (gold > 0)
-            sliders[3].value = gold;
+            sliders[3].value = (float)gold;
         else
             sliders[3].value = 0;
 
