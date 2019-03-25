@@ -6,17 +6,17 @@ using System;
 using UnityEngine.UI;
 using System.Text;
 using System.Linq;
+using Sirenix.OdinInspector;
 
 public class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
-    [SerializeField] PlayerController playerController;
+    [SerializeField] [ReadOnly] PlayerController playerController;
     IngameSceneEventHandler eventHandler;
 
     [SerializeField] GameObject 
         unitCardPref,
         spellCardPref;
     [SerializeField] Transform cardParent;
-    [SerializeField] Transform playerCity;
     [SerializeField] GameObject refreshCardBtn;
 
     private static int HAND_MAX_COUNT = 5;
@@ -27,8 +27,6 @@ public class IngameDeckShuffler : MonoBehaviour {
     [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
     [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
 
-    TileGroup tileGroup;
-
     [SerializeField] GameObject healPref;
 
     void Awake() {
@@ -36,10 +34,11 @@ public class IngameDeckShuffler : MonoBehaviour {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
+
+        playerController = PlayerController.Instance;
     }
 
     void Start() {
-        tileGroup = playerCity.GetChild(0).GetComponent<TileGroup>();
         InitCard();
     }
 
@@ -159,7 +158,8 @@ public class IngameDeckShuffler : MonoBehaviour {
         Hand.Clear();
 
         int index = 0;
-        foreach (ActiveCard unitCard in tileGroup.units) {
+
+        foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
             card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
@@ -180,7 +180,8 @@ public class IngameDeckShuffler : MonoBehaviour {
             Deck.Add(index);
             index++;
         }
-        foreach (ActiveCard spellCard in tileGroup.spells) {
+
+        foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, cardParent);
             card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(

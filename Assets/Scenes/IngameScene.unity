@@ -7840,16 +7840,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1466453813}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aa605099e0cf7046a93b6c17c7d77df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
-  unitCardPref: {fileID: 0}
-  spellCardPref: {fileID: 0}
-  cardParent: {fileID: 0}
-  playerCity: {fileID: 0}
+  unitCardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa,
+    type: 2}
+  spellCardPref: {fileID: 1508483023320674, guid: df5e88c4511dcd04b8ddfa226685ec26,
+    type: 2}
+  cardParent: {fileID: 1589755684}
   refreshCardBtn: {fileID: 0}
   origin: []
   Deck: 
