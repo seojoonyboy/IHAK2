@@ -63,12 +63,16 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
 
+    private static PlayerController _instance;
+
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
         pInfo = new ProductInfo();
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
         pInfo.clickEnvironment = new int[3];
+
+        _instance = this;
     }
 
     // Use this for initialization
@@ -87,6 +91,18 @@ public partial class PlayerController : SerializedMonoBehaviour {
         //SetPlayerConsumeResource();
         //playing = true;
         //StartCoroutine(AoutomaticSystem());
+    }
+
+    public static PlayerController Instance {
+        get {
+            if (_instance == null) {
+                Debug.LogError("PlayerController를 찾을 수 없습니다.");
+                return null;
+            }
+            else {
+                return _instance;
+            }
+        }
     }
 
     //public void PrintResource() {

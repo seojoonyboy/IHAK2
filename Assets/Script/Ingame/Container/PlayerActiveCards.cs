@@ -11,7 +11,7 @@ namespace Container {
         [SerializeField] [ReadOnly] PlayerController playerController;
 
         public void Init() {
-            playerController = GetComponent<PlayerController>();
+            playerController = PlayerController.Instance;
             try {
                 tileGroup =
                 playerController.maps[PlayerController.Player.PLAYER_1]
