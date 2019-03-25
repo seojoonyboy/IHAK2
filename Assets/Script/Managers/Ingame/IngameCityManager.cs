@@ -122,7 +122,7 @@ public class IngameCityManager : MonoBehaviour {
         //TakeDamage();
         //StartCoroutine("Repaircity");
 
-        myBuildingsInfo = playerController.playerBuildings().myBuildingsInfo;
+        myBuildingsInfo = playerController.playerBuildings().buildingInfos;
     }
 
     public Magnification SearchMags(string key) {

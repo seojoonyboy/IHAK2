@@ -19,7 +19,7 @@ public class UnitAI : MonoBehaviour {
     private Transform healthBar;
     private Transform expBar;
     private TextMeshPro LvText;
-    private Container.BuildingInfo targetBuilding;
+    private BuildingInfo targetBuilding;
     private UnitAI targetUnit;
     private float maxHealth = 0;
     public float health = 0;
@@ -38,7 +38,7 @@ public class UnitAI : MonoBehaviour {
     public bool protecting = false;
     private CircleCollider2D detectCollider;
 
-    private List<Container.BuildingInfo> buildingInfos;
+    private List<BuildingInfo> buildingInfos;
     private IngameCityManager.Target targetEnum;
     private UnitSpine unitSpine;
     private IngameSceneEventHandler eventHandler;
@@ -60,7 +60,7 @@ public class UnitAI : MonoBehaviour {
 
         }
         if (gameObject.layer == LayerMask.NameToLayer("EnemyUnit")) {
-            buildingInfos = playerController.playerBuildings().myBuildingsInfo;
+            buildingInfos = playerController.playerBuildings().buildingInfos;
             SpriteRenderer unitgaugeColor = transform.GetChild(1).GetChild(1).GetComponent<SpriteRenderer>();
             targetEnum = IngameCityManager.Target.ME;
             GetComponentInChildren<UnitDetector>().detectingLayer = LayerMask.NameToLayer("PlayerUnit");
@@ -278,7 +278,7 @@ public class UnitAI : MonoBehaviour {
 
     private void searchBuilding() {
         float distance = 0f;
-        foreach (Container.BuildingInfo target in buildingInfos) {
+        foreach (BuildingInfo target in buildingInfos) {
             if (target.hp <= 0) continue;
 
             Vector3 buildingPos = target.gameObject.transform.parent.position;
