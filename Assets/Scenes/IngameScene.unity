@@ -1229,7 +1229,7 @@ Transform:
   m_Children:
   - {fileID: 1466453814}
   m_Father: {fileID: 886251235}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &282962852
 MonoBehaviour:
@@ -1352,6 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   env_readonly: 0
+  maxhp: 0
   hp: 0
 --- !u!114 &282962854
 MonoBehaviour:
@@ -1987,6 +1988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310974710}
   - component: {fileID: 310974711}
+  - component: {fileID: 310974712}
   m_Layer: 0
   m_Name: IngameCityManager
   m_TagString: Untagged
@@ -2005,7 +2007,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 886251235}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &310974711
 MonoBehaviour:
@@ -2027,10 +2029,6 @@ MonoBehaviour:
   hpValue: {fileID: 993183136}
   enemyTotalHPGauge: {fileID: 1849017551}
   ingameSceneUIController: {fileID: 1239632114}
-  enemyTotalHP: 0
-  enemyCurrentTotalHP: 0
-  cityHP: 0
-  cityMaxHP: 0
   productResources:
     food:
       id: 0
@@ -2111,14 +2109,123 @@ MonoBehaviour:
     type: 2}
   unactiveBuildingIndex1: 100
   unactiveBuildingIndex2: 100
-  playerHQ: {fileID: 0}
-  enemyHQ: {fileID: 0}
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
   repairCount: 0
   repairAmount: 0
   enoughRepairSource: 1
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   playerController: {fileID: 282962852}
+--- !u!114 &310974712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 310974709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2adf37acf4294445b5fcf765e95e369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 282962850}
+  myBuildings: {fileID: 282962855}
+  myBuildingInfo: []
+  myResource: {fileID: 0}
+  enemyController: {fileID: 1844919643}
+  enemyBuildings: {fileID: 0}
+  enemyResource: {fileID: 0}
+  enemybuildingInfos: []
 --- !u!1 &315435915
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,8 +5073,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1239632113}
-  - {fileID: 282962851}
   - {fileID: 310974710}
+  - {fileID: 282962851}
   - {fileID: 1844919644}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -10067,6 +10174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   env_readonly: 0
+  maxhp: 0
   hp: 0
 --- !u!1 &1849017551
 GameObject:

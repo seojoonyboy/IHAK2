@@ -117,6 +117,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
             playerResource().TotalHp += buildingInfo.maxHp;
         }
+        playerResource().maxhp = playerResource().TotalHp;
     }
 
     //public void PrintResource() {
