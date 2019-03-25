@@ -31,6 +31,14 @@ namespace Container {
             activeCards.AddRange(units);
             activeCards.AddRange(spells);
         }
+
+        public List<ActiveCard> unitCards() {
+            return activeCards.FindAll(x => !string.IsNullOrEmpty(x.baseSpec.unit.name));
+        }
+
+        public List<ActiveCard> spellCards() {
+            return activeCards.FindAll(x => !string.IsNullOrEmpty(x.baseSpec.skill.name));
+        }
     }
 }
 
