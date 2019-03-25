@@ -114,7 +114,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
-        foreach (BuildingInfo buildingInfo in playerBuildings().myBuildingsInfo) {
+        foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
             playerResource().TotalHp += buildingInfo.maxHp;
         }
     }
@@ -237,8 +237,8 @@ public partial class PlayerController {
         return GetComponent<PlayerResource>();
     }
 
-    public PlayerBuildings playerBuildings() {
-        return GetComponent<PlayerBuildings>();
+    public MyBuildings playerBuildings() {
+        return GetComponent<MyBuildings>();
     }
 
     public PlayerActiveCards playerActiveCards() {

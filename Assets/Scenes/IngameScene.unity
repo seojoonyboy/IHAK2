@@ -1380,8 +1380,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGroup: {fileID: 0}
   playerController: {fileID: 0}
+  buildingInfos: []
   demoTileIndex: 0600000007000000080000000b0000000c0000000d000000100000001100000012000000
-  myBuildingsInfo: []
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,98 +2111,8 @@ MonoBehaviour:
     type: 2}
   unactiveBuildingIndex1: 100
   unactiveBuildingIndex2: 100
-  playerHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      prodType: 
-      rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 0
-      placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        detectRange: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        tierNeed: 0
-        imageName: 
-        lv: 1
-      lv: 0
-    gameObject: {fileID: 0}
-  enemyHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      prodType: 
-      rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 0
-      placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        detectRange: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        tierNeed: 0
-        imageName: 
-        lv: 1
-      lv: 0
-    gameObject: {fileID: 0}
+  playerHQ: {fileID: 0}
+  enemyHQ: {fileID: 0}
   repairCount: 0
   repairAmount: 0
   enoughRepairSource: 1
@@ -6799,98 +6709,6 @@ MonoBehaviour:
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 1589755684}
   isPlaying: 1
-  enemyHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      prodType: 
-      rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 0
-      placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        detectRange: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        tierNeed: 0
-        imageName: 
-        lv: 1
-      lv: 0
-    gameObject: {fileID: 0}
-  playerHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      prodType: 
-      rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 0
-      placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        detectRange: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        tierNeed: 0
-        imageName: 
-        lv: 1
-      lv: 0
-    gameObject: {fileID: 0}
 --- !u!1 &1259288191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10183,8 +10001,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1844919644}
   - component: {fileID: 1844919646}
-  - component: {fileID: 1844919645}
   - component: {fileID: 1844919647}
+  - component: {fileID: 1844919645}
   m_Layer: 0
   m_Name: EnemyPlayerController
   m_TagString: Untagged
@@ -10213,13 +10031,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844919643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abaa7256092086e4990d3afaf205ae26, type: 3}
+  m_Script: {fileID: 11500000, guid: 224742fff4d4a884296a9d525754d21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGroupParent: {fileID: 1320738637}
-  dummyPref: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
   tileGroup: {fileID: 0}
-  goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+  playerController: {fileID: 0}
+  buildingInfos: []
 --- !u!114 &1844919646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10231,6 +10048,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743fd887538dfc04f888a314a7b5eaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileGroupParent: {fileID: 1320738637}
+  dummyPref: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+  tileGroup: {fileID: 0}
+  playerResource: {fileID: 0}
+  goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
   buildingInfos: []
 --- !u!114 &1844919647
 MonoBehaviour:
