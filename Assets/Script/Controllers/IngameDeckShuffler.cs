@@ -263,21 +263,21 @@ public class IngameDeckShuffler : MonoBehaviour {
     }
 
     private bool CanUseCard(ActiveCardInfo data) {
-        Cost cost = data.data.baseSpec.unit.cost;
-        Unit unit = data.data.baseSpec.unit;
-        Skill skill = data.data.baseSpec.skill;
+        //Cost cost = data.data.baseSpec.unit.cost;
+        //Unit unit = data.data.baseSpec.unit;
+        //Skill skill = data.data.baseSpec.skill;
 
-        if (!string.IsNullOrEmpty(unit.name)) {
-            if (playerController.hqLevel >= unit.tierNeed) return true;
-            else return false;
-        }
-        else {
-            if ((!string.IsNullOrEmpty(skill.name))) {
-                if (playerController.hqLevel >= skill.tierNeed) return true;
-                else return false;
-            }
-        }
-        return false;
+        //if (!string.IsNullOrEmpty(unit.name)) {
+        //    if (playerController.hqLevel >= unit.tierNeed) return true;
+        //    else return false;
+        //}
+        //else {
+        //    if ((!string.IsNullOrEmpty(skill.name))) {
+        //        if (playerController.hqLevel >= skill.tierNeed) return true;
+        //        else return false;
+        //    }
+        //}
+        return true;
     }
 
     //(핸드)카드 교체 기능
