@@ -25,8 +25,8 @@ public class IngameSceneUIController : MonoBehaviour {
 
     public bool isPlaying = true;
     private float time = 300;
-    [SerializeField] Container.BuildingInfo enemyHQ;
-    [SerializeField] Container.BuildingInfo playerHQ;
+    //[SerializeField] Container.BuildingInfo enemyHQ;
+    //[SerializeField] Container.BuildingInfo playerHQ;
 
     public static int deckId;
 
@@ -79,12 +79,12 @@ public class IngameSceneUIController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
+        //IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
         playerName.text = AccountManager.Instance.userInfos.nickname;
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
         StartCoroutine("EnemyRepair");
-        enemyHQ = ieg.ingameCityManager.enemyHQ;
-        playerHQ = ieg.ingameCityManager.playerHQ;
+        //enemyHQ = ieg.ingameCityManager.enemyHQ;
+        //playerHQ = ieg.ingameCityManager.playerHQ;
     }
 
     private void Update() {

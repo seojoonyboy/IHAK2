@@ -62,8 +62,21 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [Header(" - Player Maps")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
+    IngameSceneEventHandler eventHandler;
 
     private static PlayerController _instance;
+
+    public static PlayerController Instance {
+        get {
+            if (_instance == null) {
+                Debug.LogError("PlayerController를 찾을 수 없습니다.");
+                return null;
+            }
+            else {
+                return _instance;
+            }
+        }
+    }
 
     private void Awake() {
         scoreManager = IngameScoreManager.Instance;
@@ -71,6 +84,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
         pInfo.clickEnvironment = new int[3];
+
+        eventHandler = IngameSceneEventHandler.Instance;
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
 
         _instance = this;
     }
@@ -93,15 +109,13 @@ public partial class PlayerController : SerializedMonoBehaviour {
         //StartCoroutine(AoutomaticSystem());
     }
 
-    public static PlayerController Instance {
-        get {
-            if (_instance == null) {
-                Debug.LogError("PlayerController를 찾을 수 없습니다.");
-                return null;
-            }
-            else {
-                return _instance;
-            }
+    void OnDestroy() {
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
+    }
+
+    private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
+        foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
+            playerResource().TotalHp += buildingInfo.maxHp;
         }
     }
 
@@ -223,8 +237,8 @@ public partial class PlayerController {
         return GetComponent<PlayerResource>();
     }
 
-    public PlayerBuildings playerBuildings() {
-        return GetComponent<PlayerBuildings>();
+    public MyBuildings playerBuildings() {
+        return GetComponent<MyBuildings>();
     }
 
     public PlayerActiveCards playerActiveCards() {

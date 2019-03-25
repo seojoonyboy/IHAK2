@@ -10,6 +10,7 @@ namespace Container {
 
         private decimal gold;
         private decimal env;
+        [ReadOnly] public int hp;
 
         public PlayerResource(int gold, int env) {
             Gold = gold;
@@ -36,6 +37,17 @@ namespace Container {
                 Debug.Log("환경 감소");
 
                 env_readonly = (float)Env;
+            }
+        }
+
+        public int TotalHp {
+            get { return hp; }
+            set {
+                hp = value;
+                if (hp < 0) {
+                    Debug.Log("도시체력 0이하로 떨어짐");
+                    hp = 0;
+                }
             }
         }
     }
