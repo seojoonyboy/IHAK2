@@ -27,7 +27,7 @@ public class ActiveCardCoolTime : CoolTime {
         int lv = 0;
 
         if (!string.IsNullOrEmpty(cardInfo.data.baseSpec.unit.name)) {
-            tier = cardInfo.data.baseSpec.unit.tierNeed;
+            tier = 0;
             lv = cardInfo.data.ev.lv;
         }
         else if (!string.IsNullOrEmpty(cardInfo.data.baseSpec.skill.name)) {

@@ -62,16 +62,10 @@ public partial class AccountManager : Singleton<AccountManager> {
         DEVICEID = SystemInfo.deviceUniqueIdentifier;
         eventHandler = MenuSceneEventHandler.Instance;
 
-        ReqUserInfo();
         GetAllCards();
     }
 
     public string DEVICEID { get; private set; }
-
-    public void ReqUserInfo() {
-        sb.Remove(0, sb.Length);
-        _networkManager.request("GET", sb.ToString(), ReqUserInfoCallback);
-    }
 
     private void ReqUserInfoCallback(HttpResponse response) {
         //Server의 Wallet 정보 할당

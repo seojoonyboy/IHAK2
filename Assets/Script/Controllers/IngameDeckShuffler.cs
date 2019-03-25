@@ -8,7 +8,7 @@ using System.Text;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-public class IngameDeckShuffler : MonoBehaviour {
+public partial class IngameDeckShuffler : MonoBehaviour {
     IngameCityManager ingameCityManager;
     [SerializeField] [ReadOnly] PlayerController playerController;
     IngameSceneEventHandler eventHandler;
@@ -26,8 +26,6 @@ public class IngameDeckShuffler : MonoBehaviour {
     [SerializeField] List<int> Deck = new List<int>();  //덱 인덱스 리스트
     [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
     [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
-
-    [SerializeField] GameObject healPref;
 
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
@@ -104,19 +102,19 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
 
-        if(card.GetComponent<IngameDragHandler>() == null) {
-            if (!string.IsNullOrEmpty(skill.name)) {
-                if (skill.method.methodName == "skill_unit_heal") {
-                    card.GetComponent<HealArea>().CancelDrag();
-                    card.GetComponent<HealArea>().enabled = false;
-                }
-            }
-        }
-        else {
-            card.GetComponent<IngameDragHandler>().CancelDrag();
-            card.GetComponent<IngameDragHandler>().enabled = false;
-            card.transform.Find("Deactive").gameObject.SetActive(true);
-        }
+        //if(card.GetComponent<IngameDragHandler>() == null) {
+        //    if (!string.IsNullOrEmpty(skill.name)) {
+        //        if (skill.method.methodName == "skill_unit_heal") {
+        //            card.GetComponent<HealArea>().CancelDrag();
+        //            card.GetComponent<HealArea>().enabled = false;
+        //        }
+        //    }
+        //}
+        //else {
+        //    card.GetComponent<IngameDragHandler>().CancelDrag();
+        //    card.GetComponent<IngameDragHandler>().enabled = false;
+        //    card.transform.Find("Deactive").gameObject.SetActive(true);
+        //}
         card.transform.Find("Deactive/Button").gameObject.SetActive(false);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
@@ -129,23 +127,23 @@ public class IngameDeckShuffler : MonoBehaviour {
 
         card.SetActive(true);
         Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
-        if (!string.IsNullOrEmpty(skill.name)) {
-            if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
-                card.GetComponent<IngameDragHandler>().enabled = false;
-                card.transform.Find("Deactive").gameObject.SetActive(true);
-                card.transform.Find("Deactive/Button").gameObject.SetActive(false);
-            }
-            else if(skill.method.methodName == "skill_unit_heal") {
-                card.GetComponent<HealArea>().enabled = true;
-                card.transform.Find("Deactive").gameObject.SetActive(false);
-                card.transform.Find("Deactive/Button").gameObject.SetActive(true);
-            }
-        }
-        else {
-            card.GetComponent<IngameDragHandler>().enabled = true;
-            card.transform.Find("Deactive").gameObject.SetActive(false);
-            card.transform.Find("Deactive/Button").gameObject.SetActive(true);
-        }
+        //if (!string.IsNullOrEmpty(skill.name)) {
+        //    if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
+        //        card.GetComponent<IngameDragHandler>().enabled = false;
+        //        card.transform.Find("Deactive").gameObject.SetActive(true);
+        //        card.transform.Find("Deactive/Button").gameObject.SetActive(false);
+        //    }
+        //    else if(skill.method.methodName == "skill_unit_heal") {
+        //        card.GetComponent<HealArea>().enabled = true;
+        //        card.transform.Find("Deactive").gameObject.SetActive(false);
+        //        card.transform.Find("Deactive/Button").gameObject.SetActive(true);
+        //    }
+        //}
+        //else {
+        //    card.GetComponent<IngameDragHandler>().enabled = true;
+        //    card.transform.Find("Deactive").gameObject.SetActive(false);
+        //    card.transform.Find("Deactive/Button").gameObject.SetActive(true);
+        //}
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
@@ -170,9 +168,9 @@ public class IngameDeckShuffler : MonoBehaviour {
             activeCardInfo.data = unitCard;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
 
-            if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
+            //if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
             if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
-            card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
+            //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
 
             card.AddComponent<Index>().Id = index;
             card.SetActive(false);
@@ -193,24 +191,15 @@ public class IngameDeckShuffler : MonoBehaviour {
 
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
 
-            if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
+            //if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
             if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
             card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
 
             card.AddComponent<Index>().Id = index;
             origin.Add(card);
             Deck.Add(index);
-            if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
-                DeactiveCard(activeCardInfo.data.parentBuilding);
-            }
-            else if(skill.method.methodName == "skill_unit_heal") {
-                HealArea healArea = card.AddComponent<HealArea>();
-                healArea.pref = healPref;
-                healArea.cam = Camera.main;
 
-                Destroy(card.GetComponent<IngameDragHandler>());
-            }
-                
+            AddSkill(skill.method.methodName, card);
             card.SetActive(false);
             index++;
         }
@@ -310,7 +299,7 @@ public class IngameDeckShuffler : MonoBehaviour {
     /// </summary>
     public void CancelCoolTimeBtnClicked(GameObject card) {
         ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
-        int tier = cardInfo.data.baseSpec.unit.tierNeed;
+        //int tier = cardInfo.data.baseSpec.unit.tierNeed;
         int lv = cardInfo.data.ev.lv;
         ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolTime == null) return;
@@ -323,5 +312,22 @@ public class IngameDeckShuffler : MonoBehaviour {
         //playerController.PrintResource();
 
         coolTime.OnTime();
+    }
+}
+
+
+public partial class IngameDeckShuffler : MonoBehaviour {
+    private void AddSkill(string methodName, GameObject card) {
+        switch (methodName) {
+            case "skill_magma":
+                Destroy(card.GetComponent<IngameDragHandler>());
+                card.AddComponent<Magma>();
+                //effects[Effects.skill_magma]
+                break;
+        }
+    }
+
+    public enum Effects {
+        skill_magma
     }
 }

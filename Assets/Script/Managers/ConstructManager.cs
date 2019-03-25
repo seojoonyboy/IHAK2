@@ -30,8 +30,8 @@ public class ConstructManager : Singleton<ConstructManager> {
     public List<GameObject> GetBuildingObjects() {
         List<GameObject> result = new List<GameObject>();
         result.AddRange(buildings["prod"]);
-        result.AddRange(buildings["military"]);
-        result.AddRange(buildings["special"]);
+        result.AddRange(buildings["active"]);
+        result.AddRange(buildings["unit"]);
 
         return result;
     }
@@ -74,8 +74,8 @@ public class ConstructManager : Singleton<ConstructManager> {
 
             buildings = new Dictionary<string, List<GameObject>>();
             List<GameObject> products = new List<GameObject>();
-            List<GameObject> militaries = new List<GameObject>();
-            List<GameObject> specials = new List<GameObject>();
+            List<GameObject> units = new List<GameObject>();
+            List<GameObject> actives = new List<GameObject>();
 
             foreach (Card card in result) {
                 GameObject obj = new GameObject();
@@ -90,13 +90,13 @@ public class ConstructManager : Singleton<ConstructManager> {
                 buildingObject.card = card;
 
                 if (card.data.type == "prod") products.Add(obj);
-                else if (card.data.type == "military") militaries.Add(obj);
-                else if (card.data.type == "special") specials.Add(obj);
+                else if (card.data.type == "unit") units.Add(obj);
+                else if (card.data.type == "active") actives.Add(obj);
             }
 
             buildings["prod"] = products;
-            buildings["military"] = militaries;
-            buildings["special"] = specials;
+            buildings["unit"] = units;
+            buildings["active"] = actives;
 
             GetComponent<BuildingImages>().SetImages();
         }
