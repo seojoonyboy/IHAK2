@@ -15,12 +15,10 @@ namespace DataModules {
         public string race;
         public string name;
         public string type;
-        public string prodType;
         public int rarity;
         public Cost product;
         public int hitPoint;
         public int placementLimit;
-        public AttackInfo attackInfo;
         public Skill[] activeSkills;
         public Skill[] passiveSkills;
         public Unit unit;
@@ -38,19 +36,19 @@ namespace DataModules {
         public int count;
         public int power;
         public float attackSpeed;
-        public int detectRange;
+        public float defence;
         public int attackRange;
         public int hitPoint;
         public float moveSpeed;
-        public int tierNeed;
-        public string imageName;
+        public decimal attackSP;
+        public decimal beHitSP;
+        public Skill skill;
 
-        public int lv = 1;
+        public string imageName;
     }
 
     [System.Serializable]
     public class Cost {
-        public int food;
         public int gold;
         public int environment;
     }

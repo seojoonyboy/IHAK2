@@ -8159,6 +8159,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa605099e0cf7046a93b6c17c7d77df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1966172136889694, guid: fc14ac80d6dfd684e91e1f0202cbf8ee, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: effects
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[IngameDeckShuffler+Effects,
+        Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EqualityComparer`1+DefaultComparer[[IngameDeckShuffler+Effects,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   playerController: {fileID: 0}
   unitCardPref: {fileID: 1668581265997004, guid: b4daff88cb0e9cf41a7a03212d6b1cfa,
     type: 2}
@@ -8170,7 +8212,6 @@ MonoBehaviour:
   Deck: 
   Hand: 
   Grave: 
-  healPref: {fileID: 0}
 --- !u!1 &1469289294
 GameObject:
   m_ObjectHideFlags: 0

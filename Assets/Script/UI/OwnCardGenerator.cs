@@ -83,7 +83,7 @@ public class OwnCardGenerator : MonoBehaviour {
             string _type = null;
             if (!string.IsNullOrEmpty(info.card.data.type)) {
                 if (info.card.data.type == "prod") {
-                    _type = info.card.data.prodType;
+                    _type = "prod";
                 }
 
 

@@ -105,7 +105,7 @@ public class DropHandler : MonoBehaviour {
             card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + buildingMaxCount.ToString();
         }
         deckSettingController.AddActiveSlot(selectBuilding);
-        string prodType = buildingObject.card.data.prodType;
+        //string prodType = buildingObject.card.data.prodType;
         Cost cost = buildingObject.card.data.product;
         deckSettingController.buildingCount++;
         deckSettingController.SetDeckInfo();
@@ -149,7 +149,7 @@ public class DropHandler : MonoBehaviour {
             limitCount.text = "한도 " + card.placementLimit.ToString();
 
             tier.text = card.rarity + " 등급";
-            food.text = card.product.food.ToString();
+            //food.text = card.product.food.ToString();
             gold.text = card.product.gold.ToString();
             env.text = card.product.environment.ToString();
 
@@ -171,21 +171,20 @@ public class DropHandler : MonoBehaviour {
             CardData card = buildingObject.card.data;
             DataModules.Unit unit = card.unit;
 
-            tier.text = unit.tierNeed + " 등급";
+            //tier.text = unit.tierNeed + " 등급";
             header.text = card.name;
 
             unitName.text = "유닛생산 " + unit.name;
             Debug.Log(tier.text);
-            needResources.text = "식량 : " + unit.cost.food + "\n"
-                + "골드 : " + unit.cost.gold + "\n"
+            needResources.text = "골드 : " + unit.cost.gold + "\n"
                 + "환경 : " + unit.cost.environment + "\n";
 
             unitSpec.text = "체력 : " + unit.hitPoint + "\n"
                 + "공격력 : " + unit.power + "\n"
                 + "공격 속도 : " + unit.attackSpeed + "\n"
                 + "공격 범위 : " + unit.attackRange + "\n"
-                + "이동 속도 : " + unit.moveSpeed + "\n"
-                + "요구 레벨 : " + unit.tierNeed;
+                + "이동 속도 : " + unit.moveSpeed + "\n";
+                //+ "요구 레벨 : " + unit.tierNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
             image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);

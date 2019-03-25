@@ -715,58 +715,58 @@ public class IngameCityManager : MonoBehaviour {
     }
 
     private void ReduceProductPower(BuildingInfo bi) {
-        switch (bi.cardInfo.prodType) {
-            case "gold":
-                productResources.gold.food -= bi.cardInfo.product.food;
-                productResources.gold.gold -= bi.cardInfo.product.gold;
-                productResources.gold.environment -= bi.cardInfo.product.environment;
-                break;
-            case "food":
-                productResources.food.food -= bi.cardInfo.product.food;
-                productResources.food.gold -= bi.cardInfo.product.gold;
-                productResources.food.environment -= bi.cardInfo.product.environment;
-                break;
-            case "env":
-                productResources.env.food -= bi.cardInfo.product.food;
-                productResources.env.gold -= bi.cardInfo.product.gold;
-                productResources.env.environment -= bi.cardInfo.product.environment;
-                break;
-            default:
-                break;
-        }
-        BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-        string id = buildingObject.card.data.id;
-        if (buildingObject.card.data.activeSkills.Length != 0) {
-            ingameDeckShuffler.DeactiveCard(buildingObject.gameObject);
-        }
+        //switch (bi.cardInfo.prodType) {
+        //    case "gold":
+        //        productResources.gold.food -= bi.cardInfo.product.food;
+        //        productResources.gold.gold -= bi.cardInfo.product.gold;
+        //        productResources.gold.environment -= bi.cardInfo.product.environment;
+        //        break;
+        //    case "food":
+        //        productResources.food.food -= bi.cardInfo.product.food;
+        //        productResources.food.gold -= bi.cardInfo.product.gold;
+        //        productResources.food.environment -= bi.cardInfo.product.environment;
+        //        break;
+        //    case "env":
+        //        productResources.env.food -= bi.cardInfo.product.food;
+        //        productResources.env.gold -= bi.cardInfo.product.gold;
+        //        productResources.env.environment -= bi.cardInfo.product.environment;
+        //        break;
+        //    default:
+        //        break;
+        //}
+        //BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+        //string id = buildingObject.card.data.id;
+        //if (buildingObject.card.data.activeSkills.Length != 0) {
+        //    ingameDeckShuffler.DeactiveCard(buildingObject.gameObject);
+        //}
     }
 
     private void RecoverProductPower(BuildingInfo bi) {
-        switch (bi.cardInfo.prodType) {
-            case "gold":
-                productResources.gold.food += bi.cardInfo.product.food;
-                productResources.gold.gold += bi.cardInfo.product.gold;
-                productResources.gold.environment += bi.cardInfo.product.environment;
-                break;
-            case "food":
-                productResources.food.food += bi.cardInfo.product.food;
-                productResources.food.gold += bi.cardInfo.product.gold;
-                productResources.food.environment += bi.cardInfo.product.environment;
-                break;
-            case "env":
-                productResources.env.food += bi.cardInfo.product.food;
-                productResources.env.gold += bi.cardInfo.product.gold;
-                productResources.env.environment += bi.cardInfo.product.environment;
-                break;
-            default:
-                break;
-        }
+        //switch (bi.cardInfo.prodType) {
+        //    case "gold":
+        //        productResources.gold.food += bi.cardInfo.product.food;
+        //        productResources.gold.gold += bi.cardInfo.product.gold;
+        //        productResources.gold.environment += bi.cardInfo.product.environment;
+        //        break;
+        //    case "food":
+        //        productResources.food.food += bi.cardInfo.product.food;
+        //        productResources.food.gold += bi.cardInfo.product.gold;
+        //        productResources.food.environment += bi.cardInfo.product.environment;
+        //        break;
+        //    case "env":
+        //        productResources.env.food += bi.cardInfo.product.food;
+        //        productResources.env.gold += bi.cardInfo.product.gold;
+        //        productResources.env.environment += bi.cardInfo.product.environment;
+        //        break;
+        //    default:
+        //        break;
+        //}
 
-        BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
-        string id = buildingObject.card.data.id;
-        if (buildingObject.card.data.activeSkills.Length != 0) {
-            ingameDeckShuffler.ActivateCard(buildingObject.gameObject);
-        }
+        //BuildingObject buildingObject = bi.gameObject.GetComponent<BuildingObject>();
+        //string id = buildingObject.card.data.id;
+        //if (buildingObject.card.data.activeSkills.Length != 0) {
+        //    ingameDeckShuffler.ActivateCard(buildingObject.gameObject);
+        //}
     }
 
 
