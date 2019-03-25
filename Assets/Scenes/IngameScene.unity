@@ -286,7 +286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 217.5, y: -44.5}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 225, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &98007671
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2111,8 +2111,98 @@ MonoBehaviour:
     type: 2}
   unactiveBuildingIndex1: 100
   unactiveBuildingIndex2: 100
-  playerHQ: {fileID: 0}
-  enemyHQ: {fileID: 0}
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      prodType: 
+      rarity: 0
+      product:
+        food: 0
+        gold: 0
+        environment: 0
+      hitPoint: 0
+      placementLimit: 0
+      attackInfo:
+        id: 0
+        power: 0
+        attackSpeed: 0
+        attackRange: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        cost:
+          food: 0
+          gold: 0
+          environment: 0
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        detectRange: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        tierNeed: 0
+        imageName: 
+        lv: 1
+      lv: 0
+    gameObject: {fileID: 0}
   repairCount: 0
   repairAmount: 0
   enoughRepairSource: 1
@@ -5678,7 +5768,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1027871214
 GameObject:
@@ -7866,6 +7956,7 @@ RectTransform:
   - {fileID: 781680352}
   - {fileID: 1795210944}
   - {fileID: 2043827356}
+  - {fileID: 2107023521}
   m_Father: {fileID: 874304226}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8558,6 +8649,83 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1631827497}
   m_CullTransparentMesh: 0
+--- !u!1 &1636856361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636856364}
+  - component: {fileID: 1636856363}
+  - component: {fileID: 1636856362}
+  m_Layer: 0
+  m_Name: MinimapCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1636856362
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1636856361}
+  m_Enabled: 1
+--- !u!20 &1636856363
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1636856361}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: -10
+  far clip plane: 10
+  field of view: 60
+  orthographic: 1
+  orthographic size: 320
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 12055
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: c94ad38e653257841b220e3ab2e47133, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1636856364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1636856361}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 230, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645776509
 GameObject:
   m_ObjectHideFlags: 0
@@ -9065,7 +9233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1711368124
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9763,7 +9931,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -327, y: -44.5}
+  m_AnchoredPosition: {x: 0, y: -1011}
   m_SizeDelta: {x: 250, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1795569692
@@ -10053,7 +10221,6 @@ MonoBehaviour:
   tileGroup: {fileID: 0}
   playerResource: {fileID: 0}
   goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
-  buildingInfos: []
 --- !u!114 &1844919647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11706,4 +11873,72 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2077652411}
+  m_CullTransparentMesh: 0
+--- !u!1 &2107023520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2107023521}
+  - component: {fileID: 2107023523}
+  - component: {fileID: 2107023522}
+  m_Layer: 5
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2107023521
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2107023520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1535162192}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 512, y: 512}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2107023522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2107023520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 8400000, guid: c94ad38e653257841b220e3ab2e47133, type: 2}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &2107023523
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2107023520}
   m_CullTransparentMesh: 0
