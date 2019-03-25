@@ -83,8 +83,8 @@ public class IngameSceneUIController : MonoBehaviour {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
         StartCoroutine("EnemyRepair");
-        enemyHQ = ieg.ingameCityManager.enemyHQ;
-        playerHQ = ieg.ingameCityManager.playerHQ;
+        //enemyHQ = ieg.ingameCityManager.enemyHQ;
+        //playerHQ = ieg.ingameCityManager.playerHQ;
     }
 
     private void Update() {

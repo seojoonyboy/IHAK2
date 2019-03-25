@@ -1352,6 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   env_readonly: 0
+  hp: 0
 --- !u!114 &282962854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1379,8 +1380,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGroup: {fileID: 0}
   playerController: {fileID: 0}
-  myBuildingsInfo: []
   demoTileIndex: 0600000007000000080000000b0000000c0000000d000000100000001100000012000000
+  myBuildingsInfo: []
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,7 +2083,6 @@ MonoBehaviour:
         food: 0
         gold: 0
         environment: 0
-  myBuildingsInfo: []
   enemyBuildingsInfo: []
   myBuildings_mags:
   - key: Industry
@@ -10182,9 +10182,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1844919644}
+  - component: {fileID: 1844919646}
   - component: {fileID: 1844919645}
+  - component: {fileID: 1844919647}
   m_Layer: 0
-  m_Name: EnemyGenerator
+  m_Name: EnemyPlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10214,12 +10216,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abaa7256092086e4990d3afaf205ae26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTileGroup: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1,
-    type: 2}
-  ingameCityManager: {fileID: 310974711}
-  goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
-  enemyParent: {fileID: 1320738637}
+  tileGroupParent: {fileID: 1320738637}
+  dummyPref: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
   tileGroup: {fileID: 0}
+  goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+--- !u!114 &1844919646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1844919643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 743fd887538dfc04f888a314a7b5eaf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingInfos: []
+--- !u!114 &1844919647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1844919643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178b128395858c2489ab2168cd73dfd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold_readonly: 0
+  env_readonly: 0
+  hp: 0
 --- !u!1 &1849017551
 GameObject:
   m_ObjectHideFlags: 0
