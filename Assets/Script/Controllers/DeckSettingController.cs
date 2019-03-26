@@ -323,7 +323,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id);
                 ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.data.product);
 
-                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id != -1 || tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id != 0)
+                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation != 12)
                     buildingCount++;
                 SetDeckInfo();
             }
@@ -527,7 +527,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
 
         GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().card.id);
-        int maxbuildCount = saveSelectBuilding.GetComponent<BuildingObject>().card.data.placementLimit;
+        //int maxbuildCount = saveSelectBuilding.GetComponent<BuildingObject>().card.data.placementLimit;
+        int maxbuildCount = 1;
         int count = maxbuildCount - OnTileBuildingCount(saveSelectBuilding);
         count++;
 
@@ -568,7 +569,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             return;
 
         GameObject card = FindCard(building.GetComponent<BuildingObject>().card.id);
-        int maxbuildCount = building.GetComponent<BuildingObject>().card.data.placementLimit;
+        //int maxbuildCount = building.GetComponent<BuildingObject>().card.data.placementLimit;
+        int maxbuildCount = 1;
         int count = maxbuildCount - OnTileBuildingCount(building);
         count++;
 
@@ -644,7 +646,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             {
                 GameObject slot = cardsContent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
                 //slot.transform.GetChild(2).GetComponent<Text>().text = BuildingCount(slot.GetComponent<DragHandler>().setObject).ToString() + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
-                int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit;
+                //int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit;
+                int maxBuildCount = 1;
                 int count = maxBuildCount - OnTileBuildingCount(slot.GetComponent<DragHandler>().setObject);
                 if (count == 0) {
                     slot.GetComponent<Image>().color = Color.grey;
@@ -668,7 +671,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             for (int j = 0; j < cardsContent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
             {
                 GameObject slot = cardsContent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
-                int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit;
+                //int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit;
+                int maxBuildCount = 1;
                 //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
                 slot.GetComponent<Image>().color = Color.white;
                 slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
