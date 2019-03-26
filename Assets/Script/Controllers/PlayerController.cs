@@ -25,8 +25,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     [Header(" - ResourceText")]
     [SerializeField] Text goldValue;
-    [SerializeField] Text foodValue;
-    [SerializeField] Text turnValue;
+    [SerializeField] Image goldBar;
+    //[SerializeField] Text foodValue;
+    //[SerializeField] Text turnValue;
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
     
@@ -84,6 +85,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
         pInfo.clickEnvironment = new int[3];
+        goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
@@ -97,6 +99,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         playerBuildings().Init();
 
         deckShuffler().InitCard();
+        playing = true;
+        StartCoroutine(GoldProduce());
         //PrintResource();
         //PrimalEnvEfct();
 
@@ -119,6 +123,19 @@ public partial class PlayerController : SerializedMonoBehaviour {
             playerResource().TotalHp += buildingInfo.maxHp;
         }
         playerResource().maxhp = playerResource().TotalHp;
+    }
+
+    private IEnumerator GoldProduce() {
+        while (playing) {
+            float gold = (float)playerResource().Gold;
+            yield return new WaitForSeconds(1.0f);
+            gold += 2;
+            if (gold > 30)
+                gold = 30;
+            goldBar.fillAmount = ((float)gold / 30);
+            playerResource().Gold = (int)gold;
+            goldValue.text = gold.ToString();
+        }
     }
 
     //public void PrintResource() {
@@ -231,10 +248,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     //}
 }
 
-/// <summary>
-/// 각각의 컨테이너를 리턴
-/// </summary>
-public partial class PlayerController {
+    /// <summary>
+    /// 각각의 컨테이너를 리턴
+    /// </summary>
+    public partial class PlayerController {
     public PlayerResource playerResource() {
         return GetComponent<PlayerResource>();
     }
