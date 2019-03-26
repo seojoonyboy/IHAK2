@@ -202,7 +202,16 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 buildingInfo.gameObject.transform.GetChild(2).gameObject.SetActive(false);
             }
         }
+        IngameSceneEventHandler.BuildingDestroyedPackage package = new IngameSceneEventHandler.BuildingDestroyedPackage() {
+            target = target,
+            buildingInfo = buildingInfo
+        };
 
+        IngameSceneEventHandler.Instance.PostNotification(
+            IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED,
+            this,
+            package
+        );
         /*
         if (target == Target.ME)
             ReduceProductPower(buildingInfo);

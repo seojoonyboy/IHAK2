@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    IngameSceneEventHandler eventHandler;
+
     Vector3 startScale;
     Vector3 startPosition;
 
@@ -15,12 +18,50 @@ public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     [SerializeField] [ReadOnly] Transform parent;
     [SerializeField] [ReadOnly] bool isInit = false;
     [SerializeField] [ReadOnly] GameObject parentBuilding;
+    [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
 
-    public void Init(Camera camera, GameObject magma, Transform parent, GameObject parentBuilding) {
+    public void Init(Camera camera, GameObject magma, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler) {
         this.camera = camera;
         magmaPref = magma;
         this.parentBuilding = parentBuilding;
+        this.deckShuffler = deckShuffler;
         isInit = true;
+    }
+
+    void Awake() {
+        eventHandler = IngameSceneEventHandler.Instance;
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
+    }
+
+    void OnDestroy() {
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
+    }
+
+    private void BuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
+        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        if (parms.target == IngameHpSystem.Target.ME) {
+            if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
+                CancelDrag();
+            }
+        }
+    }
+
+    private void BuildingReconstucted(Enum Event_Type, Component Sender, object Param) {
+        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        if (parms.target == IngameHpSystem.Target.ME) {
+            if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
+                GetComponent<IngameDragHandler>().enabled = true;
+            }
+        }
+    }
+
+    public void CancelDrag() {
+        GetComponent<IngameDragHandler>().enabled = false;
+
+        transform.position = startPosition;
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -62,5 +103,7 @@ public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         coolComp.StartCool();
 
         GetComponent<MagmaDragHandler>().enabled = false;
+
+        deckShuffler.UseCard(gameObject);
     }
 }
