@@ -25,8 +25,8 @@ public class IngameSceneUIController : MonoBehaviour {
 
     public bool isPlaying = true;
     private float time = 300;
-    //[SerializeField] Container.BuildingInfo enemyHQ;
-    //[SerializeField] Container.BuildingInfo playerHQ;
+    [SerializeField] public GameObject playerController;
+    [SerializeField] public GameObject enemyController;
 
     public static int deckId;
 
@@ -82,26 +82,29 @@ public class IngameSceneUIController : MonoBehaviour {
         //IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
         playerName.text = AccountManager.Instance.userInfos.nickname;
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
-        StartCoroutine("EnemyRepair");
+        //StartCoroutine("EnemyRepair");
         //enemyHQ = ieg.ingameCityManager.enemyHQ;
         //playerHQ = ieg.ingameCityManager.playerHQ;
     }
 
     private void Update() {
-        //if (isPlaying) {
-        //    if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
-        //        isPlaying = false;
-        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-        //    }
-        //    if (enemyHQ.hp < 1) {
-        //        isPlaying = false;
-        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-        //    }
-        //    if(playerHQ.hp < 1) {
-        //        isPlaying = false;
-        //        resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
-        //    }
-        //}
+        if (isPlaying) {
+            /*
+            if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            }
+            */
+            if (enemyController.GetComponent<Container.PlayerResource>().hp < 1) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            }
+            if (playerController.GetComponent<Container.PlayerResource>().hp < 1) {
+                isPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+            }
+            
+        }
     }
 
     public void PopRank(bool player) {

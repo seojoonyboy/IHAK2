@@ -2193,8 +2193,6 @@ MonoBehaviour:
   repairCount: 0
   repairAmount: 0
   enoughRepairSource: 1
-  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
-  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   playerController: {fileID: 282962852}
 --- !u!114 &310974712
 MonoBehaviour:
@@ -2209,12 +2207,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 282962850}
   myBuildings: {fileID: 0}
-  myBuildingInfo: []
   myResource: {fileID: 0}
+  myBuildingInfo: []
+  playerhpGauge: {fileID: 850662850}
   enemyController: {fileID: 1844919643}
   enemyBuildings: {fileID: 0}
   enemyResource: {fileID: 0}
   enemybuildingInfos: []
+  enemyhpGauge: {fileID: 1849017551}
+  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
+  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -7120,6 +7122,8 @@ MonoBehaviour:
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 1589755684}
   isPlaying: 1
+  playerController: {fileID: 282962850}
+  enemyController: {fileID: 1844919643}
 --- !u!1 &1259288191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10174,7 +10178,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.693
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1784039173
