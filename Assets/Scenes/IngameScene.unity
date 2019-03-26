@@ -2210,13 +2210,96 @@ MonoBehaviour:
   myResource: {fileID: 0}
   myBuildingInfo: []
   playerhpGauge: {fileID: 850662850}
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
   enemyController: {fileID: 1844919643}
   enemyBuildings: {fileID: 0}
   enemyResource: {fileID: 0}
   enemybuildingInfos: []
   enemyhpGauge: {fileID: 1849017551}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
+  ingameSceneUIController: {fileID: 1239632114}
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using DataModules;
 using UnityEngine.UI;
 using Spine.Unity;
 using Container;
+using System;
 
 public class IngameHpSystem : Singleton<IngameHpSystem> {
     protected IngameHpSystem() { }
@@ -15,6 +16,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     public PlayerResource myResource;
     public List<BuildingInfo> myBuildingInfo;
     public GameObject playerhpGauge;
+    public BuildingInfo playerHQ;
     
 
     [Space(10)]
@@ -24,36 +26,44 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     public PlayerResource enemyResource;    
     public List<BuildingInfo> enemybuildingInfos;
     public GameObject enemyhpGauge;
+    public BuildingInfo enemyHQ;
 
     [Space(10)]
     [Header(" - Wreck")]
     [SerializeField] private Sprite wreckSprite;
     [SerializeField] private SkeletonDataAsset wreckSpine;
-    //IngameSceneEventHandler ingameSceneEventHandler;
 
-    private void Start() {
+    IngameSceneEventHandler ingameSceneEventHandler;
+    public IngameSceneUIController ingameSceneUIController;
+
+    void Awake() {
+        ingameSceneEventHandler = IngameSceneEventHandler.Instance;
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, Callback);
+    }
+
+    private void Callback(Enum Event_Type, Component Sender, object Param) {
         enemyBuildings = enemyController.GetComponent<EnemyBuildings>();
-        enemybuildingInfos = enemyBuildings.buildingInfos;
         enemyResource = enemyController.GetComponent<PlayerResource>();
+        enemybuildingInfos = enemyBuildings.buildingInfos;
+        enemyHQ = enemybuildingInfos.Find(x => x.tileNum == 12);
 
         myBuildings = playerController.GetComponent<MyBuildings>();
         myBuildingInfo = myBuildings.buildingInfos;
         myResource = playerController.GetComponent<PlayerResource>();
-
-        Debug.Log(enemybuildingInfos[4].tileNum);
+        playerHQ = myBuildingInfo.Find(x => x.tileNum == 12);
+        //TakeDamage(Target.ME, 12, 1500);
     }
 
-    
-
+    void OnDestroy() {
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, Callback);
+    }
     /*
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
     }
 
-    void OnDestroy() {
-        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.TAKE_DAMAGE, TakeDamageEventOcccured);
-    }
+    
 
     private void TakeDamageEventOcccured(Enum Event_Type, Component Sender, object Param) {
         object[] parms = (object[])Param;
@@ -93,6 +103,9 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.activate = false;
+
+                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                        DestroyEnemy();
                 }
 
 
@@ -106,11 +119,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyResource.TotalHp = 0;
                     enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
                     enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-                    BuildingDestroyed(target, enemyBuilding);
-                    
-                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().card.id == -1)
-                        DestroyEnemy();
-                        
+                    BuildingDestroyed(target, enemyBuilding);                
                 }                             
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
@@ -137,6 +146,9 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     myBuilding.activate = false;
                     BuildingDestroyed(target, myBuilding);
+
+                    if (myBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                        DestroyCity();
                 }
 
                 if(myResource.TotalHp > amount) {
@@ -148,10 +160,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 else if (myResource.hp <= amount) {
                     myResource.TotalHp = 0;
                     playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
-                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-
-                    if (myBuilding.gameObject.GetComponent<BuildingObject>().card.id == -1)
-                        DestroyCity();                        
+                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;                                   
                 }                
                 break;
                 
@@ -201,26 +210,22 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         buildingInfo.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void DestroyEnemy() {
-        /*
+    public void DestroyEnemy() {        
         if (enemyResource.hp == 0 && enemyHQ.activate == false) {
-            enemyCurrentTotalHP = 0;
-            enemyTotalHPGauge.GetComponent<Image>().fillAmount = 0f;
-            enemyTotalHPGauge.transform.parent.GetChild(2).GetChild(0).GetComponent<Text>().text = 0.ToString() + " % ";
+            enemyResource.hp = 0;
+            enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0f;
+            enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + " % ";
             //StopCoroutine("Repair");
-        }
-        */
+        }        
     }
 
-    public void DestroyCity() {
-        /*
-        if (myBuildings.hp == 0 && playerHQ.activate == false) {
-            cityHP = 0;
-            hpValueBar.fillAmount = 0f;
-            hpValue.text = 0.ToString() + " % ";
+    public void DestroyCity() {        
+        if (myResource.hp == 0 || playerHQ.activate == false) {
+            myResource.hp = 0;
+            playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0f;
+            playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + " % ";
             //StopCoroutine("Repair");
-        } 
-        */
+        }         
     }
     
     /*
@@ -563,6 +568,15 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
        enoughRepairSource = true;
    }
    */
+   /*
+   IEnumerator attacking() {
+        while(ingameSceneUIController.isPlaying == true) {
+            yield return new WaitForSeconds(1.0f);
+            TakeDamage(Target.ME, 12, 500);
+        }
+    }
+    */
+
     public enum Target {
         ME,
         ENEMY_1,
