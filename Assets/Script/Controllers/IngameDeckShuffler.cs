@@ -248,14 +248,14 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
         //spell은 쿨타임
-        //유닛은 핸드, 덱에서 제거
-        if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
-            Deck.Add(id);
+        ////유닛은 핸드, 덱에서 제거
+        //if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+        //    Deck.Add(id);
 
-            ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
-            cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
-            cooltimeComp.StartCool();
-        }
+        //    ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+        //    cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
+        //    cooltimeComp.StartCool();
+        //}
         DrawCard();
     }
 
@@ -339,7 +339,8 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     camera,
                     effectModules[Effects.skill_magma],
                     PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
-                    card.GetComponent<ActiveCardInfo>().data.parentBuilding
+                    card.GetComponent<ActiveCardInfo>().data.parentBuilding,
+                    this
                 );
                 //effects[Effects.skill_magma]
                 break;
