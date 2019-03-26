@@ -204,7 +204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1040470517680680
 GameObject:
   m_ObjectHideFlags: 1
@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1116872475904318
 GameObject:
   m_ObjectHideFlags: 1
@@ -1421,7 +1421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1339234011001454
 GameObject:
   m_ObjectHideFlags: 1
@@ -1524,7 +1524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1372382854036342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,7 +1753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1428769601598794
 GameObject:
   m_ObjectHideFlags: 1
@@ -2223,7 +2223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1559790457949938
 GameObject:
   m_ObjectHideFlags: 1
@@ -2585,7 +2585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1643498037213876
 GameObject:
   m_ObjectHideFlags: 1
@@ -3417,7 +3417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1881489436217836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,7 +3784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1965921246425328
 GameObject:
   m_ObjectHideFlags: 1
@@ -13158,40 +13158,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
   mainSprite: {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
@@ -13551,40 +13546,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -13745,40 +13735,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -13920,40 +13905,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -14136,40 +14116,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300016, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -14227,40 +14202,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300032, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -14395,40 +14365,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 100
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
@@ -14767,40 +14732,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300034, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300034, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -14825,40 +14785,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
   mainSprite: {fileID: 21300018, guid: 12e749289eeb9a545b8b67e891ca5ab9, type: 3}
@@ -14974,7 +14929,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1881489436217836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -15020,7 +14975,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494959735357084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -15802,7 +15757,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1245086968571820}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -16400,7 +16355,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1038227189092960}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -16492,7 +16447,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635205132668546}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -17458,7 +17413,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1963508064231068}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -17688,7 +17643,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1112298470358086}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -17826,7 +17781,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1552605066172802}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -18056,7 +18011,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235603090330244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -19482,7 +19437,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1337942177714152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -19712,7 +19667,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1365543584438050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -19804,7 +19759,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1025669514707406}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -20172,7 +20127,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1131704103766954}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -20494,7 +20449,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1015209334715156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -20678,7 +20633,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385491577117912}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -20724,7 +20679,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1842351736003134}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -20862,7 +20817,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1132853568509534}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -21690,7 +21645,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1853456656252178}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -22058,7 +22013,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1512093588622412}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -22288,7 +22243,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383182565041360}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -22564,7 +22519,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577816267839114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -22794,7 +22749,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1521064672127442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -23254,7 +23209,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1414800713973728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -23852,7 +23807,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1428521739394384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -23990,7 +23945,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1895458639534472}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
