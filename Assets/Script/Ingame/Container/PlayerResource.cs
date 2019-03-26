@@ -10,6 +10,7 @@ namespace Container {
 
         private decimal gold;
         private decimal env;
+        public int maxhp;
         [ReadOnly] public int hp;
 
         public PlayerResource(int gold, int env) {
@@ -20,7 +21,7 @@ namespace Container {
         public decimal Gold {
             get { return gold; }
             set {
-                if (gold < value) {
+                if (value < 0 && gold < value) {
                     Debug.LogError("자원이 0이하로 떨어졌습니다.");
                     gold = 0;
                 }
@@ -44,7 +45,7 @@ namespace Container {
             get { return hp; }
             set {
                 hp = value;
-                if (hp < 0) {
+                if (hp <= 0) {
                     Debug.Log("도시체력 0이하로 떨어짐");
                     hp = 0;
                 }

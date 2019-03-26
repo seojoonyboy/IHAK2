@@ -21,7 +21,7 @@ public class Temple_Damager : MonoBehaviour {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         cityManager = GetComponent<IngameCityManager>();
     }
-
+    /*
     public void GenerateAttack(DataModules.SkillDetail detail, IngameCityManager.Target target) {
         string args = detail.args;
         string[] arr = args.Split(',');
@@ -31,20 +31,25 @@ public class Temple_Damager : MonoBehaviour {
         int.TryParse(arr[3], out damageAmount);
 
         switch (target) {
+            
             case IngameCityManager.Target.ENEMY_1:
                 rndTargets = RndNumGenerator.getRandomInt(targetNum, demoTileIndex);
                 break;
             case IngameCityManager.Target.ME:
                 rndTargets = RndNumGenerator.getRandomInt(targetNum, myTileIndex);
                 break;
+                
         }
-        MakeDisaster(target);
+        //MakeDisaster(target);
     }
+    */
 
+    /*
     public void MakeDisaster(IngameCityManager.Target target) {
         //coroutine = Damage(interval, maintainTime, target);
         StartCoroutine(coroutine);
     }
+    */
 
     //IEnumerator Damage(float interval = 1.0f, int loopCount = 0, IngameCityManager.Target target = IngameCityManager.Target.ENEMY_1) {
     //    GameObject usingSkill = new GameObject();

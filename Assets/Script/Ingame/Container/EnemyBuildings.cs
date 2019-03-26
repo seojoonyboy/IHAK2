@@ -44,5 +44,6 @@ public class EnemyBuildings : PlayerBuildings {
                 buildingInfos.Add(info);
             }
         }
+        GetComponent<PlayerResource>().maxhp = GetComponent<PlayerResource>().TotalHp;
     }
 }

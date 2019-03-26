@@ -25,8 +25,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     [Header(" - ResourceText")]
     [SerializeField] Text goldValue;
-    [SerializeField] Text foodValue;
-    [SerializeField] Text turnValue;
+    [SerializeField] Image goldBar;
+    //[SerializeField] Text foodValue;
+    //[SerializeField] Text turnValue;
     [SerializeField] Image envValue;
     [SerializeField] IngameCityManager icm;
     
@@ -84,6 +85,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
         pInfo.clickEnvironment = new int[3];
+        goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
@@ -95,8 +97,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
     void Start() {
         playerActiveCards().Init();
         playerBuildings().Init();
-
-        //deckShuffler().InitCard();
+        
+        deckShuffler().InitCard();
+        resourceManager().OnGoldProduce(true);
         //PrintResource();
         //PrimalEnvEfct();
 
@@ -118,6 +121,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
             playerResource().TotalHp += buildingInfo.maxHp;
         }
+        playerResource().maxhp = playerResource().TotalHp;
     }
 
     //public void PrintResource() {
@@ -230,12 +234,16 @@ public partial class PlayerController : SerializedMonoBehaviour {
     //}
 }
 
-/// <summary>
-/// 각각의 컨테이너를 리턴
-/// </summary>
-public partial class PlayerController {
+    /// <summary>
+    /// 각각의 컨테이너를 리턴
+    /// </summary>
+    public partial class PlayerController {
     public PlayerResource playerResource() {
         return GetComponent<PlayerResource>();
+    }
+
+    public IngameResourceManager resourceManager() {
+        return GetComponent<IngameResourceManager>();
     }
 
     public MyBuildings playerBuildings() {

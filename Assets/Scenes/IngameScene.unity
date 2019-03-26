@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 282962851}
   - component: {fileID: 282962852}
   - component: {fileID: 282962853}
+  - component: {fileID: 282962856}
   - component: {fileID: 282962855}
   - component: {fileID: 282962854}
   m_Layer: 0
@@ -1323,9 +1324,8 @@ MonoBehaviour:
       Data: 
   productResource: {fileID: 1711368124}
   ingameTimer: {fileID: 1905110268}
-  goldValue: {fileID: 1191445014}
-  foodValue: {fileID: 1735805637}
-  turnValue: {fileID: 0}
+  goldValue: {fileID: 1983411991}
+  goldBar: {fileID: 751448560}
   envValue: {fileID: 1749300415}
   icm: {fileID: 310974711}
   hqLevel: 1
@@ -1352,6 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   env_readonly: 0
+  maxhp: 0
   hp: 0
 --- !u!114 &282962854
 MonoBehaviour:
@@ -1382,6 +1383,19 @@ MonoBehaviour:
   playerController: {fileID: 0}
   buildingInfos: []
   demoTileIndex: 0600000007000000080000000b0000000c0000000d000000100000001100000012000000
+--- !u!114 &282962856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68166daaacb79434baa91ce8f33ebfb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldValue: {fileID: 1983411991}
+  goldBar: {fileID: 751448560}
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,6 +2000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310974710}
   - component: {fileID: 310974711}
+  - component: {fileID: 310974712}
   m_Layer: 0
   m_Name: IngameCityManager
   m_TagString: Untagged
@@ -2026,10 +2041,6 @@ MonoBehaviour:
   hpValue: {fileID: 993183136}
   enemyTotalHPGauge: {fileID: 1849017551}
   ingameSceneUIController: {fileID: 1239632114}
-  enemyTotalHP: 0
-  enemyCurrentTotalHP: 0
-  cityHP: 0
-  cityMaxHP: 0
   productResources:
     food:
       id: 0
@@ -2120,40 +2131,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
     gameObject: {fileID: 0}
   enemyHQ:
@@ -2166,40 +2172,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 0
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
     gameObject: {fileID: 0}
   repairCount: 0
@@ -2208,6 +2209,25 @@ MonoBehaviour:
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   playerController: {fileID: 282962852}
+--- !u!114 &310974712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 310974709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2adf37acf4294445b5fcf765e95e369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 282962850}
+  myBuildings: {fileID: 0}
+  myBuildingInfo: []
+  myResource: {fileID: 0}
+  enemyController: {fileID: 1844919643}
+  enemyBuildings: {fileID: 0}
+  enemyResource: {fileID: 0}
+  enemybuildingInfos: []
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,7 +2736,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children: [{fileID: 1983411988}]
   m_Father: {fileID: 1795569691}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6369,10 +6389,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: BitBenderGames.UnityEventWithRaycastHit2D, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  expertModeEnabled: 0
+  expertModeEnabled: 1
   zoomBackSpringFactor: 20
   dragBackSpringFactor: 10
-  autoScrollVelocityMax: 60
+  autoScrollVelocityMax: 150
   dampFactorTimeMultiplier: 2
   isPinchModeExclusive: 1
   customZoomSensitivity: 1
@@ -10593,6 +10613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   env_readonly: 0
+  maxhp: 0
   hp: 0
 --- !u!1 &1849017551
 GameObject:
@@ -11707,6 +11728,111 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1969575551}
+  m_CullTransparentMesh: 0
+--- !u!1 &1983411987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983411988}
+  - component: {fileID: 1983411992}
+  - component: {fileID: 1983411991}
+  - component: {fileID: 1983411990}
+  - component: {fileID: 1983411989}
+  m_Layer: 5
+  m_Name: GoldValueText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1983411988
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1983411987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 449502990}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1983411989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1983411987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &1983411990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1983411987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
+--- !u!114 &1983411991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1983411987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 50501b5b6e567c944bf13d0a8d29fd68, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &1983411992
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1983411987}
   m_CullTransparentMesh: 0
 --- !u!1 &2001229593
 GameObject:
