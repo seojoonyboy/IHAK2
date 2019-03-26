@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4098081674590514}
   - component: {fileID: 212176125894487098}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RangeTexture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,15 +35,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4263763910880020}
-  - component: {fileID: 114145747335891854}
   - component: {fileID: 58108351778124754}
-  m_Layer: 0
+  - component: {fileID: 114834494574496092}
+  m_Layer: 5
   m_Name: Magma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4098081674590514
 Transform:
   m_ObjectHideFlags: 1
@@ -80,13 +80,13 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114145747335891854
+--- !u!114 &114834494574496092
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1966172136889694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6af5ad00d0b8ce419f8acaef35270a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 78aba04911e849747a9a1363bf73a3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   range_texture: {fileID: 212176125894487098}
