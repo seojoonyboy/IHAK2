@@ -2206,8 +2206,6 @@ MonoBehaviour:
   repairCount: 0
   repairAmount: 0
   enoughRepairSource: 1
-  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
-  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   playerController: {fileID: 282962852}
 --- !u!114 &310974712
 MonoBehaviour:
@@ -2222,12 +2220,99 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 282962850}
   myBuildings: {fileID: 0}
-  myBuildingInfo: []
   myResource: {fileID: 0}
+  myBuildingInfo: []
+  playerhpGauge: {fileID: 850662850}
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
   enemyController: {fileID: 1844919643}
   enemyBuildings: {fileID: 0}
   enemyResource: {fileID: 0}
   enemybuildingInfos: []
+  enemyhpGauge: {fileID: 1849017551}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
+  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
+  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
+  ingameSceneUIController: {fileID: 1239632114}
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -7133,6 +7218,8 @@ MonoBehaviour:
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 1589755684}
   isPlaying: 1
+  playerController: {fileID: 282962850}
+  enemyController: {fileID: 1844919643}
 --- !u!1 &1259288191
 GameObject:
   m_ObjectHideFlags: 0
@@ -10230,7 +10317,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.693
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1784039173
