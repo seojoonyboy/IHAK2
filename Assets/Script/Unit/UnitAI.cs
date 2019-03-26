@@ -49,7 +49,7 @@ public class UnitAI : MonoBehaviour {
 
     void Start() {
         detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
-        detectCollider.radius = unitCard.baseSpec.unit.detectRange;
+        detectCollider.radius = unitCard.baseSpec.unit.attackRange;
         if (protecting) detectCollider.enabled = false;
         if (gameObject.layer == LayerMask.NameToLayer("PlayerUnit")) {
             buildingInfos = cityManager.enemyBuildingsInfo;
