@@ -99,8 +99,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         playerBuildings().Init();
 
         deckShuffler().InitCard();
-        playing = true;
-        StartCoroutine(GoldProduce());
+        resourceManager().OnGoldProduce(true);
         //PrintResource();
         //PrimalEnvEfct();
 
@@ -123,19 +122,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
             playerResource().TotalHp += buildingInfo.maxHp;
         }
         playerResource().maxhp = playerResource().TotalHp;
-    }
-
-    private IEnumerator GoldProduce() {
-        while (playing) {
-            float gold = (float)playerResource().Gold;
-            yield return new WaitForSeconds(1.0f);
-            gold += 2;
-            if (gold > 30)
-                gold = 30;
-            goldBar.fillAmount = ((float)gold / 30);
-            playerResource().Gold = (int)gold;
-            goldValue.text = gold.ToString();
-        }
     }
 
     //public void PrintResource() {
@@ -254,6 +240,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public partial class PlayerController {
     public PlayerResource playerResource() {
         return GetComponent<PlayerResource>();
+    }
+
+    public IngameResourceManager resourceManager() {
+        return GetComponent<IngameResourceManager>();
     }
 
     public MyBuildings playerBuildings() {

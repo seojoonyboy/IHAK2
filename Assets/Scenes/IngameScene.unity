@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 282962851}
   - component: {fileID: 282962852}
   - component: {fileID: 282962853}
+  - component: {fileID: 282962856}
   - component: {fileID: 282962855}
   - component: {fileID: 282962854}
   m_Layer: 0
@@ -1382,6 +1383,19 @@ MonoBehaviour:
   playerController: {fileID: 0}
   buildingInfos: []
   demoTileIndex: 0600000007000000080000000b0000000c0000000d000000100000001100000012000000
+--- !u!114 &282962856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68166daaacb79434baa91ce8f33ebfb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldValue: {fileID: 1983411991}
+  goldBar: {fileID: 751448560}
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
