@@ -96,7 +96,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         playerActiveCards().Init();
         playerBuildings().Init();
 
-        deckShuffler().InitCard();
+        //deckShuffler().InitCard();
         //PrintResource();
         //PrimalEnvEfct();
 

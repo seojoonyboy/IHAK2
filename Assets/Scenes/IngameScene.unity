@@ -8169,7 +8169,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: effects
+    - Name: effectModules
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[IngameDeckShuffler+Effects,
         Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
@@ -8212,6 +8212,7 @@ MonoBehaviour:
   Deck: 
   Hand: 
   Grave: 
+  camera: {fileID: 1047380300}
 --- !u!1 &1469289294
 GameObject:
   m_ObjectHideFlags: 0

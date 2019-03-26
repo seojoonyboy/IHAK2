@@ -17,7 +17,7 @@ public class CoolTime : MonoBehaviour {
         while(currTime < coolTime) {
             currTime += 0.5f;
             Work();
-            Debug.Log("Cool 남은 시간 " + (coolTime - currTime) + "초");
+            //Debug.Log("Cool 남은 시간 " + (coolTime - currTime) + "초");
             yield return new WaitForSeconds(0.5f);
         }
         OnTime();
