@@ -257,6 +257,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //    cooltimeComp.StartCool();
         //}
         DrawCard();
+        Deck.Add(id);
     }
 
     private bool CanUseCard(ActiveCardInfo data) {

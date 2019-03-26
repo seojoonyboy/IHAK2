@@ -4,15 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using Sirenix.OdinInspector;
 
 public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     IngameSceneEventHandler eventHandler;
+    [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
 
     Vector3 startScale;
     Vector3 startPosition;
     Camera cam;
 
     void Awake() {
+        deckShuffler = PlayerController.Instance.deckShuffler();
+
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
@@ -88,6 +92,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
             return;
         }
 
+        deckShuffler.UseCard(gameObject);
         //dropHandler.OnDrop();
     }
 }
