@@ -1173,7 +1173,8 @@ namespace BitBenderGames {
 
     private Vector3 GetDragVector(Vector3 dragPosStart, Vector3 dragPosCurrent) {
       Vector3 intersectionDragStart = GetIntersectionPoint(Cam.ScreenPointToRay(dragPosStart));
-      Vector3 intersectionDragCurrent = GetIntersectionPoint(Cam.ScreenPointToRay(dragPosCurrent));
+      //Vector3 intersectionDragCurrent = GetIntersectionPoint(Cam.ScreenPointToRay(dragPosCurrent)); //custom horizontal Only by oraclezj
+      Vector3 intersectionDragCurrent = GetIntersectionPoint(Cam.ScreenPointToRay(new Vector3(dragPosCurrent.x, dragPosStart.y, dragPosCurrent.z)));
       return (intersectionDragCurrent - intersectionDragStart);
     }
 
