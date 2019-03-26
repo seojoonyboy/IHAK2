@@ -233,40 +233,35 @@ MonoBehaviour:
       race: 
       name: 
       type: 
-      prodType: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
       hitPoint: 1500
       placementLimit: 0
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}

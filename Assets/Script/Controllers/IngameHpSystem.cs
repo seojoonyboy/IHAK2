@@ -29,6 +29,8 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         enemyBuildings = enemyController.GetComponent<EnemyBuildings>();
         enemybuildingInfos = enemyBuildings.buildingInfos;
         enemyResource = enemyController.GetComponent<PlayerResource>();
+
+        TakeDamage(Target.ME, 6, 400);
     }
 
     /*
@@ -102,7 +104,6 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 BuildingInfo myBuilding = myBuildingInfo.Find(x => x.tileNum == tileNum);
                 if (myBuilding == null) return false;
                 if (myBuilding.hp <= 0) return false;
-                
 
                 if(myBuilding.hp > amount) {
                     myBuilding.hp -= amount;
@@ -118,6 +119,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     myBuilding.hp = 0;                    
                     myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    amount = myBuilding.hp;
                     //BuildingDestroyed(target, myBuilding);
                 }
 
