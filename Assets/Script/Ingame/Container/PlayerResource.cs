@@ -51,5 +51,10 @@ namespace Container {
                 }
             }
         }
+
+        public void UseGold(decimal amount = 0) {
+            Debug.Log("Gold 소모 : " + amount);
+            Gold -= amount;
+        }
     }
 }

@@ -260,39 +260,42 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         var match = origin.Find(x => id == x.GetComponent<Index>().Id);
         if (match == null) return;
 
-        match.SetActive(false);
-        Hand.Remove(id);
+        ActiveCardInfo activeCard = selectedObject.GetComponent<ActiveCardInfo>();
+        if (CanUseCard(activeCard)) {
+            match.SetActive(false);
+            Hand.Remove(id);
 
-        Grave.Add(id);
-        DrawCard(id);
+            Grave.Add(id);
+            DrawCard(id);
 
-        ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
-        //spell은 쿨타임
-        ////유닛은 핸드, 덱에서 제거
-        //if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
-        //    Deck.Add(id);
-
-        //    ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
-        //    cooltimeComp.StartCool();
-        //}
+            switch (activeCard.data.type) {
+                case "unit":
+                    playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
+                    break;
+                case "active":
+                    playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
+                    break;
+            }
+        }
+        else {
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+        }
     }
 
-    private bool CanUseCard(ActiveCardInfo data) {
-        //Cost cost = data.data.baseSpec.unit.cost;
-        //Unit unit = data.data.baseSpec.unit;
-        //Skill skill = data.data.baseSpec.skill;
-
-        //if (!string.IsNullOrEmpty(unit.name)) {
-        //    if (playerController.hqLevel >= unit.tierNeed) return true;
-        //    else return false;
-        //}
-        //else {
-        //    if ((!string.IsNullOrEmpty(skill.name))) {
-        //        if (playerController.hqLevel >= skill.tierNeed) return true;
-        //        else return false;
-        //    }
-        //}
+    private bool CanUseCard(ActiveCardInfo card) {
+        string type = card.data.type;
+        Cost cost = null;
+        switch (type) {
+            case "unit":
+                cost = card.data.baseSpec.unit.cost;
+                break;
+            case "active":
+                cost = card.data.baseSpec.skill.cost;
+                break;
+        }
+        if (cost == null) return false;
+        if (cost.gold > playerController.playerResource().Gold) return false;
+        
         return true;
     }
 
