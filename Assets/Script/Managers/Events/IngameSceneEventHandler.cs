@@ -1,3 +1,4 @@
+using DataModules;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,7 +63,15 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
         HQ_UPGRADE,
         RESOURCE_CHANGE,
         MY_BUILDINGS_INFO_ADDED,
+        ENEMY_BUILDINGS_INFO_ADDED,
+        BUILDING_DESTROYED,
+        BUILDING_RECONSTRUCTED,
         UNIT_UPGRADED,
         ORDER_UNIT_RETURN
+    }
+
+    public struct BuildingDestroyedPackage {
+        public IngameHpSystem.Target target;
+        public BuildingInfo buildingInfo;
     }
 }

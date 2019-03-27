@@ -97,7 +97,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
     void Start() {
         playerActiveCards().Init();
         playerBuildings().Init();
-
+        playerBuildings().RemoveTile();
+        
         deckShuffler().InitCard();
         resourceManager().OnGoldProduce(true);
         //PrintResource();

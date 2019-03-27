@@ -10,7 +10,7 @@ public class EnemyPlayerController : MonoBehaviour {
 
     [SerializeField] [ReadOnly] TileGroup tileGroup;
     [SerializeField] [ReadOnly] PlayerResource playerResource;
-    public GameObject goblin;
+    public GameObject goblin;    
 
     void Start() {
         tileGroup = Instantiate(dummyPref, tileGroupParent)

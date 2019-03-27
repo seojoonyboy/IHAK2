@@ -40,11 +40,20 @@ namespace Container {
                 bi.gameObject = buildingGo;
                 bi.cardInfo = buildingGo.GetComponent<BuildingObject>().card.data;
                 bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
-                //cityHP += bi.hp;
                 buildingInfos.Add(bi);
             }
 
             ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, this, buildingInfos);
+        }
+
+        public void RemoveTile() {
+            for(int i = 0 ; i < tileGroup.transform.childCount - 1 ; i++) {
+                tileGroup
+                    .transform
+                    .GetChild(i)
+                    .GetComponent<SpriteRenderer>()
+                    .enabled = false;
+            }
         }
     }
 }

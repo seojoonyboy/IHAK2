@@ -8,7 +8,7 @@ using System.Text;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-public partial class IngameDeckShuffler : MonoBehaviour {
+public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     IngameCityManager ingameCityManager;
     [SerializeField] [ReadOnly] PlayerController playerController;
     IngameSceneEventHandler eventHandler;
@@ -22,7 +22,7 @@ public partial class IngameDeckShuffler : MonoBehaviour {
     private static int HAND_MAX_COUNT = 5;
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
 
-    [SerializeField] List<GameObject> origin = new List<GameObject>();    //원본 액티브 카드 리스트
+    [SerializeField] public List<GameObject> origin = new List<GameObject>();    //원본 액티브 카드 리스트
     [SerializeField] List<int> Deck = new List<int>();  //덱 인덱스 리스트
     [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
     [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
@@ -147,6 +147,15 @@ public partial class IngameDeckShuffler : MonoBehaviour {
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
+    public void MakeMagmaCard(int num) {
+        for(int i=0; i<num; i++) {
+            Skill skill = new Skill();
+            skill.method = new SkillDetail() { methodName = "skill_magma" };
+            GameObject card = Instantiate(spellCardPref, cardParent);
+            AddSkill(skill.method.methodName, card);
+        }
+    }
+
     public void InitCard() {
         foreach(GameObject card in origin) {
             Destroy(card);
@@ -239,16 +248,16 @@ public partial class IngameDeckShuffler : MonoBehaviour {
 
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
         //spell은 쿨타임
-        //유닛은 핸드, 덱에서 제거
-        if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
-            Deck.Add(id);
+        ////유닛은 핸드, 덱에서 제거
+        //if (!string.IsNullOrEmpty(activeCard.baseSpec.skill.name)) {
+        //    Deck.Add(id);
 
-            ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
-            cooltimeComp.cards = origin;
-            cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
-            cooltimeComp.StartCool();
-        }
+        //    ActiveCardCoolTime cooltimeComp = activeCard.parentBuilding.AddComponent<ActiveCardCoolTime>();
+        //    cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
+        //    cooltimeComp.StartCool();
+        //}
         DrawCard();
+        Deck.Add(id);
     }
 
     private bool CanUseCard(ActiveCardInfo data) {
@@ -316,12 +325,24 @@ public partial class IngameDeckShuffler : MonoBehaviour {
 }
 
 
-public partial class IngameDeckShuffler : MonoBehaviour {
+public partial class IngameDeckShuffler : SerializedMonoBehaviour {
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
+    public Dictionary<Effects, GameObject> effectModules;
+    public Camera camera;
+
     private void AddSkill(string methodName, GameObject card) {
         switch (methodName) {
-            case "skill_magma":
+            case "magma":
                 Destroy(card.GetComponent<IngameDragHandler>());
-                card.AddComponent<Magma>();
+                MagmaDragHandler magmaDragHandler = card.AddComponent<MagmaDragHandler>();
+
+                magmaDragHandler.Init(
+                    camera,
+                    effectModules[Effects.skill_magma],
+                    PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
+                    card.GetComponent<ActiveCardInfo>().data.parentBuilding,
+                    this
+                );
                 //effects[Effects.skill_magma]
                 break;
         }

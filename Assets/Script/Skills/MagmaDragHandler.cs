@@ -1,29 +1,37 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using Sirenix.OdinInspector;
 
-public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     IngameSceneEventHandler eventHandler;
-    [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
 
     Vector3 startScale;
     Vector3 startPosition;
-    Camera cam;
+
+    [SerializeField] [ReadOnly] GameObject 
+        magmaPref,
+        magma;
+    [SerializeField] [ReadOnly] Camera camera;
+    [SerializeField] [ReadOnly] Transform parent;
+    [SerializeField] [ReadOnly] bool isInit = false;
+    [SerializeField] [ReadOnly] GameObject parentBuilding;
+    [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
+
+    public void Init(Camera camera, GameObject magma, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler) {
+        this.camera = camera;
+        magmaPref = magma;
+        this.parentBuilding = parentBuilding;
+        this.deckShuffler = deckShuffler;
+        isInit = true;
+    }
 
     void Awake() {
-        deckShuffler = PlayerController.Instance.deckShuffler();
-
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
-    }
-
-    void Start() {
-        cam = Camera.main;
     }
 
     void OnDestroy() {
@@ -32,9 +40,9 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     private void BuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
-        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage) Param;
-        if(parms.target == IngameHpSystem.Target.ME) {
-            if(GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
+        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        if (parms.target == IngameHpSystem.Target.ME) {
+            if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
                 CancelDrag();
             }
         }
@@ -54,12 +62,16 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
-        
-        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if(!isInit) {
+            Debug.LogError("Magma의 초기화가 정상적으로 되지 않았습니다!");
+            return;
+        }
+
+        if (magma == null) magma = Instantiate(magmaPref, parent);
+
         startPosition = transform.position;
         startScale = transform.localScale;
     }
@@ -67,32 +79,31 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
 
-        GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
-        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
-        m_PointEventData.position = Input.mousePosition;
+        if (!isInit) {
+            Debug.LogError("마그마 관련 초기화가 정상적으로 되지 않았습니다!");
+            return;
+        }
 
-        transform.GetComponent<Image>().enabled = false;
-        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = false;
+        magma.SetActive(true);
+        Vector3 origin = camera.ScreenToWorldPoint(Input.mousePosition);
+        magma.transform.position = new Vector3(origin.x, origin.y, 0);
+
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
 
-        transform.GetComponent<Image>().enabled = true;
-        foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+        magma.GetComponent<Magma>().StartDamaging();
 
-        if (eventData == null) return;
+        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        coolComp.targetCard = gameObject;
+        coolComp.coolTime = 25;
+        coolComp.behaviour = this;
+        coolComp.StartCool();
 
-        ActiveCardCoolTime coolComp = GetComponent<ActiveCardInfo>().data.parentBuilding.GetComponent<ActiveCardCoolTime>();
-        if (coolComp != null) {
-            Debug.Log("쿨타임! 사용불가");
-            return;
-        }
+        GetComponent<MagmaDragHandler>().enabled = false;
 
         deckShuffler.UseCard(gameObject);
-        //dropHandler.OnDrop();
     }
 }

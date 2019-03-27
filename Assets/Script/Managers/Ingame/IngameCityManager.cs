@@ -66,8 +66,6 @@ public class IngameCityManager : MonoBehaviour {
 
     [Space(10)]
     [Header(" - Other")]
-    [SerializeField] private Sprite wreckSprite;
-    [SerializeField] private SkeletonDataAsset wreckSpine;
     [SerializeField] PlayerController playerController;
     
     
@@ -358,16 +356,6 @@ public class IngameCityManager : MonoBehaviour {
         }
     }
 
-    private void SetWreck(GameObject setBuilding) {
-        SpriteRenderer spriteRenderer = setBuilding.GetComponent<SpriteRenderer>();
-        if(spriteRenderer != null) {
-            spriteRenderer.sprite = wreckSprite;
-        }
-        else {
-            SkeletonAnimation ani = setBuilding.GetComponent<SkeletonAnimation>();
-            StartCoroutine(SetAnimationTile(ani, wreckSpine));
-        }
-    }
 
     private void SetReviveImage(GameObject setBuilding) {
         BuildingObject buildingObject = setBuilding.GetComponent<BuildingObject>();
