@@ -523,7 +523,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (saveSelectBuilding == null)
             return;
 
-        if (saveSelectBuilding.GetComponent<BuildingObject>().card.id == -1)
+        if (saveSelectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)
             return;
 
         GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().card.id);
@@ -565,7 +565,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (building == null)
             return;
 
-        if (building.GetComponent<BuildingObject>().card.id == -1)
+        if (building.GetComponent<BuildingObject>().setTileLocation == 12)
             return;
 
         GameObject card = FindCard(building.GetComponent<BuildingObject>().card.id);

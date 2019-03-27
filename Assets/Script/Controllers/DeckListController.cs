@@ -178,6 +178,7 @@ public partial class DeckListController : MonoBehaviour {
         int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
         Deck deck = accountManager.decks.Find(x => x.id == deckIndex);
         if (deck == null) return;
+        if (accountManager.decks.Count <= accountManager.selectNumber) return;
         moveToDeckSetting(deck);
     }
 
