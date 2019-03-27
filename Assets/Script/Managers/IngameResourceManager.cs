@@ -26,15 +26,23 @@ public class IngameResourceManager : MonoBehaviour {
 
     private IEnumerator GoldProduce() {
         while (true) {
+            RefreshGoldSlider();
             float gold = (float)PlayerController.Instance.playerResource().Gold;
+            int increaseAmnt = 2;
             yield return new WaitForSeconds(1.0f);
-            gold += 2;
-            if (gold > 30)
-                gold = 30;
+            if (gold > 30) {
+                increaseAmnt = 0;
+            }
             goldBar.fillAmount = ((float)gold / 30);
-            PlayerController.Instance.playerResource().Gold = (int)gold;
+            PlayerController.Instance.playerResource().Gold += increaseAmnt;
             goldValue.text = gold.ToString();
         }
+    }
+
+    public void RefreshGoldSlider() {
+        float gold = (float)PlayerController.Instance.playerResource().Gold;
+        goldBar.fillAmount = ((float)gold / 30);
+        goldValue.text = gold.ToString();
     }
 
     public void OnEnvProduce(bool start) {

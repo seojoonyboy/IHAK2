@@ -26,6 +26,7 @@ namespace Container {
                     gold = 0;
                 }
                 gold = value;
+                PlayerController.Instance.resourceManager().RefreshGoldSlider();
 
                 gold_readonly = (float)Gold;
             }
