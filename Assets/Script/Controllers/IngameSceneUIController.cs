@@ -30,27 +30,6 @@ public class IngameSceneUIController : MonoBehaviour {
 
     public static int deckId;
 
-    private void Awake() {
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
-        
-        GameObject ld = (GameObject)Instantiate(go, playerCity.transform);
-        ld.SetActive(true);
-        foreach(Transform tile in ld.transform) {
-            tile.gameObject.layer = 8;
-            foreach(Transform building in tile) {
-                building.gameObject.layer = 8;
-            }
-        }
-        ProductResources touchProdPower = ld.GetComponent<TileGroup>().touchPerProdPower;
-
-        Transform target = playerCity.transform.GetChild(0).Find("Tile[2,2]");
-        Vector2 hqPos = target.localPosition;
-
-        ld.transform.localScale = new Vector3(1, 1, 1);
-        ld.transform.Find("Background").gameObject.SetActive(false);
-        FindObjectOfType<IngameCityManager>().eachPlayersTileGroups.Add(ld);
-    }
-
     private void OnDataCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             if(response.data != null) {

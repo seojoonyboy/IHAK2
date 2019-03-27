@@ -80,6 +80,33 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     private void Awake() {
+        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
+
+        GameObject ld = (GameObject)Instantiate(
+            go,
+            maps[Player.PLAYER_1].transform
+        );
+        TileGroup tileGroup = go.GetComponent<TileGroup>();
+        ld.SetActive(true);
+        foreach (Transform tile in ld.transform) {
+            tile.gameObject.layer = 8;
+            foreach (Transform building in tile) {
+                building.gameObject.layer = 8;
+            }
+        }
+
+        for(int i=0; i< go.GetComponent<TileGroup>().units.Count; i++) {
+            ld.GetComponent<TileGroup>().units[i].baseSpec.unit.cost = go.GetComponent<TileGroup>().units[i].baseSpec.unit.cost;
+        }
+        for(int i=0; i<go.GetComponent<TileGroup>().spells.Count; i++) {
+            ld.GetComponent<TileGroup>().spells[i].baseSpec.skill.cost = go.GetComponent<TileGroup>().spells[i].baseSpec.skill.cost;
+        }
+
+        //TileGroup tmp = ld.GetComponent<TileGroup>();
+
+        ld.transform.localScale = new Vector3(1, 1, 1);
+        ld.transform.Find("Background").gameObject.SetActive(false);
+
         scoreManager = IngameScoreManager.Instance;
         pInfo = new ProductInfo();
         pInfo.clickGold = new int[3];

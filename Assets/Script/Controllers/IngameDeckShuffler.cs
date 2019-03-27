@@ -26,7 +26,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] List<int> Deck = new List<int>();  //덱 인덱스 리스트
     [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
     [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
-
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
         eventHandler = IngameSceneEventHandler.Instance;
@@ -34,10 +33,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
 
         playerController = PlayerController.Instance;
-    }
-
-    void Start() {
-        InitCard();
     }
 
     void OnDestroy() {
@@ -218,21 +213,43 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         }
     }
 
+    public void DrawCard(int prevId) {
+        if (Deck.Count == 0) {
+            if(Grave.Count == 1 && Grave[0] == prevId) {
+                Deck.Add(prevId);
+                Grave.Remove(prevId);
+            }
+            
+            if(Grave.Count >= 2) {
+                int index = Grave.Find(x => x != prevId);
+                Deck.Add(index);
+                Grave.Remove(index);
+            }
+        }
+        if (Deck.Count == 0) return;
+
+        int selectedIndex = rand.Next(0, Deck.Count);
+        Hand.Add(Deck[selectedIndex]);
+        Debug.Log(Deck[selectedIndex]);
+        origin[Deck[selectedIndex]].SetActive(true);
+        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
+        Deck.Remove(Deck[selectedIndex]);
+    }
+
     //카드 뽑기
     public void DrawCard() {
-        List<int> pool = new List<int>();
-        foreach (int item in Deck) {
-            ActiveCardInfo info = origin[item].GetComponent<ActiveCardInfo>();
-            if (CanUseCard(info)) pool.Add(origin[item].GetComponent<Index>().Id);
+        if (Deck.Count == 0) {
+            Grave.AddRange(Grave);
+            Grave.Clear();
         }
-        if (pool.Count == 0) return;
+        if (Deck.Count == 0) return;
 
-        int selectedIndex = rand.Next(0, pool.Count);
-        Hand.Add(pool[selectedIndex]);
-        Debug.Log(pool[selectedIndex]);
-        origin[pool[selectedIndex]].SetActive(true);
-        origin[pool[selectedIndex]].transform.SetAsFirstSibling();
-        Deck.Remove(pool[selectedIndex]);
+        int selectedIndex = rand.Next(0, Deck.Count);
+        Hand.Add(Deck[selectedIndex]);
+        Debug.Log(Deck[selectedIndex]);
+        origin[Deck[selectedIndex]].SetActive(true);
+        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
+        Deck.Remove(Deck[selectedIndex]);
     }
 
     //card use
@@ -246,6 +263,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         match.SetActive(false);
         Hand.Remove(id);
 
+        Grave.Add(id);
+        DrawCard(id);
+
         ActiveCard activeCard = selectedObject.GetComponent<ActiveCardInfo>().data;
         //spell은 쿨타임
         ////유닛은 핸드, 덱에서 제거
@@ -256,8 +276,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //    cooltimeComp.coolTime = activeCard.baseSpec.skill.coolTime;
         //    cooltimeComp.StartCool();
         //}
-        DrawCard();
-        Deck.Add(id);
     }
 
     private bool CanUseCard(ActiveCardInfo data) {
