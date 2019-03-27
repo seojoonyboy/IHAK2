@@ -230,7 +230,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         int selectedIndex = rand.Next(0, Deck.Count);
         Hand.Add(Deck[selectedIndex]);
-        Debug.Log(Deck[selectedIndex]);
+        //Debug.Log(Deck[selectedIndex]);
         origin[Deck[selectedIndex]].SetActive(true);
         origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
         Deck.Remove(Deck[selectedIndex]);
@@ -246,7 +246,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         int selectedIndex = rand.Next(0, Deck.Count);
         Hand.Add(Deck[selectedIndex]);
-        Debug.Log(Deck[selectedIndex]);
+        //Debug.Log(Deck[selectedIndex]);
         origin[Deck[selectedIndex]].SetActive(true);
         origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
         Deck.Remove(Deck[selectedIndex]);
