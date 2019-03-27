@@ -265,17 +265,19 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             match.SetActive(false);
             Hand.Remove(id);
 
-            Grave.Add(id);
-            DrawCard(id);
-
             switch (activeCard.data.type) {
+                //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
                 case "unit":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
                     break;
+                //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
+                    Grave.Add(id);
                     break;
             }
+
+            DrawCard(id);
         }
         else {
             IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
