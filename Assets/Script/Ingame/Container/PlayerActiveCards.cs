@@ -47,5 +47,6 @@ public class ActiveCard {
     public GameObject parentBuilding;
     public GameObject gameObject;
     public BaseSpec baseSpec = new BaseSpec();
+    public string type;
     public Ev ev;
 }

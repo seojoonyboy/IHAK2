@@ -282,6 +282,7 @@ public partial class DeckListController {
                             ActiveCard activeCard = new ActiveCard();
                             activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
                             activeCard.baseSpec.unit = buildingObject.card.data.unit;
+                            activeCard.type = buildingObject.card.data.type;
                             tileGroup.units.Add(activeCard);
                             break;
                         case "active":
@@ -289,6 +290,7 @@ public partial class DeckListController {
                             ActiveCard _activeCard = new ActiveCard();
                             _activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
                             _activeCard.baseSpec.skill = buildingObject.card.data.activeSkills[0];
+                            _activeCard.type = buildingObject.card.data.type;
                             tileGroup.spells.Add(_activeCard);
                             break;
                     }
