@@ -376,7 +376,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 selectBuilding = hit.transform.gameObject;
                 saveSelectBuilding = selectBuilding;
                 startSortingOrder = GetSortingOrder(selectBuilding);
-                if (selectBuilding.GetComponent<BuildingObject>().card.id == -1)
+                if (selectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)
                     selectBuilding = null;
 
             }
@@ -385,7 +385,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     selectBuilding = hit.transform.GetChild(0).gameObject;
                     saveSelectBuilding = selectBuilding;
                     startSortingOrder = GetSortingOrder(selectBuilding);
-                    if (selectBuilding.GetComponent<BuildingObject>().card.id == -1)
+                    if (selectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)
                         selectBuilding = null;
                 }
                 else {
