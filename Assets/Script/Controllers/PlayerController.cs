@@ -314,6 +314,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     public GameObject GetHeroPrefab(string id) {
+        if (!heroPrefabs.ContainsKey(id)) return null;
         return heroPrefabs[id];
     }
 }
