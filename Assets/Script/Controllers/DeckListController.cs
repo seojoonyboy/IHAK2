@@ -267,11 +267,34 @@ public partial class DeckListController {
                 if (targetBuilding != null) {
 
                     GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-
                     targetTile.GetComponent<TileObject>().buildingSet = true;
                     setBuild.transform.position = targetTile.transform.position;
 
+                    BuildingObject tmp = targetBuilding.GetComponent<BuildingObject>();
+
                     BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
+                    switch (buildingObject.card.data.type) {
+                        case "unit":
+                            buildingObject.card.data = tmp.card.data;
+                            //buildingObject.card.data.unit.cost.environment = targetBuilding
+                            //    .GetComponent<BuildingObject>()
+                            //    .card.data.unit.cost.environment;
+                            ActiveCard activeCard = new ActiveCard();
+                            activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                            activeCard.baseSpec.unit = buildingObject.card.data.unit;
+                            activeCard.type = buildingObject.card.data.type;
+                            tileGroup.units.Add(activeCard);
+                            break;
+                        case "active":
+                            buildingObject.card.data = tmp.card.data;
+                            ActiveCard _activeCard = new ActiveCard();
+                            _activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
+                            _activeCard.baseSpec.skill = buildingObject.card.data.activeSkills[0];
+                            _activeCard.type = buildingObject.card.data.type;
+                            tileGroup.spells.Add(_activeCard);
+                            break;
+                    }
+
                     buildingObject.setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
                     if (setBuild.GetComponent<SpriteRenderer>() != null) {
                         setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
@@ -279,23 +302,6 @@ public partial class DeckListController {
                     }
                     else {
                         setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                    }
-                    CardData card = buildingObject.card.data;
-
-                    if (!string.IsNullOrEmpty(card.unit.name)) {
-                        ActiveCard activeCard = new ActiveCard();
-                        activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                        activeCard.baseSpec.unit = card.unit;
-                        tileGroup.units.Add(activeCard);
-                    }
-
-                    if(card.activeSkills.Length != 0) {
-                        foreach(Skill skill in card.activeSkills) {
-                            ActiveCard activeCard = new ActiveCard();
-                            activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                            activeCard.baseSpec.skill = skill;
-                            tileGroup.spells.Add(activeCard);
-                        }
                     }
                 }
             }
