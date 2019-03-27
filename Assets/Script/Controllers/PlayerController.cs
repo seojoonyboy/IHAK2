@@ -308,7 +308,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
             Debug.LogError("해당 유닛의 프리팹을 찾을 수 없습니다!");
             return;
         }
-        GameObject hero = Instantiate(result);
+        GameObject hero = Instantiate(result, summonParent);
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.SetUnitData(card);
     }
