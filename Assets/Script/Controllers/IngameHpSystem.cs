@@ -51,12 +51,23 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         myBuildingInfo = myBuildings.buildingInfos;
         myResource = playerController.GetComponent<PlayerResource>();
         playerHQ = myBuildingInfo.Find(x => x.tileNum == 12);
+        SetHp();
         //TakeDamage(Target.ME, 12, 1500);
     }
 
     void OnDestroy() {
         ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, Callback);
     }
+
+
+    public void SetHp() {
+        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 100.ToString() + "%";
+        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
+
+        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 1000.ToString() + "%";
+        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100;
+    }
+
     /*
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
