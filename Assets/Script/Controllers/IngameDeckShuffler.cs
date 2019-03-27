@@ -269,6 +269,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
                 case "unit":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
+                    playerController.HeroSummon(activeCard.data);
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":
