@@ -115,7 +115,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         CheckCardCount();
         ResetActiveSlot();
         DeckActiveCheck();
-        resetButton.OnClickAsObservable().Subscribe(_ => resetTile());
+        resetButton.OnClickAsObservable().Subscribe(_ => {
+            Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => resetTile());
+        });
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
         nameEditBtn.OnClickAsObservable().Where(_ => nameEditing == false).Subscribe(_ => InputDeckName());

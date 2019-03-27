@@ -114,7 +114,7 @@ public class DropHandler : MonoBehaviour {
 
 
     public void CardBuildingSwap() {   
-        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().card.id == -1)
+        if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().setTileLocation == 12)
             return;
 
         if (setObject == null) return;
