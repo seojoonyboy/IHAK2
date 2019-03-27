@@ -107,6 +107,23 @@ public class UnitAI : MonoBehaviour {
         ChangeLvText();
     }
 
+    public void SetUnitData(Unit unit, int level) {
+        Init();
+        unitCard = new ActiveCard();
+        unitCard.baseSpec.unit = unit;
+        moveSpeed = unit.moveSpeed;
+        power = unit.power;
+        unitCard.ev.lv = level;
+        SetMaxHP();
+        if(health == 0) health = unitCard.ev.hp;
+        if(health == 0) health = maxHealth;
+        else health += HealTime();
+        if(health > maxHealth) health = maxHealth;
+        calculateHealthBar();
+        calculateExpBar();
+        ChangeLvText();
+    }
+
     private void LvUpHP() { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
         float beforeMax = maxHealth;
         SetMaxHP();
