@@ -119,8 +119,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
         nameEditBtn.OnClickAsObservable().Where(_ => nameEditing == false).Subscribe(_ => InputDeckName());
-        //nameSaveBtn.OnCancelAsObservable().Where(_ => nameEditing == true).Subscribe(_ => SetDeckName());
-        //nameReturnBtn.OnCancelAsObservable().Where(_ => nameEditing == true).Subscribe(_ => DeckStatusUI.transform.Find("EditField").gameObject.SetActive(false));
+     
 
         downStream.Subscribe(_ => PickEditBuilding());
         dragStream.Where(_ => (clicktime < requireClickTime) && (picking== true || selectBuilding != null)).Subscribe(_ => clicktime += Time.deltaTime);
@@ -188,7 +187,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
         int deckNumber = playerInfosManager.selectNumber;
         Text showFieldName = DeckStatusUI.transform.Find("EditField").Find("DeckNameInputField").GetChild(0).GetComponent<Text>();
-        buildingCount--;
 
         changedDeckName = deckName.text = playerInfosManager.decks[deckNumber].name;
         showFieldName.text = deckName.text;
@@ -216,9 +214,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void SettingButton() {
-
         if (SetAllTileBuildingCheck()) {
-            OnclickInputConfirm(changedDeckName);
+            if (changedDeckName == "")
+                Modal.instantiate("이름을 입력해주세요.", Modal.Type.CHECK);
+            else
+                OnclickInputConfirm(changedDeckName);
         }
         else
             Modal.instantiate("건물을 모두 배치해주세요.", Modal.Type.CHECK);
@@ -523,7 +523,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (saveSelectBuilding == null)
             return;
 
-        if (saveSelectBuilding.GetComponent<BuildingObject>().card.id == -1)
+        if (saveSelectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)
             return;
 
         GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().card.id);
@@ -565,7 +565,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (building == null)
             return;
 
-        if (building.GetComponent<BuildingObject>().card.id == -1)
+        if (building.GetComponent<BuildingObject>().setTileLocation == 12)
             return;
 
         GameObject card = FindCard(building.GetComponent<BuildingObject>().card.id);

@@ -86,7 +86,7 @@ public class MenuSceneController2 : MonoBehaviour {
         hss = FindObjectOfType<HorizontalScrollSnap>();
         userNickname.text = AccountManager.Instance.userInfos.nickname;
         deckListWnd.SetActive(false);
-        buttonList.GetChild(0).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => deckListWnd.SetActive(true));
+        buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => deckListWnd.SetActive(true));
         exitDeckList.OnClickAsObservable().Subscribe(_ => deckListWnd.SetActive(false));
         //clickMenuButton(pageNum);
         //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null);

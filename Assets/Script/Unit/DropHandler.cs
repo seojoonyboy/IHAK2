@@ -117,6 +117,8 @@ public class DropHandler : MonoBehaviour {
         if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().card.id == -1)
             return;
 
+        if (setObject == null) return;
+
         if (targetTile.transform.GetChild(0).GetComponent<BuildingObject>().card.id == setObject.GetComponent<BuildingObject>().card.id)
             return;
 

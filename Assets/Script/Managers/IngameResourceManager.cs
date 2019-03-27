@@ -10,9 +10,11 @@ public class IngameResourceManager : MonoBehaviour {
     [SerializeField] Image goldBar;
 
     private IEnumerator goldProducer;
+    private IEnumerator envProducer;
 
     private void Awake() {
         goldProducer = GoldProduce();
+        envProducer = EnvProduce();
     }
 
     public void OnGoldProduce(bool start) {
@@ -32,6 +34,17 @@ public class IngameResourceManager : MonoBehaviour {
             goldBar.fillAmount = ((float)gold / 30);
             PlayerController.Instance.playerResource().Gold = (int)gold;
             goldValue.text = gold.ToString();
+        }
+    }
+
+    public void OnEnvProduce(bool start) {
+        
+    }
+
+    private IEnumerator EnvProduce() {
+        while (true) {
+            float env = (float)PlayerController.Instance.playerResource().Env;
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }
