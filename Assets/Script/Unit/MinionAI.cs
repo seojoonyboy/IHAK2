@@ -19,6 +19,7 @@ public class MinionAI : UnitAI {
 	public override void SetUnitData(ActiveCard card) {
 		Init();
 		moveSpeed = unit.moveSpeed;
+		attackSpeed = unit.attackSpeed;
 		attackRange = unit.attackRange;
         power = unit.power;
 		SetMaxHP();
