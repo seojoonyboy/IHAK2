@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     IngameSceneEventHandler eventHandler;
@@ -52,16 +53,25 @@ public class MagmaDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, 
         IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
         if (parms.target == IngameHpSystem.Target.ME) {
             if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
-                GetComponent<IngameDragHandler>().enabled = true;
+                GetComponent<MagmaDragHandler>().enabled = true;
             }
         }
     }
 
     public void CancelDrag() {
-        GetComponent<IngameDragHandler>().enabled = false;
+        GetComponent<MagmaDragHandler>().enabled = false;
 
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
+
+        GameObject deactive = transform.Find("Deactive").gameObject;
+        deactive.SetActive(true);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(
+            PlayerController.Instance.deckShuffler()
+            .cardParent
+            .GetComponent<RectTransform>()
+        );
     }
 
     public void OnBeginDrag(PointerEventData eventData) {

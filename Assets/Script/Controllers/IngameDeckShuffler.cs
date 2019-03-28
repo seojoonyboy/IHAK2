@@ -16,7 +16,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] GameObject 
         unitCardPref,
         spellCardPref;
-    [SerializeField] Transform cardParent;
+    [SerializeField] public Transform cardParent;
     [SerializeField] GameObject refreshCardBtn;
 
     private static int HAND_MAX_COUNT = 5;

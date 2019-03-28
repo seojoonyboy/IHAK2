@@ -57,6 +57,15 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+
+        GameObject deactive = transform.Find("Deactive").gameObject;
+        deactive.SetActive(true);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(
+            PlayerController.Instance.deckShuffler()
+            .cardParent
+            .GetComponent<RectTransform>()
+        );
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
