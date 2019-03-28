@@ -29,7 +29,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
     private void Start() {
         dropHandler = GetComponentInParent<DropHandler>();
-        buildingMaxCount = 1;
+        buildingMaxCount = 2;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;

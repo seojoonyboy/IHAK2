@@ -174,10 +174,12 @@ public partial class DeckListController : MonoBehaviour {
     }
 
     public void OnModifyBtn() {
+        if (accountManager.decks.Count == 0) return;
         int selectedIndex = GetComponent<Index>().Id;
         int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;
         Deck deck = accountManager.decks.Find(x => x.id == deckIndex);
         if (deck == null) return;
+        
         if (accountManager.decks.Count <= accountManager.selectNumber) return;
         moveToDeckSetting(deck);
     }
@@ -193,6 +195,7 @@ public partial class DeckListController : MonoBehaviour {
     }
 
     public void OnDeleteBtn() {
+        if (accountManager.decks.Count == 0) return;
         int selectedIndex = GetComponent<Index>().Id;
         GameObject seletedItem = slots[selectedIndex].transform.GetChild(0).gameObject;
         int deckIndex = slots[selectedIndex].transform.GetChild(0).GetComponent<Index>().Id;

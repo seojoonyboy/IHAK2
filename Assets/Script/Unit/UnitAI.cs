@@ -17,7 +17,7 @@ public class UnitAI : MonoBehaviour {
     private timeUpdate update;
 
     private BuildingInfo targetBuilding;
-    private UnitAI targetUnit;
+    protected UnitAI targetUnit;
     protected Transform healthBar;
     
     public float health = 0;
@@ -30,7 +30,7 @@ public class UnitAI : MonoBehaviour {
 
     private float currentTime;
 
-    protected static IngameCityManager cityManager;
+    protected static EnemyBuildings enemyBuildings;
     protected static PlayerController playerController;
     protected static IngameDeckShuffler ingameDeckShuffler;
     protected static EnemyHeroGenerator enemyHeroGenerator;
@@ -58,7 +58,7 @@ public class UnitAI : MonoBehaviour {
     void Start() {
         detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
         detectCollider.radius = attackRange;
-        if (gameObject.layer == myLayer) setUnitPlayer(cityManager.enemyBuildingsInfo, enemyLayer, myLayer, IngameHpSystem.Target.ENEMY_1);
+        if (gameObject.layer == myLayer) setUnitPlayer(enemyBuildings.buildingInfos, enemyLayer, myLayer, IngameHpSystem.Target.ENEMY_1);
         else if (gameObject.layer == enemyLayer) setUnitPlayer(playerController.playerBuildings().buildingInfos, myLayer, enemyLayer, IngameHpSystem.Target.ME);
         if (searchTarget()) setState(aiState.MOVE);
         else setState(aiState.NONE);
@@ -78,7 +78,7 @@ public class UnitAI : MonoBehaviour {
     }
 
     protected void InitStatic() {
-        if (cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
+        if (enemyBuildings == null) enemyBuildings = FindObjectOfType<EnemyBuildings>();
         if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
         if (enemyHeroGenerator == null) enemyHeroGenerator = FindObjectOfType<EnemyHeroGenerator>();
@@ -190,6 +190,7 @@ public class UnitAI : MonoBehaviour {
 
     private void attackUnit() {
         targetUnit.damaged(CalPower());
+        targetUnit.attackingHero(this);
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
             targetUnit = null;
@@ -272,4 +273,5 @@ public class UnitAI : MonoBehaviour {
     public virtual void DestoryEnemy() {}
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) {}
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
+    public virtual void attackingHero(UnitAI unit) {}
 }
