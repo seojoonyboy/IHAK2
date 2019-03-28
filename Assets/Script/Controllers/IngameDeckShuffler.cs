@@ -16,7 +16,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] GameObject 
         unitCardPref,
         spellCardPref;
-    [SerializeField] Transform cardParent;
+    [SerializeField] public Transform cardParent;
     [SerializeField] GameObject refreshCardBtn;
 
     private static int HAND_MAX_COUNT = 5;
@@ -31,6 +31,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, OnBuildingDestroyed);
 
         playerController = PlayerController.Instance;
     }
@@ -53,38 +54,46 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     public void HeroReturn(GameObject parentBuilding, bool isDead) {
-        //GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         //IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x => x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
         
 
-        //int index = card.GetComponent<Index>().Id;
+        int index = card.GetComponent<Index>().Id;
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
-        //if (isDead) {
-        //    ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
-        //    comp.cards = origin;            
-        //    comp.StartCool();
-        //}
+        if (isDead) {
+            ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            comp.targetCard = parentBuilding;
+            comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
+            comp.StartCool();
+        }
 
-        //if (Hand.Count == HAND_MAX_COUNT) {
-        //    Deck.Add(index);
-        //}
-        //else {
-        //    Hand.Add(index);
-        //    origin[index].SetActive(true);
-        //    origin[index].transform.SetAsLastSibling();
-        //}
+        if (Hand.Count == HAND_MAX_COUNT) {
+            Deck.Add(index);
+        }
+        else {
+            Hand.Add(index);
+            origin[index].SetActive(true);
+            origin[index].transform.SetAsLastSibling();
+        }
     }
 
     private float CalculateHeroCoolTime(ActiveCardInfo card) {
         float baseCool = card.data.baseSpec.unit.coolTime;
-        float magLv = card.data.ev.lv;
-        return baseCool * ((100f + magLv * 8f) / 100f);
+        //float magLv = card.data.ev.lv;
+        //return baseCool * ((100f + magLv * 8f) / 100f);
+        return baseCool;
     }
 
     public void HeroReturnBtnClicked() {
         eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, this);
+    }
+
+    private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
+        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        if(parms.target == IngameHpSystem.Target.ME) {
+            DeactiveCard(parms.buildingInfo.gameObject);
+        }
     }
 
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
@@ -92,28 +101,28 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     public void DeactiveCard(GameObject parentBuilding) {
-        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
-        if (card == null) return;
+        //GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        //if (card == null) return;
 
-        Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
+        //int cardIndex = card.GetComponent<Index>().Id;
+        //string location = FindCardLocation(cardIndex);
+        //switch (location) {
+        //    case "Hand":
+        //        Hand.Remove(cardIndex);
+        //        Grave.Add(cardIndex);
 
-        //if(card.GetComponent<IngameDragHandler>() == null) {
-        //    if (!string.IsNullOrEmpty(skill.name)) {
-        //        if (skill.method.methodName == "skill_unit_heal") {
-        //            card.GetComponent<HealArea>().CancelDrag();
-        //            card.GetComponent<HealArea>().enabled = false;
-        //        }
-        //    }
+        //        DrawCard(cardIndex);
+        //        break;
+        //    case "Deck":
+
+
+        //        break;
+        //    case "Grave":
+        //        break;
         //}
-        //else {
-        //    card.GetComponent<IngameDragHandler>().CancelDrag();
-        //    card.GetComponent<IngameDragHandler>().enabled = false;
-        //    card.transform.Find("Deactive").gameObject.SetActive(true);
-        //}
-        card.transform.Find("Deactive/Button").gameObject.SetActive(false);
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
-        card.SetActive(false);
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
+        //card.SetActive(false);
     }
 
     public void ActivateCard(GameObject parentBuilding) {
@@ -142,6 +151,19 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
+    public string FindCardLocation(int index) {
+        if (Hand.Exists(x => x == index)) {
+            return "Hand";
+        }
+        if (Deck.Exists(x => x == index)) {
+            return "Deck";
+        }
+        if (Grave.Exists(x => x == index)){
+            return "Grave";
+        }
+        return null;
+    }
+
     public void MakeMagmaCard(int num) {
         for(int i=0; i<num; i++) {
             Skill skill = new Skill();
@@ -164,9 +186,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
-            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
-                () => CancelCoolTimeBtnClicked(card));
-
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
@@ -186,8 +205,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, cardParent);
-            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
-                () => CancelCoolTimeBtnClicked(card));
 
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -279,6 +296,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             }
 
             DrawCard(id);
+
+            //Grave에 있는 카드들 덱으로 옯김
+            var query = Grave.FindAll(x => x != id);
+            Deck.AddRange(query);
+            foreach(int index in query) {
+                Grave.Remove(index);
+            }
         }
         else {
             IngameAlarm.instance.SetAlarm("자원이 부족합니다!");

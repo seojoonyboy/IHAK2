@@ -31,8 +31,6 @@ public class ActiveCardCoolTime : CoolTime {
         deactive.SetActive(true);
         Image image = deactive.GetComponent<Image>();
         image.fillAmount = 1 - currTime / coolTime;
-
-        deactive.transform.Find("Button/Val").GetComponent<Text>().text = "비용 : " + cancelCooltimeCost;
     }
 
     public override void OnTime() {

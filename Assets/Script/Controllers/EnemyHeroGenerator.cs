@@ -67,7 +67,7 @@ public class EnemyHeroGenerator : MonoBehaviour {
         float time = waitingSecs;
         while (time > 0) {
             time -= 1;
-            Debug.Log("적 영웅소환까지 남은 시간 : " + time);
+            //Debug.Log("적 영웅소환까지 남은 시간 : " + time);
             yield return new WaitForSeconds(1.0f);
         }
         yield return 0;
