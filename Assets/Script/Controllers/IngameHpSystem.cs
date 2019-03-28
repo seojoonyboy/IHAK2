@@ -64,7 +64,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 100.ToString() + "%";
         enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
 
-        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 1000.ToString() + "%";
+        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 100.ToString() + "%";
         playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
     }
 
