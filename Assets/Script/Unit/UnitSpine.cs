@@ -6,23 +6,13 @@ using Spine;
 
 public class UnitSpine : MonoBehaviour {
     [SpineAnimation]
-    public string runUpAnimationName;
+    public string runAnimationName;
     [SpineAnimation]
-    public string runDownAnimationName;
+    public string idleAnimationName;
     [SpineAnimation]
-    public string idleUpAnimationName;
-    [SpineAnimation]
-    public string idleDownAnimationName;
-    [SpineAnimation]
-    public string attackUpAnimationName;
-    [SpineAnimation]
-    public string attackDownAnimationName;
-    [SpineAnimation]
-    public string hitUpAnimationName;
-    [SpineAnimation]
-    public string hitDownAnimationName;
-
-    private bool isUp;
+    public string attackAnimationName;
+    //[SpineAnimation]
+    //public string hittedAnimationName;
     private Transform hitEffect;
 
     private SkeletonAnimation skeletonAnimation;
@@ -37,31 +27,26 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void Idle() {
-        if(isUp) spineAnimationState.SetAnimation(0, idleUpAnimationName, true);
-        else spineAnimationState.SetAnimation(0, idleDownAnimationName, true);
+        spineAnimationState.SetAnimation(0, idleAnimationName, true);
     }
 
     public void Move() {
-        if(isUp) spineAnimationState.SetAnimation(0, runUpAnimationName, true);
-        else spineAnimationState.SetAnimation(0, runDownAnimationName, true);
+        spineAnimationState.SetAnimation(0, runAnimationName, true);
     }
 
     public void Attack() {
         Spine.TrackEntry entry;
-        if(isUp) entry = spineAnimationState.SetAnimation(0, attackUpAnimationName, false);
-        else entry = spineAnimationState.SetAnimation(0, attackDownAnimationName, false);
+        entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
         Invoke("Idle", entry.TrackEnd);
     }
 
     public void Hitted() {
-        if(isUp) spineAnimationState.SetAnimation(1, hitUpAnimationName, false);
-        else spineAnimationState.SetAnimation(1, hitDownAnimationName, false);
+        //spineAnimationState.SetAnimation(1, hittedAnimationName, false);
         StartCoroutine("SetColor");
     }
 
     public void SetDirection(Vector2 direction) {
         skeleton.ScaleX = direction.x < 0 ? -1f: 1f;
-        isUp = direction.y > 0;
     }
 
     IEnumerator SetColor() {
