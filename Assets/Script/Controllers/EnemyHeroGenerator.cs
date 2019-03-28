@@ -74,6 +74,18 @@ public class EnemyHeroGenerator : MonoBehaviour {
     }
 
     public void HeroReturn(string id) {
+        List<GameObject> clone = new List<GameObject>();
+        foreach(GameObject obj in generatedHeroes) {
+            if(obj != null) {
+                clone.Add(obj);
+            }
+            clone.Add(obj);
+        }
+        foreach(GameObject obj in clone) {
+            if(obj == null) {
+                generatedHeroes.Remove(obj);
+            }
+        }
         GameObject hero = generatedHeroes.Find(x => x.name == "id");
         generatedHeroes.Remove(hero);
     }

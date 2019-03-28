@@ -62,10 +62,12 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
-            ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-            comp.targetCard = parentBuilding;
-            comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
-            comp.StartCool();
+            if(parentBuilding.GetComponent<ActiveCardCoolTime>() == null) {
+                ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+                comp.targetCard = card;
+                comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
+                comp.StartCool();
+            }
         }
 
         if (Hand.Count == HAND_MAX_COUNT) {

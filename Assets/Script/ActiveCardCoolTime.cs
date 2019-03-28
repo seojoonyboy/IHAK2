@@ -40,7 +40,9 @@ public class ActiveCardCoolTime : CoolTime {
         image.fillAmount = 1;
         deactive.SetActive(false);
 
-        behaviour.enabled = true;
+        if (behaviour != null) {
+            behaviour.enabled = true;
+        }
 
         Destroy(GetComponent<ActiveCardCoolTime>());
     }
