@@ -12,6 +12,8 @@ public class EnemyHeroGenerator : MonoBehaviour {
         coroutine,
         innerCoroutine;
 
+    public List<GameObject> generatedHeroes = new List<GameObject>();
+
     public int CurrentWave {
         get {
             return currentWave;
@@ -71,11 +73,20 @@ public class EnemyHeroGenerator : MonoBehaviour {
         yield return 0;
     }
 
+    public void HeroReturn(string id) {
+        GameObject hero = generatedHeroes.Find(x => x.name == "id");
+        generatedHeroes.Remove(hero);
+    }
+
     private void GenerateUnit(Set set) {
+        if (generatedHeroes.Exists(x => x.name == set.id)) return;
+
         CardData card = AccountManager.Instance.GetUnitCardData(set.id);
         if (card == null) return;
 
         GameObject unit = Instantiate(set.prefab, transform);
+        unit.name = set.id;
+
         UnitAI unitAI = unit.GetComponent<UnitAI>();
         unitAI.SetUnitData(card.unit, set.lv);
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
@@ -83,6 +94,8 @@ public class EnemyHeroGenerator : MonoBehaviour {
         GameObject name = unit.transform.Find("Name").gameObject;
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.unit.name;
+
+        generatedHeroes.Add(unit);
     }
 
     [System.Serializable]
