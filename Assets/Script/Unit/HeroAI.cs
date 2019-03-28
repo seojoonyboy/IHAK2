@@ -10,6 +10,7 @@ public class HeroAI : UnitAI {
     private TextMeshPro LvText;
 	private decimal attackSP;
 	[SerializeField] private ActiveCard unitCard;
+    private List<HeroAI> fightHeroes;
 
 	private void Init() {
         if (healthBar != null) return;
@@ -17,6 +18,7 @@ public class HeroAI : UnitAI {
         expBar = transform.Find("UnitBar/Exp");
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
+        fightHeroes = new List<HeroAI>();
 		InitStatic();
     }
 
@@ -128,6 +130,7 @@ public class HeroAI : UnitAI {
         else if(gameObject.layer == enemyLayer) {
             enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
         }
+        GiveExp();
         Destroy(gameObject);
     }
 
@@ -136,5 +139,19 @@ public class HeroAI : UnitAI {
         unitCard.ev.time = (int)Time.realtimeSinceStartup;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);
+    }
+
+    public override void attackingHero(UnitAI unit) {
+        if(unit.GetComponent<HeroAI>() == null) return;
+        for(int i = 0; i < fightHeroes.Count; i++)
+            if(fightHeroes[i].gameObject == unit.gameObject) 
+                return;
+        fightHeroes.Add(unit.GetComponent<HeroAI>());
+    }
+
+    private void GiveExp() {
+        int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1  / 5f);
+        exp /= fightHeroes.Count;
+        foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
     }
 }
