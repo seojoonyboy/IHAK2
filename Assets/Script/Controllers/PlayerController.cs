@@ -33,6 +33,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [SerializeField] IngameCityManager icm;
     
     private bool playing = false;
+    public bool IsPlaying {
+        get { return playing; }
+    }
 
     [Header(" - Player")]
     public int hqLevel = 1;

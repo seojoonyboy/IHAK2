@@ -25,6 +25,8 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
     IEnumerator MinionDelay() {
         yield return new WaitForSeconds(20.0f);
         SpawnMinion();
+        if(PlayerController.Instance.IsPlaying)
+            StartCoroutine(MinionDelay());
     }
 
     private void SpawnMinion() {
