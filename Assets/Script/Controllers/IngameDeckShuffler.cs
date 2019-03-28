@@ -111,7 +111,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //    card.GetComponent<IngameDragHandler>().enabled = false;
         //    card.transform.Find("Deactive").gameObject.SetActive(true);
         //}
-        card.transform.Find("Deactive/Button").gameObject.SetActive(false);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
         card.SetActive(false);
@@ -165,9 +164,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, cardParent);
-            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
-                () => CancelCoolTimeBtnClicked(card));
-
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
@@ -187,8 +183,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, cardParent);
-            card.transform.Find("Deactive/Button").GetComponent<Button>().onClick.AddListener(
-                () => CancelCoolTimeBtnClicked(card));
 
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -280,6 +274,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             }
 
             DrawCard(id);
+
+            //Grave에 있는 카드들 덱으로 옯김
+            var query = Grave.FindAll(x => x != id);
+            Deck.AddRange(query);
+            foreach(int index in query) {
+                Grave.Remove(index);
+            }
         }
         else {
             IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
