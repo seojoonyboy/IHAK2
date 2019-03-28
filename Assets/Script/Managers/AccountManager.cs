@@ -237,6 +237,7 @@ public partial class AccountManager {
     }
 
     public void ModifyDeckName(Deck deck, string newName) {
+        if (deck == null) return;
         ModifyDeckPostForm form = new ModifyDeckPostForm();
         form.Id = deck.id;
         Debug.Log(deck.id);
