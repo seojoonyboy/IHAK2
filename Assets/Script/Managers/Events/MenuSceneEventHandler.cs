@@ -60,6 +60,7 @@ public class MenuSceneEventHandler : Singleton<MenuSceneEventHandler>, IEventHan
         NONE,
         SET_LEADER_DECK_TOUCH_POWER,
         INITIALIZE_DECK,
-        INITIALIZE_DECK_FINISHED
+        INITIALIZE_DECK_FINISHED,
+        CHANGE_LEADER_DECK
     }
 }

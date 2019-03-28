@@ -39,6 +39,7 @@ public class MenuSceneController2 : MonoBehaviour {
         accountManager = AccountManager.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_LEADER_DECK, ChangeLeaderDeck);
     }
 
     private void SetLeaderDeckTouchPower(Enum Event_Type, Component Sender, object Param) {
@@ -51,9 +52,14 @@ public class MenuSceneController2 : MonoBehaviour {
         
     }
 
+    private void ChangeLeaderDeck(Enum Event_Type, Component Sender, object Param) {
+        SetTown();
+    }
+
     private void OnDestroy() {
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
+        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_LEADER_DECK, ChangeLeaderDeck);
     }
 
     private void SetLeaderTileGroup(Enum Event_Type, Component Sender, object Param) {
@@ -131,8 +137,9 @@ public class MenuSceneController2 : MonoBehaviour {
 
     public void SetTown() {
         if (accountManager.decks.Count == 0) return;
+        if (town.transform.childCount != 0) Destroy(town.transform.GetChild(0).gameObject);
 
-        int LeaderNum = deckListController.transform.gameObject.GetComponent<DataModules.Index>().Id;
+        int LeaderNum = accountManager.leaderIndex;
         GameObject showTown = Instantiate(accountManager.transform.GetChild(0).GetChild(LeaderNum).gameObject, town.transform);
         showTown.transform.localPosition = Vector3.zero;
         showTown.transform.localScale = new Vector3(1, 1, 1);
