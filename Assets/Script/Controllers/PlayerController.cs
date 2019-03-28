@@ -122,6 +122,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        playing = true;
         playerActiveCards().Init();
         playerBuildings().Init();
         playerBuildings().RemoveTile();
