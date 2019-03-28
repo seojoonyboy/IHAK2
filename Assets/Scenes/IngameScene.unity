@@ -4086,6 +4086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 699824795}
   - component: {fileID: 699824796}
+  - component: {fileID: 699824797}
   m_Layer: 0
   m_Name: EnemyMinionSpawnPos
   m_TagString: Untagged
@@ -4131,6 +4132,58 @@ MonoBehaviour:
     type: 2}
   longDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
     type: 2}
+--- !u!114 &699824797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 699824794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10044b8b28909364c85119f20c226d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - invokeTime:
+      min: 0
+      sec: 5
+    sets:
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01001
+      lv: 1
+  - invokeTime:
+      min: 0
+      sec: 10
+    sets:
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01001
+      lv: 2
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01002
+      lv: 2
+  - invokeTime:
+      min: 4
+      sec: 0
+    sets:
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01001
+      lv: 3
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_02002
+      lv: 3
+  - invokeTime:
+      min: 4
+      sec: 30
+    sets:
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01001
+      lv: 4
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_01002
+      lv: 4
+    - prefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+      id: n_uu_02002
+      lv: 4
 --- !u!1 &740390876
 GameObject:
   m_ObjectHideFlags: 0
