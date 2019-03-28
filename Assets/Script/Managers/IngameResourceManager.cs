@@ -30,9 +30,10 @@ public class IngameResourceManager : MonoBehaviour {
             float gold = (float)PlayerController.Instance.playerResource().Gold;
             int increaseAmnt = 2;
             yield return new WaitForSeconds(1.0f);
-            if (gold > 30) {
-                increaseAmnt = 0;
-            }
+
+            if (gold >= 30) { increaseAmnt = 0; }
+            if(gold == 29) { increaseAmnt = 1; }
+
             goldBar.fillAmount = ((float)gold / 30);
             PlayerController.Instance.playerResource().Gold += increaseAmnt;
             goldValue.text = gold.ToString();
