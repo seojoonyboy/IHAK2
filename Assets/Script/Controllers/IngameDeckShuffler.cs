@@ -53,34 +53,35 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     public void HeroReturn(GameObject parentBuilding, bool isDead) {
-        //GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
         //IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x => x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
         
 
-        //int index = card.GetComponent<Index>().Id;
+        int index = card.GetComponent<Index>().Id;
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
-        //if (isDead) {
-        //    ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
-        //    comp.cards = origin;            
-        //    comp.StartCool();
-        //}
+        if (isDead) {
+            ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            comp.targetCard = parentBuilding;
+            comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
+            comp.StartCool();
+        }
 
-        //if (Hand.Count == HAND_MAX_COUNT) {
-        //    Deck.Add(index);
-        //}
-        //else {
-        //    Hand.Add(index);
-        //    origin[index].SetActive(true);
-        //    origin[index].transform.SetAsLastSibling();
-        //}
+        if (Hand.Count == HAND_MAX_COUNT) {
+            Deck.Add(index);
+        }
+        else {
+            Hand.Add(index);
+            origin[index].SetActive(true);
+            origin[index].transform.SetAsLastSibling();
+        }
     }
 
     private float CalculateHeroCoolTime(ActiveCardInfo card) {
         float baseCool = card.data.baseSpec.unit.coolTime;
-        float magLv = card.data.ev.lv;
-        return baseCool * ((100f + magLv * 8f) / 100f);
+        //float magLv = card.data.ev.lv;
+        //return baseCool * ((100f + magLv * 8f) / 100f);
+        return baseCool;
     }
 
     public void HeroReturnBtnClicked() {
