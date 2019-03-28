@@ -150,6 +150,7 @@ public class HeroAI : UnitAI {
     }
 
     private void GiveExp() {
+        if(fightHeroes.Count == 0) return;
         int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1  / 5f);
         exp /= fightHeroes.Count;
         foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
