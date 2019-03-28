@@ -26,7 +26,7 @@ public class HeroAI : UnitAI {
         Init();
         this.unitCard = card;
         Unit unit = card.baseSpec.unit;
-        moveSpeed = unit.moveSpeed;
+        moveSpeed = unit.moveSpeed * 0.4f;
 		attackSpeed = unit.attackSpeed;
 		attackRange = unit.attackRange;
 		attackSP = unit.attackSP;
