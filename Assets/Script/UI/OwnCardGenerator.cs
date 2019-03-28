@@ -54,7 +54,7 @@ public class OwnCardGenerator : MonoBehaviour {
         float cardYSize = page.GetComponent<GridLayoutGroup>().cellSize.y;
         float spaceYSize = page.GetComponent<GridLayoutGroup>().spacing.y;
 
-        float pageYSize = (cardYSize * cardCount) + (spaceYSize * (cardCount + 1));
+        float pageYSize = (cardYSize * (cardCount+ 2)) + (spaceYSize * (cardCount + 1));
         pageSize.sizeDelta = new Vector2(pageSize.sizeDelta.x, pageYSize);
     }
 
