@@ -33,6 +33,7 @@ public class UnitAI : MonoBehaviour {
     private static PlayerController playerController;
     private static Magnification unitMagnificate;
     private static IngameDeckShuffler ingameDeckShuffler;
+    private static EnemyHeroGenerator enemyHeroGenerator;
 
     public GameObject ontile;
     public bool protecting = false;
@@ -87,6 +88,7 @@ public class UnitAI : MonoBehaviour {
         if (cityManager == null) cityManager = FindObjectOfType<IngameCityManager>();
         if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
+        if (enemyHeroGenerator == null) enemyHeroGenerator = FindObjectOfType<EnemyHeroGenerator>();
         if (unitMagnificate == null) unitMagnificate = cityManager.SearchMags("Military");
     }
 
@@ -113,7 +115,7 @@ public class UnitAI : MonoBehaviour {
         unitCard.baseSpec.unit = unit;
         moveSpeed = unit.moveSpeed;
         power = unit.power;
-        unitCard.ev.lv = level;
+        unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
         if(health == 0) health = unitCard.ev.hp;
         if(health == 0) health = maxHealth;
@@ -345,7 +347,13 @@ public class UnitAI : MonoBehaviour {
             }
         }
         unitCard.ev.hp = 0;
-        ingameDeckShuffler.HeroReturn(unitCard. parentBuilding, true);
+
+        if(gameObject.layer == 10) {
+            ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, true);
+        }
+        else if(gameObject.layer == 11) {
+            enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
+        }
         Destroy(gameObject);
     }
 

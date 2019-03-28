@@ -103,6 +103,11 @@ public partial class AccountManager : Singleton<AccountManager> {
         return card;
     }
 
+    public CardData GetUnitCardData(string id) {
+        CardData card = allCards.Find(x => x.unit != null && x.unit.id == id);
+        return card;
+    }
+
     public int GetGold() {
         return wallet.gold;
     }
