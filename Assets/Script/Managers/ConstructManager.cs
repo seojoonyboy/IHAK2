@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using DataModules;
 using UnityEngine.UI;
 using System.Text;
+using TMPro;
 using System;
 using Spine;
 using Spine.Unity;
@@ -17,6 +18,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     NetworkManager _networkManager;
     public GameObject townCenter;
     public GameObject hpGauge;
+    public GameObject nameMesh;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
@@ -86,6 +88,9 @@ public class ConstructManager : Singleton<ConstructManager> {
                 obj.AddComponent<PolygonCollider2D>().points = new Vector2[4] { new Vector2(0, 10), new Vector2(-10, 0), new Vector2(0, -10), new Vector2(10, 0) };
                 obj.tag = "Building";
                 GameObject gauge = Instantiate(hpGauge, obj.transform);
+                GameObject buildingname = Instantiate(nameMesh, obj.transform);
+                buildingname.transform.SetAsLastSibling();
+                buildingname.GetComponent<TextMeshPro>().text = obj.GetComponent<BuildingObject>().name;
                 gauge.SetActive(false);
                 buildingObject.card = card;
 
