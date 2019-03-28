@@ -75,14 +75,14 @@ public class EnemyHeroGenerator : MonoBehaviour {
         CardData card = AccountManager.Instance.GetUnitCardData(set.id);
         if (card == null) return;
 
-        //GameObject unit = Instantiate(set.prefab, transform);
-        //UnitAI unitAI = unit.GetComponent<UnitAI>();
-        //unitAI.SetUnitData(card.unit, set.lv);
-        //unit.layer = LayerMask.NameToLayer("EnemyUnit");
+        GameObject unit = Instantiate(set.prefab, transform);
+        UnitAI unitAI = unit.GetComponent<UnitAI>();
+        unitAI.SetUnitData(card.unit, set.lv);
+        unit.layer = LayerMask.NameToLayer("EnemyUnit");
 
-        //GameObject name = unit.transform.Find("Name").gameObject;
-        //name.SetActive(true);
-        //name.GetComponent<TextMeshPro>().text = card.unit.name;
+        GameObject name = unit.transform.Find("Name").gameObject;
+        name.SetActive(true);
+        name.GetComponent<TextMeshPro>().text = card.unit.name;
     }
 
     [System.Serializable]

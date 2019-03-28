@@ -113,7 +113,7 @@ public class UnitAI : MonoBehaviour {
         unitCard.baseSpec.unit = unit;
         moveSpeed = unit.moveSpeed;
         power = unit.power;
-        unitCard.ev.lv = level;
+        unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
         if(health == 0) health = unitCard.ev.hp;
         if(health == 0) health = maxHealth;
