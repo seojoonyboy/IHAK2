@@ -9,6 +9,7 @@ using Spine.Unity;
 using System;
 using Container;
 using Sirenix.OdinInspector;
+using TMPro;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
@@ -305,12 +306,16 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public void HeroSummon(ActiveCard card) {
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if(result == null) {
-            Debug.LogError("해당 유닛의 프리팹을 찾을 수 없습니다!");
-            return;
+            result = GetHeroPrefab("n_uu_01001");
         }
+
         GameObject hero = Instantiate(result, summonParent);
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.SetUnitData(card);
+
+        GameObject name = hero.transform.Find("Name").gameObject;
+        name.SetActive(true);
+        name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
     }
 
     public GameObject GetHeroPrefab(string id) {
