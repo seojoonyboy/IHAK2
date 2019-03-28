@@ -61,11 +61,8 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         GameObject deactive = transform.Find("Deactive").gameObject;
         deactive.SetActive(true);
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(
-            PlayerController.Instance.deckShuffler()
-            .cardParent
-            .GetComponent<RectTransform>()
-        );
+        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = true;
+        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
