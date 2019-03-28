@@ -114,6 +114,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.activate = false;
+                    BuildingDestroyed(target, enemyBuilding);
 
                     if (enemyBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
                         DestroyEnemy();
@@ -130,7 +131,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyResource.TotalHp = 0;
                     enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
                     enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-                    BuildingDestroyed(target, enemyBuilding);                
+                                    
                 }                             
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
