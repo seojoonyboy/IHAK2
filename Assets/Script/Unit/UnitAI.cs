@@ -57,7 +57,7 @@ public class UnitAI : MonoBehaviour {
 
     void Start() {
         detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
-        detectCollider.radius = attackRange;
+        detectCollider.radius = attackRange * 1.5f;
         if (gameObject.layer == myLayer) setUnitPlayer(enemyBuildings.buildingInfos, enemyLayer, myLayer, IngameHpSystem.Target.ENEMY_1);
         else if (gameObject.layer == enemyLayer) setUnitPlayer(playerController.playerBuildings().buildingInfos, myLayer, enemyLayer, IngameHpSystem.Target.ME);
         if (searchTarget()) setState(aiState.MOVE);
@@ -160,10 +160,21 @@ public class UnitAI : MonoBehaviour {
         currentTime += time;
         if (currentTime < attackSpeed) return;
         currentTime = 0f;
+        float distance;
         if (targetUnit != null) {
+            distance = Vector3.Distance(targetUnit.transform.position, transform.position);
+            if(!isTargetClose(distance)) {
+                setState(aiState.MOVE);
+                return;
+            }
             attackUnit();
         }
         else if (targetBuilding != null) {
+            distance = Vector3.Distance(targetBuilding.gameObject.transform.position, transform.position);
+            if(!isTargetClose(distance)) {
+                setState(aiState.MOVE);
+                return;
+            }
             attackBuilding();
         }
         else if (targetUnit == null && targetBuilding == null) {
