@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 61600329227709166}
   - component: {fileID: 50790466705561782}
   m_Layer: 10
-  m_Name: wolf
+  m_Name: WarriorMinion
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,7 +429,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 70
+  m_SortingOrder: 5
 --- !u!23 &23771679280727280
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -915,31 +915,33 @@ MonoBehaviour:
   health: 0
   unitCard:
     parentBuilding: {fileID: 0}
+    gameObject: {fileID: 0}
     baseSpec:
       unit:
         id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       skill:
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         id: 0
         name: 
         method:
@@ -950,10 +952,12 @@ MonoBehaviour:
         coolTime: 0
         desc: 
         imageName: 
+    type: 
     ev:
       lv: 0
       exp: 0
       hp: 0
+      time: 0
   ontile: {fileID: 0}
   protecting: 0
 --- !u!114 &114889295075393478
@@ -1081,14 +1085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacdc7700974283869344394e21f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runUpAnimationName: 2.(B)move
-  runDownAnimationName: 2.(F)move
-  idleUpAnimationName: 1.(B)waitting
-  idleDownAnimationName: 1.(F)waitting
-  attackUpAnimationName: 3.(B)attack
-  attackDownAnimationName: 3.(F)attack
-  hitUpAnimationName: 4.(B)hit
-  hitDownAnimationName: 4.(F)hit
+  runAnimationName: 2.(F)move
+  idleAnimationName: 1.(F)waitting
+  attackAnimationName: 3.(F)attack
 --- !u!212 &212219743801216750
 SpriteRenderer:
   m_ObjectHideFlags: 1
