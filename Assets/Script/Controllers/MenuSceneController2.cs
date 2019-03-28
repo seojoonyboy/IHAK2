@@ -23,6 +23,7 @@ public class MenuSceneController2 : MonoBehaviour {
     [SerializeField] Text userNickname;
     [SerializeField] DeckListController deckListController;
     [SerializeField] Button exitDeckList;
+    [SerializeField] AccountManager accountManager;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
@@ -34,6 +35,7 @@ public class MenuSceneController2 : MonoBehaviour {
 
     private void Awake() {
         eventHandler = MenuSceneEventHandler.Instance;
+        accountManager = AccountManager.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, SetLeaderDeckTouchPower);
     }
@@ -115,6 +117,10 @@ public class MenuSceneController2 : MonoBehaviour {
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
+
+        if (accountManager.decks.Count == 0)
+            Modal.instantiate("저장된 덱정보가 없습니다.", Modal.Type.CHECK);
+        else
+            gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
     }
 }
