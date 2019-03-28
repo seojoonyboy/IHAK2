@@ -29,7 +29,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
     private void Start() {
         dropHandler = GetComponentInParent<DropHandler>();
-        buildingMaxCount = 2;
+        buildingMaxCount = 1;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
@@ -43,7 +43,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         if (dropHandler.setObject != null) return;
-        picturePosition = transform.Find("Data").position;
+        picturePosition = transform.Find("Data").localPosition;
         dropHandler.setObject = setObject;
         dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
@@ -71,7 +71,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         deckSettingController.CloseBuildingStatus();
 
         GetComponent<Image>().enabled = true;
-        transform.Find("Data").position = picturePosition;
+        transform.Find("Data").localPosition = picturePosition;
         transform.Find("FirstMark").gameObject.SetActive(true);
         transform.Find("SecondMark").gameObject.SetActive(true);
 
