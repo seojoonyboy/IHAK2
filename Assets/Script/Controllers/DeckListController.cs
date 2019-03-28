@@ -188,6 +188,7 @@ public partial class DeckListController : MonoBehaviour {
         Deck deck = accountManager.decks.Find(x => x.id == deckIndex);
         Modal.instantiate(deck.name + " 덱을 대표덱으로 지정하시겠습니까?", Modal.Type.YESNO, () => {
             accountManager.ChangeLeaderDeck(deckIndex);
+            eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.CHANGE_LEADER_DECK, null);
         });
     }
 
