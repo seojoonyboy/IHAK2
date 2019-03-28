@@ -8,10 +8,12 @@ public class Magma : MonoBehaviour {
     public SpriteRenderer range_texture;
     private CircleCollider2D circleCollider;
 
-    List<GameObject> targets = new List<GameObject>();
+    List<GameObject> targets;
 
     // Use this for initialization
     void Start() {
+        targets = new List<GameObject>();
+
         circleCollider = GetComponent<CircleCollider2D>();
         Generate(new Data {
             range = 45,
@@ -31,24 +33,45 @@ public class Magma : MonoBehaviour {
     }
 
     IEnumerator Damage(float interval, int loopCount) {
+        List<GameObject> clone = new List<GameObject>();
+        foreach(GameObject obj in targets) {
+            clone.Add(obj);
+        }
         int count = 0;
         while (count < loopCount) {
             count++;
-            Debug.Log("마그마의 데미지 부여");
+            foreach(GameObject target in clone) {
+                if (target == null) continue;
+                if(target.layer == 11) {
+                    target.GetComponent<UnitAI>().damaged(30);
+                }
+                else if(target.layer == 9) {
+                    int tileNum = target.GetComponent<BuildingObject>().setTileLocation;
+                    IngameHpSystem.Instance.TakeDamage(IngameHpSystem.Target.ME, tileNum, 30);
+                    //target.GetComponent<>
+                }
+            }
             yield return new WaitForSeconds(interval);
         }
         gameObject.SetActive(false);
     }
 
     void OnTriggerStay2D(Collider2D collision) {
-        //Debug.Log(collision.gameObject.name + "감지됨");
-        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 11) {
+        if(collision.gameObject.layer == 11 && collision.GetComponent<UnitAI>() != null) {
+            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+        }
+
+        if(collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 11) {
+        if(collision.gameObject.layer == 11 && collision.GetComponent<UnitAI>() != null) {
+            targets.Remove(collision.gameObject);
+        }
+
+        if (collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
             targets.Remove(collision.gameObject);
         }
     }
