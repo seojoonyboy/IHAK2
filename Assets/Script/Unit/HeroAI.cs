@@ -60,8 +60,7 @@ public class HeroAI : UnitAI {
         ChangeLvText();
 	}
 
-    private void ExpGain(int exp) {
-        exp = Mathf.RoundToInt(exp * 0.2f);
+    public void ExpGain(int exp) {
         unitCard.ev.exp += exp;
         CheckLv();
         calculateExpBar();
