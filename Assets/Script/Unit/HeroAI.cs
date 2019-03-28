@@ -151,7 +151,14 @@ public class HeroAI : UnitAI {
 
     private void GiveExp() {
         if(fightHeroes.Count == 0) return;
-        int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1  / 5f);
+        int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
+        for(int i = 0; i < fightHeroes.Count; i++) {
+            if(fightHeroes[i] == null) {
+                fightHeroes.RemoveAt(i);
+                i--;
+            }
+        }
+        if(fightHeroes.Count == 0) return;
         exp /= fightHeroes.Count;
         foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
     }
