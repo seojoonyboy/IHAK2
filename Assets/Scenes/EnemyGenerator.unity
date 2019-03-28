@@ -145,45 +145,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primal_product_buildingImages:
   - {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
-  - {fileID: 21300000, guid: 7b8b33ee74f17494297f59eb0e612857, type: 3}
-  - {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
-  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
-  - {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
-  - {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
   - {fileID: 0}
-  - {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
-  - {fileID: 21300000, guid: a86b259392c211e46b5c170cb19053e5, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   primal_other_buildingImages:
-  - {fileID: 21300000, guid: 841d34b615c0dba458bc3ef3eb8d1dd7, type: 3}
-  - {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
-  - {fileID: 21300000, guid: 338a505ce1fedfa43979ca4e6da39e8f, type: 3}
+  - {fileID: 0}
   - {fileID: 21300000, guid: a58d41fdaf3d53843bb9a0023dd3bacc, type: 3}
-  - {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
-  - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
-  - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
-  - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   primal_product_buildingIcons:
   - {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
-  - {fileID: 21300000, guid: 7b8b33ee74f17494297f59eb0e612857, type: 3}
-  - {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
-  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
-  - {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
-  - {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
   - {fileID: 0}
-  - {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
-  - {fileID: 21300000, guid: a86b259392c211e46b5c170cb19053e5, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   primal_other_buildingIcons:
-  - {fileID: 21300000, guid: 841d34b615c0dba458bc3ef3eb8d1dd7, type: 3}
-  - {fileID: 21300000, guid: 26a11dc2f2ea3484b8fbe203d10ae37a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 21300000, guid: 8f9e3cdc938974f408cd3610611cdd58, type: 3}
-  - {fileID: 21300000, guid: 338a505ce1fedfa43979ca4e6da39e8f, type: 3}
+  - {fileID: 0}
   - {fileID: 21300000, guid: a58d41fdaf3d53843bb9a0023dd3bacc, type: 3}
-  - {fileID: 21300000, guid: 0cf7d3096a11d92438af6641aaeb1ea8, type: 3}
-  - {fileID: 21300000, guid: 43fb6656072fa9840ab63a37e344a8c4, type: 3}
-  - {fileID: 21300000, guid: a05a0994303d5b14582c901a94490005, type: 3}
-  - {fileID: 21300000, guid: 159290361d07d3243a81c6fafa862ccc, type: 3}
-  primal_upgrade_buildingIcons: []
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   primal_product_buildingSpines:
   - {fileID: 0}
   - {fileID: 0}
@@ -211,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   townCenter: {fileID: 1202557845967086, guid: 71564ada467bce74abaf12a07e000987, type: 2}
   hpGauge: {fileID: 1877220338478122, guid: fe1c74e31cc80504896365668378ef12, type: 2}
+  nameMesh: {fileID: 0}
 --- !u!4 &80702855
 Transform:
   m_ObjectHideFlags: 0
@@ -539,118 +539,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &263232582
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 266
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 33086347489208520, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33960055068013768, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33383330158698776, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33229788862144250, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33355119735840786, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33126294878319810, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33262117351458114, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33316774563427156, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33638157384605086, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 33969454256996630, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114196372008439100, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114196372008439100, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114567670865184396, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114567670865184396, guid: 282cc32bf111a50468290ed5aab824f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &339744385
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +719,7 @@ SpriteRenderer:
   m_Size: {x: 20.428572, y: 15}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &355211452
@@ -873,53 +761,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 21
-    card:
-      id: stone_fit
-      race: primal
-      name: "\uCC44\uC11D\uC7A5"
-      type: prod
-      prodType: gold
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 0
-        gold: 15
-        environment: -1
-      hitPoint: 250
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   mainSprite: {fileID: 21300000, guid: f717d61311339a14090fd82d4c0d162f, type: 3}
   upgradeIcon: {fileID: 0}
   spine: {fileID: 0}
   setTileLocation: -1
+--- !u!1001 &393813022
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 266
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069930580247828, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &499496623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,47 +1405,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 19
-    card:
-      id: rice_farm
-      race: primal
-      name: "\uBCBC\uB18D\uC7A5"
-      type: prod
-      prodType: food
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 15
-        gold: 0
-        environment: -1
-      hitPoint: 250
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
   mainSprite: {fileID: 21300000, guid: 04f1932b8e7f78e4589c100b4717d2b0, type: 3}
@@ -1602,7 +1522,7 @@ SpriteRenderer:
   m_Size: {x: 19.214285, y: 14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &906437925
@@ -1644,47 +1564,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 22
-    card:
-      id: mysterious_cave
-      race: primal
-      name: "\uC2E0\uBE44\uC758 \uB3D9\uAD74"
-      type: prod
-      prodType: gold
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 0
-        gold: 20
-        environment: -3
-      hitPoint: 320
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
   mainSprite: {fileID: 21300000, guid: a37783a64335ea94bbc6e372820b8ff0, type: 3}
@@ -1796,7 +1711,7 @@ SpriteRenderer:
   m_Size: {x: 16.571428, y: 13.357142}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &1115853493
@@ -1838,47 +1753,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 17
-    card:
-      id: frog_pond
-      race: primal
-      name: "\uAC1C\uAD6C\uB9AC\uC5F0\uBABB"
-      type: prod
-      prodType: env
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: -2
-        gold: -2
-        environment: 8
-      hitPoint: 235
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
   mainSprite: {fileID: 21300000, guid: 23152b86c7a757f48879c72309260e76, type: 3}
@@ -2107,47 +2017,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 23
-    card:
-      id: wolves_den
-      race: primal
-      name: "\uB291\uB300 \uC0AC\uC721\uC7A5"
-      type: military
-      prodType: 
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 150
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 1
-        name: "\uB291\uB300"
-        cost:
-          food: 150
-          gold: 0
-          environment: 0
+        id: 
+        name: 
         coolTime: 0
-        size: 4
+        size: 0
         count: 0
-        power: 13
-        attackSpeed: 1.2
-        detectRange: 25
-        attackRange: 5
-        hitPoint: 45
-        moveSpeed: 1.2
-        tierNeed: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
@@ -2259,7 +2164,7 @@ SpriteRenderer:
   m_Size: {x: 16.928572, y: 17.357143}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &1278291106
@@ -2301,47 +2206,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 20
-    card:
-      id: meat_locker
-      race: primal
-      name: "\uACE0\uAE30\uCC3D\uACE0"
-      type: prod
-      prodType: food
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 20
-        gold: 0
-        environment: -3
-      hitPoint: 320
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
   mainSprite: {fileID: 21300000, guid: b0e496b7092584e4ca97aa7b7078dea2, type: 3}
@@ -2465,47 +2365,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 24
-    card:
-      id: magma_altar
-      race: primal
-      name: "\uB9C8\uADF8\uB9C8\uC81C\uB2E8"
-      type: military
-      prodType: 
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: 0
-        gold: 0
-        environment: 0
-      hitPoint: 60
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
   mainSprite: {fileID: 21300000, guid: a79ba4054711a0241806098c395760f8, type: 3}
@@ -2809,47 +2704,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d08ed586cdf58e468e59596df4600f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    id: 18
-    card:
-      id: hot_spring
-      race: primal
-      name: "\uC628\uCC9C"
-      type: prod
-      prodType: env
+  card:
+    id: 0
+    data:
+      id: 
+      race: 
+      name: 
+      type: 
       rarity: 0
-      product:
-        food: -1
-        gold: -4
-        environment: 15
-      hitPoint: 280
-      placementLimit: 1
-      attackInfo:
-        id: 0
-        power: 0
-        attackSpeed: 0
-        attackRange: 0
+      hitPoint: 0
+      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
-        id: 0
+        id: 
         name: 
-        cost:
-          food: 0
-          gold: 0
-          environment: 0
         coolTime: 0
         size: 0
         count: 0
         power: 0
         attackSpeed: 0
-        detectRange: 0
+        defence: 0
         attackRange: 0
         hitPoint: 0
         moveSpeed: 0
-        tierNeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
         imageName: 
-        lv: 1
       lv: 0
   icon: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
   mainSprite: {fileID: 21300000, guid: 737819ed9ab603c44a4f14a9d1da38e2, type: 3}
