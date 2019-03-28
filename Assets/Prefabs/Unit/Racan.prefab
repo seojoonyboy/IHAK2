@@ -122,9 +122,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4656852050040714}
-  - component: {fileID: 114862925840933516}
   - component: {fileID: 61600329227709166}
   - component: {fileID: 50790466705561782}
+  - component: {fileID: 114355063108995748}
   m_Layer: 10
   m_Name: Racan
   m_TagString: Unit
@@ -830,6 +830,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectingLayer: 0
+--- !u!114 &114355063108995748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569794317466014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef43c6028522d44158724ae73a569d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  ontile: {fileID: 0}
+  unitCard:
+    parentBuilding: {fileID: 0}
+    gameObject: {fileID: 0}
+    baseSpec:
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            id: 0
+            methodName: 
+            args: 
+          tierNeed: 0
+          coolTime: 0
+          desc: 
+          imageName: 
+        imageName: 
+      skill:
+        id: 0
+        name: 
+        method:
+          id: 0
+          methodName: 
+          args: 
+        tierNeed: 0
+        coolTime: 0
+        desc: 
+        imageName: 
+    type: 
+    ev:
+      lv: 0
+      exp: 0
+      hp: 0
+      time: 0
 --- !u!114 &114501978233047884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -901,65 +959,6 @@ MonoBehaviour:
   m_meshFilter: {fileID: 33059751601111578}
   m_boxCollider: {fileID: 0}
   m_TextComponent: {fileID: 114889295075393478}
---- !u!114 &114862925840933516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1569794317466014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f098ce52b5a24b99a0a0523c58199cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  unitCard:
-    parentBuilding: {fileID: 0}
-    gameObject: {fileID: 0}
-    baseSpec:
-      unit:
-        id: 
-        name: 
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        defence: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        skill:
-          id: 0
-          name: 
-          method:
-            id: 0
-            methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
-          desc: 
-          imageName: 
-        imageName: 
-      skill:
-        id: 0
-        name: 
-        method:
-          id: 0
-          methodName: 
-          args: 
-        tierNeed: 0
-        coolTime: 0
-        desc: 
-        imageName: 
-    type: 
-    ev:
-      lv: 0
-      exp: 0
-      hp: 0
-      time: 0
-  ontile: {fileID: 0}
-  protecting: 0
 --- !u!114 &114889295075393478
 MonoBehaviour:
   m_ObjectHideFlags: 1

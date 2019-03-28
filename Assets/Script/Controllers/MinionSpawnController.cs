@@ -34,6 +34,7 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
                 minions[i] = Instantiate(shortDisMinion, transform.GetChild(5));
             else
                 minions[i] = Instantiate(longDisMinion, transform.GetChild(5));
+            minions[i].GetComponent<MinionAI>().SetUnitData(null);
             minions[i].layer = minionLayer;
             minions[i].transform.position = transform.GetChild(i).position;
         }
