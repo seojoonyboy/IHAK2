@@ -34,6 +34,7 @@ public class ConstructManager : Singleton<ConstructManager> {
         result.AddRange(buildings["prod"]);
         result.AddRange(buildings["active"]);
         result.AddRange(buildings["unit"]);
+        result.AddRange(buildings["passive"]);
 
         return result;
     }
@@ -78,6 +79,7 @@ public class ConstructManager : Singleton<ConstructManager> {
             List<GameObject> products = new List<GameObject>();
             List<GameObject> units = new List<GameObject>();
             List<GameObject> actives = new List<GameObject>();
+            List<GameObject> passive = new List<GameObject>();
 
             foreach (Card card in result) {
                 GameObject obj = new GameObject();
@@ -97,11 +99,13 @@ public class ConstructManager : Singleton<ConstructManager> {
                 if (card.data.type == "prod") products.Add(obj);
                 else if (card.data.type == "unit") units.Add(obj);
                 else if (card.data.type == "active") actives.Add(obj);
+                else if (card.data.type == "passive") passive.Add(obj);
             }
 
             buildings["prod"] = products;
             buildings["unit"] = units;
             buildings["active"] = actives;
+            buildings["passive"] = passive;
 
             GetComponent<BuildingImages>().SetImages();
         }
