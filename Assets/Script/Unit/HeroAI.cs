@@ -45,6 +45,9 @@ public class HeroAI : UnitAI {
         unitCard = new ActiveCard();
         unitCard.baseSpec.unit = unit;
         moveSpeed = unit.moveSpeed;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        attackSP = unit.attackSP;
         power = unit.power;
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
@@ -57,8 +60,7 @@ public class HeroAI : UnitAI {
         ChangeLvText();
 	}
 
-    private void ExpGain(int exp) {
-        exp = Mathf.RoundToInt(exp * 0.2f);
+    public void ExpGain(int exp) {
         unitCard.ev.exp += exp;
         CheckLv();
         calculateExpBar();

@@ -173,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 1229215739668522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 4762690513797372}
   m_RootOrder: 0
@@ -185,7 +185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569794317466014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.7, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: -14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4378093377937686}
@@ -243,7 +243,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1299230882406616}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.383, y: 0.05, z: 0}
+  m_LocalPosition: {x: -0.383, y: 0.005, z: 0}
   m_LocalScale: {x: 1, y: 1.2233, z: 1}
   m_Children: []
   m_Father: {fileID: 4762690513797372}
@@ -499,12 +499,12 @@ MonoBehaviour:
     coolTime: 0
     size: 1
     count: 1
-    power: 10
-    attackSpeed: 10
-    defence: 10
+    power: 5
+    attackSpeed: 1.4
+    defence: 0
     attackRange: 10
-    hitPoint: 10
-    moveSpeed: 10
+    hitPoint: 85
+    moveSpeed: 70
     skill:
       id: 0
       name: 

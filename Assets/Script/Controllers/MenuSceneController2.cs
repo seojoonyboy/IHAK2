@@ -24,6 +24,7 @@ public class MenuSceneController2 : MonoBehaviour {
     [SerializeField] DeckListController deckListController;
     [SerializeField] Button exitDeckList;
     [SerializeField] AccountManager accountManager;
+    [SerializeField] public GameObject town;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
@@ -47,6 +48,7 @@ public class MenuSceneController2 : MonoBehaviour {
             DataModules.ProductResources productResources = (DataModules.ProductResources)Param;
             go.GetComponent<TileGroup>().touchPerProdPower = productResources;
         }
+        
     }
 
     private void OnDestroy() {
@@ -72,6 +74,7 @@ public class MenuSceneController2 : MonoBehaviour {
         //    bg.gameObject.SetActive(false);
         //}
         //go.SetActive(false);
+        SetTown();
     }
 
     private void SetSpineAnimation(Transform aniTransform) {
@@ -88,8 +91,9 @@ public class MenuSceneController2 : MonoBehaviour {
         hss = FindObjectOfType<HorizontalScrollSnap>();
         userNickname.text = AccountManager.Instance.userInfos.nickname;
         deckListWnd.SetActive(false);
-        buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => deckListWnd.SetActive(true));
-        exitDeckList.OnClickAsObservable().Subscribe(_ => deckListWnd.SetActive(false));
+        buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => OpenDeckWindow());
+        exitDeckList.OnClickAsObservable().Subscribe(_ => CloseDeckWindow());
+        
         //clickMenuButton(pageNum);
         //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null);
     }
@@ -114,6 +118,27 @@ public class MenuSceneController2 : MonoBehaviour {
         OptionController oc = FindObjectOfType<OptionController>();
         oc.EnterOptionWindow(true);
     }
+
+    public void OpenDeckWindow() {
+        deckListWnd.SetActive(true);
+        town.SetActive(false);
+    }
+
+    public void CloseDeckWindow() {
+        deckListWnd.SetActive(false);
+        town.SetActive(true);
+    }
+
+    public void SetTown() {
+        if (accountManager.decks.Count == 0) return;
+
+        int LeaderNum = deckListController.transform.gameObject.GetComponent<DataModules.Index>().Id;
+        GameObject showTown = Instantiate(accountManager.transform.GetChild(0).GetChild(LeaderNum).gameObject, town.transform);
+        showTown.transform.localPosition = Vector3.zero;
+        showTown.transform.localScale = new Vector3(1, 1, 1);
+        showTown.SetActive(true);
+    }
+
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
