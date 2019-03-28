@@ -264,7 +264,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 4809c4f2e27a1487d8791c2956361b02, type: 2}
+  - {fileID: 2100000, guid: a764e73cfa0114e8a828f75df31644df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: d028545db30df499ead56e647424b2a0, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 0bb4102c8acb64548b75969b44378e15, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -734,9 +734,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacdc7700974283869344394e21f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runAnimationName: 2.(F)move
-  idleAnimationName: 1.(F)waitting
-  attackAnimationName: 3.(F)attack
+  runAnimationName: 2.move
+  idleAnimationName: 1.waitting
+  attackAnimationName: 3.attack
 --- !u!212 &212546179239670288
 SpriteRenderer:
   m_ObjectHideFlags: 1
