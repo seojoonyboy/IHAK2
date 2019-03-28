@@ -98,7 +98,7 @@ public class OwnCardGenerator : MonoBehaviour {
             }
           //count++;
             slotData.transform.Find("SecondMark/Image").GetComponent<Image>().sprite = GetIcon(_type);          
-            slotData.transform.GetChild(2).GetComponent<Text>().text = 1 + " / " + 1;
+            slotData.transform.GetChild(2).GetComponent<Text>().text = deckSettingController.maxbuildCount + " / " + deckSettingController.maxbuildCount;
             slotData.GetComponent<LongClickButton>().requiredHoldTime = 0.3f;
             slotData.GetComponent<DragHandler>().parentPageObject = transform.GetChild(page).gameObject;
             slotData.GetComponent<DragHandler>().sibilingData = count;
