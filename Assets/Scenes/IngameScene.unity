@@ -4235,15 +4235,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - invokeTime:
-      min: 0
-      sec: 5
+      min: 1
+      sec: 30
     sets:
     - prefab: {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
       id: n_uu_01001
       lv: 1
   - invokeTime:
-      min: 0
-      sec: 10
+      min: 2
+      sec: 30
     sets:
     - prefab: {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
       id: n_uu_01001
