@@ -31,6 +31,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, OnBuildingDestroyed);
 
         playerController = PlayerController.Instance;
     }
@@ -88,32 +89,40 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, this);
     }
 
+    private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
+        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        if(parms.target == IngameHpSystem.Target.ME) {
+            DeactiveCard(parms.buildingInfo.gameObject);
+        }
+    }
+
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
         InitCard();
     }
 
     public void DeactiveCard(GameObject parentBuilding) {
-        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
-        if (card == null) return;
+        //GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
+        //if (card == null) return;
 
-        Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
+        //int cardIndex = card.GetComponent<Index>().Id;
+        //string location = FindCardLocation(cardIndex);
+        //switch (location) {
+        //    case "Hand":
+        //        Hand.Remove(cardIndex);
+        //        Grave.Add(cardIndex);
 
-        //if(card.GetComponent<IngameDragHandler>() == null) {
-        //    if (!string.IsNullOrEmpty(skill.name)) {
-        //        if (skill.method.methodName == "skill_unit_heal") {
-        //            card.GetComponent<HealArea>().CancelDrag();
-        //            card.GetComponent<HealArea>().enabled = false;
-        //        }
-        //    }
+        //        DrawCard(cardIndex);
+        //        break;
+        //    case "Deck":
+
+
+        //        break;
+        //    case "Grave":
+        //        break;
         //}
-        //else {
-        //    card.GetComponent<IngameDragHandler>().CancelDrag();
-        //    card.GetComponent<IngameDragHandler>().enabled = false;
-        //    card.transform.Find("Deactive").gameObject.SetActive(true);
-        //}
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
-        card.SetActive(false);
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
+        //card.SetActive(false);
     }
 
     public void ActivateCard(GameObject parentBuilding) {
@@ -140,6 +149,19 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //    card.transform.Find("Deactive/Button").gameObject.SetActive(true);
         //}
         LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
+    }
+
+    public string FindCardLocation(int index) {
+        if (Hand.Exists(x => x == index)) {
+            return "Hand";
+        }
+        if (Deck.Exists(x => x == index)) {
+            return "Deck";
+        }
+        if (Grave.Exists(x => x == index)){
+            return "Grave";
+        }
+        return null;
     }
 
     public void MakeMagmaCard(int num) {
