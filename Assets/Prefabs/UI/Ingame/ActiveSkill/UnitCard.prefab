@@ -536,6 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad66d1e0fea2f346b2e1beba1ae1592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deckShuffler: {fileID: 0}
 --- !u!114 &114626111655009776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1166,7 +1167,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 198.87, y: 270.98}
+  m_SizeDelta: {x: 180, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224942913327654796
 RectTransform:
