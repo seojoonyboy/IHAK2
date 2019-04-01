@@ -171,7 +171,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             Skill skill = new Skill();
             skill.method = new SkillDetail() { methodName = "skill_magma" };
             GameObject card = Instantiate(spellCardPref, cardParent);
-            AddSkill(skill.method.methodName, card);
+            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
         }
     }
 
@@ -222,7 +222,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             origin.Add(card);
             Deck.Add(index);
 
-            AddSkill(skill.method.methodName, card);
+            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
             card.SetActive(false);
             index++;
         }
@@ -380,7 +380,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     public Dictionary<Effects, GameObject> effectModules;
     public Camera camera;
 
-    private void AddSkill(string methodName, GameObject card) {
+    private void AddSkill(string methodName, GameObject card, string args, int coolTime) {
         switch (methodName) {
             case "magma":
                 Destroy(card.GetComponent<IngameDragHandler>());
@@ -391,7 +391,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     effectModules[Effects.skill_magma],
                     PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
                     card.GetComponent<ActiveCardInfo>().data.parentBuilding,
-                    this
+                    this,
+                    args,
+                    coolTime
                 );
                 //effects[Effects.skill_magma]
                 break;

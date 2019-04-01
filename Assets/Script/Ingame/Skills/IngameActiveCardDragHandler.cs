@@ -18,12 +18,16 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     [SerializeField] protected bool isInit = false;
     [SerializeField] protected GameObject parentBuilding;
     [SerializeField] protected IngameDeckShuffler deckShuffler;
+    [SerializeField] protected string data;
+    [SerializeField] protected int coolTime;
 
-    public void Init(Camera camera, GameObject prefab, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler) {
+    public void Init(Camera camera, GameObject prefab, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string data, int coolTime) {
         this.camera = camera;
         this.prefab = prefab;
         this.parentBuilding = parentBuilding;
         this.deckShuffler = deckShuffler;
+        this.data = data;
+        this.coolTime = coolTime;
         isInit = true;
     }
 
@@ -69,17 +73,7 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
         PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = false;
     }
 
-    public void OnBeginDrag(PointerEventData eventData) {
-        if (!isInit) {
-            Debug.LogError("Prefab의 초기화가 정상적으로 되지 않았습니다!");
-            return;
-        }
-
-        if (obj == null) obj = Instantiate(prefab, parent);
-
-        startPosition = transform.position;
-        startScale = transform.localScale;
-    }
+    public virtual void OnBeginDrag(PointerEventData eventData) { }
 
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
@@ -95,7 +89,20 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     }
 
     public virtual void OnEndDrag(PointerEventData eventData) { }
-    public virtual void UseCard() {
+
+    public void Setting() {
+        if (!isInit) {
+            Debug.LogError("Prefab의 초기화가 정상적으로 되지 않았습니다!");
+            return;
+        }
+
+        if (obj == null) obj = Instantiate(prefab, parent);
+
+        startPosition = transform.position;
+        startScale = transform.localScale;
+    }
+
+    public void UseCard() {
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
 

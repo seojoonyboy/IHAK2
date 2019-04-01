@@ -7,30 +7,42 @@ using UnityEngine.UI;
 
 public class Magma : MonoBehaviour {
     public SpriteRenderer range_texture;
-    private CircleCollider2D circleCollider;
 
     List<GameObject> targets;
-
+    Data data;
     // Use this for initialization
     void Start() {
         targets = new List<GameObject>();
-
-        circleCollider = GetComponent<CircleCollider2D>();
-        Generate(new Data {
-            range = 45,
-            amount = 30,
-            interval = 1,
-            duration = 6
-        });
-    }
-
-    public void Generate(Data data) {
-        circleCollider.radius = data.range;
-        range_texture.transform.localScale *= data.range;
     }
 
     public void StartDamaging() {
-        StartCoroutine(Damage(1, 6));
+        StartCoroutine(Damage(data.interval, data.duration));
+    }
+
+    public void Init(string data) {
+        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+
+        string[] args = data.Split(',');
+
+        int range = 0;
+        int.TryParse(args[0], out range);
+        GetComponent<CircleCollider2D>().radius = range;
+        range_texture.transform.localScale *= range;
+
+        int interval = 1;
+
+        int duration = 0;
+        int.TryParse(args[1], out duration);
+
+        int damage = 0;
+        int.TryParse(args[2], out damage);
+
+        this.data = new Data() {
+            interval = interval,
+            range = range,
+            amount = damage,
+            duration = duration
+        };
     }
 
     IEnumerator Damage(float interval, int loopCount) {
@@ -39,7 +51,7 @@ public class Magma : MonoBehaviour {
             foreach(GameObject target in targets.ToList()) {
                 if (target == null) continue;
                 if(target.layer == 11) {
-                    target.GetComponent<UnitAI>().damaged(30);
+                    target.GetComponent<UnitAI>().damaged(data.amount);
                 }
                 else if(target.layer == 9) {
                     int tileNum = target.GetComponent<BuildingObject>().setTileLocation;
@@ -81,7 +93,7 @@ public class Magma : MonoBehaviour {
     public struct Data {
         public int range;       //범위
         public int interval;    //간격
-        public int amount;      //초당 
+        public int amount;      //피해 정도
         public int duration;    //지속시간
     }
 }

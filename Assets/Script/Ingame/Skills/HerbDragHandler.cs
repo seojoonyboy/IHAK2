@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class HerbDragHandler : MonoBehaviour {
+public class HerbDragHandler : IngameActiveCardDragHandler {
+    public override void OnEndDrag(PointerEventData eventData) {
+        obj.GetComponent<Herb>().StartHealing();
 
-    // Use this for initialization
-    void Start() {
+        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        coolComp.targetCard = gameObject;
+        coolComp.coolTime = coolTime;
+        coolComp.behaviour = this;
+        coolComp.StartCool();
 
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        UseCard();
     }
 }

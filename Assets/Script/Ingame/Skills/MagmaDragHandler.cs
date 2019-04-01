@@ -1,10 +1,5 @@
-using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using UnityEngine.UI;
 
 public class MagmaDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
@@ -12,10 +7,16 @@ public class MagmaDragHandler : IngameActiveCardDragHandler {
 
         ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
         coolComp.targetCard = gameObject;
-        coolComp.coolTime = 25;
+        coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
         coolComp.StartCool();
 
         UseCard();
+    }
+
+    public override void OnBeginDrag(PointerEventData eventData) {
+        Setting();
+
+        obj.GetComponent<Magma>().Init(data);
     }
 }
