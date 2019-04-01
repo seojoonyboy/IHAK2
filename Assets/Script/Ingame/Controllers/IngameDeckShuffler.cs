@@ -399,6 +399,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     public enum Effects {
-        skill_magma
+        skill_magma,
+        skill_herb
     }
 }
