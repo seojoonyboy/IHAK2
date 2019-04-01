@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -35,9 +36,7 @@ public class Magma : MonoBehaviour {
     IEnumerator Damage(float interval, int loopCount) {
         int count = 0;
         while (count < loopCount) {
-            List<GameObject> clone = new List<GameObject>();
-            foreach (GameObject obj in targets) clone.Add(obj);
-            foreach(GameObject target in clone) {
+            foreach(GameObject target in targets.ToList()) {
                 if (target == null) continue;
                 if(target.layer == 11) {
                     target.GetComponent<UnitAI>().damaged(30);
