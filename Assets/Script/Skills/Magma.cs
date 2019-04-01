@@ -33,13 +33,10 @@ public class Magma : MonoBehaviour {
     }
 
     IEnumerator Damage(float interval, int loopCount) {
-        List<GameObject> clone = new List<GameObject>();
-        foreach(GameObject obj in targets) {
-            clone.Add(obj);
-        }
         int count = 0;
         while (count < loopCount) {
-            count++;
+            List<GameObject> clone = new List<GameObject>();
+            foreach (GameObject obj in targets) clone.Add(obj);
             foreach(GameObject target in clone) {
                 if (target == null) continue;
                 if(target.layer == 11) {
@@ -51,6 +48,7 @@ public class Magma : MonoBehaviour {
                     //target.GetComponent<>
                 }
             }
+            count++;
             yield return new WaitForSeconds(interval);
         }
         gameObject.SetActive(false);
