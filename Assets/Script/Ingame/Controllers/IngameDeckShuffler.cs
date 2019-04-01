@@ -395,7 +395,21 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     args,
                     coolTime
                 );
-                //effects[Effects.skill_magma]
+                break;
+
+            case "herb_distribution":
+                Destroy(card.GetComponent<IngameDragHandler>());
+                HerbDragHandler herbDragHandler = card.AddComponent<HerbDragHandler>();
+
+                herbDragHandler.Init(
+                    camera,
+                    effectModules[Effects.skill_herb],
+                    PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
+                    card.GetComponent<ActiveCardInfo>().data.parentBuilding,
+                    this,
+                    args,
+                    coolTime
+                );
                 break;
         }
     }

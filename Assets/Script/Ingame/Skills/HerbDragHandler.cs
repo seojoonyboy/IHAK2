@@ -12,4 +12,10 @@ public class HerbDragHandler : IngameActiveCardDragHandler {
 
         UseCard();
     }
+
+    public override void OnBeginDrag(PointerEventData eventData) {
+        Setting();
+
+        obj.GetComponent<Herb>().Init(data);
+    }
 }

@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class Herb : MonoBehaviour {
     public SpriteRenderer range_texture;
-    private CircleCollider2D circleCollider;
 
     List<GameObject> targets;
     Data data;
     // Use this for initialization
     void Start() {
         targets = new List<GameObject>();
-
-        circleCollider = GetComponent<CircleCollider2D>();
-        data = Generate(new Data {
-            range = 35,
-            amount = 15
-        });
     }
 
-    public Data Generate(Data data) {
-        circleCollider.radius = data.range;
-        range_texture.transform.localScale *= data.range;
-        return data;
+    public void Init(string data) {
+        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+
+        string[] args = data.Split(',');
+
+        this.data = new Data();
+        int.TryParse(args[0], out this.data.range);
+        int.TryParse(args[1], out this.data.amount);
+
+        GetComponent<CircleCollider2D>().radius = this.data.range;
+        range_texture.transform.localScale *= this.data.range;
     }
 
     public void StartHealing() {
@@ -32,13 +32,26 @@ public class Herb : MonoBehaviour {
 
     IEnumerator Heal(int amout) {
         foreach (GameObject target in targets.ToList()) {
-            target.GetComponent<UnitAI>().health *= (15.0f / 100 + 1.0f);
+            target.GetComponent<UnitAI>().HerbRation(data.amount);
         }
         yield return new WaitForSeconds(1.0f);
+        gameObject.SetActive(false);
     }
 
     public struct Data {
         public int range;       //범위
         public int amount;      //%량
+    }
+
+    void OnTriggerStay2D(Collider2D collision) {
+        if (collision.gameObject.layer == 10 && collision.GetComponent<UnitAI>() != null) {
+            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.layer == 10 && collision.GetComponent<UnitAI>() != null) {
+            targets.Remove(collision.gameObject);
+        }
     }
 }

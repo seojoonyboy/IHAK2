@@ -85,11 +85,6 @@ public class Magma : MonoBehaviour {
         }
     }
 
-    public void ActivateSpell() {
-        Debug.Log("Magma Skill Activated");
-        //Destroy(gameObject);
-    }
-
     public struct Data {
         public int range;       //범위
         public int interval;    //간격
