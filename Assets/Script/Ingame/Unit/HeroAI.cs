@@ -51,6 +51,7 @@ public partial class HeroAI : UnitAI {
         attackRange = unit.attackRange;
         attackSP = unit.attackSP;
         power = unit.power;
+        power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
         if(health == 0) health = unitCard.ev.hp;

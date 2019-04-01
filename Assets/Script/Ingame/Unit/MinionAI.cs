@@ -45,7 +45,7 @@ public class MinionAI : UnitAI {
             if(units[i].layer != layerToGive) continue;
             if(units[i].GetComponent<HeroAI>() == null) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
-            if(length <= 60f) continue;
+            if(length > 60f) continue;
             heroes.Add(units[i].GetComponent<HeroAI>());
         }
         if(heroes.Count == 0) return;
