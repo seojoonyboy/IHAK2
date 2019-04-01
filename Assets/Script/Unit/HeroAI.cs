@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -143,9 +143,8 @@ public class HeroAI : UnitAI {
 
     public override void attackingHero(UnitAI unit) {
         if(unit.GetComponent<HeroAI>() == null) return;
-        for(int i = 0; i < fightHeroes.Count; i++)
-            if(fightHeroes[i].gameObject == unit.gameObject) 
-                return;
+        for (int i = 0; i < fightHeroes.Count; i++)
+            if(fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
         fightHeroes.Add(unit.GetComponent<HeroAI>());
     }
 
