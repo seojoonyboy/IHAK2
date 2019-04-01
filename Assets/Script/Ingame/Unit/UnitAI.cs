@@ -5,7 +5,7 @@ using Spine.Unity;
 using DataModules;
 using System;
 
-public class UnitAI : MonoBehaviour {
+public partial class UnitAI : MonoBehaviour {
     public enum aiState {
         NONE,
         MOVE,

@@ -5,7 +5,7 @@ using TMPro;
 using DataModules;
 using System;
 
-public class HeroAI : UnitAI {
+public partial class HeroAI : UnitAI {
 	private Transform expBar;
     private TextMeshPro LvText;
 	private decimal attackSP;
