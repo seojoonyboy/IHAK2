@@ -284,6 +284,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     public IngameDeckShuffler deckShuffler() {
+        IngameDeckShuffler tmp = transform.GetChild(0).GetComponent<IngameDeckShuffler>();
         return transform.GetChild(0).GetComponent<IngameDeckShuffler>();
     }
 }

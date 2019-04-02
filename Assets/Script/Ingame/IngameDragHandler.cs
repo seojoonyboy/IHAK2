@@ -15,8 +15,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     Camera cam;
 
     void Awake() {
-        deckShuffler = PlayerController.Instance.deckShuffler();
-
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
@@ -24,6 +22,8 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     void Start() {
         cam = Camera.main;
+
+        deckShuffler = PlayerController.Instance.deckShuffler();
     }
 
     void OnDestroy() {
@@ -60,9 +60,6 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         GameObject deactive = transform.Find("Deactive").gameObject;
         deactive.SetActive(true);
-
-        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = true;
-        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -99,6 +96,5 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
 
         deckShuffler.UseCard(gameObject);
-        //dropHandler.OnDrop();
     }
 }

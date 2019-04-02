@@ -16,8 +16,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] GameObject 
         unitCardPref,
         spellCardPref;
-    [SerializeField] public Transform cardParent;
-    [SerializeField] GameObject refreshCardBtn;
+    [SerializeField] public Transform heroCardParent;
+    [SerializeField] public Transform spellCardParent;
+    [SerializeField] public Transform itemCardParent;
 
     private static int HAND_MAX_COUNT = 5;
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
@@ -91,66 +92,10 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, this);
     }
 
-    private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
-        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
-        if(parms.target == IngameHpSystem.Target.ME) {
-            DeactiveCard(parms.buildingInfo.gameObject);
-        }
-    }
+    private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) { }
 
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
         InitCard();
-    }
-
-    public void DeactiveCard(GameObject parentBuilding) {
-        //GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
-        //if (card == null) return;
-
-        //int cardIndex = card.GetComponent<Index>().Id;
-        //string location = FindCardLocation(cardIndex);
-        //switch (location) {
-        //    case "Hand":
-        //        Hand.Remove(cardIndex);
-        //        Grave.Add(cardIndex);
-
-        //        DrawCard(cardIndex);
-        //        break;
-        //    case "Deck":
-
-
-        //        break;
-        //    case "Grave":
-        //        break;
-        //}
-
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
-        //card.SetActive(false);
-    }
-
-    public void ActivateCard(GameObject parentBuilding) {
-        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
-        if (card == null) return;
-
-        card.SetActive(true);
-        Skill skill = card.GetComponent<ActiveCardInfo>().data.baseSpec.skill;
-        //if (!string.IsNullOrEmpty(skill.name)) {
-        //    if (skill.method.methodName != "skill_magma" && skill.method.methodName != "skill_unit_heal") {
-        //        card.GetComponent<IngameDragHandler>().enabled = false;
-        //        card.transform.Find("Deactive").gameObject.SetActive(true);
-        //        card.transform.Find("Deactive/Button").gameObject.SetActive(false);
-        //    }
-        //    else if(skill.method.methodName == "skill_unit_heal") {
-        //        card.GetComponent<HealArea>().enabled = true;
-        //        card.transform.Find("Deactive").gameObject.SetActive(false);
-        //        card.transform.Find("Deactive/Button").gameObject.SetActive(true);
-        //    }
-        //}
-        //else {
-        //    card.GetComponent<IngameDragHandler>().enabled = true;
-        //    card.transform.Find("Deactive").gameObject.SetActive(false);
-        //    card.transform.Find("Deactive/Button").gameObject.SetActive(true);
-        //}
-        LayoutRebuilder.ForceRebuildLayoutImmediate(cardParent.GetComponent<RectTransform>());
     }
 
     public string FindCardLocation(int index) {
@@ -166,15 +111,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         return null;
     }
 
-    public void MakeMagmaCard(int num) {
-        for(int i=0; i<num; i++) {
-            Skill skill = new Skill();
-            skill.method = new SkillDetail() { methodName = "skill_magma" };
-            GameObject card = Instantiate(spellCardPref, cardParent);
-            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
-        }
-    }
-
     public void InitCard() {
         foreach(GameObject card in origin) {
             Destroy(card);
@@ -187,7 +123,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
-            GameObject card = Instantiate(unitCardPref, cardParent);
+            GameObject card = Instantiate(unitCardPref, heroCardParent);
             card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
@@ -198,15 +134,12 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
 
             card.AddComponent<Index>().Id = index;
-            card.SetActive(false);
-            origin.Add(card);
-            Deck.Add(index);
             index++;
         }
 
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             Skill skill = spellCard.baseSpec.skill;
-            GameObject card = Instantiate(spellCardPref, cardParent);
+            GameObject card = Instantiate(spellCardPref, spellCardParent);
 
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -219,16 +152,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
 
             card.AddComponent<Index>().Id = index;
-            origin.Add(card);
-            Deck.Add(index);
 
             AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
-            card.SetActive(false);
             index++;
-        }
-
-        for(int i=0; i<HAND_MAX_COUNT; i++) {
-            DrawCard();
         }
     }
 
@@ -274,36 +200,20 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     //card use
     public void UseCard(GameObject selectedObject) {
         int id = selectedObject.GetComponent<Index>().Id;
-        //Debug.Log("ID : " + id);
-
-        var match = origin.Find(x => id == x.GetComponent<Index>().Id);
-        if (match == null) return;
-
         ActiveCardInfo activeCard = selectedObject.GetComponent<ActiveCardInfo>();
         if (CanUseCard(activeCard)) {
-            match.SetActive(false);
-            Hand.Remove(id);
-
             switch (activeCard.data.type) {
                 //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
                 case "unit":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
                     playerController.HeroSummon(activeCard.data);
+
+                    selectedObject.GetComponent<IngameDragHandler>().enabled = false;
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
-                    Grave.Add(id);
                     break;
-            }
-
-            DrawCard(id);
-
-            //Grave에 있는 카드들 덱으로 옯김
-            var query = Grave.FindAll(x => x != id);
-            Deck.AddRange(query);
-            foreach(int index in query) {
-                Grave.Remove(index);
             }
         }
         else {
@@ -345,7 +255,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
         coolComp.coolTime = 30;
-        coolComp.Btn = refreshCardBtn;
         coolComp.StartCool();
 
         for (int i = 0; i < HAND_MAX_COUNT; i++) {

@@ -49,4 +49,6 @@ public class ActiveCard {
     public BaseSpec baseSpec = new BaseSpec();
     public string type;
     public Ev ev;
+
+    public void ChangeHp(int newVal) { ev.hp = newVal; }
 }
