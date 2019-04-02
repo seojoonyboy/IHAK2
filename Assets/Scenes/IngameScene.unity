@@ -1270,6 +1270,7 @@ GameObject:
   - component: {fileID: 282962856}
   - component: {fileID: 282962855}
   - component: {fileID: 282962854}
+  - component: {fileID: 282962857}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -1511,6 +1512,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldValue: {fileID: 1983411991}
   goldBar: {fileID: 751448560}
+--- !u!114 &282962857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8074a285560d5bc42a8417f4690db755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &285348998
 GameObject:
   m_ObjectHideFlags: 0
@@ -8661,6 +8673,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 1966172136889694, guid: fc14ac80d6dfd684e91e1f0202cbf8ee, type: 2}
     - {fileID: 1966172136889694, guid: 0e8ed439ce43ad4449e028b10e901132, type: 2}
+    - {fileID: 1966172136889694, guid: e9e5e687c8c99ac429cb1b6ad749c4f7, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -8679,7 +8692,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -8701,6 +8714,18 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 8
       Data: 

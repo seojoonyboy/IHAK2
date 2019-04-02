@@ -411,11 +411,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     coolTime
                 );
                 break;
+            //case ""
         }
     }
 
     public enum Effects {
         skill_magma,
-        skill_herb
+        skill_herb,
+        skill_scaryOracle
     }
 }
