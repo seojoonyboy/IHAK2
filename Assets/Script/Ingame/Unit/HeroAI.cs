@@ -9,18 +9,17 @@ public partial class HeroAI : UnitAI {
     
 
 	private Transform expBar;
+    private Transform colltimeBar;
     private TextMeshPro LvText;
 	private decimal attackSP;
 	[SerializeField] private ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
 
-
-    
-
 	private void Init() {
         if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
+        colltimeBar = transform.Find("UnitBar/SkillCool");
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         fightHeroes = new List<HeroAI>();
