@@ -16,6 +16,8 @@ public class WarCryDragHandler : IngameActiveCardDragHandler {
                     WarCry warCry = unit.gameObject.AddComponent<WarCry>();
                     warCry.Init(data);
                     warCry.StartBuff();
+
+                    unit.AddBuff("war_cry", warCry);
                 }
             }
 
