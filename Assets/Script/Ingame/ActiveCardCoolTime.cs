@@ -22,10 +22,7 @@ public class ActiveCardCoolTime : CoolTime {
         Image image = deactive.GetComponent<Image>();
         image.fillAmount = 1;
         deactive.SetActive(false);
-
-        if (behaviour != null) {
-            behaviour.enabled = true;
-        }
+        behaviour.enabled = true;
 
         Destroy(GetComponent<ActiveCardCoolTime>());
     }

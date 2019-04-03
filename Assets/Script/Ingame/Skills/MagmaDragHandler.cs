@@ -1,19 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI.Extensions;
 
 public class MagmaDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
-        UseCard();
+        if (UseCard()) {
+            GetComponent<MagmaDragHandler>().enabled = false;
 
-        if (!PlayerController.Instance.deckShuffler().CanUseCard(GetComponent<ActiveCardInfo>())) return;
+            obj.GetComponent<Magma>().StartDamaging();
 
-        obj.GetComponent<Magma>().StartDamaging();
+            ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            coolComp.targetCard = gameObject;
+            coolComp.coolTime = coolTime;
+            coolComp.behaviour = this;
+            coolComp.StartCool();
+        }
 
-        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = gameObject;
-        coolComp.coolTime = coolTime;
-        coolComp.behaviour = this;
-        coolComp.StartCool();
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
     }
 
     public override void OnBeginDrag(PointerEventData eventData) {

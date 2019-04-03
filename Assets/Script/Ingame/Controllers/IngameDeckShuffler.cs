@@ -53,8 +53,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
-            if(parentBuilding.GetComponent<ActiveCardCoolTime>() == null) {
-                ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            if(card.GetComponent<ActiveCardCoolTime>() == null) {
+                ActiveCardCoolTime comp = card.AddComponent<ActiveCardCoolTime>();
+                comp.behaviour = card.GetComponent<IngameDragHandler>();
                 comp.targetCard = card;
                 comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
                 comp.StartCool();
@@ -127,7 +128,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     //card use
-    public void UseCard(GameObject selectedObject) {
+    public bool UseCard(GameObject selectedObject) {
         int id = selectedObject.GetComponent<Index>().Id;
         ActiveCardInfo activeCard = selectedObject.GetComponent<ActiveCardInfo>();
         if (CanUseCard(activeCard)) {
@@ -144,9 +145,11 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
                     break;
             }
+            return true;
         }
         else {
             IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            return false;
         }
     }
 
