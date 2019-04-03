@@ -333,8 +333,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 tileSetList.Add(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.id);
                 ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.data.product);
 
-                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation != 12)
+                if (tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation != 12) {
                     buildingCount++;
+                }
                 SetDeckInfo();
             }
             else

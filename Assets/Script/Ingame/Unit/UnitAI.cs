@@ -188,7 +188,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     private void attackBuilding() {
-        ingameHpSystem.TakeDamage(targetEnum, targetBuilding.tileNum, CalPower());
+        ingameHpSystem.TakeDamage(targetEnum, 12, CalPower());
         unitSpine.Attack();
         if (targetBuilding.hp <= 0) {
             targetBuilding = null;
