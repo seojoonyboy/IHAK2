@@ -13,8 +13,8 @@ public partial class UnitAI : MonoBehaviour {
         DEAD
     };
 
-    private delegate void timeUpdate(float time);
-    private timeUpdate update;
+    protected delegate void timeUpdate(float time);
+    protected timeUpdate update;
 
     private BuildingInfo targetBuilding;
     protected UnitAI targetUnit;
@@ -112,6 +112,7 @@ public partial class UnitAI : MonoBehaviour {
 
     void Update() {
         update(Time.deltaTime);
+        Debug.Log("updating UnitAI");
     }
 
     void noneUpdate(float time) {

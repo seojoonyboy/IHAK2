@@ -15,9 +15,9 @@ public partial class HeroAI : UnitAI {
         UnitAI skillTargetUnit = null;
         GameObject targetObject = null; ;
         for (int i = 0; i < units.Length; i++) {
-            if (units[i].layer == layerToGive) continue;
+            if (units[i].layer != layerToGive) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
-            if (length > 36f) continue;
+            if (length > 100f) continue;
             if (units[i].GetComponent<HeroAI>() == null && skillTargetHero != null) continue;
             if (length < targetLegnth) {
                 if (units[i].GetComponent<HeroAI>())
@@ -32,6 +32,8 @@ public partial class HeroAI : UnitAI {
         if(targetObject != null) {
             targetUnit = targetObject.GetComponent<UnitAI>();
             moveSpeed = moveSpeed * 3;
+            StartCoroutine("Lakan_bite_Action");
+            Debug.Log("물어뜯기 발동");
         }
     }
 
@@ -39,8 +41,10 @@ public partial class HeroAI : UnitAI {
         float length = Vector3.Distance(targetUnit.transform.position, transform.position);
         while (length > attackRange) {
             length = Vector3.Distance(targetUnit.transform.position, transform.position);
+            return null;
         }
         targetUnit.damaged(power * 3);
+        Debug.Log("물어뜯기");
         moveSpeed = moveSpeed / 3;
         return null;
     }
@@ -51,7 +55,7 @@ public partial class HeroAI : UnitAI {
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
         int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
         for (int i = 0; i < units.Length; i++) {
-            if (units[i].layer != layerToGive) continue;
+            if (units[i].layer == layerToGive) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
             if (length > 45f) continue;
             if(units[i].GetComponent<Buff_evilmind>())
@@ -75,7 +79,7 @@ public partial class HeroAI : UnitAI {
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
         int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
         for (int i = 0; i < units.Length; i++) {
-            if (units[i].layer == layerToGive) continue;
+            if (units[i].layer != layerToGive) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
             if (length > 30f) continue;
             if (units[i].GetComponent<HeroAI>() == null) {
