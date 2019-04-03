@@ -32,21 +32,21 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     private void BuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
-        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage) Param;
-        if(parms.target == IngameHpSystem.Target.ME) {
-            if(GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
-                CancelDrag();
-            }
-        }
+        //IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage) Param;
+        //if(parms.target == IngameHpSystem.Target.ME) {
+        //    if(GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
+        //        CancelDrag();
+        //    }
+        //}
     }
 
     private void BuildingReconstucted(Enum Event_Type, Component Sender, object Param) {
-        IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
-        if (parms.target == IngameHpSystem.Target.ME) {
-            if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
-                GetComponent<IngameDragHandler>().enabled = true;
-            }
-        }
+        //IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
+        //if (parms.target == IngameHpSystem.Target.ME) {
+        //    if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
+        //        GetComponent<IngameDragHandler>().enabled = true;
+        //    }
+        //}
     }
 
     public void CancelDrag() {

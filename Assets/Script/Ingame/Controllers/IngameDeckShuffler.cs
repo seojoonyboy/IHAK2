@@ -20,17 +20,15 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] public Transform spellCardParent;
     [SerializeField] public Transform itemCardParent;
 
+    public List<GameObject> heroCards;
+    public List<GameObject> spellCards;
+
     private static int HAND_MAX_COUNT = 5;
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
 
-    [SerializeField] public List<GameObject> origin = new List<GameObject>();    //원본 액티브 카드 리스트
-    [SerializeField] List<int> Deck = new List<int>();  //덱 인덱스 리스트
-    [SerializeField] List<int> Hand = new List<int>();  //핸드 인덱스 리스트
-    [SerializeField] List<int> Grave = new List<int>();   //Draw발동시 사용된 카드가 임시로 머무는 장소
     void Awake() {
         ingameCityManager = GetComponent<IngameCityManager>();
         eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.UNIT_UPGRADED, OnUnitUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, OnBuildingDestroyed);
 
@@ -41,23 +39,15 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
     }
 
-    private void OnUnitUpgraded(Enum Event_Type, Component Sender, object Param) {
-        //Unit targetUnit = (Unit)Param;
-        //foreach(GameObject card in cards) {
-        //    object data = card.GetComponent<IngameCard>().data;
-        //    if(data.GetType() == typeof(Unit)) {
-        //        Unit unit = (Unit)data;
-        //        if(unit.id == targetUnit.id) {
-        //            card.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = targetUnit.lv.ToString();
-        //        }
-        //    }
-        //}
-    }
-
     public void HeroReturn(GameObject parentBuilding, bool isDead) {
-        GameObject card = origin.Find(x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding);
-        //IngameCityManager.BuildingInfo buildingInfos = ingameCityManager.myBuildingsInfo.Find(x => x.tileNum == parentBuilding.GetComponent<BuildingObject>().setTileLocation);
-        
+        GameObject card = heroCards.Find(
+            x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding
+        );
+
+        if(card == null) {
+            Debug.LogError("사망한 영웅 유닛의 카드를 찾지 못하였습니다!");
+            return;
+        }
 
         int index = card.GetComponent<Index>().Id;
         //buildingInfos.activate = true;
@@ -69,15 +59,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
                 comp.StartCool();
             }
-        }
-
-        if (Hand.Count == HAND_MAX_COUNT) {
-            Deck.Add(index);
-        }
-        else {
-            Hand.Add(index);
-            origin[index].SetActive(true);
-            origin[index].transform.SetAsLastSibling();
         }
     }
 
@@ -98,29 +79,11 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         InitCard();
     }
 
-    public string FindCardLocation(int index) {
-        if (Hand.Exists(x => x == index)) {
-            return "Hand";
-        }
-        if (Deck.Exists(x => x == index)) {
-            return "Deck";
-        }
-        if (Grave.Exists(x => x == index)){
-            return "Grave";
-        }
-        return null;
-    }
-
     public void InitCard() {
-        foreach(GameObject card in origin) {
-            Destroy(card);
-        }
-        origin.Clear();
-        Deck.Clear();
-        Hand.Clear();
+        heroCards = new List<GameObject>();
+        spellCards = new List<GameObject>();
 
         int index = 0;
-
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, heroCardParent);
@@ -133,10 +96,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
             //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
 
+            heroCards.Add(card);
+
             card.AddComponent<Index>().Id = index;
             index++;
         }
 
+        index = 0;
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             Skill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, spellCardParent);
@@ -153,48 +119,11 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
             card.AddComponent<Index>().Id = index;
 
+            spellCards.Add(card);
+
             AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
             index++;
         }
-    }
-
-    public void DrawCard(int prevId) {
-        if (Deck.Count == 0) {
-            if(Grave.Count == 1 && Grave[0] == prevId) {
-                Deck.Add(prevId);
-                Grave.Remove(prevId);
-            }
-            
-            if(Grave.Count >= 2) {
-                int index = Grave.Find(x => x != prevId);
-                Deck.Add(index);
-                Grave.Remove(index);
-            }
-        }
-        if (Deck.Count == 0) return;
-
-        int selectedIndex = rand.Next(0, Deck.Count);
-        Hand.Add(Deck[selectedIndex]);
-        //Debug.Log(Deck[selectedIndex]);
-        origin[Deck[selectedIndex]].SetActive(true);
-        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
-        Deck.Remove(Deck[selectedIndex]);
-    }
-
-    //카드 뽑기
-    public void DrawCard() {
-        if (Deck.Count == 0) {
-            Grave.AddRange(Grave);
-            Grave.Clear();
-        }
-        if (Deck.Count == 0) return;
-
-        int selectedIndex = rand.Next(0, Deck.Count);
-        Hand.Add(Deck[selectedIndex]);
-        //Debug.Log(Deck[selectedIndex]);
-        origin[Deck[selectedIndex]].SetActive(true);
-        origin[Deck[selectedIndex]].transform.SetAsFirstSibling();
-        Deck.Remove(Deck[selectedIndex]);
     }
 
     //card use
@@ -238,46 +167,15 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         return true;
     }
 
-    //(핸드)카드 교체 기능
-    //쿨타임 30초
-    public void HandReset() {
-        //쿨타임이면 return
-        IngameHandChangeCoolTime prevComp = playerController.gameObject.GetComponent<IngameHandChangeCoolTime>();
-        if (prevComp != null) return;
-
-        foreach (int index in Hand) {
-            Deck.Add(index);
-            origin[index].SetActive(false);
-        }
-        Hand.Clear();
-
-        //playerController.PrintResource();
-
-        IngameHandChangeCoolTime coolComp = playerController.gameObject.AddComponent<IngameHandChangeCoolTime>();
-        coolComp.coolTime = 30;
-        coolComp.StartCool();
-
-        for (int i = 0; i < HAND_MAX_COUNT; i++) {
-            DrawCard();
-        }
-    }
-
     /// <summary>
     /// 쿨타임 제거 버튼
     /// </summary>
     public void CancelCoolTimeBtnClicked(GameObject card) {
         ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
-        //int tier = cardInfo.data.baseSpec.unit.tierNeed;
         int lv = cardInfo.data.ev.lv;
         ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
         if (coolTime == null) return;
         uint cost = coolTime.cancelCooltimeCost;
-        //if (cost > playerController.Gold) return;
-        //if (cost > playerController.Food) return;
-
-        //playerController.Gold -= cost;
-        //playerController.Food -= cost;
-        //playerController.PrintResource();
 
         coolTime.OnTime();
     }

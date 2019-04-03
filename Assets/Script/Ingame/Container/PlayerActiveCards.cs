@@ -51,4 +51,9 @@ public class ActiveCard {
     public Ev ev;
 
     public void ChangeHp(int newVal) { ev.hp = newVal; }
+    public void TakeDamage(int amount) {
+        int changedHp = ev.hp - amount;
+        ChangeHp(changedHp);
+        //Debug.Log("데미지 받음");
+    }
 }

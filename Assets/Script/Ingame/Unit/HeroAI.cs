@@ -42,7 +42,12 @@ public partial class HeroAI : UnitAI {
         ChangeLvText();
     }
 
-	public override void SetUnitData(Unit unit, int level) {
+    public override void damaged(int damage) {
+        base.damaged(damage);
+        unitCard.TakeDamage(damage);
+    }
+
+    public override void SetUnitData(Unit unit, int level) {
         Init();
         unitCard = new ActiveCard();
         unitCard.baseSpec.unit = unit;
