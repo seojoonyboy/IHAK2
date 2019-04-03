@@ -67,12 +67,13 @@ public partial class HeroAI : UnitAI {
     }
 
     public void Shell_humantorch() {
-        if (targetUnit.GetComponent<Debuff_Humantorch>())
-            Destroy(targetUnit.GetComponent<Debuff_Humantorch>());
-        if (targetUnit.GetComponent<UnitAI>()) {
-            targetUnit.gameObject.AddComponent<Debuff_Humantorch>();
-            targetUnit.gameObject.AddComponent<Debuff_Humantorch>().SetFlameDamage(power);
-        }
+        weaponSkill = Shell_attack;       
+    }
+
+    public void Shell_attack() {
+        Debuff_Humantorch debuff = targetUnit.GetComponent<Debuff_Humantorch>();
+        if (debuff != null) Destroy(targetUnit.GetComponent<Debuff_Humantorch>());
+        targetUnit.gameObject.AddComponent<Debuff_Humantorch>().SetFlameDamage(power);
     }
 
     public void Rex_fedup(float attackPower) {

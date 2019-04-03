@@ -112,7 +112,6 @@ public partial class UnitAI : MonoBehaviour {
 
     void Update() {
         update(Time.deltaTime);
-        Debug.Log("updating UnitAI");
     }
 
     void noneUpdate(float time) {
@@ -200,7 +199,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    private void attackUnit() {
+    public virtual void attackUnit() {
         targetUnit.damaged(power);
         targetUnit.attackingHero(this);
         unitSpine.Attack();

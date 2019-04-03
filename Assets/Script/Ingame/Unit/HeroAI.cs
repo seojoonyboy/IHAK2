@@ -48,6 +48,11 @@ public partial class HeroAI : UnitAI {
         FindUnitSkill(unit.skill);
     }
 
+    public override void attackUnit() {
+        base.attackUnit();
+        if(weaponSkill != null) weaponSkill();
+    }
+
     public override void damaged(float damage) {
         base.damaged(damage);
         unitCard.TakeDamage(Mathf.RoundToInt(damage));

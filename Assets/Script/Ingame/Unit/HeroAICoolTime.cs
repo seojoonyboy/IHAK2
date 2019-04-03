@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,8 +17,10 @@ public partial class HeroAI : UnitAI {
     private float skillUsingTime;
     
     private UnityAction skillActivate;
+    private UnityAction weaponSkill;
     
     private void setState(skillState state) {
+        Debug.Log("setState");
         skillUpdate = null;
         coolTime = 0f;
         switch (state) {
@@ -50,13 +52,13 @@ public partial class HeroAI : UnitAI {
 
     void UsingSkillUpdate(float time) {
         coolTime += time;
-        if(coolTime < activeSkillCoolTime) return;
-        if(activeSkillCoolTime < 0f) {
+        if(coolTime < skillUsingTime) return;
+        if(skillUsingTime < 0f) {
             setState(skillState.WAITING_DONE);
             return;
         }
+        weaponSkill = null;
         setState(skillState.COOLING);
-
     }
 
     void noneUpdate(float time) {}
@@ -72,7 +74,7 @@ public partial class HeroAI : UnitAI {
                 SetSkill(Lakan_bite, 3f, -1f);
                 break;
             case "arsonist" :   //쉘 방화범
-                SetSkill(Shell_humantorch, 15f, 5f);
+                SetSkill(Shell_humantorch, 3f, 5f);
                 break;
             //TODO : 서버에서 이름 오면 재세팅
             case "악한마음" : //윔프 악한마음 
