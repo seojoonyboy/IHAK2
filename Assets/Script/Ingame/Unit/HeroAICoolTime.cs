@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -41,7 +41,8 @@ public partial class HeroAI : UnitAI {
 
     void CoolTimeUpdate(float time) {
         coolTime += time;
-        if(coolTime < activeSkillCoolTime) return;
+        cooltimeBar.localScale = new Vector3(coolTime / activeSkillCoolTime, cooltimeBar.transform.localScale.y, 0);
+        if (coolTime < activeSkillCoolTime) return;
         skillActivate();
         setState(skillState.SKILLING);
 
@@ -68,7 +69,7 @@ public partial class HeroAI : UnitAI {
         }
         switch(unitSkill.method.methodName) {
             case "bite" : //라칸 물어뜯기
-                SetSkill(Lakan_bite, 12f, -1f);
+                SetSkill(Lakan_bite, 3f, -1f);
                 break;
             case "arsonist" :   //쉘 방화범
                 SetSkill(Shell_humantorch, 15f, 5f);
