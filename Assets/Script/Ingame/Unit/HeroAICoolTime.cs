@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -77,12 +77,12 @@ public partial class HeroAI : UnitAI {
                 SetSkill(Shell_humantorch, 3f, 5f);
                 break;
             //TODO : 서버에서 이름 오면 재세팅
-            case "악한마음" : //윔프 악한마음 
+            case "evil_mind" : //윔프 악한마음 
                 SetSkill(Wimp_evilmind, 9f, 6f);
                 break;
             //TODO : 서버에서 이름 오면 재세팅
-            case "포식" : //렉스 포식
-                SetSkill(() => Rex_fedup(power), 20f, 0f);
+            case "satiation": //렉스 포식
+                SetSkill(() => Rex_satiation(power), 7f, -1f);
                 break;
             default :
                 Debug.LogWarning(string.Format("{0}이 스킬을 가지고 있지 않습니다.", name));
