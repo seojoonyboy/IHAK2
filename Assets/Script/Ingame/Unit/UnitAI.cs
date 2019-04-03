@@ -266,6 +266,10 @@ public partial class UnitAI : MonoBehaviour {
         calculateHealthBar();
     }
 
+    protected int LayertoGive(bool isEnemy) {
+        return isEnemy ? enemyLayer : myLayer;
+    }
+
     protected void calculateHealthBar() {
         if (!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
         float percent = (float)health / maxHealth;

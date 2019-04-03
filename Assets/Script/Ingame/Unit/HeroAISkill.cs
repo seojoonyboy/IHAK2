@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public partial class HeroAI : UnitAI {
-	//영웅들의 SP 관련 & 스킬 관련 함수
+	//영웅들의 스킬 관련 함수
 
     public void Lakan_bite() {
         List<HeroAI> heroes = new List<HeroAI>();
@@ -33,7 +33,6 @@ public partial class HeroAI : UnitAI {
             targetUnit = targetObject.GetComponent<UnitAI>();
             moveSpeed = moveSpeed * 3;
             StartCoroutine("Lakan_bite_Action");
-            Debug.Log("물어뜯기 발동");
         }
     }
 
@@ -44,8 +43,8 @@ public partial class HeroAI : UnitAI {
             return null;
         }
         targetUnit.damaged(power * 3);
-        Debug.Log("물어뜯기");
         moveSpeed = moveSpeed / 3;
+        SkillFinish();
         return null;
     }
 
@@ -94,5 +93,12 @@ public partial class HeroAI : UnitAI {
         health += drainHp;
         if (health > maxHealth)
             health = maxHealth;
+    }
+    /// <summary>
+    /// 시간 제한이 없고 특수 조건 (예 : 스킬 완료시)이 걸린 스킬일 경우
+    /// 해당 함수를 추가해주시면 됩니다.
+    /// </summary>
+    private void SkillFinish() {
+        setState(skillState.COOLING);
     }
 }
