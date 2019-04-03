@@ -10,7 +10,7 @@ public partial class HeroAI : UnitAI {
         List<HeroAI> heroes = new List<HeroAI>();
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
         int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
-        float targetLegnth = 100;
+        float tempLegnth = 100;
         HeroAI skillTargetHero = null;
         UnitAI skillTargetUnit = null;
         GameObject targetObject = null; ;
@@ -19,12 +19,12 @@ public partial class HeroAI : UnitAI {
             float length = Vector3.Distance(units[i].transform.position, transform.position);
             if (length > 100f) continue;
             if (units[i].GetComponent<HeroAI>() == null && skillTargetHero != null) continue;
-            if (length < targetLegnth) {
+            if (length < tempLegnth) {
                 if (units[i].GetComponent<HeroAI>())
                     skillTargetHero = units[i].GetComponent<HeroAI>();
                 else
                     skillTargetUnit = units[i].GetComponent<UnitAI>();
-                targetLegnth = length;
+                tempLegnth = length;
                 targetObject = units[i];
             }
         }
@@ -58,8 +58,7 @@ public partial class HeroAI : UnitAI {
             if (units[i].layer == layerToGive) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
             if (length > 45f) continue;
-            if(units[i].GetComponent<Buff_evilmind>())
-                Destroy(units[i].GetComponent<Buff_evilmind>());
+            if (units[i].GetComponent<Buff_evilmind>()) continue;
             units[i].AddComponent<Buff_evilmind>();
         }
     }
@@ -92,5 +91,8 @@ public partial class HeroAI : UnitAI {
                 units[i].GetComponent<HeroAI>().damaged(power * 0.8f);
             }
         }
+        health += drainHp;
+        if (health > maxHealth)
+            health = maxHealth;
     }
 }
