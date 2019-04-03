@@ -13,8 +13,8 @@ public partial class UnitAI : MonoBehaviour {
         DEAD
     };
 
-    private delegate void timeUpdate(float time);
-    private timeUpdate update;
+    protected delegate void timeUpdate(float time);
+    protected timeUpdate update;
 
     private BuildingInfo targetBuilding;
     protected UnitAI targetUnit;
@@ -22,7 +22,7 @@ public partial class UnitAI : MonoBehaviour {
     
     public float health = 0;
     protected float maxHealth = 0;
-    protected float power = 0;
+    public float power = 0;
     protected float defense = 0;
     protected float moveSpeed;
     protected float attackSpeed;
@@ -112,6 +112,7 @@ public partial class UnitAI : MonoBehaviour {
 
     void Update() {
         update(Time.deltaTime);
+        Debug.Log("updating UnitAI");
     }
 
     void noneUpdate(float time) {
@@ -257,6 +258,12 @@ public partial class UnitAI : MonoBehaviour {
         unitSpine.Hitted();
         calculateHealthBar();
         if(health <= 0) DestoryEnemy();
+    }
+
+    protected void healed(float healingHP) {
+        health += healingHP;
+        if(health > maxHealth) health = maxHealth;
+        calculateHealthBar();
     }
 
     protected void calculateHealthBar() {

@@ -4,13 +4,87 @@ using UnityEngine;
 using TMPro;
 using DataModules;
 using System;
+using UnityEngine.Events;
 
 public partial class HeroAI : UnitAI {
+    public enum skillState {
+        COOLING,
+        SKILLING,
+        WAITING_DONE
+    }
+
 	private Transform expBar;
     private TextMeshPro LvText;
 	private decimal attackSP;
 	[SerializeField] private ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
+
+
+    private timeUpdate skillUpdate;
+    private float coolTime;
+    private float activeSkillCoolTime = 1f; //TODO : 임시
+    private float skillUsingTime = 1f;  // TODO : 임시
+    
+    private UnityAction skillActivate;
+    
+    private void setState(skillState state) {
+        skillUpdate = null;
+        coolTime = 0f;
+        switch (state) {
+            case skillState.COOLING:
+                skillUpdate = CoolTimeUpdate;
+                break;
+            case skillState.SKILLING:
+                skillUpdate = UsingSkillUpdate;
+                break;
+            case skillState.WAITING_DONE:
+                skillUpdate = noneUpdate;
+                break;
+        }
+    }
+
+    void Update() {
+        update(Time.deltaTime);
+        skillUpdate(Time.deltaTime);
+    }
+
+    void CoolTimeUpdate(float time) {
+        coolTime += time;
+        if(coolTime < activeSkillCoolTime) return;
+        Debug.Log("스킬 발동");
+        skillActivate();
+        setState(skillState.SKILLING);
+
+    }
+
+    void UsingSkillUpdate(float time) {
+        coolTime += time;
+        if(coolTime < activeSkillCoolTime) return;
+        setState(skillState.COOLING);
+
+    }
+
+    void noneUpdate(float time) {}
+
+    private void FindUnitSkill(UnitSkill unitSkill) {
+        if(unitSkill == null) {
+            setState(skillState.WAITING_DONE);
+            return;
+        }
+        switch(unitSkill.method.methodName) {
+            case "bite" : //라칸 물어뜯기
+            skillActivate = Lakan_bite;
+            break;
+            case "arsonist" :   //쉘 방화범
+            skillActivate = Shell_humantorch;
+            break;
+            //case ""
+            default :
+            skillActivate = (() => noneUpdate(0f));
+            setState(skillState.WAITING_DONE);
+            break;
+        }
+    }
 
 	private void Init() {
         if (healthBar != null) return;
@@ -40,6 +114,8 @@ public partial class HeroAI : UnitAI {
         calculateHealthBar();
         calculateExpBar();
         ChangeLvText();
+        setState(skillState.COOLING);
+        FindUnitSkill(unit.skill);
     }
 
     public override void damaged(float damage) {
@@ -51,7 +127,7 @@ public partial class HeroAI : UnitAI {
         Init();
         unitCard = new ActiveCard();
         unitCard.baseSpec.unit = unit;
-        moveSpeed = unit.moveSpeed;
+        moveSpeed = unit.moveSpeed * 0.1f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         attackSP = unit.attackSP;
@@ -66,6 +142,8 @@ public partial class HeroAI : UnitAI {
         calculateHealthBar();
         calculateExpBar();
         ChangeLvText();
+        setState(skillState.COOLING);
+        FindUnitSkill(unit.skill);
 	}
 
     public void ExpGain(int exp) {
