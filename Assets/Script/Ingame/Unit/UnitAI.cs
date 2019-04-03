@@ -188,7 +188,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     private void attackBuilding() {
-        ingameHpSystem.TakeDamage(targetEnum, targetBuilding.tileNum, CalPower());
+        ingameHpSystem.TakeDamage(targetEnum, 12, CalPower());
         unitSpine.Attack();
         if (targetBuilding.hp <= 0) {
             targetBuilding = null;
@@ -200,7 +200,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     private void attackUnit() {
-        targetUnit.damaged(CalPower());
+        targetUnit.damaged(power);
         targetUnit.attackingHero(this);
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
@@ -252,7 +252,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    public virtual void damaged(int damage) {
+    public virtual void damaged(float damage) {
         health -= damage;
         unitSpine.Hitted();
         calculateHealthBar();

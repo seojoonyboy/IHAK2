@@ -38,25 +38,29 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
-        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, Callback);
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, SetEnemy);
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, SetPlayer);
     }
 
-    private void Callback(Enum Event_Type, Component Sender, object Param) {
+    private void SetEnemy(Enum Event_Type, Component Sender, object Param) {
         enemyBuildings = enemyController.GetComponent<EnemyBuildings>();
         enemyResource = enemyController.GetComponent<PlayerResource>();
         enemybuildingInfos = enemyBuildings.buildingInfos;
         enemyHQ = enemybuildingInfos.Find(x => x.tileNum == 12);
-
+        
+        SetHp();
+        //TakeDamage(Target.ME, 12, 1500);
+    }
+    private void SetPlayer(Enum Event_Type, Component Sender, object Param) {
         myBuildings = playerController.GetComponent<MyBuildings>();
         myBuildingInfo = myBuildings.buildingInfos;
         myResource = playerController.GetComponent<PlayerResource>();
         playerHQ = myBuildingInfo.Find(x => x.tileNum == 12);
-        SetHp();
-        //TakeDamage(Target.ME, 12, 1500);
     }
 
     void OnDestroy() {
-        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, Callback);
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, SetEnemy);
+        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, SetPlayer);
     }
 
 
