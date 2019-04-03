@@ -62,6 +62,7 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
         TAKE_DAMAGE,
         HQ_UPGRADE,
         RESOURCE_CHANGE,
+        MY_DECK_DETAIL_INFO_ADDED,
         MY_BUILDINGS_INFO_ADDED,
         ENEMY_BUILDINGS_INFO_ADDED,
         BUILDING_DESTROYED,

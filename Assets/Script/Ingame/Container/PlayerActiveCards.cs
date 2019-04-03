@@ -44,6 +44,7 @@ namespace Container {
 
 [System.Serializable]
 public class ActiveCard {
+    public int id;
     public GameObject parentBuilding;
     public GameObject gameObject;
     public BaseSpec baseSpec = new BaseSpec();
