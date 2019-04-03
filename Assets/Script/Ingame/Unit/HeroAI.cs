@@ -4,92 +4,22 @@ using UnityEngine;
 using TMPro;
 using DataModules;
 using System;
-using UnityEngine.Events;
 
 public partial class HeroAI : UnitAI {
-    public enum skillState {
-        COOLING,
-        SKILLING,
-        WAITING_DONE
-    }
+    
 
 	private Transform expBar;
+    private Transform cooltimeBar;
     private TextMeshPro LvText;
 	private decimal attackSP;
 	[SerializeField] private ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
 
-
-    private timeUpdate skillUpdate;
-    private float coolTime;
-    private float activeSkillCoolTime = 1f; //TODO : 임시
-    private float skillUsingTime = 1f;  // TODO : 임시
-    
-    private UnityAction skillActivate;
-    
-    private void setState(skillState state) {
-        skillUpdate = null;
-        coolTime = 0f;
-        switch (state) {
-            case skillState.COOLING:
-                skillUpdate = CoolTimeUpdate;
-                break;
-            case skillState.SKILLING:
-                skillUpdate = UsingSkillUpdate;
-                break;
-            case skillState.WAITING_DONE:
-                skillUpdate = noneUpdate;
-                break;
-        }
-    }
-
-    void Update() {
-        update(Time.deltaTime);
-        skillUpdate(Time.deltaTime);
-    }
-
-    void CoolTimeUpdate(float time) {
-        coolTime += time;
-        if(coolTime < activeSkillCoolTime) return;
-        Debug.Log("스킬 발동");
-        skillActivate();
-        setState(skillState.SKILLING);
-
-    }
-
-    void UsingSkillUpdate(float time) {
-        coolTime += time;
-        if(coolTime < activeSkillCoolTime) return;
-        setState(skillState.COOLING);
-
-    }
-
-    void noneUpdate(float time) {}
-
-    private void FindUnitSkill(UnitSkill unitSkill) {
-        if(unitSkill == null) {
-            setState(skillState.WAITING_DONE);
-            return;
-        }
-        switch(unitSkill.method.methodName) {
-            case "bite" : //라칸 물어뜯기
-            skillActivate = Lakan_bite;
-            break;
-            case "arsonist" :   //쉘 방화범
-            skillActivate = Shell_humantorch;
-            break;
-            //case ""
-            default :
-            skillActivate = (() => noneUpdate(0f));
-            setState(skillState.WAITING_DONE);
-            break;
-        }
-    }
-
 	private void Init() {
         if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
+        cooltimeBar = transform.Find("UnitBar/SkillCool");
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         fightHeroes = new List<HeroAI>();
@@ -239,14 +169,18 @@ public partial class HeroAI : UnitAI {
     private void GiveExp() {
         if(fightHeroes.Count == 0) return;
         int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
+        RemoveDeadHero();
+        if(fightHeroes.Count == 0) return;
+        exp /= fightHeroes.Count;
+        foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
+    }
+
+    private void RemoveDeadHero() {
         for(int i = 0; i < fightHeroes.Count; i++) {
             if(fightHeroes[i] == null) {
                 fightHeroes.RemoveAt(i);
                 i--;
             }
         }
-        if(fightHeroes.Count == 0) return;
-        exp /= fightHeroes.Count;
-        foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
     }
 }
