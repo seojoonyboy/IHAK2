@@ -30,8 +30,7 @@ namespace DataModules {
     }
 
     [System.Serializable]
-    public class DeckDetail : Deck {
-    }
+    public class DeckDetail : Deck { }
 
     [System.Serializable]
     public class ProductResources {

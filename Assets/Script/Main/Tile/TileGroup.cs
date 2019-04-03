@@ -50,8 +50,8 @@ public class TileGroup : MonoBehaviour {
     public void SettingBuildingForGame() {
         ingameSceneUIController = FindObjectOfType<IngameSceneUIController>();
         if (ingameSceneUIController == null) return;
-        isGame = ingameSceneUIController.isPlaying;
-        ingameSceneUIController.ObserveEveryValueChanged(_ => ingameSceneUIController.isPlaying).Subscribe(_ => isGame = (ingameSceneUIController.isPlaying == true) ? true : false);
+        isGame = ingameSceneUIController.canPlaying;
+        ingameSceneUIController.ObserveEveryValueChanged(_ => ingameSceneUIController.canPlaying).Subscribe(_ => isGame = (ingameSceneUIController.canPlaying == true) ? true : false);
     }
 
     public void SetAmmo() {

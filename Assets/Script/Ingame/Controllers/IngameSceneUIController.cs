@@ -23,66 +23,52 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] public Transform attackCard;
 
-    public bool isPlaying = true;
+    public bool canPlaying = false;
+    public bool canEnemyPlaying = false;
+
     private float time = 300;
     [SerializeField] public GameObject playerController;
     [SerializeField] public GameObject enemyController;
 
+    IngameSceneEventHandler eventHandler;
+
     public static int deckId;
 
-    private void OnDataCallback(HttpResponse response) {
-        if (response.responseCode == 200) {
-            if(response.data != null) {
-                DeckDetail deckDetail = JsonReader.Read<DeckDetail>(response.data.ToString());
-
-                ProductResources touchPower = deckDetail.productResources;
-                FindObjectOfType<IngameCityManager>().productResources = touchPower;
-            }
-        }
+    void Awake() {
+        eventHandler = IngameSceneEventHandler.Instance;
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
     }
 
-    private bool isDataInited(ProductResources touchProdPower) {
-        Resource food = touchProdPower.food;
-        Resource gold = touchProdPower.gold;
-        Resource env = touchProdPower.env;
+    void OnDestroy() {
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
+    }
 
-        if (food.food == 0 && food.gold == 0 && food.environment == 0) {
-            if (gold.food == 0 && gold.gold == 0 && gold.environment == 0) {
-                if (env.food == 0 && env.gold == 0 && env.environment == 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    private void OnEnemyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
+        canEnemyPlaying = true;
+    }
+
+    private void OnMyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
+        canPlaying = true;
     }
 
     // Use this for initialization
     void Start() {
-        //IngameEnemyGenerator ieg = FindObjectOfType<IngameEnemyGenerator>();
         playerName.text = AccountManager.Instance.userInfos.nickname;
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
-        //StartCoroutine("EnemyRepair");
-        //enemyHQ = ieg.ingameCityManager.enemyHQ;
-        //playerHQ = ieg.ingameCityManager.playerHQ;
     }
 
     private void Update() {
-        if (isPlaying) {
-            /*
-            if (IngameScoreManager.Instance.playerScore > IngameScoreManager.Instance.dummyScore) {
-                isPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-            }
-            */
+        if (canPlaying && canEnemyPlaying) {
             if (enemyController.GetComponent<Container.PlayerResource>().hp < 1) {
-                isPlaying = false;
+                canPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
             if (playerController.GetComponent<Container.PlayerResource>().hp < 1) {
-                isPlaying = false;
+                canPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }
-            
         }
     }
 
@@ -112,7 +98,7 @@ public class IngameSceneUIController : MonoBehaviour {
     }
 
     IEnumerator EnemyRepair() {
-        while(time > 60 && isPlaying == true) {
+        while(time > 60 && canEnemyPlaying == true) {
             yield return new WaitForSeconds(60f);
             IngameAlarm.instance.SetAlarm("Dummy 도시의 건물이 재건됩니다!!");
         }

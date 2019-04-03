@@ -44,9 +44,17 @@ namespace Container {
 
 [System.Serializable]
 public class ActiveCard {
+    public int id;
     public GameObject parentBuilding;
     public GameObject gameObject;
     public BaseSpec baseSpec = new BaseSpec();
     public string type;
     public Ev ev;
+
+    public void ChangeHp(int newVal) { ev.hp = newVal; }
+    public void TakeDamage(int amount) {
+        int changedHp = ev.hp - amount;
+        ChangeHp(changedHp);
+        //Debug.Log("데미지 받음");
+    }
 }
