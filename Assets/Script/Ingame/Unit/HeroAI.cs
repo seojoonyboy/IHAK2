@@ -146,6 +146,10 @@ public partial class HeroAI : UnitAI {
         FindUnitSkill(unit.skill);
 	}
 
+    public override void ResetSpeedPercentage() {
+        moveSpeed = unitCard.baseSpec.unit.moveSpeed;
+    }
+
     public void ExpGain(int exp) {
         unitCard.ev.exp += exp;
         CheckLv();

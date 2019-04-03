@@ -9,7 +9,7 @@ public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
         if (UseCard()) {
             GetComponent<ScaryOracleDragHandler>().enabled = false;
 
-            obj.GetComponent<ScaryOracle>().StartDebuff();
+            obj.GetComponent<ScaryOracleEmiiter>().StartDebuff();
 
             ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
             coolComp.targetCard = gameObject;
@@ -25,6 +25,6 @@ public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
     public override void OnBeginDrag(PointerEventData eventData) {
         Setting();
 
-        obj.GetComponent<ScaryOracle>().Init(data);
+        obj.GetComponent<ScaryOracleEmiiter>().Init(data);
     }
 }

@@ -292,4 +292,18 @@ public partial class UnitAI : MonoBehaviour {
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) {}
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
     public virtual void attackingHero(UnitAI unit) {}
+    public virtual void ResetSpeedPercentage() { }
+
+    public void ChangeSpeed(int amount) {
+        moveSpeed += amount;
+    }
+
+    public void ChangeSpeedByPercentage(int percent) {
+        if(percent > 0) {
+            moveSpeed *= (percent / 100.0f) + 1.0f;
+        }
+        else if(percent < 0) {
+            moveSpeed *= (-percent / 100.0f);
+        }
+    }
 }

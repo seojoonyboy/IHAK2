@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
@@ -29,7 +29,11 @@ public class MinionAI : UnitAI {
 		calculateHealthBar();
 	}
 
-	private void SetMaxHP() {
+    public override void ResetSpeedPercentage() {
+        moveSpeed = unit.moveSpeed * 0.4f;
+    }
+
+    private void SetMaxHP() {
         maxHealth = unit.hitPoint;
     }
 	public override void DestoryEnemy() {
