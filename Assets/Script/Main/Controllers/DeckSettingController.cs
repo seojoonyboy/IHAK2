@@ -32,6 +32,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public GameObject unitGenDetailModal;
     [SerializeField] private EditScenePanel editScenePanel;
     [SerializeField] public GameObject DeckStatusUI;
+    [SerializeField] public GameObject selectUI;
 
     public Text
         modalHeader,
@@ -89,6 +90,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     public Button nameEditBtn;
     public string changedDeckName;
 
+    [Header(" - BuildingMove")]
+    public bool moveBuild = false;
+    public GameObject moveTarget;
+
+
     public int SpeciesId {
         get {
             return speciesId;
@@ -128,6 +134,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         dragStream.Where(_ => (clicktime < requireClickTime) && (picking== true || selectBuilding != null)).Subscribe(_ => clicktime += Time.deltaTime);
         dragStream.Where(_=>clicktime >= requireClickTime).Subscribe(_ => MoveEditBuilding());
         upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_=> ShowDetail(selectBuilding.GetComponent<BuildingObject>()));
+        upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_ => selectBuilding.GetComponent<PolygonCollider2D>().enabled = true);
         upStream.Where(_=> clicktime >= requireClickTime).Subscribe(_ => DropEditBuilding());
         upStream.Subscribe(_ => clicktime = 0f);
 
@@ -371,10 +378,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
+
+        
         if (hit.collider != null) {
 
-            if (hit.collider.tag == "Building") {
+            if (hit.collider.tag == "Building") {                
                 selectBuilding = hit.transform.gameObject;
+                selectUI.transform.position = cam.WorldToScreenPoint(selectBuilding.transform.position);
                 saveSelectBuilding = selectBuilding;
                 startSortingOrder = GetSortingOrder(selectBuilding);
                 if (selectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)

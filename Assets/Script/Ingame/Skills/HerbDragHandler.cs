@@ -1,9 +1,8 @@
-using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MagmaDragHandler : IngameActiveCardDragHandler {
+public class HerbDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
-        obj.GetComponent<Magma>().StartDamaging();
+        obj.GetComponent<Herb>().StartHealing();
 
         ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
         coolComp.targetCard = gameObject;
@@ -17,6 +16,6 @@ public class MagmaDragHandler : IngameActiveCardDragHandler {
     public override void OnBeginDrag(PointerEventData eventData) {
         Setting();
 
-        obj.GetComponent<Magma>().Init(data);
+        obj.GetComponent<Herb>().Init(data);
     }
 }
