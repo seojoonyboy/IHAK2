@@ -14,6 +14,7 @@ public partial class HeroAI : UnitAI {
     }
 
 	private Transform expBar;
+    private Transform colltimeBar;
     private TextMeshPro LvText;
 	private decimal attackSP;
 	[SerializeField] private ActiveCard unitCard;
@@ -22,8 +23,8 @@ public partial class HeroAI : UnitAI {
 
     private timeUpdate skillUpdate;
     private float coolTime;
-    private float activeSkillCoolTime = 1f; //TODO : 임시
-    private float skillUsingTime = 1f;  // TODO : 임시
+    private float activeSkillCoolTime = 2f; //TODO : 임시
+    private float skillUsingTime = 2f;  // TODO : 임시
     
     private UnityAction skillActivate;
     
@@ -50,7 +51,8 @@ public partial class HeroAI : UnitAI {
 
     void CoolTimeUpdate(float time) {
         coolTime += time;
-        if(coolTime < activeSkillCoolTime) return;
+        colltimeBar.localScale = new Vector3(coolTime / activeSkillCoolTime, colltimeBar.localScale.y, 0);
+        if (coolTime < activeSkillCoolTime) return;
         Debug.Log("스킬 발동");
         skillActivate();
         setState(skillState.SKILLING);
@@ -90,6 +92,7 @@ public partial class HeroAI : UnitAI {
         if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
+        colltimeBar = transform.Find("UnitBar/SkillCool");
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         fightHeroes = new List<HeroAI>();
