@@ -252,7 +252,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    public virtual void damaged(int damage) {
+    public virtual void damaged(float damage) {
         health -= damage;
         unitSpine.Hitted();
         calculateHealthBar();
@@ -283,6 +283,6 @@ public partial class UnitAI : MonoBehaviour {
     public virtual void SetUnitData(Unit unit, int level) {}
     public virtual void DestoryEnemy() {}
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) {}
-    public virtual int CalPower() { return Mathf.RoundToInt(power); }
+    public virtual float CalPower() { return power; }
     public virtual void attackingHero(UnitAI unit) {}
 }
