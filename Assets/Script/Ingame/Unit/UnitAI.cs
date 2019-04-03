@@ -260,6 +260,12 @@ public partial class UnitAI : MonoBehaviour {
         if(health <= 0) DestoryEnemy();
     }
 
+    private void healed(float healingHP) {
+        health += healingHP;
+        if(health > maxHealth) health = maxHealth;
+        calculateHealthBar();
+    }
+
     protected void calculateHealthBar() {
         if (!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
         float percent = (float)health / maxHealth;
