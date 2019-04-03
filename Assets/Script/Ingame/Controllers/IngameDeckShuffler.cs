@@ -150,7 +150,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         }
     }
 
-    private bool CanUseCard(ActiveCardInfo card) {
+    public bool CanUseCard(ActiveCardInfo card) {
         string type = card.data.type;
         Cost cost = null;
         switch (type) {
@@ -218,13 +218,42 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     coolTime
                 );
                 break;
-            //case ""
+            case "scary_prediction":
+                Destroy(card.GetComponent<IngameDragHandler>());
+                ScaryOracleDragHandler scaryOracle = card.AddComponent<ScaryOracleDragHandler>();
+
+                scaryOracle.Init(
+                    camera,
+                    effectModules[Effects.skill_scaryOracle],
+                    PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
+                    card.GetComponent<ActiveCardInfo>().data.parentBuilding,
+                    this,
+                    args,
+                    coolTime
+                );
+                break;
+
+            case "war_cry":
+                Destroy(card.GetComponent<IngameDragHandler>());
+                WarCryDragHandler warCry = card.AddComponent<WarCryDragHandler>();
+
+                warCry.Init(
+                    camera,
+                    effectModules[Effects.skill_scaryOracle],
+                    PlayerController.Instance.maps[PlayerController.Player.PLAYER_1].transform.parent,
+                    card.GetComponent<ActiveCardInfo>().data.parentBuilding,
+                    this,
+                    args,
+                    coolTime
+                );
+                break;
         }
     }
 
     public enum Effects {
         skill_magma,
         skill_herb,
-        skill_scaryOracle
+        skill_scaryOracle,
+        skill_warcry
     }
 }

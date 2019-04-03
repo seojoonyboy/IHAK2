@@ -2112,13 +2112,9 @@ MonoBehaviour:
           id: 0
           name: 
           method:
-            id: 0
             methodName: 
             args: 
-          tierNeed: 0
-          coolTime: 0
           desc: 
-          imageName: 
         imageName: 
       lv: 0
     gameObject: {fileID: 0}
@@ -2153,13 +2149,9 @@ MonoBehaviour:
           id: 0
           name: 
           method:
-            id: 0
             methodName: 
             args: 
-          tierNeed: 0
-          coolTime: 0
           desc: 
-          imageName: 
         imageName: 
       lv: 0
     gameObject: {fileID: 0}
@@ -2214,13 +2206,9 @@ MonoBehaviour:
           id: 0
           name: 
           method:
-            id: 0
             methodName: 
             args: 
-          tierNeed: 0
-          coolTime: 0
           desc: 
-          imageName: 
         imageName: 
       lv: 0
     gameObject: {fileID: 0}
@@ -2260,13 +2248,9 @@ MonoBehaviour:
           id: 0
           name: 
           method:
-            id: 0
             methodName: 
             args: 
-          tierNeed: 0
-          coolTime: 0
           desc: 
-          imageName: 
         imageName: 
       lv: 0
     gameObject: {fileID: 0}
@@ -7564,7 +7548,8 @@ MonoBehaviour:
   ingameTimer: {fileID: 1905110268}
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 0}
-  isPlaying: 1
+  canPlaying: 0
+  canEnemyPlaying: 0
   playerController: {fileID: 282962850}
   enemyController: {fileID: 1844919643}
 --- !u!1 &1259288191
@@ -8832,6 +8817,7 @@ MonoBehaviour:
     - {fileID: 1966172136889694, guid: fc14ac80d6dfd684e91e1f0202cbf8ee, type: 2}
     - {fileID: 1966172136889694, guid: 0e8ed439ce43ad4449e028b10e901132, type: 2}
     - {fileID: 1966172136889694, guid: e9e5e687c8c99ac429cb1b6ad749c4f7, type: 2}
+    - {fileID: 1966172136889694, guid: 72cdac53689c33a44adc4006587b6c8b, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -8850,40 +8836,52 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
       Data: 3
     - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
       Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -8901,10 +8899,8 @@ MonoBehaviour:
   heroCardParent: {fileID: 1568939764}
   spellCardParent: {fileID: 411155556}
   itemCardParent: {fileID: 920716469}
-  origin: []
-  Deck: 
-  Hand: 
-  Grave: 
+  heroCards: []
+  spellCards: []
   camera: {fileID: 1047380300}
 --- !u!1 &1469289294
 GameObject:

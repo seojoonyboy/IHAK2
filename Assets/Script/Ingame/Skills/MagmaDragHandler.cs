@@ -3,6 +3,10 @@ using UnityEngine.EventSystems;
 
 public class MagmaDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
+        UseCard();
+
+        if (!PlayerController.Instance.deckShuffler().CanUseCard(GetComponent<ActiveCardInfo>())) return;
+
         obj.GetComponent<Magma>().StartDamaging();
 
         ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
@@ -10,8 +14,6 @@ public class MagmaDragHandler : IngameActiveCardDragHandler {
         coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
         coolComp.StartCool();
-
-        UseCard();
     }
 
     public override void OnBeginDrag(PointerEventData eventData) {
