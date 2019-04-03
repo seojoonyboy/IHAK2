@@ -100,8 +100,8 @@ public partial class HeroAI : UnitAI {
         return Mathf.RoundToInt(((100f + unitCard.ev.lv * 15f) / 100f) * stat);
     }
 
-    public override float CalPower() {
-        return power;
+    public override int CalPower() {
+        return Mathf.RoundToInt(power);
     }
 
     private float HealTime() {
