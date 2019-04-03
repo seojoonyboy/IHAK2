@@ -6,16 +6,16 @@ using DataModules;
 using System;
 
 public partial class HeroAI : UnitAI {
-    
 
-	private Transform expBar;
+
+    private Transform expBar;
     private Transform cooltimeBar;
     private TextMeshPro LvText;
-	private decimal attackSP;
-	[SerializeField] private ActiveCard unitCard;
+    private decimal attackSP;
+    [SerializeField] private ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
 
-	private void Init() {
+    private void Init() {
         if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
@@ -23,7 +23,7 @@ public partial class HeroAI : UnitAI {
         LvText = transform.Find("UnitBar/LevelBackGround/Level").GetComponent<TextMeshPro>();
         unitSpine = GetComponentInChildren<UnitSpine>();
         fightHeroes = new List<HeroAI>();
-		InitStatic();
+        InitStatic();
     }
 
     public override void SetUnitData(ActiveCard card) {
@@ -31,16 +31,16 @@ public partial class HeroAI : UnitAI {
         this.unitCard = card;
         Unit unit = card.baseSpec.unit;
         moveSpeed = unit.moveSpeed * 0.4f;
-		attackSpeed = unit.attackSpeed;
-		attackRange = unit.attackRange;
-		attackSP = unit.attackSP;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        attackSP = unit.attackSP;
         power = unit.power;
-        if(card.ev.lv <= 0) card.ev.lv = 1;
+        if (card.ev.lv <= 0) card.ev.lv = 1;
         SetMaxHP();
-        if(health == 0) health = card.ev.hp;
-        if(health == 0) health = maxHealth;
+        if (health == 0) health = card.ev.hp;
+        if (health == 0) health = maxHealth;
         else health += HealTime();
-        if(health > maxHealth) health = maxHealth;
+        if (health > maxHealth) health = maxHealth;
         calculateHealthBar();
         calculateExpBar();
         ChangeLvText();
@@ -65,16 +65,16 @@ public partial class HeroAI : UnitAI {
         power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
-        if(health == 0) health = unitCard.ev.hp;
-        if(health == 0) health = maxHealth;
+        if (health == 0) health = unitCard.ev.hp;
+        if (health == 0) health = maxHealth;
         else health += HealTime();
-        if(health > maxHealth) health = maxHealth;
+        if (health > maxHealth) health = maxHealth;
         calculateHealthBar();
         calculateExpBar();
         ChangeLvText();
         setState(skillState.COOLING);
         FindUnitSkill(unit.skill);
-	}
+    }
 
     public override void ResetSpeedPercentage() {
         moveSpeed = unitCard.baseSpec.unit.moveSpeed;
@@ -92,11 +92,11 @@ public partial class HeroAI : UnitAI {
 
     private void CheckLv() {
         bool isLvUp = ExpNeed() <= unitCard.ev.exp;
-        if(isLvUp) ChangeStat();
+        if (isLvUp) ChangeStat();
     }
 
     private void ChangeStat() {
-        if(unitCard.ev.lv >= 10) return;
+        if (unitCard.ev.lv >= 10) return;
         unitCard.ev.lv++;
         unitCard.ev.exp = 0;
         power = PowerUP(power);
@@ -118,7 +118,7 @@ public partial class HeroAI : UnitAI {
 
     private float HealTime() {
         int totalTime = (int)Time.realtimeSinceStartup - unitCard.ev.time;
-        float healed = maxHealth * totalTime * 0.03f; 
+        float healed = maxHealth * totalTime * 0.03f;
         return healed;
     }
 
@@ -128,13 +128,13 @@ public partial class HeroAI : UnitAI {
         beforeMax = maxHealth - beforeMax;
         health += beforeMax;
     }
-    
-	private void calculateExpBar() {
+
+    private void calculateExpBar() {
         float percent = (float)unitCard.ev.exp / ExpNeed();
         expBar.transform.localScale = new Vector3(percent, 1f, 1f);
     }
 
-	private void SetMaxHP() {
+    private void SetMaxHP() {
         maxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
     }
 
@@ -142,17 +142,17 @@ public partial class HeroAI : UnitAI {
         TileReset();
         unitCard.ChangeHp(0);
 
-        if(gameObject.layer == myLayer) {
+        if (gameObject.layer == myLayer) {
             ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, true);
         }
-        else if(gameObject.layer == enemyLayer) {
+        else if (gameObject.layer == enemyLayer) {
             enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
         }
         GiveExp();
         Destroy(gameObject);
     }
 
-	public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
+    public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
         unitCard.ChangeHp((int)health);
         unitCard.ev.time = (int)Time.realtimeSinceStartup;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
@@ -160,24 +160,24 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void attackingHero(UnitAI unit) {
-        if(unit.GetComponent<HeroAI>() == null) return;
+        if (unit.GetComponent<HeroAI>() == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
-            if(fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
+            if (fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
         fightHeroes.Add(unit.GetComponent<HeroAI>());
     }
 
     private void GiveExp() {
-        if(fightHeroes.Count == 0) return;
+        if (fightHeroes.Count == 0) return;
         int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
         RemoveDeadHero();
-        if(fightHeroes.Count == 0) return;
+        if (fightHeroes.Count == 0) return;
         exp /= fightHeroes.Count;
-        foreach(HeroAI hero in fightHeroes) hero.ExpGain(exp);
+        foreach (HeroAI hero in fightHeroes) hero.ExpGain(exp);
     }
 
     private void RemoveDeadHero() {
-        for(int i = 0; i < fightHeroes.Count; i++) {
-            if(fightHeroes[i] == null) {
+        for (int i = 0; i < fightHeroes.Count; i++) {
+            if (fightHeroes[i] == null) {
                 fightHeroes.RemoveAt(i);
                 i--;
             }
