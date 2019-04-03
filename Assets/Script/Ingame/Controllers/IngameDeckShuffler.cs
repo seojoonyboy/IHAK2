@@ -136,6 +136,10 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
                 case "unit":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
+                    var effectModules = playerController.PlayerPassiveCards().effectModules;
+                    if (effectModules.ContainsKey("Unit_health")) {
+                        activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
+                    }
                     playerController.HeroSummon(activeCard.data);
 
                     selectedObject.GetComponent<IngameDragHandler>().enabled = false;

@@ -206,6 +206,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
         IngameDeckShuffler tmp = transform.GetChild(0).GetComponent<IngameDeckShuffler>();
         return transform.GetChild(0).GetComponent<IngameDeckShuffler>();
     }
+
+    public PlayerPassiveCards PlayerPassiveCards() {
+        return GetComponent<PlayerPassiveCards>();
+    }
 }
 
 public partial class PlayerController {
@@ -226,6 +230,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public Dictionary<string, GameObject> heroPrefabs;
 
     [SerializeField] Transform summonParent;
+    [SerializeField] Transform passiveUIParent;
+    [SerializeField] GameObject passiveUIPref;
 
     public void HeroSummon(ActiveCard card) {
         var result = GetHeroPrefab(card.baseSpec.unit.id);
@@ -245,5 +251,20 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public GameObject GetHeroPrefab(string id) {
         if (!heroPrefabs.ContainsKey(id)) return null;
         return heroPrefabs[id];
+    }
+
+    public void SetPassiveUI() {
+        foreach (KeyValuePair<string, float> pair in PlayerPassiveCards().effectModules) {
+            GameObject uiObj = Instantiate(passiveUIPref, passiveUIParent);
+            Text desc = uiObj.transform.Find("Text").GetComponent<Text>();
+
+            if (pair.Key == "Unit_health") {
+                desc.text = "유닛 체력 버프 적용중 +" + pair.Value;
+            }
+
+            if(pair.Key == "Unit_die_gold") {
+                desc.text = "유닛 사망시 골드 획득 버프 적용중 +" + pair.Value;
+            }
+        }
     }
 }

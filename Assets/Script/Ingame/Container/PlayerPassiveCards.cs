@@ -3,33 +3,66 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataModules;
 
 public class PlayerPassiveCards : SerializedMonoBehaviour {
     public List<GameObject> passiveCards;
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
-    public Dictionary<Passives, GameObject> effectModules;
+    public Dictionary<string, float> effectModules = new Dictionary<string, float>();
 
     [SerializeField] [ReadOnly] PlayerController playerController;
     [SerializeField] [ReadOnly] TileGroup tileGroup;
 
-    public void Init() {
-        playerController = PlayerController.Instance;
-        try {
-            tileGroup =
-            playerController.maps[PlayerController.Player.PLAYER_1]
-            .transform.GetChild(0)
-            .gameObject
-            .GetComponent<TileGroup>();
-        }
-        catch (NullReferenceException ex) {
-            Debug.LogError("TileGroup을 찾을 수 없습니다.");
-            return;
-        }
+    private IngameSceneEventHandler ingameSceneEventHandler;
 
-
+    void Awake() {
+        ingameSceneEventHandler = IngameSceneEventHandler.Instance;
+        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
     }
 
+    private void OnMyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
+        Init();
+    }
 
+    public void Init() {
+        playerController = PlayerController.Instance;
+        var buildings = playerController.playerBuildings().buildingInfos;
+        foreach(BuildingInfo buildingInfo in buildings) {
+            if(buildingInfo.cardInfo.type == "passive") {
+                passiveCards.Add(buildingInfo.gameObject);
+                //AddEffectModule(buildingInfo.cardInfo.passiveSkills[0].method.methodName);
+                TmpAddEffectModule(buildingInfo.cardInfo.id);
+            }
+        }
+        playerController.SetPassiveUI();
+    }
+
+    private void TmpAddEffectModule(string id) {
+        switch (id) {
+            //원시광장 (유닛 체력 증가)
+            case "n_pm_02001":
+                if (effectModules.ContainsKey("Unit_health")) {
+                    effectModules["Unit_health"] += 10;
+                }
+                else {
+                    effectModules.Add("Unit_health", 10);
+                }
+                break;
+            //자연의 청소부 (유닛 사망시 골드 획득)
+            case "n_pm_02004":
+                if (effectModules.ContainsKey("Unit_die_gold")) {
+                    effectModules["Unit_health"] += 5;
+                }
+                else {
+                    effectModules.Add("Unit_die_gold", 5);
+                }
+                break;
+        }
+    }
+
+    private void AddEffectModule(string methodName) {
+
+    }
 
     public enum Passives {
         mysterious_mine,
