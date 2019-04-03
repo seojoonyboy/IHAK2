@@ -49,7 +49,7 @@ public class ActiveCard {
     public GameObject gameObject;
     public BaseSpec baseSpec = new BaseSpec();
     public string type;
-    public Ev ev;
+    public Ev ev = new Ev();
 
     public void ChangeHp(int newVal) { ev.hp = newVal; }
     public void TakeDamage(int amount) {
