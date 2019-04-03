@@ -80,9 +80,11 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
             return;
         }
 
-        obj.SetActive(true);
-        Vector3 origin = camera.ScreenToWorldPoint(Input.mousePosition);
-        obj.transform.position = new Vector3(origin.x, origin.y, 0);
+        if(obj != null) {
+            obj.SetActive(true);
+            Vector3 origin = camera.ScreenToWorldPoint(Input.mousePosition);
+            obj.transform.position = new Vector3(origin.x, origin.y, 0);
+        }
     }
 
     public virtual void OnEndDrag(PointerEventData eventData) { }
