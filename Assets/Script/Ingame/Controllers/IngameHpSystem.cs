@@ -110,6 +110,9 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                         enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
                         float hpScaleX = (float)enemyBuilding.hp / enemyBuilding.maxHp;
                         enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+
+                        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
                     }
                 }
                 else if (enemyBuilding.hp <= amount) {
@@ -119,24 +122,22 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     enemyBuilding.activate = false;
                     BuildingDestroyed(target, enemyBuilding);
+                    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
+                    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
                     if (enemyBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
                         DestroyEnemy();
                 }
 
-
+                /*
                 if (enemyResource.TotalHp > amount) {
                     enemyResource.TotalHp -= amount;
-                    float percent = (float)enemyResource.TotalHp / enemyResource.maxhp;
-                    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
-                    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = percent;
+                    float percent = (float)enemyResource.TotalHp / enemyResource.maxhp;                    
                 }
                 else if(enemyResource.TotalHp <= amount) {
-                    enemyResource.TotalHp = 0;
-                    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
-                    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-                                    
-                }                             
+                    enemyResource.TotalHp = 0;                   
+                } 
+                */
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
 
@@ -153,6 +154,8 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                         myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
                         float hpScaleX = (float)myBuilding.hp / myBuilding.maxHp;
                         myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
                     }
                 }
                 else if(myBuilding.hp <= amount) {
@@ -162,22 +165,23 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     myBuilding.activate = false;
                     BuildingDestroyed(target, myBuilding);
+                    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
+                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
                     if (myBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
                         DestroyCity();
                 }
-
+                /*
                 if(myResource.TotalHp > amount) {
                     myResource.TotalHp -= amount;
                     float percent = (float)myResource.TotalHp / myResource.maxhp;
-                    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(percent * 100f).ToString() + "%";
-                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = percent;
+                    
                 }
                 else if (myResource.hp <= amount) {
                     myResource.TotalHp = 0;
-                    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
-                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;                                   
-                }                
+                                                
+                }    
+                */
                 break;
                 
         }
