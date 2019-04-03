@@ -42,9 +42,9 @@ public partial class HeroAI : UnitAI {
         ChangeLvText();
     }
 
-    public override void damaged(int damage) {
+    public override void damaged(float damage) {
         base.damaged(damage);
-        unitCard.TakeDamage(damage);
+        unitCard.TakeDamage(Mathf.RoundToInt(damage));
     }
 
     public override void SetUnitData(Unit unit, int level) {
@@ -100,8 +100,8 @@ public partial class HeroAI : UnitAI {
         return Mathf.RoundToInt(((100f + unitCard.ev.lv * 15f) / 100f) * stat);
     }
 
-    public override int CalPower() {
-        return Mathf.RoundToInt(power);
+    public override float CalPower() {
+        return power;
     }
 
     private float HealTime() {
