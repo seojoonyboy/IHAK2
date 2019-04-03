@@ -73,6 +73,14 @@ public partial class DeckListController : MonoBehaviour {
             if(response.data != null) {
                 List<Deck> decks = JsonReader.Read<List<Deck>>(response.data.ToString());
                 accountManager.decks = decks;
+
+                for(int i=0; i<decks.Count; i++) {
+                    accountManager.transform
+                        .GetChild(0)
+                        .GetChild(i)
+                        .GetComponent<Index>().Id = decks[i].id;
+                }
+
                 SetBuildingsInTileGroupTiles(decks);
 
                 int leaderIndex = 0;
@@ -284,6 +292,7 @@ public partial class DeckListController {
                             //    .GetComponent<BuildingObject>()
                             //    .card.data.unit.cost.environment;
                             ActiveCard activeCard = new ActiveCard();
+                            activeCard.id = buildingObject.card.id;
                             activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
                             activeCard.baseSpec.unit = buildingObject.card.data.unit;
                             activeCard.type = buildingObject.card.data.type;
@@ -292,6 +301,7 @@ public partial class DeckListController {
                         case "active":
                             buildingObject.card.data = tmp.card.data;
                             ActiveCard _activeCard = new ActiveCard();
+                            _activeCard.id = buildingObject.card.id;
                             _activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
                             _activeCard.baseSpec.skill = buildingObject.card.data.activeSkills[0];
                             _activeCard.type = buildingObject.card.data.type;

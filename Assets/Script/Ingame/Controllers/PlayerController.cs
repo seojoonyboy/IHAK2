@@ -10,6 +10,7 @@ using System;
 using Container;
 using Sirenix.OdinInspector;
 using TMPro;
+using System.Text;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
@@ -64,6 +65,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
     IngameSceneEventHandler eventHandler;
+    Req_deckDetail.Deck deck;
 
     private static PlayerController _instance;
 
@@ -116,30 +118,46 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
+        GetDeckDetailRequest(ld);
         _instance = this;
     }
 
-    // Use this for initialization
-    void Start() {
-        playing = true;
-        playerActiveCards().Init();
-        playerBuildings().Init();
-        playerBuildings().RemoveTile();
-        
-        deckShuffler().InitCard();
-        resourceManager().OnGoldProduce(true);
-        //PrintResource();
-        //PrimalEnvEfct();
+    private void GetDeckDetailRequest(GameObject ld) {
+        StringBuilder url = new StringBuilder();
+        NetworkManager _networkManager = NetworkManager.Instance;
+        int id = ld.GetComponent<Index>().Id;
 
-        //icm.productResources.gold.gold += icm.upgradeInfos[0].product.gold;
-        //icm.productResources.food.food += icm.upgradeInfos[0].product.food;
-        //icm.productResources.env.environment += icm.upgradeInfos[0].product.env;
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(AccountManager.Instance.DEVICEID)
+            .Append("/decks/")
+            .Append(id.ToString());
+        _networkManager.request("GET", url.ToString(), GetDetailDeckCallback, false);
+    }
 
-        //coinAni.GetSkeletonData(false);
-        //SetPlayerConsumeResource();
-        //playing = true;
-        //StartCoroutine(AoutomaticSystem());
+    private void GetDetailDeckCallback(HttpResponse response) {
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                deck = JsonReader.Read<Req_deckDetail.Deck>(response.data.ToString());
+                TileGroup tileGroup = maps[Player.PLAYER_1]
+                    .transform
+                    .GetChild(0)
+                    .gameObject
+                    .GetComponent<TileGroup>();
+
+                foreach(Req_deckDetail.Card card in deck.cards) {
+                    if (card.data.type == "unit") {
+                        ActiveCard activeCard = tileGroup.units.Find(x => x.id == card.id);
+                        if(activeCard != null) {
+                            activeCard.baseSpec.unit.skill = card.data.unit.skill;
+                        }
+                    }
+                }
+                eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, null);
+            }
+        }
     }
 
     void OnDestroy() {
@@ -153,114 +171,15 @@ public partial class PlayerController : SerializedMonoBehaviour {
         playerResource().maxhp = playerResource().TotalHp;
     }
 
-    //public void PrintResource() {
-    //    goldValue.text = Gold.ToString();
-    //    foodValue.text = Food.ToString();
+    private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {
+        playing = true;
+        playerActiveCards().Init();
+        playerBuildings().Init();
+        playerBuildings().RemoveTile();
 
-    //    Transform envBar = envValue.transform.parent.GetChild(1);
-    //    envBar.localPosition = new Vector3(((float)Env / 600.0f) * 540, 0, 0);
-    //    Text envText = envValue.transform.parent.GetChild(3).GetComponent<Text>();
-    //    envText.text = Env.ToString();
-    //    showResource();
-    //}
-
-    //private void showResource() {
-    //    productResource.GetChild(0).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication).ToString();
-    //    productResource.GetChild(1).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication).ToString();
-    //    productResource.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication).ToString();        
-    //}
-
-    //public bool isEnoughResources(DataModules.Cost cost) {
-    //    if (Gold < cost.gold) return false;
-    //    if (Food < cost.food) return false;
-    //    return true;
-    //}
-
-    //private void PrimalEnvEfct() {
-    //    if (Env < -299) {
-    //        if (!envEfctOn) {
-    //            envEfctOn = !envEfctOn;
-    //            efct3 = Efct3Second(false);
-    //            StartCoroutine(efct3);
-    //        }   
-    //    }
-    //    if (Env >= -299 && Env <= 299) {
-    //        if(efct3 != null)
-    //            StopCoroutine(efct3);
-    //    }
-    //    if (Env > 299) {
-    //        if (!envEfctOn) {
-    //            envEfctOn = !envEfctOn;
-    //            efct3 = Efct3Second(true);
-    //            StartCoroutine(efct3);
-    //        }
-    //    }
-    //}
-
-    //private IEnumerator Efct3Second(bool positive) {
-    //    while (!positive) {
-    //        yield return new WaitForSeconds(3.0f);
-    //        Food -= (uint)Mathf.Round(Env / 5);
-    //        Gold += (uint)Mathf.Round(Env / 5);
-    //    }
-    //    while (positive) {
-    //        yield return new WaitForSeconds(3.0f);
-    //        Food += (uint)Mathf.Round(Env / 5);
-    //        Gold = CheckResourceFlow(Gold, (uint)Mathf.Round(Env / 5), false);
-    //    }
-    //}
-
-    //private IEnumerator AoutomaticSystem() {
-    //    int time = 300;
-    //    while (playing) {
-    //        yield return new WaitForSeconds(1.0f);
-    //        time--;
-    //        ingameTimer.text = ((int)(time / 60)).ToString() + ":";
-    //        if (((int)(time % 60)) < 10)
-    //            ingameTimer.text += "0";
-    //        ingameTimer.text += ((int)(time % 60)).ToString();
-
-    //        Gold += (uint)Mathf.Round((float)icm.productResources.all.gold * icm.myBuildings_mags[0].magnfication);
-    //        Food += (uint)Mathf.Round((float)icm.productResources.all.food * icm.myBuildings_mags[1].magnfication);
-    //        if (Env >= -600 && Env <= 600) {
-    //            Env += (int)Mathf.Round((float)icm.productResources.all.environment * icm.myBuildings_mags[2].magnfication);
-    //            Env -= (int)Mathf.Round((icm.productResources.all.gold + icm.productResources.all.food) / time);
-    //            if (Env < -600)
-    //                Env = -600;
-    //            if (Env > 600)
-    //                Env = 600;
-    //        }
-    //        scoreManager.AddScore(icm.productResources.all.gold, IngameScoreManager.ScoreType.Product);
-    //        scoreManager.AddScore(icm.productResources.all.food, IngameScoreManager.ScoreType.Product);
-    //        scoreManager.AddScore(icm.productResources.all.environment, IngameScoreManager.ScoreType.Product);
-
-    //        PrintResource();
-    //        PrimalEnvEfct();
-    //    }
-    //}
-    //public void SetPlayerConsumeResource() {
-    //    float hp = icm.cityMaxHP;
-    //    MaxHpMulti = Mathf.RoundToInt(hp * 0.005f);
-    //    tileCount = icm.CityTotalTileCount();
-    //}
-
-    //public uint CheckResourceFlow(uint target, uint am1, bool sum) {
-    //    int targetSource, amount;
-    //    targetSource = (int)target;
-    //    amount = (int)am1;
-
-
-    //    if (sum == true)
-    //        targetSource += amount;
-    //    else if (sum == false)
-    //        targetSource -= amount;
-
-    //    if (targetSource > 0) {
-    //        return (uint)targetSource;
-    //    }
-    //    else
-    //        return 0;
-    //}
+        deckShuffler().InitCard();
+        resourceManager().OnGoldProduce(true);
+    }
 }
 
     /// <summary>
@@ -284,6 +203,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     public IngameDeckShuffler deckShuffler() {
+        IngameDeckShuffler tmp = transform.GetChild(0).GetComponent<IngameDeckShuffler>();
         return transform.GetChild(0).GetComponent<IngameDeckShuffler>();
     }
 }
