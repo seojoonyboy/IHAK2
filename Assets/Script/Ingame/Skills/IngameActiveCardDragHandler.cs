@@ -68,9 +68,6 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
 
         GameObject deactive = transform.Find("Deactive").gameObject;
         deactive.SetActive(true);
-
-        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = true;
-        PlayerController.Instance.deckShuffler().cardParent.GetComponent<HorizontalLayoutGroup>().childForceExpandWidth = false;
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData) { }

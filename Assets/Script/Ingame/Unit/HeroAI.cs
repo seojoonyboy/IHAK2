@@ -42,7 +42,12 @@ public partial class HeroAI : UnitAI {
         ChangeLvText();
     }
 
-	public override void SetUnitData(Unit unit, int level) {
+    public override void damaged(int damage) {
+        base.damaged(damage);
+        unitCard.TakeDamage(damage);
+    }
+
+    public override void SetUnitData(Unit unit, int level) {
         Init();
         unitCard = new ActiveCard();
         unitCard.baseSpec.unit = unit;
@@ -123,7 +128,7 @@ public partial class HeroAI : UnitAI {
 
     public override void DestoryEnemy() {
         TileReset();
-        unitCard.ev.hp = 0;
+        unitCard.ChangeHp(0);
 
         if(gameObject.layer == myLayer) {
             ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, true);
@@ -136,7 +141,7 @@ public partial class HeroAI : UnitAI {
     }
 
 	public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
-        unitCard.ev.hp = (int)health;
+        unitCard.ChangeHp((int)health);
         unitCard.ev.time = (int)Time.realtimeSinceStartup;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);

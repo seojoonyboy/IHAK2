@@ -252,7 +252,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    public void damaged(int damage) {
+    public virtual void damaged(int damage) {
         health -= damage;
         unitSpine.Hitted();
         calculateHealthBar();

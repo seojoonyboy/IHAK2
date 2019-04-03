@@ -42,7 +42,7 @@ namespace DataModules {
         public float moveSpeed;
         public decimal attackSP;
         public decimal beHitSP;
-        public Skill skill;
+        public UnitSkill skill;
 
         public string imageName;
     }
@@ -74,8 +74,22 @@ namespace DataModules {
     }
 
     [System.Serializable]
+    public class UnitSkill {
+        public int id;
+        public string name;
+        public UnitSkillDetail method;
+        public string desc;
+    }
+
+    [System.Serializable]
     public class SkillDetail {
         public int id;
+        public string methodName;
+        public string args;
+    }
+
+    [System.Serializable]
+    public class UnitSkillDetail {
         public string methodName;
         public string args;
     }
