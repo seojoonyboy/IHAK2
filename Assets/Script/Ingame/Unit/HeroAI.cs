@@ -188,4 +188,13 @@ public partial class HeroAI : UnitAI {
             }
         }
     }
+
+    public override void ResetStat() {
+        Unit unit = unitCard.baseSpec.unit;
+        moveSpeed = unit.moveSpeed * 0.4f;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        power = PowerUP(unit.power);
+        maxHealth = PowerUP(unit.hitPoint);
+    }
 }

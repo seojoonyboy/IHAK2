@@ -88,14 +88,20 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, heroCardParent);
-            card.transform.Find("Name/Value").GetComponent<Text>().text = unit.name;
+            card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
             card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
 
             //if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
-            if (unit.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = unit.cost.gold.ToString();
+            card.transform.Find("Header/Bg/Value").GetComponent<Text>().text = "<color=yellow>" + (int)unit.cost.gold + "</color><color=#0DBBFF>" + "/0</color>";
+            card.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>().text = "+ " + unit.power;
+            card.transform.Find("Specs/Base/Def/Value").GetComponent<Text>().text = "+ " + unit.defence;
             //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
+            Slider healthSlider = card.transform.Find("Stats/Health").GetComponent<Slider>();
+            Slider ExpSlider = card.transform.Find("Stats/Exp").GetComponent<Slider>();
+
+            healthSlider.value = healthSlider.maxValue = unit.hitPoint;
 
             heroCards.Add(card);
 
