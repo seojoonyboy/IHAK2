@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WarCry : MonoBehaviour {
+public class WarCry : Buff {
     public SpriteRenderer range_texture;
-    Data data;
+    public int duration;
 
     public void Init(string data) {
         string[] args = data.Split(',');
@@ -21,22 +21,19 @@ public class WarCry : MonoBehaviour {
         int moveSpeed = 0;
         int.TryParse(args[3], out moveSpeed);
 
-        this.data = new Data() {
-            duration = duration,
-            attackPower = attackPower,
-            moveSpeed = moveSpeed,
-            attackSpeed = attackSpeed
-        };
+        this.attackSpeed = attackSpeed;
+        power = attackPower;
+        this.duration = duration;
+        moveSpeed_percentage = moveSpeed;
     }
 
     public void StartBuff() {
-        StartCoroutine(Buff(1, data.duration));
+        StartCoroutine(Buff(1, duration));
     }
 
     IEnumerator Buff(float interval, int loopCount) {
         int count = 0;
         while (count < loopCount) {
-
             count++;
             yield return new WaitForSeconds(interval);
         }
@@ -44,9 +41,9 @@ public class WarCry : MonoBehaviour {
     }
 
     public struct Data {
-        public int moveSpeed;       //이동속도 증가량(%)
-        public int attackPower;     //공격력 증가량(%)
-        public float attackSpeed;     //공격속도 감소량(초)
-        public int duration;        //지속시간
+        public int moveSpeed;           //이동속도 증가량(%)
+        public int attackPower;         //공격력 증가량(%)
+        public float attackSpeed;       //공격속도 감소량(초)
+        public int duration;            //지속시간
     }
 }

@@ -13,16 +13,16 @@ public partial class UnitAI : MonoBehaviour {
         DEAD
     };
 
-    private delegate void timeUpdate(float time);
-    private timeUpdate update;
+    protected delegate void timeUpdate(float time);
+    protected timeUpdate update;
 
     private BuildingInfo targetBuilding;
     protected UnitAI targetUnit;
     protected Transform healthBar;
-    
+
     public float health = 0;
     protected float maxHealth = 0;
-    protected float power = 0;
+    public float power = 0;
     protected float defense = 0;
     protected float moveSpeed;
     protected float attackSpeed;
@@ -40,7 +40,7 @@ public partial class UnitAI : MonoBehaviour {
     private CircleCollider2D detectCollider;
 
     private List<BuildingInfo> buildingInfos;
-    
+
     protected UnitSpine unitSpine;
     private IngameSceneEventHandler eventHandler;
 
@@ -50,7 +50,7 @@ public partial class UnitAI : MonoBehaviour {
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
-        if(myLayer > 0) return;
+        if (myLayer > 0) return;
         myLayer = LayerMask.NameToLayer("PlayerUnit");
         enemyLayer = LayerMask.NameToLayer("EnemyUnit");
     }
@@ -163,7 +163,7 @@ public partial class UnitAI : MonoBehaviour {
         float distance;
         if (targetUnit != null) {
             distance = Vector3.Distance(targetUnit.transform.position, transform.position);
-            if(!isTargetClose(distance)) {
+            if (!isTargetClose(distance)) {
                 setState(aiState.MOVE);
                 return;
             }
@@ -171,7 +171,7 @@ public partial class UnitAI : MonoBehaviour {
         }
         else if (targetBuilding != null) {
             distance = Vector3.Distance(targetBuilding.gameObject.transform.position, transform.position);
-            if(!isTargetClose(distance)) {
+            if (!isTargetClose(distance)) {
                 setState(aiState.MOVE);
                 return;
             }
@@ -199,7 +199,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    private void attackUnit() {
+    public virtual void attackUnit() {
         targetUnit.damaged(power);
         targetUnit.attackingHero(this);
         unitSpine.Attack();
@@ -256,7 +256,17 @@ public partial class UnitAI : MonoBehaviour {
         health -= damage;
         unitSpine.Hitted();
         calculateHealthBar();
-        if(health <= 0) DestoryEnemy();
+        if (health <= 0) DestoryEnemy();
+    }
+
+    protected void healed(float healingHP) {
+        health += healingHP;
+        if (health > maxHealth) health = maxHealth;
+        calculateHealthBar();
+    }
+
+    protected int LayertoGive(bool isEnemy) {
+        return isEnemy ? enemyLayer : myLayer;
     }
 
     protected void calculateHealthBar() {
@@ -279,10 +289,24 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    public virtual void SetUnitData(ActiveCard card) {}
-    public virtual void SetUnitData(Unit unit, int level) {}
-    public virtual void DestoryEnemy() {}
-    public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) {}
+    public virtual void SetUnitData(ActiveCard card) { }
+    public virtual void SetUnitData(Unit unit, int level) { }
+    public virtual void DestoryEnemy() { }
+    public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) { }
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
-    public virtual void attackingHero(UnitAI unit) {}
+    public virtual void attackingHero(UnitAI unit) { }
+    public virtual void ResetSpeedPercentage() { }
+
+    public void ChangeSpeed(int amount) {
+        moveSpeed += amount;
+    }
+
+    public void ChangeSpeedByPercentage(int percent) {
+        if (percent > 0) {
+            moveSpeed *= (percent / 100.0f) + 1.0f;
+        }
+        else if (percent < 0) {
+            moveSpeed *= (-percent / 100.0f);
+        }
+    }
 }

@@ -101,12 +101,11 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
         startScale = transform.localScale;
     }
 
-    public void UseCard() {
+    public bool UseCard() {
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
 
-        deckShuffler.UseCard(gameObject);
-
-        GetComponent<IngameActiveCardDragHandler>().enabled = false;
+        var result = deckShuffler.UseCard(gameObject);
+        return result;
     }
 }

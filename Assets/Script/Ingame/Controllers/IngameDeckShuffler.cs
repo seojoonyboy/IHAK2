@@ -53,8 +53,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
-            if(parentBuilding.GetComponent<ActiveCardCoolTime>() == null) {
-                ActiveCardCoolTime comp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+            if(card.GetComponent<ActiveCardCoolTime>() == null) {
+                ActiveCardCoolTime comp = card.AddComponent<ActiveCardCoolTime>();
+                comp.behaviour = card.GetComponent<IngameDragHandler>();
                 comp.targetCard = card;
                 comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
                 comp.StartCool();
@@ -127,7 +128,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     }
 
     //card use
-    public void UseCard(GameObject selectedObject) {
+    public bool UseCard(GameObject selectedObject) {
         int id = selectedObject.GetComponent<Index>().Id;
         ActiveCardInfo activeCard = selectedObject.GetComponent<ActiveCardInfo>();
         if (CanUseCard(activeCard)) {
@@ -135,6 +136,10 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
                 case "unit":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
+                    var effectModules = playerController.PlayerPassiveCards().effectModules;
+                    if (effectModules.ContainsKey("Unit_health")) {
+                        activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
+                    }
                     playerController.HeroSummon(activeCard.data);
 
                     selectedObject.GetComponent<IngameDragHandler>().enabled = false;
@@ -144,9 +149,11 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
                     break;
             }
+            return true;
         }
         else {
             IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            return false;
         }
     }
 

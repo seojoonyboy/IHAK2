@@ -31,10 +31,14 @@ public class Herb : MonoBehaviour {
     }
 
     IEnumerator Heal(int amout) {
-        foreach (GameObject target in targets.ToList()) {
-            target.GetComponent<UnitAI>().HerbRation(data.amount);
+        int count = 0;
+        while(count < 5) {
+            foreach (GameObject target in targets.ToList()) {
+                count++;
+                target.GetComponent<UnitAI>().HerbRation(data.amount);
+                yield return new WaitForSeconds(1.0f);
+            }
         }
-        yield return new WaitForSeconds(1.0f);
         gameObject.SetActive(false);
     }
 
