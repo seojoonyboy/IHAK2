@@ -385,7 +385,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             if (hit.collider.tag == "Building") {                
                 selectBuilding = hit.transform.gameObject;
-                selectUI.transform.position = cam.WorldToScreenPoint(selectBuilding.transform.position);
                 saveSelectBuilding = selectBuilding;
                 startSortingOrder = GetSortingOrder(selectBuilding);
                 if (selectBuilding.GetComponent<BuildingObject>().setTileLocation == 12)
