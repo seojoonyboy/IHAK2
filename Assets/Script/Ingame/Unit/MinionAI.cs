@@ -57,4 +57,13 @@ public class MinionAI : UnitAI {
         int exp = expPoint / heroes.Count;
         for (int i = 0; i < heroes.Count; i++) heroes[i].ExpGain(exp);
     }
+
+    public override void ResetStat() {
+        moveSpeed = unit.moveSpeed * 0.4f;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        power = unit.power;
+        maxHealth = unit.hitPoint;
+
+    }
 }
