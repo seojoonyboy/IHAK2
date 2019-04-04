@@ -61,12 +61,12 @@ public partial class HeroAI : UnitAI {
                 Slider expSlider = unitCard.gameObject.transform.Find("Stats/Exp").GetComponent<Slider>();
 
                 healthSlider.value = health;
-                healthSlider.maxValue = unitCard.baseSpec.unit.hitPoint;
+                healthSlider.maxValue = maxHealth;
 
                 expSlider.value = unitCard.ev.exp;
                 expSlider.maxValue = ExpNeed();
 
-                //Debug.Log("카드 슬라이더 갱싱");
+                Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);
         }
@@ -125,7 +125,13 @@ public partial class HeroAI : UnitAI {
 
     private void CheckLv() {
         bool isLvUp = ExpNeed() <= unitCard.ev.exp;
-        if (isLvUp) ChangeStat();
+        if (isLvUp) {
+            ChangeStat();
+            if(unitCard.gameObject != null) {
+                Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
+                cardLvText.text = "Lv. " + unitCard.ev.lv;
+            }
+        }
     }
 
     private void ChangeStat() {
