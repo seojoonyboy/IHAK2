@@ -17,7 +17,7 @@ public class MinionAI : UnitAI {
         unitSpine = GetComponentInChildren<UnitSpine>();
     }
 
-    public override void SetUnitData(ActiveCard card) {
+    public override void SetUnitData(ActiveCard card, GameObject cardObj) {
         Init();
         InitStatic();
         moveSpeed = unit.moveSpeed * 0.4f;
@@ -56,5 +56,14 @@ public class MinionAI : UnitAI {
         if (heroes.Count == 0) return;
         int exp = expPoint / heroes.Count;
         for (int i = 0; i < heroes.Count; i++) heroes[i].ExpGain(exp);
+    }
+
+    public override void ResetStat() {
+        moveSpeed = unit.moveSpeed * 0.4f;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        power = unit.power;
+        maxHealth = unit.hitPoint;
+
     }
 }

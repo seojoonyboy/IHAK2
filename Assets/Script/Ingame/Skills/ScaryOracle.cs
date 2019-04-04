@@ -7,7 +7,7 @@ public class ScaryOracle : Buff {
     public int percentage;
 
     void Start() {
-        moveSpeed_percentage = percentage;
+        moveSpeed_percentage = -percentage;
         GetComponent<UnitAI>().AddBuff("scary_oracle", this);
     }
 

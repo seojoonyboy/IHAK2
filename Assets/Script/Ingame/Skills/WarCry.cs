@@ -21,7 +21,7 @@ public class WarCry : Buff {
         int moveSpeed = 0;
         int.TryParse(args[3], out moveSpeed);
 
-        this.attackSpeed = attackSpeed;
+        this.attackSpeed = -attackSpeed;
         power = attackPower;
         this.duration = duration;
         moveSpeed_percentage = moveSpeed;

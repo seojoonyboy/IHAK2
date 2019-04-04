@@ -76,7 +76,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         transform.GetComponent<Image>().enabled = false;
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = false;
+        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = false;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
@@ -85,7 +85,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
+        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = true;
 
         if (eventData == null) return;
 

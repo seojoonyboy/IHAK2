@@ -162,6 +162,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     void OnDestroy() {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
     }
 
     private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
@@ -187,28 +188,27 @@ public partial class PlayerController : SerializedMonoBehaviour {
     /// </summary>
     public partial class PlayerController {
     public PlayerResource playerResource() {
-        return GetComponent<PlayerResource>();
+        return _instance.GetComponent<PlayerResource>();
     }
 
     public IngameResourceManager resourceManager() {
-        return GetComponent<IngameResourceManager>();
+        return _instance.GetComponent<IngameResourceManager>();
     }
 
     public MyBuildings playerBuildings() {
-        return GetComponent<MyBuildings>();
+        return _instance.GetComponent<MyBuildings>();
     }
 
     public PlayerActiveCards playerActiveCards() {
-        return GetComponent<PlayerActiveCards>();
+        return _instance.GetComponent<PlayerActiveCards>();
     }
 
     public IngameDeckShuffler deckShuffler() {
-        IngameDeckShuffler tmp = transform.GetChild(0).GetComponent<IngameDeckShuffler>();
-        return transform.GetChild(0).GetComponent<IngameDeckShuffler>();
+        return _instance.transform.GetChild(0).GetComponent<IngameDeckShuffler>();
     }
 
     public PlayerPassiveCards PlayerPassiveCards() {
-        return GetComponent<PlayerPassiveCards>();
+        return _instance.GetComponent<PlayerPassiveCards>();
     }
 }
 
@@ -233,7 +233,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [SerializeField] Transform passiveUIParent;
     [SerializeField] GameObject passiveUIPref;
 
-    public void HeroSummon(ActiveCard card) {
+    public void HeroSummon(ActiveCard card, GameObject cardObj) {
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if(result == null) {
             result = GetHeroPrefab("n_uu_01001");
@@ -241,7 +241,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         GameObject hero = Instantiate(result, summonParent);
         UnitAI unitAI = hero.GetComponent<UnitAI>();
-        unitAI.SetUnitData(card);
+        unitAI.SetUnitData(card, cardObj);
 
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);

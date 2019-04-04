@@ -35,6 +35,8 @@ public class Herb : MonoBehaviour {
         while(count < 5) {
             foreach (GameObject target in targets.ToList()) {
                 count++;
+                if (target == null) continue;
+
                 target.GetComponent<UnitAI>().HerbRation(data.amount);
                 yield return new WaitForSeconds(1.0f);
             }

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using DataModules;
 using System;
+using UnityEngine.UI;
 
 public partial class HeroAI : UnitAI {
 
@@ -12,8 +13,9 @@ public partial class HeroAI : UnitAI {
     private Transform cooltimeBar;
     private TextMeshPro LvText;
     private decimal attackSP;
-    [SerializeField] private ActiveCard unitCard;
+    [SerializeField] public ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
+    IEnumerator coroutine;
 
     private void Init() {
         if (healthBar != null) return;
@@ -26,7 +28,7 @@ public partial class HeroAI : UnitAI {
         InitStatic();
     }
 
-    public override void SetUnitData(ActiveCard card) {
+    public override void SetUnitData(ActiveCard card, GameObject cardObj) {
         Init();
         this.unitCard = card;
         Unit unit = card.baseSpec.unit;
@@ -46,6 +48,32 @@ public partial class HeroAI : UnitAI {
         ChangeLvText();
         setState(skillState.COOLING);
         FindUnitSkill(unit.skill);
+
+        unitCard.gameObject = cardObj;
+        coroutine = UpdateInfoCard();
+        StartCoroutine(coroutine);
+    }
+
+    IEnumerator UpdateInfoCard() {
+        while (true) {
+            if(unitCard.gameObject != null) {
+                Slider healthSlider = unitCard.gameObject.transform.Find("Stats/Health").GetComponent<Slider>();
+                Slider expSlider = unitCard.gameObject.transform.Find("Stats/Exp").GetComponent<Slider>();
+
+                healthSlider.value = health;
+                healthSlider.maxValue = maxHealth;
+
+                expSlider.value = unitCard.ev.exp;
+                expSlider.maxValue = ExpNeed();
+
+                Debug.Log("HP : " + health);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    void OnDestroy() {
+        if(coroutine != null) StopCoroutine(coroutine);
     }
 
     public override void attackUnit() {
@@ -97,7 +125,13 @@ public partial class HeroAI : UnitAI {
 
     private void CheckLv() {
         bool isLvUp = ExpNeed() <= unitCard.ev.exp;
-        if (isLvUp) ChangeStat();
+        if (isLvUp) {
+            ChangeStat();
+            if(unitCard.gameObject != null) {
+                Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
+                cardLvText.text = "Lv. " + unitCard.ev.lv;
+            }
+        }
     }
 
     private void ChangeStat() {
@@ -187,5 +221,14 @@ public partial class HeroAI : UnitAI {
                 i--;
             }
         }
+    }
+
+    public override void ResetStat() {
+        Unit unit = unitCard.baseSpec.unit;
+        moveSpeed = unit.moveSpeed * 0.4f;
+        attackSpeed = unit.attackSpeed;
+        attackRange = unit.attackRange;
+        power = PowerUP(unit.power);
+        maxHealth = PowerUP(unit.hitPoint);
     }
 }

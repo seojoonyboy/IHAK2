@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using DataModules;
+using UnityEngine.UI;
 
 public partial class HeroAI : UnitAI {
     public enum skillState {
@@ -39,6 +40,15 @@ public partial class HeroAI : UnitAI {
     void Update() {
         update(Time.deltaTime);
         skillUpdate(Time.deltaTime);
+
+        CardSkillSliderUpdate();
+    }
+
+    void CardSkillSliderUpdate() {
+        if (unitCard.gameObject != null) {
+            Image deactive = unitCard.gameObject.transform.Find("Specs/Skills/Skill_A/Deactive").GetComponent<Image>();
+            deactive.fillAmount = coolTime / activeSkillCoolTime;
+        }
     }
 
     void CoolTimeUpdate(float time) {

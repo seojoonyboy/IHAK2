@@ -15,7 +15,9 @@ public class MagmaDragHandler : IngameActiveCardDragHandler {
             coolComp.behaviour = this;
             coolComp.StartCool();
         }
-
+        else {
+            obj.SetActive(false);
+        }
         PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
         PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
     }
