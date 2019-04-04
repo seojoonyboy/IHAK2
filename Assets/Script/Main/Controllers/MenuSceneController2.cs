@@ -25,6 +25,7 @@ public class MenuSceneController2 : MonoBehaviour {
     [SerializeField] Button exitDeckList;
     [SerializeField] AccountManager accountManager;
     [SerializeField] public GameObject town;
+    [SerializeField] public GameObject onCanvasTownPos;
 
     private HorizontalScrollSnap hss;
     private Windows openedWindow;
@@ -138,6 +139,7 @@ public class MenuSceneController2 : MonoBehaviour {
     public void SetTown() {
         if (accountManager.decks.Count == 0) return;
         if (town.transform.childCount != 0) Destroy(town.transform.GetChild(0).gameObject);
+        town.transform.position = onCanvasTownPos.transform.position;
 
         int LeaderNum = accountManager.leaderIndex;
         GameObject showTown = Instantiate(accountManager.transform.GetChild(0).GetChild(LeaderNum).gameObject, town.transform);
