@@ -25,6 +25,7 @@ namespace Container {
                     Debug.LogError("자원이 0이하로 떨어졌습니다.");
                     gold = 0;
                 }
+                if(value > 30) { value = 30; }
                 gold = value;
                 PlayerController.Instance.resourceManager().RefreshGoldSlider();
 
