@@ -66,7 +66,7 @@ public partial class HeroAI : UnitAI {
                 expSlider.value = unitCard.ev.exp;
                 expSlider.maxValue = ExpNeed();
 
-                Debug.Log("HP : " + health);
+                //Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);
         }
