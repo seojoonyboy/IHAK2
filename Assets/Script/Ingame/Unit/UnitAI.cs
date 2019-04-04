@@ -289,7 +289,7 @@ public partial class UnitAI : MonoBehaviour {
         }
     }
 
-    public virtual void SetUnitData(ActiveCard card) { }
+    public virtual void SetUnitData(ActiveCard card, GameObject cardObj) { }
     public virtual void SetUnitData(Unit unit, int level) { }
     public virtual void DestoryEnemy() { }
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) { }

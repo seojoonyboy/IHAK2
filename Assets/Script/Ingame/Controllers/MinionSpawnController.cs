@@ -44,7 +44,7 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
                 }
             }
 
-            minions[i].GetComponent<MinionAI>().SetUnitData(null);
+            minions[i].GetComponent<MinionAI>().SetUnitData(null, null);
             minions[i].layer = minionLayer;
             minions[i].transform.position = transform.GetChild(i).position;
         }

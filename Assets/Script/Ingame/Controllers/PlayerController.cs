@@ -233,7 +233,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [SerializeField] Transform passiveUIParent;
     [SerializeField] GameObject passiveUIPref;
 
-    public void HeroSummon(ActiveCard card) {
+    public void HeroSummon(ActiveCard card, GameObject cardObj) {
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if(result == null) {
             result = GetHeroPrefab("n_uu_01001");
@@ -241,7 +241,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         GameObject hero = Instantiate(result, summonParent);
         UnitAI unitAI = hero.GetComponent<UnitAI>();
-        unitAI.SetUnitData(card);
+        unitAI.SetUnitData(card, cardObj);
 
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);

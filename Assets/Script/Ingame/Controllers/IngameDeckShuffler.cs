@@ -91,12 +91,14 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+            card.transform.Find("Portrait").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
 
             //if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
             card.transform.Find("Header/Bg/Value").GetComponent<Text>().text = "<color=yellow>" + (int)unit.cost.gold + "</color><color=#0DBBFF>" + "/0</color>";
             card.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>().text = "+ " + unit.power;
             card.transform.Find("Specs/Base/Def/Value").GetComponent<Text>().text = "+ " + unit.defence;
+            card.transform.Find("Specs/Skills/Skill_A/Text").GetComponent<Text>().text = unit.skill.name;
+            
             //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
             Slider healthSlider = card.transform.Find("Stats/Health").GetComponent<Slider>();
             Slider ExpSlider = card.transform.Find("Stats/Exp").GetComponent<Slider>();
@@ -146,7 +148,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     if (effectModules.ContainsKey("Unit_health")) {
                         activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
                     }
-                    playerController.HeroSummon(activeCard.data);
+                    playerController.HeroSummon(activeCard.data, selectedObject);
 
                     selectedObject.GetComponent<IngameDragHandler>().enabled = false;
                     break;

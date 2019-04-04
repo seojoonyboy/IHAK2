@@ -17,7 +17,7 @@ public class MinionAI : UnitAI {
         unitSpine = GetComponentInChildren<UnitSpine>();
     }
 
-    public override void SetUnitData(ActiveCard card) {
+    public override void SetUnitData(ActiveCard card, GameObject cardObj) {
         Init();
         InitStatic();
         moveSpeed = unit.moveSpeed * 0.4f;
