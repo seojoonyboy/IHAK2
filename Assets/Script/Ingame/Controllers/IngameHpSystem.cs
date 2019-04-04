@@ -72,6 +72,13 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
     }
 
+    IEnumerator attack() {
+        while(enemyHQ.hp > 0) {
+            yield return new WaitForSeconds(1.0f);
+            TakeDamage(Target.ENEMY_1, 12, 100);
+        }
+    }
+
     /*
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -125,7 +132,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
                     enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
-                    if (enemyBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                    if (enemyHQ.hp <= 0)
                         DestroyEnemy();
                 }
 

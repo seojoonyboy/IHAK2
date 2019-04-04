@@ -22,6 +22,7 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] Text ingameTimer;
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] public Transform attackCard;
+    [SerializeField] IngameHpSystem IngameHpSystem;
 
     public bool canPlaying = false;
     public bool canEnemyPlaying = false;
@@ -61,11 +62,11 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void Update() {
         if (canPlaying && canEnemyPlaying) {
-            if (enemyController.GetComponent<Container.PlayerResource>().hp < 1) {
+            if (IngameHpSystem.enemyHQ.hp <= 0) {
                 canPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
             }
-            if (playerController.GetComponent<Container.PlayerResource>().hp < 1) {
+            if (IngameHpSystem.playerHQ.hp <= 0) {
                 canPlaying = false;
                 resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
             }
