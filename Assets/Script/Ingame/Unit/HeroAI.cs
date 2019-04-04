@@ -66,7 +66,7 @@ public partial class HeroAI : UnitAI {
                 expSlider.value = unitCard.ev.exp;
                 expSlider.maxValue = ExpNeed();
 
-                Debug.Log("카드 슬라이더 갱싱");
+                //Debug.Log("카드 슬라이더 갱싱");
             }
             yield return new WaitForSeconds(0.1f);
         }
