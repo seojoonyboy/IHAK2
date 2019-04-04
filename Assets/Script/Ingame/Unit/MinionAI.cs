@@ -38,6 +38,7 @@ public class MinionAI : UnitAI {
     }
     public override void DestoryEnemy() {
         GiveExp();
+        playerController.DieEffect(this);   //사망시 패시브 효과 처리
         Destroy(gameObject);
     }
 

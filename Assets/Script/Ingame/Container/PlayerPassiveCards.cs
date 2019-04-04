@@ -50,11 +50,11 @@ public class PlayerPassiveCards : SerializedMonoBehaviour {
                 break;
             //자연의 청소부 (유닛 사망시 골드 획득)
             case "n_pm_02004":
-                if (effectModules.ContainsKey("Unit_die_gold")) {
-                    effectModules["Unit_health"] += 5;
+                if (effectModules.ContainsKey("Minion_die_gold")) {
+                    effectModules["Minion_die_gold"] += 0.2f;
                 }
                 else {
-                    effectModules.Add("Unit_die_gold", 5);
+                    effectModules.Add("Minion_die_gold", 0.2f);
                 }
                 break;
         }

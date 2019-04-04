@@ -259,11 +259,20 @@ public partial class PlayerController : SerializedMonoBehaviour {
             Text desc = uiObj.transform.Find("Text").GetComponent<Text>();
 
             if (pair.Key == "Unit_health") {
-                desc.text = "유닛 체력 버프 적용중 +" + pair.Value;
+                desc.text = "유닛 체력 버프 +" + pair.Value;
             }
 
-            if(pair.Key == "Unit_die_gold") {
-                desc.text = "유닛 사망시 골드 획득 버프 적용중 +" + pair.Value;
+            if(pair.Key == "Minion_die_gold") {
+                desc.text = "미니언 사망시 골드 획득 +" + pair.Value;
+            }
+        }
+    }
+
+    public void DieEffect(object instance) {
+        Type minionType = typeof(MinionAI);
+        if(instance.GetType() == minionType) {
+            if (PlayerPassiveCards().effectModules.ContainsKey("Minion_die_gold")) {
+                playerResource().Gold += (decimal)PlayerPassiveCards().effectModules["Minion_die_gold"];
             }
         }
     }
