@@ -10,15 +10,16 @@ public class Buff_evilmind : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Buff emBuff = new Buff();
+        emBuff.power = 10;
         unitIdentity = gameObject.GetComponent<UnitAI>();
-        basePower = unitIdentity.power;
-        unitIdentity.power = basePower * 1.1f;
+        unitIdentity.AddBuff("evil_mind", emBuff);
     }
 
     private void Update() {
         time += Time.deltaTime;
         if (time > 6.0f) {
-            unitIdentity.power = basePower;
+            unitIdentity.RemoveBuff("evil_mind");
             Destroy(this);
         }
     }
