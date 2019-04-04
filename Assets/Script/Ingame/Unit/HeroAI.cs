@@ -130,6 +130,11 @@ public partial class HeroAI : UnitAI {
             if(unitCard.gameObject != null) {
                 Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
                 cardLvText.text = "Lv. " + unitCard.ev.lv;
+
+                Text atk = unitCard.gameObject.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>();
+                atk.text = "+ " + power;
+
+                //Text def = unitCard.gameObject.transform.Find("Specs/Base/Def/Value").GetComponent<Text>();
             }
         }
     }
