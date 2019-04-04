@@ -84,6 +84,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             transform.GetChild(2).GetComponent<Text>().color = Color.white;
         }
         else if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) {
+            transform.GetComponent<Image>().color = Color.gray;
             transform.GetChild(0).GetComponent<Image>().color = Color.gray;
             transform.GetChild(1).GetComponent<Text>().color = Color.gray;
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;

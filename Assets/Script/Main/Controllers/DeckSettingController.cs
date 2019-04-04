@@ -701,7 +701,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         GameObject card;
 
         if(cardsContent != null) {
-            for (int i = 0; i < cardsContent.transform.childCount; i++) {
+            for (int i = 0; i < cardsContent.transform.GetChild(0).childCount; i++) {
                 if (cardsContent.transform.GetChild(0).GetChild(i).GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id == id) {
                     card = cardsContent.transform.GetChild(0).GetChild(i).gameObject;
                     return card;
