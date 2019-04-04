@@ -33,13 +33,12 @@ public class Herb : MonoBehaviour {
     IEnumerator Heal(int amout) {
         int count = 0;
         while(count < 5) {
+            count++;
             foreach (GameObject target in targets.ToList()) {
-                count++;
                 if (target == null) continue;
-
                 target.GetComponent<UnitAI>().HerbRation(data.amount);
-                yield return new WaitForSeconds(1.0f);
             }
+            yield return new WaitForSeconds(1.0f);
         }
         gameObject.SetActive(false);
     }
