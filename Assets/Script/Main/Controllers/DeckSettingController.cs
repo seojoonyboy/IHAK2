@@ -701,12 +701,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         GameObject card;
 
         if(cardsContent != null) {
-            for(int i = 0; i< cardsContent.transform.childCount; i++) {
-                for(int j = 0; j < cardsContent.transform.GetChild(i).childCount; j++) {
-                    if (cardsContent.transform.GetChild(i).GetChild(j).GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id == id) {
-                        card = cardsContent.transform.GetChild(i).GetChild(j).gameObject;
-                        return card;
-                    }
+            for (int i = 0; i < cardsContent.transform.childCount; i++) {
+                if (cardsContent.transform.GetChild(0).GetChild(i).GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id == id) {
+                    card = cardsContent.transform.GetChild(0).GetChild(i).gameObject;
+                    return card;
                 }
             }
         }
