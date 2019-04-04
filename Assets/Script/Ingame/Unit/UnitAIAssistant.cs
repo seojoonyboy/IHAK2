@@ -8,8 +8,10 @@ public partial class UnitAI : MonoBehaviour {
     [SerializeField] Dictionary<string, Buff> buffList = new Dictionary<string, Buff>();
 
     public void AddBuff(string name, Buff buff) {
-        buffList.Add(name, buff);
-        Buffering(buff);
+        if (!buffList.ContainsKey(name)) {
+            buffList.Add(name, buff);
+            Buffering(buff);
+        }
     }
 
     public void RemoveBuff(string name) {
