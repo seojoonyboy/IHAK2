@@ -1565,7 +1565,6 @@ MonoBehaviour:
   goldValue: {fileID: 1983411991}
   goldBar: {fileID: 751448560}
   envValue: {fileID: 1749300415}
-  icm: {fileID: 310974711}
   hqLevel: 1
   tileCount: 0
   goldConsume: 0
@@ -2236,312 +2235,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 309452728}
   m_CullTransparentMesh: 0
---- !u!1 &310974709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 310974710}
-  - component: {fileID: 310974711}
-  - component: {fileID: 310974712}
-  m_Layer: 0
-  m_Name: IngameCityManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &310974710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 310974709}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 886251235}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &310974711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 310974709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6f00c58b54e2f4886660c9dcf26ce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeInfos:
-  - {fileID: 11400000, guid: 1e7ea0a2f4e53744fa935f8e5708e138, type: 2}
-  - {fileID: 11400000, guid: 0d44c1c600de9834789bd44a69066fd8, type: 2}
-  - {fileID: 11400000, guid: aa84a1710db493647adbe47a2d138129, type: 2}
-  - {fileID: 11400000, guid: 0496afdd28a4af74eb912818060ab0f7, type: 2}
-  hpValueBar: {fileID: 1784039172}
-  hpValue: {fileID: 993183136}
-  enemyTotalHPGauge: {fileID: 1849017551}
-  ingameSceneUIController: {fileID: 1239632114}
-  productResources:
-    food:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    gold:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    env:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    all:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-  goldGenerate: 0
-  envGenerate: 0
-  foodGenerate: 0
-  deck:
-    id: 0
-    name: 
-    race: 
-    isRepresent: 0
-    coordsSerial: 
-    cards: []
-    productResources:
-      food:
-        id: 0
-        food: 0
-        gold: 0
-        environment: 0
-      gold:
-        id: 0
-        food: 0
-        gold: 0
-        environment: 0
-      env:
-        id: 0
-        food: 0
-        gold: 0
-        environment: 0
-      all:
-        id: 0
-        food: 0
-        gold: 0
-        environment: 0
-  enemyBuildingsInfo: []
-  myBuildings_mags:
-  - key: Industry
-    lv: 1
-    foodCost: 0
-    goldCost: 0
-    magnfication: 1
-  - key: Farm
-    lv: 1
-    foodCost: 0
-    goldCost: 0
-    magnfication: 1
-  - key: Env
-    lv: 1
-    foodCost: 0
-    goldCost: 0
-    magnfication: 1
-  - key: Military
-    lv: 1
-    foodCost: 0
-    goldCost: 0
-    magnfication: 1
-  buildingList: 
-  playerCity: {fileID: 438138127}
-  unactiveImage: {fileID: 1706033081576888, guid: c9fdbd74db90ea44dad19863d3d09d44,
-    type: 2}
-  unactiveBuildingIndex1: 100
-  unactiveBuildingIndex2: 100
-  playerHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      rarity: 0
-      hitPoint: 0
-      placementLimit: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        defence: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        skill:
-          id: 0
-          name: 
-          method:
-            methodName: 
-            args: 
-          desc: 
-        imageName: 
-      lv: 0
-    gameObject: {fileID: 0}
-  enemyHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      rarity: 0
-      hitPoint: 0
-      placementLimit: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        defence: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        skill:
-          id: 0
-          name: 
-          method:
-            methodName: 
-            args: 
-          desc: 
-        imageName: 
-      lv: 0
-    gameObject: {fileID: 0}
-  repairCount: 0
-  repairAmount: 0
-  enoughRepairSource: 1
-  playerController: {fileID: 282962852}
---- !u!114 &310974712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 310974709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2adf37acf4294445b5fcf765e95e369, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 282962850}
-  myBuildings: {fileID: 0}
-  myResource: {fileID: 0}
-  myBuildingInfo: []
-  playerhpGauge: {fileID: 850662850}
-  playerHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      rarity: 0
-      hitPoint: 0
-      placementLimit: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        defence: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        skill:
-          id: 0
-          name: 
-          method:
-            methodName: 
-            args: 
-          desc: 
-        imageName: 
-      lv: 0
-    gameObject: {fileID: 0}
-  enemyController: {fileID: 1844919643}
-  enemyBuildings: {fileID: 0}
-  enemyResource: {fileID: 0}
-  enemybuildingInfos: []
-  enemyhpGauge: {fileID: 1849017551}
-  enemyHQ:
-    tileNum: 0
-    activate: 0
-    hp: 0
-    maxHp: 0
-    cardInfo:
-      id: 
-      race: 
-      name: 
-      type: 
-      rarity: 0
-      hitPoint: 0
-      placementLimit: 0
-      activeSkills: []
-      passiveSkills: []
-      unit:
-        id: 
-        name: 
-        coolTime: 0
-        size: 0
-        count: 0
-        power: 0
-        attackSpeed: 0
-        defence: 0
-        attackRange: 0
-        hitPoint: 0
-        moveSpeed: 0
-        skill:
-          id: 0
-          name: 
-          method:
-            methodName: 
-            args: 
-          desc: 
-        imageName: 
-      lv: 0
-    gameObject: {fileID: 0}
-  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
-  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
-  ingameSceneUIController: {fileID: 1239632114}
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -5778,6 +5471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 886251235}
+  - component: {fileID: 886251236}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -5797,11 +5491,108 @@ Transform:
   m_Children:
   - {fileID: 1239632113}
   - {fileID: 282962851}
-  - {fileID: 310974710}
   - {fileID: 1844919644}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &886251236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 886251234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2adf37acf4294445b5fcf765e95e369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 282962850}
+  myBuildings: {fileID: 0}
+  myResource: {fileID: 0}
+  myBuildingInfo: []
+  playerhpGauge: {fileID: 850662850}
+  playerHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            methodName: 
+            args: 
+          desc: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
+  enemyController: {fileID: 1844919643}
+  enemyBuildings: {fileID: 0}
+  enemyResource: {fileID: 0}
+  enemybuildingInfos: []
+  enemyhpGauge: {fileID: 1849017551}
+  enemyHQ:
+    tileNum: 0
+    activate: 0
+    hp: 0
+    maxHp: 0
+    cardInfo:
+      id: 
+      race: 
+      name: 
+      type: 
+      rarity: 0
+      hitPoint: 0
+      placementLimit: 0
+      activeSkills: []
+      passiveSkills: []
+      unit:
+        id: 
+        name: 
+        coolTime: 0
+        size: 0
+        count: 0
+        power: 0
+        attackSpeed: 0
+        defence: 0
+        attackRange: 0
+        hitPoint: 0
+        moveSpeed: 0
+        skill:
+          id: 0
+          name: 
+          method:
+            methodName: 
+            args: 
+          desc: 
+        imageName: 
+      lv: 0
+    gameObject: {fileID: 0}
+  wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
+  wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
+  ingameSceneUIController: {fileID: 1239632114}
 --- !u!1 &893541853
 GameObject:
   m_ObjectHideFlags: 0
@@ -7749,7 +7540,7 @@ MonoBehaviour:
   ingameTimer: {fileID: 1905110268}
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 0}
-  IngameHpSystem: {fileID: 310974712}
+  IngameHpSystem: {fileID: 886251236}
   canPlaying: 0
   canEnemyPlaying: 0
   playerController: {fileID: 282962850}
@@ -11595,7 +11386,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 886251235}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1844919645
 MonoBehaviour:

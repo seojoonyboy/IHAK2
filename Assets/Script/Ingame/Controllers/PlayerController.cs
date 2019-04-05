@@ -31,7 +31,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
     //[SerializeField] Text foodValue;
     //[SerializeField] Text turnValue;
     [SerializeField] Image envValue;
-    [SerializeField] IngameCityManager icm;
     
     private bool playing = false;
     public bool IsPlaying {

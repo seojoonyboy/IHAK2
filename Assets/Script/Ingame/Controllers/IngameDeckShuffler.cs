@@ -9,7 +9,6 @@ using System.Linq;
 using Sirenix.OdinInspector;
 
 public partial class IngameDeckShuffler : SerializedMonoBehaviour {
-    IngameCityManager ingameCityManager;
     [SerializeField] [ReadOnly] PlayerController playerController;
     IngameSceneEventHandler eventHandler;
 
@@ -27,7 +26,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     private readonly System.Random rand = new System.Random((int)DateTime.Now.Ticks);
 
     void Awake() {
-        ingameCityManager = GetComponent<IngameCityManager>();
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, OnBuildingDestroyed);

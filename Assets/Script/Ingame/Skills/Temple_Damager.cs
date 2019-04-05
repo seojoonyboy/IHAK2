@@ -15,11 +15,9 @@ public class Temple_Damager : MonoBehaviour {
     private int[] rndTargets;
     private int[] demoTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
     private int[] myTileIndex = { 6, 7, 8, 11, 12, 13, 16, 17, 18 };
-    private IngameCityManager cityManager;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
-        cityManager = GetComponent<IngameCityManager>();
     }
     /*
     public void GenerateAttack(DataModules.SkillDetail detail, IngameCityManager.Target target) {
