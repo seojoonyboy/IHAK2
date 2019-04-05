@@ -53,7 +53,7 @@ public class Magma : MonoBehaviour {
                 }
                 else if(target.layer == 9) {
                     int tileNum = target.GetComponent<BuildingObject>().setTileLocation;
-                    IngameHpSystem.Instance.TakeDamage(IngameHpSystem.Target.ME, 12, 30);
+                    IngameHpSystem.Instance.TakeDamage(IngameHpSystem.Target.ME, 30);
                     //target.GetComponent<>
                 }
             }
