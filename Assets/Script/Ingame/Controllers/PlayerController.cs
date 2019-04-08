@@ -240,6 +240,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
 
         GameObject hero = Instantiate(result, summonParent);
+        cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
+
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.SetUnitData(card, cardObj);
 

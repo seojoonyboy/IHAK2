@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using Sirenix.OdinInspector;
+using BitBenderGames;
 
 public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     IngameSceneEventHandler eventHandler;
@@ -13,6 +14,7 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
     Vector3 startScale;
     Vector3 startPosition;
     Camera cam;
+    public GameObject instantiatedUnitObj;
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
@@ -22,6 +24,19 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     void Start() {
         cam = Camera.main;
+
+        EventTrigger et = GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+
+        entry.callback.AddListener(
+            (eventData) => cam.GetComponent<TouchInputController>().OnEventTriggerPointerDown(null)
+        );
+
+        et.triggers.Add(entry);
+
+        Button btn = GetComponent<Button>();
+        btn.onClick.AddListener(() => OnPointerClick());
 
         deckShuffler = PlayerController.Instance.deckShuffler();
     }
@@ -100,5 +115,19 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         }
 
         deckShuffler.UseCard(gameObject);
+    }
+
+    public void OnPointerClick() {
+        if(instantiatedUnitObj != null) {
+            iTween.MoveTo(
+                cam.gameObject, 
+                new Vector3(
+                    instantiatedUnitObj.transform.position.x,
+                    instantiatedUnitObj.transform.position.y,
+                    cam.transform.position.z
+                ),
+                1.0f
+            );
+        }
     }
 }
