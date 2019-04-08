@@ -75,7 +75,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     IEnumerator attack() {
         while(enemyHQ.hp > 0) {
             yield return new WaitForSeconds(1.0f);
-            TakeDamage(Target.ENEMY_1, 12, 100);
+            TakeDamage(Target.ENEMY_1, 100);
         }
     }
 
@@ -103,32 +103,31 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
 
 
-    public bool TakeDamage(Target target, int tileNum, int amount) {
+    public bool TakeDamage(Target target, int amount) {
         switch (target) {
             case Target.ENEMY_1:
-                BuildingInfo enemyBuilding = enemybuildingInfos.Find(x => x.tileNum == tileNum);
-                if (enemyBuilding == null) return false;
-                if (enemyBuilding.hp <= 0) return false;
+                if (enemyHQ == null) return false;
+                if (enemyHQ.hp <= 0) return false;
 
                 //체력감소 연산
-                if (enemyBuilding.hp > amount) {
-                    enemyBuilding.hp -= amount;
-                    if (enemyBuilding.hp < enemyBuilding.maxHp) {
-                        enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = (float)enemyBuilding.hp / enemyBuilding.maxHp;
-                        enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                if (enemyHQ.hp > amount) {
+                    enemyHQ.hp -= amount;
+                    if (enemyHQ.hp < enemyHQ.maxHp) {
+                        enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                        float hpScaleX = (float)enemyHQ.hp / enemyHQ.maxHp;
+                        enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
 
                         enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
                         enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
                     }
                 }
-                else if (enemyBuilding.hp <= amount) {
-                    amount = enemyBuilding.hp;
-                    enemyBuilding.hp = 0;                    
-                    enemyBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                    enemyBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    enemyBuilding.activate = false;
-                    BuildingDestroyed(target, enemyBuilding);
+                else if (enemyHQ.hp <= amount) {
+                    amount = enemyHQ.hp;
+                    enemyHQ.hp = 0;
+                    enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    enemyHQ.activate = false;
+                    BuildingDestroyed(target, enemyHQ);
                     enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
                     enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
@@ -148,34 +147,33 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
 
-            case Target.ME:                
-                BuildingInfo myBuilding = myBuildingInfo.Find(x => x.tileNum == tileNum);
-                if (myBuilding == null) return false;
-                if (myBuilding.hp <= 0) return false;
+            case Target.ME:
+                if (playerHQ == null) return false;
+                if (playerHQ.hp <= 0) return false;
 
 
-                if(myBuilding.hp > amount) {
-                    myBuilding.hp -= amount;
+                if(playerHQ.hp > amount) {
+                    playerHQ.hp -= amount;
 
-                    if (myBuilding.hp < myBuilding.maxHp) {
-                        myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = (float)myBuilding.hp / myBuilding.maxHp;
-                        myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                    if (playerHQ.hp < playerHQ.maxHp) {
+                        playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                        float hpScaleX = (float)playerHQ.hp / playerHQ.maxHp;
+                        playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
                         playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
                         playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
                     }
                 }
-                else if(myBuilding.hp <= amount) {
-                    amount = myBuilding.hp;
-                    myBuilding.hp = 0;                    
-                    myBuilding.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                    myBuilding.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    myBuilding.activate = false;
-                    BuildingDestroyed(target, myBuilding);
+                else if(playerHQ.hp <= amount) {
+                    amount = playerHQ.hp;
+                    playerHQ.hp = 0;
+                    playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    playerHQ.activate = false;
+                    BuildingDestroyed(target, playerHQ);
                     playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
                     playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
-                    if (myBuilding.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                    if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
                         DestroyCity();
                 }
                 /*
