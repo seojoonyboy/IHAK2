@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using Sirenix.OdinInspector;
 
-public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     IngameSceneEventHandler eventHandler;
     [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
 
@@ -50,7 +50,7 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void CancelDrag() {
-        GetComponent<IngameDragHandler>().enabled = false;
+        GetComponent<HeroCardDragHandler>().enabled = false;
 
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
@@ -65,6 +65,8 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData) {
         startPosition = transform.position;
         startScale = transform.localScale;
+
+        GetComponentInChildren<BoundaryCamMove>().isDrag = true;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -86,6 +88,8 @@ public class IngameDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler,
         transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = true;
+
+        GetComponentInChildren<BoundaryCamMove>().isDrag = false;
 
         if (eventData == null) return;
 

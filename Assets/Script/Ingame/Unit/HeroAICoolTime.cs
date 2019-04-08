@@ -21,7 +21,7 @@ public partial class HeroAI : UnitAI {
     private UnityAction weaponSkill;
     
     private void setState(skillState state) {
-        Debug.Log("setState");
+        //Debug.Log("setState");
         skillUpdate = null;
         coolTime = 0f;
         switch (state) {

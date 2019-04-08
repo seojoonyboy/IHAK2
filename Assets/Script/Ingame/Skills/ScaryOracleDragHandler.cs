@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 
 public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
+        DragOff();
         if (UseCard()) {
             GetComponent<ScaryOracleDragHandler>().enabled = false;
 
