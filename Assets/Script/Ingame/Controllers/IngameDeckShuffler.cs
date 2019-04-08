@@ -147,7 +147,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                         activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
                     }
                     playerController.HeroSummon(activeCard.data, selectedObject);
-
                     selectedObject.GetComponent<HeroCardDragHandler>().enabled = false;
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.

@@ -98,6 +98,12 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.position = startPosition;
+        GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
+
         transform.localScale = new Vector3(1, 1, 1);
 
         transform.GetComponent<Image>().enabled = true;
@@ -114,6 +120,9 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
             return;
         }
 
+        foreach(RaycastResult result in results){
+            if (result.gameObject.name == "HeroCards") { return; }
+        }
         deckShuffler.UseCard(gameObject);
     }
 
