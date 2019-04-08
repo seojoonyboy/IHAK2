@@ -1,9 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoundaryCamMove : MonoBehaviour {
-    public int Boundary;
+    [Range(0, 100)]
+    public int LeftOffset;
+    [Range(0, 100)]
+    public int RightOffset;
+    [Range(0, 100)]
+    public int TopOffset;
+    [Range(0, 100)]
+    public int BottomOffset;
+
     public int Speed;
 
     private int ScreenWidth;
@@ -24,7 +30,7 @@ public class BoundaryCamMove : MonoBehaviour {
     void Update() {
         if (!isDrag) return;
 
-        if (Input.mousePosition.x > ScreenWidth - Boundary) {
+        if (Input.mousePosition.x > ScreenWidth - (ScreenWidth * (RightOffset / 100.0f))) {
             cam.transform.position = new Vector3(
                 cam.transform.position.x + Speed * Time.deltaTime,
                 cam.transform.position.y,
@@ -32,7 +38,7 @@ public class BoundaryCamMove : MonoBehaviour {
             );
         }
 
-        if (Input.mousePosition.x < 0 + Boundary) {
+        if (Input.mousePosition.x < 0 + (ScreenWidth * (LeftOffset / 100.0f))) {
             cam.transform.position = new Vector3(
                 cam.transform.position.x - Speed * Time.deltaTime,
                 cam.transform.position.y,
@@ -40,7 +46,7 @@ public class BoundaryCamMove : MonoBehaviour {
             );
         }
 
-        if (Input.mousePosition.y > ScreenHeight - Boundary) {
+        if (Input.mousePosition.y > ScreenHeight - (ScreenWidth * (TopOffset / 100.0f))) {
             cam.transform.position = new Vector3(
                 cam.transform.position.x,
                 cam.transform.position.y + Speed * Time.deltaTime,
@@ -48,7 +54,7 @@ public class BoundaryCamMove : MonoBehaviour {
             );
         }
 
-        if (Input.mousePosition.y < 0 + Boundary) {
+        if (Input.mousePosition.y < 0 + (ScreenWidth * (BottomOffset / 100.0f))) {
             cam.transform.position = new Vector3(
                 cam.transform.position.x,
                 cam.transform.position.y - Speed * Time.deltaTime,

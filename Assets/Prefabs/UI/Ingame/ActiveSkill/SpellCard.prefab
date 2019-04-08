@@ -554,7 +554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdb4b74d63c8734aa148f73b55b04c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boundary: 50
+  LeftOffset: 10
+  RightOffset: 10
+  TopOffset: 30
+  BottomOffset: 30
   Speed: 60
   isDrag: 0
 --- !u!114 &114914101496482698
