@@ -19,26 +19,68 @@ public class CardSlot : MonoBehaviour, IDropHandler {
         if (card == null) {
             SetCard(eventData.pointerDrag.gameObject);
         }
-        else if( card != null) {
+        else if(card != null) {
             SwapCard(eventData.pointerDrag.gameObject);
         }
     }
 
     public void SetCard(GameObject dragObject) {
         if (card != null) return;
+        if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
         cardObject.GetComponent<Image>().sprite = dragObject.GetComponent<Image>().sprite;
         cardObject.transform.Find("Image").GetComponent<Image>().sprite = dragObject.transform.Find("Data").GetComponent<Image>().sprite;
         cardObject.transform.Find("Mark").GetChild(0).GetComponent<Image>().sprite = dragObject.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+
+
+        DeckSettingController deckSettingController = DeckSettingController.Instance;
+        int slotNum = transform.GetSiblingIndex();
+        deckSettingController.buildingCount++;
+
+        switch (transform.parent.parent.name) {
+            case "hero":
+                deckSettingController.heroList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "active":
+                deckSettingController.activeList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "passive":
+                deckSettingController.passiveList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "wild":
+                deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+        }
     }
 
     public void SwapCard(GameObject dragObject) {
+        if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
         Destroy(card);
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
         cardObject.GetComponent<Image>().sprite = dragObject.GetComponent<Image>().sprite;
         cardObject.transform.Find("Image").GetComponent<Image>().sprite = dragObject.transform.Find("Data").GetComponent<Image>().sprite;
         cardObject.transform.Find("Mark").GetChild(0).GetComponent<Image>().sprite = dragObject.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+
+        DeckSettingController deckSettingController = DeckSettingController.Instance;
+        int slotNum = transform.GetSiblingIndex();
+        deckSettingController.buildingCount++;
+
+        switch (transform.parent.parent.name) {
+            case "hero":
+                deckSettingController.heroList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "active":
+                deckSettingController.activeList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "passive":
+                deckSettingController.passiveList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+            case "wild":
+                deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
+                break;
+        }
     }
+    
 
 
 }

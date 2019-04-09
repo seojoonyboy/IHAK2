@@ -131,7 +131,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         ResetActiveSlot();
         DeckActiveCheck();
         resetButton.OnClickAsObservable().Subscribe(_ => {
-            Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => resetTile());
+            Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => resetDeck());
         });
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
@@ -169,19 +169,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
 
         if (prevData != null) {
-            //int[] coords = prevData.coordsSerial;
-            //Cost product = null;
-            //foreach (int coord in coords) {
-            //    GameObject obj = constructManager.GetBuildingObjectById(coord);
-            //    if (obj != null) {
-            //        BuildingObject buildingObject = obj.GetComponent<BuildingObject>();
-            //        product = buildingObject.card.data.product;
-            //        if (product != null) {
-            //            ChangeSliderValue(product);
-            //        }
-            //    }
-            //}
-            //FirstSetDeckInfo();
         }
         else
             deckCount++;
@@ -212,12 +199,24 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void SettingCard() {
-        if (AccountManager.Instance.selectNumber + 1 > AccountManager.Instance.decks.Count) return;
+        GameObject heroTap = slotUI.transform.Find("Content").Find("hero").Find("Decks").gameObject;
+        GameObject activeTap = slotUI.transform.Find("Content").Find("active").Find("Decks").gameObject;
+        GameObject passiveTap = slotUI.transform.Find("Content").Find("passive").Find("Decks").gameObject;
+        GameObject wildTap = slotUI.transform.Find("Content").Find("wild").Find("Decks").gameObject;
 
-        GameObject heroTap = slotUI.transform.Find("Content").Find("Hero").Find("Decks").gameObject;
-        GameObject activeTap = slotUI.transform.Find("Content").Find("Active").Find("Decks").gameObject;
-        GameObject passiveTap = slotUI.transform.Find("Content").Find("Passive").Find("Decks").gameObject;
-        GameObject wildTap = slotUI.transform.Find("Content").Find("Wild").Find("Decks").gameObject;
+        if (AccountManager.Instance.selectNumber + 1 > AccountManager.Instance.decks.Count) {
+            for (int i = 0; i < heroTap.transform.childCount; i++)
+                heroList.Add(-1);
+
+            for (int i = 0; i < activeTap.transform.childCount; i++)
+                activeList.Add(-1);
+
+            for (int i = 0; i < passiveTap.transform.childCount; i++)
+                passiveList.Add(-1);
+
+            wildcard = -1;
+            return;
+        }        
 
         int heroCount = 0;
         int activeCount = 0;
@@ -236,6 +235,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                         deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
                         deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                         deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                        heroList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                         heroCount++;
                     }
                     break;
@@ -245,6 +245,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                         deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
                         deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                         deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                        activeList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                         activeCount++;
                     }
                     break;
@@ -254,6 +255,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                         deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
                         deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                         deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                        passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                         passiveCount++;
                     }
                     break;                
@@ -373,12 +375,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         
         // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
 
-        /*
-        for(int i = 0; i< tileGroup.transform.childCount; i++) {
-            if (tileGroup.transform.GetChild(i).childCount != 0)
-                Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
-        }
-        */
+        
         if (playerInfosManager.selectNumber > deckCount - 1)
             return;
 
@@ -406,19 +403,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         }
     }
 
-    public void resetTile() {
+    public void resetDeck() {
         for (int i = 0; i < tileCount; i++) {
-            if (i == tileCount / 2)
-                continue;
-            if (tileGroup.transform.GetChild(i).childCount != 0) {
-                /*
-                GameObject card = FindCard(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.id);
-                int count = BuildingCount(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
-                --count;
-                card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().data.card.placementLimit;
-                */
-                Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject); // accountManager => 하위 => tileGroup(몇번째 그룹?) => GetChild(i) i번째 타일 => GetChild(0) 0번째에 있는 건물
-            }
+            
 
 
             tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
@@ -428,7 +415,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         SetDeckInfo();
         ResetAllSliderValues();
         ResetCardCount();
-        ResetActiveSlot();
         reset = true;
     }
 
