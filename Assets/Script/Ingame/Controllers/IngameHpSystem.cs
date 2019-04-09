@@ -73,7 +73,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     }
 
     IEnumerator attack() {
-        while(enemyHQ.hp > 0) {
+        while(true) {
             yield return new WaitForSeconds(1.0f);
             TakeDamage(Target.ENEMY_1, 100);
         }
@@ -107,33 +107,33 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         switch (target) {
             case Target.ENEMY_1:
                 if (enemyHQ == null) return false;
-                if (enemyHQ.hp <= 0) return false;
+                //if (enemyHQ.hp <= 0) return false;
 
-                //체력감소 연산
-                if (enemyHQ.hp > amount) {
-                    enemyHQ.hp -= amount;
-                    if (enemyHQ.hp < enemyHQ.maxHp) {
-                        enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = (float)enemyHQ.hp / enemyHQ.maxHp;
-                        enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                ////체력감소 연산
+                //if (enemyHQ.hp > amount) {
+                //    enemyHQ.hp -= amount;
+                //    if (enemyHQ.hp < enemyHQ.maxHp) {
+                //        enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                //        float hpScaleX = (float)enemyHQ.hp / enemyHQ.maxHp;
+                //        enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
 
-                        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
-                        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
-                    }
-                }
-                else if (enemyHQ.hp <= amount) {
-                    amount = enemyHQ.hp;
-                    enemyHQ.hp = 0;
-                    enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                    enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    enemyHQ.activate = false;
-                    BuildingDestroyed(target, enemyHQ);
-                    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
-                    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
+                //        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                //        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
+                //    }
+                //}
+                //else if (enemyHQ.hp <= amount) {
+                //    amount = enemyHQ.hp;
+                //    enemyHQ.hp = 0;
+                //    enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                //    enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                //    enemyHQ.activate = false;
+                //    BuildingDestroyed(target, enemyHQ);
+                //    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
+                //    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
-                    if (enemyHQ.hp <= 0)
-                        DestroyEnemy();
-                }
+                //    if (enemyHQ.hp <= 0)
+                //        DestroyEnemy();
+                //}
 
                 /*
                 if (enemyResource.TotalHp > amount) {
@@ -148,34 +148,34 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 break;
 
             case Target.ME:
-                if (playerHQ == null) return false;
-                if (playerHQ.hp <= 0) return false;
+                //if (playerHQ == null) return false;
+                //if (playerHQ.hp <= 0) return false;
 
 
-                if(playerHQ.hp > amount) {
-                    playerHQ.hp -= amount;
+                //if(playerHQ.hp > amount) {
+                //    playerHQ.hp -= amount;
 
-                    if (playerHQ.hp < playerHQ.maxHp) {
-                        playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                        float hpScaleX = (float)playerHQ.hp / playerHQ.maxHp;
-                        playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
-                        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
-                        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
-                    }
-                }
-                else if(playerHQ.hp <= amount) {
-                    amount = playerHQ.hp;
-                    playerHQ.hp = 0;
-                    playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                    playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    playerHQ.activate = false;
-                    BuildingDestroyed(target, playerHQ);
-                    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
-                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
+                //    if (playerHQ.hp < playerHQ.maxHp) {
+                //        playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                //        float hpScaleX = (float)playerHQ.hp / playerHQ.maxHp;
+                //        playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                //        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                //        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
+                //    }
+                //}
+                //else if(playerHQ.hp <= amount) {
+                //    amount = playerHQ.hp;
+                //    playerHQ.hp = 0;
+                //    playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                //    playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                //    playerHQ.activate = false;
+                //    BuildingDestroyed(target, playerHQ);
+                //    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
+                //    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
 
-                    if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
-                        DestroyCity();
-                }
+                //    if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                //        DestroyCity();
+                //}
                 /*
                 if(myResource.TotalHp > amount) {
                     myResource.TotalHp -= amount;
@@ -215,7 +215,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     }
 
     private void BuildingDestroyed(Target target, BuildingInfo buildingInfo) {
-        buildingInfo.hp = 0;
+        //buildingInfo.hp = 0;
         IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         SetWreck(buildingInfo.gameObject);

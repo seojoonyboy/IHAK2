@@ -6,12 +6,14 @@ namespace DataModules {
     public class Deck {
         public int id;
         public string name;
-        public string race;
         public bool isRepresent;
-        public int[] coordsSerial;
-        public int[,] coords;
+
+        public int[] heroSerial;
+        public int[] activeSerial;
+        public int[] passiveSerial;
+        public int[] wildcardSerial;
+
         public Card[] cards;
-        public ProductResources productResources;
     }
 
     public class DeckPostForm {

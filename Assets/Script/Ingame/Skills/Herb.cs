@@ -13,17 +13,17 @@ public class Herb : MonoBehaviour {
         targets = new List<GameObject>();
     }
 
-    public void Init(string data) {
+    public void Init(string[] data) {
         range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
 
-        string[] args = data.Split(',');
+        //string[] args = data.Split(',');
 
-        this.data = new Data();
-        int.TryParse(args[0], out this.data.range);
-        int.TryParse(args[1], out this.data.amount);
+        //this.data = new Data();
+        //int.TryParse(args[0], out this.data.range);
+        //int.TryParse(args[1], out this.data.amount);
 
-        GetComponent<CircleCollider2D>().radius = this.data.range;
-        range_texture.transform.localScale *= this.data.range;
+        //GetComponent<CircleCollider2D>().radius = this.data.range;
+        //range_texture.transform.localScale *= this.data.range;
     }
 
     public void StartHealing() {

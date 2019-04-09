@@ -8,7 +8,7 @@ public class ActiveCardInfo : MonoBehaviour {
 [System.Serializable]
 public class BaseSpec {
     public Unit unit;
-    public Skill skill;
+    public ActiveSkill skill;
 }
 
 [System.Serializable]

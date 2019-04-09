@@ -21,25 +21,25 @@ public class BuildingImages : MonoBehaviour {
         defaultIcon;
 
     public void SetImages() {
-        ConstructManager dataManager = GetComponent<ConstructManager>();
-        var lists = dataManager.GetBuildingObjects();
-        foreach (GameObject obj in lists) {
-            BuildingObject bo = obj.GetComponent<BuildingObject>();
-            CardData data = bo.card.data;
-            bo.mainSprite = GetImage(data.race, data.type, data.id);
-            bo.icon = GetIcon(data.race, data.type, data.id);
-            bo.upgradeIcon = GetIcon(data.race, "upgrade", data.id);
-            bo.spine = GetSpine(data.race, data.type, data.id);
+        //ConstructManager dataManager = GetComponent<ConstructManager>();
+        //var lists = dataManager.GetBuildingObjects();
+        //foreach (GameObject obj in lists) {
+        //    BuildingObject bo = obj.GetComponent<BuildingObject>();
+        //    CardData data = bo.card.data;
+        //    bo.mainSprite = GetImage(data.race, data.type, data.id);
+        //    bo.icon = GetIcon(data.race, data.type, data.id);
+        //    bo.upgradeIcon = GetIcon(data.race, "upgrade", data.id);
+        //    bo.spine = GetSpine(data.race, data.type, data.id);
 
-            if(bo.spine == null) { 
-                SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
-                sprite.sprite = bo.mainSprite;
-            }
-            else {
-                obj.AddComponent<SkeletonAnimation>();
-                obj.AddComponent<TileSpineAnimation>();
-            }
-        }
+        //    if(bo.spine == null) { 
+        //        SpriteRenderer sprite = obj.AddComponent<SpriteRenderer>();
+        //        sprite.sprite = bo.mainSprite;
+        //    }
+        //    else {
+        //        obj.AddComponent<SkeletonAnimation>();
+        //        obj.AddComponent<TileSpineAnimation>();
+        //    }
+        //}
     }
 
     public Sprite GetImage(string race, string type, string id) {

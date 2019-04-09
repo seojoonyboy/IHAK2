@@ -35,8 +35,7 @@ public partial class HeroAI : UnitAI {
         moveSpeed = unit.moveSpeed * 0.4f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        attackSP = unit.attackSP;
-        power = unit.power;
+        power = unit.attackPower;
         if (card.ev.lv <= 0) card.ev.lv = 1;
         SetMaxHP();
         if (health == 0) health = card.ev.hp;
@@ -93,8 +92,7 @@ public partial class HeroAI : UnitAI {
         moveSpeed = unit.moveSpeed * 0.1f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        attackSP = unit.attackSP;
-        power = unit.power;
+        power = unit.attackPower;
         power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
@@ -233,7 +231,7 @@ public partial class HeroAI : UnitAI {
         moveSpeed = unit.moveSpeed * 0.4f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        power = PowerUP(unit.power);
+        power = PowerUP(unit.attackPower);
         maxHealth = PowerUP(unit.hitPoint);
     }
 }

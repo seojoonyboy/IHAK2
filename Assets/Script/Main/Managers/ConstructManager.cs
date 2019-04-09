@@ -31,9 +31,8 @@ public class ConstructManager : Singleton<ConstructManager> {
 
     public List<GameObject> GetBuildingObjects() {
         List<GameObject> result = new List<GameObject>();
-        result.AddRange(buildings["prod"]);
+        result.AddRange(buildings["hero"]);
         result.AddRange(buildings["active"]);
-        result.AddRange(buildings["unit"]);
         result.AddRange(buildings["passive"]);
 
         return result;
@@ -76,8 +75,7 @@ public class ConstructManager : Singleton<ConstructManager> {
             var result = Req_cardsInventoryRead.Read<List<Req_cardsInventoryRead.Card>>(response.data.ToString());
 
             buildings = new Dictionary<string, List<GameObject>>();
-            List<GameObject> products = new List<GameObject>();
-            List<GameObject> units = new List<GameObject>();
+            List<GameObject> heroes = new List<GameObject>();
             List<GameObject> actives = new List<GameObject>();
             List<GameObject> passive = new List<GameObject>();
 
@@ -96,14 +94,12 @@ public class ConstructManager : Singleton<ConstructManager> {
                 gauge.SetActive(false);
                 buildingObject.card = card;
 
-                if (card.data.type == "prod") products.Add(obj);
-                else if (card.data.type == "unit") units.Add(obj);
+                if (card.data.type == "hero") heroes.Add(obj);
                 else if (card.data.type == "active") actives.Add(obj);
                 else if (card.data.type == "passive") passive.Add(obj);
             }
 
-            buildings["prod"] = products;
-            buildings["unit"] = units;
+            buildings["hero"] = heroes;
             buildings["active"] = actives;
             buildings["passive"] = passive;
 

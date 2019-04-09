@@ -106,10 +106,10 @@ public class DropHandler : MonoBehaviour {
         }
         deckSettingController.AddActiveSlot(selectBuilding);
         //string prodType = buildingObject.card.data.prodType;
-        Cost cost = buildingObject.card.data.product;
+        //Cost cost = buildingObject.card.data.product;
         deckSettingController.buildingCount++;
         deckSettingController.SetDeckInfo();
-        deckSettingController.ChangeSliderValue(cost);
+        //deckSettingController.ChangeSliderValue(cost);
     }
 
 
@@ -146,17 +146,17 @@ public class DropHandler : MonoBehaviour {
             Text gold = innerModal.Find("DataArea/UpperBody/Gold/Value").GetComponent<Text>();
 
             CardData card = buildingObject.card.data;
-            hp.text = card.hitPoint.ToString();
-            header.text = card.name;
-            limitCount.text = "한도 " + card.placementLimit.ToString();
+            //hp.text = card.hitPoint.ToString();
+            //header.text = card.name;
+            //limitCount.text = "한도 " + card.placementLimit.ToString();
 
-            tier.text = card.rarity + " 등급";
-            //food.text = card.product.food.ToString();
-            gold.text = card.product.gold.ToString();
-            env.text = card.product.environment.ToString();
+            //tier.text = card.rarity + " 등급";
+            ////food.text = card.product.food.ToString();
+            //gold.text = card.product.gold.ToString();
+            //env.text = card.product.environment.ToString();
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
+            //image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
             prodDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         else {
@@ -179,17 +179,17 @@ public class DropHandler : MonoBehaviour {
             unitName.text = "유닛생산 " + unit.name;
             Debug.Log(tier.text);
             needResources.text = "골드 : " + unit.cost.gold + "\n"
-                + "환경 : " + unit.cost.environment + "\n";
+                + "인구 : " + unit.cost.population + "\n";
 
             unitSpec.text = "체력 : " + unit.hitPoint + "\n"
-                + "공격력 : " + unit.power + "\n"
+                + "공격력 : " + unit.attackPower + "\n"
                 + "공격 속도 : " + unit.attackSpeed + "\n"
                 + "공격 범위 : " + unit.attackRange + "\n"
                 + "이동 속도 : " + unit.moveSpeed + "\n";
                 //+ "요구 레벨 : " + unit.tierNeed;
 
             Image image = innerModal.Find("Upper/ImageArea/Image").GetComponent<Image>();
-            image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
+            //image.sprite = ConstructManager.Instance.GetComponent<BuildingImages>().GetIcon(buildingObject.card.data.race, buildingObject.card.data.type, buildingObject.card.data.id);
             unitGenDetailModal.transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
         }
         Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);

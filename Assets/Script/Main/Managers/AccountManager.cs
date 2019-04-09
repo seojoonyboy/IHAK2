@@ -204,7 +204,6 @@ public partial class AccountManager {
         form.Name = deck.name;
         form.Race = "primal";
         form.IsRepresent = false;
-        form.CoordsSerial = deck.coordsSerial;
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
@@ -222,7 +221,6 @@ public partial class AccountManager {
         form.Name = deck.name;
         form.Race = "primal";
         form.IsRepresent = deck.isRepresent;
-        form.CoordsSerial = deck.coordsSerial;
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
@@ -244,7 +242,6 @@ public partial class AccountManager {
         form.Name = newName;
         form.Race = "primal";
         form.IsRepresent = deck.isRepresent;
-        form.CoordsSerial = deck.coordsSerial;
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
@@ -273,7 +270,7 @@ public partial class AccountManager {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 DeckDetail deck = JsonReader.Read<DeckDetail>(response.data.ToString());
-                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, deck.productResources);
+                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, null);
             }
         }
     }
@@ -306,8 +303,6 @@ public partial class AccountManager {
 
         Deck deck = decks.Find(x => x.id == tmpData.id);
         deck.name = tmpData.name;
-        deck.coordsSerial = tmpData.coordsSerial;
-        deck.coords = tmpData.coords;
 
         eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
     }

@@ -34,13 +34,11 @@ public class EnemyBuildings : PlayerBuildings {
                 BuildingInfo info = new BuildingInfo(
                     tileNum: tileNum,
                     activate: true,
-                    hp: card.hitPoint,
-                    maxHp: card.hitPoint,
                     card: card,
                     gameObject: building
                 );
 
-                GetComponent<PlayerResource>().TotalHp += info.maxHp;
+                GetComponent<PlayerResource>().TotalHp += 100;
                 buildingInfos.Add(info);
             }
         }

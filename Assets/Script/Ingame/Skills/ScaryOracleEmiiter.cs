@@ -45,19 +45,19 @@ public class ScaryOracleEmiiter : MonoBehaviour {
         public int amount;      //피해 정도
         public int duration;    //지속시간
     }
-    public void Init(string data) {
-        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
-        targets = new List<GameObject>();
+    public void Init(string[] data) {
+        //range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+        //targets = new List<GameObject>();
 
-        this.data = new Data() {
-            interval = 1,
-            range = 45,
-            amount = 65,
-            duration = 6
-        };
+        //this.data = new Data() {
+        //    interval = 1,
+        //    range = 45,
+        //    amount = 65,
+        //    duration = 6
+        //};
 
-        GetComponent<CircleCollider2D>().radius = this.data.range;
-        range_texture.transform.localScale *= this.data.range;
+        //GetComponent<CircleCollider2D>().radius = this.data.range;
+        //range_texture.transform.localScale *= this.data.range;
     }
 
     void OnTriggerStay2D(Collider2D collision) {

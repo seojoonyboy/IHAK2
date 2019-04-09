@@ -23,7 +23,7 @@ public class MinionAI : UnitAI {
         moveSpeed = unit.moveSpeed * 0.4f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        power = unit.power;
+        power = unit.attackPower;
         SetMaxHP();
         health = unit.hitPoint;
         calculateHealthBar();
@@ -62,7 +62,7 @@ public class MinionAI : UnitAI {
         moveSpeed = unit.moveSpeed * 0.4f;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        power = unit.power;
+        power = unit.attackPower;
         maxHealth = unit.hitPoint;
 
     }

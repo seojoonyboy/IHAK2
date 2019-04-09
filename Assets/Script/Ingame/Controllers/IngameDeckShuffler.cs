@@ -93,7 +93,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
             //if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
             card.transform.Find("Header/Bg/Value").GetComponent<Text>().text = "<color=yellow>" + (int)unit.cost.gold + "</color><color=#0DBBFF>" + "/0</color>";
-            card.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>().text = "+ " + unit.power;
+            card.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>().text = "+ " + unit.attackPower;
             card.transform.Find("Specs/Base/Def/Value").GetComponent<Text>().text = "+ " + unit.defence;
             card.transform.Find("Specs/Skills/Skill_A/Text").GetComponent<Text>().text = unit.skill.name;
             
@@ -111,7 +111,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         index = 0;
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
-            Skill skill = spellCard.baseSpec.skill;
+            ActiveSkill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, spellCardParent);
 
             card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
@@ -122,7 +122,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
             //if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
             if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
-            card.transform.Find("Tier/Value").GetComponent<Text>().text = skill.tierNeed.ToString();
 
             card.AddComponent<Index>().Id = index;
 
@@ -199,7 +198,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     public Dictionary<Effects, GameObject> effectModules;
     public Camera camera;
 
-    private void AddSkill(string methodName, GameObject card, string args, int coolTime) {
+    private void AddSkill(string methodName, GameObject card, string[] args, int coolTime) {
         switch (methodName) {
             case "magma":
                 Destroy(card.GetComponent<HeroCardDragHandler>());

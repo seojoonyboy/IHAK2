@@ -39,7 +39,6 @@ namespace Container {
 
                 bi.gameObject = buildingGo;
                 bi.cardInfo = buildingGo.GetComponent<BuildingObject>().card.data;
-                bi.hp = bi.maxHp = bi.cardInfo.hitPoint;
                 buildingInfos.Add(bi);
             }
 

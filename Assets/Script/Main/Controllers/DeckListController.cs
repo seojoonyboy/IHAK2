@@ -244,12 +244,11 @@ public partial class DeckListController {
         ConstructManager cm = ConstructManager.Instance;
         GameObject constructManager = cm.transform.gameObject;
         GameObject targetTile;
-        GameObject targetBuilding;
+        GameObject targetBuilding = null;
 
         for (int i = 0; i < decks.Count; i++) {
             TileGroup tileGroup = accountManager.transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
             int tileCount = accountManager.transform.GetChild(0).GetChild(i).childCount - 1;
-            tileGroup.touchPerProdPower = data[i].productResources;
 
             for (int j = 0; j < tileCount; j++) {
                 targetTile = accountManager.transform.GetChild(0).GetChild(i).GetChild(j).gameObject;
@@ -274,7 +273,15 @@ public partial class DeckListController {
                     }
                     continue;
                 }
-                targetBuilding = FindBuildingWithID(decks[i].coordsSerial[j]);
+                List<int> cardsIndex = new List<int>();
+                cardsIndex.AddRange(decks[i].heroSerial.ToList());
+                cardsIndex.AddRange(decks[i].activeSerial.ToList());
+                cardsIndex.AddRange(decks[i].passiveSerial.ToList());
+                cardsIndex.AddRange(decks[i].wildcardSerial.ToList());
+
+                foreach(int index in cardsIndex) {
+                    targetBuilding = FindBuildingWithID(index);
+                }
                 //그 외
                 if (targetBuilding != null) {
 

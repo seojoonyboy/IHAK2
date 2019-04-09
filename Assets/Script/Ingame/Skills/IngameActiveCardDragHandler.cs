@@ -18,10 +18,10 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     [SerializeField] protected bool isInit = false;
     [SerializeField] protected GameObject parentBuilding;
     [SerializeField] protected IngameDeckShuffler deckShuffler;
-    [SerializeField] protected string data;
+    [SerializeField] protected string[] data;
     [SerializeField] protected int coolTime;
 
-    public void Init(Camera camera, GameObject prefab, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string data, int coolTime) {
+    public void Init(Camera camera, GameObject prefab, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime) {
         this.camera = camera;
         this.prefab = prefab;
         this.parentBuilding = parentBuilding;

@@ -62,14 +62,14 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void Update() {
         if (canPlaying && canEnemyPlaying) {
-            if (IngameHpSystem.enemyHQ.hp <= 0) {
-                canPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-            }
-            if (IngameHpSystem.playerHQ.hp <= 0) {
-                canPlaying = false;
-                resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
-            }
+            //if (IngameHpSystem.enemyHQ.hp <= 0) {
+            //    canPlaying = false;
+            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            //}
+            //if (IngameHpSystem.playerHQ.hp <= 0) {
+            //    canPlaying = false;
+            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+            //}
         }
     }
 

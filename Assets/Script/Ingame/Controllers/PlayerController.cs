@@ -166,10 +166,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
-        foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
-            playerResource().TotalHp += buildingInfo.maxHp;
-        }
-        playerResource().maxhp = playerResource().TotalHp;
+        //foreach (BuildingInfo buildingInfo in playerBuildings().buildingInfos) {
+        //    playerResource().TotalHp += buildingInfo.maxHp;
+        //}
+        //playerResource().maxhp = playerResource().TotalHp;
     }
 
     private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {

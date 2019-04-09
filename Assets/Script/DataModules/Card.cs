@@ -12,37 +12,30 @@ namespace DataModules {
     [System.Serializable]
     public class CardData {
         public string id;
-        public string race;
         public string name;
         public string type;
         public int rarity;
-        public Cost product;
-        public int hitPoint;
-        public int placementLimit;
-        public Skill[] activeSkills;
-        public Skill[] passiveSkills;
+        public ActiveSkill[] activeSkills;
+        public PassiveSkill[] passiveSkills;
         public Unit unit;
-
-        public int lv;
     }
 
     [System.Serializable]
     public class Unit {
         public string id;
         public string name;
+        public int rarity;
         public Cost cost;
         public int coolTime;
         public int size;
-        public int count;
-        public int power;
+        public int attackPower;
         public float attackSpeed;
         public float defence;
         public int attackRange;
         public int hitPoint;
         public float moveSpeed;
-        public decimal attackSP;
-        public decimal beHitSP;
         public UnitSkill skill;
+        public Minion minion;
 
         public string imageName;
     }
@@ -50,7 +43,7 @@ namespace DataModules {
     [System.Serializable]
     public class Cost {
         public decimal gold;
-        public decimal environment;
+        public decimal population;
     }
 
     [System.Serializable]
@@ -63,34 +56,45 @@ namespace DataModules {
 
     [System.Serializable]
     public class Skill {
-        public Cost cost;
         public int id;
         public string name;
         public SkillDetail method;
-        public int tierNeed;
-        public int coolTime;
         public string desc;
-        public string imageName;
     }
 
     [System.Serializable]
-    public class UnitSkill {
-        public int id;
-        public string name;
-        public UnitSkillDetail method;
-        public string desc;
+    public class ActiveSkill : Skill {
+        public Cost cost;
+        public int coolTime;
     }
+
+    [System.Serializable]
+    public class UnitSkill : Skill {
+        public Cost cost;
+        public int coolTime;
+    }
+
+    [System.Serializable]
+    public class PassiveSkill : Skill { }
 
     [System.Serializable]
     public class SkillDetail {
         public int id;
         public string methodName;
-        public string args;
+        public string[] args;
     }
 
     [System.Serializable]
     public class UnitSkillDetail {
         public string methodName;
         public string args;
+    }
+
+    [System.Serializable]
+    public class Minion {
+        public int id;
+        public string type;
+        public int count;
+        public int capability;
     }
 }

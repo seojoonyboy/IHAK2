@@ -190,13 +190,13 @@ public partial class UnitAI : MonoBehaviour {
     private void attackBuilding() {
         ingameHpSystem.TakeDamage(targetEnum, CalPower());
         unitSpine.Attack();
-        if (targetBuilding.hp <= 0) {
-            targetBuilding = null;
-            if (searchTarget())
-                setState(aiState.MOVE);
-            else
-                setState(aiState.NONE);
-        }
+        //if (targetBuilding.hp <= 0) {
+        //    targetBuilding = null;
+        //    if (searchTarget())
+        //        setState(aiState.MOVE);
+        //    else
+        //        setState(aiState.NONE);
+        //}
     }
 
     public virtual void attackUnit() {
@@ -235,7 +235,7 @@ public partial class UnitAI : MonoBehaviour {
     private void searchBuilding() {
         float distance = 0f;
         foreach (BuildingInfo target in buildingInfos) {
-            if (target.hp <= 0) continue;
+            //if (target.hp <= 0) continue;
 
             Vector3 buildingPos = target.gameObject.transform.parent.position;
             float length = Vector3.Distance(transform.position, buildingPos);
