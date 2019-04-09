@@ -65,6 +65,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public Dictionary<Player, GameObject> maps;
     IngameSceneEventHandler eventHandler;
     Req_deckDetail.Deck deck;
+    public GameObject cam;
 
     private static PlayerController _instance;
 
@@ -239,6 +240,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
 
         GameObject hero = Instantiate(result, summonParent);
+        cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
+
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.SetUnitData(card, cardObj);
 

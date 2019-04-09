@@ -6,6 +6,7 @@ using UnityEngine.UI.Extensions;
 
 public class WarCryDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
+        DragOff();
         if (UseCard()) {
             GetComponent<WarCryDragHandler>().enabled = false;
 

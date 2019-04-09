@@ -53,7 +53,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         if (isDead) {
             if(card.GetComponent<ActiveCardCoolTime>() == null) {
                 ActiveCardCoolTime comp = card.AddComponent<ActiveCardCoolTime>();
-                comp.behaviour = card.GetComponent<IngameDragHandler>();
+                comp.behaviour = card.GetComponent<HeroCardDragHandler>();
                 comp.targetCard = card;
                 comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
                 comp.StartCool();
@@ -147,8 +147,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                         activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
                     }
                     playerController.HeroSummon(activeCard.data, selectedObject);
-
-                    selectedObject.GetComponent<IngameDragHandler>().enabled = false;
+                    selectedObject.GetComponent<HeroCardDragHandler>().enabled = false;
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":
@@ -203,7 +202,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     private void AddSkill(string methodName, GameObject card, string args, int coolTime) {
         switch (methodName) {
             case "magma":
-                Destroy(card.GetComponent<IngameDragHandler>());
+                Destroy(card.GetComponent<HeroCardDragHandler>());
                 MagmaDragHandler magmaDragHandler = card.AddComponent<MagmaDragHandler>();
 
                 magmaDragHandler.Init(
@@ -218,7 +217,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 break;
 
             case "herb_distribution":
-                Destroy(card.GetComponent<IngameDragHandler>());
+                Destroy(card.GetComponent<HeroCardDragHandler>());
                 HerbDragHandler herbDragHandler = card.AddComponent<HerbDragHandler>();
 
                 herbDragHandler.Init(
@@ -232,7 +231,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 );
                 break;
             case "scary_prediction":
-                Destroy(card.GetComponent<IngameDragHandler>());
+                Destroy(card.GetComponent<HeroCardDragHandler>());
                 ScaryOracleDragHandler scaryOracle = card.AddComponent<ScaryOracleDragHandler>();
 
                 scaryOracle.Init(
@@ -247,7 +246,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 break;
 
             case "war_cry":
-                Destroy(card.GetComponent<IngameDragHandler>());
+                Destroy(card.GetComponent<HeroCardDragHandler>());
                 WarCryDragHandler warCry = card.AddComponent<WarCryDragHandler>();
 
                 warCry.Init(

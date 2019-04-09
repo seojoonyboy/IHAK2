@@ -3,6 +3,7 @@ using UnityEngine.UI.Extensions;
 
 public class HerbDragHandler : IngameActiveCardDragHandler {
     public override void OnEndDrag(PointerEventData eventData) {
+        DragOff();
         if (UseCard()) {
             GetComponent<HerbDragHandler>().enabled = false;
 

@@ -70,7 +70,7 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
         deactive.SetActive(true);
     }
 
-    public virtual void OnBeginDrag(PointerEventData eventData) { }
+    public virtual void OnBeginDrag(PointerEventData eventData) { DragOn(); }
 
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
@@ -107,5 +107,13 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
 
         var result = deckShuffler.UseCard(gameObject);
         return result;
+    }
+
+    public void DragOn() {
+        GetComponentInChildren<BoundaryCamMove>().isDrag = true;
+    }
+
+    public void DragOff() {
+        GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }
 }
