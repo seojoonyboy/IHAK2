@@ -5,8 +5,7 @@ using UnityEngine.Networking;
 public class NetworkManager : Singleton<NetworkManager> {
 #if DEVELOPMENT_BUILD
     //개발용
-    //public string baseUrl = "http://ihak2devclient.fbl.kr/";
-    public string baseUrl = "http://ihak2test.fbl.kr/";
+    public string baseUrl = "http://ihak2devclient.fbl.kr/";
 #else
     //릴리즈용
     public string baseUrl = "http://ihak2test.fbl.kr/";
