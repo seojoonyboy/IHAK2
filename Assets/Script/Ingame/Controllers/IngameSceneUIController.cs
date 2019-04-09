@@ -1,3 +1,4 @@
+using Container;
 using DataModules;
 using Newtonsoft.Json;
 using System;
@@ -62,14 +63,14 @@ public class IngameSceneUIController : MonoBehaviour {
 
     private void Update() {
         if (canPlaying && canEnemyPlaying) {
-            //if (IngameHpSystem.enemyHQ.hp <= 0) {
-            //    canPlaying = false;
-            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
-            //}
-            //if (IngameHpSystem.playerHQ.hp <= 0) {
-            //    canPlaying = false;
-            //    resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
-            //}
+            if (enemyController.GetComponent<PlayerResource>().TotalHp <= 0) {
+                canPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+            }
+            if (playerController.GetComponent<PlayerResource>().TotalHp <= 0) {
+                canPlaying = false;
+                resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+            }
         }
     }
 
