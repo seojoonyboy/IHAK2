@@ -8,52 +8,48 @@ public class IngameResourceManager : MonoBehaviour {
     [Header(" - ResourceUI")]
     [SerializeField] Text goldValue;
     [SerializeField] Image goldBar;
+    [SerializeField] Text citizenValue;
 
-    private IEnumerator goldProducer;
-    private IEnumerator envProducer;
+    private IEnumerator resourceProducer;
 
     private void Awake() {
-        goldProducer = GoldProduce();
-        envProducer = EnvProduce();
+        resourceProducer = ResourceProduce();
     }
 
-    public void OnGoldProduce(bool start) {
+    public void OnResourceProduce(bool start) {
         if(start)
-            StartCoroutine(goldProducer);
+            StartCoroutine(resourceProducer);
         else
-            StopCoroutine(goldProducer);
+            StopCoroutine(resourceProducer);
     }
 
-    private IEnumerator GoldProduce() {
+    private IEnumerator ResourceProduce() {
         while (true) {
-            RefreshGoldSlider();
+            //RefreshGoldSlider();
             float gold = (float)PlayerController.Instance.playerResource().Gold;
-            int increaseAmnt = 2;
-            yield return new WaitForSeconds(1.0f);
+            float citizen = (float)PlayerController.Instance.playerResource().Citizen;
+            int increaseAmnt = 1;
+            yield return new WaitForSeconds(0.2f);
 
-            if (gold >= 30) { increaseAmnt = 0; }
-            if(gold == 29) { increaseAmnt = 1; }
+            if (gold >= 100) { increaseAmnt = 0; }
+            if (citizen  >= 100) { increaseAmnt = 0; }
+            //if(gold == 299) { increaseAmnt = 1; }
 
-            goldBar.fillAmount = ((float)gold / 30);
+            //goldBar.fillAmount = ((float)gold / 100);
             PlayerController.Instance.playerResource().Gold += increaseAmnt;
-            goldValue.text = gold.ToString();
+            PlayerController.Instance.playerResource().Citizen += increaseAmnt;
+            //goldValue.text = ((int)(gold / 10)).ToString();
         }
     }
 
     public void RefreshGoldSlider() {
         float gold = (float)PlayerController.Instance.playerResource().Gold;
-        goldBar.fillAmount = ((float)gold / 30);
-        goldValue.text = gold.ToString();
+        goldBar.fillAmount = ((float)gold / 100);
+        goldValue.text = ((int)(gold / 10)).ToString();
     }
 
-    public void OnEnvProduce(bool start) {
-        
-    }
-
-    private IEnumerator EnvProduce() {
-        while (true) {
-            float env = (float)PlayerController.Instance.playerResource().Env;
-            yield return new WaitForSeconds(1.0f);
-        }
+    public void RefreshCitizenText() {
+        float citizen = (float)PlayerController.Instance.playerResource().Citizen;
+        citizenValue.text = ((int)(citizen / 10)).ToString();
     }
 }
