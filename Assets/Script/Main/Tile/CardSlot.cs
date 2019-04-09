@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,17 +16,31 @@ public class CardSlot : MonoBehaviour, IDropHandler {
     }
     
     public void OnDrop (PointerEventData eventData) {
-        if (card == null) {
-            SetCard(eventData.pointerDrag.gameObject);
+        
+        if(card == null) {
+            try {
+                SetCard(eventData.pointerPress.gameObject);
+            }
+            catch (NullReferenceException ne) {
+                Debug.Log("카드선택오류");
+            }
         }
         else if(card != null) {
-            SwapCard(eventData.pointerDrag.gameObject);
+            try {
+                SwapCard(eventData.pointerPress.gameObject);
+            }
+            catch (NullReferenceException ne) {
+                Debug.Log("카드선택오류");
+            }
         }
+        
     }
 
     public void SetCard(GameObject dragObject) {
         if (card != null) return;
+        if (dragObject == null) return;
         if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
+        if (DeckSettingController.Instance.buildingCount >= 10) return;
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
         cardObject.GetComponent<Image>().sprite = dragObject.GetComponent<Image>().sprite;
         cardObject.transform.Find("Image").GetComponent<Image>().sprite = dragObject.transform.Find("Data").GetComponent<Image>().sprite;
@@ -54,6 +68,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
     }
 
     public void SwapCard(GameObject dragObject) {
+        if (dragObject == null) return;
         if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
         Destroy(card);
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
