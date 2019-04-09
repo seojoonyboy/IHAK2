@@ -21,14 +21,17 @@ public class DropHandler : MonoBehaviour {
     [SerializeField] public GameObject unitGenDetailModal;
 
     private void Start() {
+        /*
         cam = Camera.main;
         startCamSize = cam.orthographicSize;
         var camSizeStream = cam.ObserveEveryValueChanged(_ => cam.orthographicSize).Subscribe(_ => camSize = cam.orthographicSize);
         prodDetailModal = deckSettingController.prodDetailModal;
         unitGenDetailModal = deckSettingController.unitGenDetailModal;
+        */
     }
 
     public void OnDrop() {
+        /*
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
@@ -62,9 +65,10 @@ public class DropHandler : MonoBehaviour {
         }
         
         //RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, 5000);
+        */
         
     }
-
+    /*
     public void SettingBuilding(GameObject building) {
         if (building == null) return;
         GameObject selectBuilding = Instantiate(building);
@@ -194,6 +198,6 @@ public class DropHandler : MonoBehaviour {
         }
         Debug.Log(prodDetailModal.transform.GetChild(0).GetChild(4).name);
     }
-
+    */
 
 }
