@@ -179,7 +179,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         playerBuildings().RemoveTile();
 
         deckShuffler().InitCard();
-        resourceManager().OnGoldProduce(true);
+        resourceManager().OnResourceProduce(true);
     }
 }
 
