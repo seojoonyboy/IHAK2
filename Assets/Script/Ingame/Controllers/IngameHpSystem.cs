@@ -106,89 +106,73 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     public bool TakeDamage(Target target, int amount) {
         switch (target) {
             case Target.ENEMY_1:
+                int totalHp = enemyController.GetComponent<PlayerResource>().TotalHp;
+                int maxHp = enemyController.GetComponent<PlayerResource>().maxhp;
+
                 if (enemyHQ == null) return false;
-                //if (enemyHQ.hp <= 0) return false;
+                if (totalHp <= 0) return false;
 
-                ////체력감소 연산
-                //if (enemyHQ.hp > amount) {
-                //    enemyHQ.hp -= amount;
-                //    if (enemyHQ.hp < enemyHQ.maxHp) {
-                //        enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                //        float hpScaleX = (float)enemyHQ.hp / enemyHQ.maxHp;
-                //        enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                //체력감소 연산
+                if (totalHp > amount) {
+                    totalHp -= amount;
+                    if (totalHp < maxHp) {
+                        enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                        float hpScaleX = (float)totalHp / maxHp;
+                        enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
 
-                //        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
-                //        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
-                //    }
-                //}
-                //else if (enemyHQ.hp <= amount) {
-                //    amount = enemyHQ.hp;
-                //    enemyHQ.hp = 0;
-                //    enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                //    enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                //    enemyHQ.activate = false;
-                //    BuildingDestroyed(target, enemyHQ);
-                //    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
-                //    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-
-                //    if (enemyHQ.hp <= 0)
-                //        DestroyEnemy();
-                //}
-
-                /*
-                if (enemyResource.TotalHp > amount) {
-                    enemyResource.TotalHp -= amount;
-                    float percent = (float)enemyResource.TotalHp / enemyResource.maxhp;                    
+                        enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                        enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
+                    }
                 }
-                else if(enemyResource.TotalHp <= amount) {
-                    enemyResource.TotalHp = 0;                   
-                } 
-                */
+                else if (totalHp <= amount) {
+                    amount = totalHp;
+                    totalHp = 0;
+                    enemyHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    enemyHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    enemyHQ.activate = false;
+                    BuildingDestroyed(target, enemyHQ);
+                    enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0f.ToString() + "%";
+                    enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
+
+                    if (totalHp <= 0)
+                        DestroyEnemy();
+                }
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
 
             case Target.ME:
-                //if (playerHQ == null) return false;
-                //if (playerHQ.hp <= 0) return false;
+                totalHp = PlayerController.Instance.playerResource().TotalHp;
+                maxHp = PlayerController.Instance.playerResource().maxhp;
+
+                if (playerHQ == null) return false;
+                if (totalHp <= 0) return false;
 
 
-                //if(playerHQ.hp > amount) {
-                //    playerHQ.hp -= amount;
+                if (totalHp > amount) {
+                    totalHp -= amount;
 
-                //    if (playerHQ.hp < playerHQ.maxHp) {
-                //        playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
-                //        float hpScaleX = (float)playerHQ.hp / playerHQ.maxHp;
-                //        playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
-                //        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
-                //        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
-                //    }
-                //}
-                //else if(playerHQ.hp <= amount) {
-                //    amount = playerHQ.hp;
-                //    playerHQ.hp = 0;
-                //    playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
-                //    playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                //    playerHQ.activate = false;
-                //    BuildingDestroyed(target, playerHQ);
-                //    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
-                //    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
-
-                //    if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
-                //        DestroyCity();
-                //}
-                /*
-                if(myResource.TotalHp > amount) {
-                    myResource.TotalHp -= amount;
-                    float percent = (float)myResource.TotalHp / myResource.maxhp;
-                    
+                    if (totalHp < maxHp) {
+                        playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(true); // 건물 하위에 있는 체력게이지 활성화.
+                        float hpScaleX = (float)totalHp / maxHp;
+                        playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(hpScaleX, 1, 1);
+                        playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = Mathf.RoundToInt(hpScaleX * 100f).ToString() + "%";
+                        playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hpScaleX;
+                    }
                 }
-                else if (myResource.hp <= amount) {
-                    myResource.TotalHp = 0;
-                                                
-                }    
-                */
+                else if (totalHp <= amount) {
+                    amount = totalHp;
+                    totalHp = 0;
+                    playerHQ.gameObject.transform.GetChild(0).GetChild(1).localScale = new Vector3(0, 1, 1);
+                    playerHQ.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    playerHQ.activate = false;
+                    BuildingDestroyed(target, playerHQ);
+                    playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = 0.ToString() + "%";
+                    playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 0;
+
+                    if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
+                        DestroyCity();
+                }
                 break;
-                
         }
         return true;
     }
