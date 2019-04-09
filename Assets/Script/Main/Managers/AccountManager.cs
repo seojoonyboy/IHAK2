@@ -137,6 +137,7 @@ public partial class AccountManager : Singleton<AccountManager> {
             Modal.instantiate("새로운 계정을 등록합니다.", "닉네임을 입력하세요.", null, Modal.Type.INSERT, SetUserReqData);
         }
         else {
+            Debug.Log(response.responseCode);
             Debug.Log("알 수 없는 Server 오류");
         }
     }

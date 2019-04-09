@@ -44,6 +44,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [Header(" - TileGroup")]
     [SerializeField] public GameObject tileGroup;
     [SerializeField] public List<int> cardSetList;
+    [SerializeField] public List<int> heroList;
+    [SerializeField] public List<int> activeList;
+    [SerializeField] public List<int> passiveList;
+    [SerializeField] public int wildcard;
+
     [SerializeField] public int tileCount = 0;
 
     [Header(" - EditingBuilding")]
@@ -289,13 +294,16 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     private void OnclickInputConfirm(string inputText) {
         Deck deck = new Deck();
-        deck.race = "primal";
+        //deck.race = "primal";
         deck.name = inputText;
         deck.coordsSerial = new int[cardSetList.Count + 1];
         for (int i = 0; i < cardSetList.Count; i++) {
+            /*
             deck.coordsSerial[i] = cardSetList[i];
             if (tileGroup.transform.GetChild(i).childCount != 0)
                 tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation = tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum;
+                */
+            deck.coordsSerial[i] = 0;
         }
         deck.coordsSerial = cardSetList.ToArray();
         if (prevData == null) {
