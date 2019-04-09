@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
+public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     DropHandler dropHandler;
     public GameObject setObject;
     Vector3 startScale;
@@ -44,21 +44,22 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         if (!canDrag) return;
         if (dropHandler.setObject != null) return;
         picturePosition = transform.Find("Data").localPosition;
+
+
+        transform.gameObject.GetComponent<Image>().raycastTarget = false;
         dropHandler.setObject = setObject;
         dropHandler.buildingMaxCount = buildingMaxCount;
         startPosition = transform.position;        
         camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
         deckSettingController.picking = true;
-        //deckSettingController.ShowBuildingStatus(setObject);
-        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = false;
     }
 
-    public void OnEndDrag() {
+    public void OnEndDrag(PointerEventData eventData) {
         transform.localPosition = new Vector3(0, 14, 0);
         transform.localScale = startScale;
-        
-        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
 
+        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
+        transform.gameObject.GetComponent<Image>().raycastTarget = true;
         Canvas.ForceUpdateCanvases();
         var glg = transform.parent.GetComponent<GridLayoutGroup>();
         glg.CalculateLayoutInputHorizontal();
@@ -67,8 +68,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         glg.SetLayoutVertical();
         canDrag = false;
         deckSettingController.picking = false;
-        deckSettingController.clicktime = 0f;
-        deckSettingController.CloseBuildingStatus();
+        deckSettingController.clicktime = 0f;        
 
         GetComponent<Image>().enabled = true;
         transform.Find("Data").localPosition = picturePosition;
@@ -77,7 +77,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
         transform.Find("Name").GetComponent<Text>().enabled = true;
         transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
-        
+
+        /*
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
             transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
             transform.GetChild(1).GetComponent<Text>().color = Color.white;
@@ -90,6 +91,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             transform.GetChild(2).GetComponent<Text>().color = Color.gray;
         }
         dropHandler.OnDrop();
+        
+        */
         dropHandler.setObject = null;
     }
 
@@ -97,11 +100,18 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
         if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
         if (dropHandler.setObject != setObject) return;
+        transform.gameObject.GetComponent<Image>().raycastTarget = false;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        
+        transform.position = Input.mousePosition;
+        transform.GetChild(0).GetComponent<Image>().color = Color.white;
+        transform.localScale = startScale;
 
+        /*
         if (hit.collider != null) {
+            
             if(hit.collider.tag == "Tile") {
                 GameObject tile = hit.transform.gameObject;
                 if (accountManager.userTier >= tile.GetComponent<TileObject>().Tier) {
@@ -149,14 +159,13 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler {
             }
         }
         else {
-            transform.position = Input.mousePosition;
-            transform.GetChild(0).GetComponent<Image>().color = Color.white;
-            transform.localScale = startScale;
+            
         }
+        */
     }
-
+    /*
     public void showStatus() {
         dropHandler.ShowDetail(setObject.GetComponent<BuildingObject>());
     }
-
+*/
 }
