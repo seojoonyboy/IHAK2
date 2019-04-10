@@ -68,7 +68,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
                 deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
                 break;
         }
-        dragObject.GetComponent<DragHandler>().canDrag = false;
+        dragObject.GetComponent<DragHandler>().DisableCard();
 
 
     }
@@ -122,7 +122,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
                 deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
                 break;
         }
-        dragObject.GetComponent<DragHandler>().canDrag = false;
+        dragObject.GetComponent<DragHandler>().DisableCard();
     }
     
 
