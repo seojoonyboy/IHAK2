@@ -29,7 +29,9 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     public void DeleteCitizen() {
         int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
         if (citizenNum > 0) {
-            Destroy(citizens[citizenNum]);
+            GameObject citizenObject = citizens[citizenNum-1];
+            citizens.Remove(citizens[citizenNum-1]);
+            Destroy(citizenObject);
             citizenNum--;
             PlayerController.Instance.playerResource().Citizen -= 10;
         }
