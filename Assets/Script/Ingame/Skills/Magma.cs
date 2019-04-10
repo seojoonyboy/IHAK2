@@ -19,28 +19,26 @@ public class Magma : MonoBehaviour {
 
     public void Init(string[] data) {
         range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+        
+        int range = 0;
+        int.TryParse(data[0], out range);
+        GetComponent<CircleCollider2D>().radius = range;
+        range_texture.transform.localScale *= range;
 
-        //string[] args = data.Split(',');
+        int interval = 1;
 
-        //int range = 0;
-        //int.TryParse(args[0], out range);
-        //GetComponent<CircleCollider2D>().radius = range;
-        //range_texture.transform.localScale *= range;
+        int duration = 0;
+        int.TryParse(data[1], out duration);
 
-        //int interval = 1;
+        int damage = 0;
+        int.TryParse(data[2], out damage);
 
-        //int duration = 0;
-        //int.TryParse(args[1], out duration);
-
-        //int damage = 0;
-        //int.TryParse(args[2], out damage);
-
-        //this.data = new Data() {
-        //    interval = interval,
-        //    range = range,
-        //    amount = damage,
-        //    duration = duration
-        //};
+        this.data = new Data() {
+            interval = interval,
+            range = range,
+            amount = damage,
+            duration = duration
+        };
     }
 
     IEnumerator Damage(float interval, int loopCount) {

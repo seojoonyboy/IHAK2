@@ -23,7 +23,6 @@ namespace Container {
             get { return gold; }
             set {
                 if (value < 0 && gold < value) {
-                    Debug.LogError("자원이 0이하로 떨어졌습니다.");
                     gold = 0;
                 }
                 if(value > 100) { value = 100; return; }
