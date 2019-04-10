@@ -28,8 +28,12 @@ public class Req_deckDetail : JsonReader {
         public string name;
         public string race;
         public bool isRepresent;
-        public int[] coordsSerial;
-        public int[,] coords;
+
+        public int[] heroSerial;
+        public int[] activeSerial;
+        public int[] passiveSerial;
+        public int[] wildcardSerial;
+
         public Card[] cards;
     }
 

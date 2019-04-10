@@ -148,10 +148,11 @@ public partial class PlayerController : SerializedMonoBehaviour {
                     .GetComponent<TileGroup>();
 
                 foreach(Req_deckDetail.Card card in deck.cards) {
-                    if (card.data.type == "unit") {
+                    if (card.data.type == "hero") {
                         ActiveCard activeCard = tileGroup.units.Find(x => x.id == card.id);
                         if(activeCard != null) {
                             activeCard.baseSpec.unit.skill = card.data.unit.skill;
+                            activeCard.baseSpec.unit.minion = card.data.unit.minion;
                         }
                     }
                 }
