@@ -104,19 +104,19 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
             switch (type) {
                 case "hero":
-                    deckSettingController.FindCard(deckSettingController.heroList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.FindCard(deckSettingController.heroList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                     deckSettingController.heroList[transform.parent.GetSiblingIndex()] = -1;
                     break;
                 case "active":
-                    deckSettingController.FindCard(deckSettingController.activeList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.FindCard(deckSettingController.activeList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                     deckSettingController.activeList[transform.parent.GetSiblingIndex()] = -1;
                     break;
                 case "passive":
-                    deckSettingController.FindCard(deckSettingController.passiveList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.FindCard(deckSettingController.passiveList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                     deckSettingController.passiveList[transform.parent.GetSiblingIndex()] = -1;
                     break;
                 case "wild":
-                    deckSettingController.FindCard(deckSettingController.wildcard).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.FindCard(deckSettingController.wildcard).GetComponent<DragHandler>().ActivateCard();
                     deckSettingController.wildcard = -1;
                     break;
             }
