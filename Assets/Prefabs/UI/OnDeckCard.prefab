@@ -55,6 +55,8 @@ GameObject:
   - component: {fileID: 224394733513984220}
   - component: {fileID: 222008067186205448}
   - component: {fileID: 114237390915324070}
+  - component: {fileID: 114003273317592754}
+  - component: {fileID: 210447387166471432}
   m_Layer: 5
   m_Name: OnDeckCard
   m_TagString: Untagged
@@ -73,12 +75,29 @@ GameObject:
   - component: {fileID: 222226350623232586}
   - component: {fileID: 114934834082806888}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114003273317592754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1489534197875274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5fa5eb8e61b4d48b3bd6fa237d2afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setObject: {fileID: 0}
+  canDrag: 0
+  onDeck: 1
+  deckSettingController: {fileID: 0}
+  parentPageObject: {fileID: 0}
+  sibilingData: 0
 --- !u!114 &114100885862672080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,6 +206,16 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!210 &210447387166471432
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1489534197875274}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!222 &222008067186205448
 CanvasRenderer:
   m_ObjectHideFlags: 1

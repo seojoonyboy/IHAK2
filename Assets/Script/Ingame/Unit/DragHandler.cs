@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-    DropHandler dropHandler;
     public GameObject setObject;
     Vector3 startScale;
     Vector3 startPosition;
@@ -14,160 +13,98 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     float camMagnification;
     Camera cam;
     public bool canDrag = false;
+    public bool onDeck = false;
     public DeckSettingController deckSettingController;
-    public AccountManager accountManager;
-    private int buildingMaxCount;
 
     [Header(" - PageSave")]
     public GameObject parentPageObject;
     public int sibilingData;
 
-    /*
-    public void BeginDrag() {
-        
-        OnBeginDrag(null);
-    }
-    */
+
     private void Start() {
-        dropHandler = GetComponentInParent<DropHandler>();
         canDrag = true;
-        buildingMaxCount = 1;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
         deckSettingController = DeckSettingController.Instance;
-        GetComponent<LongClickButton>().onShortClick.AddListener(() => Debug.Log("Short Button Click"));
-        accountManager = AccountManager.Instance;
-        
+        startPosition = transform.position;
     }
 
     public void OnBeginDrag (PointerEventData eventData) {
-        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
-        if (dropHandler.setObject != null) return;
+        if (deckSettingController.cardCount >= deckSettingController.maxCard) return;
+
         picturePosition = transform.Find("Data").localPosition;
-
-
         transform.gameObject.GetComponent<Image>().raycastTarget = false;
-        dropHandler.setObject = setObject;
-        dropHandler.buildingMaxCount = buildingMaxCount;
-        startPosition = transform.position;        
-        camMagnification = (dropHandler.startCamSize - dropHandler.camSize) * 0.025f;
+        
         deckSettingController.picking = true;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         transform.localPosition = new Vector3(0, 14, 0);
         transform.localScale = startScale;
-
-        //cam.GetComponent<BitBenderGames.MobileTouchCamera>().enabled = true;
+        transform.position = startPosition;
+        
         transform.gameObject.GetComponent<Image>().raycastTarget = true;
         Canvas.ForceUpdateCanvases();
-        var glg = transform.parent.GetComponent<GridLayoutGroup>();
-        glg.CalculateLayoutInputHorizontal();
-        glg.CalculateLayoutInputVertical();
-        glg.SetLayoutHorizontal();
-        glg.SetLayoutVertical();
-        canDrag = false;
+
+        if(onDeck == false) {
+            var glg = transform.parent.GetComponent<GridLayoutGroup>();
+            glg.CalculateLayoutInputHorizontal();
+            glg.CalculateLayoutInputVertical();
+            glg.SetLayoutHorizontal();
+            glg.SetLayoutVertical();
+        }
+
+        if(onDeck == true) {
+            DragDestroy(eventData.pointerEnter.gameObject);
+        }
+
         deckSettingController.picking = false;
-        deckSettingController.clicktime = 0f;        
+        deckSettingController.clicktime = 0f;  
 
-        GetComponent<Image>().enabled = true;
-        transform.Find("Data").localPosition = picturePosition;
-        transform.Find("FirstMark").gameObject.SetActive(true);
-        transform.Find("SecondMark").gameObject.SetActive(true);
 
-        transform.Find("Name").GetComponent<Text>().enabled = true;
-        transform.GetChild(2).GetComponent<Text>().enabled = true;    // slot => Count;
-
-        /*
-        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) > 0) {
-            transform.GetChild(0).GetComponent<Image>().color = Color.white;  //slot => Data;
-            transform.GetChild(1).GetComponent<Text>().color = Color.white;
-            transform.GetChild(2).GetComponent<Text>().color = Color.white;
-        }
-        else if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) {
-            transform.GetComponent<Image>().color = Color.gray;
-            transform.GetChild(0).GetComponent<Image>().color = Color.gray;
-            transform.GetChild(1).GetComponent<Text>().color = Color.gray;
-            transform.GetChild(2).GetComponent<Text>().color = Color.gray;
-        }
-        dropHandler.OnDrop();
-        
-        */
-        dropHandler.setObject = null;
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (buildingMaxCount - deckSettingController.OnTileBuildingCount(setObject) <= 0) return;
         if (!canDrag) return;
-        if (dropHandler.setObject != setObject) return;
+        if (deckSettingController.cardCount >= deckSettingController.maxCard) return;
         transform.gameObject.GetComponent<Image>().raycastTarget = false;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-        
+
         transform.position = Input.mousePosition;
         transform.GetChild(0).GetComponent<Image>().color = Color.white;
         transform.localScale = startScale;
-
-        /*
-        if (hit.collider != null) {
-            
-            if(hit.collider.tag == "Tile") {
-                GameObject tile = hit.transform.gameObject;
-                if (accountManager.userTier >= tile.GetComponent<TileObject>().Tier) {
-
-                    transform.localScale = new Vector3(startScale.x + camMagnification, startScale.y + camMagnification);
-                    transform.position = cam.WorldToScreenPoint(tile.transform.position);
-
-                    GetComponent<Image>().enabled = false;
-                    transform.Find("FirstMark").gameObject.SetActive(false);
-                    transform.Find("SecondMark").gameObject.SetActive(false);
-                    transform.Find("Name").GetComponent<Text>().enabled = false;
-                    transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
-                    transform.Find("Data").position = cam.WorldToScreenPoint(tile.transform.position);
-
-                    if (tile.GetComponent<TileObject>().buildingSet == false) {
-                        if (AccountManager.Instance.userTier >= tile.GetComponent<TileObject>().Tier)
-                            transform.GetChild(0).GetComponent<Image>().color = Color.green;   //slot => Data;
-                        else
-                            transform.GetChild(0).GetComponent<Image>().color = Color.red;
-                    }
-                    else
-                        transform.GetChild(0).GetComponent<Image>().color = Color.red;
-                }
-                else {
-                    transform.position = Input.mousePosition;
-                    transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                    transform.localScale = startScale;
-                }
-            }
-            else if (hit.collider.tag == "Building") {
-                GameObject tile = hit.transform.parent.gameObject;
-                transform.localScale = new Vector3(startScale.x * 1.5f + camMagnification, startScale.y * 1.5f + camMagnification);
-                transform.position = cam.WorldToScreenPoint(tile.transform.position);
-
-                GetComponent<Image>().enabled = false;
-                transform.Find("Name").GetComponent<Text>().enabled = false;
-                transform.GetChild(2).GetComponent<Text>().enabled = false;    // slot => Count;
-
-                transform.GetChild(0).GetComponent<Image>().color = Color.red; //slot => Data;
-            }
-            else if (hit.collider.tag == "BackGroundTile") {
-                transform.position = Input.mousePosition;
-                transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                transform.localScale = startScale;
-            }
-        }
-        else {
-            
-        }
-        */
     }
-    /*
-    public void showStatus() {
-        dropHandler.ShowDetail(setObject.GetComponent<BuildingObject>());
+
+    public void DragDestroy(GameObject target) {
+        if (onDeck == false) return;
+        if (target != transform.parent.gameObject) {
+            string type = transform.parent.parent.parent.name;
+
+            switch (type) {
+                case "hero":
+                    deckSettingController.FindCard(deckSettingController.heroList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.heroList[transform.parent.GetSiblingIndex()] = -1;
+                    break;
+                case "active":
+                    deckSettingController.FindCard(deckSettingController.activeList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.activeList[transform.parent.GetSiblingIndex()] = -1;
+                    break;
+                case "passive":
+                    deckSettingController.FindCard(deckSettingController.passiveList[transform.parent.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.passiveList[transform.parent.GetSiblingIndex()] = -1;
+                    break;
+                case "wild":
+                    deckSettingController.FindCard(deckSettingController.wildcard).GetComponent<DragHandler>().canDrag = true;
+                    deckSettingController.wildcard = -1;
+                    break;
+            }
+
+            Destroy(gameObject);
+        }
+
     }
-*/
 }

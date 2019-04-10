@@ -34,6 +34,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [SerializeField] public GameObject DeckStatusUI;
     [SerializeField] public GameObject selectUI;
     [SerializeField] public GameObject slotUI;
+    [SerializeField] public GameObject heroTap;
+    [SerializeField] public GameObject activeTap;
+    [SerializeField] public GameObject passiveTap;
+    [SerializeField] public GameObject wildTap;
+
+
 
     public Text
         modalHeader,
@@ -74,7 +80,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     [Header(" - UserData")]
     private int speciesId = 0;
     private int deckCount;
-    public int buildingCount = 0;
+    public int cardCount = 0;
+    public int maxCard = 10;
 
     [Header(" - Time")]
     public float clicktime = 0f;
@@ -119,6 +126,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         deckCount = playerInfosManager.decks.Count;
         gsm = FindObjectOfType<GameSceneManager>();
         cam = Camera.main;
+
+        heroTap = slotUI.transform.Find("Content").Find("hero").Find("Decks").gameObject;
+        activeTap = slotUI.transform.Find("Content").Find("active").Find("Decks").gameObject;
+        passiveTap = slotUI.transform.Find("Content").Find("passive").Find("Decks").gameObject;
+        wildTap = slotUI.transform.Find("Content").Find("wild").Find("Decks").gameObject;
+
         var downStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
         var dragStream = Observable.EveryUpdate().Where(_=>Input.GetMouseButton(0));
         var upStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonUp(0));
@@ -131,7 +144,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         ResetActiveSlot();
         DeckActiveCheck();
         resetButton.OnClickAsObservable().Subscribe(_ => {
-            Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => resetDeck());
+            Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => ResetDeck());
         });
         deleteButton.OnClickAsObservable().Subscribe(_ => DeleteBuilding());
 
@@ -195,14 +208,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         changedDeckName = deckName.text = playerInfosManager.decks[deckNumber].name;
         showFieldName.text = deckName.text;
-        deckBuildingCount.text = buildingCount.ToString() + " / " + 8.ToString();
+        deckBuildingCount.text = cardCount.ToString() + " / " + 8.ToString();
     }
 
     public void SettingCard() {
-        GameObject heroTap = slotUI.transform.Find("Content").Find("hero").Find("Decks").gameObject;
-        GameObject activeTap = slotUI.transform.Find("Content").Find("active").Find("Decks").gameObject;
-        GameObject passiveTap = slotUI.transform.Find("Content").Find("passive").Find("Decks").gameObject;
-        GameObject wildTap = slotUI.transform.Find("Content").Find("wild").Find("Decks").gameObject;
 
         if (AccountManager.Instance.selectNumber + 1 > AccountManager.Instance.decks.Count) {
             for (int i = 0; i < heroTap.transform.childCount; i++)
@@ -229,6 +238,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 heroList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                 card.GetComponent<DragHandler>().canDrag = false;
+
+                card.GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
             }
         }
 
@@ -241,6 +255,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 activeList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                 card.GetComponent<DragHandler>().canDrag = false;
+
+                card.GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
             }
         }
 
@@ -253,6 +272,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
                 card.GetComponent<DragHandler>().canDrag = false;
+
+                card.GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
             }
         }
 
@@ -264,13 +288,17 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
             passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
             card.GetComponent<DragHandler>().canDrag = false;
-        }
 
+            card.GetComponent<Image>().color = Color.grey;
+            card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+            card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
+            card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
+        }
     }
 
     public void SetDeckInfo() {
         Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
-        deckBuildingCount.text = buildingCount.ToString() + " / " + 8.ToString();
+        deckBuildingCount.text = cardCount.ToString() + " / " + 8.ToString();
     }
 
     public void OnPrepareModal() {
@@ -401,25 +429,53 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 cardSetList.Add(card[i].id);
                 //ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.data.product);
 
-                buildingCount++;
+                cardCount++;
                 
                 SetDeckInfo();
             }
         }
     }
 
-    public void resetDeck() {
-        for (int i = 0; i < tileCount; i++) {
-            
-
-
-            tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
-            cardSetList[i] = 0;
+    public void ResetDeck() {
+        GameObject card;
+        for (int i = 0; i < heroTap.transform.childCount; i++) {
+            card = heroTap.transform.GetChild(i).GetComponent<CardSlot>().card;
+            if (card != null) {
+                FindCard(heroList[i]).GetComponent<DragHandler>().canDrag = true;
+                Destroy(card);
+            }
+            heroList[i] = -1;
         }
-        buildingCount = 0;
+
+        for (int i = 0; i < activeTap.transform.childCount; i++) {
+            card = activeTap.transform.GetChild(i).GetComponent<CardSlot>().card;
+            if (card != null) {
+                FindCard(activeList[i]).GetComponent<DragHandler>().canDrag = true;
+                Destroy(card);
+            }
+            activeList[i] = -1;
+        }
+
+        for (int i = 0; i < passiveTap.transform.childCount; i++) {
+            card = passiveTap.transform.GetChild(i).GetComponent<CardSlot>().card;
+            if (card != null) {
+                FindCard(passiveList[i]).GetComponent<DragHandler>().canDrag = true;
+                Destroy(card);
+            }
+            passiveList[i] = -1;
+        }
+
+        card = wildTap.transform.GetChild(0).GetComponent<CardSlot>().card;
+        if (card != null) {
+            FindCard(wildcard).GetComponent<DragHandler>().canDrag = true;
+            Destroy(card);
+        }
+        wildcard = -1;
+
+
+        cardCount = 0;
         SetDeckInfo();
         ResetAllSliderValues();
-        ResetCardCount();
         reset = true;
     }
 
@@ -556,7 +612,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                     selectBuilding.transform.position = position;
                     SetSortingOrder(selectBuilding, tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum);
                     targetTile.GetComponent<TileObject>().buildingSet = true;
-                    buildingCount++;
+                    cardCount++;
                     SetDeckInfo();
                 }
                 else {
@@ -596,33 +652,13 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         GameObject slot = FindCard(saveSelectBuilding.GetComponent<BuildingObject>().card.id);
         //int maxbuildCount = saveSelectBuilding.GetComponent<BuildingObject>().card.data.placementLimit;
         
-        int count = maxbuildCount - OnTileBuildingCount(saveSelectBuilding);
-        count++;
-
-        if(count > 0) {
-            slot.GetComponent<Image>().color = Color.white;
-            slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
-            slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
-            slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
-        }
-
-        //slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
-        slot.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + maxbuildCount.ToString();
-
-        GameObject ActiveSkillUISlot = FindActiveSlot(saveSelectBuilding.GetComponent<BuildingObject>().card.id);
-        if(ActiveSkillUISlot != null) {
-            ClearActiveSlot(ActiveSkillUISlot);
-        }
+        
 
 
-
-        //Cost cost = saveSelectBuilding.GetComponent<BuildingObject>().card.data.product;
-        //MinusSliderValue(cost);
-
+        
         cardSetList[saveSelectBuilding.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         saveSelectBuilding.transform.parent.GetComponent<TileObject>().buildingSet = false;
-        //gameObject.transform.GetChild(2).gameObject.SetActive(false);
-        buildingCount--;
+        cardCount--;
         SetDeckInfo();
         Destroy(saveSelectBuilding);
     }
@@ -648,21 +684,11 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             card.transform.GetChild(2).GetComponent<Text>().color = Color.white;
         }
 
-        //card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + selectbuildingStatus.GetComponent<BuildingObject>().data.card.placementLimit;
-        card.transform.GetChild(2).GetComponent<Text>().text = count.ToString() + " / " + maxbuildCount.ToString();
-
-        GameObject ActiveSkillUISlot = FindActiveSlot(building.GetComponent<BuildingObject>().card.id);
-        if (ActiveSkillUISlot != null) {
-            ClearActiveSlot(ActiveSkillUISlot);
-        }
-
-        //Cost cost = building.GetComponent<BuildingObject>().card.data.product;
-        //MinusSliderValue(cost);
 
         cardSetList[building.transform.parent.GetComponent<TileObject>().tileNum] = 0;
         building.transform.parent.GetComponent<TileObject>().buildingSet = false;
         //gameObject.transform.GetChild(2).gameObject.SetActive(false);
-        buildingCount--;
+        cardCount--;
         SetDeckInfo();
         Destroy(building);
     }
@@ -727,29 +753,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             }
         }
     }
-
-    public void ResetCardCount() {
-        //리셋시에 건물이 사라지니, 건물의 카운트를 재조정.
-        if (cardsContent == null)
-            return;
-
-        for (int i = 0; i < cardsContent.transform.childCount; i++) // 페이지 검사
-        {
-            for (int j = 0; j < cardsContent.transform.GetChild(i).childCount; j++) //  i 페이지 안에 있는 slot 검사
-            {
-                GameObject slot = cardsContent.transform.GetChild(i).GetChild(j).gameObject; // i페이지 안에 있는 j번째 카드
-                //int maxBuildCount = slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.placementLimit;
-                //int maxBuildCount = 2;
-                //slot.transform.GetChild(2).GetComponent<Text>().text = 0 + " / " + slot.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().data.card.placementLimit.ToString();
-                slot.GetComponent<Image>().color = Color.white;
-                slot.transform.GetChild(0).GetComponent<Image>().color = Color.white;
-                slot.transform.GetChild(1).GetComponent<Text>().color = Color.white;
-                slot.transform.GetChild(2).GetComponent<Text>().text = maxbuildCount.ToString() + " / " + maxbuildCount.ToString();
-                slot.transform.GetChild(2).GetComponent<Text>().color = Color.white;
-            }
-        }
-    }
-
+    
     public GameObject FindCard(int id) {
         //id값을 받아서 activeSlotUI 안에 있는 카드를 리턴해주는 함수
         GameObject card;

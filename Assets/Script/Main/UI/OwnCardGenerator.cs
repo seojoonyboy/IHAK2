@@ -73,7 +73,18 @@ public class OwnCardGenerator : MonoBehaviour {
             BuildingObject info = buildings[i].GetComponent<BuildingObject>();
             deckSettingController.totalCard.Add(slotData);
 
-            slotData.GetComponent<Image>().sprite = cardPanels[info.card.data.rarity - 1];
+            //slotData.GetComponent<Image>().sprite = cardPanels[info.card.data.rarity - 1]; 
+            switch(info.card.data.type) {
+                case "hero":
+                    slotData.GetComponent<Image>().sprite = cardPanels[0];
+                    break;
+                case "active":
+                    slotData.GetComponent<Image>().sprite = cardPanels[1];
+                    break;
+                case "passive":
+                    slotData.GetComponent<Image>().sprite = cardPanels[2];
+                    break;
+            }
 
             slotData.transform.Find("FirstMark").GetComponent<Image>().sprite = markIcons[info.card.data.rarity - 1];
             slotData.transform.Find("SecondMark").GetComponent<Image>().sprite = markIcons[info.card.data.rarity - 1];
@@ -98,10 +109,11 @@ public class OwnCardGenerator : MonoBehaviour {
             }
           //count++;
             slotData.transform.Find("SecondMark/Image").GetComponent<Image>().sprite = GetIcon(_type);          
-            slotData.transform.GetChild(2).GetComponent<Text>().text = deckSettingController.maxbuildCount + " / " + deckSettingController.maxbuildCount;
+            //slotData.transform.GetChild(2).GetComponent<Text>().text = deckSettingController.maxbuildCount + " / " + deckSettingController.maxbuildCount;
             slotData.GetComponent<LongClickButton>().requiredHoldTime = 0.3f;
             slotData.GetComponent<DragHandler>().parentPageObject = transform.GetChild(page).gameObject;
             slotData.GetComponent<DragHandler>().sibilingData = count;
+            slotData.GetComponent<DragHandler>().onDeck = false;
         }
     }
 
