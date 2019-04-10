@@ -220,6 +220,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 passiveList.Add(-1);
 
             wildcard = -1;
+            SetDeckInfo();
             return;
         }
 
@@ -233,7 +234,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 card.GetComponent<DragHandler>().DisableCard();
-
+                cardCount++;
             }
         }
 
@@ -245,6 +246,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 card.GetComponent<DragHandler>().DisableCard();
+                cardCount++;
             }
         }
 
@@ -256,6 +258,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 card.GetComponent<DragHandler>().DisableCard();
+                cardCount++;
             }
         }
 
@@ -266,12 +269,14 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
             deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
             card.GetComponent<DragHandler>().DisableCard();
+            cardCount++;
         }
+        SetDeckInfo();
     }
 
     public void SetDeckInfo() {
         Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
-        deckBuildingCount.text = cardCount.ToString() + " / " + 8.ToString();
+        deckBuildingCount.text = cardCount.ToString() + " / " + maxCard.ToString();
     }
 
     public void OnPrepareModal() {
@@ -297,7 +302,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 OnclickInputConfirm(changedDeckName);
         }
         else
-            Modal.instantiate("건물을 모두 배치해주세요.", Modal.Type.CHECK);
+            Modal.instantiate("카드를 10장 배치해주세요.", Modal.Type.CHECK);
     }
 
     private void OnclickInputConfirm(string inputText) {
@@ -344,56 +349,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     private void Return() {
         prevData = null;
-        
-        /*
-        if (reset == false) {
-            for (int i = 0; i < tileCount; i++) {
-                if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
-                    if (tileGroup.transform.GetChild(i).childCount != 0) {
-                        Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
-                        tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet = false;
-                        continue;
-                    }
-                }
-                else if (playerInfosManager.decks[playerInfosManager.selectNumber] != null) {
-                    if (tileGroup.transform.GetChild(i).childCount != 0) {
-                        GameObject building = tileGroup.transform.GetChild(i).GetChild(0).gameObject;
-
-                        if (building.GetComponent<BuildingObject>().setTileLocation < 0) {
-                            if (building.transform.parent.childCount == 1)
-                                building.transform.parent.GetComponent<TileObject>().buildingSet = false;
-
-                            Destroy(building);
-                            continue;
-                        }
-
-                        if (building.GetComponent<BuildingObject>().setTileLocation != tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum) {
-                            building.transform.parent.GetComponent<TileObject>().buildingSet = false;
-                            building.transform.SetParent(tileGroup.transform.GetChild(building.GetComponent<BuildingObject>().setTileLocation));
-                            building.transform.position = building.transform.parent.position;
-                            building.transform.parent.GetComponent<TileObject>().buildingSet = true;
-                        }
-                    }
-                }
-            }
-        }
-        else if (reset == true) {
-            if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
-                for (int i = 0; i < tileGroup.transform.childCount; i++) {
-                    if (tileGroup.transform.GetChild(i).childCount != 0)
-                        Destroy(tileGroup.transform.GetChild(i).GetChild(0).gameObject);
-                }
-            }
-                //playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
-        }
-        
-        // playerInfosManager.SetTileObjects(playerInfosManager.selectNumber);
-
-        
-        if (playerInfosManager.selectNumber > deckCount - 1)
-            return;
-
-        */
         tileGroup.SetActive(false);
         //playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
@@ -807,7 +762,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public bool SetAllTileBuildingCheck() {
-        return true;
+        if (cardCount < maxCard)
+            return false;
+        else if (cardCount == maxCard)
+            return true;
+
+        return false;
     }
 
     public void DeckActiveCheck() {

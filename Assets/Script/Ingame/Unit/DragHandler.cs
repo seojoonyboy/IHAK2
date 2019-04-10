@@ -32,8 +32,6 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag (PointerEventData eventData) {
         if (!canDrag) return;
-        if (deckSettingController.cardCount >= deckSettingController.maxCard) return;
-
         picturePosition = transform.Find("Data").localPosition;
         transform.gameObject.GetComponent<Image>().raycastTarget = false;
         
@@ -41,9 +39,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        transform.localPosition = new Vector3(0, 14, 0);
+        transform.localPosition = new Vector3(0, 0, 0);
         transform.localScale = startScale;
-        transform.position = startPosition;
         
         transform.gameObject.GetComponent<Image>().raycastTarget = true;
         Canvas.ForceUpdateCanvases();
@@ -67,8 +64,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (!canDrag) return;
-        if (deckSettingController.cardCount >= deckSettingController.maxCard) return;
+        if (!canDrag) return;        
         transform.gameObject.GetComponent<Image>().raycastTarget = false;
         Vector3 origin = cam.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray = new Ray2D(origin, Vector2.zero);
@@ -124,7 +120,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     deckSettingController.wildcard = -1;
                     break;
             }
-
+            deckSettingController.cardCount--;
+            deckSettingController.SetDeckInfo();
             Destroy(gameObject);
         }
 

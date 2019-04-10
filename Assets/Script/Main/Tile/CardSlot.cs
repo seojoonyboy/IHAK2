@@ -41,7 +41,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
         if (dragObject.GetComponent<DragHandler>().canDrag == false) return;
         if (dragObject.GetComponent<DragHandler>().onDeck == true) return;
         if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
-        if (DeckSettingController.Instance.cardCount >= 10) return;
+        if (DeckSettingController.Instance.cardCount >= DeckSettingController.Instance.maxCard) return;
 
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
         cardObject.GetComponent<Image>().sprite = dragObject.GetComponent<Image>().sprite;
@@ -53,7 +53,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
         DeckSettingController deckSettingController = DeckSettingController.Instance;
         int slotNum = transform.GetSiblingIndex();
         deckSettingController.cardCount++;
-
+        deckSettingController.SetDeckInfo();
         switch (transform.parent.parent.name) {
             case "hero":
                 deckSettingController.heroList[slotNum] = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
