@@ -62,12 +62,10 @@ namespace Container {
         }
 
         public void UseGold(decimal amount = 0) {
-            Debug.Log("Gold 소모 : " + amount);
             Gold -= amount * 10;
         }
 
         public void UseCitizen(decimal amount = 0) {
-            Debug.Log("Gold 소모 : " + amount);
             Citizen -= amount * 10;
         }
     }
