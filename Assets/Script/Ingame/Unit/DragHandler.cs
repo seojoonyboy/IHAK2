@@ -121,6 +121,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     break;
             }
             deckSettingController.cardCount--;
+            deckSettingController.SetDeckInfo();
             Destroy(gameObject);
         }
 
