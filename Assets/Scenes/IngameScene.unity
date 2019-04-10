@@ -1595,7 +1595,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   citizen_readonly: 0
-  csc: {fileID: 1430365976}
   maxhp: 0
   hp: 0
 --- !u!114 &282962854
@@ -9012,7 +9011,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1430365975}
-  - component: {fileID: 1430365976}
   m_Layer: 0
   m_Name: PlayerCitizenSpawnPos
   m_TagString: Untagged
@@ -9037,29 +9035,6 @@ Transform:
   m_Father: {fileID: 216397196}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1430365976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1430365974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e78c375286fde4281d0a2ada4932d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  playerNum: 0
-  citizenPrefab: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
-    type: 2}
 --- !u!1 &1464819093
 GameObject:
   m_ObjectHideFlags: 0
@@ -11834,7 +11809,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold_readonly: 0
   citizen_readonly: 0
-  csc: {fileID: 0}
   maxhp: 0
   hp: 0
 --- !u!1 &1849017551
@@ -12841,7 +12815,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1963893152}
-  - component: {fileID: 1963893153}
   m_Layer: 0
   m_Name: PlayerMinionSpawnPos
   m_TagString: Untagged
@@ -12868,31 +12841,6 @@ Transform:
   m_Father: {fileID: 216397196}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1963893153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1963893151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1cb0544383f6245a2dbc952c15915d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  playerNum: 0
-  shortDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
-    type: 2}
-  longDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,
-    type: 2}
 --- !u!1 &1969575551
 GameObject:
   m_ObjectHideFlags: 0
