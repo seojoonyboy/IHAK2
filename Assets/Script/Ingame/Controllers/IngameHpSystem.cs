@@ -137,6 +137,9 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     if (totalHp <= 0)
                         DestroyEnemy();
                 }
+
+                enemyController.GetComponent<PlayerResource>().TotalHp = totalHp;
+
                 IngameScoreManager.Instance.AddScore(amount, IngameScoreManager.ScoreType.Attack);
                 break;
 
@@ -146,7 +149,6 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
                 if (playerHQ == null) return false;
                 if (totalHp <= 0) return false;
-
 
                 if (totalHp > amount) {
                     totalHp -= amount;
@@ -172,6 +174,8 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                     if (playerHQ.gameObject.GetComponent<BuildingObject>().setTileLocation == 12)
                         DestroyCity();
                 }
+
+                playerController.GetComponent<PlayerResource>().TotalHp = totalHp;
                 break;
         }
         return true;
