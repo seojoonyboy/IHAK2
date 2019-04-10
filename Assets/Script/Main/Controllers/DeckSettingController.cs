@@ -125,7 +125,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         playerInfosManager.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject.SetActive(true);
         tileGroup = playerInfosManager.transform.gameObject.transform.GetChild(0).GetChild(playerInfosManager.selectNumber).gameObject;
         tileCount = tileGroup.transform.childCount - 1;
-        TilebuildingList();
+        LoadDeckList();
         SettingCard();
         CheckCardCount();
         ResetActiveSlot();
@@ -216,51 +216,56 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
             wildcard = -1;
             return;
-        }        
+        }
 
-        int heroCount = 0;
-        int activeCount = 0;
-        int passiveCount = 0;
-        int wildCount = 0;
+        GameObject card;
 
-
-        for (int i = 0; i< cardSetList.Count; i++) {
-            GameObject card = FindCard(cardSetList[i]);
-            string type = card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type;
-
-            switch (type) {
-                case "unit":
-                    if(heroCount < heroTap.transform.childCount) {
-                        GameObject deckCard = Instantiate(originalCard, heroTap.transform.GetChild(heroCount));
-                        deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                        heroList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                        heroCount++;
-                    }
-                    break;
-                case "active":
-                    if (activeCount < activeTap.transform.childCount) {
-                        GameObject deckCard = Instantiate(originalCard, activeTap.transform.GetChild(activeCount));
-                        deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                        activeList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                        activeCount++;
-                    }
-                    break;
-                case "passive":
-                    if (passiveCount < passiveTap.transform.childCount) {
-                        GameObject deckCard = Instantiate(originalCard, passiveTap.transform.GetChild(passiveCount));
-                        deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
-                        deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                        passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                        passiveCount++;
-                    }
-                    break;                
+        for (int i = 0; i < heroTap.transform.childCount; i++) {
+            card = FindCard(heroList[i]);
+            if(card != null) {
+                GameObject deckCard = Instantiate(originalCard, heroTap.transform.GetChild(i));
+                deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                heroList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
+                card.GetComponent<DragHandler>().canDrag = false;
             }
         }
+
+        for (int i = 0; i < activeTap.transform.childCount; i++) {
+            card = FindCard(activeList[i]);
+            if(card != null) {
+                GameObject deckCard = Instantiate(originalCard, activeTap.transform.GetChild(i));
+                deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                activeList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
+                card.GetComponent<DragHandler>().canDrag = false;
+            }
+        }
+
+        for (int i = 0; i < passiveTap.transform.childCount; i++) {
+            card = FindCard(passiveList[i]);
+            if(card != null) {
+                GameObject deckCard = Instantiate(originalCard, passiveTap.transform.GetChild(i));
+                deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
+                card.GetComponent<DragHandler>().canDrag = false;
+            }
+        }
+
+        card = FindCard(wildcard);
+        if(card != null) {
+            GameObject deckCard = Instantiate(originalCard, wildTap.transform.GetChild(0));
+            deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+            deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+            deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+            passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
+            card.GetComponent<DragHandler>().canDrag = false;
+        }
+
     }
 
     public void SetDeckInfo() {
@@ -385,7 +390,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
     }
 
-    public void TilebuildingList() {            
+    public void LoadDeckList() {            
         if (AccountManager.Instance.selectNumber + 1 > AccountManager.Instance.decks.Count) return;
 
         int deckNum = AccountManager.Instance.selectNumber;
