@@ -44,6 +44,7 @@ namespace Container {
                 if (value > 100) { value = 100; return; }
                 citizen = value;
                 PlayerController.Instance.resourceManager().RefreshCitizenText();
+                PlayerController.Instance.CitizenSpawnController().AddCitizen();
 
                 citizen_readonly = (float)citizen;
             }

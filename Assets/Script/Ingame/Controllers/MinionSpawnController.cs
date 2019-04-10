@@ -15,13 +15,8 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             minionLayer = 10;
         else
             minionLayer = 11;
-        StartCoroutine(MinionDelay());
+        //StartCoroutine(MinionDelay());
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
     IEnumerator MinionDelay() {
         yield return new WaitForSeconds(20.0f);
@@ -49,11 +44,26 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             minions[i].transform.position = transform.GetChild(i).position;
         }
     }
+
+    public void SpawnSquadMinion(string type, int maxSpawn) {
+        int spawnNum = 0;
+        if (maxSpawn * 10 > (int)PlayerController.Instance.playerResource().Citizen)
+            spawnNum = maxSpawn;
+        else
+            spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        for (int i = 0; i < spawnNum; i++) {
+            if (type == "melee")
+                Instantiate(shortDisMinion, SpawnPos.GetChild(i));
+            else if(type == "range")
+                Instantiate(longDisMinion, SpawnPos.GetChild(i));
+        }
+    }
 }
 
 public partial class MinionSpawnController : SerializedMonoBehaviour {
     [Header(" - Player Identity")]
     [SerializeField] PlayerController.Player playerNum;
+    [SerializeField] Transform SpawnPos;
 
     [Header(" - Prefabs")]
     [SerializeField] GameObject shortDisMinion;

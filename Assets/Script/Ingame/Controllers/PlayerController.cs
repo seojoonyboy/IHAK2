@@ -208,6 +208,14 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public PlayerPassiveCards PlayerPassiveCards() {
         return _instance.GetComponent<PlayerPassiveCards>();
     }
+
+    public CitizenSpawnController CitizenSpawnController() {
+        return _instance.GetComponent<CitizenSpawnController>();
+    }
+
+    public MinionSpawnController MinionSpawnController() {
+        return _instance.GetComponent<MinionSpawnController>();
+    }
 }
 
 public partial class PlayerController {
