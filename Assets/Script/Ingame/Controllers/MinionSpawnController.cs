@@ -45,17 +45,22 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
         }
     }
 
-    public void SpawnSquadMinion(string type, int maxSpawn) {
+    public void SpawnMinionSquad(ActiveCard heroCard) {
         int spawnNum = 0;
-        if (maxSpawn * 10 > (int)PlayerController.Instance.playerResource().Citizen)
-            spawnNum = maxSpawn;
+        if (heroCard.baseSpec.unit.minion.count * 10 > (int)PlayerController.Instance.playerResource().Citizen)
+            spawnNum = heroCard.baseSpec.unit.minion.count;
         else
             spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        
         for (int i = 0; i < spawnNum; i++) {
-            if (type == "melee")
-                Instantiate(shortDisMinion, SpawnPos.GetChild(i));
-            else if(type == "range")
-                Instantiate(longDisMinion, SpawnPos.GetChild(i));
+            GameObject minion;
+            if (heroCard.baseSpec.unit.minion.type == "melee") {
+                minion = Instantiate(shortDisMinion, SpawnPos.GetChild(i));
+            }
+            else{
+                minion = Instantiate(longDisMinion, SpawnPos.GetChild(i));
+            }
+            minion.GetComponent<MinionAI>().SetMinionData(heroCard);
         }
     }
 }

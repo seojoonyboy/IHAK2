@@ -29,6 +29,27 @@ public class MinionAI : UnitAI {
         calculateHealthBar();
     }
 
+    public void SetMinionData(ActiveCard heroCard) {
+        Init();
+        InitStatic();
+        moveSpeed = heroCard.baseSpec.unit.moveSpeed * 0.4f;
+        if (heroCard.baseSpec.unit.minion.type == "melee") {
+            attackSpeed = 1.4f;
+            attackRange = 10;
+            power = 5.0f;
+            health = 85;
+            maxHealth = 85;
+        }
+        else {
+            attackSpeed = 1.2f;
+            attackRange = 20;
+            power = 7.0f;
+            health = 60;
+            maxHealth = 60;
+        }
+        calculateHealthBar();
+    }
+    
     public override void ResetSpeedPercentage() {
         moveSpeed = unit.moveSpeed * 0.4f;
     }
@@ -64,6 +85,5 @@ public class MinionAI : UnitAI {
         attackRange = unit.attackRange;
         power = unit.attackPower;
         maxHealth = unit.hitPoint;
-
     }
 }

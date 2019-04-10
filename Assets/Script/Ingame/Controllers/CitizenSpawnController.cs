@@ -13,13 +13,14 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     void Start () {
         citizens = new List<GameObject>();
         citizenNum = 0;
+        SpawnPos.transform.position = CityPos.position;
     }
 
     public void AddCitizen() {
         int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
         if (realtimeCitizenNum > citizenNum) {
             citizenNum++;
-            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(Random.Range(0, 4)));
+            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(Random.Range(0, 4)).transform);
             citizen.GetComponent<UnitAI>().enabled = false;
             citizens.Add(citizen);
         }
@@ -39,6 +40,7 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     [Header(" - Player Identity")]
     [SerializeField] PlayerController.Player playerNum;
     [SerializeField] Transform SpawnPos;
+    [SerializeField] Transform CityPos;
 
     [Header(" - Prefabs")]
     [SerializeField] GameObject citizenPrefab;
