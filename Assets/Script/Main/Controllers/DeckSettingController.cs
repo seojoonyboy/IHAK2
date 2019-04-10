@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using DataModules;
-using System;
 using UniRx;
-using UniRx.Triggers;
 using Spine.Unity;
-
 
 public class DeckSettingController : Singleton<DeckSettingController> {
     protected DeckSettingController() { }
