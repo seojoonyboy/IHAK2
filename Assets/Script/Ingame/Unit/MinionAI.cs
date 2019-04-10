@@ -49,10 +49,6 @@ public class MinionAI : UnitAI {
         }
         calculateHealthBar();
     }
-    
-    public override void ResetSpeedPercentage() {
-        moveSpeed = unit.moveSpeed * 0.4f;
-    }
 
     private void SetMaxHP() {
         maxHealth = unit.hitPoint;

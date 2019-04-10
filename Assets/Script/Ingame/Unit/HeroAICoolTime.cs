@@ -86,11 +86,9 @@ public partial class HeroAI : UnitAI {
             case "arsonist" :   //쉘 방화범
                 SetSkill(Shell_humantorch, 3f, 5f);
                 break;
-            //TODO : 서버에서 이름 오면 재세팅
             case "evil_mind" : //윔프 악한마음 
                 SetSkill(Wimp_evilmind, 9f, 6f);
                 break;
-            //TODO : 서버에서 이름 오면 재세팅
             case "satiation": //렉스 포식
                 SetSkill(() => Rex_satiation(power), 7f, -1f);
                 break;
