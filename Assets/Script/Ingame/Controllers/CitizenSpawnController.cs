@@ -13,13 +13,16 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     void Start () {
         citizens = new List<GameObject>();
         citizenNum = 0;
+        SpawnPos.transform.position = CityPos.position;
     }
 
     public void AddCitizen() {
         int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
         if (realtimeCitizenNum > citizenNum) {
             citizenNum++;
-            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(Random.Range(0, 4)));
+            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(1));
+            citizen.transform.position
+                = new Vector3(CityPos.position.x + Random.Range(-25.0f, 25.0f), CityPos.position.y + Random.Range(-25.0f, 25.0f), CityPos.position.z);
             citizen.GetComponent<UnitAI>().enabled = false;
             citizens.Add(citizen);
         }
@@ -28,7 +31,9 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     public void DeleteCitizen() {
         int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
         if (citizenNum > 0) {
-            Destroy(citizens[citizenNum]);
+            GameObject citizenObject = citizens[citizenNum-1];
+            citizens.Remove(citizens[citizenNum-1]);
+            Destroy(citizenObject);
             citizenNum--;
             PlayerController.Instance.playerResource().Citizen -= 10;
         }
@@ -39,6 +44,7 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     [Header(" - Player Identity")]
     [SerializeField] PlayerController.Player playerNum;
     [SerializeField] Transform SpawnPos;
+    [SerializeField] Transform CityPos;
 
     [Header(" - Prefabs")]
     [SerializeField] GameObject citizenPrefab;

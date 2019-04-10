@@ -8,23 +8,22 @@ public class WarCry : Buff {
     public int duration;
 
     public void Init(string[] data) {
-        //string[] args = data.Split(',');
-        //int duration = 0;
-        //int.TryParse(args[0], out duration);
+        int duration = 0;
+        int.TryParse(data[0], out duration);
 
-        //float attackSpeed = 0;
-        //float.TryParse(args[1], out attackSpeed);
+        float attackSpeed = 0;
+        float.TryParse(data[1], out attackSpeed);
 
-        //int attackPower = 0;
-        //int.TryParse(args[2], out attackPower);
+        int attackPower = 0;
+        int.TryParse(data[2], out attackPower);
 
-        //int moveSpeed = 0;
-        //int.TryParse(args[3], out moveSpeed);
+        int moveSpeed = 0;
+        int.TryParse(data[3], out moveSpeed);
 
-        //this.attackSpeed = -attackSpeed;
-        //power = attackPower;
-        //this.duration = duration;
-        //moveSpeed_percentage = moveSpeed;
+        this.attackSpeed = -attackSpeed;
+        power = attackPower;
+        this.duration = duration;
+        moveSpeed_percentage = moveSpeed;
     }
 
     public void StartBuff() {
