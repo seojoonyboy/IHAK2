@@ -27,19 +27,22 @@ namespace Container {
                 return;
             }
 
-            for (int i = 0; i < demoTileIndex.Length; i++) {    // 3x3 마을용 연산
+            for (int i = 0; i < tileGroup.transform.GetChild(0).childCount; i++) {    // 3x3 마을용 연산
                 BuildingInfo bi = new BuildingInfo();
                 bi.tileNum = demoTileIndex[i];
                 bi.activate = true;
-                GameObject buildingGo = tileGroup
+                try {
+                    GameObject buildingGo = tileGroup
                     .transform
                     .GetChild(demoTileIndex[i])
                     .GetChild(0)
                     .gameObject;
 
-                bi.gameObject = buildingGo;
-                bi.cardInfo = buildingGo.GetComponent<BuildingObject>().card.data;
-                buildingInfos.Add(bi);
+                    bi.gameObject = buildingGo;
+                    bi.cardInfo = buildingGo.GetComponent<BuildingObject>().card.data;
+                    buildingInfos.Add(bi);
+                }
+                catch(NullReferenceException ex) { }
             }
 
             ingameSceneEventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, this, buildingInfos);

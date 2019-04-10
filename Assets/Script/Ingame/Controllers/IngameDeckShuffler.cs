@@ -139,7 +139,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         if (CanUseCard(activeCard)) {
             switch (activeCard.data.type) {
                 //영웅 유닛 카드는 사용시 아예 핸드, 덱에서 제외
-                case "unit":
+                case "hero":
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.unit.cost.gold);
                     var effectModules = playerController.PlayerPassiveCards().effectModules;
                     if (effectModules.ContainsKey("Unit_health")) {
@@ -165,11 +165,15 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         string type = card.data.type;
         Cost cost = null;
         switch (type) {
-            case "unit":
-                cost = card.data.baseSpec.unit.cost;
+            case "hero":
+                cost = new Cost();
+                cost.gold = card.data.baseSpec.unit.cost.gold * 10;
+                cost.population = card.data.baseSpec.unit.cost.population;
                 break;
             case "active":
-                cost = card.data.baseSpec.skill.cost;
+                cost = new Cost();
+                cost.gold = card.data.baseSpec.skill.cost.gold * 10;
+                cost.population = card.data.baseSpec.skill.cost.population;
                 break;
         }
         if (cost == null) return false;

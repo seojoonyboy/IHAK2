@@ -20,7 +20,11 @@ namespace DataModules {
         public string Name;
         public string Race;
         public bool IsRepresent;
-        public int[] CoordsSerial;
+
+        public int[] heroSerial;
+        public int[] activeSerial;
+        public int[] passiveSerial;
+        public int[] wildcardSerial;
     }
 
     public class ModifyDeckPostForm {
@@ -28,7 +32,11 @@ namespace DataModules {
         public string Name;
         public string Race;
         public bool IsRepresent;
-        public int[] CoordsSerial;
+
+        public int[] HeroSerial;
+        public int[] ActiveSerial;
+        public int[] PassiveSerial;
+        public int[] WildcardSerial;
     }
 
     [System.Serializable]

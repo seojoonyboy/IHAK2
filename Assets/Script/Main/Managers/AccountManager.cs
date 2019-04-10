@@ -205,6 +205,15 @@ public partial class AccountManager {
         form.Name = deck.name;
         form.Race = "primal";
         form.IsRepresent = false;
+        form.heroSerial = deck.heroSerial;
+        form.activeSerial = deck.activeSerial;
+        form.passiveSerial = deck.passiveSerial;
+        if(deck.wildcardSerial != null) {
+            form.wildcardSerial = deck.wildcardSerial;
+        }
+        else {
+            form.wildcardSerial = new int[0];
+        }
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
