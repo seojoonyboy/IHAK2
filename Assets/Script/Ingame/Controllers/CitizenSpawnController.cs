@@ -20,7 +20,9 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
         int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
         if (realtimeCitizenNum > citizenNum) {
             citizenNum++;
-            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(Random.Range(0, 4)).transform);
+            GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(1));
+            citizen.transform.position
+                = new Vector3(CityPos.position.x + Random.Range(-25.0f, 25.0f), CityPos.position.y + Random.Range(-25.0f, 25.0f), CityPos.position.z);
             citizen.GetComponent<UnitAI>().enabled = false;
             citizens.Add(citizen);
         }
