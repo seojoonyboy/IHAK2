@@ -322,7 +322,8 @@ public partial class DeckListController {
                         setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                     }
                     else {
-                        setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        //setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+                        setBuild.transform.GetChild(1).gameObject.SetActive(false);
                     }
                 }
             }
