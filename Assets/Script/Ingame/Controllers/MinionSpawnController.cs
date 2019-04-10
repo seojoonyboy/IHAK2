@@ -48,9 +48,10 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
     public void SpawnMinionSquad(ActiveCard heroCard) {
         int spawnNum = 0;
         if (heroCard.baseSpec.unit.minion.count * 10 > (int)PlayerController.Instance.playerResource().Citizen)
-            spawnNum = heroCard.baseSpec.unit.minion.count;
-        else
             spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        else
+            spawnNum = heroCard.baseSpec.unit.minion.count;
+        
         
         for (int i = 0; i < spawnNum; i++) {
             GameObject minion;
@@ -61,6 +62,7 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
                 minion = Instantiate(longDisMinion, SpawnPos.GetChild(i));
             }
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
+            PlayerController.Instance.CitizenSpawnController().DeleteCitizen();
         }
     }
 }
