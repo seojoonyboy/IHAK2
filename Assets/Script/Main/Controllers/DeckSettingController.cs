@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using DataModules;
-using System;
 using UniRx;
-using UniRx.Triggers;
 using Spine.Unity;
-
 
 public class DeckSettingController : Singleton<DeckSettingController> {
     protected DeckSettingController() { }
@@ -329,18 +324,25 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     private void OnclickInputConfirm(string inputText) {
         Deck deck = new Deck();
-        //deck.race = "primal";
+
         deck.name = inputText;
-        //deck.coordsSerial = new int[cardSetList.Count + 1];
-        //for (int i = 0; i < cardSetList.Count; i++) {
-        //    /*
-        //    deck.coordsSerial[i] = cardSetList[i];
-        //    if (tileGroup.transform.GetChild(i).childCount != 0)
-        //        tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().setTileLocation = tileGroup.transform.GetChild(i).GetComponent<TileObject>().tileNum;
-        //        */
-        //    deck.coordsSerial[i] = 0;
-        //}
-        //deck.coordsSerial = cardSetList.ToArray();
+
+        List<int> _heroList = heroList;
+        _heroList.RemoveAll(x => x == -1);
+        deck.heroSerial = _heroList.ToArray();
+
+        List<int> _activeList = activeList;
+        _activeList.RemoveAll(x => x == -1);
+        deck.activeSerial = _activeList.ToArray();
+
+        List<int> _passiveList = passiveList;
+        _passiveList.RemoveAll(x => x == -1);
+        deck.passiveSerial = _passiveList.ToArray();
+
+        if(wildcard != -1) {
+            deck.wildcardSerial = new int[1];
+        }
+
         if (prevData == null) {
             playerInfosManager.AddDeck(deck);
         }
@@ -812,22 +814,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public bool SetAllTileBuildingCheck() {
-        // 활성화 된 타일에 카드가 다 올라왔는지 체크하는 함수
-        int count = 0;
-        bool setComplete = false;
-
-        for(int i = 0; i< tileCount; i++) {
-            if (tileGroup.transform.GetChild(i).GetComponent<TileObject>().buildingSet)
-                count++;
-        }
-
-        if (count > 8)
-            setComplete = true;
-        else
-            setComplete = false;
-
-
-        return setComplete;
+        return true;
     }
 
     public void DeckActiveCheck() {
