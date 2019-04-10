@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DataModules;
@@ -145,7 +146,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         nameEditBtn.OnClickAsObservable().Where(_ => nameEditing == false).Subscribe(_ => InputDeckName());
      
-
+        /*
         downStream.Subscribe(_ => PickEditBuilding());
         dragStream.Where(_ => (clicktime < requireClickTime) && (picking== true || selectBuilding != null)).Subscribe(_ => clicktime += Time.deltaTime);
         dragStream.Where(_=>clicktime >= requireClickTime).Subscribe(_ => MoveEditBuilding());
@@ -153,7 +154,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_ => selectBuilding.GetComponent<PolygonCollider2D>().enabled = true);
         upStream.Where(_=> clicktime >= requireClickTime).Subscribe(_ => DropEditBuilding());
         upStream.Subscribe(_ => clicktime = 0f);
-
+        */
         chooseSpeciesBtn.onClick
             .AsObservable()
             .Subscribe(_ => {
@@ -229,15 +230,10 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if(card != null) {
                 GameObject deckCard = Instantiate(originalCard, heroTap.transform.GetChild(i));
                 deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                heroList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                card.GetComponent<DragHandler>().canDrag = false;
+                card.GetComponent<DragHandler>().DisableCard();
 
-                card.GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
-                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
             }
         }
 
@@ -246,15 +242,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if(card != null) {
                 GameObject deckCard = Instantiate(originalCard, activeTap.transform.GetChild(i));
                 deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                activeList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                card.GetComponent<DragHandler>().canDrag = false;
-
-                card.GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
-                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
+                card.GetComponent<DragHandler>().DisableCard();
             }
         }
 
@@ -263,15 +253,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             if(card != null) {
                 GameObject deckCard = Instantiate(originalCard, passiveTap.transform.GetChild(i));
                 deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-                deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+                deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-                passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-                card.GetComponent<DragHandler>().canDrag = false;
-
-                card.GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
-                card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
-                card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
+                card.GetComponent<DragHandler>().DisableCard();
             }
         }
 
@@ -279,15 +263,9 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if(card != null) {
             GameObject deckCard = Instantiate(originalCard, wildTap.transform.GetChild(0));
             deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
-            deckCard.transform.Find("Image").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
+            deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
             deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
-            passiveList.Add(card.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id);
-            card.GetComponent<DragHandler>().canDrag = false;
-
-            card.GetComponent<Image>().color = Color.grey;
-            card.transform.GetChild(0).GetComponent<Image>().color = Color.grey;
-            card.transform.GetChild(1).GetComponent<Text>().color = Color.grey;
-            card.transform.GetChild(2).GetComponent<Text>().color = Color.grey;
+            card.GetComponent<DragHandler>().DisableCard();
         }
     }
 
@@ -367,6 +345,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     private void Return() {
         prevData = null;
         
+        /*
         if (reset == false) {
             for (int i = 0; i < tileCount; i++) {
                 if (playerInfosManager.selectNumber > playerInfosManager.decks.Count - 1) {
@@ -414,7 +393,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (playerInfosManager.selectNumber > deckCount - 1)
             return;
 
-
+        */
         tileGroup.SetActive(false);
         //playerInfosManager.checkDeck(playerInfosManager.selectNumber);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
@@ -424,18 +403,32 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         if (AccountManager.Instance.selectNumber + 1 > AccountManager.Instance.decks.Count) return;
 
         int deckNum = AccountManager.Instance.selectNumber;
-        Card[] card = AccountManager.Instance.decks[deckNum].cards;
+        Deck deck = AccountManager.Instance.decks[deckNum];
 
-        for (int i = 0; i < card.Length; i++) {
-            if (card[i].id != 0) {
-                cardSetList.Add(card[i].id);
-                //ChangeSliderValue(tileGroup.transform.GetChild(i).GetChild(0).GetComponent<BuildingObject>().card.data.product);
+        for (int i = 0; i < deck.heroSerial.Length; i++)
+            heroList.Add(deck.heroSerial[i]);
 
-                cardCount++;
-                
-                SetDeckInfo();
-            }
-        }
+        for (int i = deck.heroSerial.Length; i < heroTap.transform.childCount; i++)
+            heroList.Add(-1);
+
+        for (int i = 0; i < deck.activeSerial.Length; i++) 
+            activeList.Add(deck.activeSerial[i]);        
+
+        for (int i = deck.activeSerial.Length; i < activeTap.transform.childCount; i++)
+            activeList.Add(-1);
+
+        for (int i = 0; i < deck.passiveSerial.Length; i++)
+            passiveList.Add(deck.passiveSerial[i]);
+
+        for (int i = deck.passiveSerial.Length; i < passiveTap.transform.childCount; i++)
+            passiveList.Add(-1);
+
+        if (deck.wildcardSerial.Length >= 1)
+            wildcard = deck.wildcardSerial[0];
+        else if (deck.wildcardSerial.Length < 1)
+            wildcard = -1;
+
+
     }
 
     public void ResetDeck() {
@@ -443,7 +436,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         for (int i = 0; i < heroTap.transform.childCount; i++) {
             card = heroTap.transform.GetChild(i).GetComponent<CardSlot>().card;
             if (card != null) {
-                FindCard(heroList[i]).GetComponent<DragHandler>().canDrag = true;
+                FindCard(heroList[i]).GetComponent<DragHandler>().ActivateCard();
                 Destroy(card);
             }
             heroList[i] = -1;
@@ -452,7 +445,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         for (int i = 0; i < activeTap.transform.childCount; i++) {
             card = activeTap.transform.GetChild(i).GetComponent<CardSlot>().card;
             if (card != null) {
-                FindCard(activeList[i]).GetComponent<DragHandler>().canDrag = true;
+                FindCard(activeList[i]).GetComponent<DragHandler>().ActivateCard();
                 Destroy(card);
             }
             activeList[i] = -1;
@@ -461,7 +454,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         for (int i = 0; i < passiveTap.transform.childCount; i++) {
             card = passiveTap.transform.GetChild(i).GetComponent<CardSlot>().card;
             if (card != null) {
-                FindCard(passiveList[i]).GetComponent<DragHandler>().canDrag = true;
+                FindCard(passiveList[i]).GetComponent<DragHandler>().ActivateCard();
                 Destroy(card);
             }
             passiveList[i] = -1;
@@ -469,7 +462,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         card = wildTap.transform.GetChild(0).GetComponent<CardSlot>().card;
         if (card != null) {
-            FindCard(wildcard).GetComponent<DragHandler>().canDrag = true;
+            FindCard(wildcard).GetComponent<DragHandler>().ActivateCard();
             Destroy(card);
         }
         wildcard = -1;

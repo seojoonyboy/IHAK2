@@ -79,6 +79,28 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         transform.localScale = startScale;
     }
 
+    public void DisableCard() {
+        canDrag = false;
+        transform.GetComponent<Image>().color = Color.gray;
+        transform.Find("Data").GetComponent<Image>().color = Color.gray;
+        transform.Find("Name").GetComponent<Text>().color = Color.gray;
+        transform.Find("FirstMark").GetComponent<Image>().color = Color.gray;
+        //transform.Find("FirstMark").Find("Text").GetComponent<Text>().color = Color.gray;
+        transform.Find("SecondMark").GetComponent<Image>().color = Color.gray;
+        transform.Find("SecondMark").Find("Image").GetComponent<Image>().color = Color.gray;
+    }
+
+    public void ActivateCard() {
+        canDrag = true;
+        transform.GetComponent<Image>().color = Color.white;
+        transform.Find("Data").GetComponent<Image>().color = Color.white;
+        transform.Find("Name").GetComponent<Text>().color = Color.white;
+        transform.Find("FirstMark").GetComponent<Image>().color = Color.white;
+        //transform.Find("FirstMark").Find("Text").GetComponent<Text>().color = Color.white;
+        transform.Find("SecondMark").GetComponent<Image>().color = Color.white;
+        transform.Find("SecondMark").Find("Image").GetComponent<Image>().color = Color.white;
+    }
+
     public void DragDestroy(GameObject target) {
         if (onDeck == false) return;
         if (target != transform.parent.gameObject) {
