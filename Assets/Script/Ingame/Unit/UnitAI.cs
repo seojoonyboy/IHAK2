@@ -36,7 +36,6 @@ public partial class UnitAI : MonoBehaviour {
     protected static EnemyHeroGenerator enemyHeroGenerator;
     protected static IngameHpSystem ingameHpSystem;
 
-    public GameObject ontile;
     private CircleCollider2D detectCollider;
 
     private List<BuildingInfo> buildingInfos;
@@ -245,7 +244,7 @@ public partial class UnitAI : MonoBehaviour {
         if (health <= 0) DestoryEnemy();
     }
 
-    protected void healed(float healingHP) {
+    protected void Healed(float healingHP) {
         health += healingHP;
         if (health > maxHealth) health = maxHealth;
         calculateHealthBar();
@@ -262,20 +261,6 @@ public partial class UnitAI : MonoBehaviour {
         if (!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
         float percent = (float)health / maxHealth;
         healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
-    }
-
-    protected void TileReset() {
-        if (ontile == null) {
-            ontile = null;
-        }
-        else if (ontile.GetComponent<TileCollision>() != null && ontile.GetComponent<TileCollision>().count > 0) {
-            ontile.GetComponent<TileCollision>().count--;
-
-            if (ontile.GetComponent<TileCollision>().count <= 0) {
-                ontile.GetComponent<TileCollision>().count = 0;
-                ontile.GetComponent<TileCollision>().check = false;
-            }
-        }
     }
 
     public virtual void SetUnitData(ActiveCard card, GameObject cardObj) { }

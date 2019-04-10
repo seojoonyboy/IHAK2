@@ -4285,7 +4285,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372382854036342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 266, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4784784078253508}
@@ -13455,21 +13455,18 @@ MonoBehaviour:
     id: 59
     data:
       id: n_pr_01001
-      race: primal
       name: "\uC815\uD654\uC758 \uC0D8"
       type: prod
       rarity: 1
-      hitPoint: 320
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -13481,13 +13478,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -13521,31 +13520,26 @@ MonoBehaviour:
     id: 57
     data:
       id: n_pr_02001
-      race: primal
       name: "\uC2E0\uBE44\uC758 \uAD11\uC0B0"
       type: active
       rarity: 2
-      hitPoint: 350
-      placementLimit: 0
       activeSkills:
       - id: 2
         name: "\uC2E0\uBE44\uD55C \uAD11\uC11D"
         method:
           id: 0
           methodName: mysterious_ore
-          args: 10,15
-        tierNeed: 0
-        coolTime: 12
+          args: []
         desc: "10\uCD08\uAC04 \uAE08 \uC0DD\uC0B0\uB7C9 15% \uC99D\uAC00"
-        imageName: 
+        coolTime: 12
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -13557,13 +13551,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -13584,32 +13580,27 @@ MonoBehaviour:
     id: 53
     data:
       id: n_s_01003
-      race: primal
       name: "\uC804\uC7C1 \uBD81"
       type: active
       rarity: 1
-      hitPoint: 150
-      placementLimit: 0
       activeSkills:
       - id: 7
         name: "\uC804\uC7C1\uC758 \uD568\uC131"
         method:
           id: 0
           methodName: war_cry
-          args: 8,0.2,25,20
-        tierNeed: 0
-        coolTime: 14
+          args: []
         desc: "8\uCD08\uAC04 \uBAA8\uB4E0 \uC544\uAD70\uC758 \uACF5\uACA9\uC18D\uB3C4\uC2DC\uAC04
           -0.2\uCD08, \uACF5\uACA9\uB825 +25%, \uC720\uB2DB \uC774\uB3D9\uC18D\uB3C4+20%"
-        imageName: 
+        coolTime: 14
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -13621,13 +13612,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14555,21 +14548,18 @@ MonoBehaviour:
     id: 67
     data:
       id: n_mu_02001
-      race: primal
       name: "\uC758\uC2DD\uC6A9 \uBAA8\uB2E5\uBD88"
       type: unit
       rarity: 2
-      hitPoint: 320
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: n_uu_02001
         name: "\uC714\uD504"
+        rarity: 0
         coolTime: 25
         size: 3
-        count: 1
-        power: 14
+        attackPower: 0
         attackSpeed: 1.3
         defence: 5
         attackRange: 30
@@ -14581,13 +14571,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14728,21 +14720,18 @@ MonoBehaviour:
     id: 69
     data:
       id: n_mu_01001
-      race: primal
       name: "\uB291\uB300 \uC6B0\uB9AC"
       type: unit
       rarity: 1
-      hitPoint: 250
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: n_uu_01001
         name: "\uB77C\uCE78"
+        rarity: 0
         coolTime: 10
         size: 4
-        count: 1
-        power: 11
+        attackPower: 0
         attackSpeed: 1.2
         defence: 0
         attackRange: 12
@@ -14754,13 +14743,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14901,21 +14892,18 @@ MonoBehaviour:
     id: 58
     data:
       id: n_pr_01002
-      race: primal
       name: "\uC0AC\uAE08 \uCC44\uCDE8\uC7A5"
       type: prod
       rarity: 1
-      hitPoint: 300
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -14927,13 +14915,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14999,21 +14989,18 @@ MonoBehaviour:
     id: 59
     data:
       id: n_pr_01001
-      race: primal
       name: "\uC815\uD654\uC758 \uC0D8"
       type: prod
       rarity: 1
-      hitPoint: 320
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -15025,13 +15012,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -15830,21 +15819,18 @@ MonoBehaviour:
     id: 0
     data:
       id: 
-      race: 
       name: 
       type: 
       rarity: 0
-      hitPoint: 1500
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: 
         name: 
+        rarity: 0
         coolTime: 0
         size: 0
-        count: 0
-        power: 0
+        attackPower: 0
         attackSpeed: 0
         defence: 0
         attackRange: 0
@@ -15856,13 +15842,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   upgradeIcon: {fileID: 21300018, guid: 2317cb552894dc54da24a09a53a35e19, type: 3}
@@ -16040,21 +16028,18 @@ MonoBehaviour:
     id: 68
     data:
       id: n_mu_01002
-      race: primal
       name: "\uC0AC\uB0E5\uAFBC\uC758 \uC624\uB450\uB9C9"
       type: unit
       rarity: 1
-      hitPoint: 280
-      placementLimit: 0
       activeSkills: []
       passiveSkills: []
       unit:
         id: n_uu_01002
         name: "\uB9C8\uB8E8"
+        rarity: 0
         coolTime: 13
         size: 3
-        count: 1
-        power: 9
+        attackPower: 0
         attackSpeed: 1.1
         defence: 10
         attackRange: 38
@@ -16066,13 +16051,15 @@ MonoBehaviour:
           method:
             id: 0
             methodName: 
-            args: 
-          tierNeed: 0
-          coolTime: 0
+            args: []
           desc: 
-          imageName: 
+          coolTime: 0
+        minion:
+          id: 0
+          type: 
+          count: 0
+          capability: 0
         imageName: 
-      lv: 0
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}

@@ -20,7 +20,7 @@ public class MinionAI : UnitAI {
     public override void SetUnitData(ActiveCard card, GameObject cardObj) {
         Init();
         InitStatic();
-        moveSpeed = unit.moveSpeed * 0.4f;
+        moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;
@@ -32,7 +32,7 @@ public class MinionAI : UnitAI {
     public void SetMinionData(ActiveCard heroCard) {
         Init();
         InitStatic();
-        moveSpeed = heroCard.baseSpec.unit.moveSpeed * 0.4f;
+        moveSpeed = heroCard.baseSpec.unit.moveSpeed;
         if (heroCard.baseSpec.unit.minion.type == "melee") {
             attackSpeed = 1.4f;
             attackRange = 10;
@@ -62,7 +62,7 @@ public class MinionAI : UnitAI {
     private void GiveExp() {
         List<HeroAI> heroes = new List<HeroAI>();
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
-        int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
+        int layerToGive = LayertoGive(true);
         for (int i = 0; i < units.Length; i++) {
             if (units[i].layer != layerToGive) continue;
             if (units[i].GetComponent<HeroAI>() == null) continue;
@@ -76,7 +76,7 @@ public class MinionAI : UnitAI {
     }
 
     public override void ResetStat() {
-        moveSpeed = unit.moveSpeed * 0.4f;
+        moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;

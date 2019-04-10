@@ -185,7 +185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569794317466014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: -14, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4378093377937686}
@@ -492,14 +492,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  ontile: {fileID: 0}
+  power: 0
   unit:
     id: 
     name: "\uBBF8\uB2C8\uC5B8"
+    rarity: 0
     coolTime: 0
     size: 1
-    count: 1
-    power: 5
+    attackPower: 0
     attackSpeed: 1.4
     defence: 0
     attackRange: 10
@@ -511,11 +511,14 @@ MonoBehaviour:
       method:
         id: 0
         methodName: 
-        args: 
-      tierNeed: 0
-      coolTime: 0
+        args: []
       desc: 
-      imageName: 
+      coolTime: 0
+    minion:
+      id: 0
+      type: 
+      count: 0
+      capability: 0
     imageName: 
   expPoint: 36
 --- !u!114 &114166272264082106

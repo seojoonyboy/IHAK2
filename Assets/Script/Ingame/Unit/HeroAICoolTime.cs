@@ -90,7 +90,7 @@ public partial class HeroAI : UnitAI {
                 SetSkill(Wimp_evilmind, 9f, 6f);
                 break;
             case "satiation": //렉스 포식
-                SetSkill(() => Rex_satiation(power), 7f, -1f);
+                SetSkill(Rex_satiation, 7f, -1f);
                 break;
             default :
                 Debug.LogWarning(string.Format("{0}이 스킬을 가지고 있지 않습니다.", name));

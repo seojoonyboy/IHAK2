@@ -32,13 +32,30 @@ public partial class HeroAI : UnitAI {
         Init();
         this.unitCard = card;
         Unit unit = card.baseSpec.unit;
-        moveSpeed = unit.moveSpeed * 0.4f;
+        int level = (card.ev.lv <= 0) ? 1 : card.ev.lv;
+        SetUnitDataCommon(level);
+        unitCard.gameObject = cardObj;
+        coroutine = UpdateInfoCard();
+        StartCoroutine(coroutine);
+    }
+
+    public override void SetUnitData(Unit unit, int level) {
+        Init();
+        unitCard = new ActiveCard();
+        unitCard.baseSpec.unit = unit;
+        SetUnitDataCommon(level);
+    }
+
+    private void SetUnitDataCommon(int level) {
+        Unit unit = unitCard.baseSpec.unit;
+        moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;
-        if (card.ev.lv <= 0) card.ev.lv = 1;
+        power = PowerUP(power);
+        unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
-        if (health == 0) health = card.ev.hp;
+        if (health == 0) health = unitCard.ev.hp;
         if (health == 0) health = maxHealth;
         else health += HealTime();
         if (health > maxHealth) health = maxHealth;
@@ -47,10 +64,6 @@ public partial class HeroAI : UnitAI {
         ChangeLvText();
         setState(skillState.COOLING);
         FindUnitSkill(unit.skill);
-
-        unitCard.gameObject = cardObj;
-        coroutine = UpdateInfoCard();
-        StartCoroutine(coroutine);
     }
 
     IEnumerator UpdateInfoCard() {
@@ -83,28 +96,6 @@ public partial class HeroAI : UnitAI {
     public override void damaged(float damage) {
         base.damaged(damage);
         unitCard.TakeDamage(Mathf.RoundToInt(damage));
-    }
-
-    public override void SetUnitData(Unit unit, int level) {
-        Init();
-        unitCard = new ActiveCard();
-        unitCard.baseSpec.unit = unit;
-        moveSpeed = unit.moveSpeed * 0.1f;
-        attackSpeed = unit.attackSpeed;
-        attackRange = unit.attackRange;
-        power = unit.attackPower;
-        power = PowerUP(power);
-        unitCard.ev = new Ev() { lv = level };
-        SetMaxHP();
-        if (health == 0) health = unitCard.ev.hp;
-        if (health == 0) health = maxHealth;
-        else health += HealTime();
-        if (health > maxHealth) health = maxHealth;
-        calculateHealthBar();
-        calculateExpBar();
-        ChangeLvText();
-        setState(skillState.COOLING);
-        FindUnitSkill(unit.skill);
     }
 
     public void ExpGain(int exp) {
@@ -177,7 +168,6 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void DestoryEnemy() {
-        TileReset();
         unitCard.ChangeHp(0);
 
         if (gameObject.layer == myLayer) {
@@ -224,7 +214,7 @@ public partial class HeroAI : UnitAI {
 
     public override void ResetStat() {
         Unit unit = unitCard.baseSpec.unit;
-        moveSpeed = unit.moveSpeed * 0.4f;
+        moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = PowerUP(unit.attackPower);
