@@ -39,6 +39,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
     public void SetCard(GameObject dragObject) {
         if (card != null) return;
         if (dragObject == null) return;
+        if (dragObject.GetComponent<DragHandler>().canDrag == false) return;
         if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
         if (DeckSettingController.Instance.buildingCount >= 10) return;
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
@@ -65,10 +66,14 @@ public class CardSlot : MonoBehaviour, IDropHandler {
                 deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
                 break;
         }
+        dragObject.GetComponent<DragHandler>().canDrag = false;
+
+
     }
 
     public void SwapCard(GameObject dragObject) {
         if (dragObject == null) return;
+        if (dragObject.GetComponent<DragHandler>().canDrag == false) return;
         if (transform.parent.parent.name != dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.data.type && transform.parent.parent.name != "wild") return;
         Destroy(card);
         GameObject cardObject = Instantiate(DeckSettingController.Instance.originalCard, transform);
@@ -94,6 +99,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
                 deckSettingController.wildcard = dragObject.GetComponent<DragHandler>().setObject.GetComponent<BuildingObject>().card.id;
                 break;
         }
+        dragObject.GetComponent<DragHandler>().canDrag = false;
     }
     
 

@@ -22,13 +22,15 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public GameObject parentPageObject;
     public int sibilingData;
 
+    /*
     public void BeginDrag() {
-        canDrag = true;
+        
         OnBeginDrag(null);
     }
-
+    */
     private void Start() {
         dropHandler = GetComponentInParent<DropHandler>();
+        canDrag = true;
         buildingMaxCount = 1;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
