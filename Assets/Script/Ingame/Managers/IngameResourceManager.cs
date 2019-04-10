@@ -28,16 +28,17 @@ public class IngameResourceManager : MonoBehaviour {
             //RefreshGoldSlider();
             float gold = (float)PlayerController.Instance.playerResource().Gold;
             float citizen = (float)PlayerController.Instance.playerResource().Citizen;
-            int increaseAmnt = 1;
+            int _goldIncreaseAmount = 1;
+            int _citizenIncreaseAmount = 1;
+
             yield return new WaitForSeconds(0.2f);
 
-            if (gold >= 100) { increaseAmnt = 0; }
-            if (citizen  >= 100) { increaseAmnt = 0; }
+            if (gold >= 100) { _goldIncreaseAmount = 0; }
+            if (citizen  >= 100) { _citizenIncreaseAmount = 0; }
             //if(gold == 299) { increaseAmnt = 1; }
-
             //goldBar.fillAmount = ((float)gold / 100);
-            PlayerController.Instance.playerResource().Gold += increaseAmnt;
-            PlayerController.Instance.playerResource().Citizen += increaseAmnt;
+            PlayerController.Instance.playerResource().Gold += _goldIncreaseAmount;
+            PlayerController.Instance.playerResource().Citizen += _citizenIncreaseAmount;
             //goldValue.text = ((int)(gold / 10)).ToString();
         }
     }
