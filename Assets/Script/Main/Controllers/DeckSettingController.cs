@@ -136,8 +136,8 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         tileCount = tileGroup.transform.childCount - 1;
         LoadDeckList();
         SettingCard();
-        CheckCardCount();
-        ResetActiveSlot();
+        //CheckCardCount();
+        //ResetActiveSlot();
         DeckActiveCheck();
         resetButton.OnClickAsObservable().Subscribe(_ => {
             Modal.instantiate("장착 중인 모든 카드를 해체합니다.", Modal.Type.YESNO, () => ResetDeck());
@@ -196,15 +196,18 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         pref.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 160);
         pref.AddComponent<Button>().onClick.AddListener(() => Modal.instantiate("준비중입니다.", Modal.Type.CHECK));
     }
-    public void FirstSetDeckInfo() {
+
+    public void LoadDeckName() {
         Text deckName = DeckStatusUI.transform.Find("DeckName").GetComponent<Text>();
-        Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
-        int deckNumber = playerInfosManager.selectNumber;
         Text showFieldName = DeckStatusUI.transform.Find("EditField").Find("DeckNameInputField").GetChild(0).GetComponent<Text>();
 
-        changedDeckName = deckName.text = playerInfosManager.decks[deckNumber].name;
-        showFieldName.text = deckName.text;
-        deckBuildingCount.text = cardCount.ToString() + " / " + 8.ToString();
+        int deckNum = AccountManager.Instance.selectNumber;
+        Deck deck = AccountManager.Instance.decks[deckNum];
+
+        changedDeckName = deck.name;
+
+        deckName.text = changedDeckName;
+        showFieldName.text = changedDeckName;
     }
 
     public void SettingCard() {
@@ -271,10 +274,12 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             card.GetComponent<DragHandler>().DisableCard();
             cardCount++;
         }
+
+        LoadDeckName();
         SetDeckInfo();
     }
 
-    public void SetDeckInfo() {
+    public void SetDeckInfo() {        
         Text deckBuildingCount = DeckStatusUI.transform.Find("DeckBuildingCount").GetComponent<Text>();
         deckBuildingCount.text = cardCount.ToString() + " / " + maxCard.ToString();
     }
@@ -295,7 +300,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void SettingButton() {
-        if (SetAllTileBuildingCheck()) {
+        if (CheckOnDeckCount()) {
             if (changedDeckName == "")
                 Modal.instantiate("이름을 입력해주세요.", Modal.Type.CHECK);
             else
@@ -761,7 +766,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         slider.transform.Find("Text").GetComponent<Text>().text = slider.GetComponent<Slider>().value.ToString();
     }
 
-    public bool SetAllTileBuildingCheck() {
+    public bool CheckOnDeckCount() {
         if (cardCount < maxCard)
             return false;
         else if (cardCount == maxCard)

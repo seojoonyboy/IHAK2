@@ -15,7 +15,8 @@ public partial class HeroAI : UnitAI {
         while (!targetObject) {
             List<HeroAI> heroes = new List<HeroAI>();
             GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
-            int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
+            
+            int layerToGive = LayertoGive(true);
             float tempLegnth = 100;
             HeroAI skillTargetHero = null;
             UnitAI skillTargetUnit = null;
@@ -56,7 +57,7 @@ public partial class HeroAI : UnitAI {
     public void Wimp_evilmind() {
         List<HeroAI> heroes = new List<HeroAI>();
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
-        int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
+        int layerToGive = LayertoGive(true);
         for (int i = 0; i < units.Length; i++) {
             if (units[i].layer == layerToGive) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
@@ -78,7 +79,7 @@ public partial class HeroAI : UnitAI {
         }
     }
 
-    public void Rex_satiation(float attackPower) {
+    public void Rex_satiation() {
         StartCoroutine("Find_Rex_satiation_Target");
     }
 
@@ -88,7 +89,7 @@ public partial class HeroAI : UnitAI {
         while (!skillActed) {
             List<HeroAI> heroes = new List<HeroAI>();
             GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
-            int layerToGive = gameObject.layer == myLayer ? enemyLayer : myLayer;
+            int layerToGive = LayertoGive(true);
             for (int i = 0; i < units.Length; i++) {
                 if (units[i].layer != layerToGive) continue;
                 float length = Vector3.Distance(units[i].transform.position, transform.position);
@@ -107,11 +108,8 @@ public partial class HeroAI : UnitAI {
             }
             yield return null;
         }
-        health += drainHp;
-        if (health > maxHealth)
-            health = maxHealth;
-        if (skillActed)
-            setState(skillState.COOLING);
+        Healed(drainHp);
+        SkillFinish();
     }
 
 

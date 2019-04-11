@@ -10,7 +10,7 @@ public partial class UnitAI : MonoBehaviour {
         NONE,
         MOVE,
         ATTACK,
-        DEAD
+        RETURN
     };
 
     protected delegate void timeUpdate(float time);
@@ -36,7 +36,6 @@ public partial class UnitAI : MonoBehaviour {
     protected static EnemyHeroGenerator enemyHeroGenerator;
     protected static IngameHpSystem ingameHpSystem;
 
-    public GameObject ontile;
     private CircleCollider2D detectCollider;
 
     private List<BuildingInfo> buildingInfos;
@@ -60,8 +59,7 @@ public partial class UnitAI : MonoBehaviour {
         detectCollider.radius = attackRange * 1.5f;
         if (gameObject.layer == myLayer) setUnitPlayer(enemyBuildings.buildingInfos, enemyLayer, myLayer, IngameHpSystem.Target.ENEMY_1);
         else if (gameObject.layer == enemyLayer) setUnitPlayer(playerController.playerBuildings().buildingInfos, myLayer, enemyLayer, IngameHpSystem.Target.ME);
-        if (searchTarget()) setState(aiState.MOVE);
-        else setState(aiState.NONE);
+        setState(aiState.NONE);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
@@ -104,7 +102,8 @@ public partial class UnitAI : MonoBehaviour {
                 unitSpine.Idle();
                 update = attackUpdate;
                 break;
-            case aiState.DEAD:
+            case aiState.RETURN:
+                //TODO : 유닛이 정리 됐을 때 원위치로 돌아오게 하기
                 update = noneUpdate;
                 break;
         }
@@ -114,12 +113,7 @@ public partial class UnitAI : MonoBehaviour {
         update(Time.deltaTime);
     }
 
-    void noneUpdate(float time) {
-        currentTime += time;
-        if ((int)currentTime % 3 == 2)
-            if (searchTarget()) setState(aiState.MOVE);
-        return;
-    }
+    void noneUpdate(float time) { }
 
     void moveUpdate(float time) {
         currentTime += time;
@@ -190,13 +184,6 @@ public partial class UnitAI : MonoBehaviour {
     private void attackBuilding() {
         ingameHpSystem.TakeDamage(targetEnum, CalPower());
         unitSpine.Attack();
-        //if (targetBuilding.hp <= 0) {
-        //    targetBuilding = null;
-        //    if (searchTarget())
-        //        setState(aiState.MOVE);
-        //    else
-        //        setState(aiState.NONE);
-        //}
     }
 
     public virtual void attackUnit() {
@@ -235,8 +222,6 @@ public partial class UnitAI : MonoBehaviour {
     private void searchBuilding() {
         float distance = 0f;
         foreach (BuildingInfo target in buildingInfos) {
-            //if (target.hp <= 0) continue;
-
             Vector3 buildingPos = target.gameObject.transform.parent.position;
             float length = Vector3.Distance(transform.position, buildingPos);
             if (this.targetBuilding == null) {
@@ -259,14 +244,17 @@ public partial class UnitAI : MonoBehaviour {
         if (health <= 0) DestoryEnemy();
     }
 
-    protected void healed(float healingHP) {
+    protected void Healed(float healingHP) {
         health += healingHP;
         if (health > maxHealth) health = maxHealth;
         calculateHealthBar();
     }
 
     protected int LayertoGive(bool isEnemy) {
-        return isEnemy ? enemyLayer : myLayer;
+        if(gameObject.layer == myLayer)
+            return isEnemy ? enemyLayer : myLayer;
+        else
+            return isEnemy ? myLayer : enemyLayer;
     }
 
     protected void calculateHealthBar() {
@@ -275,38 +263,10 @@ public partial class UnitAI : MonoBehaviour {
         healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
     }
 
-    protected void TileReset() {
-        if (ontile == null) {
-            ontile = null;
-        }
-        else if (ontile.GetComponent<TileCollision>() != null && ontile.GetComponent<TileCollision>().count > 0) {
-            ontile.GetComponent<TileCollision>().count--;
-
-            if (ontile.GetComponent<TileCollision>().count <= 0) {
-                ontile.GetComponent<TileCollision>().count = 0;
-                ontile.GetComponent<TileCollision>().check = false;
-            }
-        }
-    }
-
     public virtual void SetUnitData(ActiveCard card, GameObject cardObj) { }
     public virtual void SetUnitData(Unit unit, int level) { }
     public virtual void DestoryEnemy() { }
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) { }
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
     public virtual void attackingHero(UnitAI unit) { }
-    public virtual void ResetSpeedPercentage() { }
-
-    public void ChangeSpeed(int amount) {
-        moveSpeed += amount;
-    }
-
-    public void ChangeSpeedByPercentage(int percent) {
-        if (percent > 0) {
-            moveSpeed *= (percent / 100.0f) + 1.0f;
-        }
-        else if (percent < 0) {
-            moveSpeed *= (-percent / 100.0f);
-        }
-    }
 }
