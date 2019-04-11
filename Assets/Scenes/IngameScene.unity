@@ -7477,14 +7477,14 @@ MonoBehaviour:
   cameraAxes: 0
   perspectiveZoomMode: 0
   camZoomMin: 60
-  camZoomMax: 75
+  camZoomMax: 60
   camOverzoomMargin: 0
   camOverdragMargin: 0
-  boundaryMin: {x: -93.338135, y: 0}
-  boundaryMax: {x: 537.5571, y: 0}
+  boundaryMin: {x: -93.338135, y: -160}
+  boundaryMax: {x: 480, y: 160}
   camFollowFactor: 15
-  autoScrollDampMode: 0
-  autoScrollDamp: 300
+  autoScrollDampMode: 2
+  autoScrollDamp: 800
   autoScrollDampCurve:
     serializedVersion: 2
     m_Curve:
@@ -7498,8 +7498,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.7
-      value: 0.9
+      time: 0.95416564
+      value: 0.93096423
       inSlope: -0.5
       outSlope: -0.5
       tangentMode: 0
