@@ -16,6 +16,10 @@ namespace IngameModule {
 
         LayerMask mask;
         MapStation hq_mapStation;
+
+        [SerializeField] GameObject arrowPref;
+        GameObject prevGameObject;
+
         void Awake() {
             m_Raycaster = GetComponentInParent<GraphicRaycaster>();
             m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
@@ -40,10 +44,14 @@ namespace IngameModule {
                     RaycastHit2D hit = Physics2D.BoxCast(point, new Vector2(10, 10), 0, Vector3.forward, Mathf.Infinity, layerMask: mask);
                     Debug.DrawLine(point, new Vector3(point.x, point.y, -point.z * 100), Color.red);
                     if (hit.collider != null) {
-                        //Debug.Log(hit.transform.gameObject.name);
-                        List<Vector3> path = PathFind(hit.transform.gameObject);
-                        foreach(Vector3 val in path) {
-                            Debug.Log(val);
+                        if(prevGameObject != hit.transform.gameObject) {
+                            ClearPrevPath();
+                            //Debug.Log(hit.transform.gameObject.name);
+                            List<Vector3> path = PathFind(hit.transform.gameObject);
+                            foreach (Vector3 val in path) {
+                                GameObject arrow = Instantiate(arrowPref, PlayerController.Instance.pathPrefabsParent);
+                            }
+                            prevGameObject = hit.transform.gameObject;
                         }
                     }
                 }
@@ -88,6 +96,12 @@ namespace IngameModule {
             }
 
             return path;
+        }
+
+        void ClearPrevPath() {
+            foreach(Transform item in PlayerController.Instance.pathPrefabsParent) {
+                Destroy(item.gameObject);
+            }
         }
     }
 }

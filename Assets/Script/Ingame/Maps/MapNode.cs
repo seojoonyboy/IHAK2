@@ -25,6 +25,7 @@ public class MapNode : MonoBehaviour {
 
         MapStation[] stations = FindObjectsOfType<MapStation>();
         foreach (MapStation station in stations) station.mapStationList = new List<Vector3>();
+        if (found == null) return null;
         return found.mapStationList;
     }
 
