@@ -127,7 +127,13 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         foreach(RaycastResult result in results){
             if (result.gameObject.name == "HeroCards") { return; }
         }
-        deckShuffler.UseCard(gameObject);
+
+        if(instantiatedUnitObj != null) {
+            Debug.Log("이미 생성된 영웅 이동 처리");
+        }
+        else {
+            deckShuffler.UseCard(gameObject);
+        }
     }
 
     public void OnPointerClick() {
