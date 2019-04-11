@@ -94,6 +94,8 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         transform.GetComponent<Image>().enabled = false;
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = false;
+
+        GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnDrag(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
