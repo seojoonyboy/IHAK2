@@ -24,9 +24,9 @@ public class MapNode : MonoBehaviour {
         }
 
         MapStation[] stations = FindObjectsOfType<MapStation>();
+        List<Vector3> result = new List<Vector3>(found.mapStationList);
         foreach (MapStation station in stations) station.mapStationList = new List<Vector3>();
-        if (found == null) return null;
-        return found.mapStationList;
+        return result;
     }
 
     public bool CheckDestination(EnumMapPosition destination) {
