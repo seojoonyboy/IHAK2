@@ -51,7 +51,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
-            if(card.GetComponent<ActiveCardCoolTime>() == null) {
+            card.GetComponent<HeroCardDragHandler>().enabled = false;
+
+            if (card.GetComponent<ActiveCardCoolTime>() == null) {
                 ActiveCardCoolTime comp = card.AddComponent<ActiveCardCoolTime>();
                 comp.behaviour = card.GetComponent<HeroCardDragHandler>();
                 comp.targetCard = card;
@@ -146,7 +148,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                         activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
                     }
                     playerController.HeroSummon(activeCard.data, selectedObject);
-                    selectedObject.GetComponent<HeroCardDragHandler>().enabled = false;
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":

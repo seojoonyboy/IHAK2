@@ -45,7 +45,7 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
         }
     }
 
-    public void SpawnMinionSquad(ActiveCard heroCard) {
+    public void SpawnMinionSquad(ActiveCard heroCard, Transform spawnPos) {
         int spawnNum = 0;
         if (heroCard.baseSpec.unit.minion.count * 10 > (int)PlayerController.Instance.playerResource().Citizen)
             spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
@@ -56,13 +56,13 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
         for (int i = 0; i < spawnNum; i++) {
             GameObject minion;
             if (heroCard.baseSpec.unit.minion.type == "melee") {
-                minion = Instantiate(shortDisMinion, SpawnPos.GetChild(5));
+                minion = Instantiate(shortDisMinion, spawnPos);
             }
             else{
-                minion = Instantiate(longDisMinion, SpawnPos.GetChild(5));
+                minion = Instantiate(longDisMinion, spawnPos);
             }
             minion.transform.position
-                = new Vector3(SpawnPos.position.x + Random.Range(-15.0f, 15.0f), SpawnPos.position.y + Random.Range(-15.0f, 15.0f), SpawnPos.position.z);
+                = new Vector3(spawnPos.position.x + Random.Range(-15.0f, 15.0f), spawnPos.position.y + Random.Range(-15.0f, 15.0f), spawnPos.position.z);
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
             PlayerController.Instance.CitizenSpawnController().DeleteCitizen();
         }
@@ -72,7 +72,6 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
 public partial class MinionSpawnController : SerializedMonoBehaviour {
     [Header(" - Player Identity")]
     [SerializeField] PlayerController.Player playerNum;
-    [SerializeField] Transform SpawnPos;
 
     [Header(" - Prefabs")]
     [SerializeField] GameObject shortDisMinion;
