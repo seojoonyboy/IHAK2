@@ -10,7 +10,7 @@ public class MapStation : MapNode {
 		for(int i = 0; i < roads.Length; i++) {
 			if(usedRoad.Contains(roads[i].mapPostion)) continue;
 			//도착지가 길일 경우
-			if(CheckDestination(destination)) {
+			if(roads[i].CheckDestination(destination)) {
 				MapStation goal = roads[i].NextNode(mapPostion);
 				goal.SetList(mapStationList);
 				return goal;

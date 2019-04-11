@@ -28,7 +28,7 @@ public class MapNode : MonoBehaviour {
         return found.mapStationList;
     }
 
-    protected bool CheckDestination(EnumMapPosition destination) {
+    public bool CheckDestination(EnumMapPosition destination) {
         return mapPostion == destination;
     }
 }
