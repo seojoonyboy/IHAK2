@@ -22,7 +22,6 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 
     private void Start() {
-        canDrag = true;
         Input.simulateMouseWithTouches = true;
         cam = Camera.main;
         startScale = transform.localScale;
