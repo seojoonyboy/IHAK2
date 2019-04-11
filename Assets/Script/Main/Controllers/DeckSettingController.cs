@@ -236,6 +236,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
+                deckCard.GetComponent<DragHandler>().canDrag = true;
                 card.GetComponent<DragHandler>().DisableCard();
                 cardCount++;
             }
@@ -249,6 +250,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 card.GetComponent<DragHandler>().DisableCard();
+                deckCard.GetComponent<DragHandler>().canDrag = true;
                 cardCount++;
             }
         }
@@ -261,6 +263,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
                 deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
                 card.GetComponent<DragHandler>().DisableCard();
+                deckCard.GetComponent<DragHandler>().canDrag = true;
                 cardCount++;
             }
         }
@@ -272,6 +275,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             deckCard.transform.Find("Data").GetComponent<Image>().sprite = card.transform.Find("Data").GetComponent<Image>().sprite;
             deckCard.transform.Find("Mark").Find("Image").GetComponent<Image>().sprite = card.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
             card.GetComponent<DragHandler>().DisableCard();
+            deckCard.GetComponent<DragHandler>().canDrag = true;
             cardCount++;
         }
 

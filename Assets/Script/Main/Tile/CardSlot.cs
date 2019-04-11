@@ -49,6 +49,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
         cardObject.transform.Find("Mark").GetChild(0).GetComponent<Image>().sprite = dragObject.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
         cardObject.GetComponent<DragHandler>().setObject = dragObject.GetComponent<DragHandler>().setObject;
         cardObject.GetComponent<DragHandler>().onDeck = true;
+        cardObject.GetComponent<DragHandler>().canDrag = true;
 
         DeckSettingController deckSettingController = DeckSettingController.Instance;
         int slotNum = transform.GetSiblingIndex();
@@ -86,16 +87,16 @@ public class CardSlot : MonoBehaviour, IDropHandler {
 
         switch (deckName) {
             case "hero":
-                deckSettingController.FindCard(deckSettingController.heroList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                deckSettingController.FindCard(deckSettingController.heroList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                 break;
             case "active":
-                deckSettingController.FindCard(deckSettingController.activeList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                deckSettingController.FindCard(deckSettingController.activeList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                 break;
             case "passive":
-                deckSettingController.FindCard(deckSettingController.passiveList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().canDrag = true;
+                deckSettingController.FindCard(deckSettingController.passiveList[transform.GetSiblingIndex()]).GetComponent<DragHandler>().ActivateCard();
                 break;
             case "wild":
-                deckSettingController.FindCard(deckSettingController.wildcard).GetComponent<DragHandler>().canDrag = true;
+                deckSettingController.FindCard(deckSettingController.wildcard).GetComponent<DragHandler>().ActivateCard();
                 break;
         }
 
@@ -106,6 +107,7 @@ public class CardSlot : MonoBehaviour, IDropHandler {
         cardObject.transform.Find("Mark").GetChild(0).GetComponent<Image>().sprite = dragObject.transform.Find("SecondMark").GetChild(0).GetComponent<Image>().sprite;
         cardObject.GetComponent<DragHandler>().setObject = dragObject.GetComponent<DragHandler>().setObject;
         cardObject.GetComponent<DragHandler>().onDeck = true;
+        cardObject.GetComponent<DragHandler>().canDrag = true;
 
 
         switch (deckName) {
