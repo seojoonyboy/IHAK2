@@ -10,14 +10,12 @@ public class UnitGroup : MonoBehaviour {
 
     private float moveSpeed;
     private bool moving = false;
-    public MapNode currentNode;
+    public MapStation currentNode;
 
     public void SetMove(List<Vector3> MovingPos) {
-        GetData();
+        if(moving) return;
         this.MovingPos = new List<Vector3>(MovingPos);
-        UnitMoveAnimation(true);
-        //moving = true;
-        //UnitMoveDirection(MovingPos[0]);
+        moving = true;
     }
 
     private void Update() {
@@ -32,7 +30,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void CheckGoal() {
-        bool isGoal = Vector3.Distance(transform.position, MovingPos[0]) <= 0.1f;
+        bool isGoal = Vector3.Distance(transform.position, MovingPos[0]) <= 0.5f;
         if(!isGoal) return;
         MovingPos.RemoveAt(0);
         if(MovingPos.Count == 0) moving = false;
@@ -41,14 +39,16 @@ public class UnitGroup : MonoBehaviour {
 
     private void Start() {
         GetData();
+        if(!moving) return;
+        UnitMoveAnimation(true);
+        UnitMoveDirection(MovingPos[0]);
     }
 
     private void GetData() {
-        if(unitAIs != null) return;
         unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
         unitAIs = transform.GetComponentsInChildren<UnitAI>();
-        //UnitIndividualSet(false);
-        moveSpeed = unitAIs[0].moveSpeed;
+        UnitIndividualSet(false);
+        moveSpeed = unitAIs[0].moveSpeed * 0.4f;
     }
 
     private void UnitIndividualSet(bool attack) {
@@ -69,8 +69,11 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D node) {
-        if(node.gameObject.layer == LayerMask.NameToLayer("Node"))
-            currentNode = node.gameObject.GetComponent<MapNode>();
+        if(node.gameObject.layer == LayerMask.NameToLayer("Node")) {
+            MapStation station = node.gameObject.GetComponent<MapStation>();
+            if(node == null) return;
+            currentNode = station;
+        }
     }
 
 }

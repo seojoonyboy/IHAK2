@@ -221,7 +221,7 @@ public partial class HeroAI : UnitAI {
         maxHealth = PowerUP(unit.hitPoint);
     }
 
-    public MapNode GetCurrentNode() {
+    public MapStation GetCurrentNode() {
         UnitGroup group = GetComponentInParent<UnitGroup>();
         return group.currentNode;
     }
