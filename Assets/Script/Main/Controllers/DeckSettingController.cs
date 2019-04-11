@@ -64,7 +64,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
     [Header(" - Flag")]
     [SerializeField] public bool reset = false;
-    [SerializeField] public bool modify;
+    [SerializeField] public bool deckModify = false;
     public bool saveBtnClick = false;
     public static Deck prevData = null;
     public bool nameEditing = false;
@@ -223,6 +223,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
                 passiveList.Add(-1);
 
             wildcard = -1;
+            deckModify = false;
             SetDeckInfo();
             return;
         }
@@ -278,7 +279,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             deckCard.GetComponent<DragHandler>().canDrag = true;
             cardCount++;
         }
-
+        deckModify = true;
         LoadDeckName();
         SetDeckInfo();
     }
@@ -336,16 +337,15 @@ public class DeckSettingController : Singleton<DeckSettingController> {
             deck.wildcardSerial[0] = wildcard;
         }
 
-        if (prevData == null) {
+        if (deckModify == false) {
             playerInfosManager.AddDeck(deck);
         }
-        else {
+        else if(deckModify == true) {
             deck.isRepresent = prevData.isRepresent;
             deck.id = prevData.id;
             playerInfosManager.decks[playerInfosManager.selectNumber] = deck;
             playerInfosManager.ModifyDeck(deck);
         }
-        prevData = null;
 
         tileGroup.SetActive(false);
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
