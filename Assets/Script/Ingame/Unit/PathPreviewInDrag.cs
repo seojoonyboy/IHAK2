@@ -73,6 +73,7 @@ namespace IngameModule {
 
         public void OnEndDrag(PointerEventData eventData) {
             canSearch = false;
+            ClearPrevPath();
         }
 
         void OnDestroy() {
