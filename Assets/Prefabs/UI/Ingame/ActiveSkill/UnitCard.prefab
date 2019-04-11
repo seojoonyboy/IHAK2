@@ -807,7 +807,7 @@ MonoBehaviour:
   LeftOffset: 10
   RightOffset: 10
   TopOffset: 30
-  BottomOffset: 30
+  BottomOffset: 10
   Speed: 60
   isDrag: 0
 --- !u!114 &114127567703459984
@@ -1031,6 +1031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckShuffler: {fileID: 0}
   instantiatedUnitObj: {fileID: 0}
+  path: []
 --- !u!114 &114453553847683364
 MonoBehaviour:
   m_ObjectHideFlags: 1

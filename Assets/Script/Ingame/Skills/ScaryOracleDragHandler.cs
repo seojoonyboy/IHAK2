@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
 public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
+    void Start() {
+        base.MoveBlock();
+    }
+
     public override void OnEndDrag(PointerEventData eventData) {
         DragOff();
         if (UseCard()) {
@@ -21,11 +25,12 @@ public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
 
         PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
         PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+        GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }
 
     public override void OnBeginDrag(PointerEventData eventData) {
         Setting();
-
+        GetComponentInChildren<BoundaryCamMove>().isDrag = true;
         obj.GetComponent<ScaryOracleEmiiter>().Init(data);
     }
 }

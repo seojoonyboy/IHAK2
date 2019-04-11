@@ -1,3 +1,4 @@
+using BitBenderGames;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -20,6 +21,7 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     [SerializeField] protected IngameDeckShuffler deckShuffler;
     [SerializeField] protected string[] data;
     [SerializeField] protected int coolTime;
+    Camera cam;
 
     public void Init(Camera camera, GameObject prefab, Transform parent, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime) {
         this.camera = camera;
@@ -35,6 +37,20 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
+    }
+
+    public virtual void MoveBlock() {
+        cam = Camera.main;
+
+        EventTrigger et = GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+
+        entry.callback.AddListener(
+            (eventData) => cam.GetComponent<TouchInputController>().OnEventTriggerPointerDown(null)
+        );
+
+        et.triggers.Add(entry);
     }
 
     void OnDestroy() {
@@ -70,7 +86,10 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
         deactive.SetActive(true);
     }
 
-    public virtual void OnBeginDrag(PointerEventData eventData) { DragOn(); }
+    public virtual void OnBeginDrag(PointerEventData eventData) {
+        GetComponentInChildren<BoundaryCamMove>().isDrag = true;
+        DragOn();
+    }
 
     public void OnDrag(PointerEventData eventData) {
         transform.position = Input.mousePosition;
