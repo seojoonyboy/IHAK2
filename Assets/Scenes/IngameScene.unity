@@ -1783,6 +1783,8 @@ MonoBehaviour:
   cam: {fileID: 1047380298}
   hq_mapStation: {fileID: 257835151}
   pathPrefabsParent: {fileID: 1934013359}
+  unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
+    type: 2}
   summonParent: {fileID: 1963893152}
   passiveUIParent: {fileID: 1292266989}
   passiveUIPref: {fileID: 1330301450320232, guid: de38f08bd378ae14295fdb132358d50a,
@@ -1909,7 +1911,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   playerNum: 0
-  SpawnPos: {fileID: 1963893152}
   shortDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,
     type: 2}
   longDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
@@ -4934,7 +4935,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   playerNum: 1
-  SpawnPos: {fileID: 0}
   shortDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
     type: 2}
   longDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,

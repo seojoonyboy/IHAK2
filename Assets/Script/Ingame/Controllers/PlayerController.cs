@@ -237,17 +237,19 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<string, GameObject> heroPrefabs;
 
+    [SerializeField] GameObject unitGroupPrefab;
     [SerializeField] Transform summonParent;
     [SerializeField] Transform passiveUIParent;
     [SerializeField] GameObject passiveUIPref;
 
     public void HeroSummon(ActiveCard card, GameObject cardObj) {
+        GameObject unitGroup = Instantiate(unitGroupPrefab, summonParent);
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if(result == null) {
             result = GetHeroPrefab("n_uu_01001");
         }
 
-        GameObject hero = Instantiate(result, summonParent);
+        GameObject hero = Instantiate(result, unitGroup.transform);
         cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
@@ -256,7 +258,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
-        _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card);
+        _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
     }
 
     public GameObject GetHeroPrefab(string id) {

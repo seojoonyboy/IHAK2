@@ -24,7 +24,7 @@ public partial class UnitAI : MonoBehaviour {
     protected float maxHealth = 0;
     public float power = 0;
     protected float defense = 0;
-    protected float moveSpeed;
+    public float moveSpeed;
     protected float attackSpeed;
     protected float attackRange;
 
