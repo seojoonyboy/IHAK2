@@ -20,6 +20,8 @@ namespace IngameModule {
         [SerializeField] GameObject arrowPref;
         GameObject prevGameObject;
 
+        List<Vector3> path = new List<Vector3>();
+
         void Awake() {
             m_Raycaster = GetComponentInParent<GraphicRaycaster>();
             m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
@@ -47,7 +49,7 @@ namespace IngameModule {
                         if(prevGameObject != hit.transform.gameObject) {
                             ClearPrevPath();
                             //Debug.Log(hit.transform.gameObject.name);
-                            List<Vector3> path = PathFind(hit.transform.gameObject);
+                            path = PathFind(hit.transform.gameObject);
 
                             int arrowNum = path.Count - 1;
                             if(arrowNum >= 1) {
@@ -74,6 +76,8 @@ namespace IngameModule {
         public void OnEndDrag(PointerEventData eventData) {
             canSearch = false;
             ClearPrevPath();
+
+            transform.parent.GetComponent<HeroCardDragHandler>().path = path;
         }
 
         void OnDestroy() {

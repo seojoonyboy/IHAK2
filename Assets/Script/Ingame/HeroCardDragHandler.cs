@@ -16,6 +16,8 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
     Camera cam;
     public GameObject instantiatedUnitObj;
 
+    public List<Vector3> path;
+
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
