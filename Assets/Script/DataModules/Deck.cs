@@ -28,15 +28,14 @@ namespace DataModules {
     }
 
     public class ModifyDeckPostForm {
-        public int Id;
         public string Name;
         public string Race;
         public bool IsRepresent;
 
-        public int[] HeroSerial;
-        public int[] ActiveSerial;
-        public int[] PassiveSerial;
-        public int[] WildcardSerial;
+        public int[] heroSerial;
+        public int[] activeSerial;
+        public int[] passiveSerial;
+        public int[] wildcardSerial;
     }
 
     [System.Serializable]

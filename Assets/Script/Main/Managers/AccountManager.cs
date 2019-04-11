@@ -221,16 +221,24 @@ public partial class AccountManager {
             .Append("api/users/deviceid/")
             .Append(DEVICEID)
             .Append("/decks");
+        Debug.Log(url);
         _networkManager.request("PUT", url.ToString(), dataPack.ToString(), AddDeckCallback);
     }
 
     public void ModifyDeck(Deck deck) {
         ModifyDeckPostForm form = new ModifyDeckPostForm();
-        form.Id = deck.id;
-        Debug.Log(deck.id);
         form.Name = deck.name;
         form.Race = "primal";
-        form.IsRepresent = deck.isRepresent;
+        form.IsRepresent = false;
+        form.heroSerial = deck.heroSerial;
+        form.activeSerial = deck.activeSerial;
+        form.passiveSerial = deck.passiveSerial;
+        if (deck.wildcardSerial != null) {
+            form.wildcardSerial = deck.wildcardSerial;
+        }
+        else {
+            form.wildcardSerial = new int[0];
+        }
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
@@ -239,6 +247,7 @@ public partial class AccountManager {
             .Append(DEVICEID)
             .Append("/decks/")
             .Append(deck.id.ToString());
+        Debug.Log(url);
         _networkManager.request("PUT", url.ToString(), dataPack.ToString(), ModifyDeckCallback);
 
         tmpData = deck;
@@ -247,11 +256,18 @@ public partial class AccountManager {
     public void ModifyDeckName(Deck deck, string newName) {
         if (deck == null) return;
         ModifyDeckPostForm form = new ModifyDeckPostForm();
-        form.Id = deck.id;
-        Debug.Log(deck.id);
-        form.Name = newName;
+        form.Name = deck.name;
         form.Race = "primal";
-        form.IsRepresent = deck.isRepresent;
+        form.IsRepresent = false;
+        form.heroSerial = deck.heroSerial;
+        form.activeSerial = deck.activeSerial;
+        form.passiveSerial = deck.passiveSerial;
+        if (deck.wildcardSerial != null) {
+            form.wildcardSerial = deck.wildcardSerial;
+        }
+        else {
+            form.wildcardSerial = new int[0];
+        }
         var dataPack = JsonConvert.SerializeObject(form);
 
         StringBuilder url = new StringBuilder();
@@ -310,6 +326,7 @@ public partial class AccountManager {
 
     private void ModifyDeckCallback(HttpResponse response) {
         if (response.responseCode != 200 || tmpData == null) return;
+        Debug.Log(response.responseCode);
 
         Deck deck = decks.Find(x => x.id == tmpData.id);
         deck.name = tmpData.name;
