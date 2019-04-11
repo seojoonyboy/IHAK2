@@ -12,12 +12,12 @@ public class UnitGroup : MonoBehaviour {
     private bool moving = false;
     public MapStation currentNode;
 
-    public void SetMove(List<Vector3> MovingPos) {
+    public void SetMove(List<Vector3> pos) {
         if(moving) return;
-        this.MovingPos = new List<Vector3>(MovingPos);
-        if(this.MovingPos == null) return;
-        this.MovingPos.RemoveAt(0);
-        if(this.MovingPos.Count == 0) return;
+        MovingPos = new List<Vector3>(pos);
+        if(MovingPos == null || MovingPos.Count == 0) return;
+        MovingPos.RemoveAt(0);
+        if(MovingPos.Count == 0) return;
         MoveStart();
     }
 
