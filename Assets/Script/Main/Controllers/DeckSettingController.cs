@@ -333,6 +333,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         if(wildcard != -1) {
             deck.wildcardSerial = new int[1];
+            deck.wildcardSerial[0] = wildcard;
         }
 
         if (prevData == null) {

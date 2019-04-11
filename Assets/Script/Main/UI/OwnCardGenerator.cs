@@ -116,6 +116,7 @@ public class OwnCardGenerator : MonoBehaviour {
             slotData.GetComponent<DragHandler>().parentPageObject = transform.GetChild(page).gameObject;
             slotData.GetComponent<DragHandler>().sibilingData = count;
             slotData.GetComponent<DragHandler>().onDeck = false;
+            slotData.GetComponent<DragHandler>().canDrag = true;
         }
     }
 
