@@ -12,7 +12,7 @@ public class MapStation : MapNode {
 			//도착지가 길일 경우
 			if(roads[i].CheckDestination(destination)) {
 				MapStation goal = roads[i].NextNode(mapPostion);
-				goal.SetList(mapStationList);
+				goal.SetListLastRoad(mapStationList);
 				return goal;
 			}
 			//도착지가 진지일 경우
@@ -29,6 +29,12 @@ public class MapStation : MapNode {
 	}
 
 	public void SetList(List<Vector3> list) {
+		if(mapStationList.Count != 0 && mapStationList.Count <= list.Count) return;
+		mapStationList = new List<Vector3>(list);
+		mapStationList.Add(transform.position);
+	}
+
+	public void SetListLastRoad(List<Vector3> list) {
 		mapStationList = new List<Vector3>(list);
 		mapStationList.Add(transform.position);
 	}

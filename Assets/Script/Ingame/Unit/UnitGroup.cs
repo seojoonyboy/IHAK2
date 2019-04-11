@@ -15,8 +15,17 @@ public class UnitGroup : MonoBehaviour {
     public void SetMove(List<Vector3> MovingPos) {
         if(moving) return;
         this.MovingPos = new List<Vector3>(MovingPos);
-        if(MovingPos == null || MovingPos.Count == 0) return;
+        if(this.MovingPos == null) return;
+        this.MovingPos.RemoveAt(0);
+        if(this.MovingPos.Count == 0) return;
+        MoveStart();
+    }
+
+    private void MoveStart() {
         moving = true;
+        if(unitAIs == null) return;
+        UnitMoveAnimation(true);
+        UnitMoveDirection(MovingPos[0]);
     }
 
     private void Update() {
@@ -34,21 +43,21 @@ public class UnitGroup : MonoBehaviour {
         bool isGoal = Vector3.Distance(transform.position, MovingPos[0]) <= 0.5f;
         if(!isGoal) return;
         MovingPos.RemoveAt(0);
-        if(MovingPos.Count == 0) SetWaiting();
+        if(MovingPos.Count == 0) MoveEnd();
         else UnitMoveDirection(MovingPos[0]);
     }
 
-    private void SetWaiting() {
+    private void MoveEnd() {
         moving = false;
         UnitMoveAnimation(false);
+        MovingPos = null;
     }
 
     private void Start() {
         GetData();
         UnitMoveAnimation(false);
         if(!moving) return;
-        UnitMoveAnimation(true);
-        UnitMoveDirection(MovingPos[0]);
+        MoveStart();
     }
 
     private void GetData() {
@@ -70,9 +79,9 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void UnitMoveDirection(Vector3 pos) {
-        Vector3 result = transform.position - pos;
+        Vector3 result = pos - transform.position;
         for(int i = 0; i < unitAnimations.Length; i++)
-            unitAnimations[i].SetDirection(pos);
+            unitAnimations[i].SetDirection(result);
     }
 
     private void OnTriggerEnter2D(Collider2D node) {
