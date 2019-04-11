@@ -15,6 +15,7 @@ public class UnitGroup : MonoBehaviour {
     public void SetMove(List<Vector3> MovingPos) {
         if(moving) return;
         this.MovingPos = new List<Vector3>(MovingPos);
+        if(MovingPos == null || MovingPos.Count == 0) return;
         moving = true;
     }
 
@@ -33,12 +34,18 @@ public class UnitGroup : MonoBehaviour {
         bool isGoal = Vector3.Distance(transform.position, MovingPos[0]) <= 0.5f;
         if(!isGoal) return;
         MovingPos.RemoveAt(0);
-        if(MovingPos.Count == 0) moving = false;
+        if(MovingPos.Count == 0) SetWaiting();
         else UnitMoveDirection(MovingPos[0]);
+    }
+
+    private void SetWaiting() {
+        moving = false;
+        UnitMoveAnimation(false);
     }
 
     private void Start() {
         GetData();
+        UnitMoveAnimation(false);
         if(!moving) return;
         UnitMoveAnimation(true);
         UnitMoveDirection(MovingPos[0]);
@@ -71,7 +78,7 @@ public class UnitGroup : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D node) {
         if(node.gameObject.layer == LayerMask.NameToLayer("Node")) {
             MapStation station = node.gameObject.GetComponent<MapStation>();
-            if(node == null) return;
+            if(station == null) return;
             currentNode = station;
         }
     }

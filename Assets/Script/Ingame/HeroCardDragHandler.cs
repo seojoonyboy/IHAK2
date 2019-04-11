@@ -131,7 +131,7 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         }
 
         if(instantiatedUnitObj != null) {
-            Debug.Log("이미 생성된 영웅 이동 처리");
+            instantiatedUnitObj.GetComponentInParent<UnitGroup>().SetMove(path);
         }
         else {
             deckShuffler.UseCard(gameObject);
