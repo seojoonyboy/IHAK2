@@ -106,6 +106,8 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
 
+        GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnEndDrag(eventData);
+
         transform.localScale = new Vector3(1, 1, 1);
 
         transform.GetComponent<Image>().enabled = true;
