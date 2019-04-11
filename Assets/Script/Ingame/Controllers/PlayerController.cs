@@ -66,6 +66,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     IngameSceneEventHandler eventHandler;
     Req_deckDetail.Deck deck;
     public GameObject cam;
+    public MapStation hq_mapStation;
 
     private static PlayerController _instance;
 
