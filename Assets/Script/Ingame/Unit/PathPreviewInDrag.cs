@@ -48,8 +48,20 @@ namespace IngameModule {
                             ClearPrevPath();
                             //Debug.Log(hit.transform.gameObject.name);
                             List<Vector3> path = PathFind(hit.transform.gameObject);
-                            foreach (Vector3 val in path) {
-                                GameObject arrow = Instantiate(arrowPref, PlayerController.Instance.pathPrefabsParent);
+
+                            int arrowNum = path.Count - 1;
+                            if(arrowNum >= 1) {
+                                for (int i = 0; i < arrowNum; i++) {
+                                    GameObject arrow = Instantiate(arrowPref, PlayerController.Instance.pathPrefabsParent);
+                                    arrow.transform.position = path[i];
+
+                                    var dir = path[i + 1] - path[i];
+                                    var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                                    arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                                    float dist = Vector2.Distance(path[i + 1], path[i]);
+                                    arrow.GetComponent<SpriteRenderer>().size = new Vector2(dist, 10);
+                                }
                             }
                             prevGameObject = hit.transform.gameObject;
                         }
