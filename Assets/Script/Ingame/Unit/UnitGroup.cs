@@ -9,13 +9,15 @@ public class UnitGroup : MonoBehaviour {
     private List<Vector3> MovingPos;
 
     private float moveSpeed;
-    private bool moving;
+    private bool moving = false;
+    public MapNode currentNode;
 
     public void SetMove(List<Vector3> MovingPos) {
+        GetData();
         this.MovingPos = new List<Vector3>(MovingPos);
         UnitMoveAnimation(true);
-        moving = true;
-        UnitMoveDirection(MovingPos[0]);
+        //moving = true;
+        //UnitMoveDirection(MovingPos[0]);
     }
 
     private void Update() {
@@ -24,8 +26,8 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void Moving(float time) {
-        Vector3 distance3 = transform.position - MovingPos[0];
-        transform.Translate(distance3 * time * moveSpeed);
+        Vector3 distance3 = MovingPos[0] - transform.position;
+        transform.Translate(distance3.normalized * time * moveSpeed);
         CheckGoal();
     }
 
@@ -39,10 +41,10 @@ public class UnitGroup : MonoBehaviour {
 
     private void Start() {
         GetData();
-        moving = false;
     }
 
     private void GetData() {
+        if(unitAIs != null) return;
         unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
         unitAIs = transform.GetComponentsInChildren<UnitAI>();
         //UnitIndividualSet(false);
@@ -64,6 +66,11 @@ public class UnitGroup : MonoBehaviour {
         Vector3 result = transform.position - pos;
         for(int i = 0; i < unitAnimations.Length; i++)
             unitAnimations[i].SetDirection(pos);
-    }  
+    }
+
+    private void OnTriggerEnter2D(Collider2D node) {
+        if(node.gameObject.layer == LayerMask.NameToLayer("Node"))
+            currentNode = node.gameObject.GetComponent<MapNode>();
+    }
 
 }

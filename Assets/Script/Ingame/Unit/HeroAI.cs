@@ -220,4 +220,9 @@ public partial class HeroAI : UnitAI {
         power = PowerUP(unit.attackPower);
         maxHealth = PowerUP(unit.hitPoint);
     }
+
+    public MapNode GetCurrentNode() {
+        UnitGroup group = GetComponentInParent<UnitGroup>();
+        return group.currentNode;
+    }
 }
