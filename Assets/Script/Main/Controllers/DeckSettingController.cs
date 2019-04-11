@@ -300,7 +300,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
     }
 
     public void SettingButton() {
-        if (SetAllTileBuildingCheck()) {
+        if (CheckOnDeckCount()) {
             if (changedDeckName == "")
                 Modal.instantiate("이름을 입력해주세요.", Modal.Type.CHECK);
             else
@@ -766,7 +766,7 @@ public class DeckSettingController : Singleton<DeckSettingController> {
         slider.transform.Find("Text").GetComponent<Text>().text = slider.GetComponent<Slider>().value.ToString();
     }
 
-    public bool SetAllTileBuildingCheck() {
+    public bool CheckOnDeckCount() {
         if (cardCount < maxCard)
             return false;
         else if (cardCount == maxCard)
