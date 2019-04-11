@@ -95,9 +95,13 @@ namespace IngameModule {
         List<Vector3> PathFind(GameObject collision) {
             MapStation station = collision.GetComponent<MapStation>();
             List<Vector3> path = new List<Vector3>();
-            if(station != null) {
+            MapStation startStation = hq_mapStation;
+            if (transform.parent.GetComponent<HeroCardDragHandler>().instantiatedUnitObj != null) {
+                startStation = transform.parent.GetComponent<HeroCardDragHandler>().instantiatedUnitObj.GetComponent<HeroAI>().GetCurrentNode();
+            }
+            if (station != null) {
                 path = MapNode.SearchPosition(
-                    hq_mapStation,
+                    startStation,
                     station.mapPostion
                 );
                 return path;
@@ -106,7 +110,7 @@ namespace IngameModule {
             MapRoad mapRoad = collision.GetComponent<MapRoad>();
             if(mapRoad != null) {
                 path = MapNode.SearchPosition(
-                    hq_mapStation, 
+                    startStation, 
                     mapRoad.mapPostion
                 );
                 return path;
