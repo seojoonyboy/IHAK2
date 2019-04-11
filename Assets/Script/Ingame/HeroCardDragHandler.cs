@@ -94,6 +94,8 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         transform.GetComponent<Image>().enabled = false;
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
         foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = false;
+
+        GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnDrag(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
@@ -103,6 +105,8 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         m_PointEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointEventData, results);
+
+        GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnEndDrag(eventData);
 
         transform.localScale = new Vector3(1, 1, 1);
 

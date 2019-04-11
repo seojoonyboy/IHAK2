@@ -51,11 +51,13 @@ public class OwnCardGenerator : MonoBehaviour {
         GameObject page = transform.GetChild(0).gameObject;
         RectTransform pageSize = page.GetComponent<RectTransform>();
         int cardCount = constructManager.GetBuildingObjects().Count;
+        /*
         float cardYSize = page.GetComponent<GridLayoutGroup>().cellSize.y;
         float spaceYSize = page.GetComponent<GridLayoutGroup>().spacing.y;
 
         float pageYSize = (cardYSize * (cardCount / 4)) + (spaceYSize * (cardCount / 4));
         pageSize.sizeDelta = new Vector2(pageSize.sizeDelta.x, pageYSize);
+        */
     }
 
     private void SetCards() {
