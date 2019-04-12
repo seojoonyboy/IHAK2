@@ -38,8 +38,7 @@ public partial class UnitAI : MonoBehaviour {
     
     public void HerbRation(int percent) {
         float healing = health * percent / 100.0f;
-        health += healing;
-        calculateHealthBar();
+        Healed(healing);
     }
 
     public void ScaryOracle(int percent) {
