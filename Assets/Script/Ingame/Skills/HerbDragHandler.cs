@@ -1,13 +1,13 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
-public class HerbDragHandler : IngameActiveCardDragHandler {
+public class HerbDragHandler : SpellCardDragHandler {
     void Start() {
         base.MoveBlock();
     }
 
     public override void OnEndDrag(PointerEventData eventData) {
-        DragOff();
+        base.OnEndDrag(eventData);
         if (UseCard()) {
             GetComponent<HerbDragHandler>().enabled = false;
 

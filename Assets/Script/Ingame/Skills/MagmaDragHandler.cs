@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
-public class MagmaDragHandler : IngameActiveCardDragHandler {
+public class MagmaDragHandler : SpellCardDragHandler {
     void Start() {
         base.MoveBlock();
     }

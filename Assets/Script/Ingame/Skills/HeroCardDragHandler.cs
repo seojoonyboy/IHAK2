@@ -7,66 +7,19 @@ using System;
 using Sirenix.OdinInspector;
 using BitBenderGames;
 
-public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
-    IngameSceneEventHandler eventHandler;
-    [SerializeField] [ReadOnly] IngameDeckShuffler deckShuffler;
-
-    Vector3 startScale;
-    Vector3 startPosition;
-    Camera cam;
+public class HeroCardDragHandler : IngameActiveCardDragHandler {
     public GameObject instantiatedUnitObj;
-
     public List<Vector3> path;
 
-    void Awake() {
-        eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
-    }
-
     void Start() {
-        cam = Camera.main;
-
-        EventTrigger et = GetComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerDown;
-
-        entry.callback.AddListener(
-            (eventData) => cam.GetComponent<TouchInputController>().OnEventTriggerPointerDown(null)
-        );
-
-        et.triggers.Add(entry);
+        base.Init();
 
         Button btn = GetComponent<Button>();
         btn.onClick.AddListener(() => OnPointerClick());
-
-        deckShuffler = PlayerController.Instance.deckShuffler();
     }
 
-    void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, BuildingDestroyed);
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_RECONSTRUCTED, BuildingReconstucted);
-    }
-
-    private void BuildingDestroyed(Enum Event_Type, Component Sender, object Param) {
-        //IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage) Param;
-        //if(parms.target == IngameHpSystem.Target.ME) {
-        //    if(GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
-        //        CancelDrag();
-        //    }
-        //}
-    }
-
-    private void BuildingReconstucted(Enum Event_Type, Component Sender, object Param) {
-        //IngameSceneEventHandler.BuildingDestroyedPackage parms = (IngameSceneEventHandler.BuildingDestroyedPackage)Param;
-        //if (parms.target == IngameHpSystem.Target.ME) {
-        //    if (GetComponent<ActiveCardInfo>().data.parentBuilding == parms.buildingInfo.gameObject) {
-        //        GetComponent<IngameDragHandler>().enabled = true;
-        //    }
-        //}
-    }
-
-    public void CancelDrag() {
+    public new void CancelDrag() {
+        base.CancelDrag();
         GetComponent<HeroCardDragHandler>().enabled = false;
 
         transform.position = startPosition;
@@ -79,15 +32,12 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         deactive.SetActive(true);
     }
 
-    public void OnBeginDrag(PointerEventData eventData) {
-        startPosition = transform.position;
-        startScale = transform.localScale;
-
-        GetComponentInChildren<BoundaryCamMove>().isDrag = true;
+    public override void OnBeginDrag(PointerEventData eventData) {
+        base.OnBeginDrag(eventData);
     }
 
-    public void OnDrag(PointerEventData eventData) {
-        transform.position = Input.mousePosition;
+    public override void OnDrag(PointerEventData eventData) {
+        base.OnDrag(eventData);
 
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
         PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
@@ -100,8 +50,9 @@ public class HeroCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandle
         GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnDrag(eventData);
     }
 
-    public void OnEndDrag(PointerEventData eventData) {
-        transform.position = startPosition;
+    public override void OnEndDrag(PointerEventData eventData) {
+        base.OnEndDrag(eventData);
+
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
         PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
         m_PointEventData.position = Input.mousePosition;

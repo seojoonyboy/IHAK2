@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
-public class ScaryOracleDragHandler : IngameActiveCardDragHandler {
+public class ScaryOracleDragHandler : SpellCardDragHandler {
     void Start() {
         base.MoveBlock();
     }
 
     public override void OnEndDrag(PointerEventData eventData) {
-        DragOff();
+        base.OnEndDrag(eventData);
         if (UseCard()) {
             GetComponent<ScaryOracleDragHandler>().enabled = false;
 

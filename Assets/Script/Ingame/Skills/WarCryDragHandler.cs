@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
-public class WarCryDragHandler : IngameActiveCardDragHandler {
+public class WarCryDragHandler : SpellCardDragHandler {
     void Start() {
         base.MoveBlock();
     }
 
     public override void OnEndDrag(PointerEventData eventData) {
-        DragOff();
+        base.OnEndDrag(eventData);
         if (UseCard()) {
             GetComponent<WarCryDragHandler>().enabled = false;
 
