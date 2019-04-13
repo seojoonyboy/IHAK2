@@ -1,11 +1,6 @@
 using BitBenderGames;
-using Sirenix.OdinInspector;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
     protected IngameSceneEventHandler eventHandler;
