@@ -1,10 +1,11 @@
 using DataModules;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterTower : MonoBehaviour {
-    List<GameObject> targets;
+public class MonsterTower : SerializedMonoBehaviour {
+    [SerializeField] [ReadOnly] List<GameObject> targets;
 
     public Transform monsterParent;
     public List<GameObject> monsters;
@@ -13,6 +14,7 @@ public class MonsterTower : MonoBehaviour {
     // Use this for initialization
     void Start() {
         MonstersReset(false);
+        targets = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -21,21 +23,13 @@ public class MonsterTower : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D collision) {
-        if (collision.gameObject.layer == 11 && collision.GetComponent<UnitAI>() != null) {
-            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
-        }
-
-        if (collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
+        if ((collision.gameObject.layer == 10 || collision.gameObject.layer == 11) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 11 && collision.GetComponent<UnitAI>() != null) {
-            targets.Remove(collision.gameObject);
-        }
-
-        if (collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
+        if ((collision.gameObject.layer == 10 || collision.gameObject.layer == 11) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
         }
     }
