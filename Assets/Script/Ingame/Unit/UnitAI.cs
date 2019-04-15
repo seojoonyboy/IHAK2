@@ -15,8 +15,6 @@ public partial class UnitAI : MonoBehaviour {
 
     protected delegate void timeUpdate(float time);
     protected timeUpdate update;
-
-    private BuildingInfo targetBuilding;
     protected UnitAI targetUnit;
     protected Transform healthBar;
 
@@ -30,22 +28,16 @@ public partial class UnitAI : MonoBehaviour {
 
     private float currentTime;
 
-    protected static EnemyBuildings enemyBuildings;
     protected static PlayerController playerController;
     protected static IngameDeckShuffler ingameDeckShuffler;
     protected static EnemyHeroGenerator enemyHeroGenerator;
-    protected static IngameHpSystem ingameHpSystem;
-
-    private CircleCollider2D detectCollider;
-
-    private List<BuildingInfo> buildingInfos;
 
     protected UnitSpine unitSpine;
     private IngameSceneEventHandler eventHandler;
+    private UnitGroup myGroup;
 
     protected static int myLayer = 0;
     protected static int enemyLayer = 0;
-    private IngameHpSystem.Target targetEnum;
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
@@ -55,32 +47,30 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     void Start() {
-        detectCollider = transform.GetComponentInChildren<CircleCollider2D>();
-        detectCollider.radius = attackRange * 1.5f;
-        if (gameObject.layer == myLayer) setUnitPlayer(enemyBuildings.buildingInfos, enemyLayer, myLayer, IngameHpSystem.Target.ENEMY_1);
-        else if (gameObject.layer == enemyLayer) setUnitPlayer(playerController.playerBuildings().buildingInfos, myLayer, enemyLayer, IngameHpSystem.Target.ME);
         setState(aiState.NONE);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
-    }
-
-    private void setUnitPlayer(List<BuildingInfo> info, int layer1, int layer2, IngameHpSystem.Target targetEnum) {
-        buildingInfos = info;
-        UnitDetector dectector = GetComponentInChildren<UnitDetector>();
-        dectector.detectingLayer = layer1;
-        dectector.gameObject.layer = layer2;
-        this.targetEnum = targetEnum;
     }
 
     private void OnDestroy() {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
+    private void OnEnable() {
+        if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
+        SearchEnemy();
+        setState(aiState.MOVE);
+    }
+
     protected void InitStatic() {
-        if (enemyBuildings == null) enemyBuildings = FindObjectOfType<EnemyBuildings>();
         if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
         if (enemyHeroGenerator == null) enemyHeroGenerator = FindObjectOfType<EnemyHeroGenerator>();
-        if (ingameHpSystem == null) ingameHpSystem = FindObjectOfType<IngameHpSystem>();
+    }
+
+    public void SearchEnemy() {
+        Transform enemy = myGroup.GiveMeEnemy(transform);
+        targetUnit = enemy.GetComponent<UnitAI>();
+        if(targetUnit == null) Debug.LogWarning("유닛 말고 또 뭔지 이종욱에게 말해주세요"); //TODO : 유닛 말고 또 다른 종류의 적
     }
 
     private void setState(aiState state) {
@@ -92,7 +82,7 @@ public partial class UnitAI : MonoBehaviour {
                 update = noneUpdate;
                 break;
             case aiState.MOVE:
-                Transform target = GetTarget();
+                Transform target = targetUnit.transform;
                 Vector3 distance = target.position - transform.position;
                 unitSpine.SetDirection(distance);
                 unitSpine.Move();
@@ -116,9 +106,11 @@ public partial class UnitAI : MonoBehaviour {
     void noneUpdate(float time) { }
 
     void moveUpdate(float time) {
-        currentTime += time;
-        Transform target = GetTarget();
-        if (target == null) return;
+        currentTime += time; 
+        if (targetUnit == null) { 
+            return;
+        }
+        Transform target = targetUnit.transform;
         Vector3 distance = target.position - transform.position;
         float length = Vector3.Distance(transform.position, target.position);
         if (isTargetClose(length)) {
@@ -128,26 +120,6 @@ public partial class UnitAI : MonoBehaviour {
         transform.Translate(distance.normalized * time * moveSpeed);
         if (currentTime < 2f) return;
         currentTime = 0f;
-        searchTarget();
-    }
-
-    private Transform GetTarget() {
-        Transform target;
-        if (targetUnit == null) {
-            if (targetBuilding == null) {
-                if (!searchTarget()) setState(aiState.NONE);
-                return null;
-            }
-            target = targetBuilding.gameObject.transform.parent;
-        }
-        else {
-            if (targetUnit == null) {
-                if (!searchTarget()) setState(aiState.NONE);
-                return null;
-            }
-            target = targetUnit.gameObject.transform;
-        }
-        return target;
     }
 
     void attackUpdate(float time) {
@@ -163,27 +135,6 @@ public partial class UnitAI : MonoBehaviour {
             }
             attackUnit();
         }
-        else if (targetBuilding != null) {
-            distance = Vector3.Distance(targetBuilding.gameObject.transform.position, transform.position);
-            if (!isTargetClose(distance)) {
-                setState(aiState.MOVE);
-                return;
-            }
-            attackBuilding();
-        }
-        else if (targetUnit == null && targetBuilding == null) {
-            detectCollider.enabled = true;
-            if (searchTarget())
-                setState(aiState.MOVE);
-            else
-                setState(aiState.NONE);
-            return;
-        }
-    }
-
-    private void attackBuilding() {
-        ingameHpSystem.TakeDamage(targetEnum, CalPower());
-        unitSpine.Attack();
     }
 
     public virtual void attackUnit() {
@@ -192,49 +143,17 @@ public partial class UnitAI : MonoBehaviour {
         unitSpine.Attack();
         if (targetUnit.health <= 0f) {
             targetUnit = null;
-            detectCollider.enabled = true;
-            if (searchTarget())
-                setState(aiState.MOVE);
-            else
-                setState(aiState.NONE);
+            setState(aiState.NONE);
         }
     }
 
     private bool isTargetClose(float distance) {
-        if (targetBuilding == null && targetUnit == null) {
-            searchTarget();
+        if (targetUnit == null) {
             return false;
         }
         if (distance <= attackRange)
             return true;
         return false;
-    }
-
-    private bool searchTarget() {
-        searchBuilding();
-        return targetBuilding != null;
-    }
-    public void NearEnemy(Collider2D other) {
-        targetUnit = other.GetComponent<UnitAI>();
-        targetBuilding = null;
-    }
-
-    private void searchBuilding() {
-        float distance = 0f;
-        foreach (BuildingInfo target in buildingInfos) {
-            Vector3 buildingPos = target.gameObject.transform.parent.position;
-            float length = Vector3.Distance(transform.position, buildingPos);
-            if (this.targetBuilding == null) {
-                this.targetBuilding = target;
-                distance = length;
-                continue;
-            }
-            if (distance > length) {
-                this.targetBuilding = target;
-                distance = length;
-                continue;
-            }
-        }
     }
 
     public virtual void damaged(float damage) {

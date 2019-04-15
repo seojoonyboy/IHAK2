@@ -10,7 +10,10 @@ public class UnitGroup : MonoBehaviour {
 
     private float moveSpeed;
     private bool moving = false;
-    public MapStation currentNode;
+    private bool attacking = false;
+    public MapStation currentStation;
+    public MapNode currentNode;
+    public Transform enemyGroup;
 
     public void SetMove(List<Vector3> pos) {
         if(moving) return;
@@ -36,10 +39,10 @@ public class UnitGroup : MonoBehaviour {
     private void Moving(float time) {
         Vector3 distance3 = MovingPos[0] - transform.position;
         transform.Translate(distance3.normalized * time * moveSpeed);
-        CheckGoal();
+        CheckStationReached();
     }
 
-    private void CheckGoal() {
+    private void CheckStationReached() {
         bool isGoal = Vector3.Distance(transform.position, MovingPos[0]) <= 0.5f;
         if(!isGoal) return;
         MovingPos.RemoveAt(0);
@@ -85,11 +88,45 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D node) {
-        if(node.gameObject.layer == LayerMask.NameToLayer("Node")) {
-            MapStation station = node.gameObject.GetComponent<MapStation>();
-            if(station == null) return;
-            currentNode = station;
+        if(SetNodePosition(node)) return; 
+        //TODO : 적대 그룹을 만날 경우 - if 내용 변경 필요
+        if(attacking) {
+            PrepareBattle(node.transform);
         }
     }
 
+    private bool SetNodePosition(Collider2D node) {
+        if(node.gameObject.layer != LayerMask.NameToLayer("Node")) return false;
+        currentNode = node.gameObject.GetComponent<MapNode>();
+        MapStation station = node.gameObject.GetComponent<MapStation>();
+        if(station == null) return true;
+        currentStation = station;
+        return true;
+    }
+
+    private void PrepareBattle(Transform group) {
+        this.enabled = false;
+        attacking = true;
+        enemyGroup = group;
+        UnitIndividualSet(true);
+    }
+
+    private bool CheckEnemyLeft() {
+        if(enemyGroup.childCount != 0) return true;
+        FinishBattle();
+        return false;
+    }
+
+    public Transform GiveMeEnemy(Transform myTransform) {
+        //TODO : 자기 유닛위치에 가까운 유닛으로 변경 필요
+        if(CheckEnemyLeft()) return enemyGroup.GetChild(0);
+        return null;
+    }
+
+    private void FinishBattle() {
+        enemyGroup = null;
+        this.enabled = true;
+        attacking = false;
+        UnitIndividualSet(false);
+    }
 }
