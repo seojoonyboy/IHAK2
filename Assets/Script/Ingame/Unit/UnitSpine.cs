@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
@@ -20,10 +20,14 @@ public class UnitSpine : MonoBehaviour {
     private Skeleton skeleton;
 
     private void Awake() {
+        Init();
+        hitEffect = transform.parent.Find("wolf_hit");
+    }
+
+    public virtual void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
-        hitEffect = transform.parent.Find("wolf_hit");
     }
 
     public void Idle() {
