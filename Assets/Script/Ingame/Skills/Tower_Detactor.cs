@@ -2,7 +2,7 @@ using DataModules;
 using TMPro;
 using UnityEngine;
 
-public class Tower_Detactor : MonoBehaviour {
+public class Tower_Detactor : IngameBuilding {
     private CircleCollider2D box;
     private int damage;
     private float atkTime;
@@ -17,6 +17,8 @@ public class Tower_Detactor : MonoBehaviour {
     //public int towerMaxShell = 0;
 
     void Start() {
+        maxHp = 300;
+        buildingHp = maxHp;
         box = GetComponent<CircleCollider2D>();
         setRange(40);
         damage = 23;
