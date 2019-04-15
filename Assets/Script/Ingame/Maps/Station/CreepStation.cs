@@ -51,7 +51,7 @@ public partial class CreepStation : DefaultStation {
 }
 
 public partial class CreepStation {
-    [SerializeField] [ReadOnly] List<GameObject> targets;
+    [SerializeField] [ReadOnly] public List<GameObject> targets;
     public Transform monsterParent;
     public List<GameObject> monsters;
     public Pool[] pools;
