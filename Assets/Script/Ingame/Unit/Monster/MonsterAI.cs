@@ -36,27 +36,13 @@ public partial class MonsterAI : MonoBehaviour {
     }
 
     void Start() {
-        setState(aiState.MOVE);
+        setState(aiState.NONE);
         patrolTarget = GetPatrolTarget();
         interval += Random.Range(-1.0f, 1.0f);
     }
 
     void Update() {
-        if (tower == null) return;
         update(Time.deltaTime);
-
-        time += Time.deltaTime;
-        transform.position = Vector2.MoveTowards(
-                new Vector2(transform.position.x, transform.position.y),
-                patrolTarget,
-                speed * Time.deltaTime
-        );
-
-        if (time > interval) {
-            patrolTarget = GetPatrolTarget();
-            time = 0;
-            interval = 10 + Random.Range(-1.0f, 1.0f);
-        }
     }
 
     private void setState(aiState state) {
@@ -77,7 +63,21 @@ public partial class MonsterAI : MonoBehaviour {
         }
     }
 
-    void noneUpdate(float time) { }
+    void noneUpdate(float time) {
+        if (tower == null) return;
+        this.time += time;
+        transform.position = Vector2.MoveTowards(
+                new Vector2(transform.position.x, transform.position.y),
+                patrolTarget,
+                speed * Time.deltaTime
+        );
+
+        if (this.time > interval) {
+            patrolTarget = GetPatrolTarget();
+            this.time = 0;
+            interval = 10 + Random.Range(-1.0f, 1.0f);
+        }
+    }
 
     void moveUpdate(float time) { }
     void attackUpdate(float time) { }
