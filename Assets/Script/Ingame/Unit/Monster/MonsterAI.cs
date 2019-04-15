@@ -29,9 +29,10 @@ public partial class MonsterAI : MonoBehaviour {
     public Transform healthBar;
 
     public MonsterTower tower;
-
+    MonsterSpine monsterSpine;
     void Awake() {
         originPos = transform;
+        monsterSpine = GetComponentInChildren<MonsterSpine>();
     }
 
     void Start() {
@@ -48,12 +49,15 @@ public partial class MonsterAI : MonoBehaviour {
         update = null;
         switch (state) {
             case aiState.NONE:
+                monsterSpine.Idle();
                 update = noneUpdate;
                 break;
             case aiState.MOVE:
+                monsterSpine.Move();
                 update = moveUpdate;
                 break;
             case aiState.ATTACK:
+                monsterSpine.Attack();
                 update = attackUpdate;
                 break;
         }
@@ -67,6 +71,10 @@ public partial class MonsterAI : MonoBehaviour {
                 patrolTarget,
                 speed * Time.deltaTime
         );
+
+        if(Vector2.Distance(transform.position, patrolTarget) == 0.1f) {
+            setState(aiState.NONE);
+        }
 
         if (this.time > interval) {
             patrolTarget = GetPatrolTarget();

@@ -38,6 +38,13 @@ public class MonsterTower : SerializedMonoBehaviour {
 
     }
 
+    /// <summary>
+    /// 소유자 변경(점령)
+    /// </summary>
+    public void OwnerChange() {
+
+    }
+
     public void MonsterDie(GameObject monster) {
         monsters.Remove(monster);
     }
