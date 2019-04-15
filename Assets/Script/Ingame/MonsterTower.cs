@@ -56,6 +56,7 @@ public class MonsterTower : SerializedMonoBehaviour {
                     .GetChild(i)
                     .transform
                     .position;
+                instantiatedMonster.GetComponent<MonsterAI>().tower = this;
                 monsters.Add(instantiatedMonster);
             }
         }
