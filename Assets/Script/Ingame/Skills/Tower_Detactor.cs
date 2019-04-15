@@ -11,10 +11,10 @@ public class Tower_Detactor : MonoBehaviour {
     private float time;
     [SerializeField]
     private GameObject arrow;
-    [SerializeField]
-    public int towerShellCount = 0;
-    [SerializeField]
-    public int towerMaxShell = 0;
+    //[SerializeField]
+    //public int towerShellCount = 0;
+    //[SerializeField]
+    //public int towerMaxShell = 0;
 
     void Start() {
         box = GetComponent<CircleCollider2D>();
@@ -51,9 +51,9 @@ public class Tower_Detactor : MonoBehaviour {
         if (checkEnemyDead()) return;
         time += Time.deltaTime;
         if (time < atkTime) return;
-        if (towerShellCount <= 0) return;
+        //if (towerShellCount <= 0) return;
         time -= atkTime;
-        enemy.GetComponent<UnitAI>().damaged(damage);
+        //enemy.GetComponent<UnitAI>().damaged(damage);
         shootArrow();
     }
 
@@ -61,12 +61,14 @@ public class Tower_Detactor : MonoBehaviour {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);        
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);        
         Destroy(arrow, atkTime * 0.3f);
-        towerShellCount--;
+        //towerShellCount--;
+        /*
         TextMeshPro ammoValueText = transform.parent.GetChild(2).GetComponent<TextMeshPro>();
         if(towerShellCount < towerMaxShell) {
             ammoValueText.transform.gameObject.SetActive(true);
             ammoValueText.text = towerShellCount + " / " + towerMaxShell;
         }
+        */
     }
 
     private bool checkEnemyDead() {

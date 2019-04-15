@@ -239,8 +239,8 @@ public partial class UnitAI : MonoBehaviour {
 
     public virtual void damaged(float damage) {
         health -= damage;
-        unitSpine.Hitted();
-        calculateHealthBar();
+        //unitSpine.Hitted();
+        //calculateHealthBar();
         if (health <= 0) DestoryEnemy();
     }
 
