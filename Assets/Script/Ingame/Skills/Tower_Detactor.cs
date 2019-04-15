@@ -59,6 +59,8 @@ public class Tower_Detactor : IngameBuilding {
         shootArrow();
     }
 
+
+
     private void shootArrow() {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);        
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);        

@@ -6,4 +6,5 @@ public class IngameBuilding : MonoBehaviour {
 
     public int buildingHp;
     public int maxHp;
+    
 }
