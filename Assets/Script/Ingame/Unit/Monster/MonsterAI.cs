@@ -17,8 +17,7 @@ public partial class MonsterAI : MonoBehaviour {
     public enum aiState {
         NONE,
         MOVE,
-        ATTACK,
-        RETURN
+        ATTACK
     };
 
     protected delegate void timeUpdate(float time);
@@ -56,9 +55,6 @@ public partial class MonsterAI : MonoBehaviour {
                 break;
             case aiState.ATTACK:
                 update = attackUpdate;
-                break;
-            case aiState.RETURN:
-                update = noneUpdate;
                 break;
         }
     }
