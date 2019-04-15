@@ -65,12 +65,13 @@ public class TileGroup : MonoBehaviour {
             building = transform.GetChild(attackingTowerLocation[i]).GetChild(0).gameObject;
             detector = building.transform.GetChild(1).GetComponent<Tower_Detactor>();
             ammoValueText = building.transform.GetChild(2).GetComponent<TextMeshPro>();
-
+            /*
             detector.towerShellCount += detector.towerMaxShell;
             ammoValueText.text = detector.towerShellCount + " / " + detector.towerMaxShell;
             ammoValueText.transform.gameObject.SetActive(false);
             if (detector.towerShellCount > detector.towerMaxShell)
                 detector.towerShellCount = detector.towerMaxShell;
+                */
         }
 
     }
@@ -90,13 +91,15 @@ public class TileGroup : MonoBehaviour {
                 building = transform.GetChild(attackingTowerLocation[i]).GetChild(0).gameObject;
                 detector = building.transform.GetChild(1).GetComponent<Tower_Detactor>();
                 ammoValueText = building.transform.GetChild(2).GetComponent<TextMeshPro>();
-
+                /*
                 detector.towerShellCount += detector.towerMaxShell / 2;
                 if (detector.towerShellCount > detector.towerMaxShell) {
                     detector.towerShellCount = detector.towerMaxShell;
                     ammoValueText.transform.gameObject.SetActive(false);
                 }
                 ammoValueText.text = detector.towerShellCount + " / " + detector.towerMaxShell;
+                */
+
             }
         }
     }
