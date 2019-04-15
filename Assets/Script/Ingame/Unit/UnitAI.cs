@@ -244,6 +244,12 @@ public partial class UnitAI : MonoBehaviour {
         if (health <= 0) DestoryEnemy();
     }
 
+    public void Healed() {
+        float amount = maxHealth * 0.05f;
+        health += amount;
+        if (health > maxHealth) health = maxHealth;
+    }
+
     protected void Healed(float healingHP) {
         health += healingHP;
         if (health > maxHealth) health = maxHealth;
