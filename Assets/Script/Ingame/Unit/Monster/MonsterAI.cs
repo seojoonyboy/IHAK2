@@ -28,7 +28,7 @@ public partial class MonsterAI : MonoBehaviour {
     public float maxHealth = 0;
     public Transform healthBar;
 
-    public MonsterTower tower;
+    public CreepStation tower;
     MonsterSpine monsterSpine;
     void Awake() {
         originPos = transform;
