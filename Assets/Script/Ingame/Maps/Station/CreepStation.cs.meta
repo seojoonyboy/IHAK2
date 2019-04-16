@@ -3,7 +3,10 @@ guid: 41cdce9e444ac7246b24935812995d75
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - building: {instanceID: 0}
+  - monsterParent: {instanceID: 0}
+  - SpawnPos: {fileID: 1306745127633288, guid: 75cd9371089b4e54da39c815fd5f8876, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
