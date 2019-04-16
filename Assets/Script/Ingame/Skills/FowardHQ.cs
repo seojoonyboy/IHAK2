@@ -8,7 +8,7 @@ public class FowardHQ : IngameBuilding {
     void Start() {
         maxHp = 300;
         buildingHp = maxHp;
-        effectRange = transform.gameObject.GetComponent<CircleCollider2D>();
+        effectRange = transform.parent.GetComponent<CircleCollider2D>();
     }
 
     private void setRange(float amount) {

@@ -67,7 +67,7 @@ public class UnitGroup : MonoBehaviour {
         unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
         unitAIs = transform.GetComponentsInChildren<UnitAI>();
         UnitIndividualSet(false);
-        moveSpeed = unitAIs[0].moveSpeed * 0.4f;
+        moveSpeed = unitAIs[0].moveSpeed;
     }
 
     private void UnitIndividualSet(bool attack) {
@@ -112,6 +112,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private bool CheckEnemyLeft() {
+        if(enemyGroup == null) return false;
         if(enemyGroup.childCount != 0) return true;
         FinishBattle();
         return false;

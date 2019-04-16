@@ -8,14 +8,12 @@ public class FieldHospital : IngameBuilding {
 
     public CircleCollider2D effectRange;
     public float delayTime = 1f;
-    public float time = 0f;
-    public int count = 0;
     GameObject target;
     // Use this for initialization
     void Start () {
         maxHp = 300;
         buildingHp = maxHp;
-        effectRange = transform.gameObject.GetComponent<CircleCollider2D>();
+        effectRange = transform.parent.GetComponent<CircleCollider2D>();
     }
 
     private void setRange(float amount) {

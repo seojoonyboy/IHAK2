@@ -14,7 +14,7 @@ public class StationBasic : MonoBehaviour {
                 gameObject.AddComponent<CreepStation>();
                 break;
             case StationState.Tower:
-                gameObject.AddComponent<TowerStation>();
+                gameObject.AddComponent<TowerStation>();                
                 break;
             case StationState.Shop:
                 gameObject.AddComponent<ShopStation>();

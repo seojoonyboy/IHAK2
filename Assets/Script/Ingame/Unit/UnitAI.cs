@@ -70,6 +70,7 @@ public partial class UnitAI : MonoBehaviour {
     public void SearchEnemy() {
         if(myGroup == null) return;
         Transform enemy = myGroup.GiveMeEnemy(transform);
+        if(enemy == null) return;
         targetUnit = enemy.GetComponent<UnitAI>();
         if(targetUnit == null) Debug.LogWarning("유닛 말고 또 뭔지 이종욱에게 말해주세요"); //TODO : 유닛 말고 또 다른 종류의 적
     }
