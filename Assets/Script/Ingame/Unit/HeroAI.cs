@@ -197,13 +197,13 @@ public partial class HeroAI : UnitAI {
     private void GiveExp() {
         if (fightHeroes.Count == 0) return;
         int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
-        RemoveDeadHero();
+        RemoveDeadHeroNoExp();
         if (fightHeroes.Count == 0) return;
         exp /= fightHeroes.Count;
         foreach (HeroAI hero in fightHeroes) hero.ExpGain(exp);
     }
 
-    private void RemoveDeadHero() {
+    private void RemoveDeadHeroNoExp() {
         for (int i = 0; i < fightHeroes.Count; i++) {
             if (fightHeroes[i] == null) {
                 fightHeroes.RemoveAt(i);
@@ -223,6 +223,6 @@ public partial class HeroAI : UnitAI {
 
     public MapStation GetCurrentNode() {
         UnitGroup group = GetComponentInParent<UnitGroup>();
-        return group.currentNode;
+        return group.currentStation;
     }
 }

@@ -2598,7 +2598,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 310319779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6192dbe59c66ee34395b896b8180a1be, type: 3}
+  m_Script: {fileID: 11500000, guid: 41cdce9e444ac7246b24935812995d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -2610,6 +2610,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  playerNum: 0
+  stationIdentity: 0
   targets: []
   monsterParent: {fileID: 1629144240}
   monsters: []
@@ -2618,6 +2620,7 @@ MonoBehaviour:
     - num: 6
       monster: {fileID: 1143876191896102, guid: 9def9a9e0c15c9d45aef109dbbabfe87,
         type: 2}
+  poolLv: 0
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -8742,7 +8745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3ecad579a79824c95daf6f8b996a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationstate: 1
+  stationstate: 0
 --- !u!1 &1211720891
 GameObject:
   m_ObjectHideFlags: 0
@@ -13944,7 +13947,7 @@ GameObject:
   - component: {fileID: 1853951389}
   - component: {fileID: 1853951388}
   - component: {fileID: 1853951390}
-  - component: {fileID: 1853951391}
+  - component: {fileID: 1853951392}
   m_Layer: 14
   m_Name: S20
   m_TagString: Untagged
@@ -13998,7 +14001,7 @@ CircleCollider2D:
   m_Offset: {x: -7, y: 0}
   serializedVersion: 2
   m_Radius: 50
---- !u!114 &1853951391
+--- !u!114 &1853951392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14006,7 +14009,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1853951387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6192dbe59c66ee34395b896b8180a1be, type: 3}
+  m_Script: {fileID: 11500000, guid: 41cdce9e444ac7246b24935812995d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -14018,6 +14021,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  playerNum: 0
+  stationIdentity: 0
   targets: []
   monsterParent: {fileID: 1629144240}
   monsters: []
@@ -14026,6 +14031,7 @@ MonoBehaviour:
     - num: 6
       monster: {fileID: 1143876191896102, guid: 9def9a9e0c15c9d45aef109dbbabfe87,
         type: 2}
+  poolLv: 0
 --- !u!1 &1866525756
 GameObject:
   m_ObjectHideFlags: 0

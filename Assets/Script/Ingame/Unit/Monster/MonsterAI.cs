@@ -9,6 +9,7 @@ using UnityEngine;
 public partial class MonsterAI : MonoBehaviour {
     public Transform originPos;
     public Vector2 patrolTarget;
+    public Transform moveToTarget;
 
     private float time;
     private float interval = 10.0f;
@@ -28,10 +29,13 @@ public partial class MonsterAI : MonoBehaviour {
     public float maxHealth = 0;
     public Transform healthBar;
 
-    public MonsterTower tower;
+    public CreepStation tower;
+    MonsterSpine monsterSpine;
+    float attackRange = 1;
 
     void Awake() {
         originPos = transform;
+        monsterSpine = GetComponentInChildren<MonsterSpine>();
     }
 
     void Start() {
@@ -48,12 +52,15 @@ public partial class MonsterAI : MonoBehaviour {
         update = null;
         switch (state) {
             case aiState.NONE:
+                monsterSpine.Idle();
                 update = noneUpdate;
                 break;
             case aiState.MOVE:
+                monsterSpine.Move();
                 update = moveUpdate;
                 break;
             case aiState.ATTACK:
+                monsterSpine.Attack();
                 update = attackUpdate;
                 break;
         }
@@ -61,12 +68,21 @@ public partial class MonsterAI : MonoBehaviour {
 
     void noneUpdate(float time) {
         if (tower == null) return;
+        if(tower.targets.Count != 0) {
+            setState(aiState.MOVE);
+            return;
+        }
+
         this.time += time;
         transform.position = Vector2.MoveTowards(
                 new Vector2(transform.position.x, transform.position.y),
                 patrolTarget,
                 speed * Time.deltaTime
         );
+
+        if(Vector2.Distance(transform.position, patrolTarget) == 0.1f) {
+            setState(aiState.NONE);
+        }
 
         if (this.time > interval) {
             patrolTarget = GetPatrolTarget();
@@ -75,8 +91,47 @@ public partial class MonsterAI : MonoBehaviour {
         }
     }
 
-    void moveUpdate(float time) { }
-    void attackUpdate(float time) { }
+    /// <summary>
+    /// 공격 대상이 감지되었을 때 이동
+    /// </summary>
+    /// <param name="time"></param>
+    void moveUpdate(float time) {
+        Vector2 target = GetTarget().position;
+        transform.position = Vector2.MoveTowards(
+                new Vector2(transform.position.x, transform.position.y),
+                target,
+                speed * time
+        );
+    }
+
+    void attackUpdate(float time) {
+        if (moveToTarget == null) {
+            if(GetTarget() == null) {
+                ReturnToBase();
+                return;
+            }
+            else {
+                var distance = Vector3.Distance(moveToTarget.transform.position, transform.position);
+                if (distance <= attackRange) {
+                    Debug.Log(distance);
+                    setState(aiState.MOVE);
+                }
+                else monsterSpine.Attack();
+            }
+        }
+    }
+
+    private Transform GetTarget() {
+        Transform target;
+        if(tower.targets.Count != 0) {
+            int rndNum = Random.Range(0, tower.targets.Count - 1);
+            moveToTarget = target = tower.targets[rndNum].transform;
+        }
+        else {
+            target = null;
+        }
+        return target;
+    }
 
     public void damaged(float damage) {
         health -= damage;
@@ -101,6 +156,14 @@ public partial class MonsterAI : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    private void ReturnToBase() {
+        setState(aiState.MOVE);
+    }
+
+    /// <summary>
+    /// Idle 상태일때 순찰
+    /// </summary>
+    /// <returns>목적지</returns>
     private Vector2 GetPatrolTarget() {
         if (tower == null) return transform.position;
         int posCount = tower.transform.GetChild(0).childCount;
@@ -111,6 +174,13 @@ public partial class MonsterAI : MonoBehaviour {
         float offsetY = Random.Range(-5.0f, 5.0f);
         Vector2 vector = new Vector2(target.position.x + offsetX, target.position.y + offsetY);
         return vector;
+    }
+
+    /// <summary>
+    /// 공격 대상 설정
+    /// </summary>
+    public void SetAtkTarget() {
+        setState(aiState.MOVE);
     }
 }
 
