@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4497109901514196}
   - component: {fileID: 114673464225563214}
+  - component: {fileID: 114666703141586966}
   m_Layer: 12
   m_Name: Goblin
   m_TagString: Untagged
@@ -360,6 +361,25 @@ MonoBehaviour:
   m_meshFilter: {fileID: 33574771765219674}
   m_boxCollider: {fileID: 0}
   m_TextComponent: {fileID: 114841531966709566}
+--- !u!114 &114666703141586966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1143876191896102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea28297457414f4fa7fb24562e785fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 11400000, guid: 99974fefdff8c1b42b5088eaaba87d22, type: 2}
+  enemyStats: {fileID: 0}
+  eyes: {fileID: 0}
+  remainState: {fileID: 11400000, guid: db7c0175c60751f459ffdca13103044c, type: 2}
+  wayPointList: []
+  nextWayPoint: 0
+  chaseTarget: {fileID: 0}
+  stateTimeElapsed: 0
 --- !u!114 &114673464225563214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -373,6 +393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originPos: {fileID: 0}
   patrolTarget: {x: 0, y: 0}
+  moveToTarget: {fileID: 0}
   health: 0
   maxHealth: 0
   healthBar: {fileID: 0}
