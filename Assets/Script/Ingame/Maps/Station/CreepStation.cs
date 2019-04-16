@@ -70,7 +70,7 @@ public partial class CreepStation {
         pools[0] = tempPool;
     }
 
-    void OnTriggerStay2D(Collider2D collision) {
+    void OnTriggerEnter2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }

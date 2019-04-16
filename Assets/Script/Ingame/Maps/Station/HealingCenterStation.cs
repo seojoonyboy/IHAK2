@@ -46,7 +46,7 @@ public class HealingCenterStation : DefaultStation {
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision) {
+    void OnTriggerEnter2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
         }
