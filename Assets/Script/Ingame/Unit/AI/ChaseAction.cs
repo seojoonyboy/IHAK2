@@ -1,4 +1,5 @@
 using AI;
+using AI_submodule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class ChaseAction : Action {
     }
 
     private void Chase(StateController controller) {
-        Debug.Log("Chase!!");
+        if (controller.gameObject.GetComponent<MoveToAttack>() == null) {
+            controller.gameObject
+            .AddComponent<MoveToAttack>()
+            .Init();
+        }
     }
 }
