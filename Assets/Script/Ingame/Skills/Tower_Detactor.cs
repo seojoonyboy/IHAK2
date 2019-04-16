@@ -19,14 +19,14 @@ public class Tower_Detactor : IngameBuilding {
     void Start() {
         maxHp = 300;
         buildingHp = maxHp;
-        box = GetComponent<CircleCollider2D>();
+        box = transform.parent.GetComponent<CircleCollider2D>();
         setRange(40);
         damage = 23;
         atkTime = 1.4f;
     }
 
     public void init(AttackInfo info) {
-        box = GetComponent<CircleCollider2D>();
+        box = transform.parent.GetComponent<CircleCollider2D>();
         setRange(info.attackRange);
         damage = info.power;
         atkTime = info.attackSpeed;
