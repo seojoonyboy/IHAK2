@@ -46,7 +46,7 @@ public class HealingCenterStation : DefaultStation {
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision) {        
+    void OnTriggerEnter2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
         }
@@ -54,19 +54,6 @@ public class HealingCenterStation : DefaultStation {
             if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
             collision.gameObject.AddComponent<Heal>();
         }
-
-        if (collision.name.CompareTo("Skeleton") != 0 && collision.gameObject.layer == (int)OwnerNum) {
-            collision.gameObject.AddComponent<Heal>();
-            collision.GetComponent<Heal>().delayTime = transform.GetChild(0).GetComponent<FieldHospital>().delayTime;
-        }
-
-        if (collision.gameObject.layer != (int)OwnerNum) {
-            Heal heal = collision.gameObject.GetComponent<Heal>();
-            if (heal != null) {
-                Destroy(heal);
-            }
-        }
-
     }
 
     void OnTriggerExit2D(Collider2D collision) {
@@ -75,12 +62,6 @@ public class HealingCenterStation : DefaultStation {
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
-            Heal heal = collision.gameObject.GetComponent<Heal>();
-            if (heal != null)
-                Destroy(heal);
-        }
-
-        if (collision.name.CompareTo("Skeleton") != 0) {
             Heal heal = collision.gameObject.GetComponent<Heal>();
             if (heal != null)
                 Destroy(heal);
