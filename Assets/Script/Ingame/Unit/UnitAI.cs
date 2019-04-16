@@ -68,6 +68,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     public void SearchEnemy() {
+        if(myGroup == null) return;
         Transform enemy = myGroup.GiveMeEnemy(transform);
         targetUnit = enemy.GetComponent<UnitAI>();
         if(targetUnit == null) Debug.LogWarning("유닛 말고 또 뭔지 이종욱에게 말해주세요"); //TODO : 유닛 말고 또 다른 종류의 적
@@ -82,10 +83,7 @@ public partial class UnitAI : MonoBehaviour {
                 update = noneUpdate;
                 break;
             case aiState.MOVE:
-                Transform target = targetUnit.transform;
-                Vector3 distance = target.position - transform.position;
-                unitSpine.SetDirection(distance);
-                unitSpine.Move();
+                if(!StartMove()) break;
                 update = moveUpdate;
                 break;
             case aiState.ATTACK:
@@ -97,6 +95,15 @@ public partial class UnitAI : MonoBehaviour {
                 update = noneUpdate;
                 break;
         }
+    }
+
+    private bool StartMove() {
+        if(targetUnit == null) return false;
+        Transform target = targetUnit.transform;
+        Vector3 distance = target.position - transform.position;
+        unitSpine.SetDirection(distance);
+        unitSpine.Move();
+        return true;
     }
 
     void Update() {
