@@ -6,49 +6,61 @@ using UnityEngine;
 public class HealingCenterStation : DefaultStation {
 
     [SerializeField]
-    [ReadOnly] public List<GameObject> targets;
+    [ReadOnly] public List<GameObject> enemys;
+    [ReadOnly] public List<GameObject> healingTarget;
+
+    private bool startSeize = false;
 
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.HealingCenter;
-        targets = new List<GameObject>();
+        enemys = new List<GameObject>();
+        healingTarget = new List<GameObject>();
         Building = Resources.Load("Prefabs/FieldHospital") as GameObject;
         Instantiate(Building, transform);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    IEnumerator FindOwner() {
-        bool find = true;
-        int targetLayer = 0;
-        while (find) {
-            foreach (GameObject target in targets) {
-                if (target == null) continue;
-                if ((int)OwnerNum != target.layer) {
-                    int tempLayer = targetLayer;
-                    targetLayer = target.layer;
-                    if (tempLayer != targetLayer)
-                        find = false;
-                }
-            }
-            yield return new WaitForSeconds(0.1f);
+    private void Update() {
+        if(!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
+            startSeize = true;
+            StartCoroutine(SeizeBuilding());
         }
-        OwnerNum = (PlayerController.Player)targetLayer;
+    }
+
+    IEnumerator SeizeBuilding() {
+        int time = 0;
+        while (startSeize) {
+            if (time == 100) {
+                OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
+                startSeize = false;
+            }
+            if (healingTarget.Count > 0)
+                startSeize = false;
+            yield return new WaitForSeconds(0.1f);
+            time++;
+        }
     }
 
     void OnTriggerStay2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+            if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+        }
+        if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
+            if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+            collision.gameObject.AddComponent<Heal>();
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            targets.Remove(collision.gameObject);
+            enemys.Remove(collision.gameObject);
+        }
+        if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
+            if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+            Heal heal = collision.gameObject.GetComponent<Heal>();
+            if (heal != null)
+                Destroy(heal);
         }
     }
 }
