@@ -33,6 +33,10 @@ public class HealingCenterStation : DefaultStation {
         while (startSeize) {
             if (time == 100) {
                 OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
+                GetComponent<Collider2D>().enabled = false;
+                enemys.Clear();
+                healingTarget.Clear();
+                GetComponent<Collider2D>().enabled = true;
                 startSeize = false;
             }
             if (healingTarget.Count > 0)
