@@ -10,7 +10,7 @@ public partial class CreepStation : DefaultStation {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
         targets = new List<GameObject>();
-
+        SetMonsters();
         MonstersReset(false);
     }
 
@@ -45,8 +45,24 @@ public partial class CreepStation {
     [SerializeField] [ReadOnly] public List<GameObject> targets;
     public Transform monsterParent;
     public List<GameObject> monsters;
-    public Pool[] pools;
+    public Pool[] pools = new Pool[1];
     [SerializeField] [ReadOnly] int poolLv = 0;
+
+    public void SetMonsters() {
+        monsters = new List<GameObject>();
+        monsterParent = transform.parent.parent.Find("Monsters");
+        Instantiate(Resources.Load("Prefabs/Monsters/MonsterPos") as GameObject, transform);
+        Set goblin = new Set {
+            num = 6,
+            monster = Resources.Load("Prefabs/Monsters/Goblin") as GameObject
+        };
+        List<Set> tempSets = new List<Set>();
+        tempSets.Add(goblin);
+        Pool tempPool = new Pool();
+        tempPool.sets = tempSets;
+        pools[0] = tempPool;
+    }
+
     void OnTriggerStay2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
@@ -66,7 +82,6 @@ public partial class CreepStation {
     }
 
     public void MonstersReset(bool isTierUp) {
-        monsters = new List<GameObject>();
         if (isTierUp) poolLv++;
 
         Pool selPool = pools[poolLv];
@@ -84,6 +99,8 @@ public partial class CreepStation {
             }
         }
     }
+
+    
 
     [System.Serializable]
     public class Pool {
