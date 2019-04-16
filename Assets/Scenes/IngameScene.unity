@@ -1690,7 +1690,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 0
+      Data: 10
     - Name: 
       Entry: 10
       Data: 0
@@ -1702,7 +1702,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 12
     - Name: 
       Entry: 10
       Data: 1
@@ -1714,7 +1714,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 11
     - Name: 
       Entry: 10
       Data: 1
@@ -1726,7 +1726,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 3
+      Data: 13
     - Name: 
       Entry: 10
       Data: 1
@@ -14002,8 +14002,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  playerNum: 0
+  ownerNum: 0
   stationIdentity: 0
+  building: {fileID: 0}
   targets: []
   monsterParent: {fileID: 1629144240}
   monsters: []
