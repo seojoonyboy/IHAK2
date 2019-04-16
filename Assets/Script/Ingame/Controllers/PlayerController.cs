@@ -222,11 +222,11 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
 public partial class PlayerController {
     public enum Player {
-        PLAYER_1,
-        PLAYER_2,
-        PLAYER_3,
-        PLAYER_4,
-        NEUTRAL,
+        PLAYER_1 = 10,
+        PLAYER_2 = 11,
+        PLAYER_3 = 12,
+        PLAYER_4 = 13,
+        NEUTRAL = 14,
     }
 }
 

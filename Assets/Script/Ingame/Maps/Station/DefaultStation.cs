@@ -13,16 +13,23 @@ public partial class DefaultStation : SerializedMonoBehaviour {
 
 public partial class DefaultStation : SerializedMonoBehaviour {
     [Header(" - Owned Player ")]
-    [SerializeField] PlayerController.Player playerNum;
+    [SerializeField] PlayerController.Player ownerNum;
 
     [Header(" - Station Identity")]
     [SerializeField] StationBasic.StationState stationIdentity;
 
-    public PlayerController.Player PlayerNum {
-        set { playerNum = value; }
+    [Header(" - Ingame Building Info")]
+    [SerializeField] GameObject building;
+
+    public PlayerController.Player OwnerNum {
+        get { return ownerNum; } set { ownerNum = value; }
     }
 
     public StationBasic.StationState StationIdentity {
         set { stationIdentity = value; }
+    }
+
+    public GameObject Building{
+        get { return building; } set { building = value; }
     }
 }

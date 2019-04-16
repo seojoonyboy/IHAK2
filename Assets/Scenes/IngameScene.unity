@@ -2598,29 +2598,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 310319779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41cdce9e444ac7246b24935812995d75, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d3ecad579a79824c95daf6f8b996a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  playerNum: 0
-  stationIdentity: 0
-  targets: []
-  monsterParent: {fileID: 1629144240}
-  monsters: []
-  pools:
-  - sets:
-    - num: 6
-      monster: {fileID: 1143876191896102, guid: 9def9a9e0c15c9d45aef109dbbabfe87,
-        type: 2}
-  poolLv: 0
+  stationstate: 1
 --- !u!1 &311666519
 GameObject:
   m_ObjectHideFlags: 0
@@ -8745,7 +8726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3ecad579a79824c95daf6f8b996a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationstate: 0
+  stationstate: 5
 --- !u!1 &1211720891
 GameObject:
   m_ObjectHideFlags: 0
