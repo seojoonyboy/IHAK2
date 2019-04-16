@@ -8,7 +8,7 @@ public partial class BaseCampStation : DefaultStation {
 
 	// Use this for initialization
 	void Start () {
-        PlayerNum = PlayerController.Player.NEUTRAL;
+        OwnerNum = PlayerController.Player.NEUTRAL;
         creepList = new List<GameObject>();
     }
 	
