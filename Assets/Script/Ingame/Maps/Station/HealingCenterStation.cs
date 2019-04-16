@@ -17,10 +17,6 @@ public class HealingCenterStation : DefaultStation {
         Instantiate(Building, transform);
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     IEnumerator FindOwner() {
         bool find = true;
@@ -40,15 +36,34 @@ public class HealingCenterStation : DefaultStation {
         OwnerNum = (PlayerController.Player)targetLayer;
     }
 
-    void OnTriggerStay2D(Collider2D collision) {
+    void OnTriggerStay2D(Collider2D collision) {        
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
+
+        if (collision.name.CompareTo("Skeleton") != 0 && collision.gameObject.layer == (int)OwnerNum) {
+            collision.gameObject.AddComponent<Heal>();
+            collision.GetComponent<Heal>().delayTime = transform.GetChild(0).GetComponent<FieldHospital>().delayTime;
+        }
+
+        if (collision.gameObject.layer != (int)OwnerNum) {
+            Heal heal = collision.gameObject.GetComponent<Heal>();
+            if (heal != null) {
+                Destroy(heal);
+            }
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
+        }
+
+        if (collision.name.CompareTo("Skeleton") != 0) {
+            Heal heal = collision.gameObject.GetComponent<Heal>();
+            if (heal != null)
+                Destroy(heal);
         }
     }
 }
