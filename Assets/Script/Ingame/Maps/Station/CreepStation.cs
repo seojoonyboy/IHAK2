@@ -5,6 +5,8 @@ using UnityEngine;
 
 public partial class CreepStation : DefaultStation {
 
+    private bool startSeize = false;
+
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
@@ -15,27 +17,32 @@ public partial class CreepStation : DefaultStation {
     }
 
     private void LateUpdate() {
-        if (monsters.Count == 0 && targets.Count > 0 ) {
+        if (!startSeize && monsters.Count == 0 && targets.Count > 0 ) {
+            startSeize = true;
             StartCoroutine(FindOwner());
         }
     }
 
     IEnumerator FindOwner() {
-        bool find = true;
         int targetLayer = 0;
-        while (find) {
+        while (startSeize) {
             foreach (GameObject target in targets) {
                 if (target == null) continue;
                 if ((int)OwnerNum != target.layer) {
                     int tempLayer = targetLayer;
-                    targetLayer = target.layer; 
-                    if (tempLayer != targetLayer)
-                        find = false;
+                    targetLayer = target.layer;
+                    if (tempLayer != targetLayer) {
+                        startSeize = false;
+                    }
                 }
             }
             yield return new WaitForSeconds(0.1f);
+            OwnerNum = (PlayerController.Player)targetLayer;
+            GetComponent<Collider2D>().enabled = false;
+            targets.Clear();
+            GetComponent<Collider2D>().enabled = true;
+            startSeize = false;
         }
-        OwnerNum = (PlayerController.Player)targetLayer;
     }
 
     public void ChangeOwner() { }
