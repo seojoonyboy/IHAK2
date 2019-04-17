@@ -5,7 +5,8 @@ using UnityEngine;
 
 public partial class TowerStation : DefaultStation {
     [SerializeField] [ReadOnly] protected bool startSeize = false;
-    
+    [SerializeField] [ReadOnly] protected bool rebuilding = false;
+
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
@@ -18,6 +19,7 @@ public partial class TowerStation : DefaultStation {
 	
 	// Update is called once per frame
 	void Update () {
+        if (rebuilding) return;
         if (towerComponent.IsDestroyed && !startSeize) {
             startSeize = true;
             StartCoroutine(FindOwner());
@@ -49,10 +51,13 @@ public partial class TowerStation : DefaultStation {
     }
 
     IEnumerator RebuildTower() {
+        rebuilding = true;
         yield return new WaitForSeconds(8.0f);
         Building = Resources.Load("Prefabs/Tower") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        Destroy(towerComponent.gameObject);
         towerComponent = tower.GetComponent<Tower_Detactor>();
+        rebuilding = false;
     }
 }
 

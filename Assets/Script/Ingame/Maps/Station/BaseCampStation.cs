@@ -6,6 +6,7 @@ using UnityEngine;
 public partial class BaseCampStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
+    [SerializeField] [ReadOnly] protected bool rebuilding = false;
 
 
     // Use this for initialization
@@ -22,6 +23,7 @@ public partial class BaseCampStation : DefaultStation {
 
     // Update is called once per frame
     void Update() {
+        if (rebuilding) return;
         if (towerComponent.IsDestroyed && creepList.Count == 0 && !startSeize) {
             startSeize = true;
             StartCoroutine(FindOwner());
@@ -53,10 +55,13 @@ public partial class BaseCampStation : DefaultStation {
     }
 
     IEnumerator RebuildTower() {
+        rebuilding = true;
         yield return new WaitForSeconds(10.0f);
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        Destroy(towerComponent.gameObject);
         towerComponent = tower.GetComponent<FowardHQ>();
+        rebuilding = false;
     }
 
 

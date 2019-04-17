@@ -6,7 +6,7 @@ using UnityEngine;
 public class FowardHQ : IngameBuilding {
 
     public CircleCollider2D effectRange;
-    [SerializeField] [ReadOnly] private bool isDestroyed = false;
+    [SerializeField] bool isDestroyed = false;
 
     public bool IsDestroyed {
         get { return isDestroyed; }
@@ -22,5 +22,4 @@ public class FowardHQ : IngameBuilding {
     private void setRange(float amount) {
         effectRange.radius = amount;
     }
-
 }
