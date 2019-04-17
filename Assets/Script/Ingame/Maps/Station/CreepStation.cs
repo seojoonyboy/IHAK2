@@ -27,7 +27,7 @@ public partial class CreepStation : DefaultStation {
     IEnumerator FindOwner() {
         int targetLayer = 0;
         while (startSeize) {
-            foreach (GameObject target in targets) {
+            foreach (GameObject target in targets.ToList()) {
                 if(target == null) continue;
                 if (targetLayer == 0) {
                     targetLayer = target.layer;
