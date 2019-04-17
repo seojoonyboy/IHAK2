@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class Heal : MonoBehaviour {
-    public float time = 0f;
-    public float delayTime;
+    public float time;
+    public float delayTime = 1f;
 
     private void Update() {
         time += Time.deltaTime;
@@ -13,7 +13,6 @@ public class Heal : MonoBehaviour {
     }
 
     private void healUnit() {
-        if (gameObject.layer != 10) return;
         UnitAI unit = transform.gameObject.GetComponent<UnitAI>();
         if (unit == null) return;
         unit.Healed();
