@@ -32,11 +32,12 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
         else minion = null;
 
         if (minion == null) return;
-
+        PlayerController.Instance.transform.GetComponent<Container.PlayerResource>().UseCitizen();
 
         minion.GetComponent<MinionAI>().SetUnitData(null, null);
         minion.layer = gameObject.layer;
         minion.transform.position = unitGroup.transform.position;
+
 
     }
 
