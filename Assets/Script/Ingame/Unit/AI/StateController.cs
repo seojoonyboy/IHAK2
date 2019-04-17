@@ -12,8 +12,10 @@ public class StateController : MonoBehaviour {
 
     [HideInInspector] public List<Transform> wayPointList;
     [HideInInspector] public int nextWayPoint;
-    [HideInInspector] public Transform chaseTarget;
+    public Transform chaseTarget;
     [HideInInspector] public float stateTimeElapsed;
+
+    public List<State> allStates;
 
     private bool aiActive;
 
@@ -38,6 +40,7 @@ public class StateController : MonoBehaviour {
     }
 
     public void TransitionToState(State nextState) {
+        Debug.Log(nextState);
         if (nextState != remainState) {
             currentState = nextState;
             OnExitState();

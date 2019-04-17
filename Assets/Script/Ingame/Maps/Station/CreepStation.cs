@@ -78,7 +78,23 @@ public partial class CreepStation {
 
     void OnTriggerExit2D(Collider2D collision) {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
+            foreach(GameObject monster in monsters) {
+                if(monster.GetComponent<StateController>().chaseTarget == collision.transform) {
+                    monster.GetComponent<StateController>().chaseTarget = null;
+                }
+            }
             targets.Remove(collision.gameObject);
+        }
+    }
+
+    void Update() {
+        if(targets != null && targets.Count == 0) {
+            foreach (GameObject monster in monsters) {
+                monster.GetComponent<StateController>().chaseTarget = null;
+            }
+        }
+        foreach(GameObject target in targets) {
+            Debug.Log(target.name);
         }
     }
 

@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "PluggableAI/Decisions/MonsterDecision")]
+/// <summary>
+/// Default 상태
+/// </summary>
+[CreateAssetMenu(menuName = "PluggableAI/Decisions/LookDecision")]
 public class MonsterDecision : Decision {
 
     public override bool Decide(StateController controller) {

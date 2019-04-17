@@ -11,10 +11,6 @@ namespace AI_submodule {
         float time;
         float speed = 10;
         float interval = 8;
-        // Use this for initialization
-        void Start() {
-
-        }
 
         // Update is called once per frame
         void Update() {
