@@ -27,7 +27,7 @@ namespace Container {
                 }
                 if(value > 100) { value = 100; return; }
                 gold = value;
-                PlayerController.Instance.resourceManager().RefreshGoldSlider();
+                PlayerController.Instance.resourceManager().RefreshGold();
 
                 gold_readonly = (float)Gold;
             }
@@ -42,7 +42,7 @@ namespace Container {
                 }
                 if (value > 100) { value = 100; return; }
                 citizen = value;
-                PlayerController.Instance.resourceManager().RefreshCitizenText();
+                PlayerController.Instance.resourceManager().RefreshCitizen();
                 PlayerController.Instance.CitizenSpawnController().AddCitizen();
 
                 citizen_readonly = (float)citizen;
