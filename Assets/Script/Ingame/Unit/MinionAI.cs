@@ -27,6 +27,7 @@ public class MinionAI : UnitAI {
         SetMaxHP();
         health = unit.hitPoint;
         calculateHealthBar();
+        SetColliderData();
     }
 
     public void SetMinionData(ActiveCard heroCard) {
@@ -48,6 +49,7 @@ public class MinionAI : UnitAI {
             maxHealth = 60;
         }
         calculateHealthBar();
+        SetColliderData();
     }
 
     private void SetMaxHP() {

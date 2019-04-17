@@ -15,7 +15,7 @@ public partial class UnitAI : MonoBehaviour {
 
     protected delegate void timeUpdate(float time);
     protected timeUpdate update;
-    protected UnitAI targetUnit;
+    protected Transform targetUnit;
     protected Transform healthBar;
 
     public float health = 0;
@@ -33,21 +33,23 @@ public partial class UnitAI : MonoBehaviour {
     protected static EnemyHeroGenerator enemyHeroGenerator;
 
     protected UnitSpine unitSpine;
+    private UnitDetector detector;
     private IngameSceneEventHandler eventHandler;
     private UnitGroup myGroup;
 
     protected static int myLayer = 0;
     protected static int enemyLayer = 0;
+    protected static int neutralLayer = 0;
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         if (myLayer > 0) return;
         myLayer = LayerMask.NameToLayer("PlayerUnit");
         enemyLayer = LayerMask.NameToLayer("EnemyUnit");
+        neutralLayer = LayerMask.NameToLayer("Neutral");
     }
 
     void Start() {
-        setState(aiState.NONE);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
@@ -57,8 +59,11 @@ public partial class UnitAI : MonoBehaviour {
 
     private void OnEnable() {
         if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
-        SearchEnemy();
-        setState(aiState.MOVE);
+        SetEnemy();
+    }
+
+    void OnDisable() {
+        detector.EnemyDone();
     }
 
     protected void InitStatic() {
@@ -67,12 +72,23 @@ public partial class UnitAI : MonoBehaviour {
         if (enemyHeroGenerator == null) enemyHeroGenerator = FindObjectOfType<EnemyHeroGenerator>();
     }
 
+    protected void SetColliderData() {
+        detector = transform.GetComponentInChildren<UnitDetector>();
+        detector.SetData(attackRange, LayertoGive(true));
+    }
+
     public void SearchEnemy() {
         if(myGroup == null) return;
         Transform enemy = myGroup.GiveMeEnemy(transform);
         if(enemy == null) return;
-        targetUnit = enemy.GetComponent<UnitAI>();
-        if(targetUnit == null) Debug.LogWarning("유닛 말고 또 뭔지 이종욱에게 말해주세요"); //TODO : 유닛 말고 또 다른 종류의 적
+        targetUnit = enemy;
+        if(targetUnit == null) Debug.LogWarning("어떤 유령인건지 궁금하니 이종욱에게 말해주세요");
+    }
+
+    private void SetEnemy() {
+        SearchEnemy();
+        if(targetUnit == null) return;
+        setState(aiState.MOVE);
     }
 
     private void setState(aiState state) {
@@ -116,9 +132,10 @@ public partial class UnitAI : MonoBehaviour {
     void moveUpdate(float time) {
         currentTime += time; 
         if (targetUnit == null) { 
+            SetEnemy();
             return;
         }
-        Transform target = targetUnit.transform;
+        Transform target = targetUnit;
         Vector3 distance = target.position - transform.position;
         float length = Vector3.Distance(transform.position, target.position);
         if (isTargetClose(length)) {
@@ -136,27 +153,43 @@ public partial class UnitAI : MonoBehaviour {
         currentTime = 0f;
         float distance;
         if (targetUnit != null) {
-            distance = Vector3.Distance(targetUnit.transform.position, transform.position);
+            distance = Vector3.Distance(targetUnit.position, transform.position);
             if (!isTargetClose(distance)) {
                 setState(aiState.MOVE);
                 return;
             }
             attackUnit();
         }
+        else SetEnemy();
     }
 
     public virtual void attackUnit() {
-        targetUnit.damaged(power);
-        targetUnit.attackingHero(this);
-        unitSpine.Attack();
-        if (targetUnit.health <= 0f) {
-            targetUnit = null;
-            setState(aiState.NONE);
+        UnitAI unitAI = targetUnit.GetComponent<UnitAI>();
+        MonsterAI monsterAI = targetUnit.GetComponent<MonsterAI>();
+        //TODO : 다음 적 찾기 함수 만들기
+        if(unitAI != null) {
+            unitAI.damaged(power, transform); 
+            unitAI.attackingHero(this);
+            if (unitAI.health <= 0f) {
+                targetUnit = null;
+                SetEnemy();
+            }
         }
+        else if(monsterAI != null) {
+            monsterAI.damaged(power);
+            if (monsterAI.health <= 0f) {
+                targetUnit = null;
+                SetEnemy();
+            }
+        }
+        else Debug.LogWarning("유닛도 아닌놈을 타겟으로 잡은건지 이종욱에게 알려주세요 :" + targetUnit.name);
+        unitSpine.Attack();
+        
     }
 
     private bool isTargetClose(float distance) {
         if (targetUnit == null) {
+            SetEnemy();
             return false;
         }
         if (distance <= attackRange)
@@ -169,6 +202,11 @@ public partial class UnitAI : MonoBehaviour {
         unitSpine.Hitted();
         calculateHealthBar();
         if (health <= 0) DestoryEnemy();
+    }
+
+    public void damaged(float damage, Transform enemy) {
+        damaged(damage);
+        myGroup.UnitHittedOrFound(enemy);
     }
 
     public void Healed() {
@@ -185,15 +223,20 @@ public partial class UnitAI : MonoBehaviour {
 
     protected int LayertoGive(bool isEnemy) {
         if(gameObject.layer == myLayer)
-            return isEnemy ? enemyLayer : myLayer;
+            return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
         else
-            return isEnemy ? myLayer : enemyLayer;
+            return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
     }
 
     protected void calculateHealthBar() {
         if (!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
         float percent = (float)health / maxHealth;
         healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+    }
+
+    public void NearEnemy(Collider2D other) {
+        //targetUnit = other.GetComponent<UnitAI>();
+        myGroup.UnitHittedOrFound(other.transform);
     }
 
     public virtual void SetUnitData(ActiveCard card, GameObject cardObj) { }

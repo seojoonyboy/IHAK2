@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114673464225563214}
   - component: {fileID: 114666703141586966}
   - component: {fileID: 58522346704515202}
+  - component: {fileID: 50002395070257910}
   m_Layer: 14
   m_Name: Goblin
   m_TagString: Untagged
@@ -341,6 +342,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579284841348354}
   m_Mesh: {fileID: 0}
+--- !u!50 &50002395070257910
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1143876191896102}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &58522346704515202
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -401,6 +422,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 801dec6dd5e7944429f627d0ee54e76d, type: 2}
   - {fileID: 11400000, guid: 99974fefdff8c1b42b5088eaaba87d22, type: 2}
   - {fileID: 11400000, guid: db7c0175c60751f459ffdca13103044c, type: 2}
+  time: 0
 --- !u!114 &114673464225563214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -419,6 +441,7 @@ MonoBehaviour:
   maxHealth: 0
   healthBar: {fileID: 0}
   tower: {fileID: 0}
+  monsterSpine: {fileID: 0}
   data:
     id: npc_monster_01001
     name: "\uACE0\uBE14\uB9B0 \uBCF4\uBCD1"
