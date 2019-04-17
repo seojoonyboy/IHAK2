@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4497109901514196}
   - component: {fileID: 114673464225563214}
   - component: {fileID: 114666703141586966}
-  m_Layer: 12
+  - component: {fileID: 58522346704515202}
+  m_Layer: 14
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +37,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4219796013085552}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: UnitBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4572939123437386}
   - component: {fileID: 212410172468577592}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +71,7 @@ GameObject:
   - component: {fileID: 33574771765219674}
   - component: {fileID: 23107122951180048}
   - component: {fileID: 114562000575254166}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: TMP SubMesh [BMJUA_TTF SDF Material + LiberationSans SDF Atlas]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +90,7 @@ GameObject:
   - component: {fileID: 23637908773132244}
   - component: {fileID: 114760460802856936}
   - component: {fileID: 114854636294581766}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4878932774865594}
   - component: {fileID: 212137986636016610}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +125,7 @@ GameObject:
   - component: {fileID: 23820580810034744}
   - component: {fileID: 222091567231986970}
   - component: {fileID: 114841531966709566}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,6 +341,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579284841348354}
   m_Mesh: {fileID: 0}
+--- !u!58 &58522346704515202
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1143876191896102}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 6.5}
+  serializedVersion: 2
+  m_Radius: 13.222905
 --- !u!114 &114562000575254166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,6 +396,11 @@ MonoBehaviour:
   nextWayPoint: 0
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
+  allStates:
+  - {fileID: 11400000, guid: e42c1c915bd041545bcf2c8c9f02fe2d, type: 2}
+  - {fileID: 11400000, guid: 801dec6dd5e7944429f627d0ee54e76d, type: 2}
+  - {fileID: 11400000, guid: 99974fefdff8c1b42b5088eaaba87d22, type: 2}
+  - {fileID: 11400000, guid: db7c0175c60751f459ffdca13103044c, type: 2}
 --- !u!114 &114673464225563214
 MonoBehaviour:
   m_ObjectHideFlags: 1

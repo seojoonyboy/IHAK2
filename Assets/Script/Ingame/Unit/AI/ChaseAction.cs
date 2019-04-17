@@ -14,7 +14,7 @@ public class ChaseAction : Action {
         if (controller.gameObject.GetComponent<MoveToAttack>() == null) {
             controller.gameObject
             .AddComponent<MoveToAttack>()
-            .Init();
+            .Init(controller);
         }
     }
 }

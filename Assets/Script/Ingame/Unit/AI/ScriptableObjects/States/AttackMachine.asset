@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc6ab43c81192ed47b17993745968ced, type: 3}
-  m_Name: ChaseMachine
+  m_Name: AttackMachine
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: ae070a5c8fc3d4e42a55bca75b0a9954, type: 2}
+  - {fileID: 11400000, guid: c98cfc420cfa61c4d80366ea7d3ebfd5, type: 2}
   transitions:
-  - decision: {fileID: 11400000, guid: 9755170e570e51946a569e1aaa49d69c, type: 2}
+  - decision: {fileID: 11400000, guid: 2b194714d44ad2c419671fc4d41028a0, type: 2}
     trueState: {fileID: 11400000}
-    falseState: {fileID: 11400000, guid: 99974fefdff8c1b42b5088eaaba87d22, type: 2}
+    falseState: {fileID: 11400000, guid: 801dec6dd5e7944429f627d0ee54e76d, type: 2}
   sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
