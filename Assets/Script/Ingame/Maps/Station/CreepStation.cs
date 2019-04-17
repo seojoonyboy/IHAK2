@@ -5,7 +5,7 @@ using UnityEngine;
 
 public partial class CreepStation : DefaultStation {
 
-    private bool startSeize = false;
+    [SerializeField] [ReadOnly] protected bool startSeize = false;
 
     // Use this for initialization
     void Start () {
@@ -27,13 +27,14 @@ public partial class CreepStation : DefaultStation {
         int targetLayer = 0;
         while (startSeize) {
             foreach (GameObject target in targets) {
-                if (target == null) continue;
-                if ((int)OwnerNum != target.layer) {
-                    int tempLayer = targetLayer;
+                if(target == null) continue;
+                if (targetLayer == 0) {
                     targetLayer = target.layer;
-                    if (tempLayer != targetLayer) {
-                        startSeize = false;
-                    }
+                    continue;
+                }
+                if ((int)OwnerNum != target.layer) {
+                    yield return new WaitForSeconds(0.1f);
+                    if (targetLayer != target.layer) startSeize = false;
                 }
             }
             yield return new WaitForSeconds(0.1f);
@@ -71,12 +72,14 @@ public partial class CreepStation {
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             foreach(GameObject monster in monsters) {
                 if(monster.GetComponent<StateController>().chaseTarget == collision.transform) {

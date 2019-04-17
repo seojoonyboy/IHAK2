@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using DataModules;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class Tower_Detactor : IngameBuilding {
     private int damage;
     private float atkTime;
     private Transform enemy;
+    
     private bool isAttacking = false;
     private float time;
     [SerializeField]
@@ -15,6 +17,18 @@ public class Tower_Detactor : IngameBuilding {
     //public int towerShellCount = 0;
     //[SerializeField]
     //public int towerMaxShell = 0;
+
+    [SerializeField] [ReadOnly] private PlayerController.Player towerOwner;
+    [SerializeField] [ReadOnly] private bool isDestroyed = false;
+
+    public bool IsDestroyed {
+        get { return isDestroyed; }
+        set { isDestroyed = true; }
+    }
+
+    public PlayerController.Player TowerOwner {
+        set { towerOwner = value; }
+    }
 
     void Start() {
         maxHp = 300;
@@ -36,9 +50,9 @@ public class Tower_Detactor : IngameBuilding {
         box.radius = range;
     }
     private void OnTriggerStay2D(Collider2D other) {
-        if(other.gameObject.layer == 10) {
+        if (other.gameObject.layer != (int)towerOwner) {
             if (isAttacking) return;
-            if(other.name.CompareTo("Skeleton")== 0) return;
+            if (other.name.CompareTo("Skeleton") == 0) return;
             isAttacking = true;
             //enemy = other.transform.parent;
             enemy = other.transform;
@@ -49,6 +63,11 @@ public class Tower_Detactor : IngameBuilding {
     }
 
     private void Update() {
+        if (isDestroyed) return;
+        if (buildingHp == 0) {
+            isDestroyed = true;
+            return;
+        }
         if (!isAttacking) return;
         if (checkEnemyDead()) return;
         time += Time.deltaTime;
@@ -62,8 +81,8 @@ public class Tower_Detactor : IngameBuilding {
 
 
     private void shootArrow() {
-        GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);        
-        iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);        
+        GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
+        iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
         //towerShellCount--;
         /*

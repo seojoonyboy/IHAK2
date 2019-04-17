@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealingCenterStation : DefaultStation {
+public partial class HealingCenterStation : DefaultStation {
 
-    [SerializeField]
-    [ReadOnly] public List<GameObject> enemys;
-    [ReadOnly] public List<GameObject> healingTarget;
-
-    private bool startSeize = false;
+    [SerializeField] [ReadOnly] protected bool startSeize = false;
 
     // Use this for initialization
     void Start () {
@@ -46,7 +42,17 @@ public class HealingCenterStation : DefaultStation {
         }
     }
 
+    
+}
+
+public partial class HealingCenterStation : DefaultStation {
+
+    [SerializeField]
+    [ReadOnly] public List<GameObject> enemys;
+    [ReadOnly] public List<GameObject> healingTarget;
+
     void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
         }
@@ -57,6 +63,7 @@ public class HealingCenterStation : DefaultStation {
     }
 
     void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             enemys.Remove(collision.gameObject);
         }
@@ -68,3 +75,4 @@ public class HealingCenterStation : DefaultStation {
         }
     }
 }
+
