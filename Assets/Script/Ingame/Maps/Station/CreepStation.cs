@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public partial class CreepStation : DefaultStation {
@@ -92,12 +93,13 @@ public partial class CreepStation {
 
     void Update() {
         if(targets != null && targets.Count == 0) {
-            foreach (GameObject monster in monsters) {
+            foreach (GameObject monster in monsters.ToList()) {
+                if (monster == null) {
+                    monsters.Remove(monster);
+                    continue;
+                }
                 monster.GetComponent<StateController>().chaseTarget = null;
             }
-        }
-        foreach(GameObject target in targets) {
-            Debug.Log(target.name);
         }
     }
 
