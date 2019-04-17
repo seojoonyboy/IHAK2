@@ -30,7 +30,7 @@ namespace AI_submodule {
             this.stateController = stateController;
         }
 
-        void OnTriggerEnter2D(Collider2D collision) {
+        void OnTriggerStay2D(Collider2D collision) {
             if ((collision.gameObject.layer != 14) && collision.GetComponent<UnitAI>() != null) {
                 stateController.TransitionToState(stateController.allStates[0]);
                 if(GetComponent<Timer>() == null) {

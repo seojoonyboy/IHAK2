@@ -16,10 +16,14 @@ public class AttackAction : Action {
         var target = controller.chaseTarget;
         if (controller.GetComponent<Timer>() == null) return;
         if (controller.time - controller.GetComponent<Timer>().time > controller.GetComponent<MonsterAI>().data.attackSpeed) {
+            if (target == null) return;
             if (target.GetComponent<UnitAI>() != null) {
-                controller.GetComponent<MonsterAI>().monsterSpine.Attack();
+                if(target != null) {
+                    target.GetComponent<UnitAI>().damaged(controller.GetComponent<MonsterAI>().data.attackPower);
+                    controller.GetComponent<MonsterAI>().monsterSpine.Attack();
+                }
             }
-            //Debug.Log("공격!");
+            Debug.Log("공격!");
             controller.GetComponent<Timer>().time = controller.time;
         }
     }
