@@ -93,6 +93,11 @@ public partial class CreepStation {
 
         Pool selPool = pools[poolLv];
 
+        List<Transform> wayPoints = new List<Transform>();
+        foreach (Transform wayPoint in transform.GetChild(0)) {
+            wayPoints.Add(wayPoint);
+        }
+
         foreach (Set set in selPool.sets) {
             for (int i = 0; i < set.num; i++) {
                 GameObject instantiatedMonster = Instantiate(set.monster, monsterParent);
@@ -101,6 +106,8 @@ public partial class CreepStation {
                     .GetChild(i)
                     .transform
                     .position;
+                
+                instantiatedMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
                 instantiatedMonster.GetComponent<MonsterAI>().tower = this;
                 monsters.Add(instantiatedMonster);
             }
