@@ -30,7 +30,11 @@ public partial class MonsterAI : MonoBehaviour {
     public Transform healthBar;
 
     public CreepStation tower;
-    MonsterSpine monsterSpine;
+    public MonsterSpine monsterSpine;
+
+    void Awake() {
+        monsterSpine = GetComponentInChildren<MonsterSpine>();
+    }
 
     public void damaged(float damage) {
         health -= damage;

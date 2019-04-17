@@ -15,6 +15,7 @@ public class DetectStateDecision : Decision {
     }
 
     private bool Chase(StateController controller) {
+        controller.GetComponent<MonsterAI>().monsterSpine.Move();
         var tower = controller.GetComponent<MonsterAI>().tower;
         if (controller.chaseTarget != null) {
             return true;

@@ -10,6 +10,6 @@ public class AttackAction : Action {
     }
 
     private void Attack(StateController controller) {
-
+        controller.GetComponent<MonsterAI>().monsterSpine.Attack();
     }
 }
