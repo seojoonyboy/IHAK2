@@ -10,6 +10,8 @@ public class ChaseAction : Action {
         Chase(controller);
     }
 
+    public override void TimeReset(StateController controller) { }
+
     private void Chase(StateController controller) {
         if (controller.gameObject.GetComponent<MoveToAttack>() == null) {
             controller.gameObject

@@ -65,6 +65,9 @@ public partial class CreepStation {
             num = 6,
             monster = Resources.Load("Prefabs/Monsters/Goblin") as GameObject
         };
+
+        goblin.monster.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+
         List<Set> tempSets = new List<Set>();
         tempSets.Add(goblin);
         Pool tempPool = new Pool();

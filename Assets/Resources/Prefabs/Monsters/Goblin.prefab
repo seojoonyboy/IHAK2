@@ -152,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1262751195222304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 22.11, z: 0}
+  m_LocalPosition: {x: 4.05, y: 22.11, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children:
   - {fileID: 4572939123437386}
@@ -183,8 +183,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1384380511964560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7284, y: 0.6, z: 1}
+  m_LocalPosition: {x: -0.276, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 4219796013085552}
   m_RootOrder: 0
@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 1680480249806262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.662, y: 0.005, z: 0}
-  m_LocalScale: {x: 1.7284, y: 1.2233, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4219796013085552}
   m_RootOrder: 1
@@ -401,6 +401,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 801dec6dd5e7944429f627d0ee54e76d, type: 2}
   - {fileID: 11400000, guid: 99974fefdff8c1b42b5088eaaba87d22, type: 2}
   - {fileID: 11400000, guid: db7c0175c60751f459ffdca13103044c, type: 2}
+  time: 0
 --- !u!114 &114673464225563214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,37 +416,21 @@ MonoBehaviour:
   originPos: {fileID: 0}
   patrolTarget: {x: 0, y: 0}
   moveToTarget: {fileID: 0}
-  health: 0
-  maxHealth: 0
-  healthBar: {fileID: 0}
+  health: 200
+  maxHealth: 200
+  healthBar: {fileID: 4878932774865594}
   tower: {fileID: 0}
+  monsterSpine: {fileID: 0}
   data:
     id: npc_monster_01001
-    name: "\uACE0\uBE14\uB9B0 \uBCF4\uBCD1"
     rarity: 1
-    coolTime: 0
     size: 4
     attackPower: 6
     attackSpeed: 1.1
     defence: 0
-    attackRange: 12
+    attackRange: 1
     hitPoint: 200
-    moveSpeed: 90
-    skill:
-      id: 0
-      name: 
-      method:
-        id: 0
-        methodName: 
-        args: []
-      desc: 
-      coolTime: 0
-    minion:
-      id: 0
-      type: 
-      count: 0
-      capability: 0
-    imageName: 
+    moveSpeed: 8
 --- !u!114 &114760460802856936
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -61,5 +61,14 @@ public partial class MonsterAI : MonoBehaviour {
 }
 
 public partial class MonsterAI {
-    public Unit data;
+    //public Unit data;
+    public NeutralMonsterData data;
+
+    public void Init(NeutralMonsterData data) {
+        if (data == null) return;
+
+        this.data = data;
+        health = maxHealth = this.data.hitPoint;
+        calculateHealthBar();
+    }
 }

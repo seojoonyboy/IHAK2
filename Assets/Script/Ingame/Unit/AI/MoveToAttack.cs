@@ -1,3 +1,4 @@
+using DataModules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,12 +33,18 @@ namespace AI_submodule {
         void OnTriggerEnter2D(Collider2D collision) {
             if ((collision.gameObject.layer != 14) && collision.GetComponent<UnitAI>() != null) {
                 stateController.TransitionToState(stateController.allStates[0]);
+                if(GetComponent<Timer>() == null) {
+                    gameObject.AddComponent<Timer>();
+                }
                 isCloseToTarget = true;
             }
         }
 
         void OnTriggerExit2D(Collider2D collision) {
             if ((collision.gameObject.layer != 14) && collision.GetComponent<UnitAI>() != null) {
+                if (GetComponent<Timer>() != null) {
+                    Destroy(GetComponent<Timer>());
+                }
                 isCloseToTarget = false;
             }
         }
