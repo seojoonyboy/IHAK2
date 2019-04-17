@@ -77,5 +77,11 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
     [SerializeField] GameObject shortDisMinion;
     [SerializeField] GameObject longDisMinion;
 
+    public GameObject ShortDisMinion {
+        get { return shortDisMinion; }
+    }
+    public GameObject LongDisMinion {
+        get { return longDisMinion; }
+    }
 
 }

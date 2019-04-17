@@ -36,24 +36,23 @@ public partial class BaseCampStation : DefaultStation {
         OwnerNum = (PlayerController.Player)targetLayer;
     }
 
-
-    void OnTriggerStay2D(Collider2D collision) {
-        if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null && targets.Contains(collision.gameObject) == false) {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+        }
+
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+            collision.gameObject.AddComponent<RespawnMinion>();
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
+        if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
         }
-    }
 
-
-    // Update is called once per frame
-    void Update () {
-		if(creepList.Count == 0) {
-
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+            Destroy(collision.gameObject.GetComponent<RespawnMinion>());
         }
-	}
+    }    
 }
