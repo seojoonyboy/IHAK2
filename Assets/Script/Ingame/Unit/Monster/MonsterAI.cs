@@ -58,22 +58,6 @@ public partial class MonsterAI : MonoBehaviour {
         tower.MonsterDie(gameObject);
         Destroy(gameObject);
     }
-
-    /// <summary>
-    /// Idle 상태일때 순찰
-    /// </summary>
-    /// <returns>목적지</returns>
-    private Vector2 GetPatrolTarget() {
-        if (tower == null) return transform.position;
-        int posCount = tower.transform.GetChild(0).childCount;
-        int rndNum = Random.Range(0, posCount - 1);
-
-        Transform target = tower.transform.GetChild(0).GetChild(rndNum).transform;
-        float offsetX = Random.Range(-10.0f, 10.0f);
-        float offsetY = Random.Range(-5.0f, 5.0f);
-        Vector2 vector = new Vector2(target.position.x + offsetX, target.position.y + offsetY);
-        return vector;
-    }
 }
 
 public partial class MonsterAI {

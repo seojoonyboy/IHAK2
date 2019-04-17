@@ -19,6 +19,7 @@ public class StateController : MonoBehaviour {
 
     private bool aiActive;
 
+    public float time;
     public void SetupAI(bool aiActivationFromTankManager, List<Transform> wayPointsFromTankManager) {
         wayPointList = wayPointsFromTankManager;
         aiActive = aiActivationFromTankManager;
@@ -30,6 +31,7 @@ public class StateController : MonoBehaviour {
         if (!aiActive)
             return;
         currentState.UpdateState(this);
+        time += Time.deltaTime;
     }
 
     void OnDrawGizmos() {
@@ -40,7 +42,6 @@ public class StateController : MonoBehaviour {
     }
 
     public void TransitionToState(State nextState) {
-        Debug.Log(nextState);
         if (nextState != remainState) {
             currentState = nextState;
             OnExitState();

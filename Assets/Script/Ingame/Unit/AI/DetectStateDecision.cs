@@ -10,7 +10,6 @@ using UnityEngine;
 public class DetectStateDecision : Decision {
     public override bool Decide(StateController controller) {
         bool targetConfirmed = Chase(controller);
-        Debug.Log(targetConfirmed);
         return targetConfirmed;
     }
 

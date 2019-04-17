@@ -24,7 +24,7 @@ public partial class AccountManager : Singleton<AccountManager> {
 
     //내 계정에서 사용가능한 카드뿐만 아니라 게임에 존재하는 모든 카드들의 정보
     public List<CardData> allCards;
-
+    public List<NeutralMonsterData> neutralMonsterDatas;
     public class UserClassInput {
         public string nickname;
         public string deviceId;
@@ -63,6 +63,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         eventHandler = MenuSceneEventHandler.Instance;
 
         GetAllCards();
+        GetAllNeutralMonstersInfo();
     }
 
     public string DEVICEID { get; private set; }
@@ -95,6 +96,20 @@ public partial class AccountManager : Singleton<AccountManager> {
         if(response.responseCode == 200) {
             List<CardData> cards = JsonReader.Read<List<CardData>>(response.data);
             allCards = cards;
+        }
+    }
+
+    public void GetAllNeutralMonstersInfo() {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/info/creeps");
+        _networkManager.request("GET", url.ToString(), GetAllNeutralMonstersInfoCallback, false);
+    }
+
+    private void GetAllNeutralMonstersInfoCallback(HttpResponse response) {
+        if(response.responseCode == 200) {
+            List<NeutralMonsterData> data = JsonReader.Read<List<NeutralMonsterData>>(response.data);
+            neutralMonsterDatas = data;
         }
     }
 
