@@ -39,6 +39,8 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void Attack() {
+        string currentAnimation = spineAnimationState.GetCurrent(0).ToString();
+        if(attackAnimationName.CompareTo(currentAnimation) == 0) return;
         Spine.TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
         Invoke("Idle", entry.TrackEnd);
