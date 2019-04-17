@@ -28,7 +28,7 @@ public partial class HealingCenterStation : DefaultStation {
         int time = 0;
         while (startSeize) {
             if (enemys.Count == 0) startSeize = false;
-            if (time == 100) {
+            if (time == 200) {
                 OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
                 GetComponent<Collider2D>().enabled = false;
                 enemys.Clear();
