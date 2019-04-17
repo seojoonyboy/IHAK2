@@ -48,7 +48,9 @@ public class UnitSpine : MonoBehaviour {
     }
 
     private bool CheckOverlap(string name) {
-        string currentAnimation = spineAnimationState.GetCurrent(0).ToString();
+        TrackEntry entry = spineAnimationState.GetCurrent(0);
+        if(entry == null) return false;
+        string currentAnimation = entry.ToString();
         if(name.CompareTo(currentAnimation) == 0) return true;
         return false;
     }
