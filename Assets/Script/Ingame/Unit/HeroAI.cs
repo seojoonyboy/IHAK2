@@ -34,6 +34,7 @@ public partial class HeroAI : UnitAI {
         Unit unit = card.baseSpec.unit;
         int level = (card.ev.lv <= 0) ? 1 : card.ev.lv;
         SetUnitDataCommon(level);
+        SetColliderData();
         unitCard.gameObject = cardObj;
         coroutine = UpdateInfoCard();
         StartCoroutine(coroutine);
@@ -44,6 +45,7 @@ public partial class HeroAI : UnitAI {
         unitCard = new ActiveCard();
         unitCard.baseSpec.unit = unit;
         SetUnitDataCommon(level);
+        SetColliderData();
     }
 
     private void SetUnitDataCommon(int level) {

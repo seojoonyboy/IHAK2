@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
@@ -13,7 +13,7 @@ public class UnitGroup : MonoBehaviour {
     private bool attacking = false;
     public MapStation currentStation;
     public MapNode currentNode;
-    public Transform enemyGroup;
+    private List<GameObject> enemyGroup;
 
     private int maxMinionNum;
     private int currentMinionNum {get {return transform.childCount -1;}}
@@ -117,11 +117,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D node) {
-        if(SetNodePosition(node)) return; 
-        //TODO : 적대 그룹을 만날 경우 - if 내용 변경 필요
-        if(attacking) {
-            PrepareBattle(node.transform);
-        }
+        if(SetNodePosition(node)) return;
     }
 
     private bool SetNodePosition(Collider2D node) {
@@ -133,24 +129,52 @@ public class UnitGroup : MonoBehaviour {
         return true;
     }
 
-    private void PrepareBattle(Transform group) {
+    public void UnitHittedOrFound(Transform enemy) {
+        if(attacking) return;
+        PrepareBattle(enemy);
+    }
+
+    private void PrepareBattle(Transform enemy) {
         this.enabled = false;
         attacking = true;
-        enemyGroup = group;
+        MonsterAI monster = enemy.GetComponent<MonsterAI>();
+        if(monster == null) {
+            Debug.LogWarning("몬스터 아니면 누군가, 이종욱에게 알려주세요");
+            return;
+        }
+        enemyGroup = monster.tower.monsters;
         UnitIndividualSet(true);
     }
 
     private bool CheckEnemyLeft() {
         if(enemyGroup == null) return false;
-        if(enemyGroup.childCount != 0) return true;
+        if(enemyGroup.Count != 0) return true;
+        enemyGroup = null;
         FinishBattle();
         return false;
     }
 
     public Transform GiveMeEnemy(Transform myTransform) {
-        //TODO : 자기 유닛위치에 가까운 유닛으로 변경 필요
-        if(CheckEnemyLeft()) return enemyGroup.GetChild(0);
-        return null;
+        if(!CheckEnemyLeft()) return null;
+        Transform target = null;
+        float shortLength = float.MaxValue;
+        for(int i = 0; i < enemyGroup.Count; i++) {
+            Transform next = enemyGroup[i].transform;
+            float length = Vector3.Distance(myTransform.position, next.position);
+            CheckDistance(ref target, ref shortLength, next, length);
+        }
+        return target;
+    }
+
+    private void CheckDistance(ref Transform target, ref float shortLength, Transform next, float length) {
+        if(target == null) {
+            target = next;
+            shortLength = length;
+        }
+        else if(shortLength > length) {
+            target = next;
+            shortLength = length;
+        }
     }
 
     private void FinishBattle() {
@@ -158,5 +182,8 @@ public class UnitGroup : MonoBehaviour {
         this.enabled = true;
         attacking = false;
         UnitIndividualSet(false);
+        if(!moving) return;
+        UnitMoveAnimation(true);
+        UnitMoveDirection(MovingPos[0]);
     }
 }

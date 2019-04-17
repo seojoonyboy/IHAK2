@@ -146,15 +146,6 @@ public class DeckSettingController : Singleton<DeckSettingController> {
 
         nameEditBtn.OnClickAsObservable().Where(_ => nameEditing == false).Subscribe(_ => InputDeckName());
      
-        /*
-        downStream.Subscribe(_ => PickEditBuilding());
-        dragStream.Where(_ => (clicktime < requireClickTime) && (picking== true || selectBuilding != null)).Subscribe(_ => clicktime += Time.deltaTime);
-        dragStream.Where(_=>clicktime >= requireClickTime).Subscribe(_ => MoveEditBuilding());
-        upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_=> ShowDetail(selectBuilding.GetComponent<BuildingObject>()));
-        upStream.Where(_ => clicktime < requireClickTime && selectBuilding != null).Subscribe(_ => selectBuilding.GetComponent<PolygonCollider2D>().enabled = true);
-        upStream.Where(_=> clicktime >= requireClickTime).Subscribe(_ => DropEditBuilding());
-        upStream.Subscribe(_ => clicktime = 0f);
-        */
         chooseSpeciesBtn.onClick
             .AsObservable()
             .Subscribe(_ => {
