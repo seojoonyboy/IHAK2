@@ -52,7 +52,7 @@ public partial class HealingCenterStation : DefaultStation {
     [ReadOnly] public List<GameObject> healingTarget;
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer != 16) return;
+        if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
         }
@@ -63,7 +63,7 @@ public partial class HealingCenterStation : DefaultStation {
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer != 16) return;
+        if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             enemys.Remove(collision.gameObject);
         }

@@ -1,46 +1,86 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class BaseCampStation : DefaultStation {
 
-    List<GameObject> creepList;
+    [SerializeField] [ReadOnly] protected bool startSeize = false;
+    [SerializeField] [ReadOnly] protected bool rebuilding = false;
 
-    [SerializeField]
-    public List<GameObject> targets;
 
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
+        StationIdentity = StationBasic.StationState.BaseCamp;
         creepList = new List<GameObject>();
         targets = new List<GameObject>();
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
-        Instantiate(Building, transform);
+        GameObject tower = Instantiate(Building, transform);
+        towerComponent = tower.GetComponent<FowardHQ>();
+    }
+
+
+    // Update is called once per frame
+    void Update() {
+        if (rebuilding) return;
+        if (towerComponent.IsDestroyed && creepList.Count == 0 && !startSeize) {
+            startSeize = true;
+            StartCoroutine(FindOwner());
+        }
     }
 
     IEnumerator FindOwner() {
-        bool find = true;
         int targetLayer = 0;
-        while (find) {
+        while (startSeize) {
             foreach (GameObject target in targets) {
                 if (target == null) continue;
-                if ((int)OwnerNum != target.layer) {
-                    int tempLayer = targetLayer;
+                if (targetLayer == 0) {
                     targetLayer = target.layer;
-                    if (tempLayer != targetLayer)
-                        find = false;
+                    continue;
+                }
+                if ((int)OwnerNum != target.layer) {
+                    yield return new WaitForSeconds(0.1f);
+                    if (targetLayer != target.layer) startSeize = false;
                 }
             }
             yield return new WaitForSeconds(0.1f);
+            OwnerNum = (PlayerController.Player)targetLayer;
+            GetComponent<Collider2D>().enabled = false;
+            targets.Clear();
+            GetComponent<Collider2D>().enabled = true;
+            StartCoroutine(RebuildTower());
+            startSeize = false;
         }
-        OwnerNum = (PlayerController.Player)targetLayer;
+    }
+
+    IEnumerator RebuildTower() {
+        rebuilding = true;
+        yield return new WaitForSeconds(10.0f);
+        Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
+        GameObject tower = Instantiate(Building, transform);
+        Destroy(towerComponent.gameObject);
+        towerComponent = tower.GetComponent<FowardHQ>();
+        rebuilding = false;
     }
 
 
-    void OnTriggerStay2D(Collider2D collision) {
+}
+
+
+public partial class BaseCampStation : DefaultStation {
+    [SerializeField] [ReadOnly] public List<GameObject> targets;
+    List<GameObject> creepList;
+    public FowardHQ towerComponent;
+
+    void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
-        if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null && targets.Contains(collision.gameObject) == false) {
+        if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+        }
+
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+            collision.gameObject.AddComponent<RespawnMinion>();
         }
     }
 
@@ -49,13 +89,9 @@ public partial class BaseCampStation : DefaultStation {
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
         }
-    }
 
-
-    // Update is called once per frame
-    void Update () {
-		if(creepList.Count == 0) {
-
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+            Destroy(collision.gameObject.GetComponent<RespawnMinion>());
         }
-	}
+    }    
 }
