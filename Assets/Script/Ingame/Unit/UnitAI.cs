@@ -63,6 +63,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     void OnDisable() {
+        if(detector == null) return;
         detector.EnemyDone();
     }
 

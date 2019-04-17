@@ -31,17 +31,17 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void Idle() {
-        if(CheckOverlap(idleAnimationName)) return;
+        //if(CheckOverlap(idleAnimationName)) return;
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
     }
 
     public void Move() {
-        if(CheckOverlap(runAnimationName)) return;
+        //if(CheckOverlap(runAnimationName)) return;
         spineAnimationState.SetAnimation(0, runAnimationName, true);
     }
 
     public void Attack() {
-        if(CheckOverlap(attackAnimationName)) return;
+        //if(CheckOverlap(attackAnimationName)) return;
         Spine.TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
         Invoke("Idle", entry.TrackEnd);
