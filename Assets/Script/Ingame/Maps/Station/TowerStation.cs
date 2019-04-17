@@ -14,6 +14,7 @@ public partial class TowerStation : DefaultStation {
         targets = new List<GameObject>();
         Building = Resources.Load("Prefabs/Tower") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        tower.layer = 14;
         towerComponent = tower.GetComponent<Tower_Detactor>();
     }
 	
@@ -56,6 +57,7 @@ public partial class TowerStation : DefaultStation {
         Building = Resources.Load("Prefabs/Tower") as GameObject;
         GameObject tower = Instantiate(Building, transform);
         Destroy(towerComponent.gameObject);
+        tower.layer = (int)OwnerNum;
         towerComponent = tower.GetComponent<Tower_Detactor>();
         rebuilding = false;
     }

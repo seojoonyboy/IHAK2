@@ -18,6 +18,7 @@ public partial class BaseCampStation : DefaultStation {
         targets = new List<GameObject>();
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        tower.layer = 14;
         towerComponent = tower.GetComponent<FowardHQ>();
     }
 
@@ -61,6 +62,7 @@ public partial class BaseCampStation : DefaultStation {
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
         Destroy(towerComponent.gameObject);
+        tower.layer = (int)OwnerNum;
         towerComponent = tower.GetComponent<FowardHQ>();
         rebuilding = false;
     }
