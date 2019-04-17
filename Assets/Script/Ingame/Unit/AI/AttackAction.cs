@@ -23,7 +23,7 @@ public class AttackAction : Action {
                     controller.GetComponent<MonsterAI>().monsterSpine.Attack();
                 }
             }
-            Debug.Log("공격!");
+            //Debug.Log("공격!");
             controller.GetComponent<Timer>().time = controller.time;
         }
     }
