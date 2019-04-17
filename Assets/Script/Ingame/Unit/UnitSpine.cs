@@ -36,7 +36,7 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void Move() {
-        //if(CheckOverlap(runAnimationName)) return;
+        if(CheckOverlap(runAnimationName)) return;
         spineAnimationState.SetAnimation(0, runAnimationName, true);
     }
 
