@@ -92,12 +92,13 @@ public partial class CreepStation {
     }
 
     void Update() {
-        if(targets != null && targets.Count == 0) {
-            foreach (GameObject monster in monsters.ToList()) {
-                if (monster == null) {
-                    monsters.Remove(monster);
-                    continue;
-                }
+        foreach (GameObject monster in monsters.ToList()) {
+            if (monster == null) {
+                monsters.Remove(monster);
+            }
+        }
+        if (targets != null && targets.Count == 0) {
+            foreach (GameObject monster in monsters) {
                 monster.GetComponent<StateController>().chaseTarget = null;
             }
         }
