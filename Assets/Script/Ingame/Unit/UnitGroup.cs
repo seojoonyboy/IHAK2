@@ -15,6 +15,10 @@ public class UnitGroup : MonoBehaviour {
     public MapNode currentNode;
     public Transform enemyGroup;
 
+    private int maxMinionNum;
+    private int currentMinionNum {get {return transform.childCount -1;}}
+    private string minionType;
+
     public void SetMove(List<Vector3> pos) {
         if(moving) return;
         MovingPos = new List<Vector3>(pos);
@@ -58,6 +62,7 @@ public class UnitGroup : MonoBehaviour {
 
     private void Start() {
         GetData();
+        SetMinionData();
         UnitMoveAnimation(false);
         if(!moving) return;
         MoveStart();
@@ -68,6 +73,30 @@ public class UnitGroup : MonoBehaviour {
         unitAIs = transform.GetComponentsInChildren<UnitAI>();
         UnitIndividualSet(false);
         moveSpeed = unitAIs[0].moveSpeed;
+    }
+
+    private void SetMinionData() {
+        HeroAI hero = unitAIs[0].GetComponent<HeroAI>();
+        Minion minionData = hero.unitCard.baseSpec.unit.minion;
+        maxMinionNum = minionData.count;
+        minionType = minionData.type;
+        Debug.Log(IsMinionMax());
+        Debug.Log(MinionType());
+    }
+
+    public bool IsMinionMax() {
+        if(IsHeroDead()) return true;
+        return maxMinionNum == currentMinionNum;
+    }
+
+    private bool IsHeroDead() {
+        HeroAI hero = transform.GetChild(0).GetComponent<HeroAI>();
+        if(hero == null) return true;
+        return false;
+    }
+
+    public string MinionType() {
+        return minionType;
     }
 
     private void UnitIndividualSet(bool attack) {
