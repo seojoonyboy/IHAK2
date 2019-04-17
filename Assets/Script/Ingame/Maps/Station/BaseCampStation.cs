@@ -38,12 +38,14 @@ public partial class BaseCampStation : DefaultStation {
 
 
     void OnTriggerStay2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null && targets.Contains(collision.gameObject) == false) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.layer != 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
         }
