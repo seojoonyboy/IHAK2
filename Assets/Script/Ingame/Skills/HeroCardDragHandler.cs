@@ -39,9 +39,8 @@ public class HeroCardDragHandler : IngameActiveCardDragHandler {
         PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
         m_PointEventData.position = Input.mousePosition;
 
-        transform.GetComponent<Image>().enabled = false;
         foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = false;
+        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "UnitCard(Clone)") image.enabled = false;
 
         GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnDrag(eventData);
     }
@@ -59,9 +58,8 @@ public class HeroCardDragHandler : IngameActiveCardDragHandler {
 
         transform.localScale = new Vector3(1, 1, 1);
 
-        transform.GetComponent<Image>().enabled = true;
         foreach(Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Portrait") image.enabled = true;
+        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "UnitCard(Clone)") image.enabled = true;
 
         GetComponentInChildren<BoundaryCamMove>().isDrag = false;
 
