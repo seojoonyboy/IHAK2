@@ -7,14 +7,16 @@ public partial class BaseCampStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
 
+
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
+        StationIdentity = StationBasic.StationState.BaseCamp;
         creepList = new List<GameObject>();
         targets = new List<GameObject>();
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
-        towerComponent = tower.GetComponent<Tower_Detactor>();
+        towerComponent = tower.GetComponent<FowardHQ>();
     }
 
 
@@ -54,7 +56,7 @@ public partial class BaseCampStation : DefaultStation {
         yield return new WaitForSeconds(10.0f);
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
-        towerComponent = tower.GetComponent<Tower_Detactor>();
+        towerComponent = tower.GetComponent<FowardHQ>();
     }
 
 
@@ -64,7 +66,7 @@ public partial class BaseCampStation : DefaultStation {
 public partial class BaseCampStation : DefaultStation {
     [SerializeField] [ReadOnly] public List<GameObject> targets;
     List<GameObject> creepList;
-    public Tower_Detactor towerComponent;
+    public FowardHQ towerComponent;
 
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
