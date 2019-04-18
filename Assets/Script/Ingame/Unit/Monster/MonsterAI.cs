@@ -73,6 +73,6 @@ public partial class MonsterAI {
         health = maxHealth = this.data.hitPoint;
         calculateHealthBar();
 
-        GetComponent<CircleCollider2D>().radius = this.data.attackRange * 10;
+        GetComponent<CircleCollider2D>().radius = this.data.attackRange;
     }
 }

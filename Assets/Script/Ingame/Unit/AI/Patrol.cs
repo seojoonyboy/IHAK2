@@ -44,8 +44,8 @@ namespace AI_submodule {
             if(tower.GetType() == typeof(CreepStation)) {
                 var tower = (CreepStation)this.tower;
                 Transform target = tower.transform.GetChild(0).GetChild(rndNum).transform;
-                float offsetX = Random.Range(-10.0f, 10.0f);
-                float offsetY = Random.Range(-5.0f, 5.0f);
+                float offsetX = Random.Range(-1.0f, 1.0f);
+                float offsetY = Random.Range(-0.5f, 0.5f);
                 Vector2 vector = new Vector2(target.position.x + offsetX, target.position.y + offsetY);
                 return vector;
             }

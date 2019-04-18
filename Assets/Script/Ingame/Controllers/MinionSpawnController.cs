@@ -62,7 +62,7 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
                 minion = Instantiate(longDisMinion, spawnPos);
             }
             minion.transform.position
-                = new Vector3(spawnPos.position.x + Random.Range(-15.0f, 15.0f), spawnPos.position.y + Random.Range(-15.0f, 15.0f), spawnPos.position.z);
+                = new Vector3(spawnPos.position.x + Random.Range(-3.0f, 3.0f), spawnPos.position.y + Random.Range(-3.0f, 3.0f), spawnPos.position.z);
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
             PlayerController.Instance.CitizenSpawnController().DeleteCitizen();
         }
