@@ -9,7 +9,7 @@ namespace AI_submodule {
         List<Transform> waypoints;
 
         float time;
-        float speed = 10;
+        float speed = 2;
         float interval = 8;
 
         // Update is called once per frame

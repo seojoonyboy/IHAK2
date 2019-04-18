@@ -17,6 +17,7 @@ public partial class UnitAI : MonoBehaviour {
     protected timeUpdate update;
     protected Transform targetUnit;
     protected Transform healthBar;
+    [SerializeField] private GameObject arrow;
 
     public float health = 0;
     protected float maxHealth = 0;
@@ -186,7 +187,14 @@ public partial class UnitAI : MonoBehaviour {
         }
         else Debug.LogWarning("유닛도 아닌놈을 타겟으로 잡은건지 이종욱에게 알려주세요 :" + targetUnit.name);
         unitSpine.Attack();
-        
+        if(attackRange <= 2f) return;
+        shootArrow();
+    }
+
+    private void shootArrow() {
+        GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
+        iTween.MoveTo(arrow, targetUnit.position, attackSpeed * 0.3f);
+        Destroy(arrow, attackSpeed * 0.3f);
     }
 
     private bool isTargetClose(float distance) {

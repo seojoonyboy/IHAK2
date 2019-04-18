@@ -18,10 +18,11 @@ public class Magma : MonoBehaviour {
     }
 
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+        range_texture.transform.localScale = new Vector3(1, 1, 1);
         
         int range = 0;
         int.TryParse(data[0], out range);
+        range /= 2;
         GetComponent<CircleCollider2D>().radius = range;
         range_texture.transform.localScale *= range;
 
@@ -49,10 +50,8 @@ public class Magma : MonoBehaviour {
                 if(target.layer == 11) {
                     target.GetComponent<UnitAI>().damaged(data.amount);
                 }
-                else if(target.layer == 9) {
-                    int tileNum = target.GetComponent<BuildingObject>().setTileLocation;
-                    IngameHpSystem.Instance.TakeDamage(IngameHpSystem.Target.ME, 30);
-                    //target.GetComponent<>
+                else if(target.layer == 14) {
+                    target.GetComponent<MonsterAI>().damaged(data.amount);
                 }
             }
             count++;
@@ -66,7 +65,7 @@ public class Magma : MonoBehaviour {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
 
-        if(collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
+        if(collision.gameObject.layer == 14 && collision.GetComponent<MonsterAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
@@ -75,8 +74,7 @@ public class Magma : MonoBehaviour {
         if(collision.gameObject.layer == 11 && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
         }
-
-        if (collision.gameObject.layer == 9 && collision.GetComponent<BuildingObject>() != null) {
+        if (collision.gameObject.layer == 14 && collision.GetComponent<MonsterAI>() != null) {
             targets.Remove(collision.gameObject);
         }
     }

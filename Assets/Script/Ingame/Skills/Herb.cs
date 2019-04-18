@@ -14,10 +14,12 @@ public class Herb : MonoBehaviour {
     }
 
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+        range_texture.transform.localScale = new Vector3(1, 1, 1);
         
         this.data = new Data();
         int.TryParse(data[0], out this.data.range);
+        this.data.range /= 2;
+
         int.TryParse(data[1], out this.data.amount);
 
         GetComponent<CircleCollider2D>().radius = this.data.range;
