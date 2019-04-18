@@ -22,7 +22,11 @@ public partial class DefaultStation : SerializedMonoBehaviour {
     [SerializeField] GameObject building;
 
     public PlayerController.Player OwnerNum {
-        get { return ownerNum; } set { ownerNum = value; }
+        get { return ownerNum; }
+        set {
+            ownerNum = value;
+            IngameAlarm.instance.SetAlarm(ownerNum + "가 거점을 점령하였습니다.");
+        }
     }
 
     public StationBasic.StationState StationIdentity {
