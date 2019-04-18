@@ -49,6 +49,7 @@ public class FowardHQ : IngameBuilding {
         atkTime = 1.4f;
         towerOwner = PlayerController.Player.NEUTRAL;
         gauge = transform.Find("UnitBar").gameObject;
+        setRange(10);
         ObjectActive();
     }
 
@@ -83,7 +84,7 @@ public class FowardHQ : IngameBuilding {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
-        enemy.GetComponent<UnitAI>().damaged(damage);
+        enemy.GetComponent<UnitAI>().damaged(damage, transform);
     }
 
     private bool checkEnemyDead() {

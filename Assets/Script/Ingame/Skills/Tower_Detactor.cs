@@ -42,7 +42,7 @@ public class Tower_Detactor : IngameBuilding {
         maxHp = 300;
         buildingHp = maxHp;
         box = transform.parent.GetComponent<CircleCollider2D>();
-        setRange(40);
+        setRange(10);
         damage = 23;
         atkTime = 1.4f;
         towerOwner = PlayerController.Player.NEUTRAL;
@@ -97,7 +97,7 @@ public class Tower_Detactor : IngameBuilding {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
-        enemy.GetComponent<UnitAI>().damaged(damage);
+        enemy.GetComponent<UnitAI>().damaged(damage, transform);
         //towerShellCount--;
         /*
         TextMeshPro ammoValueText = transform.parent.GetChild(2).GetComponent<TextMeshPro>();
