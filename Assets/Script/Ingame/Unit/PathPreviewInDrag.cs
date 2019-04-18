@@ -62,7 +62,7 @@ namespace IngameModule {
                                     arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
                                     float dist = Vector2.Distance(path[i + 1], path[i]);
-                                    arrow.GetComponent<SpriteRenderer>().size = new Vector2(dist, 10);
+                                    arrow.GetComponent<SpriteRenderer>().size = new Vector2(dist, 4);
                                 }
                             }
                             prevGameObject = hit.transform.gameObject;
