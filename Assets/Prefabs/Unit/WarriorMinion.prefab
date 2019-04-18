@@ -159,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835397233811550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.15, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4656852050040714}
@@ -202,8 +202,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680689109314990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9.54, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalPosition: {x: 0, y: 2.36, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children:
   - {fileID: 4393862207253788}
   - {fileID: 4970885788193130}
@@ -217,7 +217,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1130886944253450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalPosition: {x: 0, y: -5.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4656852050040714}
@@ -264,7 +264,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a764e73cfa0114e8a828f75df31644df, type: 2}
+  - {fileID: 2100000, guid: 3270f8780233249ce96b4b50813f5076, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -452,7 +452,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!61 &61600329227709166
@@ -478,7 +478,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 10}
+  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &114049824196621146
 MonoBehaviour:
@@ -500,12 +500,12 @@ MonoBehaviour:
     rarity: 0
     coolTime: 0
     size: 1
-    attackPower: 0
+    attackPower: 5
     attackSpeed: 1.4
     defence: 0
-    attackRange: 10
+    attackRange: 1.5
     hitPoint: 85
-    moveSpeed: 70
+    moveSpeed: 0
     skill:
       id: 0
       name: 
@@ -519,7 +519,7 @@ MonoBehaviour:
       id: 0
       type: 
       count: 0
-      capability: 0
+      capabilityArgs: 
     imageName: 
   expPoint: 36
 --- !u!114 &114166272264082106
@@ -533,8 +533,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0bb4102c8acb64548b75969b44378e15, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: c5751ea37ff6e4f6aa6397e3137178ed, type: 2}
+  initialSkinName: 2.blue
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -548,7 +548,7 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: run
+  _animationName: 1.idle
   loop: 1
   timeScale: 1
 --- !u!114 &114451305930647118
@@ -659,8 +659,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 13.25
+  m_fontSizeBase: 13.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -737,8 +737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacdc7700974283869344394e21f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runAnimationName: 2.move
-  idleAnimationName: 1.waitting
+  runAnimationName: 2.move_2
+  idleAnimationName: 1.idle
   attackAnimationName: 3.attack
 --- !u!212 &212546179239670288
 SpriteRenderer:
@@ -855,6 +855,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 14.6}
+  m_AnchoredPosition: {x: 0, y: 3.69}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}

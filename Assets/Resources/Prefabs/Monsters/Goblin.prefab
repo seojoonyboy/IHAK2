@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4030705511545954
 Transform:
   m_ObjectHideFlags: 1
@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579284841348354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.15, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4497109901514196}
@@ -153,8 +153,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1262751195222304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.05, y: 22.11, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalPosition: {x: 1.2, y: 1, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 4572939123437386}
   - {fileID: 4878932774865594}
@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1143876191896102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.9, y: -10.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4030705511545954}
@@ -266,7 +266,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 81fdcc11041e54ab5ab05346650bf28c, type: 2}
+  - {fileID: 2100000, guid: 3270f8780233249ce96b4b50813f5076, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -374,9 +374,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 6.5}
+  m_Offset: {x: 0, y: -3}
   serializedVersion: 2
-  m_Radius: 13.222905
+  m_Radius: 10
 --- !u!114 &114562000575254166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -463,8 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: b56c5878d3cb94f289fc87e2c368e6c5, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: c5751ea37ff6e4f6aa6397e3137178ed, type: 2}
+  initialSkinName: 1.red
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -478,7 +478,7 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: stand
+  _animationName: 1.idle
   loop: 1
   timeScale: 1
 --- !u!114 &114841531966709566
@@ -528,8 +528,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 11.47
+  m_fontSizeBase: 11.47
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -606,9 +606,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdfcb566cfa1f77488bfbca4786646f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runAnimationName: run
-  idleAnimationName: stand
-  attackAnimationName: attack
+  runAnimationName: 2.move_2
+  idleAnimationName: 1.idle
+  attackAnimationName: 3.attack
 --- !u!212 &212137986636016610
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -724,6 +724,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.86, y: 31.21}
+  m_AnchoredPosition: {x: -0.18, y: 2}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}

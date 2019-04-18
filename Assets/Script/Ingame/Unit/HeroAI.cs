@@ -131,6 +131,7 @@ public partial class HeroAI : UnitAI {
         unitCard.ev.lv++;
         unitCard.ev.exp = 0;
         power = PowerUP(power);
+        LvUpMinions();
         LvUpHP();
         ChangeLvText();
     }
@@ -141,6 +142,13 @@ public partial class HeroAI : UnitAI {
 
     private int PowerUP(float stat) {
         return Mathf.RoundToInt(((100f + unitCard.ev.lv * 15f) / 100f) * stat);
+    }
+
+    private void LvUpMinions() {
+        Transform heroGroup = transform.parent;
+        for (int i = 1; i < heroGroup.childCount; i++) {
+            heroGroup.GetChild(i).GetComponent<MinionAI>().SetMinionData(unitCard, true);
+        }
     }
 
     public override int CalPower() {

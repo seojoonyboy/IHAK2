@@ -30,24 +30,17 @@ public class MinionAI : UnitAI {
         SetColliderData();
     }
 
-    public void SetMinionData(ActiveCard heroCard) {
+    public void SetMinionData(ActiveCard heroCard, bool levelup = false) {
         Init();
         InitStatic();
         moveSpeed = heroCard.baseSpec.unit.moveSpeed;
-        if (heroCard.baseSpec.unit.minion.type == "melee") {
-            attackSpeed = 1.4f;
-            attackRange = 10;
-            power = 5.0f;
-            health = 85;
-            maxHealth = 85;
-        }
-        else {
-            attackSpeed = 1.2f;
-            attackRange = 20;
-            power = 7.0f;
-            health = 60;
-            maxHealth = 60;
-        }
+        float heroBonus = ((heroCard.baseSpec.unit.minion.capabilityArgs[0]) + (heroCard.baseSpec.unit.minion.capabilityArgs[1] * heroCard.ev.lv)) / 100.0f;
+        attackSpeed = unit.attackSpeed * heroBonus;
+        attackRange = unit.attackRange * heroBonus;
+        power = unit.attackPower * heroBonus;
+        maxHealth = unit.hitPoint * heroBonus;
+        if(!levelup)
+            health = maxHealth;
         calculateHealthBar();
         SetColliderData();
     }

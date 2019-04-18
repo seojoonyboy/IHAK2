@@ -24,7 +24,7 @@ public partial class UnitAI : MonoBehaviour {
     protected float defense = 0;
     public float moveSpeed;
     protected float attackSpeed;
-    protected float attackRange;
+    public float attackRange;
 
     private float currentTime;
 
@@ -50,6 +50,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     void Start() {
+        setState(aiState.NONE);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
