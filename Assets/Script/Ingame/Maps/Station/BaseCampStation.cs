@@ -18,6 +18,7 @@ public partial class BaseCampStation : DefaultStation {
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
         towerComponent = tower.GetComponent<FowardHQ>();
+        SetMonsters();
     }
 
 
@@ -64,6 +65,34 @@ public partial class BaseCampStation : DefaultStation {
         rebuilding = false;
     }
 
+
+}
+
+public partial class BaseCampStation {
+    public Transform monsterParent;
+    public List<GameObject> monster;
+    public GameObject goblin;
+    int monsterCount = 6;
+    List<Transform> wayPoints = new List<Transform>();
+
+    public void SetMonsters() {
+        monster = new List<GameObject>();
+        monsterParent = transform.parent.parent.Find("Monsters");
+        Instantiate(Resources.Load("Prefabs/Monsters/MonsterPos") as GameObject, transform);
+        goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
+
+        foreach(Transform wayPoint in transform.GetChild(0)) {
+            wayPoints.Add(wayPoint);
+        }
+
+        for (int i=0; i<monsterCount; i++) {
+            GameObject generateMonster = Instantiate(goblin, monsterParent);
+            generateMonster.transform.position = transform.GetChild(0).position;
+
+            generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+            monster.Add(generateMonster);        
+        }        
+    }
 
 }
 
