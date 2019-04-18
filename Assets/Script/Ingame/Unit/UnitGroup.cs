@@ -146,9 +146,16 @@ public class UnitGroup : MonoBehaviour {
     private void PrepareBattle(Transform enemy) {
         this.enabled = false;
         attacking = true;
+        MonsterCheck(enemy);
+        UnitCheck(enemy);
+        BuildingCheck(enemy);
+
+        UnitIndividualSet(true);
+    }
+
+    private void MonsterCheck(Transform enemy) {
         MonsterAI monster = enemy.GetComponent<MonsterAI>();
         if(monster == null) {
-            Debug.LogWarning("몬스터 아니면 누군가, 이종욱에게 알려주세요");
             return;
         }
         if(monster.tower.GetType() == typeof(CreepStation)) {
@@ -157,9 +164,35 @@ public class UnitGroup : MonoBehaviour {
 
         if(monster.tower.GetType() == typeof(BaseCampStation)) {
             enemyGroup = ((BaseCampStation)monster.tower).monsters;
+            enemyGroup.Add(((BaseCampStation)monster.tower).Building);
         }
+        return;
+    }
 
-        UnitIndividualSet(true);
+    private void UnitCheck(Transform enemy) {
+        UnitAI unit = enemy.GetComponent<UnitAI>();
+        if(unit == null) return;
+        //TODO : 추후에 유닛끼리 대결할 때 유닛들의 리스트를 가져오기
+        return;
+    }
+
+    private void BuildingCheck(Transform enemy) {
+        IngameBuilding detector = enemy.GetComponent<IngameBuilding>();
+        if(detector == null) return;
+        BaseCampStation baseCamp = detector.GetComponentInParent<BaseCampStation>();
+        if(baseCamp != null) {
+            enemyGroup = baseCamp.monsters;
+            enemyGroup.Add(baseCamp.Building);
+            return;
+        }
+        TowerStation tower = detector.GetComponentInParent<TowerStation>();
+        if(tower != null) {
+            if(enemyGroup == null) enemyGroup = new List<GameObject>();
+            enemyGroup.Add(tower.Building);
+            return;
+        }
+        Debug.LogWarning("어떤 건물에 있는 놈인지 이종욱에게 알려주세요");
+        return;
     }
 
     private bool CheckEnemyLeft() {

@@ -169,7 +169,7 @@ public partial class UnitAI : MonoBehaviour {
     public virtual void attackUnit() {
         UnitAI unitAI = targetUnit.GetComponent<UnitAI>();
         MonsterAI monsterAI = targetUnit.GetComponent<MonsterAI>();
-        //TODO : 다음 적 찾기 함수 만들기
+        IngameBuilding building = targetUnit.GetComponent<IngameBuilding>();
         if(unitAI != null) {
             unitAI.damaged(power, transform); 
             unitAI.attackingHero(this);
@@ -181,6 +181,13 @@ public partial class UnitAI : MonoBehaviour {
         else if(monsterAI != null) {
             monsterAI.damaged(power);
             if (monsterAI.health <= 0f) {
+                targetUnit = null;
+                SetEnemy();
+            }
+        }
+        else if(building != null) {
+            building.TakeDamage(power);
+            if(building.buildingHp <= 0f) {
                 targetUnit = null;
                 SetEnemy();
             }

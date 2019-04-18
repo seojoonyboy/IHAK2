@@ -93,12 +93,12 @@ public class FowardHQ : IngameBuilding {
         return true;
     }
 
-    public void TakeDamage(float amount) {
+    public override void TakeDamage(float amount) {
         if (isDestroyed == true) return;
         Transform gaugeAmount = gauge.transform.Find("Gauge");
 
         if (buildingHp > amount)
-            buildingHp -= amount;
+            buildingHp -= Mathf.FloorToInt(amount);
         else
             buildingHp = 0;
 
