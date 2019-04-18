@@ -36,8 +36,17 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void Update() {
+        MoveUpdate(Time.deltaTime);
+        //AttackUpdate(Time.deltaTime);
+    }
+
+    private void MoveUpdate(float time) {
         if(!moving) return;
-        Moving(Time.deltaTime);
+        Moving(time);
+    }
+    private void AttackUpdate(float time) {
+        if(!attacking) return;
+        transform.position = transform.GetChild(0).position;
     }
 
     private void Moving(float time) {
@@ -184,8 +193,14 @@ public class UnitGroup : MonoBehaviour {
         this.enabled = true;
         attacking = false;
         UnitIndividualSet(false);
+        if(IsHeroDead()) Destroy(gameObject, 5f);
         if(!moving) return;
         UnitMoveAnimation(true);
         UnitMoveDirection(MovingPos[0]);
+    }
+
+    public void UnitDead() {
+        //TODO : 테스트 필요 게임오브젝트 파괴 명령 해도 바로 안사라지는 문제가 있어서 -1로 해야하는데 일단 0으로 세팅
+        if(currentMinionNum == 0) Destroy(gameObject);
     }
 }

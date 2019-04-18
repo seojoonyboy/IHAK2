@@ -180,6 +180,7 @@ public partial class HeroAI : UnitAI {
         }
         GiveExp();
         Destroy(gameObject);
+        myGroup.UnitDead();
     }
 
     public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
