@@ -112,6 +112,15 @@ public partial class BaseCampStation : DefaultStation {
     List<GameObject> creepList;
     public FowardHQ towerComponent;
 
+    public GameObject TowerObject {
+        get {
+            if (towerComponent != null)
+                return towerComponent.transform.gameObject;
+            else
+                return null;
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
