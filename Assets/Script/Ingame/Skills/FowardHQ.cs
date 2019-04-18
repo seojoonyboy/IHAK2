@@ -9,15 +9,15 @@ public class FowardHQ : IngameBuilding {
     public CircleCollider2D effectRange;
     private int damage;
     private float atkTime;
-    private Transform enemy;
-
+    [SerializeField] private Transform enemy;
+    
     [SerializeField] bool isAttacking = false;
     [SerializeField] bool isDestroyed = false;
 
     private float time;
     [SerializeField] private GameObject arrow;
 
-    [SerializeField] [ReadOnly] private PlayerController.Player towerOwner;
+    [SerializeField] private PlayerController.Player towerOwner;
 
     public bool IsDestroyed {
         get { return isDestroyed; }
@@ -28,6 +28,16 @@ public class FowardHQ : IngameBuilding {
         set { towerOwner = value; }
     }
 
+    public Transform Enemy {
+        get {
+            if (enemy != null)
+                return enemy;
+
+            return null;
+        }
+        set { enemy = value; }
+    }
+
     // Use this for initialization
     void Start() {
         maxHp = 300;
@@ -35,6 +45,7 @@ public class FowardHQ : IngameBuilding {
         effectRange = transform.parent.GetComponent<CircleCollider2D>();
         damage = 23;
         atkTime = 1.4f;
+        towerOwner = PlayerController.Player.NEUTRAL;
     }
 
     private void Update() {
@@ -64,6 +75,7 @@ public class FowardHQ : IngameBuilding {
     }
 
     private void shootArrow() {
+        if (enemy == null) return;
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
@@ -75,15 +87,5 @@ public class FowardHQ : IngameBuilding {
         effectRange.enabled = true;
         return true;
     }
-
-    private void OnTriggerStay2D(Collider2D collision) {
-        if(collision.gameObject.layer != (int)towerOwner) {
-            if (isAttacking == true) return;
-            if (collision.name.CompareTo("Skeleton") == 0) return;
-            isAttacking = true;
-            enemy = collision.transform;
-            time = 0f;
-        }
-    }
-
+    
 }
