@@ -37,10 +37,7 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
         minion.GetComponent<MinionAI>().SetUnitData(null, null);
         minion.layer = gameObject.layer;
         minion.transform.position = unitGroup.transform.position;
-
-
     }
-
 }
 
 public partial class RespawnMinion : SerializedMonoBehaviour {

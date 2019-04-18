@@ -35,7 +35,7 @@ public partial class UnitAI : MonoBehaviour {
     protected UnitSpine unitSpine;
     private UnitDetector detector;
     private IngameSceneEventHandler eventHandler;
-    private UnitGroup myGroup;
+    protected UnitGroup myGroup;
 
     protected static int myLayer = 0;
     protected static int enemyLayer = 0;
