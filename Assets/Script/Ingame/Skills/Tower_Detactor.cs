@@ -92,9 +92,11 @@ public class Tower_Detactor : IngameBuilding {
 
 
     private void shootArrow() {
+        if (enemy == null) return;
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
+        enemy.GetComponent<UnitAI>().damaged(damage);
         //towerShellCount--;
         /*
         TextMeshPro ammoValueText = transform.parent.GetChild(2).GetComponent<TextMeshPro>();
