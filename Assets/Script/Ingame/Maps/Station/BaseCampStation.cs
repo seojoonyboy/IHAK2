@@ -88,11 +88,12 @@ public partial class BaseCampStation {
             wayPoints.Add(wayPoint);
         }
 
-        for (int i=0; i<monsterCount; i++) {
+        for (int i = 0; i < monsterCount; i++) {
             GameObject generateMonster = Instantiate(goblin, monsterParent);
-            generateMonster.transform.position = transform.GetChild(0).position;
+            generateMonster.transform.position = transform.GetChild(1).GetChild(i).position;
 
             generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+            generateMonster.GetComponent<MonsterAI>().tower = this;
             monster.Add(generateMonster);        
         }        
     }
