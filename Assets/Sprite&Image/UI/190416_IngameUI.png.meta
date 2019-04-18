@@ -1,0 +1,701 @@
+fileFormatVersion: 2
+guid: a52059b03fff7a54ea1e2a002057cdcb
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 190416_IngameUI_Player_HP_BG1
+    21300002: 190416_IngameUI_Resource_BG
+    21300004: 190416_IngameUI_Player_HP_Bar
+    21300006: 190416_IngameUI_Player_HP_BG2
+    21300008: 190416_IngameUI_Enemy_HP_BG1
+    21300010: 190416_IngameUI_Enemy_HP_Bar
+    21300012: 190416_IngameUI_Enemy_HP_BG2
+    21300014: 190416_IngameUI_Type_Melee
+    21300016: 190416_IngameUI_Hero_Card
+    21300018: 190416_IngameUI_Skill_BG
+    21300020: 190416_IngameUI_Hero_Level_BG
+    21300022: 190416_IngameUI_Skill_1
+    21300024: 190416_IngameUI_Skill_2
+    21300026: 190416_IngameUI_Skill_3
+    21300028: 190416_IngameUI_Hero_BP_Bar
+    21300030: 190416_IngameUI_Item_Exist
+    21300032: 190416_IngameUI_Item_Empty
+    21300034: 190416_IngameUI_Item_1
+    21300036: 190416_IngameUI_Item_2
+    21300038: 190416_IngameUI_22
+    21300040: 190416_IngameUI_Hero_Exp_Bar
+    21300042: 190416_IngameUI_Item_3
+    21300044: 190416_IngameUI_25
+    21300046: 190416_IngameUI_Item_AD
+    21300048: 190416_IngameUI_Item_HP
+    21300050: 190416_IngameUI_Item_Defence
+    21300052: 190416_IngameUI_Command_BG
+    21300054: 190416_IngameUI_Resource_Gold_Bar
+    21300056: 190416_IngameUI_Resource_Gold_Space
+    21300058: 190416_IngameUI_Resource_Citizen_Bar
+    21300060: 190416_IngameUI_Resource_Citizen_Space
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 190416_IngameUI_Player_HP_BG1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 957
+        width: 286
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe00df09948182d49b23ad34d2fe56e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Player_HP_Bar
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 909
+        width: 214
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6eb9f17c70e23f4cb22b913d8dbfd09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Player_HP_BG2
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 909
+        width: 214
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893cc2189a8fdd4458be8a544bd776dd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Enemy_HP_BG1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 834
+        width: 286
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e18ee30ed5b381488e0c5b526b18ded
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Enemy_HP_Bar
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 786
+        width: 214
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 772338144e0004f43b9b3892a67cf33d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Enemy_HP_BG2
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 786
+        width: 214
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 817bbf943e1fd5449b540a0cd177d745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Type_Melee
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 610
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9425ed960f3267449a782170822ac534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Hero_Card
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 478
+        width: 136
+        height: 220
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 214ef7c439e0e3944891973d9c416c23
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Skill_BG
+      rect:
+        serializedVersion: 2
+        x: 1624
+        y: 637
+        width: 370
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05c13b42087f1684caa4fca56833ffa9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Hero_Level_BG
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 569
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86c0bce1a347a91499d01829b409443d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Skill_1
+      rect:
+        serializedVersion: 2
+        x: 1642
+        y: 511
+        width: 102
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5454962ebd77fd4d9341d464b0007a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Skill_2
+      rect:
+        serializedVersion: 2
+        x: 1758
+        y: 510
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8242fd9157aca474681df315a77fe8ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Skill_3
+      rect:
+        serializedVersion: 2
+        x: 1874
+        y: 511
+        width: 102
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f710e949f7dec084fa3bc4a18c8c75a0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Hero_BP_Bar
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 462
+        width: 89
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0187ec27b7b3d4741ba3120e454d7a36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_Exist
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 381
+        width: 84
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d838137d91a094a4d9c5a534310c7df6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_Empty
+      rect:
+        serializedVersion: 2
+        x: 1452
+        y: 381
+        width: 84
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa56c4f171ad5c948a47bb629435c3a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_1
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 405
+        width: 65
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9a2cf2d4c991e149bd0d6bf183674c3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_2
+      rect:
+        serializedVersion: 2
+        x: 1729
+        y: 408
+        width: 65
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30b1ee54ac8930c448131452844bdc63
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_22
+      rect:
+        serializedVersion: 2
+        x: 1863
+        y: 470
+        width: 26
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a897a4b5be3d9649981c7c6e1f1bf01
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Hero_Exp_Bar
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 448
+        width: 89
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c2675de6f5bba40ba403263042d27e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_3
+      rect:
+        serializedVersion: 2
+        x: 1817
+        y: 410
+        width: 72
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66cc6f9820d7aac4690a10d7954c0330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_25
+      rect:
+        serializedVersion: 2
+        x: 1816
+        y: 401
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e882c67a1d42cd6419e584219f851933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_AD
+      rect:
+        serializedVersion: 2
+        x: 1633
+        y: 327
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d1b60dd855d2114794f6848058eb47a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_HP
+      rect:
+        serializedVersion: 2
+        x: 1682
+        y: 328
+        width: 31
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5309c774c0d98b44c9f5492fc1bc1484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Item_Defence
+      rect:
+        serializedVersion: 2
+        x: 1731
+        y: 326
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72cf08b13152be54b80341dd86050687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Command_BG
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 27
+        width: 1942
+        height: 274
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d390107b2e3222d41bed8ce4043b7a5c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Resource_Gold_Space
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 762
+        width: 292
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd568c0d2d1f2f14f9016c47d367f7bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 190416_IngameUI_Resource_Citizen_Space
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 762
+        width: 292
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3c8f02f8b1a185449dc275b8ab0e864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5228abb4a7f211c478af2ee856d44a3e
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -59,7 +59,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 7
 --- !u!58 &58954371297275556
@@ -90,4 +90,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStation: {fileID: 0}
   currentNode: {fileID: 0}
-  enemyGroup: {fileID: 0}

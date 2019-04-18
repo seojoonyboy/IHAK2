@@ -20,6 +20,7 @@ public partial class HeroAI : UnitAI {
             float tempLegnth = 100;
             HeroAI skillTargetHero = null;
             UnitAI skillTargetUnit = null;
+            MonsterAI skillTargetMonster = null;
             for (int i = 0; i < units.Length; i++) {
                 if (units[i].layer != layerToGive) continue;
                 float length = Vector3.Distance(units[i].transform.position, transform.position);
@@ -28,8 +29,10 @@ public partial class HeroAI : UnitAI {
                 if (length < tempLegnth) {
                     if (units[i].GetComponent<HeroAI>())
                         skillTargetHero = units[i].GetComponent<HeroAI>();
-                    else
+                    else if(units[i].GetComponent<MinionAI>())
                         skillTargetUnit = units[i].GetComponent<UnitAI>();
+                    else
+                        skillTargetMonster = units[i].GetComponent<MonsterAI>();
                     tempLegnth = length;
                     targetObject = units[i];
                 }
@@ -37,7 +40,7 @@ public partial class HeroAI : UnitAI {
             //yield return new WaitForSeconds(0.5f);
             yield return null;
         }
-        targetUnit = targetObject.GetComponent<UnitAI>();
+        targetUnit = targetObject.transform;
         moveSpeed = moveSpeed * 3;
         StartCoroutine("Lakan_bite_Action");
     }
@@ -48,7 +51,10 @@ public partial class HeroAI : UnitAI {
             length = Vector3.Distance(targetUnit.transform.position, transform.position);
             yield return null;
         }
-        targetUnit.damaged(power * 3);
+        if(targetUnit.GetComponent<UnitAI>())
+            targetUnit.GetComponent<UnitAI>().damaged(power * 3, transform);
+        else if(targetUnit.GetComponent<MonsterAI>())
+            targetUnit.GetComponent<MonsterAI>().damaged(power * 3);
         moveSpeed = moveSpeed / 3;
         SkillFinish();
     }
@@ -96,13 +102,16 @@ public partial class HeroAI : UnitAI {
                 if (length > 30f) continue;
                 if (units[i].GetComponent<HeroAI>() == null) {
                     drainHp += 5;
-                    units[i].GetComponent<UnitAI>().damaged(power * 0.8f);
+                    if(units[i].GetComponent<MonsterAI>())
+                        units[i].GetComponent<MonsterAI>().damaged(power * 0.8f);
+                    else
+                        units[i].GetComponent<UnitAI>().damaged(power * 0.8f, transform);
                     skillActed = true;
                 }
                 else {
                     drainHp += 20;
                     drainHp += 5;
-                    units[i].GetComponent<HeroAI>().damaged(power * 0.8f);
+                    units[i].GetComponent<HeroAI>().damaged(power * 0.8f, transform);
                     skillActed = true;
                 }
             }

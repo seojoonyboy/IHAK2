@@ -29,7 +29,7 @@ public partial class MonsterAI : MonoBehaviour {
     public float maxHealth = 0;
     public Transform healthBar;
 
-    public CreepStation tower;
+    public Object tower;
     public MonsterSpine monsterSpine;
 
     void Awake() {
@@ -55,11 +55,24 @@ public partial class MonsterAI : MonoBehaviour {
     }
 
     public void Die() {
-        tower.MonsterDie(gameObject);
+        if(tower.GetType() == typeof(CreepStation)) {
+            ((CreepStation)tower).MonsterDie(gameObject);
+        }
         Destroy(gameObject);
     }
 }
 
 public partial class MonsterAI {
-    public Unit data;
+    //public Unit data;
+    public NeutralMonsterData data;
+
+    public void Init(NeutralMonsterData data) {
+        if (data == null) return;
+
+        this.data = data;
+        health = maxHealth = this.data.hitPoint;
+        calculateHealthBar();
+
+        GetComponent<CircleCollider2D>().radius = this.data.attackRange * 10;
+    }
 }

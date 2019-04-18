@@ -9,6 +9,7 @@ public class IngameResourceManager : MonoBehaviour {
     [SerializeField] Text goldValue;
     [SerializeField] Image goldBar;
     [SerializeField] Text citizenValue;
+    [SerializeField] Image citizenBar;
 
     private IEnumerator resourceProducer;
 
@@ -43,14 +44,15 @@ public class IngameResourceManager : MonoBehaviour {
         }
     }
 
-    public void RefreshGoldSlider() {
+    public void RefreshGold() {
         float gold = (float)PlayerController.Instance.playerResource().Gold;
         goldBar.fillAmount = ((float)gold / 100);
         goldValue.text = ((int)(gold / 10)).ToString();
     }
 
-    public void RefreshCitizenText() {
+    public void RefreshCitizen() {
         float citizen = (float)PlayerController.Instance.playerResource().Citizen;
+        citizenBar.fillAmount = ((float)citizen / 100);
         citizenValue.text = ((int)(citizen / 10)).ToString();
     }
 }
