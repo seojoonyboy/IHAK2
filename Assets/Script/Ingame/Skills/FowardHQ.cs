@@ -82,6 +82,7 @@ public class FowardHQ : IngameBuilding {
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, enemy.position, atkTime * 0.3f);
         Destroy(arrow, atkTime * 0.3f);
+        enemy.GetComponent<UnitAI>().damaged(damage);
     }
 
     private bool checkEnemyDead() {
