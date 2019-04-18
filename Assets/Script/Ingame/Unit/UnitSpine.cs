@@ -61,7 +61,7 @@ public class UnitSpine : MonoBehaviour {
     }
 
     public void SetDirection(Vector2 direction) {
-        skeleton.ScaleX = direction.x < 0 ? -1f: 1f;
+        skeleton.ScaleX = direction.x >= 0 ? -1f: 1f;
     }
 
     IEnumerator SetColor() {

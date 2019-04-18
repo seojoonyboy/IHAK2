@@ -50,7 +50,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     void Start() {
-        setState(aiState.NONE);
+        SetEnemy();
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
