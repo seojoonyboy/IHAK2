@@ -20,9 +20,14 @@ public class DetectStateDecision : Decision {
             return true;
         }
         else {
-            if (tower.targets.Count != 0) {
-                int rndNum = Random.Range(0, tower.targets.Count - 1);
-                controller.chaseTarget = tower.targets[rndNum].transform;
+            List<GameObject> targets = new List<GameObject>();
+            if (tower.GetType() == typeof(CreepStation)) {
+                targets = ((CreepStation)tower).targets;
+            }
+
+            if (targets.Count != 0) {
+                int rndNum = Random.Range(0, targets.Count - 1);
+                controller.chaseTarget = targets[rndNum].transform;
                 return true;
             }
             else {

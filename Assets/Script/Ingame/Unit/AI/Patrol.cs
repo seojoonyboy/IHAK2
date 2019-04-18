@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AI_submodule {
     public class Patrol : MonoBehaviour {
-        public CreepStation tower;
+        public Object tower;
         public Vector2 patrolTarget;
         List<Transform> waypoints;
 
@@ -33,6 +33,7 @@ namespace AI_submodule {
         public void Init(List<Transform> waypoints) {
             this.waypoints = waypoints;
             patrolTarget = GetPatrolTarget();
+
             tower = GetComponent<MonsterAI>().tower;
         }
 
@@ -40,11 +41,16 @@ namespace AI_submodule {
             if (tower == null) return transform.position;
             int rndNum = Random.Range(0, waypoints.Count - 1);
 
-            Transform target = tower.transform.GetChild(0).GetChild(rndNum).transform;
-            float offsetX = Random.Range(-10.0f, 10.0f);
-            float offsetY = Random.Range(-5.0f, 5.0f);
-            Vector2 vector = new Vector2(target.position.x + offsetX, target.position.y + offsetY);
-            return vector;
+            if(tower.GetType() == typeof(CreepStation)) {
+                var tower = (CreepStation)this.tower;
+                Transform target = tower.transform.GetChild(0).GetChild(rndNum).transform;
+                float offsetX = Random.Range(-10.0f, 10.0f);
+                float offsetY = Random.Range(-5.0f, 5.0f);
+                Vector2 vector = new Vector2(target.position.x + offsetX, target.position.y + offsetY);
+                return vector;
+            }
+
+            return transform.position;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
@@ -142,7 +142,9 @@ public class UnitGroup : MonoBehaviour {
             Debug.LogWarning("몬스터 아니면 누군가, 이종욱에게 알려주세요");
             return;
         }
-        enemyGroup = monster.tower.monsters;
+        if(monster.tower.GetType() == typeof(CreepStation)) {
+            enemyGroup = ((CreepStation)monster.tower).monsters;
+        }
         UnitIndividualSet(true);
     }
 
