@@ -182,13 +182,13 @@ public class UnitGroup : MonoBehaviour {
         BaseCampStation baseCamp = detector.GetComponentInParent<BaseCampStation>();
         if(baseCamp != null) {
             enemyGroup = baseCamp.monsters;
-            enemyGroup.Add(baseCamp.Building);
+            enemyGroup.Add(baseCamp.towerComponent.gameObject);
             return;
         }
         TowerStation tower = detector.GetComponentInParent<TowerStation>();
         if(tower != null) {
             if(enemyGroup == null) enemyGroup = new List<GameObject>();
-            enemyGroup.Add(tower.Building);
+            enemyGroup.Add(tower.towerComponent.gameObject);
             return;
         }
         Debug.LogWarning("어떤 건물에 있는 놈인지 이종욱에게 알려주세요");
@@ -208,6 +208,10 @@ public class UnitGroup : MonoBehaviour {
         Transform target = null;
         float shortLength = float.MaxValue;
         for(int i = 0; i < enemyGroup.Count; i++) {
+            if(enemyGroup[i] == null) {
+                enemyGroup.RemoveAt(i--);
+                continue;
+            }
             Transform next = enemyGroup[i].transform;
             float length = Vector3.Distance(myTransform.position, next.position);
             CheckDistance(ref target, ref shortLength, next, length);
