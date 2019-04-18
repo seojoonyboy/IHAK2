@@ -71,7 +71,10 @@ public partial class TowerStation : DefaultStation {
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+            if (!targets.Exists(x => x == collision.gameObject)) {
+                targets.Add(collision.gameObject);
+                if (towerComponent.Enemy == null) towerComponent.Enemy = targets[0].transform;
+            }
         }
     }
 
@@ -79,6 +82,12 @@ public partial class TowerStation : DefaultStation {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
+
+            if(towerComponent.Enemy = collision.transform) {
+                if (targets.Count <= 0) towerComponent.Enemy = null;
+                else towerComponent.Enemy = targets[0].transform;
+            }
+
         }
     }
 }

@@ -22,7 +22,7 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
             citizenNum++;
             GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(1));
             citizen.transform.position
-                = new Vector3(CityPos.position.x + Random.Range(-25.0f, 25.0f), CityPos.position.y + Random.Range(-25.0f, 25.0f), CityPos.position.z);
+                = new Vector3(CityPos.position.x + Random.Range(-5.0f, 5.0f), CityPos.position.y + Random.Range(-5.0f, 5.0f), CityPos.position.z);
             citizen.GetComponent<UnitAI>().enabled = false;
             citizens.Add(citizen);
         }

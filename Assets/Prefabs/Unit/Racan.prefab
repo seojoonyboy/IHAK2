@@ -273,7 +273,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835397233811550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.15, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4656852050040714}
@@ -342,8 +342,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680689109314990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.66, y: 25.83, z: 0}
-  m_LocalScale: {x: 28, y: 15, z: 1}
+  m_LocalPosition: {x: 0.3, y: 2.79, z: 0}
+  m_LocalScale: {x: 5, y: 3, z: 1}
   m_Children:
   - {fileID: 4402015260776046}
   - {fileID: 4393862207253788}
@@ -388,7 +388,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1130886944253450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.68, z: 0}
+  m_LocalPosition: {x: 0, y: -0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4656852050040714}
@@ -470,7 +470,12 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 72415c5bda996403499814a5ff49c286, type: 2}
+  - {fileID: 2100000, guid: 7662186b6d3c647608b10878097ee2af, type: 2}
+  - {fileID: 2100000, guid: b5a2f3e532ac347d1982c6aa924dc06d, type: 2}
+  - {fileID: 2100000, guid: 7662186b6d3c647608b10878097ee2af, type: 2}
+  - {fileID: 2100000, guid: b5a2f3e532ac347d1982c6aa924dc06d, type: 2}
+  - {fileID: 2100000, guid: 7662186b6d3c647608b10878097ee2af, type: 2}
+  - {fileID: 2100000, guid: b5a2f3e532ac347d1982c6aa924dc06d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -707,7 +712,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 2}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!61 &61600329227709166
@@ -733,7 +738,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5, y: 10}
+  m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &114158344370590136
 MonoBehaviour:
@@ -860,8 +865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: d9ccb5d14044a492bb396c27fc978f6c, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: 3986f63b3b1094e3e94a0ed6d8534e45, type: 2}
+  initialSkinName: 1.blue
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -875,7 +880,7 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: run
+  _animationName: 1.idle
   loop: 1
   timeScale: 1
 --- !u!114 &114355063108995748
@@ -892,6 +897,7 @@ MonoBehaviour:
   health: 0
   power: 0
   moveSpeed: 0
+  attackRange: 0
   unitCard:
     id: 0
     parentBuilding: {fileID: 0}
@@ -922,7 +928,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
       skill:
         id: 0
@@ -995,7 +1001,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1269309602835682}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07994bfe8b0e4adb97d706de5dea48d5, type: 3}
   m_Name: 
@@ -1068,8 +1074,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 13.25
+  m_fontSizeBase: 13.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1086,7 +1092,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1147,8 +1153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runAnimationName: 2.move
-  idleAnimationName: 1.waitting
-  attackAnimationName: 3.attack_namal
+  idleAnimationName: 1.idle
+  attackAnimationName: 3.attack
 --- !u!212 &212219743801216750
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1455,8 +1461,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.86, y: 31.21}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: 0.17, y: 4.02}
+  m_SizeDelta: {x: 4, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224643171777708328
 RectTransform:

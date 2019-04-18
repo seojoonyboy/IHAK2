@@ -15,7 +15,7 @@ namespace AI_submodule {
             target = stateController.chaseTarget;
             if (target != null) {
                 float dist = Vector2.Distance(target.position, transform.position);
-                if(dist >= 8.0f) {
+                if(dist >= 0.8f) {
                     transform.position = Vector2.MoveTowards(
                     new Vector2(transform.position.x, transform.position.y),
                     target.position,
