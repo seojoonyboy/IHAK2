@@ -20,6 +20,10 @@ public class MonsterDecision : Decision {
         if(tower.GetType() == typeof(CreepStation)) {
             targets = ((CreepStation)tower).targets;
         }
+        if(tower.GetType() == typeof(BaseCampStation)) {
+            targets = ((BaseCampStation)tower).targets;
+        }
+
         if (targets != null && targets.Count != 0) {
             foreach (GameObject target in targets) {
                 if (target == null) {

@@ -31,7 +31,7 @@ namespace DataModules {
         public int attackPower;
         public float attackSpeed;
         public float defence;
-        public int attackRange;
+        public float attackRange;
         public int hitPoint;
         public float moveSpeed;
         public UnitSkill skill;
