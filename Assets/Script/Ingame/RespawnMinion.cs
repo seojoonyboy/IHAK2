@@ -33,11 +33,12 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
 
         if (minion == null) return;
         PlayerController.Instance.transform.GetComponent<Container.PlayerResource>().UseCitizen(1);
-
-        minion.GetComponent<MinionAI>().SetUnitData(null, null);
-        minion.layer = gameObject.layer;
+        ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
+        minion.GetComponent<MinionAI>().SetMinionData(card);
+        minion.layer = transform.GetChild(0).gameObject.layer;
         minion.transform.position = unitGroup.transform.position;
         unitGroup.ResetData();
+        minion.GetComponent<UnitAI>().enabled = false;
     }
 }
 
