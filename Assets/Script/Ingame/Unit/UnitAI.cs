@@ -199,6 +199,7 @@ public partial class UnitAI : MonoBehaviour {
     }
 
     private void shootArrow() {
+        if(targetUnit == null) return;
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, targetUnit.position, attackSpeed * 0.3f);
         Destroy(arrow, attackSpeed * 0.3f);
