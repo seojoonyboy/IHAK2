@@ -39,7 +39,7 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     }
 
     protected void CancelDrag() {
-        GetComponent<MagmaDragHandler>().enabled = false;
+        GetComponent<IngameActiveCardDragHandler>().enabled = false;
 
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);

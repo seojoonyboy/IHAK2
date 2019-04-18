@@ -51,6 +51,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
+            card.GetComponent<HeroCardDragHandler>().CancelDrag();
             card.GetComponent<HeroCardDragHandler>().enabled = false;
 
             if (card.GetComponent<ActiveCardCoolTime>() == null) {
