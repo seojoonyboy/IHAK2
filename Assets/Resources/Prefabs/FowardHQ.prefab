@@ -97,6 +97,11 @@ MonoBehaviour:
   buildingHp: 0
   maxHp: 0
   effectRange: {fileID: 0}
+  enemy: {fileID: 0}
+  isAttacking: 0
+  isDestroyed: 0
+  arrow: {fileID: 1770122807129098, guid: f78f211aa83a9134786377509d57bdaa, type: 2}
+  towerOwner: 0
 --- !u!212 &212396415983157814
 SpriteRenderer:
   m_ObjectHideFlags: 1

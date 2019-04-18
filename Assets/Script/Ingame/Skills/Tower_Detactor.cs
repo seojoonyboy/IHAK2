@@ -2,21 +2,18 @@ using Sirenix.OdinInspector;
 using DataModules;
 using TMPro;
 using UnityEngine;
+using UniRx;
 
 public class Tower_Detactor : IngameBuilding {
     private CircleCollider2D box;
     private int damage;
     private float atkTime;
-    private Transform enemy;
+    [SerializeField] [ReadOnly] private Transform enemy;
     
     private bool isAttacking = false;
-    private float time;
+    [SerializeField] [ReadOnly] private float time;
     [SerializeField]
     private GameObject arrow;
-    //[SerializeField]
-    //public int towerShellCount = 0;
-    //[SerializeField]
-    //public int towerMaxShell = 0;
 
     [SerializeField] [ReadOnly] private PlayerController.Player towerOwner;
     [SerializeField] [ReadOnly] private bool isDestroyed = false;
@@ -30,6 +27,16 @@ public class Tower_Detactor : IngameBuilding {
         set { towerOwner = value; }
     }
 
+    public Transform Enemy {
+        get {
+            if (enemy != null)
+                return enemy;
+
+            return null;
+        }
+        set { enemy = value; }
+    }
+
     void Start() {
         maxHp = 300;
         buildingHp = maxHp;
@@ -37,6 +44,9 @@ public class Tower_Detactor : IngameBuilding {
         setRange(40);
         damage = 23;
         atkTime = 1.4f;
+        towerOwner = PlayerController.Player.NEUTRAL;
+        Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_ => isAttacking = true);
+        Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; });
     }
 
     public void init(AttackInfo info) {
@@ -49,6 +59,7 @@ public class Tower_Detactor : IngameBuilding {
     private void setRange(float range) {
         box.radius = range;
     }
+    /*
     private void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.layer != (int)towerOwner) {
             if (isAttacking) return;
@@ -61,7 +72,7 @@ public class Tower_Detactor : IngameBuilding {
             box.enabled = false;
         }
     }
-
+    */
     private void Update() {
         if (isDestroyed) return;
         if (buildingHp == 0) {

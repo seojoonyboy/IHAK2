@@ -73,18 +73,20 @@ public partial class BaseCampStation : DefaultStation {
 
 public partial class BaseCampStation {
     public Transform monsterParent;
-    public List<GameObject> monster;
+    public List<GameObject> monsters;
     public GameObject goblin;
     int monsterCount = 6;
     List<Transform> wayPoints = new List<Transform>();
 
     public void SetMonsters() {
-        monster = new List<GameObject>();
+        monsters = new List<GameObject>();
         monsterParent = transform.parent.parent.Find("Monsters");
         Instantiate(Resources.Load("Prefabs/Monsters/MonsterPos") as GameObject, transform);
         goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
 
-        foreach(Transform wayPoint in transform.GetChild(0)) {
+        goblin.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+
+        foreach(Transform wayPoint in transform.GetChild(1)) {
             wayPoints.Add(wayPoint);
         }
 
@@ -94,8 +96,12 @@ public partial class BaseCampStation {
 
             generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
             generateMonster.GetComponent<MonsterAI>().tower = this;
-            monster.Add(generateMonster);        
+            monsters.Add(generateMonster);        
         }        
+    }
+
+    public void MonsterDie(GameObject monster) {
+        monsters.Remove(monster);
     }
 
 }
@@ -109,18 +115,28 @@ public partial class BaseCampStation : DefaultStation {
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
+            if (!targets.Exists(x => x == collision.gameObject)) {
+                targets.Add(collision.gameObject);
+                if (towerComponent.Enemy == null) towerComponent.Enemy = targets[0].transform;
+            }
         }
 
         if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
             collision.gameObject.AddComponent<RespawnMinion>();
         }
     }
+    
+
 
     void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
+
+            if(towerComponent.Enemy = collision.transform) {
+                if (targets.Count <= 0) towerComponent.Enemy = null;
+                else towerComponent.Enemy = targets[0].transform;
+            }
         }
 
         if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {

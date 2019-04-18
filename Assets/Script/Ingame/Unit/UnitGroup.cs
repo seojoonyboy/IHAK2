@@ -154,6 +154,11 @@ public class UnitGroup : MonoBehaviour {
         if(monster.tower.GetType() == typeof(CreepStation)) {
             enemyGroup = ((CreepStation)monster.tower).monsters;
         }
+
+        if(monster.tower.GetType() == typeof(BaseCampStation)) {
+            enemyGroup = ((BaseCampStation)monster.tower).monsters;
+        }
+
         UnitIndividualSet(true);
     }
 
