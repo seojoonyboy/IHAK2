@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
+using UniRx;
 
 public class FowardHQ : IngameBuilding {
 
@@ -14,7 +15,7 @@ public class FowardHQ : IngameBuilding {
     [SerializeField] bool isAttacking = false;
     [SerializeField] bool isDestroyed = false;
 
-    private float time;
+    [SerializeField] private float time;
     [SerializeField] private GameObject arrow;
 
     [SerializeField] private PlayerController.Player towerOwner;
@@ -46,6 +47,8 @@ public class FowardHQ : IngameBuilding {
         damage = 23;
         atkTime = 1.4f;
         towerOwner = PlayerController.Player.NEUTRAL;
+        Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_=>isAttacking = true);
+        Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0;});
     }
 
     private void Update() {
@@ -59,7 +62,7 @@ public class FowardHQ : IngameBuilding {
         if (checkEnemyDead() == true) return;
         time += Time.deltaTime;
         if (time < atkTime) return;
-        time -= atkTime;
+        time = 0;
         shootArrow();
     }
 
