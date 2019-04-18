@@ -84,6 +84,11 @@ public class UnitGroup : MonoBehaviour {
         moveSpeed = unitAIs[0].moveSpeed;
     }
 
+    public void ResetData() {
+        unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
+        unitAIs = transform.GetComponentsInChildren<UnitAI>();
+    }
+
     private void SetMinionData() {
         HeroAI hero = unitAIs[0].GetComponent<HeroAI>();
         Minion minionData = hero.unitCard.baseSpec.unit.minion;
@@ -109,20 +114,26 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void UnitIndividualSet(bool attack) {
-        for(int i = 0; i < unitAIs.Length; i++)
+        for(int i = 0; i < unitAIs.Length; i++) {
+            if(unitAIs[i] == null) continue;
             unitAIs[i].enabled = attack;
+        }
     }
 
     private void UnitMoveAnimation(bool move) {
-        for(int i = 0; i < unitAnimations.Length; i++) 
+        for(int i = 0; i < unitAnimations.Length; i++) {
+            if(unitAIs[i] == null) continue;
             if(move) unitAnimations[i].Move();
             else     unitAnimations[i].Idle();
+        }
     }
 
     private void UnitMoveDirection(Vector3 pos) {
         Vector3 result = pos - transform.position;
-        for(int i = 0; i < unitAnimations.Length; i++)
+        for(int i = 0; i < unitAnimations.Length; i++) {
+            if(unitAIs[i] == null) continue;
             unitAnimations[i].SetDirection(result);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D node) {
