@@ -24,6 +24,9 @@ public class DetectStateDecision : Decision {
             if (tower.GetType() == typeof(CreepStation)) {
                 targets = ((CreepStation)tower).targets;
             }
+            if (tower.GetType() == typeof(BaseCampStation)) {
+                targets = ((BaseCampStation)tower).targets;
+            }
 
             if (targets.Count != 0) {
                 int rndNum = Random.Range(0, targets.Count - 1);

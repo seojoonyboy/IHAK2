@@ -58,6 +58,9 @@ public partial class MonsterAI : MonoBehaviour {
         if(tower.GetType() == typeof(CreepStation)) {
             ((CreepStation)tower).MonsterDie(gameObject);
         }
+        if (tower.GetType() == typeof(BaseCampStation)) {
+            ((BaseCampStation)tower).MonsterDie(gameObject);
+        }
         Destroy(gameObject);
     }
 }

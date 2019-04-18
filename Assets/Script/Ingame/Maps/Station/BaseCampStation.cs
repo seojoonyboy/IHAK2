@@ -73,18 +73,20 @@ public partial class BaseCampStation : DefaultStation {
 
 public partial class BaseCampStation {
     public Transform monsterParent;
-    public List<GameObject> monster;
+    public List<GameObject> monsters;
     public GameObject goblin;
     int monsterCount = 6;
     List<Transform> wayPoints = new List<Transform>();
 
     public void SetMonsters() {
-        monster = new List<GameObject>();
+        monsters = new List<GameObject>();
         monsterParent = transform.parent.parent.Find("Monsters");
         Instantiate(Resources.Load("Prefabs/Monsters/MonsterPos") as GameObject, transform);
         goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
 
-        foreach(Transform wayPoint in transform.GetChild(0)) {
+        goblin.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+
+        foreach(Transform wayPoint in transform.GetChild(1)) {
             wayPoints.Add(wayPoint);
         }
 
@@ -94,8 +96,12 @@ public partial class BaseCampStation {
 
             generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
             generateMonster.GetComponent<MonsterAI>().tower = this;
-            monster.Add(generateMonster);        
+            monsters.Add(generateMonster);        
         }        
+    }
+
+    public void MonsterDie(GameObject monster) {
+        monsters.Remove(monster);
     }
 
 }
