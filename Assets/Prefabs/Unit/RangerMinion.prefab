@@ -264,7 +264,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a764e73cfa0114e8a828f75df31644df, type: 2}
+  - {fileID: 2100000, guid: 3270f8780233249ce96b4b50813f5076, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -491,8 +491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0bb4102c8acb64548b75969b44378e15, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: c5751ea37ff6e4f6aa6397e3137178ed, type: 2}
+  initialSkinName: 2.blue
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -506,7 +506,7 @@ MonoBehaviour:
   addNormals: 0
   calculateTangents: 0
   disableRenderingOnOverride: 1
-  _animationName: run
+  _animationName: 1.idle
   loop: 1
   timeScale: 1
 --- !u!114 &114581974659180004
@@ -548,7 +548,7 @@ MonoBehaviour:
       id: 0
       type: 
       count: 0
-      capability: 0
+      capabilityArgs: 
     imageName: 
   expPoint: 18
 --- !u!114 &114700090400101256
@@ -737,8 +737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacdc7700974283869344394e21f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runAnimationName: 2.move
-  idleAnimationName: 1.waitting
+  runAnimationName: 2.move_2
+  idleAnimationName: 1.idle
   attackAnimationName: 3.attack
 --- !u!212 &212546179239670288
 SpriteRenderer:
