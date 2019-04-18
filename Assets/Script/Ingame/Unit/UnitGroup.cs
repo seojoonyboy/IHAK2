@@ -231,6 +231,10 @@ public class UnitGroup : MonoBehaviour {
         }
         if(target == null) {
             if(enemyBuilding == null) return null;
+            if(enemyBuilding.GetComponent<IngameBuilding>().buildingHp <= 0) {
+                enemyBuilding = null;
+                return null;
+            }
             return enemyBuilding.transform;
         }
         return target;
