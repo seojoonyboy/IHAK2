@@ -18,11 +18,11 @@ public class Magma : MonoBehaviour {
     }
 
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(1, 1, 1);
+        range_texture.transform.localScale = new Vector3(22, 22, 1);
         
         int range = 0;
         int.TryParse(data[0], out range);
-        range /= 2;
+        range /= 4;
         GetComponent<CircleCollider2D>().radius = range;
         range_texture.transform.localScale *= range;
 

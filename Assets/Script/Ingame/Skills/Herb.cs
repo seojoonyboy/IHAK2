@@ -14,11 +14,11 @@ public class Herb : MonoBehaviour {
     }
 
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(1, 1, 1);
+        range_texture.transform.localScale = new Vector3(22, 22, 1);
         
         this.data = new Data();
         int.TryParse(data[0], out this.data.range);
-        this.data.range /= 2;
+        this.data.range /= 4;
 
         int.TryParse(data[1], out this.data.amount);
 
