@@ -1,11 +1,13 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public partial class HealingCenterStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
+    [SerializeField] [ReadOnly] protected int seizePlayer;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +20,11 @@ public partial class HealingCenterStation : DefaultStation {
     }
 
     private void Update() {
+        if(OwnerNum == PlayerController.Player.NEUTRAL && !startSeize && enemys.Count > 0) {
+            startSeize = true;
+            seizePlayer = enemys[0].layer;
+            StartCoroutine(SeizeNeutralBuilding());
+        }
         if(!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
             startSeize = true;
             StartCoroutine(SeizeBuilding());
@@ -42,7 +49,27 @@ public partial class HealingCenterStation : DefaultStation {
         }
     }
 
-    
+    IEnumerator SeizeNeutralBuilding() {
+        int targetLayer = 0;
+        while (startSeize) {
+            foreach (GameObject target in enemys.ToList()) {
+                if (target == null) continue;
+                if (targetLayer == 0) {
+                    targetLayer = target.layer;
+                    continue;
+                }
+                if ((int)OwnerNum != target.layer) {
+                    yield return new WaitForSeconds(0.1f);
+                    if (targetLayer != target.layer) startSeize = false;
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(SeizeBuilding());
+            startSeize = false;
+        }
+    }
+
+
 }
 
 public partial class HealingCenterStation : DefaultStation {
@@ -55,6 +82,10 @@ public partial class HealingCenterStation : DefaultStation {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+            if(OwnerNum == PlayerController.Player.NEUTRAL) {
+                if (seizePlayer != collision.gameObject.layer)
+                    startSeize = false;
+            }
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
