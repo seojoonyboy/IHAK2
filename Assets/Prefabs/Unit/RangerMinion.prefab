@@ -529,12 +529,12 @@ MonoBehaviour:
     rarity: 0
     coolTime: 0
     size: 1
-    attackPower: 0
+    attackPower: 7
     attackSpeed: 1.2
     defence: 0
-    attackRange: 20
+    attackRange: 6
     hitPoint: 60
-    moveSpeed: 70
+    moveSpeed: 0
     skill:
       id: 0
       name: 
@@ -548,7 +548,7 @@ MonoBehaviour:
       id: 0
       type: 
       count: 0
-      capability: 0
+      capabilityArgs: 
     imageName: 
   expPoint: 18
 --- !u!114 &114700090400101256

@@ -1970,9 +1970,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   playerNum: 0
-  shortDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,
+  shortDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
     type: 2}
-  longDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+  longDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,
     type: 2}
 --- !u!114 &282962859
 MonoBehaviour:
@@ -9887,7 +9887,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
     gameObject: {fileID: 0}
   enemyController: {fileID: 1844919643}
@@ -9930,7 +9930,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
     gameObject: {fileID: 0}
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}

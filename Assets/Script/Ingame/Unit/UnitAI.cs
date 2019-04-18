@@ -24,7 +24,7 @@ public partial class UnitAI : MonoBehaviour {
     protected float defense = 0;
     public float moveSpeed;
     protected float attackSpeed;
-    protected float attackRange;
+    public float attackRange;
 
     private float currentTime;
 
