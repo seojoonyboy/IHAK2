@@ -29,7 +29,7 @@ public partial class MonsterAI : MonoBehaviour {
     public float maxHealth = 0;
     public Transform healthBar;
 
-    public CreepStation tower;
+    public Object tower;
     public MonsterSpine monsterSpine;
 
     void Awake() {
@@ -55,7 +55,9 @@ public partial class MonsterAI : MonoBehaviour {
     }
 
     public void Die() {
-        tower.MonsterDie(gameObject);
+        if(tower.GetType() == typeof(CreepStation)) {
+            ((CreepStation)tower).MonsterDie(gameObject);
+        }
         Destroy(gameObject);
     }
 }
