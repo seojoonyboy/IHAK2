@@ -25,7 +25,9 @@ public partial class DefaultStation : SerializedMonoBehaviour {
         get { return ownerNum; }
         set {
             ownerNum = value;
-            IngameAlarm.instance.SetAlarm(ownerNum + "가 거점을 점령하였습니다.");
+            if(ownerNum == PlayerController.Player.PLAYER_1) {
+                IngameAlarm.instance.SetAlarm(ownerNum + "가 거점을 점령하였습니다.");
+            }
         }
     }
 
