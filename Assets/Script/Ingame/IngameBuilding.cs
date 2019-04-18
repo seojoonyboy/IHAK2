@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class IngameBuilding : MonoBehaviour {
 
-    public float buildingHp;
-    public float maxHp;
+    public int buildingHp;
+    public int maxHp;
+
+    public void damaged(float damage) {
+        buildingHp -= Mathf.FloorToInt(damage);
+        
+    }
+
+    public virtual void TakeDamage(float amount) { }
     
 }
