@@ -43,7 +43,7 @@ namespace IngameModule {
             while (true) {
                 if (canSearch) {
                     Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    RaycastHit2D hit = Physics2D.BoxCast(point, new Vector2(10, 10), 0, Vector3.forward, Mathf.Infinity, layerMask: mask);
+                    RaycastHit2D hit = Physics2D.BoxCast(point, new Vector2(2, 2), 0, Vector3.forward, Mathf.Infinity, layerMask: mask);
                     Debug.DrawLine(point, new Vector3(point.x, point.y, -point.z * 100), Color.red);
                     if (hit.collider != null) {
                         if(prevGameObject != hit.transform.gameObject) {
@@ -89,7 +89,7 @@ namespace IngameModule {
         void OnDrawGizmos() {
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(point, new Vector2(10, 10));
+            Gizmos.DrawWireCube(point, new Vector2(2, 2));
         }
 
         List<Vector3> PathFind(GameObject collision) {
