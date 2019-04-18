@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public partial class TowerStation : DefaultStation {
@@ -30,7 +31,7 @@ public partial class TowerStation : DefaultStation {
     IEnumerator FindOwner() {
         int targetLayer = 0;
         while (startSeize) {
-            foreach (GameObject target in targets) {
+            foreach (GameObject target in targets.ToList()) {
                 if (target == null) continue;
                 if (targetLayer == 0) {
                     targetLayer = target.layer;
