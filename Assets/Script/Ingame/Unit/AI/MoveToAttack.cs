@@ -12,14 +12,16 @@ namespace AI_submodule {
         // Update is called once per frame
         void Update() {
             if (stateController == null) return;
-
             target = stateController.chaseTarget;
             if (target != null) {
-                transform.position = Vector2.MoveTowards(
+                float dist = Vector2.Distance(target.position, transform.position);
+                if(dist >= 8.0f) {
+                    transform.position = Vector2.MoveTowards(
                     new Vector2(transform.position.x, transform.position.y),
                     target.position,
                     speed * Time.deltaTime
                 );
+                }
             }
             else {
                 stateController.TransitionToState(stateController.allStates[1]);
