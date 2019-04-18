@@ -62,6 +62,7 @@ public partial class BaseCampStation : DefaultStation {
         yield return new WaitForSeconds(10.0f);
         Building = Resources.Load("Prefabs/FowardHQ") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        tower.transform.SetAsFirstSibling();
         Destroy(towerComponent.gameObject);
         tower.layer = (int)OwnerNum;
         towerComponent = tower.GetComponent<FowardHQ>();

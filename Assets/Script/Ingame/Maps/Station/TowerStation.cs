@@ -57,6 +57,7 @@ public partial class TowerStation : DefaultStation {
         yield return new WaitForSeconds(8.0f);
         Building = Resources.Load("Prefabs/Tower") as GameObject;
         GameObject tower = Instantiate(Building, transform);
+        tower.transform.SetAsFirstSibling();
         Destroy(towerComponent.gameObject);
         tower.layer = (int)OwnerNum;
         towerComponent = tower.GetComponent<Tower_Detactor>();

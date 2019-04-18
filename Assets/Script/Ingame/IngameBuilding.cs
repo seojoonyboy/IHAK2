@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IngameBuilding : MonoBehaviour {
 
-    public int buildingHp;
-    public int maxHp;
+    public float buildingHp;
+    public float maxHp;
     
 }
