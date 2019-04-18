@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEditor.Animations;
 using UnityEngine;
 using AI;
 
