@@ -20,9 +20,6 @@ public class HeroCardDragHandler : IngameActiveCardDragHandler {
 
         transform.position = startPosition;
         transform.localScale = new Vector3(1, 1, 1);
-        
-        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = true;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "Image") image.enabled = true;
 
         GameObject deactive = transform.Find("Deactive").gameObject;
         deactive.SetActive(true);
@@ -38,9 +35,6 @@ public class HeroCardDragHandler : IngameActiveCardDragHandler {
         GraphicRaycaster m_Raycaster = GetComponentInParent<GraphicRaycaster>();
         PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
         m_PointEventData.position = Input.mousePosition;
-
-        foreach (Text list in transform.GetComponentsInChildren<Text>()) list.enabled = false;
-        foreach (Image image in transform.GetComponentsInChildren<Image>()) if (image.name != "UnitCard(Clone)") image.enabled = false;
 
         GetComponentInChildren<IngameModule.PathPreviewInDrag>().OnDrag(eventData);
     }

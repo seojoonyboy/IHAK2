@@ -116,7 +116,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             ActiveSkill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, spellCardParent);
 
-            card.transform.Find("Name/Value").GetComponent<Text>().text = skill.name;
+            card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = spellCard;
 
