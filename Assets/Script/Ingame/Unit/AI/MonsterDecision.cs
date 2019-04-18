@@ -16,14 +16,18 @@ public class MonsterDecision : Decision {
 
     private bool Look(StateController controller) {
         var tower = controller.GetComponent<MonsterAI>().tower;
-        if (tower.targets != null && tower.targets.Count != 0) {
-            foreach (GameObject target in tower.targets) {
+        List<GameObject> targets = new List<GameObject>();
+        if(tower.GetType() == typeof(CreepStation)) {
+            targets = ((CreepStation)tower).targets;
+        }
+        if (targets != null && targets.Count != 0) {
+            foreach (GameObject target in targets) {
                 if (target == null) {
-                    tower.targets.Remove(target);
+                    targets.Remove(target);
                 }
             }
-            int rndNum = Random.Range(0, tower.targets.Count - 1);
-            controller.chaseTarget = tower.targets[rndNum].transform;
+            int rndNum = Random.Range(0, targets.Count - 1);
+            controller.chaseTarget = targets[rndNum].transform;
 
             Destroy(controller.GetComponent<Patrol>());
             return true;
