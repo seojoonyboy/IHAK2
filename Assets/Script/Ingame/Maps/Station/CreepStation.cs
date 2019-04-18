@@ -1,4 +1,6 @@
+using ingameUIModules;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ public partial class CreepStation : DefaultStation {
         targets = new List<GameObject>();
         SetMonsters();
         MonstersReset(false);
+        SetOccupySlider();
     }
 
     private void LateUpdate() {
@@ -56,6 +59,8 @@ public partial class CreepStation {
     public List<GameObject> monsters;
     public Pool[] pools = new Pool[1];
     [SerializeField] [ReadOnly] int poolLv = 0;
+    public CircularSlider occupySlider;
+    [SerializeField] [ReadOnly] int maxMonsterNum;
 
     public void SetMonsters() {
         monsters = new List<GameObject>();
@@ -67,6 +72,7 @@ public partial class CreepStation {
         };
 
         goblin.monster.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+        maxMonsterNum = goblin.num;
 
         List<Set> tempSets = new List<Set>();
         tempSets.Add(goblin);
@@ -111,6 +117,8 @@ public partial class CreepStation {
 
     public void MonsterDie(GameObject monster) {
         monsters.Remove(monster);
+
+        occupySlider.IncreaseByPercentage(18.0f);
     }
 
     public void MonstersReset(bool isTierUp) {
@@ -139,7 +147,15 @@ public partial class CreepStation {
         }
     }
 
-    
+    private void SetOccupySlider() {
+        occupySlider = (Instantiate(Resources.Load("Prefabs/OccupySlider"), transform) as GameObject).GetComponent<CircularSlider>();
+        occupySlider.Reset();
+
+    }
+
+    private void Occupied() {
+
+    }
 
     [System.Serializable]
     public class Pool {

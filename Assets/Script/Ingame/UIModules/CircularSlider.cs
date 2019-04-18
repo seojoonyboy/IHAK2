@@ -7,8 +7,13 @@ namespace ingameUIModules {
         public delegate void OnLoseTerritory();
         public delegate void OnOccupyTerritory();
 
-        private OnLoseTerritory loseTerritory;
-        private OnOccupyTerritory occupyTerritory;
+        private OnLoseTerritory loseTerritoryHandler;
+        private OnOccupyTerritory occupyTerritoryHandler;
+
+        void Start() {
+            loseTerritoryHandler = loseTerritory;
+            occupyTerritoryHandler = occupyTerritory;
+        }
 
         public void IncreaseByPercentage(float amount) {
             float val = amount / 100.0f;
@@ -34,6 +39,14 @@ namespace ingameUIModules {
 
         public void LoseImmidiately() {
             DecreaseByPercentage(100);
+        }
+
+        void occupyTerritory() {
+
+        }
+
+        void loseTerritory() {
+
         }
     }
 
