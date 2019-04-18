@@ -95,6 +95,6 @@ namespace DataModules {
         public int id;
         public string type;
         public int count;
-        public int capability;
+        public int[] capabilityArgs;
     }
 }
