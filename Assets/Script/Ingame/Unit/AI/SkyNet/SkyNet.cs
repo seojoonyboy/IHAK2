@@ -57,7 +57,15 @@ namespace AI {
         protected virtual void Die() { }
         protected virtual void GainExp() { }
         protected virtual void LvUp() { }
-        protected virtual void CalculateHealthBar() { }
+        protected virtual void CalculateHealthBar() {
+            if (healthBar == null) {
+                Debug.LogError(gameObject.name + "의 HealthBar가 설정되어 있지 않습니다.");
+                return;
+            }
+            float percent = HP / maxHp;
+            healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+        }
+
         public UnitGroup GetMyUnitGroup() {
             if(GetComponent<UnitGroup>() == null) {
                 Debug.LogError(gameObject.name + "의 UnitGroup 컴포넌트를 찾을 수 없습니다!");
