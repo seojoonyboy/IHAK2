@@ -30,13 +30,19 @@ namespace AI {
         }
 
         public float MaxHealth {
-            get { return maxHp; }
+            get {
+                return maxHp;
+            }
+
+            set {
+                maxHp = value;
+            }
         }
 
         /// <summary>
         /// 기본 Data 초기화
         /// </summary>
-        protected abstract void Init();
+        public abstract void Init(object data);
 
         /// <summary>
         /// 정수 피해량 만큼 체력 감소
@@ -54,7 +60,7 @@ namespace AI {
             HP += amount;
         }
 
-        protected virtual void Die() { }
+        public virtual void Die() { }
         protected virtual void GainExp() { }
         protected virtual void LvUp() { }
         protected virtual void CalculateHealthBar() {
@@ -78,6 +84,14 @@ namespace AI {
 
         public virtual void ChangeOwner(int newNum) {
             ownerNum = (PlayerController.Player)newNum;
+        }
+
+        void Awake() {
+            if(GetComponentInParent<UnitGroup>() == null) {
+                GameObject unitGroup = new GameObject();
+                unitGroup.AddComponent<UnitGroup>();
+                transform.SetParent(unitGroup.transform);
+            }
         }
     }
 }
