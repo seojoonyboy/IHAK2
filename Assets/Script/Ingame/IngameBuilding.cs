@@ -39,4 +39,6 @@ public class IngameBuilding : SkyNet {
                 healthBar.parent.Find("BackGround").gameObject.SetActive(true);
             }).AddTo(gameObject);
     }
+
+    public override void SetUnitData(object data, GameObject gameObject) { }
 }
