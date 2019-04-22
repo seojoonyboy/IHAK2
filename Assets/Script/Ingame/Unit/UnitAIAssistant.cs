@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public partial class UnitAI : MonoBehaviour {
+public partial class UnitAI : AI.SkyNet {
 
     [SerializeField] Dictionary<string, Buff> buffList = new Dictionary<string, Buff>();
 

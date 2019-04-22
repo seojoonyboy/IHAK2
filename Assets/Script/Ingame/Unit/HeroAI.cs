@@ -17,7 +17,7 @@ public partial class HeroAI : UnitAI {
     private List<HeroAI> fightHeroes;
     IEnumerator coroutine;
 
-    private void Init() {
+    public override void Init(object card) {
         if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
@@ -28,11 +28,14 @@ public partial class HeroAI : UnitAI {
         InitStatic();
     }
 
-    public override void SetUnitData(ActiveCard card, GameObject cardObj) {
-        Init();
-        this.unitCard = card;
-        Unit unit = card.baseSpec.unit;
-        int level = (card.ev.lv <= 0) ? 1 : card.ev.lv;
+    public override void SetUnitData(object card, GameObject cardObj) {
+        Init(card);
+        ActiveCard actcard = (ActiveCard)card;
+        MaxHealth = actcard.baseSpec.unit.hitPoint;
+        HP = MaxHealth;
+        this.unitCard = actcard;
+        Unit unit = actcard.baseSpec.unit;
+        int level = (actcard.ev.lv <= 0) ? 1 : actcard.ev.lv;
         SetUnitDataCommon(level);
         SetColliderData();
         unitCard.gameObject = cardObj;
@@ -40,13 +43,13 @@ public partial class HeroAI : UnitAI {
         StartCoroutine(coroutine);
     }
 
-    public override void SetUnitData(Unit unit, int level) {
-        Init();
-        unitCard = new ActiveCard();
-        unitCard.baseSpec.unit = unit;
-        SetUnitDataCommon(level);
-        SetColliderData();
-    }
+    //public override void setunitdata(unit unit, int level) {
+    //    init(unit);
+    //    unitcard = new activecard();
+    //    unitcard.basespec.unit = unit;
+    //    setunitdatacommon(level);
+    //    setcolliderdata();
+    //}
 
     private void SetUnitDataCommon(int level) {
         Unit unit = unitCard.baseSpec.unit;

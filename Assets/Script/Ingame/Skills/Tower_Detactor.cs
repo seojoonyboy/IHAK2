@@ -15,16 +15,11 @@ public class Tower_Detactor : IngameBuilding {
     [SerializeField]
     private GameObject arrow;
 
-    [SerializeField] [ReadOnly] private PlayerController.Player towerOwner;
     [SerializeField] [ReadOnly] private bool isDestroyed = false;
 
     public bool IsDestroyed {
         get { return isDestroyed; }
         set { isDestroyed = true; }
-    }
-
-    public PlayerController.Player TowerOwner {
-        set { towerOwner = value; }
     }
 
     public Transform Enemy {
@@ -39,15 +34,18 @@ public class Tower_Detactor : IngameBuilding {
 
     public void Init(AttackInfo info) {
         base.Init(info);
+        healthBar = transform.Find("UnitBar/Gauge");
+        healthBar.gameObject.SetActive(true);
 
         HP = MaxHealth = 300;
         box = transform.parent.GetComponent<CircleCollider2D>();
         setRange(10);
         damage = 23;
         atkTime = 1.4f;
-        towerOwner = PlayerController.Player.NEUTRAL;
-        healthBar = transform.Find("UnitBar");
+        ownerNum = PlayerController.Player.NEUTRAL;
+        
         ObjectActive();
+        healthBar.gameObject.SetActive(false);
     }
 
     private void setRange(float range) {
@@ -108,11 +106,11 @@ public class Tower_Detactor : IngameBuilding {
         return true;
     }
 
-    public void ObjectActive() {
+    public new void ObjectActive() {
+        base.ObjectActive();
+
         Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_ => isAttacking = true).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; }).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => HP >= MaxHealth).Subscribe(_ => healthBar.gameObject.SetActive(false)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => HP < MaxHealth).Subscribe(_ => healthBar.gameObject.SetActive(true)).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => HP <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
     }
 }

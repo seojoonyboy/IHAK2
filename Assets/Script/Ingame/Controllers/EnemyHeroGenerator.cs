@@ -90,7 +90,7 @@ public class EnemyHeroGenerator : MonoBehaviour {
         unit.name = set.id;
 
         UnitAI unitAI = unit.GetComponent<UnitAI>();
-        unitAI.SetUnitData(card.unit, set.lv);
+        //unitAI.SetUnitData(card.unit, set.lv);
         unit.layer = LayerMask.NameToLayer("EnemyUnit");
 
         GameObject name = unit.transform.Find("Name").gameObject;
