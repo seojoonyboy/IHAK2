@@ -1,17 +1,26 @@
+using AI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IngameBuilding : MonoBehaviour {
-
-    public float buildingHp;
-    public float maxHp;
-
-    public void damaged(float damage) {
-        buildingHp -= Mathf.FloorToInt(damage);
-        
+public class IngameBuilding : SkyNet {
+    public override void Damage(float damage) {
+        base.Damage(damage);
     }
 
-    public virtual void TakeDamage(float amount) { }
-    
+    public override void Init(object data) {
+
+    }
+
+    public override void Recover(float amount) {
+        base.Recover(amount);
+    }
+
+    public override void Die() {
+        base.Die();
+    }
+
+    public override void ChangeOwner(int newNum) {
+        base.ChangeOwner(newNum);
+    }
 }

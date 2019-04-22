@@ -42,8 +42,7 @@ public class FowardHQ : IngameBuilding {
 
     // Use this for initialization
     void Start() {
-        maxHp = 300;
-        buildingHp = maxHp;
+        HP = MaxHealth = 300;
         effectRange = transform.parent.GetComponent<CircleCollider2D>();
         damage = 23;
         atkTime = 1.4f;
@@ -55,8 +54,8 @@ public class FowardHQ : IngameBuilding {
 
     private void Update() {
         if (isDestroyed == true) return;
-        if(buildingHp <= 0) {
-            buildingHp = 0;
+        if(HP <= 0) {
+            HP = 0;
             isDestroyed = true;
             return;
         }
@@ -94,21 +93,9 @@ public class FowardHQ : IngameBuilding {
         return true;
     }
 
-    public override void TakeDamage(float amount) {
-        if (isDestroyed == true) return;
-        Transform gaugeAmount = gauge.transform.Find("Gauge");
-
-        if (buildingHp > amount)
-            buildingHp -= Mathf.FloorToInt(amount);
-        else
-            buildingHp = 0;
-
-        gaugeAmount.localScale = new Vector3(buildingHp / maxHp, gaugeAmount.localScale.y);
-    }
-
     public void RepairBuilding() {
         if (isDestroyed == false) return;
-        buildingHp = maxHp;
+        HP = MaxHealth;
         Transform gaugeAmount = gauge.transform.Find("Gauge");
         gaugeAmount.localScale = new Vector3(1, gaugeAmount.localScale.y);
         isDestroyed = false;
@@ -117,14 +104,9 @@ public class FowardHQ : IngameBuilding {
     public void ObjectActive() {
         Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_ => isAttacking = true).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; }).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp >= maxHp).Subscribe(_ => gauge.SetActive(false)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp < maxHp).Subscribe(_ => gauge.SetActive(true)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
-
-
-        //int a = 3;
-        //Observable.Range(1, 9).Subscribe(row => Debug.Log(a * row)).AddTo(this);
-    
+        Observable.EveryUpdate().Where(_ => HP >= MaxHealth).Subscribe(_ => gauge.SetActive(false)).AddTo(gameObject);
+        Observable.EveryUpdate().Where(_ => HP < MaxHealth).Subscribe(_ => gauge.SetActive(true)).AddTo(gameObject);
+        Observable.EveryUpdate().Where(_ => HP <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);       
         
     }
     

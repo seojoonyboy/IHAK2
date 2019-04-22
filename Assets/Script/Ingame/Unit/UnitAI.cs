@@ -186,8 +186,8 @@ public partial class UnitAI : MonoBehaviour {
             }
         }
         else if(building != null) {
-            building.TakeDamage(power);
-            if(building.buildingHp <= 0f) {
+            building.Damage(power);
+            if(building.HP <= 0f) {
                 targetUnit = null;
                 SetEnemy();
             }
