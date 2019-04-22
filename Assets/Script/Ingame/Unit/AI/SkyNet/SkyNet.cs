@@ -11,6 +11,13 @@ namespace AI {
         [SerializeField] private float maxHp;
         public PlayerController.Player ownerNum;
         [SerializeField] protected Transform healthBar;
+        [SerializeField] private int expPoint;
+        private int lastAttackLayer = 0;
+
+
+        protected static int myLayer = 0;
+        protected static int enemyLayer = 0;
+        protected static int neutralLayer = 0;
 
         public float HP {
             get {
@@ -55,6 +62,15 @@ namespace AI {
             HP -= amount;
         }
 
+        public virtual void Damage(float damage, Transform enemy) {
+            Damage(damage);
+            lastAttackLayer = enemy.gameObject.layer;
+        }
+
+        public int ThisPlayerHitMe() {
+            return lastAttackLayer;
+        }
+
         /// <summary>
         /// 현재 체력을 정수만큼 회복
         /// </summary>
@@ -64,7 +80,28 @@ namespace AI {
         }
 
         public virtual void Die() { }
-        protected virtual void GainExp() { }
+        protected virtual void GiveExp() {
+            int layerToGive = ThisPlayerHitMe();
+            if(layerToGive == neutralLayer) return;
+            List<HeroAI> heroes = new List<HeroAI>();
+            FindCloseHero(heroes, layerToGive);
+            if (heroes.Count == 0) return;
+            int exp = expPoint / heroes.Count;
+            for (int i = 0; i < heroes.Count; i++) heroes[i].ExpGain(exp);
+        }
+
+        private void FindCloseHero(List<HeroAI> heroes, int layer) {
+            float ExpGiveLength = 20f;
+            GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+            for (int i = 0; i < units.Length; i++) {
+                if (units[i].layer != layer) continue;
+                if (units[i].GetComponent<HeroAI>() == null) continue;
+                float length = Vector3.Distance(units[i].transform.position, transform.position);
+                if (length > ExpGiveLength) continue;
+                heroes.Add(units[i].GetComponent<HeroAI>());
+            }
+        }
+
         protected virtual void LvUp() { }
         protected virtual void CalculateHealthBar() {
             if (healthBar == null) {
@@ -80,5 +117,12 @@ namespace AI {
         public virtual void ChangeOwner(int newNum) {
             ownerNum = (PlayerController.Player)newNum;
         }
-    }
+
+        protected int LayertoGive(bool isEnemy) {
+            if(gameObject.layer == myLayer)
+                return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
+            else
+                return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
+        }
+    }   
 }

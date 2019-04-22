@@ -35,10 +35,6 @@ public partial class UnitAI : AI.SkyNet {
     private IngameSceneEventHandler eventHandler;
     protected UnitGroup myGroup;
 
-    protected static int myLayer = 0;
-    protected static int enemyLayer = 0;
-    protected static int neutralLayer = 0;
-
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         if (myLayer > 0) return;
@@ -191,15 +187,8 @@ public partial class UnitAI : AI.SkyNet {
         return false;
     }
 
-    protected int LayertoGive(bool isEnemy) {
-        if(gameObject.layer == myLayer)
-            return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
-        else
-            return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
-    }
-
-    public void Damage(float damage, Transform enemy) {
-        Damage(damage);
+    public override void Damage(float damage, Transform enemy) {
+        base.Damage(damage, enemy);
         myGroup.UnitHittedOrFound(enemy);
     }
 
@@ -211,6 +200,10 @@ public partial class UnitAI : AI.SkyNet {
     public void NearEnemy(Collider2D other) {
         //targetUnit = other.GetComponent<UnitAI>();
         myGroup.UnitHittedOrFound(other.transform);
+    }
+
+    public virtual HeroAI GetMyHeroAI() {
+        return transform.parent.GetComponentInChildren<HeroAI>();
     }
 
     public override void Init(object card) { }
