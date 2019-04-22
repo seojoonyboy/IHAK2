@@ -254,6 +254,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
+        unitAI.ownerNum = Player.PLAYER_1;
         unitAI.SetUnitData(card, cardObj);
 
         GameObject name = hero.transform.Find("Name").gameObject;
