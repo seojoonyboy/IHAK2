@@ -5,7 +5,7 @@ using Spine.Unity;
 using DataModules;
 using System;
 
-public partial class UnitAI : MonoBehaviour {
+public partial class UnitAI : AI.SkyNet {
     public enum aiState {
         NONE,
         MOVE,
@@ -257,8 +257,8 @@ public partial class UnitAI : MonoBehaviour {
         myGroup.UnitHittedOrFound(other.transform);
     }
 
-    public virtual void SetUnitData(ActiveCard card, GameObject cardObj) { }
-    public virtual void SetUnitData(Unit unit, int level) { }
+    public override void Init(object card) { }
+    public override void SetUnitData(object unit, GameObject gameObject) { }
     public virtual void DestoryEnemy() { }
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) { }
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
