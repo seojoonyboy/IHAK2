@@ -9,13 +9,12 @@ public class Tower_Detactor : IngameBuilding {
     private int damage;
     private float atkTime;
     [SerializeField] [ReadOnly] private Transform enemy;
-    
+
     private bool isAttacking = false;
     [SerializeField] [ReadOnly] private float time;
     [SerializeField]
     private GameObject arrow;
 
-    [SerializeField] private GameObject gauge;
     [SerializeField] [ReadOnly] private PlayerController.Player towerOwner;
     [SerializeField] [ReadOnly] private bool isDestroyed = false;
 
@@ -38,23 +37,17 @@ public class Tower_Detactor : IngameBuilding {
         set { enemy = value; }
     }
 
-    void Start() {
-        maxHp = 300;
-        buildingHp = maxHp;
+    public void Init(AttackInfo info) {
+        base.Init(info);
+
+        HP = MaxHealth = 300;
         box = transform.parent.GetComponent<CircleCollider2D>();
         setRange(10);
         damage = 23;
         atkTime = 1.4f;
         towerOwner = PlayerController.Player.NEUTRAL;
-        gauge = transform.Find("UnitBar").gameObject;
+        healthBar = transform.Find("UnitBar");
         ObjectActive();
-    }
-
-    public void init(AttackInfo info) {
-        box = transform.parent.GetComponent<CircleCollider2D>();
-        setRange(info.attackRange);
-        damage = info.power;
-        atkTime = info.attackSpeed;
     }
 
     private void setRange(float range) {
@@ -76,7 +69,7 @@ public class Tower_Detactor : IngameBuilding {
     */
     private void Update() {
         if (isDestroyed) return;
-        if (buildingHp == 0) {
+        if (HP == 0) {
             isDestroyed = true;
             return;
         }
@@ -108,26 +101,6 @@ public class Tower_Detactor : IngameBuilding {
         */
     }
 
-    public override void TakeDamage(float amount) {
-        if (isDestroyed == true) return;
-        Transform gaugeAmount = gauge.transform.Find("Gauge");
-
-        if (buildingHp > amount)
-            buildingHp -= Mathf.FloorToInt(amount);
-        else
-            buildingHp = 0;
-
-        gaugeAmount.localScale = new Vector3(buildingHp / maxHp, gaugeAmount.localScale.y);
-    }
-
-    public void RepairBuilding() {
-        if (isDestroyed == false) return;
-        buildingHp = maxHp;
-        Transform gaugeAmount = gauge.transform.Find("Gauge");
-        gaugeAmount.localScale = new Vector3(1, gaugeAmount.localScale.y);
-        isDestroyed = false;
-    }
-
     private bool checkEnemyDead() {
         if (enemy != null) return false;
         isAttacking = false;
@@ -138,8 +111,8 @@ public class Tower_Detactor : IngameBuilding {
     public void ObjectActive() {
         Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_ => isAttacking = true).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; }).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp >= maxHp).Subscribe(_ => gauge.SetActive(false)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp < maxHp).Subscribe(_ => gauge.SetActive(true)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
+        Observable.EveryUpdate().Where(_ => HP >= MaxHealth).Subscribe(_ => healthBar.gameObject.SetActive(false)).AddTo(gameObject);
+        Observable.EveryUpdate().Where(_ => HP < MaxHealth).Subscribe(_ => healthBar.gameObject.SetActive(true)).AddTo(gameObject);
+        Observable.EveryUpdate().Where(_ => HP <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
     }
 }

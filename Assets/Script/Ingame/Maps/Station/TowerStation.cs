@@ -17,6 +17,7 @@ public partial class TowerStation : DefaultStation {
         GameObject tower = Instantiate(Building, transform);
         tower.layer = 14;
         towerComponent = tower.GetComponent<Tower_Detactor>();
+        towerComponent.Init(null);
     }
 	
 	// Update is called once per frame
