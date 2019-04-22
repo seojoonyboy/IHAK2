@@ -119,8 +119,14 @@ public class FowardHQ : IngameBuilding {
         Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; }).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => buildingHp >= maxHp).Subscribe(_ => gauge.SetActive(false)).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => buildingHp < maxHp).Subscribe(_ => gauge.SetActive(true)).AddTo(gameObject);
-        Observable.EveryUpdate().Where(_ => buildingHp <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);       
+        Observable.EveryUpdate().Where(_ => buildingHp <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
+
+
+        //int a = 3;
+        //Observable.Range(1, 9).Subscribe(row => Debug.Log(a * row)).AddTo(this);
+    
         
     }
+    
     
 }
