@@ -7,10 +7,10 @@ namespace AI {
     /// Mother Of All AI System
     /// </summary>
     public abstract class SkyNet : MonoBehaviour {
-        private float hp;
-        private float maxHp;
+        [SerializeField] private float hp;
+        [SerializeField] private float maxHp;
         public PlayerController.Player ownerNum;
-        protected Transform healthBar;
+        [SerializeField] protected Transform healthBar;
 
         public float HP {
             get {
@@ -43,6 +43,7 @@ namespace AI {
         /// 기본 Data 초기화
         /// </summary>
         public abstract void Init(object data);
+        //public abstract void SetUnitGroup();
 
         /// <summary>
         /// 정수 피해량 만큼 체력 감소
@@ -68,30 +69,12 @@ namespace AI {
                 Debug.LogError(gameObject.name + "의 HealthBar가 설정되어 있지 않습니다.");
                 return;
             }
-            float percent = HP / maxHp;
+            float percent = HP / MaxHealth;
             healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
-        }
-
-        public UnitGroup GetMyUnitGroup() {
-            if(GetComponent<UnitGroup>() == null) {
-                Debug.LogError(gameObject.name + "의 UnitGroup 컴포넌트를 찾을 수 없습니다!");
-                return null;
-            }
-            else {
-                return GetComponent<UnitGroup>();
-            }
         }
 
         public virtual void ChangeOwner(int newNum) {
             ownerNum = (PlayerController.Player)newNum;
-        }
-
-        void Awake() {
-            if(GetComponentInParent<UnitGroup>() == null) {
-                GameObject unitGroup = new GameObject();
-                unitGroup.AddComponent<UnitGroup>();
-                transform.SetParent(unitGroup.transform);
-            }
         }
     }
 }

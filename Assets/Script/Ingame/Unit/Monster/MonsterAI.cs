@@ -30,10 +30,6 @@ public partial class MonsterAI : SkyNet {
     public Object tower;
     public MonsterSpine monsterSpine;
 
-    void Awake() {
-        monsterSpine = GetComponentInChildren<MonsterSpine>();
-    }
-
     public override void Die() {
         base.Die();
 
@@ -53,6 +49,9 @@ public partial class MonsterAI : SkyNet {
     public override void Init(object data) {
         NeutralMonsterData NeutralData = (NeutralMonsterData)data;
         if (NeutralData == null) return;
+
+        healthBar = transform.Find("UnitBar/HP").transform;
+        monsterSpine = GetComponentInChildren<MonsterSpine>();
 
         this.data = NeutralData;
         HP = MaxHealth = this.data.hitPoint;
