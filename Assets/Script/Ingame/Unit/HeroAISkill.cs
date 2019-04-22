@@ -54,7 +54,7 @@ public partial class HeroAI : UnitAI {
         if(targetUnit.GetComponent<UnitAI>())
             targetUnit.GetComponent<UnitAI>().damaged(power * 3, transform);
         else if(targetUnit.GetComponent<MonsterAI>())
-            targetUnit.GetComponent<MonsterAI>().damaged(power * 3);
+            targetUnit.GetComponent<MonsterAI>().Damage(power * 3);
         moveSpeed = moveSpeed / 3;
         SkillFinish();
     }
@@ -79,6 +79,7 @@ public partial class HeroAI : UnitAI {
 
     public void Shell_attack() {
         if(targetUnit != null) {
+            if (targetUnit.GetComponent<IngameBuilding>()) return;
             Debuff_Humantorch debuff = targetUnit.GetComponent<Debuff_Humantorch>();
             if (debuff != null) Destroy(targetUnit.GetComponent<Debuff_Humantorch>());
             targetUnit.gameObject.AddComponent<Debuff_Humantorch>().SetFlameDamage(power);
@@ -103,7 +104,7 @@ public partial class HeroAI : UnitAI {
                 if (units[i].GetComponent<HeroAI>() == null) {
                     drainHp += 5;
                     if(units[i].GetComponent<MonsterAI>())
-                        units[i].GetComponent<MonsterAI>().damaged(power * 0.8f);
+                        units[i].GetComponent<MonsterAI>().Damage(power * 0.8f);
                     else
                         units[i].GetComponent<UnitAI>().damaged(power * 0.8f, transform);
                     skillActed = true;

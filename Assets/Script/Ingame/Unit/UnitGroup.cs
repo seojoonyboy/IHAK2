@@ -14,6 +14,7 @@ public class UnitGroup : MonoBehaviour {
     public MapStation currentStation;
     public MapNode currentNode;
     private List<GameObject> enemyGroup;
+    private GameObject enemyBuilding;
 
     private int maxMinionNum;
     private int currentMinionNum {get {return transform.childCount -1;}}
@@ -175,7 +176,7 @@ public class UnitGroup : MonoBehaviour {
 
         if(monster.tower.GetType() == typeof(BaseCampStation)) {
             enemyGroup = ((BaseCampStation)monster.tower).monsters;
-            enemyGroup.Add(((BaseCampStation)monster.tower).Building);
+            enemyBuilding = ((BaseCampStation)monster.tower).towerComponent.gameObject;
         }
         return;
     }
@@ -193,13 +194,13 @@ public class UnitGroup : MonoBehaviour {
         BaseCampStation baseCamp = detector.GetComponentInParent<BaseCampStation>();
         if(baseCamp != null) {
             enemyGroup = baseCamp.monsters;
-            enemyGroup.Add(baseCamp.towerComponent.gameObject);
+            enemyBuilding = (baseCamp.towerComponent.gameObject);
             return;
         }
         TowerStation tower = detector.GetComponentInParent<TowerStation>();
         if(tower != null) {
             if(enemyGroup == null) enemyGroup = new List<GameObject>();
-            enemyGroup.Add(tower.towerComponent.gameObject);
+            enemyBuilding = tower.towerComponent.gameObject;
             return;
         }
         Debug.LogWarning("어떤 건물에 있는 놈인지 이종욱에게 알려주세요");
@@ -208,8 +209,9 @@ public class UnitGroup : MonoBehaviour {
 
     private bool CheckEnemyLeft() {
         if(enemyGroup == null) return false;
-        if(enemyGroup.Count != 0) return true;
+        if(enemyGroup.Count != 0 || enemyBuilding != null) return true;
         enemyGroup = null;
+        enemyBuilding = null;
         FinishBattle();
         return false;
     }
@@ -226,6 +228,14 @@ public class UnitGroup : MonoBehaviour {
             Transform next = enemyGroup[i].transform;
             float length = Vector3.Distance(myTransform.position, next.position);
             CheckDistance(ref target, ref shortLength, next, length);
+        }
+        if(target == null) {
+            if(enemyBuilding == null) return null;
+            if(enemyBuilding.GetComponent<IngameBuilding>().buildingHp <= 0) {
+                enemyBuilding = null;
+                return null;
+            }
+            return enemyBuilding.transform;
         }
         return target;
     }

@@ -20,11 +20,11 @@ public partial class HealingCenterStation : DefaultStation {
     }
 
     private void Update() {
-        if(OwnerNum == PlayerController.Player.NEUTRAL && !startSeize && enemys.Count > 0) {
-            startSeize = true;
-            seizePlayer = enemys[0].layer;
-            StartCoroutine(SeizeNeutralBuilding());
-        }
+        //if(OwnerNum == PlayerController.Player.NEUTRAL && !startSeize && enemys.Count > 0) {
+        //    startSeize = true;
+        //    seizePlayer = enemys[0].layer;
+        //    StartCoroutine(SeizeNeutralBuilding());
+        //}
         if(!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
             startSeize = true;
             StartCoroutine(SeizeBuilding());
@@ -35,7 +35,7 @@ public partial class HealingCenterStation : DefaultStation {
         int time = 0;
         while (startSeize) {
             if (enemys.Count == 0) startSeize = false;
-            if (time == 200) {
+            if (time == 100) {
                 OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
                 GetComponent<Collider2D>().enabled = false;
                 enemys.Clear();

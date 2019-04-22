@@ -51,7 +51,7 @@ public class Magma : MonoBehaviour {
                     target.GetComponent<UnitAI>().damaged(data.amount);
                 }
                 else if(target.layer == 14) {
-                    target.GetComponent<MonsterAI>().damaged(data.amount);
+                    target.GetComponent<MonsterAI>().Damage(data.amount);
                 }
             }
             count++;

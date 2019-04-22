@@ -31,7 +31,7 @@ public class Debuff_Humantorch : MonoBehaviour {
         time += Time.deltaTime;
         if(time >= 1.0f) {
             if(!inMonster) unitIdentity.damaged(flameDamage);
-            else monsterIdentity.damaged(flameDamage);
+            else monsterIdentity.Damage(flameDamage);
             time = 0;
             count++;
         }

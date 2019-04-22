@@ -179,8 +179,8 @@ public partial class UnitAI : MonoBehaviour {
             }
         }
         else if(monsterAI != null) {
-            monsterAI.damaged(power);
-            if (monsterAI.health <= 0f) {
+            monsterAI.Damage(power);
+            if (monsterAI.HP <= 0f) {
                 targetUnit = null;
                 SetEnemy();
             }
