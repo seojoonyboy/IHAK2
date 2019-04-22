@@ -43,6 +43,8 @@ namespace AI {
         /// 기본 Data 초기화
         /// </summary>
         public abstract void Init(object data);
+
+        public abstract void SetUnitData(object data, GameObject gameObject);
         //public abstract void SetUnitGroup();
 
         /// <summary>

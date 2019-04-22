@@ -142,6 +142,7 @@ public partial class CreepStation {
                 
                 instantiatedMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
                 instantiatedMonster.GetComponent<MonsterAI>().tower = this;
+                instantiatedMonster.GetComponent<MonsterAI>().ownerNum = OwnerNum;
                 monsters.Add(instantiatedMonster);
             }
         }
