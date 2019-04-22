@@ -18,7 +18,6 @@ public partial class HeroAI : UnitAI {
     IEnumerator coroutine;
 
     public override void Init(object card) {
-        if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
         cooltimeBar = transform.Find("UnitBar/SkillCool");
@@ -28,7 +27,7 @@ public partial class HeroAI : UnitAI {
         InitStatic();
     }
 
-    public override void SetUnitData(object card, GameObject cardObj) {
+    public override void Init(object card, GameObject cardObj) {
         Init(card);
         ActiveCard actcard = (ActiveCard)card;
         MaxHealth = actcard.baseSpec.unit.hitPoint;
@@ -60,11 +59,9 @@ public partial class HeroAI : UnitAI {
         power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
-        if (health == 0) health = unitCard.ev.hp;
-        if (health == 0) health = maxHealth;
-        else health += HealTime();
-        if (health > maxHealth) health = maxHealth;
-        calculateHealthBar();
+        if (HP == 0) HP = MaxHealth = unitCard.ev.hp;
+        else HP += HealTime();
+        if (HP > MaxHealth) HP = MaxHealth;
         calculateExpBar();
         ChangeLvText();
         setState(skillState.COOLING);
@@ -77,8 +74,8 @@ public partial class HeroAI : UnitAI {
                 Slider healthSlider = unitCard.gameObject.transform.Find("Stats/Health").GetComponent<Slider>();
                 Slider expSlider = unitCard.gameObject.transform.Find("Stats/Exp").GetComponent<Slider>();
 
-                healthSlider.value = health;
-                healthSlider.maxValue = maxHealth;
+                healthSlider.value = HP;
+                healthSlider.maxValue = MaxHealth;
 
                 expSlider.value = unitCard.ev.exp;
                 expSlider.maxValue = ExpNeed();
@@ -98,8 +95,8 @@ public partial class HeroAI : UnitAI {
         if(weaponSkill != null) weaponSkill();
     }
 
-    public override void damaged(float damage) {
-        base.damaged(damage);
+    public override void Damage(float damage) {
+        base.Damage(damage);
         unitCard.TakeDamage(Mathf.RoundToInt(damage));
     }
 
@@ -160,15 +157,15 @@ public partial class HeroAI : UnitAI {
 
     private float HealTime() {
         int totalTime = (int)Time.realtimeSinceStartup - unitCard.ev.time;
-        float healed = maxHealth * totalTime * 0.03f;
+        float healed = MaxHealth * totalTime * 0.03f;
         return healed;
     }
 
     private void LvUpHP() { //레벨업 했을 때 최대체력 변화와 그에 따른 체력 추가를 보는것.
-        float beforeMax = maxHealth;
+        float beforeMax = MaxHealth;
         SetMaxHP();
-        beforeMax = maxHealth - beforeMax;
-        health += beforeMax;
+        beforeMax = MaxHealth - beforeMax;
+        HP += beforeMax;
     }
 
     private void calculateExpBar() {
@@ -177,10 +174,10 @@ public partial class HeroAI : UnitAI {
     }
 
     private void SetMaxHP() {
-        maxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
+        MaxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
     }
 
-    public override void DestoryEnemy() {
+    public override void Die() {
         unitCard.ChangeHp(0);
 
         if (gameObject.layer == myLayer) {
@@ -195,7 +192,7 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
-        unitCard.ChangeHp((int)health);
+        unitCard.ChangeHp((int)HP);
         unitCard.ev.time = (int)Time.realtimeSinceStartup;
         ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
         Destroy(gameObject);
@@ -232,7 +229,7 @@ public partial class HeroAI : UnitAI {
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = PowerUP(unit.attackPower);
-        maxHealth = PowerUP(unit.hitPoint);
+        MaxHealth = PowerUP(unit.hitPoint);
     }
 
     public MapStation GetCurrentNode() {

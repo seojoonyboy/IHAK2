@@ -19,7 +19,7 @@ public class AttackAction : Action {
             if (target == null) return;
             if (target.GetComponent<UnitAI>() != null) {
                 if(target != null) {
-                    target.GetComponent<UnitAI>().damaged(controller.GetComponent<MonsterAI>().data.attackPower);
+                    target.GetComponent<UnitAI>().Damage(controller.GetComponent<MonsterAI>().data.attackPower);
                     controller.GetComponent<MonsterAI>().monsterSpine.Attack();
                 }
             }

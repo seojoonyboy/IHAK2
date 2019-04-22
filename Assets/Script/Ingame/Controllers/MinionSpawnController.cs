@@ -34,12 +34,12 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             if(playerNum == PlayerController.Player.PLAYER_1) {
                 var effectModules = PlayerController.Instance.PlayerPassiveCards().effectModules;
                 if (effectModules.ContainsKey("Unit_health")) {
-                    minions[i].GetComponent<MinionAI>().health += effectModules["Unit_health"];
+                    minions[i].GetComponent<MinionAI>().HP += effectModules["Unit_health"];
                     Debug.Log("아군 미니언 체력 버프 적용됨");
                 }
             }
 
-            minions[i].GetComponent<MinionAI>().SetUnitData(null, null);
+            minions[i].GetComponent<MinionAI>().Init(null, null);
             minions[i].layer = minionLayer;
             minions[i].transform.position = transform.GetChild(i).position;
         }

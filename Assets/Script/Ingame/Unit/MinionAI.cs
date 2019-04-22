@@ -12,12 +12,11 @@ public class MinionAI : UnitAI {
     }
 
     public override void Init(object card) {
-        if (healthBar != null) return;
         healthBar = transform.Find("UnitBar/HP");
         unitSpine = GetComponentInChildren<UnitSpine>();
     }
 
-    public override void SetUnitData(object card, GameObject cardObj) {
+    public override void Init(object card, GameObject cardObj) {
         Init(card);
         InitStatic();
         moveSpeed = unit.moveSpeed;
@@ -25,8 +24,8 @@ public class MinionAI : UnitAI {
         attackRange = unit.attackRange;
         power = unit.attackPower;
         SetMaxHP();
-        health = unit.hitPoint;
-        calculateHealthBar();
+        HP = unit.hitPoint;
+        CalculateHealthBar();
         SetColliderData();
     }
 
@@ -38,17 +37,17 @@ public class MinionAI : UnitAI {
         attackSpeed = unit.attackSpeed * heroBonus;
         attackRange = unit.attackRange * heroBonus;
         power = unit.attackPower * heroBonus;
-        maxHealth = unit.hitPoint * heroBonus;
+        MaxHealth = unit.hitPoint * heroBonus;
         if(!levelup)
-            health = maxHealth;
-        calculateHealthBar();
+            HP = MaxHealth;
+        CalculateHealthBar();
         SetColliderData();
     }
 
     private void SetMaxHP() {
-        maxHealth = unit.hitPoint;
+        MaxHealth = unit.hitPoint;
     }
-    public override void DestoryEnemy() {
+    public override void Die() {
         GiveExp();
         playerController.DieEffect(this);   //사망시 패시브 효과 처리
         Destroy(gameObject);
@@ -76,6 +75,6 @@ public class MinionAI : UnitAI {
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;
-        maxHealth = unit.hitPoint;
+        MaxHealth = unit.hitPoint;
     }
 }

@@ -47,11 +47,8 @@ public class Magma : MonoBehaviour {
         while (count < loopCount) {
             foreach(GameObject target in targets.ToList()) {
                 if (target == null) continue;
-                if(target.layer == 11) {
-                    target.GetComponent<UnitAI>().damaged(data.amount);
-                }
-                else if(target.layer == 14) {
-                    target.GetComponent<MonsterAI>().Damage(data.amount);
+                if(target.layer == 11 || target.layer == 14) {
+                    target.GetComponent<AI.SkyNet>().Damage(data.amount);
                 }
             }
             count++;

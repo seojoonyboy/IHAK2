@@ -255,7 +255,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.ownerNum = Player.PLAYER_1;
-        unitAI.SetUnitData(card, cardObj);
+        unitAI.Init(card, cardObj);
 
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);

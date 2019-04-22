@@ -16,11 +16,8 @@ public partial class UnitAI : AI.SkyNet {
     protected delegate void timeUpdate(float time);
     protected timeUpdate update;
     protected Transform targetUnit;
-    protected Transform healthBar;
     [SerializeField] private GameObject arrow;
 
-    public float health = 0;
-    protected float maxHealth = 0;
     public float power = 0;
     protected float defense = 0;
     public float moveSpeed;
@@ -167,30 +164,9 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     public virtual void attackUnit() {
-        UnitAI unitAI = targetUnit.GetComponent<UnitAI>();
-        MonsterAI monsterAI = targetUnit.GetComponent<MonsterAI>();
-        IngameBuilding building = targetUnit.GetComponent<IngameBuilding>();
-        if(unitAI != null) {
-            unitAI.damaged(power, transform); 
-            unitAI.attackingHero(this);
-            if (unitAI.health <= 0f) {
-                targetUnit = null;
-                SetEnemy();
-            }
-        }
-        else if(monsterAI != null) {
-            monsterAI.Damage(power);
-            if (monsterAI.HP <= 0f) {
-                targetUnit = null;
-                SetEnemy();
-            }
-        }
-        else if(building != null) {
-            building.Damage(power);
-            if(building.HP <= 0f) {
-                targetUnit = null;
-                SetEnemy();
-            }
+        AI.SkyNet skyNet = targetUnit.GetComponent<AI.SkyNet>();
+        if(skyNet != null) {
+            skyNet.Damage(power);
         }
         else Debug.LogWarning("유닛도 아닌놈을 타겟으로 잡은건지 이종욱에게 알려주세요 :" + targetUnit.name);
         unitSpine.Attack();
@@ -215,30 +191,6 @@ public partial class UnitAI : AI.SkyNet {
         return false;
     }
 
-    public virtual void damaged(float damage) {
-        health -= damage;
-        unitSpine.Hitted();
-        calculateHealthBar();
-        if (health <= 0) DestoryEnemy();
-    }
-
-    public void damaged(float damage, Transform enemy) {
-        damaged(damage);
-        myGroup.UnitHittedOrFound(enemy);
-    }
-
-    public void Healed() {
-        float amount = maxHealth * 0.05f;
-        health += amount;
-        if (health > maxHealth) health = maxHealth;
-    }
-
-    protected void Healed(float healingHP) {
-        health += healingHP;
-        if (health > maxHealth) health = maxHealth;
-        calculateHealthBar();
-    }
-
     protected int LayertoGive(bool isEnemy) {
         if(gameObject.layer == myLayer)
             return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
@@ -246,10 +198,14 @@ public partial class UnitAI : AI.SkyNet {
             return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
     }
 
-    protected void calculateHealthBar() {
-        if (!healthBar.parent.gameObject.activeSelf) healthBar.parent.gameObject.SetActive(true);
-        float percent = (float)health / maxHealth;
-        healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+    public void Damage(float damage, Transform enemy) {
+        Damage(damage);
+        myGroup.UnitHittedOrFound(enemy);
+    }
+
+    public void Heal() {
+        float amount = MaxHealth * 0.05f;
+        base.Recover(amount);
     }
 
     public void NearEnemy(Collider2D other) {
@@ -258,8 +214,7 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     public override void Init(object card) { }
-    public override void SetUnitData(object unit, GameObject gameObject) { }
-    public virtual void DestoryEnemy() { }
+    public override void Init(object unit, GameObject gameObject) { }
     public virtual void ReturnDeck(Enum Event_Type, Component Sender, object Param) { }
     public virtual int CalPower() { return Mathf.RoundToInt(power); }
     public virtual void attackingHero(UnitAI unit) { }

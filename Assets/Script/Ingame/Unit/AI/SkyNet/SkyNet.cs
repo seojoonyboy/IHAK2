@@ -44,7 +44,7 @@ namespace AI {
         /// </summary>
         public abstract void Init(object data);
 
-        public abstract void SetUnitData(object data, GameObject gameObject);
+        public abstract void Init(object data, GameObject gameObject);
         //public abstract void SetUnitGroup();
 
         /// <summary>
@@ -72,7 +72,9 @@ namespace AI {
                 return;
             }
             float percent = HP / MaxHealth;
-            healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+            if(MaxHealth != 0) {
+                healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+            }
         }
 
         public virtual void ChangeOwner(int newNum) {

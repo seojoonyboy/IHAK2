@@ -52,7 +52,7 @@ public partial class HeroAI : UnitAI {
             yield return null;
         }
         if(targetUnit.GetComponent<UnitAI>())
-            targetUnit.GetComponent<UnitAI>().damaged(power * 3, transform);
+            targetUnit.GetComponent<UnitAI>().Damage(power * 3, transform);
         else if(targetUnit.GetComponent<MonsterAI>())
             targetUnit.GetComponent<MonsterAI>().Damage(power * 3);
         moveSpeed = moveSpeed / 3;
@@ -106,19 +106,19 @@ public partial class HeroAI : UnitAI {
                     if(units[i].GetComponent<MonsterAI>())
                         units[i].GetComponent<MonsterAI>().Damage(power * 0.8f);
                     else
-                        units[i].GetComponent<UnitAI>().damaged(power * 0.8f, transform);
+                        units[i].GetComponent<UnitAI>().Damage(power * 0.8f, transform);
                     skillActed = true;
                 }
                 else {
                     drainHp += 20;
                     drainHp += 5;
-                    units[i].GetComponent<HeroAI>().damaged(power * 0.8f, transform);
+                    units[i].GetComponent<HeroAI>().Damage(power * 0.8f, transform);
                     skillActed = true;
                 }
             }
             yield return null;
         }
-        Healed(drainHp);
+        Recover(drainHp);
         SkillFinish();
     }
 
