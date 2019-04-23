@@ -20,6 +20,7 @@ public class MenuSceneController2 : MonoBehaviour {
     //[SerializeField] Transform buttonSelect;
     [SerializeField] Transform buttonList;
     [SerializeField] GameObject deckListWnd;
+    [SerializeField] GameObject missionListWnd;
     [SerializeField] Text userNickname;
     [SerializeField] DeckListController deckListController;
     [SerializeField] Button exitDeckList;
@@ -98,6 +99,7 @@ public class MenuSceneController2 : MonoBehaviour {
         hss = FindObjectOfType<HorizontalScrollSnap>();
         userNickname.text = AccountManager.Instance.userInfos.nickname;
         deckListWnd.SetActive(false);
+        missionListWnd.SetActive(false);
         buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => OpenDeckWindow());
         exitDeckList.OnClickAsObservable().Subscribe(_ => CloseDeckWindow());
         
@@ -151,10 +153,12 @@ public class MenuSceneController2 : MonoBehaviour {
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-
+        missionListWnd.SetActive(true);
+        /*
         if (accountManager.decks.Count == 0)
             Modal.instantiate("저장된 덱정보가 없습니다.", Modal.Type.CHECK);
         else
             gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
+            */
     }
 }

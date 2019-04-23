@@ -39,6 +39,7 @@ public partial class MonsterAI : SkyNet {
         if (tower.GetType() == typeof(BaseCampStation)) {
             ((BaseCampStation)tower).MonsterDie(gameObject);
         }
+        GiveExp();
         Destroy(gameObject);
     }
 }

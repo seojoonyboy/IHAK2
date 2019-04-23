@@ -100,6 +100,13 @@ public partial class HeroAI : UnitAI {
         unitCard.TakeDamage(Mathf.RoundToInt(damage));
     }
 
+    public override void Damage(float damage, Transform enemy) {
+        base.Damage(damage, enemy);
+        UnitAI unitAI = enemy.GetComponent<UnitAI>();
+        if(unitAI == null) return;
+        attackingHero(unitAI);
+    }
+
     public void ExpGain(int exp) {
         unitCard.ev.exp += exp;
         CheckLv();
@@ -199,13 +206,19 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void attackingHero(UnitAI unit) {
-        if (unit.GetComponent<HeroAI>() == null) return;
+        //TODO : 미니언일 경우 영웅을 데려와야하고 영웅이면 그대로 기록
+        HeroAI heroAI = unit.GetMyHeroAI();
+        if(heroAI == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
             if (fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
         fightHeroes.Add(unit.GetComponent<HeroAI>());
     }
 
-    private void GiveExp() {
+    public override HeroAI GetMyHeroAI() {
+        return this;
+    }
+
+    protected override void GiveExp() {
         if (fightHeroes.Count == 0) return;
         int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
         RemoveDeadHeroNoExp();

@@ -19,6 +19,7 @@ public class IngameBuilding : SkyNet {
 
     public override void Die() {
         base.Die();
+        GiveExp();
     }
 
     public override void ChangeOwner(int newNum) {
