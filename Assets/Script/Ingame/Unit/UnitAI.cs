@@ -29,6 +29,7 @@ public partial class UnitAI : AI.SkyNet {
     protected static PlayerController playerController;
     protected static IngameDeckShuffler ingameDeckShuffler;
     protected static EnemyHeroGenerator enemyHeroGenerator;
+    protected static IngameHpSystem ingameHpSystem;
 
     protected UnitSpine unitSpine;
     private UnitDetector detector;
@@ -66,6 +67,7 @@ public partial class UnitAI : AI.SkyNet {
         if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
         if (enemyHeroGenerator == null) enemyHeroGenerator = FindObjectOfType<EnemyHeroGenerator>();
+        if (ingameHpSystem == null) ingameHpSystem = IngameHpSystem.Instance;
     }
 
     protected void SetColliderData() {
@@ -163,6 +165,10 @@ public partial class UnitAI : AI.SkyNet {
         AI.SkyNet skyNet = targetUnit.GetComponent<AI.SkyNet>();
         if(skyNet != null) {
             skyNet.Damage(power);
+        }
+        else if(targetUnit.GetComponent<TileObject>()) {
+            bool isPlayer1 = myLayer == LayerMask.NameToLayer("PlayerUnit");            
+            ingameHpSystem.TakeDamage(isPlayer1 ? IngameHpSystem.Target.ENEMY_1 : IngameHpSystem.Target.ME, Mathf.FloorToInt(power));
         }
         else Debug.LogWarning("유닛도 아닌놈을 타겟으로 잡은건지 이종욱에게 알려주세요 :" + targetUnit.name);
         unitSpine.Attack();
