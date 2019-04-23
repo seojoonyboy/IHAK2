@@ -11,6 +11,7 @@ using Container;
 using Sirenix.OdinInspector;
 using TMPro;
 using System.Text;
+using ingameUIModules;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
@@ -217,6 +218,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     public MinionSpawnController MinionSpawnController() {
         return _instance.GetComponent<MinionSpawnController>();
+    }
+
+    public HeroSummonListener HeroSummonListener() {
+        return _instance.GetComponent<HeroSummonListener>();
     }
 }
 
