@@ -72,6 +72,27 @@ public class UnitGroup : MonoBehaviour {
         moving = false;
         UnitMoveAnimation(false);
         MovingPos = null;
+        AmIinHQ();
+    }
+
+    private void AmIinHQ() {
+        UnitAI unit = transform.GetComponentInChildren<UnitAI>();
+        if(unit == null) return;
+        int unitLayer = unit.gameObject.layer;
+        bool isPlayer1 = unitLayer == LayerMask.NameToLayer("PlayerUnit");
+        bool youAreinHQ = currentStation.mapPostion == (isPlayer1 ? EnumMapPosition.S12 : EnumMapPosition.S10);
+        if(!youAreinHQ) return;
+        AttackHQ(isPlayer1 ? "EnemyCity" : "PlayerCity");
+    }
+
+    private void AttackHQ(string name) {
+        GameObject group = GameObject.Find(name);
+        Transform hq = group.transform.GetChild(0).Find("Tile[2,2]");
+        enemyBuilding = hq.gameObject;
+        enemyGroup = new List<GameObject>();
+        this.enabled = false;
+        attacking = true;
+        UnitIndividualSet(true);
     }
 
     private void Start() {
@@ -255,6 +276,14 @@ public class UnitGroup : MonoBehaviour {
     public Transform GiveMeEnemy(Transform myTransform) {
         if(!CheckEnemyLeft()) return null;
         Transform target = null;
+        CheckEnemyGroup(myTransform, ref target);
+        if(target != null) return target;
+        CheckEnemyBuilding(ref target);
+        return target;
+    }
+
+    private void CheckEnemyGroup(Transform myTransform, ref Transform target) {
+        if(enemyGroup == null) return;
         float shortLength = float.MaxValue;
         for(int i = 0; i < enemyGroup.Count; i++) {
             if(enemyGroup[i] == null) {
@@ -265,15 +294,19 @@ public class UnitGroup : MonoBehaviour {
             float length = Vector3.Distance(myTransform.position, next.position);
             CheckDistance(ref target, ref shortLength, next, length);
         }
-        if(target == null) {
-            if(enemyBuilding == null) return null;
-            if(enemyBuilding.GetComponent<IngameBuilding>().HP <= 0) {
-                enemyBuilding = null;
-                return null;
-            }
-            return enemyBuilding.transform;
+    }
+
+    private void CheckEnemyBuilding(ref Transform target) {
+        if(enemyBuilding == null) return;
+        if(enemyBuilding.GetComponent<TileObject>()) {
+            target = enemyBuilding.transform;
+            return;
         }
-        return target;
+        if(enemyBuilding.GetComponent<IngameBuilding>().HP <= 0) {
+            enemyBuilding = null;
+            return;
+        }
+        target = enemyBuilding.transform;
     }
 
     private void CheckDistance(ref Transform target, ref float shortLength, Transform next, float length) {

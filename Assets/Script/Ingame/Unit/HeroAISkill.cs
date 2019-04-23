@@ -79,7 +79,7 @@ public partial class HeroAI : UnitAI {
 
     public void Shell_attack() {
         if(targetUnit != null) {
-            if (targetUnit.GetComponent<IngameBuilding>()) return;
+            if (targetUnit.GetComponent<IngameBuilding>() || targetUnit.GetComponent<TileObject>()) return;
             Debuff_Humantorch debuff = targetUnit.GetComponent<Debuff_Humantorch>();
             if (debuff != null) Destroy(targetUnit.GetComponent<Debuff_Humantorch>());
             targetUnit.gameObject.AddComponent<Debuff_Humantorch>().SetFlameDamage(power);
