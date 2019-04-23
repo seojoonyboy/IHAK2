@@ -46,6 +46,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public string NickName { get; set; }
     public UserClass userInfos { get; set; }
     public int leaderIndex { get; set; }
+    public int missionClear = 0;
     
 
     private Wallet wallet;
