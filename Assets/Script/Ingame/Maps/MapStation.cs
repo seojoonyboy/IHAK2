@@ -1,12 +1,31 @@
-﻿using System.Collections;
+using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapStation : MapNode {
+    public enum NodeDirection {
+        RightUp = 0,
+        Right = 1,
+        RighDown = 2,
+        LeftDown = 3,
+        Left = 4,
+        LeftUp = 5,
+        Up = 6,
+        Down = 7,
+    }
+
 	[SerializeField] protected MapRoad[] roads;
-	public List<Vector3> mapStationList;
-	
-	public MapStation Search(EnumMapPosition destination) {
+    //[SerializeField] public List<NodeDirection> adjNodes;
+    [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
+    [SerializeField] public Dictionary<NodeDirection, MapNode> adjNodes = new Dictionary<NodeDirection, MapNode>();
+    public List<Vector3> mapStationList;
+
+    public Dictionary<NodeDirection, MapNode> AdjNodes {
+        get { return adjNodes; }
+    }
+
+    public MapStation Search(EnumMapPosition destination) {
 		for(int i = 0; i < roads.Length; i++) {
 			if(usedRoad.Contains(roads[i].mapPostion)) continue;
 			//도착지가 길일 경우

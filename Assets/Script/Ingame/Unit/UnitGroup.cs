@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
+using UniRx;
+using UniRx.Triggers;
 
 public class UnitGroup : MonoBehaviour {
     private UnitSpine[] unitAnimations;
@@ -15,9 +17,11 @@ public class UnitGroup : MonoBehaviour {
     public MapNode currentNode;
     private List<GameObject> enemyGroup;
     private GameObject enemyBuilding;
+    private Collider2D clickCol;
+    private bool directionOpen = false;
 
     private int maxMinionNum;
-    private int currentMinionNum {get {return transform.childCount -1;}}
+    private int currentMinionNum {get {return transform.childCount -2;}}
     private string minionType;
 
     public void SetMove(List<Vector3> pos) {
@@ -47,7 +51,7 @@ public class UnitGroup : MonoBehaviour {
     }
     private void AttackUpdate(float time) {
         if(!attacking) return;
-        transform.position = transform.GetChild(0).position;
+        transform.position = transform.GetChild(1).position;
     }
 
     private void Moving(float time) {
@@ -71,11 +75,35 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void Start() {
+        clickCol = GetComponent<Collider2D>();
+        var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => ClickGroup(Input.mousePosition)).Subscribe(_ => checkWay());
         GetData();
         SetMinionData();
         UnitMoveAnimation(false);
         if(!moving) return;
         MoveStart();
+    }
+
+    private bool ClickGroup(Vector2 pos) {
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
+            foreach(RaycastHit2D target in hits) {
+                if (target.collider == clickCol)
+                    return true;
+                if (target.collider.gameObject.layer == 31) {
+                    int index = target.collider.transform.GetSiblingIndex();
+                    List<Vector3> path = new List<Vector3>();
+                    path.Add(currentStation.transform.position);
+                    path.Add(currentStation.adjNodes[(MapStation.NodeDirection)index].transform.position);
+                    SetMove(path);
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     private void GetData() {
@@ -105,7 +133,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private bool IsHeroDead() {
-        HeroAI hero = transform.GetChild(0).GetComponent<HeroAI>();
+        HeroAI hero = transform.GetChild(1).GetComponent<HeroAI>();
         if(hero == null) return true;
         return false;
     }
@@ -146,7 +174,15 @@ public class UnitGroup : MonoBehaviour {
         currentNode = node.gameObject.GetComponent<MapNode>();
         MapStation station = node.gameObject.GetComponent<MapStation>();
         if(station == null) return true;
+        if (currentStation != null) {
+            foreach (MapStation.NodeDirection nextNode in currentStation.adjNodes.Keys) {
+                transform.GetChild(0).GetChild((int)nextNode).gameObject.SetActive(false);
+            }
+        }
         currentStation = station;
+        foreach (MapStation.NodeDirection nextNode in currentStation.adjNodes.Keys) {
+            transform.GetChild(0).GetChild((int)nextNode).gameObject.SetActive(true);
+        }
         return true;
     }
 
@@ -265,5 +301,12 @@ public class UnitGroup : MonoBehaviour {
     public void UnitDead() {
         //TODO : 테스트 필요 게임오브젝트 파괴 명령 해도 바로 안사라지는 문제가 있어서 -1로 해야하는데 일단 0으로 세팅
         if(currentMinionNum == 0) Destroy(gameObject);
+    }
+
+    private void checkWay() {
+        directionOpen = !directionOpen;
+        foreach (MapStation.NodeDirection node in currentStation.adjNodes.Keys) {
+            transform.GetChild(0).gameObject.SetActive(directionOpen);
+        }
     }
 }

@@ -1,8 +1,9 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapNode : MonoBehaviour {
+public class MapNode : SerializedMonoBehaviour {
     public EnumMapPosition mapPostion;
     protected static Queue<MapStation> searchQueue;
     protected static List<EnumMapPosition> usedRoad;
