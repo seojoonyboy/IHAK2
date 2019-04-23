@@ -150,15 +150,26 @@ public class MenuSceneController2 : MonoBehaviour {
         showTown.SetActive(true);
     }
 
+    public void OpenMissionWindow() {
+        town.SetActive(false);
+        missionListWnd.SetActive(true);
+    }
+
+    public void CloseMissionWindow() {
+        town.SetActive(true);
+        missionListWnd.SetActive(false);
+    }
+
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        //missionListWnd.SetActive(true);
+        //OpenMissionWindow();
+
         
         if (accountManager.decks.Count == 0)
             Modal.instantiate("저장된 덱정보가 없습니다.", Modal.Type.CHECK);
         else
             gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
-            
+          
     }
 }

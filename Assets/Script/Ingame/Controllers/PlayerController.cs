@@ -11,6 +11,7 @@ using Container;
 using Sirenix.OdinInspector;
 using TMPro;
 using System.Text;
+using ingameUIModules;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
@@ -68,6 +69,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public GameObject cam;
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
+    public GameObject 
+        GoldResourceFlick,
+        CitizenResourceFlick;
 
     private static PlayerController _instance;
 
@@ -218,6 +222,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public MinionSpawnController MinionSpawnController() {
         return _instance.GetComponent<MinionSpawnController>();
     }
+
+    public HeroSummonListener HeroSummonListener() {
+        return _instance.GetComponent<HeroSummonListener>();
+    }
 }
 
 public partial class PlayerController {
@@ -251,7 +259,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
 
         GameObject hero = Instantiate(result, unitGroup.transform);
-        cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
+        cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.ownerNum = Player.PLAYER_1;
@@ -261,7 +269,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
         _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
-        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardDragHandler>().path);
+        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
     public GameObject GetHeroPrefab(string id) {

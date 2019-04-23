@@ -89,6 +89,8 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, heroCardParent);
+            card.GetComponent<Toggle>().group = card.transform.parent.GetComponent<ToggleGroup>();
+
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
