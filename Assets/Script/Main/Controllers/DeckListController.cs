@@ -65,6 +65,7 @@ public partial class DeckListController : MonoBehaviour {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + accountManager.DEVICEID + "/decks");
+        Debug.Log(url);
         _networkManager.request("GET", url.ToString(), ReqGetDecksCallback, false);
     }
 
@@ -95,6 +96,9 @@ public partial class DeckListController : MonoBehaviour {
                 Sort(decks);
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, null, leaderIndex);
             }
+        }
+        else {
+            Debug.Log("에러!" + response.responseCode);
         }
     }
 
