@@ -122,8 +122,8 @@ public class UnitGroup : MonoBehaviour {
                     return true;
                 }
             }
-            return false;
         }
+        if (directionOpen) checkWay();
         return false;
     }
 
