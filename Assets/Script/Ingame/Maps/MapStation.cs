@@ -28,6 +28,14 @@ public class MapStation : MapNode {
 		return null;
 	}
 
+	public List<MapStation> AdjacentStation() {
+		List<MapStation> stations = new List<MapStation>();
+		for(int i = 0; i < roads.Length; i++) {
+			stations.Add(roads[i].NextNode(mapPostion));
+		}
+		return stations;
+	}
+
 	public void SetList(List<Vector3> list) {
 		if(mapStationList.Count != 0 && mapStationList.Count <= list.Count) return;
 		mapStationList = new List<Vector3>(list);
