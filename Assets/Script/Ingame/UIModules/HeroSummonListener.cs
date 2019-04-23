@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 using System;
+using System.Linq;
+using DataModules;
+using BitBenderGames;
 
 namespace ingameUIModules {
     public class HeroSummonListener : MonoBehaviour {
@@ -33,6 +36,17 @@ namespace ingameUIModules {
             m_Raycaster.Raycast(m_PointEventData, results);
 
             if (results.Count == 0) {
+                ToggleGroup tg = PlayerController.Instance.deckShuffler().heroCardParent.GetComponent<ToggleGroup>();
+                var toggles = tg.ActiveToggles();
+                Toggle toggle = toggles.ToList().First();
+                if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
+                    PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
+                }
+                else {
+                    IngameAlarm.instance.SetAlarm("이미 소환한 유닛입니다!");
+                }
+                //PlayerController.Instance.HeroSummon(toggle.GetComponent<ActiveCardInfo>().data, toggle.gameObject);
+
                 Debug.Log("화면을 클릭했음");
                 return true;
             }
@@ -49,6 +63,9 @@ namespace ingameUIModules {
 
         public void ToggleListener(bool isOn) {
             GetComponent<ObservableUpdateTrigger>().enabled = isOn;
+            PlayerController.Instance.GoldResourceFlick.SetActive(isOn);
+            Camera.main.GetComponent<MobileTouchCamera>().enabled = !isOn;
+            //PlayerController.Instance.CitizenResourceFlick.SetActive(isOn);
         }
     }
 }
