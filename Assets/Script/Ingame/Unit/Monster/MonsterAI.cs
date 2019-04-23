@@ -39,6 +39,7 @@ public partial class MonsterAI : SkyNet {
         if (tower.GetType() == typeof(BaseCampStation)) {
             ((BaseCampStation)tower).MonsterDie(gameObject);
         }
+        GiveExp();
         Destroy(gameObject);
     }
 }
@@ -61,5 +62,5 @@ public partial class MonsterAI : SkyNet {
         GetComponent<CircleCollider2D>().radius = this.data.attackRange;
     }
 
-    public override void SetUnitData(object unit, GameObject gameObject) { }
+    public override void Init(object unit, GameObject gameObject) { }
 }

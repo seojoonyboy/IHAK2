@@ -19,6 +19,7 @@ public class IngameBuilding : SkyNet {
 
     public override void Die() {
         base.Die();
+        GiveExp();
     }
 
     public override void ChangeOwner(int newNum) {
@@ -40,5 +41,5 @@ public class IngameBuilding : SkyNet {
             }).AddTo(gameObject);
     }
 
-    public override void SetUnitData(object data, GameObject gameObject) { }
+    public override void Init(object data, GameObject gameObject) { }
 }

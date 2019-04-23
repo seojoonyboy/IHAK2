@@ -11,6 +11,13 @@ namespace AI {
         [SerializeField] private float maxHp;
         public PlayerController.Player ownerNum;
         [SerializeField] protected Transform healthBar;
+        [SerializeField] private int expPoint;
+        private int lastAttackLayer = 0;
+
+
+        protected static int myLayer = 0;
+        protected static int enemyLayer = 0;
+        protected static int neutralLayer = 0;
 
         public float HP {
             get {
@@ -44,7 +51,7 @@ namespace AI {
         /// </summary>
         public abstract void Init(object data);
 
-        public abstract void SetUnitData(object data, GameObject gameObject);
+        public abstract void Init(object data, GameObject gameObject);
         //public abstract void SetUnitGroup();
 
         /// <summary>
@@ -53,6 +60,15 @@ namespace AI {
         /// <param name="amount">정수 피해량</param>
         public virtual void Damage(float amount) {
             HP -= amount;
+        }
+
+        public virtual void Damage(float damage, Transform enemy) {
+            Damage(damage);
+            lastAttackLayer = enemy.gameObject.layer;
+        }
+
+        public int ThisPlayerHitMe() {
+            return lastAttackLayer;
         }
 
         /// <summary>
@@ -64,7 +80,28 @@ namespace AI {
         }
 
         public virtual void Die() { }
-        protected virtual void GainExp() { }
+        protected virtual void GiveExp() {
+            int layerToGive = ThisPlayerHitMe();
+            if(layerToGive == neutralLayer) return;
+            List<HeroAI> heroes = new List<HeroAI>();
+            FindCloseHero(heroes, layerToGive);
+            if (heroes.Count == 0) return;
+            int exp = expPoint / heroes.Count;
+            for (int i = 0; i < heroes.Count; i++) heroes[i].ExpGain(exp);
+        }
+
+        private void FindCloseHero(List<HeroAI> heroes, int layer) {
+            float ExpGiveLength = 20f;
+            GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+            for (int i = 0; i < units.Length; i++) {
+                if (units[i].layer != layer) continue;
+                if (units[i].GetComponent<HeroAI>() == null) continue;
+                float length = Vector3.Distance(units[i].transform.position, transform.position);
+                if (length > ExpGiveLength) continue;
+                heroes.Add(units[i].GetComponent<HeroAI>());
+            }
+        }
+
         protected virtual void LvUp() { }
         protected virtual void CalculateHealthBar() {
             if (healthBar == null) {
@@ -72,11 +109,20 @@ namespace AI {
                 return;
             }
             float percent = HP / MaxHealth;
-            healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+            if(MaxHealth != 0) {
+                healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
+            }
         }
 
         public virtual void ChangeOwner(int newNum) {
             ownerNum = (PlayerController.Player)newNum;
         }
-    }
+
+        protected int LayertoGive(bool isEnemy) {
+            if(gameObject.layer == myLayer)
+                return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
+            else
+                return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
+        }
+    }   
 }
