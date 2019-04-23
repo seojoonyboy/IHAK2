@@ -37,8 +37,8 @@ public partial class UnitAI : AI.SkyNet {
     }
     
     public void HerbRation(int percent) {
-        float healing = health * percent / 100.0f;
-        Healed(healing);
+        float healing = HP * percent / 100.0f;
+        Recover(healing);
     }
 
     public void ScaryOracle(int percent) {

@@ -15,6 +15,6 @@ public class Heal : MonoBehaviour {
     private void healUnit() {
         UnitAI unit = transform.gameObject.GetComponent<UnitAI>();
         if (unit == null) return;
-        unit.Healed();
+        unit.Heal();
     }
 }
