@@ -303,7 +303,7 @@ public class UnitGroup : MonoBehaviour {
         if(currentMinionNum == 0) Destroy(gameObject);
     }
 
-    private void checkWay() {
+    public void checkWay() {
         directionOpen = !directionOpen;
         foreach (MapStation.NodeDirection node in currentStation.adjNodes.Keys) {
             transform.GetChild(0).gameObject.SetActive(directionOpen);
