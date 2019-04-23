@@ -47,7 +47,7 @@ namespace ingameUIModules {
                 }
                 //PlayerController.Instance.HeroSummon(toggle.GetComponent<ActiveCardInfo>().data, toggle.gameObject);
 
-                Debug.Log("화면을 클릭했음");
+                //Debug.Log("화면을 클릭했음");
                 return true;
             }
             return false;
