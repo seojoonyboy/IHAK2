@@ -108,7 +108,6 @@ public class FowardHQ : IngameBuilding {
         Observable.EveryUpdate().Where(_ => HP <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
 
          
-    }
-    
+    }  
     
 }

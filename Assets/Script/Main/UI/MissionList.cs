@@ -24,10 +24,11 @@ public class MissionList : MonoBehaviour {
             missionBtnList.GetChild(i).GetComponent<Image>().sprite = clearSprite;        
     }
 	
+    
 
     public void SelectMission(int num) {
         if (accountManager.selectNumber < num) return;
-        selectMissionNum = num;
+        selectMissionNum = num;       
     }
 
     public void StartMission() {
