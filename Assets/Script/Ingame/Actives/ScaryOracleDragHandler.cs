@@ -18,9 +18,9 @@ public class ScaryOracleDragHandler : SpellCardDragHandler {
         coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
         coolComp.StartCool();
-
-        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+        GetComponent<SpellCardDragHandler>().enabled = false;
+        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
         //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }
 
