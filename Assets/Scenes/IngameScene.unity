@@ -1934,6 +1934,7 @@ MonoBehaviour:
     - {fileID: 438138126}
     - {fileID: 1320738636}
     - {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
+    - {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -2026,31 +2027,31 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 1
+      Data: n_hc_01001
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: n_hc_02001
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
       Data: n_uu_01001
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: n_uu_01002
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: n_uu_02002
     - Name: 
       Entry: 10
       Data: 2
@@ -2086,6 +2087,7 @@ MonoBehaviour:
     type: 2}
   summonParent: {fileID: 1963893152}
   passiveUIParent: {fileID: 1292266989}
+  spellPrefabParent: {fileID: 1928166538}
   passiveUIPref: {fileID: 1330301450320232, guid: de38f08bd378ae14295fdb132358d50a,
     type: 2}
 --- !u!114 &282962853
@@ -12825,7 +12827,6 @@ GameObject:
   - component: {fileID: 1568939767}
   - component: {fileID: 1568939766}
   - component: {fileID: 1568939765}
-  - component: {fileID: 1568939769}
   m_Layer: 5
   m_Name: HeroCards
   m_TagString: Untagged
@@ -12920,18 +12921,6 @@ MonoBehaviour:
   ExpandHorizontalSpacing: 0
   ChildForceExpandWidth: 0
   ChildForceExpandHeight: 0
---- !u!114 &1568939769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1568939763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1184210157, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 1
 --- !u!1 &1582004633
 GameObject:
   m_ObjectHideFlags: 0
@@ -14338,6 +14327,7 @@ GameObject:
   - component: {fileID: 1723423578}
   - component: {fileID: 1723423580}
   - component: {fileID: 1723423579}
+  - component: {fileID: 1723423581}
   m_Layer: 5
   m_Name: Command
   m_TagString: Untagged
@@ -14400,6 +14390,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1723423577}
   m_CullTransparentMesh: 0
+--- !u!114 &1723423581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1723423577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1184210157, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 1
 --- !u!1 &1732055589
 GameObject:
   m_ObjectHideFlags: 0

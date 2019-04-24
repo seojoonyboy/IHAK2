@@ -96,8 +96,8 @@ namespace IngameModule {
             MapStation station = collision.GetComponent<MapStation>();
             List<Vector3> path = new List<Vector3>();
             MapStation startStation = hq_mapStation;
-            if (transform.parent.GetComponent<HeroCardDragHandler>().instantiatedUnitObj != null) {
-                startStation = transform.parent.GetComponent<HeroCardDragHandler>().instantiatedUnitObj.GetComponent<HeroAI>().GetCurrentNode();
+            if (transform.parent.GetComponent<HeroCardHandler>().instantiatedUnitObj != null) {
+                startStation = transform.parent.GetComponent<HeroCardHandler>().instantiatedUnitObj.GetComponent<HeroAI>().GetCurrentNode();
             }
             if (station != null) {
                 path = MapNode.SearchPosition(

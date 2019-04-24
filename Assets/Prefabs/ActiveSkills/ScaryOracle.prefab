@@ -36,7 +36,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4263763910880020}
   - component: {fileID: 58108351778124754}
-  - component: {fileID: 114791891067072902}
   m_Layer: 5
   m_Name: ScaryOracle
   m_TagString: Untagged
@@ -86,18 +85,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114791891067072902
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1966172136889694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166232cd9c6a5334ca434182e97b71d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range_texture: {fileID: 212176125894487098}
 --- !u!212 &212176125894487098
 SpriteRenderer:
   m_ObjectHideFlags: 1

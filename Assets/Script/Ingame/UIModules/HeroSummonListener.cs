@@ -49,6 +49,8 @@ namespace ingameUIModules {
                 else {
                     IngameAlarm.instance.SetAlarm("이미 소환한 유닛입니다!");
                 }
+
+                tg.SetAllTogglesOff();
                 //PlayerController.Instance.HeroSummon(toggle.GetComponent<ActiveCardInfo>().data, toggle.gameObject);
 
                 //Debug.Log("화면을 클릭했음");
