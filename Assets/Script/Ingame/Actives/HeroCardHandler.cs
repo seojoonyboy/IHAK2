@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HeroCardHandler : MonoBehaviour {
+public class HeroCardHandler : IngameCardHandler {
     ToggleGroup toggleGroup;
     public GameObject instantiatedUnitObj;
     public List<Vector3> path;
@@ -17,10 +17,6 @@ public class HeroCardHandler : MonoBehaviour {
             ToggleValueChanged(GetComponent<Toggle>());
         });
         toggleGroup = transform.parent.GetComponent<ToggleGroup>();
-    }
-
-    void Start() {
-        //var clickStream = this.UpdateAsObservable().Where(_ => )
     }
 
     void ToggleValueChanged(Toggle toggle) {

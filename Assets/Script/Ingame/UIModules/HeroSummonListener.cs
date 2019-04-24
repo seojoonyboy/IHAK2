@@ -13,17 +13,17 @@ using BitBenderGames;
 namespace ingameUIModules {
     public class HeroSummonListener : MonoBehaviour {
         void Start() {
-            var clickStream = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
+            //var clickStream = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
 
-            clickStream
-                .Subscribe(_ => IsSummonOk());
+            //clickStream
+            //    .Subscribe(_ => IsSummonOk());
 
-            clickStream
-                .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
-                .Where(x => x.Count >= 2)
-                .Subscribe(_ => Debug.Log("Double Click"));
+            //clickStream
+            //    .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
+            //    .Where(x => x.Count >= 2)
+            //    .Subscribe(_ => Debug.Log("Double Click"));
 
-            OffListener();
+            //OffListener();
         }
 
         private bool IsSummonOk() {
