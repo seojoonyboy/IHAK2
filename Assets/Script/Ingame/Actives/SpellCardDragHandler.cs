@@ -25,8 +25,7 @@ public class SpellCardDragHandler : MonoBehaviour {
     void Update() {
         // Debug.Log(_mouseState);
         if (Input.GetMouseButtonDown(0)) {
-            RaycastHit hitInfo;
-            if (Target == GetClickedObject(out hitInfo)) {
+            if (Target == GetClickedObject()) {
                 _mouseState = true;
                 screenSpace = Camera.main.WorldToScreenPoint(Target.transform.position);
                 offset = Target.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
@@ -47,14 +46,14 @@ public class SpellCardDragHandler : MonoBehaviour {
         }
     }
 
-    GameObject GetClickedObject(out RaycastHit hit) {
+    GameObject GetClickedObject() {
         GameObject target = null;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 100000, out hit)) {
-            target = hit.collider.gameObject;
-            Debug.Log(hit.collider.gameObject.name);
-        }
-        //Debug.Log(target.name);
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        LayerMask mask = 1 << LayerMask.NameToLayer("UI");
+        RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
+        if(hits.collider == null) return null;
+        target = hits.collider.gameObject;
+        Debug.Log(target.name);
         return target;
     }
 
