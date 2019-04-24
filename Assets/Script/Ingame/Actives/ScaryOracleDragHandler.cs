@@ -14,7 +14,7 @@ public class ScaryOracleDragHandler : SpellCardDragHandler {
         oracle.StartDebuff();
 
         ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = gameObject;
+        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
         coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
         coolComp.StartCool();

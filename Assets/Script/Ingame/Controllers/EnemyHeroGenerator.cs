@@ -27,8 +27,8 @@ public class EnemyHeroGenerator : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        coroutine = Spawning();
-        StartCoroutine(coroutine);
+        //coroutine = Spawning();
+        //StartCoroutine(coroutine);
     }
 
     // Update is called once per frame

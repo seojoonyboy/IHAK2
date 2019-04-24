@@ -34,7 +34,10 @@ public partial class HealingCenterStation : DefaultStation {
     IEnumerator SeizeBuilding() {
         int time = 0;
         while (startSeize) {
-            if (enemys.Count == 0) startSeize = false;
+            if (enemys.Count == 0) {
+                startSeize = false;
+                break;
+            }
             if (time == 100) {
                 OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
                 GetComponent<Collider2D>().enabled = false;
@@ -88,7 +91,7 @@ public partial class HealingCenterStation : DefaultStation {
             }
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+            if (!healingTarget.Exists(x => x == collision.gameObject)) healingTarget.Add(collision.gameObject);
             collision.gameObject.AddComponent<Heal>();
         }
     }
@@ -99,7 +102,7 @@ public partial class HealingCenterStation : DefaultStation {
             enemys.Remove(collision.gameObject);
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!healingTarget.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
+            if (!healingTarget.Exists(x => x == collision.gameObject)) healingTarget.Remove(collision.gameObject);
             Heal heal = collision.gameObject.GetComponent<Heal>();
             if (heal != null)
                 Destroy(heal);
