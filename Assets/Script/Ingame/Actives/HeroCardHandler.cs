@@ -23,12 +23,18 @@ public class HeroCardHandler : IngameCardHandler {
         Toggle toggle = GetComponent<Toggle>();
         toggle.isOn = !toggle.isOn;
         ToggleValueChanged(toggle);
-        //GetComponent<Toggle>().isOn = !GetComponent<Toggle>().isOn;
-        //ToggleValueChanged(GetComponent<Toggle>());
     }
+
+    protected override void OnDoubleClick() {
+        Vector3 pos = instantiatedUnitObj.transform.position;
+        pos.z = -10f;
+        if(instantiatedUnitObj != null) {
+            Camera.main.transform.position = pos;
+        }
+    }
+
     void ToggleValueChanged(Toggle toggle) {
         if (toggle.isOn) {
-            //Debug.Log(transform.Find("Name").GetComponent<Text>().text + "활성화됨");
             transform.Find("Selected").gameObject.SetActive(true);
 
             Cost cost = GetComponent<ActiveCardInfo>().data.baseSpec.unit.cost;
