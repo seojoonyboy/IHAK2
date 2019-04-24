@@ -40,9 +40,13 @@ namespace ingameUIModules {
             m_Raycaster.Raycast(m_PointEventData, results);
 
             if (results.Count == 0) {
-                ToggleGroup tg = PlayerController.Instance.deckShuffler().heroCardParent.GetComponent<ToggleGroup>();
+                ToggleGroup tg = PlayerController.Instance.deckShuffler().heroCardParent.parent.GetComponent<ToggleGroup>();
                 var toggles = tg.ActiveToggles();
                 Toggle toggle = toggles.ToList().First();
+
+                //spell card가 선택된 상태
+                if (toggle.GetComponent<HeroCardHandler>() == null) return false;
+
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
                     PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
                 }

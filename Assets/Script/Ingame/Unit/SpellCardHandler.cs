@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class SpellCardHandler : IngameCardHandler {
     ToggleGroup toggleGroup;
     public GameObject prefab;
+    public string[] data;
+    public GameObject parentBuilding;
+    public int coolTime;
 
     private GameObject instantiatedPrefab;
 
@@ -44,6 +47,17 @@ public class SpellCardHandler : IngameCardHandler {
         toggle.isOn = !toggle.isOn;
         if (toggle.isOn) {
             instantiatedPrefab = Instantiate(prefab, PlayerController.Instance.spellPrefabParent);
+            instantiatedPrefab.GetComponent<SpellCardDragHandler>().Init(
+                camera: Camera.main,
+                parentBuilding: parentBuilding,
+                deckShuffler: PlayerController.Instance.deckShuffler(),
+                data: data,
+                coolTime: coolTime
+            );
+
+            Vector3 camPos = Camera.main.transform.position;
+            camPos.z = 0;
+            instantiatedPrefab.transform.position = camPos;
         }
         else {
             Destroy(instantiatedPrefab);

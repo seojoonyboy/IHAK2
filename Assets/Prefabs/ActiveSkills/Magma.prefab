@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4263763910880020}
   - component: {fileID: 58108351778124754}
+  - component: {fileID: 114358614799262452}
   m_Layer: 5
   m_Name: Magma
   m_TagString: Untagged
@@ -85,6 +86,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &114358614799262452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1966172136889694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6af5ad00d0b8ce419f8acaef35270a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckShuffler: {fileID: 0}
+  camera: {fileID: 0}
+  isInit: 0
+  parentBuilding: {fileID: 0}
+  data: []
+  coolTime: 0
 --- !u!212 &212176125894487098
 SpriteRenderer:
   m_ObjectHideFlags: 1

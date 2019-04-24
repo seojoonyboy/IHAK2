@@ -20,7 +20,7 @@ public class IngameActiveCardDragHandler : MonoBehaviour, IBeginDragHandler, IDr
     }
 
     public virtual void Init() {
-        MoveBlock();
+        //MoveBlock();
         deckShuffler = PlayerController.Instance.deckShuffler();
     }
 
