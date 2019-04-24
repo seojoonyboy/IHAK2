@@ -69,6 +69,9 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public GameObject cam;
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
+    public GameObject 
+        GoldResourceFlick,
+        CitizenResourceFlick;
 
     private static PlayerController _instance;
 
@@ -256,7 +259,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
 
         GameObject hero = Instantiate(result, unitGroup.transform);
-        cardObj.GetComponent<HeroCardDragHandler>().instantiatedUnitObj = hero;
+        cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         unitAI.ownerNum = Player.PLAYER_1;
@@ -266,7 +269,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
         _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
-        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardDragHandler>().path);
+        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
     public GameObject GetHeroPrefab(string id) {

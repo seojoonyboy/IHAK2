@@ -77,7 +77,7 @@ namespace IngameModule {
             canSearch = false;
             ClearPrevPath();
 
-            transform.parent.GetComponent<HeroCardDragHandler>().path = path;
+            transform.parent.GetComponent<HeroCardHandler>().path = path;
         }
 
         void OnDestroy() {
