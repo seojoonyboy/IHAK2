@@ -7,16 +7,19 @@ public class MagmaDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
+
         //if (UseCard()) {
         //    GetComponent<MagmaDragHandler>().enabled = false;
 
-        //    obj.GetComponent<Magma>().StartDamaging();
+        GetComponent<Magma>().StartDamaging();
 
-        //    ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    coolComp.targetCard = gameObject;
-        //    coolComp.coolTime = coolTime;
-        //    coolComp.behaviour = this;
-        //    coolComp.StartCool();
+        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
+        coolComp.coolTime = coolTime;
+        coolComp.behaviour = this;
+        coolComp.StartCool();
+
+        GetComponent<SpellCardDragHandler>().enabled = false;
         //}
         //else {
         //    obj.SetActive(false);

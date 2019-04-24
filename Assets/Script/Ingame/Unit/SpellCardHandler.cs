@@ -10,6 +10,7 @@ public class SpellCardHandler : IngameCardHandler {
     public string[] data;
     public GameObject parentBuilding;
     public int coolTime;
+    public GameObject targetCard;
 
     private GameObject instantiatedPrefab;
 
@@ -52,7 +53,8 @@ public class SpellCardHandler : IngameCardHandler {
                 parentBuilding: parentBuilding,
                 deckShuffler: PlayerController.Instance.deckShuffler(),
                 data: data,
-                coolTime: coolTime
+                coolTime: coolTime,
+                targetCard: targetCard
             );
 
             Vector3 camPos = Camera.main.transform.position;

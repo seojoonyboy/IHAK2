@@ -5,9 +5,10 @@ public class SpellCardDragHandler : MonoBehaviour {
     [SerializeField] protected Camera camera;
     [SerializeField] protected bool isInit = false;
     [SerializeField] protected GameObject parentBuilding;
-    [SerializeField] protected string[] data;
+    [SerializeField] public string[] data;
     [SerializeField] protected int coolTime;
     [SerializeField] protected IngameDeckShuffler deckShuffler;
+    [SerializeField] public GameObject targetCard;
 
     private bool _mouseState;
     public GameObject Target;
@@ -69,12 +70,14 @@ public class SpellCardDragHandler : MonoBehaviour {
         Debug.Log("드래그!!!");
     }
 
-    public virtual void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime) {
+    public virtual void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime, GameObject targetCard) {
         this.camera = camera;
         this.parentBuilding = parentBuilding;
         this.deckShuffler = deckShuffler;
         this.data = data;
         this.coolTime = coolTime;
+        this.targetCard = targetCard;
+
         isInit = true;
 
         int range;

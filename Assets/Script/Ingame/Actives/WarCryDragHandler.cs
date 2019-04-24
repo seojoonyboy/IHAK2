@@ -37,12 +37,13 @@ public class WarCryDragHandler : SpellCardDragHandler {
         //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }
 
-    public override void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime) {
+    public override void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime, GameObject targetCard) {
         this.camera = camera;
         this.parentBuilding = parentBuilding;
         this.deckShuffler = deckShuffler;
         this.data = data;
         this.coolTime = coolTime;
+        this.targetCard = targetCard;
         isInit = true;
 
         int range = 1000;

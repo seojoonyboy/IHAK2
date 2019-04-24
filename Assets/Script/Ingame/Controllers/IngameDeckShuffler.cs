@@ -225,6 +225,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         card.GetComponent<SpellCardHandler>().data = args;
         card.GetComponent<SpellCardHandler>().coolTime = coolTime;
         card.GetComponent<SpellCardHandler>().parentBuilding = parentBuilding;
+        card.GetComponent<SpellCardHandler>().targetCard = card;
     }
 
     public enum Effects {
