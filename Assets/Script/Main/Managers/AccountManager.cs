@@ -22,6 +22,8 @@ public partial class AccountManager : Singleton<AccountManager> {
     public int selectNumber;
     public GameSceneManager.SceneState scenestate;
 
+    public MissionData mission { get; set; }
+
     //내 계정에서 사용가능한 카드뿐만 아니라 게임에 존재하는 모든 카드들의 정보
     public List<CardData> allCards;
     public List<NeutralMonsterData> neutralMonsterDatas;
@@ -368,7 +370,7 @@ public partial class AccountManager {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
-                decks[0] = missionData.playerDeck;
+                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, null, missionData);
             }
         }
     }
