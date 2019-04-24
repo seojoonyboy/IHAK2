@@ -53,16 +53,7 @@ namespace ingameUIModules {
             return false;
         }
 
-        public void OffListener() {
-            GetComponent<ObservableUpdateTrigger>().enabled = false;
-        }
-
-        public void OnListener() {
-            GetComponent<ObservableUpdateTrigger>().enabled = false;
-        }
-
         public void ToggleListener(bool isOn) {
-            GetComponent<ObservableUpdateTrigger>().enabled = isOn;
             PlayerController.Instance.GoldResourceFlick.SetActive(isOn);
             Camera.main.GetComponent<MobileTouchCamera>().enabled = !isOn;
             //PlayerController.Instance.CitizenResourceFlick.SetActive(isOn);

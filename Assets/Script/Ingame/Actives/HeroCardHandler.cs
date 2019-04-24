@@ -13,12 +13,15 @@ public class HeroCardHandler : IngameCardHandler {
     public List<Vector3> path;
 
     void Awake() {
-        GetComponent<Toggle>().onValueChanged.AddListener(delegate {
-            ToggleValueChanged(GetComponent<Toggle>());
-        });
         toggleGroup = transform.parent.GetComponent<ToggleGroup>();
     }
 
+    protected override void OnSingleClick() {
+        Toggle toggle = GetComponent<Toggle>();
+        ToggleValueChanged(toggle);
+        //GetComponent<Toggle>().isOn = !GetComponent<Toggle>().isOn;
+        //ToggleValueChanged(GetComponent<Toggle>());
+    }
     void ToggleValueChanged(Toggle toggle) {
         if (toggle.isOn) {
             //Debug.Log(transform.Find("Name").GetComponent<Text>().text + "활성화됨");
