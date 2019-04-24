@@ -249,6 +249,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [SerializeField] GameObject unitGroupPrefab;
     [SerializeField] Transform summonParent;
     [SerializeField] Transform passiveUIParent;
+    [SerializeField] public Transform spellPrefabParent;
+
     [SerializeField] GameObject passiveUIPref;
 
     public void HeroSummon(ActiveCard card, GameObject cardObj) {

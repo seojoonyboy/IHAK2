@@ -51,12 +51,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //buildingInfos.activate = true;
         //buildingInfos.gameObject.GetComponent<TileSpineAnimation>().SetUnit(true);
         if (isDead) {
-            card.GetComponent<HeroCardDragHandler>().CancelDrag();
-            card.GetComponent<HeroCardDragHandler>().enabled = false;
 
             if (card.GetComponent<ActiveCardCoolTime>() == null) {
                 ActiveCardCoolTime comp = card.AddComponent<ActiveCardCoolTime>();
-                comp.behaviour = card.GetComponent<HeroCardDragHandler>();
                 comp.targetCard = card;
                 comp.coolTime = CalculateHeroCoolTime(card.GetComponent<ActiveCardInfo>());
                 comp.StartCool();
@@ -89,7 +86,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
             Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, heroCardParent);
-            card.GetComponent<Toggle>().group = card.transform.parent.GetComponent<ToggleGroup>();
+            card.GetComponent<Toggle>().group = card.transform.parent.parent.GetComponent<ToggleGroup>();
 
             card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -118,6 +115,8 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         foreach (ActiveCard spellCard in playerController.playerActiveCards().spellCards()) {
             ActiveSkill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, spellCardParent);
+
+            card.GetComponent<Toggle>().group = card.transform.parent.parent.GetComponent<ToggleGroup>();
 
             card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
@@ -209,7 +208,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     private void AddSkill(string methodName, GameObject card, string[] args, int coolTime) {
         switch (methodName) {
             case "magma":
-                Destroy(card.GetComponent<HeroCardDragHandler>());
+                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_magma];
                 MagmaDragHandler magmaDragHandler = card.AddComponent<MagmaDragHandler>();
 
                 magmaDragHandler.Init(
@@ -224,7 +223,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 break;
 
             case "herb_distribution":
-                Destroy(card.GetComponent<HeroCardDragHandler>());
+                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_herb];
                 HerbDragHandler herbDragHandler = card.AddComponent<HerbDragHandler>();
 
                 herbDragHandler.Init(
@@ -238,7 +237,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 );
                 break;
             case "scary_prediction":
-                Destroy(card.GetComponent<HeroCardDragHandler>());
+                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_scaryOracle];
                 ScaryOracleDragHandler scaryOracle = card.AddComponent<ScaryOracleDragHandler>();
 
                 scaryOracle.Init(
@@ -253,7 +252,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                 break;
 
             case "war_cry":
-                Destroy(card.GetComponent<HeroCardDragHandler>());
+                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_warcry];
                 WarCryDragHandler warCry = card.AddComponent<WarCryDragHandler>();
 
                 warCry.Init(
