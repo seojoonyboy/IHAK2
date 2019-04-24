@@ -4,17 +4,14 @@ using System.Linq;
 using UnityEngine;
 
 public class Herb : MonoBehaviour {
-    public SpriteRenderer range_texture;
+    //public SpriteRenderer range_texture;
 
     List<GameObject> targets;
     Data data;
     // Use this for initialization
-    void Start() {
-        targets = new List<GameObject>();
-    }
 
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(22, 22, 1);
+        //range_texture.transform.localScale = new Vector3(22, 22, 1);
         
         this.data = new Data();
         int.TryParse(data[0], out this.data.range);
@@ -23,10 +20,11 @@ public class Herb : MonoBehaviour {
         int.TryParse(data[1], out this.data.amount);
 
         GetComponent<CircleCollider2D>().radius = this.data.range;
-        range_texture.transform.localScale *= this.data.range;
+        //range_texture.transform.localScale *= this.data.range;
     }
 
     public void StartHealing() {
+        targets = new List<GameObject>();
         StartCoroutine(Heal(data.amount));
     }
 

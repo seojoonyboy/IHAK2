@@ -12,21 +12,18 @@ public class HerbDragHandler : SpellCardDragHandler {
 
     public override void OnEndDrag() {
         base.OnEndDrag();
-        //base.OnEndDrag(eventData);
-        //if (UseCard()) {
-        //    GetComponent<HerbDragHandler>().enabled = false;
+        Herb herb = gameObject.AddComponent<Herb>();
+        herb.Init(data);
+        herb.StartHealing();
 
-        //    obj.GetComponent<Herb>().StartHealing();
+        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        coolComp.targetCard = gameObject;
+        coolComp.coolTime = coolTime;
+        coolComp.behaviour = this;
+        coolComp.StartCool();
 
-        //    ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    coolComp.targetCard = gameObject;
-        //    coolComp.coolTime = coolTime;
-        //    coolComp.behaviour = this;
-        //    coolComp.StartCool();
-        //}
-
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
 
         //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }

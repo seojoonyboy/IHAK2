@@ -4,10 +4,11 @@ using System.Linq;
 using UnityEngine;
 
 public class ScaryOracleEmiiter : MonoBehaviour {
-    public SpriteRenderer range_texture;
+    //public SpriteRenderer range_texture;
 
     List<GameObject> targets;
     Data data;
+    int layerToUse = (1 << 11 | 1 << 14);
 
     public void StartDebuff() {
         StartCoroutine(Debuff());
@@ -18,7 +19,7 @@ public class ScaryOracleEmiiter : MonoBehaviour {
         while (count < data.duration) {
             foreach (GameObject target in targets.ToList()) {
                 if (target == null) continue;
-                if (target.layer == 11) {
+                if (target.layer == layerToUse) {
                     //target.GetComponent<UnitAI>().ScaryOracle(data.amount);
                     if (target.GetComponent<ScaryOracle>() == null) {
                         ScaryOracle scaryOracle = target.AddComponent<ScaryOracle>();
@@ -32,7 +33,7 @@ public class ScaryOracleEmiiter : MonoBehaviour {
 
         foreach(GameObject target in targets.ToList()) {
             if (target == null) continue;
-            if (target.layer == 11) {
+            if (target.layer == layerToUse) {
                 Destroy(target.GetComponent<ScaryOracle>());
             }
         }
@@ -46,7 +47,7 @@ public class ScaryOracleEmiiter : MonoBehaviour {
         public int duration;    //지속시간
     }
     public void Init(string[] data) {
-        range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
+        //range_texture.transform.localScale = new Vector3(2.336628f, 2.336628f, 2.336628f);
         targets = new List<GameObject>();
 
         int _duration;
@@ -66,17 +67,17 @@ public class ScaryOracleEmiiter : MonoBehaviour {
         };
 
         GetComponent<CircleCollider2D>().radius = this.data.range;
-        range_texture.transform.localScale *= this.data.range;
+        //range_texture.transform.localScale *= this.data.range;
     }
 
     void OnTriggerStay2D(Collider2D collision) {
-        if (collision.gameObject.layer == 11 && (collision.gameObject.GetComponent<HeroAI>() != null || collision.gameObject.GetComponent<MinionAI>() != null)) {
+        if (collision.gameObject.layer == layerToUse && (collision.gameObject.GetComponent<HeroAI>() != null || collision.gameObject.GetComponent<MinionAI>() != null)) {
             if (!targets.Exists(x => x == collision.gameObject)) targets.Add(collision.gameObject);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 11 && (collision.gameObject.GetComponent<HeroAI>() != null || collision.gameObject.GetComponent<MinionAI>() != null)) {
+        if (collision.gameObject.layer == layerToUse && (collision.gameObject.GetComponent<HeroAI>() != null || collision.gameObject.GetComponent<MinionAI>() != null)) {
             Destroy(collision.gameObject.GetComponent<ScaryOracle>());
             targets.Remove(collision.gameObject);
         }

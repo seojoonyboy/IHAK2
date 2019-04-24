@@ -7,21 +7,20 @@ public class ScaryOracleDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
-        //base.OnEndDrag(eventData);
-        //if (UseCard()) {
-        //    GetComponent<ScaryOracleDragHandler>().enabled = false;
+        GetComponent<ScaryOracleDragHandler>().enabled = false;
 
-        //    obj.GetComponent<ScaryOracleEmiiter>().StartDebuff();
+        ScaryOracleEmiiter oracle = gameObject.AddComponent<ScaryOracleEmiiter>();
+        oracle.Init(data);
+        oracle.StartDebuff();
 
-        //    ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    coolComp.targetCard = gameObject;
-        //    coolComp.coolTime = coolTime;
-        //    coolComp.behaviour = this;
-        //    coolComp.StartCool();
-        //}
+        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        coolComp.targetCard = gameObject;
+        coolComp.coolTime = coolTime;
+        coolComp.behaviour = this;
+        coolComp.StartCool();
 
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
         //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
     }
 
