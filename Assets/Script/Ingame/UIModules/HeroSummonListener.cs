@@ -12,11 +12,13 @@ using BitBenderGames;
 
 namespace ingameUIModules {
     public class HeroSummonListener : MonoBehaviour {
-        void Start() {
-            //var clickStream = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
+        bool anyTogglesOn = false;
 
-            //clickStream
-            //    .Subscribe(_ => IsSummonOk());
+        void Start() {
+            var clickStream = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
+
+            clickStream
+                .Subscribe(_ => IsSummonOk());
 
             //clickStream
             //    .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
@@ -27,6 +29,8 @@ namespace ingameUIModules {
         }
 
         private bool IsSummonOk() {
+            if (!anyTogglesOn) return false;
+
             GraphicRaycaster m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
             if (m_Raycaster == null) return false;
 
@@ -53,9 +57,10 @@ namespace ingameUIModules {
             return false;
         }
 
-        public void ToggleListener(bool isOn) {
-            PlayerController.Instance.GoldResourceFlick.SetActive(isOn);
-            Camera.main.GetComponent<MobileTouchCamera>().enabled = !isOn;
+        public void ToggleListener(bool anyTogglesOn) {
+            PlayerController.Instance.GoldResourceFlick.SetActive(anyTogglesOn);
+            Camera.main.GetComponent<MobileTouchCamera>().enabled = !anyTogglesOn;
+            this.anyTogglesOn = anyTogglesOn;
             //PlayerController.Instance.CitizenResourceFlick.SetActive(isOn);
         }
     }
