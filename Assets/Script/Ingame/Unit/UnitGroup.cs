@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DataModules;
 using UniRx;
 using UniRx.Triggers;
@@ -27,7 +28,7 @@ public class UnitGroup : MonoBehaviour {
     private void Start() {
         clickCol = GetComponent<CircleCollider2D>();
         var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
-        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => !moving && ClickGroup()).Subscribe(_ => checkWay());
+        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => !moving && ClickGroup() && !Canvas.FindObjectOfType<ToggleGroup>().AnyTogglesOn()).Subscribe(_ => checkWay());
         GetData();
         SetMinionData();
         UnitMoveAnimation(false);
