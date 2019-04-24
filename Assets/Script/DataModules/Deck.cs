@@ -56,4 +56,6 @@ namespace DataModules {
         public int gold;
         public int environment;
     }
+    
+
 }

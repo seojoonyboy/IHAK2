@@ -69,9 +69,12 @@ public class MissionList : MonoBehaviour {
         }
 
     }
+    
+
 
     public void StartMission() {
-        if (selectMissionNum < accountManager.missionClear) return;
+        if (selectMissionNum > accountManager.missionClear) return;
+        accountManager.RequestMissionDeck(selectMissionNum);
     }
 
 }

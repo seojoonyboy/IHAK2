@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataModules;
 using UniRx;
+using UniRx.Triggers;
+using UnityEngine.UI;
 
 public class FowardHQ : IngameBuilding {
 
@@ -18,6 +20,10 @@ public class FowardHQ : IngameBuilding {
 
     [SerializeField] private float time;
     [SerializeField] private GameObject arrow;
+
+    public bool clicked;
+    public GameObject select;
+    public Toggle toggle;
 
     public bool IsDestroyed {
         get { return isDestroyed; }
@@ -106,8 +112,31 @@ public class FowardHQ : IngameBuilding {
         Observable.EveryUpdate().Where(_ => enemy != null).Subscribe(_ => isAttacking = true).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => enemy == null).Subscribe(_ => { isAttacking = false; time = 0; }).AddTo(gameObject);
         Observable.EveryUpdate().Where(_ => HP <= 0).Subscribe(_ => isDestroyed = true).AddTo(gameObject);
-
          
-    }  
-    
+    }
+    /*
+    public void temp() {
+        var stream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+        var selectStream = stream.Where(_=> select == null).Subscribe(_ => select = Detect()).AddTo(this);
+
+        var temp = toggle.OnPointerDownAsObservable();
+        temp.Buffer(stream.Throttle(System.TimeSpan.FromMilliseconds(200))).Where(x => x.Count >= 2).Subscribe(_ => Debug.Log("Do Someting"));
+       
+        stream.Buffer(stream.Throttle(System.TimeSpan.FromMilliseconds(200))).Where(x => x.Count >= 2).Where(_=>select == Detect()).Subscribe(_ => { Debug.Log("더블!"); select = null; });
+        stream.Buffer(stream.Throttle(System.TimeSpan.FromMilliseconds(200))).Where(x => x.Count >= 2).Subscribe(_ => select = null);
+        stream.Where(_ => select != null).Buffer(stream.Throttle(System.TimeSpan.FromMilliseconds(200))).Where(x => x.Count < 2).Subscribe(_ => { Debug.Log("시간초과!"); select = null; });
+    }
+
+    public GameObject Detect() {
+        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray = new Ray2D(position, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if (hit.collider != null) {
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
+    */
+
 }
