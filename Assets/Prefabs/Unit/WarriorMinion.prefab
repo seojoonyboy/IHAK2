@@ -318,7 +318,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 70
 --- !u!23 &23800688037907842
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -491,8 +491,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623ec15d80a3847df9fee5ce8fa533af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 0
+  ownerNum: 0
+  healthBar: {fileID: 0}
+  expPoint: 36
   arrow: {fileID: 1770122807129098, guid: f78f211aa83a9134786377509d57bdaa, type: 2}
-  health: 10
   power: 0
   moveSpeed: 0
   attackRange: 0
@@ -523,7 +527,6 @@ MonoBehaviour:
       count: 0
       capabilityArgs: 
     imageName: 
-  expPoint: 36
 --- !u!114 &114166272264082106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -742,6 +745,7 @@ MonoBehaviour:
   runAnimationName: 2.move_2
   idleAnimationName: 1.idle
   attackAnimationName: 3.attack
+  skillAnimationName: 
 --- !u!212 &212546179239670288
 SpriteRenderer:
   m_ObjectHideFlags: 1

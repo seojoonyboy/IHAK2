@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,10 @@ public class MissionList : MonoBehaviour {
         missionSlider = transform.Find("missionSlider").GetComponent<Slider>();
         missionText = transform.Find("missionText").GetComponent<Text>();
         CheckClear();
+        
     }
+
+    
 
     public void CheckClear() {
         for (int i = 0; i < accountManager.missionClear + 1; i++) {
@@ -74,7 +78,9 @@ public class MissionList : MonoBehaviour {
 
     public void StartMission() {
         if (selectMissionNum > accountManager.missionClear) return;
-        accountManager.RequestMissionDeck(selectMissionNum);
+        accountManager.RequestMissionDeck(selectMissionNum + 1);
     }
+
+
 
 }
