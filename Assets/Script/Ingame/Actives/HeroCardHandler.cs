@@ -1,6 +1,8 @@
 using DataModules;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +17,10 @@ public class HeroCardHandler : MonoBehaviour {
             ToggleValueChanged(GetComponent<Toggle>());
         });
         toggleGroup = transform.parent.GetComponent<ToggleGroup>();
+    }
+
+    void Start() {
+        //var clickStream = this.UpdateAsObservable().Where(_ => )
     }
 
     void ToggleValueChanged(Toggle toggle) {
