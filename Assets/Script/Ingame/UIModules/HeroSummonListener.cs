@@ -46,7 +46,7 @@ namespace ingameUIModules {
 
                 //spell card가 선택된 상태
                 if (toggle.GetComponent<HeroCardHandler>() == null) {
-                    Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
+                    Invoke("OffMobileTouchCamer", 0.1f);
                     return false;
                 }
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
@@ -70,6 +70,11 @@ namespace ingameUIModules {
             Camera.main.GetComponent<MobileTouchCamera>().enabled = !anyTogglesOn;
             this.anyTogglesOn = anyTogglesOn;
             //PlayerController.Instance.CitizenResourceFlick.SetActive(isOn);
+        }
+
+        void OffMobileTouchCamer() {
+            Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
+            Debug.Log("!!");
         }
     }
 }

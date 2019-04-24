@@ -43,6 +43,16 @@ public class SpellCardDragHandler : MonoBehaviour {
             OnEndDrag();
             _mouseState = false;
         }
+        if (_mouseState) {
+            //keep track of the mouse position
+            var curScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
+
+            //convert the screen mouse position to world point and adjust with offset
+            var curPosition = Camera.main.ScreenToWorldPoint(curScreenSpace) + offset;
+
+            //update the position of the object in the world
+            Target.transform.position = curPosition;
+        }
     }
 
     GameObject GetClickedObject() {
