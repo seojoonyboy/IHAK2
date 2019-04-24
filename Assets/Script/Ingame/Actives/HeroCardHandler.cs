@@ -14,10 +14,14 @@ public class HeroCardHandler : IngameCardHandler {
 
     void Awake() {
         toggleGroup = transform.parent.GetComponent<ToggleGroup>();
+        GetComponent<Toggle>().onValueChanged.AddListener(delegate {
+            ToggleValueChanged(GetComponent<Toggle>());
+        });
     }
 
     protected override void OnSingleClick() {
         Toggle toggle = GetComponent<Toggle>();
+        toggle.isOn = !toggle.isOn;
         ToggleValueChanged(toggle);
         //GetComponent<Toggle>().isOn = !GetComponent<Toggle>().isOn;
         //ToggleValueChanged(GetComponent<Toggle>());
