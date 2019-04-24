@@ -79,7 +79,7 @@ public partial class DeckListController : MonoBehaviour {
                     accountManager.transform
                         .GetChild(0)
                         .GetChild(i)
-                        .GetComponent<Index>().Id = decks[i].id;
+                        .GetComponent<Index>().Id = decks[i].id.Value;
                 }
 
                 SetBuildingsInTileGroupTiles(decks);
@@ -87,7 +87,7 @@ public partial class DeckListController : MonoBehaviour {
                 int leaderIndex = 0;
                 foreach (Deck deck in decks) {
                     if (deck.isRepresent) {
-                        IngameSceneUIController.deckId = deck.id;
+                        IngameSceneUIController.deckId = deck.id.Value;
                         break;
                     }
                     leaderIndex++;
@@ -124,7 +124,7 @@ public partial class DeckListController : MonoBehaviour {
             GameObject newItem = Instantiate(Modify, slots[i].transform);
             newItem.transform.Find("Name").GetComponent<Text>().text = decks[i].name;
 
-            int id = decks[i].id;
+            int id = decks[i].id.Value;
             newItem.GetComponent<Index>().Id = id;
             newItem.GetComponent<Button>()
                 .onClick

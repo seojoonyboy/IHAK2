@@ -8,15 +8,17 @@ namespace DataModules {
     public class MissionData {
         public int stageNum;
         public string title;
-        public MonsterData creeps;
+        public MonsterData[] creeps;
         public Deck playerDeck;
         public Deck opponentDeck;
     }
+
     [System.Serializable]
     public class MonsterData {
         public Monster creep;
         public int count;
     }
+
     [System.Serializable]
     public class Monster {
         public string id;
@@ -29,8 +31,6 @@ namespace DataModules {
         public float attackRange;
         public float hitPoint;
         public float moveSpeed;
-        public int exp;        
+        public int exp;
     }
-
-
 }
