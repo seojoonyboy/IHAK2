@@ -350,6 +350,30 @@ public partial class AccountManager {
         eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
     }
 
+    public void RequestMissionDeck(int num) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/mission/")
+            .Append(num.ToString());
+        WWWForm form = new WWWForm();
+        Debug.Log(url.ToString());
+        _networkManager.request("GET", url.ToString(), GetMissionData, false);
+    }
+
+    private void GetMissionData(HttpResponse response) {
+        if (response.responseCode != 200) return;
+
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
+                decks[0] = missionData.playerDeck;
+            }
+        }
+    }
+
+
     public Deck FindDeck(int id) {
         Deck deck = decks.Find(x => x.id == id);
         return deck;
@@ -412,6 +436,18 @@ public partial class AccountManager {
     //            targetTile.GetComponent<TileObject>().buildingSet = false;
     //    }
     //}
+
+        
+
+
+
+
+
+
+
+
+
+
 
     public void SetHQ(int num) {
 
