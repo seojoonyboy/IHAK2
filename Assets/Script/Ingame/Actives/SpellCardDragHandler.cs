@@ -18,9 +18,13 @@ public class SpellCardDragHandler : MonoBehaviour {
         Target = gameObject;
     }
 
-    public virtual void OnBeginDrag() { }
+    public virtual void OnBeginDrag() {
+        Debug.Log("드래그 시작");
+    }
 
-    public virtual void OnEndDrag() { }
+    public virtual void OnEndDrag() {
+        Debug.Log("드래그 종료");
+    }
 
     void Update() {
         // Debug.Log(_mouseState);
@@ -29,9 +33,13 @@ public class SpellCardDragHandler : MonoBehaviour {
                 _mouseState = true;
                 screenSpace = Camera.main.WorldToScreenPoint(Target.transform.position);
                 offset = Target.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
+
+                OnBeginDrag();
             }
         }
         if (Input.GetMouseButtonUp(0)) {
+
+            OnEndDrag();
             _mouseState = false;
         }
         if (_mouseState) {
@@ -58,7 +66,6 @@ public class SpellCardDragHandler : MonoBehaviour {
     }
 
     public virtual void OnDrag() {
-        transform.position = Input.mousePosition;
         Debug.Log("드래그!!!");
     }
 

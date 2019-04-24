@@ -11,6 +11,7 @@ public class HerbDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
+        base.OnEndDrag();
         //base.OnEndDrag(eventData);
         //if (UseCard()) {
         //    GetComponent<HerbDragHandler>().enabled = false;
@@ -31,6 +32,7 @@ public class HerbDragHandler : SpellCardDragHandler {
     }
 
     public override void OnBeginDrag() {
+        base.OnBeginDrag();
         //Setting();
         //GetComponentInChildren<BoundaryCamMove>().isDrag = true;
         //obj.GetComponent<Herb>().Init(data);
