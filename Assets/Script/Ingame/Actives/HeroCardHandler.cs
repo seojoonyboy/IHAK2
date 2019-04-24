@@ -20,15 +20,32 @@ public class HeroCardHandler : IngameCardHandler {
     }
 
     protected override void OnSingleClick() {
-        Toggle toggle = GetComponent<Toggle>();
-        toggle.isOn = !toggle.isOn;
-        ToggleValueChanged(toggle);
+        if(instantiatedUnitObj != null) {
+            IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
+
+            UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
+            if (unitGroup == null) return;
+
+            MoveCamera();
+
+            unitGroup.checkWay();
+        }
+        else {
+            Toggle toggle = GetComponent<Toggle>();
+            toggle.isOn = !toggle.isOn;
+            ToggleValueChanged(toggle);
+        }
     }
 
     protected override void OnDoubleClick() {
+        if (instantiatedUnitObj == null) return;
+        MoveCamera();
+    }
+
+    void MoveCamera() {
         Vector3 pos = instantiatedUnitObj.transform.position;
         pos.z = -10f;
-        if(instantiatedUnitObj != null) {
+        if (instantiatedUnitObj != null) {
             Camera.main.transform.position = pos;
         }
     }
