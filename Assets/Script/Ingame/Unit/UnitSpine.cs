@@ -11,6 +11,9 @@ public class UnitSpine : MonoBehaviour {
     public string idleAnimationName;
     [SpineAnimation]
     public string attackAnimationName;
+    [SpineAnimation]
+    public string skillAnimationName;
+    private string currentAnimationName;
     //[SpineAnimation]
     //public string hittedAnimationName;
     private Transform hitEffect;
@@ -33,25 +36,25 @@ public class UnitSpine : MonoBehaviour {
     public void Idle() {
         //if(CheckOverlap(idleAnimationName)) return;
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
+        currentAnimationName = idleAnimationName;
     }
 
     public void Move() {
         if(CheckOverlap(runAnimationName)) return;
         spineAnimationState.SetAnimation(0, runAnimationName, true);
+        currentAnimationName = idleAnimationName;
     }
 
     public void Attack() {
         //if(CheckOverlap(attackAnimationName)) return;
         Spine.TrackEntry entry;
         entry = spineAnimationState.SetAnimation(0, attackAnimationName, false);
+        currentAnimationName = attackAnimationName;
         Invoke("Idle", entry.TrackEnd);
     }
 
     private bool CheckOverlap(string name) {
-        TrackEntry entry = spineAnimationState.GetCurrent(0);
-        if(entry == null) return false;
-        string currentAnimation = entry.ToString();
-        if(name.CompareTo(currentAnimation) == 0) return true;
+        if(name.CompareTo(currentAnimationName) == 0) return true;
         return false;
     }
 
@@ -62,6 +65,15 @@ public class UnitSpine : MonoBehaviour {
 
     public void SetDirection(Vector2 direction) {
         skeleton.ScaleX = direction.x >= 0 ? -1f: 1f;
+    }
+
+    public void Skill() {
+        if(string.IsNullOrEmpty(skillAnimationName)) return;
+        Spine.TrackEntry entry;
+        entry = spineAnimationState.SetAnimation(0, skillAnimationName, false);
+        Invoke(currentAnimationName, entry.TrackEnd);
+        currentAnimationName = skillAnimationName;
+        
     }
 
     IEnumerator SetColor() {

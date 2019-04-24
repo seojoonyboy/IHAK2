@@ -71,6 +71,7 @@ public partial class HeroAI : UnitAI {
             if (units[i].GetComponent<Buff_evilmind>()) continue;
             units[i].AddComponent<Buff_evilmind>();
         }
+        unitSpine.Skill();
     }
 
     public void Shell_humantorch() {
