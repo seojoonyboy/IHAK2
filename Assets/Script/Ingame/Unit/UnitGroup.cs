@@ -24,6 +24,17 @@ public class UnitGroup : MonoBehaviour {
     private int currentMinionNum {get {return transform.childCount -2;}}
     private string minionType;
 
+    private void Start() {
+        clickCol = GetComponent<Collider2D>();
+        var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => !moving && ClickGroup()).Subscribe(_ => checkWay());
+        GetData();
+        SetMinionData();
+        UnitMoveAnimation(false);
+        if (!moving) return;
+        MoveStart();
+    }
+
     public void SetMove(List<Vector3> pos) {
         if(moving) return;
         MovingPos = new List<Vector3>(pos);
@@ -95,18 +106,7 @@ public class UnitGroup : MonoBehaviour {
         UnitIndividualSet(true);
     }
 
-    private void Start() {
-        clickCol = GetComponent<Collider2D>();
-        var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
-        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => ClickGroup(Input.mousePosition)).Subscribe(_ => checkWay());
-        GetData();
-        SetMinionData();
-        UnitMoveAnimation(false);
-        if(!moving) return;
-        MoveStart();
-    }
-
-    private bool ClickGroup(Vector2 pos) {
+    private bool ClickGroup() {
         if (Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
