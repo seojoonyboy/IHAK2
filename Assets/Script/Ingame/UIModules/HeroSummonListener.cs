@@ -45,8 +45,10 @@ namespace ingameUIModules {
                 Toggle toggle = toggles.ToList().First();
 
                 //spell card가 선택된 상태
-                if (toggle.GetComponent<HeroCardHandler>() == null) return false;
-
+                if (toggle.GetComponent<HeroCardHandler>() == null) {
+                    tg.SetAllTogglesOff();
+                    return false;
+                }
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
                     PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
                 }

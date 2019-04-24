@@ -44,6 +44,8 @@ public class SpellCardHandler : IngameCardHandler {
     }
 
     protected override void OnSingleClick() {
+        if (GetComponent<ActiveCardCoolTime>() != null) return;
+
         Toggle toggle = GetComponent<Toggle>();
         toggle.isOn = !toggle.isOn;
         if (toggle.isOn) {

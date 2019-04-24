@@ -13,7 +13,7 @@ public class MagmaDragHandler : SpellCardDragHandler {
 
         GetComponent<Magma>().StartDamaging();
 
-        ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
+        ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
         coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
         coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
