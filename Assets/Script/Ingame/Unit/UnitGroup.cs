@@ -320,9 +320,8 @@ public class UnitGroup : MonoBehaviour {
     private bool ClickGroup() {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(ray, Mathf.Infinity);
-            LayerMask mask = LayerMask.NameToLayer("Direction");
-            RaycastHit2D hits = Physics2D.Raycast(mousePos, transform.forward, mask);
+            LayerMask mask = 1 << LayerMask.NameToLayer("Direction");
+            RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
             Debug.Log(hits.collider);
             //foreach (RaycastHit2D target in hits) {
             //    if (target.collider == clickCol)
@@ -349,6 +348,7 @@ public class UnitGroup : MonoBehaviour {
             //if (hits.collider == clickCol)
 
             else if (hits.collider.gameObject.layer == 31) {
+                if(!directionOpen) return false;
                 int index = hits.collider.transform.GetSiblingIndex();
                 List<Vector3> path = new List<Vector3>();
                 path.Add(currentStation.transform.position);
