@@ -17,7 +17,7 @@ public class HerbDragHandler : SpellCardDragHandler {
         herb.StartHealing();
 
         ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = gameObject;
+        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
         coolComp.coolTime = coolTime;
         coolComp.behaviour = this;
         coolComp.StartCool();
