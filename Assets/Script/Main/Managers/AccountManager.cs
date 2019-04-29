@@ -387,6 +387,11 @@ public partial class AccountManager {
 public partial class AccountManager {
     public MissionData mission;
 
+    public void StartMission(int num) {
+        if (num == 0 || num > 3) return;
+        RequestMissionDeck(num);
+    }
+
 
     public void RequestMissionDeck(int num) {
         StringBuilder url = new StringBuilder();
@@ -406,8 +411,19 @@ public partial class AccountManager {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
-                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, null, missionData);
+                mission = missionData;
+                MissionLoadComplete();
             }
         }
     }
+
+    public void MissionLoadComplete() {
+        GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
+
+        if (mission != null) {
+            Debug.Log(mission.title);
+            gsm.startScene(scenestate, GameSceneManager.SceneState.IngameScene);
+        }
+    }
+
 }

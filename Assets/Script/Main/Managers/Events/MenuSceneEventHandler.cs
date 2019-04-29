@@ -62,6 +62,5 @@ public class MenuSceneEventHandler : Singleton<MenuSceneEventHandler>, IEventHan
         INITIALIZE_DECK_FINISHED,
         CHANGE_LEADER_DECK,
         GET_DECK_DETAIL_FINISHED,
-        GET_MISSION_DATA_FINISHED
     }
 }
