@@ -1,5 +1,7 @@
+using BitBenderGames;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SpellCardDragHandler : MonoBehaviour {
     [SerializeField] protected Camera camera;
@@ -20,11 +22,11 @@ public class SpellCardDragHandler : MonoBehaviour {
     }
 
     public virtual void OnBeginDrag() {
-        Debug.Log("드래그 시작");
+        Camera.main.GetComponent<MobileTouchCamera>().enabled = false;
     }
 
     public virtual void OnEndDrag() {
-        Debug.Log("드래그 종료");
+        Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
     }
 
     void Update() {

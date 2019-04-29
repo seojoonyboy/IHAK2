@@ -8,6 +8,7 @@ public class WarCryDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
+        base.OnEndDrag();
         //base.OnEndDrag(eventData);
         //if (UseCard()) {
         //    GetComponent<WarCryDragHandler>().enabled = false;

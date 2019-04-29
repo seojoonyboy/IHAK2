@@ -7,6 +7,7 @@ public class ScaryOracleDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
+        base.OnEndDrag();
         GetComponent<ScaryOracleDragHandler>().enabled = false;
 
         ScaryOracleEmiiter oracle = gameObject.AddComponent<ScaryOracleEmiiter>();
@@ -25,6 +26,7 @@ public class ScaryOracleDragHandler : SpellCardDragHandler {
     }
 
     public override void OnBeginDrag() {
+        base.OnBeginDrag();
         //Setting();
         //GetComponentInChildren<BoundaryCamMove>().isDrag = true;
         //obj.GetComponent<ScaryOracleEmiiter>().Init(data);

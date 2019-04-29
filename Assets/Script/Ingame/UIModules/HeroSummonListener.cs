@@ -61,7 +61,6 @@ namespace ingameUIModules {
 
                 //spell card가 선택된 상태
                 if (toggle.GetComponent<HeroCardHandler>() == null) {
-                    Camera.main.GetComponent<MobileTouchCamera>().enabled = false;
                     return false;
                 }
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
