@@ -23,7 +23,7 @@ public class BoundaryCamMove : MonoBehaviour {
         ScreenWidth = Screen.width;
         ScreenHeight = Screen.height;
 
-        cam = PlayerController.Instance.cam;
+        cam = Camera.main.gameObject;
     }
 
     // Update is called once per frame

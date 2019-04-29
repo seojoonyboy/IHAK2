@@ -66,7 +66,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public Dictionary<Player, GameObject> maps;
     IngameSceneEventHandler eventHandler;
     Req_deckDetail.Deck deck;
-    public GameObject cam;
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     public GameObject 
