@@ -314,7 +314,6 @@ public partial class AccountManager {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 DeckDetail deck = JsonReader.Read<DeckDetail>(response.data.ToString());
-                MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_LEADER_DECK_TOUCH_POWER, null, null);
             }
         }
     }
@@ -386,73 +385,7 @@ public partial class AccountManager {
 /// 플레이어 대표 덱 메인화면에 표시하기 위한 처리. 기타 건물 타일 관련 처리
 /// </summary>
 public partial class AccountManager {
-    //public void checkDeck(int num) {
-    //    if (decks == null)
-    //        return;
-
-    //    if (num > decks.Count - 1)
-    //        return;
-
-    //    ConstructManager cm = ConstructManager.Instance;
-    //    GameObject constructManager = cm.transform.gameObject;
-    //    GameObject targetBuilding;
-    //    GameObject targetTile;
-    //    int tileCount = transform.GetChild(0).GetChild(num).childCount - 1;
-
-    //    for (int i = 0; i < tileCount; i++) {
-    //        targetTile = transform.GetChild(0).GetChild(num).GetChild(i).gameObject;
-
-    //        if (i == tileCount / 2) {
-    //            targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-    //            if (targetBuilding != null && targetTile.transform.childCount == 0) {
-    //                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-    //                targetTile.GetComponent<TileObject>().buildingSet = true;
-    //                setBuild.transform.position = targetTile.transform.position;
-    //                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-    //                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-    //                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-    //                setBuild.AddComponent<LayoutGroup>();
-    //            }
-    //            continue;
-    //        }
-
-
-    //        if (decks[num].coordsSerial[i] != 0 && targetTile.transform.childCount == 0) {
-    //            targetBuilding = FindBuildingWithID(decks[num].coordsSerial[i]);
-    //            if (targetBuilding != null) {
-    //                GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-    //                targetTile.GetComponent<TileObject>().buildingSet = true;
-    //                setBuild.transform.position = targetTile.transform.position;
-    //                setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-    //                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-    //                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-    //                setBuild.AddComponent<LayoutGroup>();
-    //            }
-    //        }
-    //        else if (decks[num].coordsSerial[i] == 0 && targetTile.transform.childCount != 0)
-    //            Destroy(targetTile.transform.GetChild(0).gameObject);
-    //        if (decks[num].coordsSerial[i] != 0) {
-    //            targetTile.GetComponent<TileObject>().buildingSet = true;
-    //        }
-    //        else if (decks[num].coordsSerial[i] <= 0)
-    //            targetTile.GetComponent<TileObject>().buildingSet = false;
-    //    }
-    //}
-
-        
-
-
-
-
-
-
-
-
-
-
-
     public void SetHQ(int num) {
-
         GameObject targetbuilding = FindObjectOfType<ConstructManager>().townCenter;
         GameObject targetTileGroup = transform.GetChild(0).GetChild(num).gameObject;
         int tileCount = targetTileGroup.transform.childCount - 1;

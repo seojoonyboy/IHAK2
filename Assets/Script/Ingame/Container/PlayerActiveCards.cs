@@ -7,17 +7,17 @@ using UnityEngine;
 namespace Container {
     public class PlayerActiveCards : MonoBehaviour {
         public List<ActiveCard> activeCards;
-        [SerializeField] [ReadOnly] TileGroup tileGroup;
+        [SerializeField] [ReadOnly] DeckInfo deckInfo;
         [SerializeField] [ReadOnly] PlayerController playerController;
 
         public void Init() {
             playerController = PlayerController.Instance;
             try {
-                tileGroup =
+                deckInfo =
                 playerController.maps[PlayerController.Player.PLAYER_1]
                 .transform.GetChild(0)
                 .gameObject
-                .GetComponent<TileGroup>();
+                .GetComponent<DeckInfo>();
             }
             catch (NullReferenceException ex) {
                 Debug.LogError("TileGroup을 찾을 수 없습니다.");
@@ -26,8 +26,8 @@ namespace Container {
 
             activeCards = new List<ActiveCard>();
 
-            var units = tileGroup.units;
-            var spells = tileGroup.spells;
+            var units = deckInfo.units;
+            var spells = deckInfo.spells;
             activeCards.AddRange(units);
             activeCards.AddRange(spells);
         }
@@ -45,7 +45,6 @@ namespace Container {
 [System.Serializable]
 public class ActiveCard {
     public int id;
-    public GameObject parentBuilding;
     public GameObject gameObject;
     public BaseSpec baseSpec = new BaseSpec();
     public string type;

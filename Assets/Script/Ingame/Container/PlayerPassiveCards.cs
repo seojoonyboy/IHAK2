@@ -11,7 +11,7 @@ public class PlayerPassiveCards : SerializedMonoBehaviour {
     public Dictionary<string, float> effectModules = new Dictionary<string, float>();
 
     [SerializeField] [ReadOnly] PlayerController playerController;
-    [SerializeField] [ReadOnly] TileGroup tileGroup;
+    [SerializeField] [ReadOnly] DeckInfo tileGroup;
 
     private IngameSceneEventHandler ingameSceneEventHandler;
 

@@ -8,16 +8,16 @@ public class EnemyPlayerController : MonoBehaviour {
     [SerializeField] Transform tileGroupParent;
     [SerializeField] GameObject dummyPref;
 
-    [SerializeField] [ReadOnly] TileGroup tileGroup;
+    [SerializeField] [ReadOnly] DeckInfo deckInfo;
     [SerializeField] [ReadOnly] PlayerResource playerResource;
     public GameObject goblin;    
 
     void Start() {
-        tileGroup = Instantiate(dummyPref, tileGroupParent)
+        deckInfo = Instantiate(dummyPref, tileGroupParent)
             .transform
-            .GetComponent<TileGroup>();
+            .GetComponent<DeckInfo>();
 
-        tileGroup.transform.Find("Background").gameObject.SetActive(false);
+        //deckInfo.transform.Find("Background").gameObject.SetActive(false);
         playerResource = GetComponent<PlayerResource>();
 
         GetComponent<EnemyBuildings>().Init();

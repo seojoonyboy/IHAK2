@@ -7,7 +7,7 @@ using System;
 using UnityEngine.UI;
 
 public partial class HeroAI : UnitAI {
-
+    public GameObject targetCard;
 
     private Transform expBar;
     private Transform cooltimeBar;
@@ -188,7 +188,7 @@ public partial class HeroAI : UnitAI {
         unitCard.ChangeHp(0);
 
         if (gameObject.layer == myLayer) {
-            ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, true);
+            ingameDeckShuffler.HeroReturn(targetCard, true);
         }
         else if (gameObject.layer == enemyLayer) {
             enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
@@ -201,7 +201,7 @@ public partial class HeroAI : UnitAI {
     public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
         unitCard.ChangeHp((int)HP);
         unitCard.ev.time = (int)Time.realtimeSinceStartup;
-        ingameDeckShuffler.HeroReturn(unitCard.parentBuilding, false);
+        ingameDeckShuffler.HeroReturn(targetCard, false);
         Destroy(gameObject);
     }
 

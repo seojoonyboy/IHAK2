@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class PlayerBuildings : MonoBehaviour {
-    [SerializeField] [ReadOnly] protected TileGroup tileGroup;
+    [SerializeField] [ReadOnly] protected DeckInfo deckInfo;
     [SerializeField] [ReadOnly] protected PlayerController playerController;
 
     public List<BuildingInfo> buildingInfos = new List<BuildingInfo>();
