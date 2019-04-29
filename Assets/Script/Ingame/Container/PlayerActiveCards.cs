@@ -53,18 +53,10 @@ namespace Container {
                 ActiveCard activeCard = new ActiveCard();
                 
                 if(cardData != null) {
-                    switch (cardData.type) {
-                        case "active":
-                            activeCard.id = playerDeck.cards[i].id;
-                            activeCard.baseSpec.skill = cardData.activeSkills[0];
-                            activeCard.type = cardData.type;
-                            break;
-                        case "hero":
-                            activeCard.id = playerDeck.cards[i].id;
-                            activeCard.baseSpec.unit = cardData.unit;
-                            activeCard.type = cardData.type;
-                            break;
-                    }
+                    activeCard.id = playerDeck.cards[i].id;
+                    activeCard.baseSpec.skill = cardData.activeSkills[0];
+                    activeCard.baseSpec.unit = cardData.unit;
+                    activeCard.type = cardData.type;
                     activeCards.Add(activeCard);
                 }               
 

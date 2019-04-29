@@ -147,13 +147,13 @@ public class MenuSceneController : MonoBehaviour {
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        //OpenMissionWindow();
+        OpenMissionWindow();
 
-        
+        /*
         if (accountManager.decks.Count == 0)
             Modal.instantiate("저장된 덱정보가 없습니다.", Modal.Type.CHECK);
         else
             gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
-          
+        */  
     }
 }

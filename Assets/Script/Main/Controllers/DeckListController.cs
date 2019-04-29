@@ -36,11 +36,14 @@ public partial class DeckListController : MonoBehaviour {
     private void Awake() {
         _networkManager = NetworkManager.Instance;
         accountManager = AccountManager.Instance;
+        transform.gameObject.SetActive(false);
+
+        eventHandler = MenuSceneEventHandler.Instance;
+        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, Initialize);
     }
 
     void Start() {
-        eventHandler = MenuSceneEventHandler.Instance;
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, Initialize);
+        
     }
 
     private void OnDestroy() {
