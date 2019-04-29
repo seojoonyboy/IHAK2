@@ -2117,7 +2117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeCards: []
-  tileGroup: {fileID: 0}
+  deckInfo: {fileID: 0}
   playerController: {fileID: 0}
 --- !u!114 &282962855
 MonoBehaviour:
@@ -2130,7 +2130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca618ef22ab815e479cfa48e1316657a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGroup: {fileID: 0}
+  deckInfo: {fileID: 0}
   playerController: {fileID: 0}
   buildingInfos: []
   demoTileIndex: 0600000007000000080000000b0000000c0000000d0000001100000012000000
@@ -15242,7 +15242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224742fff4d4a884296a9d525754d21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGroup: {fileID: 0}
+  deckInfo: {fileID: 0}
   playerController: {fileID: 0}
   buildingInfos: []
 --- !u!114 &1844919646
@@ -15258,7 +15258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGroupParent: {fileID: 1320738637}
   dummyPref: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-  tileGroup: {fileID: 0}
+  deckInfo: {fileID: 0}
   playerResource: {fileID: 0}
   goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
 --- !u!114 &1844919647
