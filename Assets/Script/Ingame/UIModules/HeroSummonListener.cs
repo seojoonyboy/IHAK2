@@ -15,17 +15,32 @@ namespace ingameUIModules {
         bool anyTogglesOn = false;
 
         void Start() {
-            var clickStream = this.UpdateAsObservable().Where(_ => Input.GetMouseButtonUp(0));
-
+            var clickStream = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
             clickStream
-                .Subscribe(_ => IsSummonOk());
+                .RepeatUntilDestroy(gameObject)
+                .Where(_ => IsSummonOk() && ClickSummonableArea())
+                .Subscribe(_ => Summon());
+        }
 
-            //clickStream
-            //    .Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(200)))
-            //    .Where(x => x.Count >= 2)
-            //    .Subscribe(_ => Debug.Log("Double Click"));
+        private bool ClickSummonableArea() {
+            if (Input.GetMouseButtonDown(0)) {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                LayerMask mask = 1 << LayerMask.NameToLayer("Node");
+                RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
+                if (hits.collider != null && hits.collider.name == "S10") {
+                    return true;
+                }
+            }
+            return false;
+        }
 
-            //OffListener();
+        private void Summon() {
+            ToggleGroup tg = PlayerController.Instance.deckShuffler().heroCardParent.parent.GetComponent<ToggleGroup>();
+            var toggles = tg.ActiveToggles();
+            Toggle toggle = toggles.ToList().First();
+            PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
+
+            tg.SetAllTogglesOff();
         }
 
         private bool IsSummonOk() {
@@ -50,17 +65,12 @@ namespace ingameUIModules {
                     return false;
                 }
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
-                    PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
+                    return true;
                 }
                 else {
                     IngameAlarm.instance.SetAlarm("이미 소환한 유닛입니다!");
+                    return false;
                 }
-
-                tg.SetAllTogglesOff();
-                //PlayerController.Instance.HeroSummon(toggle.GetComponent<ActiveCardInfo>().data, toggle.gameObject);
-
-                //Debug.Log("화면을 클릭했음");
-                return true;
             }
             return false;
         }
