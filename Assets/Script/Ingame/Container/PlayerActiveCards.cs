@@ -69,10 +69,7 @@ namespace Container {
                     }
                     activeCards.Add(activeCard);
                 }               
-
-            }
-            
-            
+            }         
         }
 
 

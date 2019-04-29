@@ -40,7 +40,6 @@ public class MenuController : MonoBehaviour {
         accountManager = AccountManager.Instance;
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_LEADER_DECK, ChangeLeaderDeck);
-        eventHandler.AddListener(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, MissionLoadComplete);
     }
 
     private void ChangeLeaderDeck(Enum Event_Type, Component Sender, object Param) {
@@ -50,7 +49,6 @@ public class MenuController : MonoBehaviour {
     private void OnDestroy() {
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, SetLeaderTileGroup);
         eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.CHANGE_LEADER_DECK, ChangeLeaderDeck);
-        eventHandler.RemoveListener(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, MissionLoadComplete);
     }
 
     private void SetLeaderTileGroup(Enum Event_Type, Component Sender, object Param) {
@@ -131,18 +129,6 @@ public class MenuController : MonoBehaviour {
         town.SetActive(true);
         missionListWnd.SetActive(false);
     }
-
-    private void MissionLoadComplete(Enum Event_Type, Component Sender, object Param) {
-        DataModules.MissionData missionData = (DataModules.MissionData)Param;
-        GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-
-        if (Param != null) {
-            accountManager.mission = missionData;
-            Debug.Log(accountManager.mission.title);
-            gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
-        }
-    }
-
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
