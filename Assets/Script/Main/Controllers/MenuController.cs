@@ -7,8 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
-public class MenuSceneController : MonoBehaviour {
-
+public class MenuController : MonoBehaviour {
     public enum Windows {
         BASIC = 0,
         DECKLIST = 1,
@@ -75,7 +74,7 @@ public class MenuSceneController : MonoBehaviour {
         missionListWnd.SetActive(false);
         buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => OpenDeckWindow());
         exitDeckList.OnClickAsObservable().Subscribe(_ => CloseDeckWindow());
-        
+
         //clickMenuButton(pageNum);
         //MenuSceneEventHandler.Instance.PostNotification(MenuSceneEventHandler.EVENT_TYPE.SET_TILE_OBJECTS_COMPLETED, null);
     }
@@ -154,6 +153,6 @@ public class MenuSceneController : MonoBehaviour {
             Modal.instantiate("저장된 덱정보가 없습니다.", Modal.Type.CHECK);
         else
             gsm.startScene(sceneState, GameSceneManager.SceneState.IngameScene);
-        */  
+        */
     }
 }
