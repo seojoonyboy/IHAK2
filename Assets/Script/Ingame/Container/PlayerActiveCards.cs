@@ -12,6 +12,11 @@ namespace Container {
 
         public void Init() {
             playerController = PlayerController.Instance;
+            DataModules.MissionData missionData;
+            DataModules.Deck playerDeck;
+            ConstructManager constructManager = ConstructManager.Instance;
+            
+            /*
             try {
                 tileGroup =
                 playerController.maps[PlayerController.Player.PLAYER_1]
@@ -30,7 +35,45 @@ namespace Container {
             var spells = tileGroup.spells;
             activeCards.AddRange(units);
             activeCards.AddRange(spells);
+            */
+            
+            try {
+                missionData = AccountManager.Instance.mission;
+                playerDeck = missionData.playerDeck;
+            }
+            catch (NullReferenceException ex) {
+                Debug.LogError("미션데이터가 로드 되지않았습니다.");
+                return;
+            }
+            activeCards = new List<ActiveCard>();
+
+            for(int i = 0; i < playerDeck.cards.Length; i++) {
+                GameObject card = constructManager.GetBuildingObjectById(playerDeck.cards[i].id);
+                DataModules.CardData cardData = card.GetComponent<BuildingObject>().card.data;
+                ActiveCard activeCard = new ActiveCard();
+                
+                if(cardData != null) {
+                    switch (cardData.type) {
+                        case "active":
+                            activeCard.id = playerDeck.cards[i].id;
+                            activeCard.baseSpec.skill = cardData.activeSkills[0];
+                            activeCard.type = cardData.type;
+                            break;
+                        case "hero":
+                            activeCard.id = playerDeck.cards[i].id;
+                            activeCard.baseSpec.unit = cardData.unit;
+                            activeCard.type = cardData.type;
+                            break;
+                    }
+                    activeCards.Add(activeCard);
+                }               
+
+            }
+            
+            
         }
+
+
 
         public List<ActiveCard> unitCards() {
             return activeCards.FindAll(x => !string.IsNullOrEmpty(x.baseSpec.unit.name));
