@@ -17,7 +17,7 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     }
 
     public void AddCitizen() {
-        int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 100;
         if (realtimeCitizenNum > citizenNum) {
             citizenNum++;
             GameObject citizen = Instantiate(citizenPrefab, SpawnPos.GetChild(1));
@@ -29,13 +29,13 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     }
 
     public void DeleteCitizen() {
-        int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        int realtimeCitizenNum = (int)PlayerController.Instance.playerResource().Citizen / 100;
         if (citizenNum > 0) {
             GameObject citizenObject = citizens[citizenNum-1];
             citizens.Remove(citizens[citizenNum-1]);
             Destroy(citizenObject);
             citizenNum--;
-            PlayerController.Instance.playerResource().Citizen -= 10;
+            PlayerController.Instance.playerResource().Citizen -= 100;
         }
     }
 }

@@ -29,13 +29,13 @@ public class IngameResourceManager : MonoBehaviour {
             //RefreshGoldSlider();
             float gold = (float)PlayerController.Instance.playerResource().Gold;
             float citizen = (float)PlayerController.Instance.playerResource().Citizen;
-            int _goldIncreaseAmount = 1;
-            int _citizenIncreaseAmount = 1;
+            int _goldIncreaseAmount = 10;
+            int _citizenIncreaseAmount = 4;
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
 
-            if (gold >= 100) { _goldIncreaseAmount = 0; }
-            if (citizen  >= 100) { _citizenIncreaseAmount = 0; }
+            if (gold >= 1000) { _goldIncreaseAmount = 0; }
+            if (citizen  >= 1000) { _citizenIncreaseAmount = 0; }
             //if(gold == 299) { increaseAmnt = 1; }
             //goldBar.fillAmount = ((float)gold / 100);
             PlayerController.Instance.playerResource().Gold += _goldIncreaseAmount;
@@ -46,13 +46,13 @@ public class IngameResourceManager : MonoBehaviour {
 
     public void RefreshGold() {
         float gold = (float)PlayerController.Instance.playerResource().Gold;
-        goldBar.fillAmount = ((float)gold / 100);
-        goldValue.text = ((int)(gold / 10)).ToString();
+        goldBar.fillAmount = ((float)gold / 1000);
+        goldValue.text = ((int)(gold / 100)).ToString();
     }
 
     public void RefreshCitizen() {
         float citizen = (float)PlayerController.Instance.playerResource().Citizen;
-        citizenBar.fillAmount = ((float)citizen / 100);
-        citizenValue.text = ((int)(citizen / 10)).ToString();
+        citizenBar.fillAmount = ((float)citizen / 1000);
+        citizenValue.text = ((int)(citizen / 100)).ToString();
     }
 }
