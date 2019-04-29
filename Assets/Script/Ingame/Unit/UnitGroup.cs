@@ -32,6 +32,7 @@ public class UnitGroup : MonoBehaviour {
         GetData();
         SetMinionData();
         UnitMoveAnimation(false);
+        StartCoroutine(MinimapSpawnAlert());
         if (!moving) return;
         MoveStart();
     }
@@ -63,7 +64,7 @@ public class UnitGroup : MonoBehaviour {
     }
     private void AttackUpdate(float time) {
         if(!attacking) return;
-        transform.position = transform.GetChild(1).position;
+        transform.position = transform.GetChild(2).position;
     }
 
     private void Moving(float time) {
@@ -136,7 +137,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private bool IsHeroDead() {
-        HeroAI hero = transform.GetChild(1).GetComponent<HeroAI>();
+        HeroAI hero = transform.GetChild(2).GetComponent<HeroAI>();
         if(hero == null) return true;
         return false;
     }
@@ -200,8 +201,34 @@ public class UnitGroup : MonoBehaviour {
         MonsterCheck(enemy);
         UnitCheck(enemy);
         BuildingCheck(enemy);
-
+        StartCoroutine(MinimapBattleAlart());
         UnitIndividualSet(true);
+    }
+
+    IEnumerator MinimapSpawnAlert() {
+        int count = 0;
+        while (true) {
+            transform.GetChild(1).gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+            transform.GetChild(1).gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            count++;
+            if (count == 3)
+                break;
+        }
+    }
+
+    IEnumerator MinimapBattleAlart() {
+        while (attacking) {
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            if (!attacking) {
+                transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                break;
+            }
+            yield return new WaitForSeconds(0.5f);
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private void MonsterCheck(Transform enemy) {
@@ -340,7 +367,7 @@ public class UnitGroup : MonoBehaviour {
                 if (directionOpen) checkWay();
                 return false;
             }
-            if (hits.collider.attachedRigidbody == transform.GetChild(1).GetComponent<Rigidbody2D>())
+            if (hits.collider.attachedRigidbody == transform.GetChild(2).GetComponent<Rigidbody2D>())
                 return true;
             if (hits.collider == clickCol)
                 return true;
