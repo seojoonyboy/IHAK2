@@ -25,7 +25,7 @@ namespace Container {
                 if (value < 0 && gold < value) {
                     gold = 0;
                 }
-                if(value > 100) { value = 100; return; }
+                if(value > 1000) { value = 1000; return; }
                 gold = value;
                 PlayerController.Instance.resourceManager().RefreshGold();
 
@@ -40,7 +40,7 @@ namespace Container {
                     Debug.LogError("시민이 0이하로 떨어졌습니다.");
                     citizen = 0;
                 }
-                if (value > 100) { value = 100; return; }
+                if (value > 1000) { value = 1000; return; }
                 citizen = value;
                 PlayerController.Instance.resourceManager().RefreshCitizen();
                 PlayerController.Instance.CitizenSpawnController().AddCitizen();
@@ -61,11 +61,11 @@ namespace Container {
         }
 
         public void UseGold(decimal amount = 0) {
-            Gold -= amount * 10;
+            Gold -= amount * 100;
         }
 
         public void UseCitizen(decimal amount = 0) {
-            Citizen -= amount * 10;
+            Citizen -= amount * 100;
         }
     }
 }
