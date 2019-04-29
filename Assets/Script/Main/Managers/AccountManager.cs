@@ -22,7 +22,7 @@ public partial class AccountManager : Singleton<AccountManager> {
     public int selectNumber;
     public GameSceneManager.SceneState scenestate;
 
-    public MissionData mission;
+    
 
     //내 계정에서 사용가능한 카드뿐만 아니라 게임에 존재하는 모든 카드들의 정보
     public List<CardData> allCards;
@@ -351,28 +351,6 @@ public partial class AccountManager {
         eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK, this);
     }
 
-    public void RequestMissionDeck(int num) {
-        StringBuilder url = new StringBuilder();
-        url.Append(_networkManager.baseUrl)
-            .Append("api/users/deviceid/")
-            .Append(DEVICEID)
-            .Append("/mission/")
-            .Append(num.ToString());
-        WWWForm form = new WWWForm();
-        Debug.Log(url.ToString());
-        _networkManager.request("GET", url.ToString(), GetMissionData, false);
-    }
-
-    private void GetMissionData(HttpResponse response) {
-        if (response.responseCode != 200) return;
-
-        if (response.responseCode == 200) {
-            if (response.data != null) {
-                MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
-                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, null, missionData);
-            }
-        }
-    }
 
 
     public Deck FindDeck(int id) {
@@ -401,6 +379,34 @@ public partial class AccountManager {
                     targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
                 else
                     targetbuilding.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
+            }
+        }
+    }
+}
+
+public partial class AccountManager {
+    public MissionData mission;
+
+
+    public void RequestMissionDeck(int num) {
+        StringBuilder url = new StringBuilder();
+        url.Append(_networkManager.baseUrl)
+            .Append("api/users/deviceid/")
+            .Append(DEVICEID)
+            .Append("/mission/")
+            .Append(num.ToString());
+        WWWForm form = new WWWForm();
+        Debug.Log(url.ToString());
+        _networkManager.request("GET", url.ToString(), GetMissionData, false);
+    }
+
+    private void GetMissionData(HttpResponse response) {
+        if (response.responseCode != 200) return;
+
+        if (response.responseCode == 200) {
+            if (response.data != null) {
+                MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
+                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_DATA_FINISHED, null, missionData);
             }
         }
     }
