@@ -23,10 +23,12 @@ public class SpellCardDragHandler : MonoBehaviour {
 
     public virtual void OnBeginDrag() {
         Camera.main.GetComponent<MobileTouchCamera>().enabled = false;
+        GetComponent<BoundaryCamMove>().isDrag = true;
     }
 
     public virtual void OnEndDrag() {
         Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
+        GetComponent<BoundaryCamMove>().isDrag = false;
     }
 
     void Update() {
