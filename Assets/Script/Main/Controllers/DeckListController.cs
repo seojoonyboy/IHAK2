@@ -82,8 +82,6 @@ public partial class DeckListController : MonoBehaviour {
                         .GetComponent<Index>().Id = decks[i].id.Value;
                 }
 
-                SetBuildingsInTileGroupTiles(decks);
-
                 int leaderIndex = 0;
                 foreach (Deck deck in decks) {
                     if (deck.isRepresent) {
@@ -93,6 +91,10 @@ public partial class DeckListController : MonoBehaviour {
                     leaderIndex++;
                 }
                 accountManager.leaderIndex = leaderIndex;
+
+                SetTileGroupData(decks);
+                GameObject tg_clone = Instantiate(accountManager.transform.GetChild(0), tg_clone_tar).gameObject;
+
                 Sort(decks);
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, null, leaderIndex);
             }
@@ -154,7 +156,6 @@ public partial class DeckListController : MonoBehaviour {
     public void OnClickSlot(GameObject pref) {
         if (pref.name.Contains("Add")) {
             AccountManager.Instance.selectNumber = AccountManager.Instance.decks.Count;
-            AccountManager.Instance.SetHQ(AccountManager.Instance.selectNumber);
 
             speciesSelModal.GetComponent<SpeciesSelectController>().ToggleModal(true);
 
@@ -238,113 +239,6 @@ public partial class DeckListController : MonoBehaviour {
 /// 각 Deck별 세부 처리
 /// </summary>
 public partial class DeckListController {
-    /// <summary>
-    /// DeckGroup별 건물 GameObject 생성 및 배치
-    /// </summary>
-    public void SetBuildingsInTileGroupTiles(List<Deck> data) {
-        var decks = accountManager.decks;
-        if (decks == null) return;
-
-        ConstructManager cm = ConstructManager.Instance;
-        GameObject constructManager = cm.transform.gameObject;
-        GameObject targetTile;
-        GameObject targetBuilding = null;
-
-        for (int i = 0; i < decks.Count; i++) {
-            TileGroup tileGroup = accountManager.transform.GetChild(0).GetChild(i).GetComponent<TileGroup>();
-            int tileCount = accountManager.transform.GetChild(0).GetChild(i).childCount - 1;
-
-            for (int j = 0; j < tileCount; j++) {
-                targetTile = accountManager.transform.GetChild(0).GetChild(i).GetChild(j).gameObject;
-                foreach(Transform prevBuilding in targetTile.transform) {
-                    Destroy(prevBuilding.gameObject);
-                }
-
-                List<int> cardsIndex = new List<int>();
-                cardsIndex.AddRange(decks[i].heroSerial.ToList());
-                cardsIndex.AddRange(decks[i].activeSerial.ToList());
-                cardsIndex.AddRange(decks[i].passiveSerial.ToList());
-                cardsIndex.AddRange(decks[i].wildcardSerial.ToList());
-                //HQ 설정
-                if (j == tileCount / 2) {
-                    targetBuilding = FindObjectOfType<ConstructManager>().townCenter;
-                    if (targetBuilding != null && targetTile.transform.childCount == 0) {
-                        GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                        targetTile.GetComponent<TileObject>().buildingSet = true;
-                        setBuild.transform.position = targetTile.transform.position;
-                        setBuild.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                        if (setBuild.GetComponent<SpriteRenderer>() != null) {
-                            setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                            setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                        }
-                        else {
-                            setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                        }
-                    }
-                    continue;
-                }
-
-                else {
-                    if(j <= cardsIndex.Count - 1) {
-                        targetBuilding = FindBuildingWithID(cardsIndex[j]);
-
-                        if (targetBuilding != null) {
-
-                            GameObject setBuild = Instantiate(targetBuilding, targetTile.transform);
-                            targetTile.GetComponent<TileObject>().buildingSet = true;
-                            setBuild.transform.position = targetTile.transform.position;
-
-                            BuildingObject tmp = targetBuilding.GetComponent<BuildingObject>();
-
-                            BuildingObject buildingObject = setBuild.GetComponent<BuildingObject>();
-                            switch (buildingObject.card.data.type) {
-                                case "hero":
-                                    buildingObject.card.data = tmp.card.data;
-                                    //buildingObject.card.data.unit.cost.environment = targetBuilding
-                                    //    .GetComponent<BuildingObject>()
-                                    //    .card.data.unit.cost.environment;
-                                    ActiveCard activeCard = new ActiveCard();
-                                    activeCard.id = buildingObject.card.id;
-                                    activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                                    activeCard.baseSpec.unit = buildingObject.card.data.unit;
-                                    activeCard.type = buildingObject.card.data.type;
-                                    tileGroup.units.Add(activeCard);
-                                    break;
-                                case "active":
-                                    buildingObject.card.data = tmp.card.data;
-                                    ActiveCard _activeCard = new ActiveCard();
-                                    _activeCard.id = buildingObject.card.id;
-                                    _activeCard.parentBuilding = targetTile.transform.GetChild(0).gameObject;
-                                    _activeCard.baseSpec.skill = buildingObject.card.data.activeSkills[0];
-                                    _activeCard.type = buildingObject.card.data.type;
-                                    tileGroup.spells.Add(_activeCard);
-                                    break;
-                            }
-
-                            buildingObject.setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                            if (setBuild.GetComponent<SpriteRenderer>() != null) {
-                                setBuild.GetComponent<SpriteRenderer>().sprite = setBuild.GetComponent<BuildingObject>().mainSprite;
-                                setBuild.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                            }
-                            else {
-                                //setBuild.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                                setBuild.transform.GetChild(1).gameObject.SetActive(false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        //clone for preview tilegroup
-        Transform tar = transform.Find("TileGroupParent");
-        foreach(Transform tf in tar) DestroyImmediate(tf.gameObject);
-
-        GameObject tg_clone = Instantiate(accountManager.transform.GetChild(0), tar).gameObject;
-        tg_clone.transform.localScale = new Vector3(12, 12, 1);
-        tg_clone.transform.localPosition = new Vector3(-270, 80, 1);
-    }
-
     public GameObject FindBuildingWithID(int ID) {
 
         GameObject buildingGroup = FindObjectOfType<ConstructManager>().transform.GetChild(0).gameObject;
@@ -357,5 +251,47 @@ public partial class DeckListController {
             }
         }
         return null;
+    }
+
+    public void SetTileGroupData(List<Deck> data) {
+        var decks = accountManager.decks;
+        if (decks == null) return;
+
+        ConstructManager cm = ConstructManager.Instance;
+        GameObject constructManager = cm.transform.gameObject;
+
+        for (int i = 0; i < decks.Count; i++) {
+            DeckInfo deckInfo = accountManager.transform.GetChild(0).GetChild(i).GetComponent<DeckInfo>();
+
+            List<int> cardsIndex = new List<int>();
+            cardsIndex.AddRange(decks[i].heroSerial.ToList());
+            cardsIndex.AddRange(decks[i].activeSerial.ToList());
+            cardsIndex.AddRange(decks[i].passiveSerial.ToList());
+            cardsIndex.AddRange(decks[i].wildcardSerial.ToList());
+
+            for(int j= 0; j<cardsIndex.Count; j++) {
+                GameObject targetBuilding = FindBuildingWithID(cardsIndex[j]);
+
+                if (targetBuilding != null) {
+                    BuildingObject buildingObject = targetBuilding.GetComponent<BuildingObject>();
+                    switch (buildingObject.card.data.type) {
+                        case "hero":
+                            ActiveCard activeCard = new ActiveCard();
+                            activeCard.id = buildingObject.card.id;
+                            activeCard.baseSpec.unit = buildingObject.card.data.unit;
+                            activeCard.type = buildingObject.card.data.type;
+                            deckInfo.units.Add(activeCard);
+                            break;
+                        case "active":
+                            ActiveCard _activeCard = new ActiveCard();
+                            _activeCard.id = buildingObject.card.id;
+                            _activeCard.baseSpec.skill = buildingObject.card.data.activeSkills[0];
+                            _activeCard.type = buildingObject.card.data.type;
+                            deckInfo.spells.Add(_activeCard);
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

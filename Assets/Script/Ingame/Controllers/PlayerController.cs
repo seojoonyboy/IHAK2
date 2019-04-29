@@ -94,7 +94,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
             go,
             maps[Player.PLAYER_1].transform
         );
-        TileGroup tileGroup = go.GetComponent<TileGroup>();
+        DeckInfo deckInfo = go.GetComponent<DeckInfo>();
         ld.SetActive(true);
         foreach (Transform tile in ld.transform) {
             tile.gameObject.layer = 8;
@@ -103,17 +103,12 @@ public partial class PlayerController : SerializedMonoBehaviour {
             }
         }
 
-        for(int i=0; i< go.GetComponent<TileGroup>().units.Count; i++) {
-            ld.GetComponent<TileGroup>().units[i].baseSpec.unit.cost = go.GetComponent<TileGroup>().units[i].baseSpec.unit.cost;
+        for(int i=0; i< go.GetComponent<DeckInfo>().units.Count; i++) {
+            ld.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost = go.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost;
         }
-        for(int i=0; i<go.GetComponent<TileGroup>().spells.Count; i++) {
-            ld.GetComponent<TileGroup>().spells[i].baseSpec.skill.cost = go.GetComponent<TileGroup>().spells[i].baseSpec.skill.cost;
+        for(int i=0; i<go.GetComponent<DeckInfo>().spells.Count; i++) {
+            ld.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost = go.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost;
         }
-
-        //TileGroup tmp = ld.GetComponent<TileGroup>();
-
-        ld.transform.localScale = new Vector3(1, 1, 1);
-        ld.transform.Find("Background").gameObject.SetActive(false);
 
         scoreManager = IngameScoreManager.Instance;
         pInfo = new ProductInfo();
@@ -147,15 +142,15 @@ public partial class PlayerController : SerializedMonoBehaviour {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 deck = JsonReader.Read<Req_deckDetail.Deck>(response.data.ToString());
-                TileGroup tileGroup = maps[Player.PLAYER_1]
+                DeckInfo deckInfo = maps[Player.PLAYER_1]
                     .transform
                     .GetChild(0)
                     .gameObject
-                    .GetComponent<TileGroup>();
+                    .GetComponent<DeckInfo>();
 
                 foreach(Req_deckDetail.Card card in deck.cards) {
                     if (card.data.type == "hero") {
-                        ActiveCard activeCard = tileGroup.units.Find(x => x.id == card.id);
+                        ActiveCard activeCard = deckInfo.units.Find(x => x.id == card.id);
                         if(activeCard != null) {
                             activeCard.baseSpec.unit.skill = card.data.unit.skill;
                             activeCard.baseSpec.unit.minion = card.data.unit.minion;
@@ -264,6 +259,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
+        hero.GetComponent<HeroAI>().targetCard = cardObj;
+
         unitAI.ownerNum = Player.PLAYER_1;
         unitAI.Init(card, cardObj);
 

@@ -37,9 +37,9 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
     }
 
-    public void HeroReturn(GameObject parentBuilding, bool isDead) {
+    public void HeroReturn(GameObject targetCard, bool isDead) {
         GameObject card = heroCards.Find(
-            x => x.GetComponent<ActiveCardInfo>().data.parentBuilding == parentBuilding
+            x => x == targetCard
         );
 
         if(card == null) {
@@ -131,7 +131,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
             spellCards.Add(card);
 
-            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime, spellCard.parentBuilding);
+            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
             index++;
         }
     }
@@ -189,13 +189,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     /// 쿨타임 제거 버튼
     /// </summary>
     public void CancelCoolTimeBtnClicked(GameObject card) {
-        ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
-        int lv = cardInfo.data.ev.lv;
-        ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
-        if (coolTime == null) return;
-        uint cost = coolTime.cancelCooltimeCost;
+        //ActiveCardInfo cardInfo = card.GetComponent<ActiveCardInfo>();
+        //int lv = cardInfo.data.ev.lv;
+        //ActiveCardCoolTime coolTime = cardInfo.data.parentBuilding.GetComponent<ActiveCardCoolTime>();
+        //if (coolTime == null) return;
+        //uint cost = coolTime.cancelCooltimeCost;
 
-        coolTime.OnTime();
+        //coolTime.OnTime();
     }
 }
 
@@ -205,7 +205,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     public Dictionary<Effects, GameObject> effectModules;
     public Camera camera;
 
-    private void AddSkill(string methodName, GameObject card, string[] args, int coolTime, GameObject parentBuilding) {
+    private void AddSkill(string methodName, GameObject card, string[] args, int coolTime) {
         switch (methodName) {
             case "magma":
                 card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_magma];
@@ -224,7 +224,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         }
         card.GetComponent<SpellCardHandler>().data = args;
         card.GetComponent<SpellCardHandler>().coolTime = coolTime;
-        card.GetComponent<SpellCardHandler>().parentBuilding = parentBuilding;
         card.GetComponent<SpellCardHandler>().targetCard = card;
     }
 
