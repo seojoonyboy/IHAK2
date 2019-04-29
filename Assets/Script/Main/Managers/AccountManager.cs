@@ -385,7 +385,7 @@ public partial class AccountManager {
 }
 
 public partial class AccountManager {
-    public MissionData mission { get; set; }
+    public MissionData mission;
 
 
     public void RequestMissionDeck(int num) {
