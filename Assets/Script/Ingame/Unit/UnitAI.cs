@@ -107,8 +107,8 @@ public partial class UnitAI : AI.SkyNet {
                 update = attackUpdate;
                 break;
             case aiState.RETURN:
-                //TODO : 유닛이 정리 됐을 때 원위치로 돌아오게 하기
-                update = noneUpdate;
+                unitSpine.Move();
+                update = returnUpdate;
                 break;
         }
     }
@@ -163,7 +163,14 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     void returnUpdate(float time) {
-        //TODO : 영웅 근처로 돌아오기
+        Vector3 distance = Vector3.zero - transform.localPosition;
+        float length = Vector3.Distance(transform.localPosition, Vector3.zero);
+        if(length < 3f) {
+            setState(aiState.NONE);
+            return;
+        }
+        transform.Translate(distance.normalized * time * moveSpeed);
+        unitSpine.SetDirection(distance);
     }
 
     public virtual void attackUnit() {
