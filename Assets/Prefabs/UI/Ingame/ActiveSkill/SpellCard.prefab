@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 222647027173131156}
   - component: {fileID: 114207720664300664}
   - component: {fileID: 114434554429848170}
-  - component: {fileID: 114829540065469278}
   - component: {fileID: 114581511899096684}
   - component: {fileID: 114740411377721186}
   - component: {fileID: 114986301759476224}
@@ -493,23 +492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b861ab7767d88c14eb776a4c0cb52cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114829540065469278
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1508483023320674}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bdb4b74d63c8734aa148f73b55b04c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftOffset: 10
-  RightOffset: 10
-  TopOffset: 10
-  BottomOffset: 20
-  Speed: 60
-  isDrag: 0
+  prefab: {fileID: 0}
+  data: []
+  parentBuilding: {fileID: 0}
+  coolTime: 0
+  targetCard: {fileID: 0}
 --- !u!114 &114914101496482698
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -350,7 +350,7 @@ public class UnitGroup : MonoBehaviour {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask = 1 << LayerMask.NameToLayer("Direction");
             RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
-            Debug.Log(hits.collider);
+            //Debug.Log(hits.collider);
             //foreach (RaycastHit2D target in hits) {
             //    if (target.collider == clickCol)
             //        return true;

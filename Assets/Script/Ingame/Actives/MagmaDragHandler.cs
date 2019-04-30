@@ -7,7 +7,7 @@ public class MagmaDragHandler : SpellCardDragHandler {
     }
 
     public override void OnEndDrag() {
-
+        base.OnEndDrag();
         //if (UseCard()) {
         //    GetComponent<MagmaDragHandler>().enabled = false;
 
@@ -31,6 +31,7 @@ public class MagmaDragHandler : SpellCardDragHandler {
     }
 
     public override void OnBeginDrag() {
+        base.OnBeginDrag();
         //Setting();
         //GetComponentInChildren<BoundaryCamMove>().isDrag = true;
         //obj.GetComponent<Magma>().Init(data);
