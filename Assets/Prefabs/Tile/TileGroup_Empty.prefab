@@ -190,7 +190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4428682239435922}
   - component: {fileID: 114787252426975634}
-  - component: {fileID: 114854366073813402}
   m_Layer: 0
   m_Name: TileGroup_Empty
   m_TagString: TileGroup
@@ -11484,44 +11483,6 @@ MonoBehaviour:
     col: 3
   row: 4
   col: 3
---- !u!114 &114854366073813402
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1055812249702644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931524e89c26adb4681bb98fd9826c25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchPerProdPower:
-    food:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    gold:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    env:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    all:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-  attackingTowerLocation: 
-  tileCount: 0
-  units: []
-  spells: []
-  isGame: 0
-  ingameSceneUIController: {fileID: 0}
 --- !u!114 &114859723509213690
 MonoBehaviour:
   m_ObjectHideFlags: 1

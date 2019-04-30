@@ -86,7 +86,15 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
     }
 
+    private void SetMap() {
+        maps.Add(Player.PLAYER_1, GameObject.Find("PlayerCity"));
+        maps.Add(Player.PLAYER_2, GameObject.Find("EnemyCity"));
+        maps.Add(Player.PLAYER_3, GameObject.Find("EnemyCity"));
+        maps.Add(Player.PLAYER_4, GameObject.Find("EnemyCity"));
+    }
+
     private void Awake() {
+        SetMap();
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
 
         GameObject ld = (GameObject)Instantiate(
@@ -121,6 +129,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
         GetDeckDetailRequest(ld);
+        hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
     }
 

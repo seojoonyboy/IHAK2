@@ -1637,7 +1637,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4069930580247828}
   - component: {fileID: 114702807084622772}
-  - component: {fileID: 114784401093959224}
   m_Layer: 0
   m_Name: TileGroup_DummyEnemy
   m_TagString: TileGroup
@@ -13485,7 +13484,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -13558,7 +13557,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -13619,7 +13618,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14578,7 +14577,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14750,7 +14749,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -14922,7 +14921,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -15019,7 +15018,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
@@ -15673,44 +15672,6 @@ MonoBehaviour:
   shapeType: 0
   extraOffset: 0
   invertPolygon: 1
---- !u!114 &114784401093959224
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1372382854036342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931524e89c26adb4681bb98fd9826c25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  touchPerProdPower:
-    food:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    gold:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    env:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-    all:
-      id: 0
-      food: 0
-      gold: 0
-      environment: 0
-  attackingTowerLocation: 
-  tileCount: 25
-  units: []
-  spells: []
-  isGame: 0
-  ingameSceneUIController: {fileID: 0}
 --- !u!114 &114785368153715898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15849,7 +15810,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
   mainSprite: {fileID: 21300000, guid: c6951d5c2f91b6d4188511772f7d0dfa, type: 3}
@@ -16058,7 +16019,7 @@ MonoBehaviour:
           id: 0
           type: 
           count: 0
-          capability: 0
+          capabilityArgs: 
         imageName: 
   icon: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
   mainSprite: {fileID: 21300000, guid: 78f1f6f6c75bd81418122fa3bf5d22e8, type: 3}
