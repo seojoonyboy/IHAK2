@@ -47,8 +47,8 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
 
     public void SpawnMinionSquad(ActiveCard heroCard, Transform spawnPos) {
         int spawnNum = 0;
-        if (heroCard.baseSpec.unit.minion.count * 10 > (int)PlayerController.Instance.playerResource().Citizen)
-            spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 10;
+        if (heroCard.baseSpec.unit.minion.count * 100 > (int)PlayerController.Instance.playerResource().Citizen)
+            spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 100;
         else
             spawnNum = heroCard.baseSpec.unit.minion.count;
         
