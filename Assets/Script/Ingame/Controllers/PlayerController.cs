@@ -91,6 +91,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         maps.Add(Player.PLAYER_2, GameObject.Find("EnemyCity"));
         maps.Add(Player.PLAYER_3, GameObject.Find("EnemyCity"));
         maps.Add(Player.PLAYER_4, GameObject.Find("EnemyCity"));
+
+        summonParent = maps[Player.PLAYER_1].transform;
     }
 
     private void Awake() {
