@@ -11,6 +11,7 @@ namespace DataModules {
         public MonsterData[] creeps;
         public Deck playerDeck;
         public Deck opponentDeck;
+        public float hqHitPoint;
     }
 
     [System.Serializable]
