@@ -1383,7 +1383,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1466453814}
-  - {fileID: 1934013359}
   m_Father: {fileID: 886251235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1500,7 +1499,7 @@ MonoBehaviour:
   coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}
   upgradeAniMaterial: {fileID: 2100000, guid: 00e9eae2576a6e94aa55844f2dc721cd, type: 2}
   hq_mapStation: {fileID: 0}
-  pathPrefabsParent: {fileID: 1934013359}
+  pathPrefabsParent: {fileID: 0}
   GoldResourceFlick: {fileID: 2057837610}
   CitizenResourceFlick: {fileID: 494684582}
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
@@ -11600,6 +11599,7 @@ GameObject:
   - component: {fileID: 1844919644}
   - component: {fileID: 1844919646}
   - component: {fileID: 1844919647}
+  - component: {fileID: 1844919648}
   - component: {fileID: 1844919645}
   m_Layer: 0
   m_Name: EnemyPlayerController
@@ -11629,12 +11629,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844919643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224742fff4d4a884296a9d525754d21c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e1cb0544383f6245a2dbc952c15915d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckInfo: {fileID: 0}
-  playerController: {fileID: 0}
-  buildingInfos: []
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  playerNum: 0
+  shortDisMinion: {fileID: 0}
+  longDisMinion: {fileID: 0}
 --- !u!114 &1844919646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11646,11 +11655,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743fd887538dfc04f888a314a7b5eaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileGroupParent: {fileID: 0}
-  dummyPref: {fileID: 1372382854036342, guid: 282cc32bf111a50468290ed5aab824f1, type: 2}
-  deckInfo: {fileID: 0}
-  playerResource: {fileID: 0}
-  goblin: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c, type: 2}
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: maps
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[PlayerController+Player, Assembly-CSharp],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EqualityComparer`1+DefaultComparer[[PlayerController+Player,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: heroPrefabs
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  hqLevel: 1
+  tileCount: 0
+  goldConsume: 0
+  activeRepair: 0
+  repairTimer: 0
+  hq_mapStation: {fileID: 0}
+  pathPrefabsParent: {fileID: 0}
+  unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
+    type: 2}
+  summonParent: {fileID: 0}
 --- !u!114 &1844919647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11666,6 +11729,21 @@ MonoBehaviour:
   citizen_readonly: 0
   maxhp: 0
   hp: 0
+--- !u!114 &1844919648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1844919643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68166daaacb79434baa91ce8f33ebfb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldValue: {fileID: 0}
+  goldBar: {fileID: 0}
+  citizenValue: {fileID: 0}
+  citizenBar: {fileID: 0}
 --- !u!1 &1852317897
 GameObject:
   m_ObjectHideFlags: 0
@@ -12317,34 +12395,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1932230587}
   m_CullTransparentMesh: 0
---- !u!1 &1934013358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1934013359}
-  m_Layer: 0
-  m_Name: NavLineRenderers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1934013359
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1934013358}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.6474257, y: 34.975697, z: -1.2371755}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 282962851}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1939830671
 GameObject:
   m_ObjectHideFlags: 0

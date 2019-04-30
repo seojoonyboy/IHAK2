@@ -46,13 +46,17 @@ public class IngameResourceManager : MonoBehaviour {
 
     public void RefreshGold() {
         float gold = (float)PlayerController.Instance.playerResource().Gold;
-        goldBar.fillAmount = ((float)gold / 1000);
-        goldValue.text = ((int)(gold / 100)).ToString();
+        if (goldBar != null) {
+            goldBar.fillAmount = ((float)gold / 1000);
+            goldValue.text = ((int)(gold / 100)).ToString();
+        }
     }
 
     public void RefreshCitizen() {
         float citizen = (float)PlayerController.Instance.playerResource().Citizen;
-        citizenBar.fillAmount = ((float)citizen / 1000);
-        citizenValue.text = ((int)(citizen / 100)).ToString();
+        if (citizenBar != null) {
+            citizenBar.fillAmount = ((float)citizen / 1000);
+            citizenValue.text = ((int)(citizen / 100)).ToString();
+        }
     }
 }

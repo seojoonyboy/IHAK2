@@ -79,7 +79,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) { }
 
     private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
-        InitCard();
+        //InitCard();
     }
 
     public void InitCard() {
