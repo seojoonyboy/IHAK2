@@ -92,7 +92,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         maps.Add(Player.PLAYER_3, GameObject.Find("EnemyCity"));
         maps.Add(Player.PLAYER_4, GameObject.Find("EnemyCity"));
 
-        summonParent = maps[Player.PLAYER_1].transform;
+        summonParent = GameObject.Find("PlayerMinionSpawnPos").transform;
     }
 
     private void Awake() {
