@@ -152,22 +152,22 @@ public partial class PlayerController : SerializedMonoBehaviour {
     private void GetDetailDeckCallback(HttpResponse response) {
         if (response.responseCode == 200) {
             if (response.data != null) {
-                deck = JsonReader.Read<Req_deckDetail.Deck>(response.data.ToString());
-                DeckInfo deckInfo = maps[Player.PLAYER_1]
-                    .transform
-                    .GetChild(0)
-                    .gameObject
-                    .GetComponent<DeckInfo>();
+                //deck = JsonReader.Read<Req_deckDetail.Deck>(response.data.ToString());
+                //DeckInfo deckInfo = maps[Player.PLAYER_1]
+                //    .transform
+                //    .GetChild(0)
+                //    .gameObject
+                //    .GetComponent<DeckInfo>();
 
-                foreach(Req_deckDetail.Card card in deck.cards) {
-                    if (card.data.type == "hero") {
-                        ActiveCard activeCard = deckInfo.units.Find(x => x.id == card.id);
-                        if(activeCard != null) {
-                            activeCard.baseSpec.unit.skill = card.data.unit.skill;
-                            activeCard.baseSpec.unit.minion = card.data.unit.minion;
-                        }
-                    }
-                }
+                //foreach(Req_deckDetail.Card card in deck.cards) {
+                //    if (card.data.type == "hero") {
+                //        ActiveCard activeCard = deckInfo.units.Find(x => x.id == card.id);
+                //        if(activeCard != null) {
+                //            activeCard.baseSpec.unit.skill = card.data.unit.skill;
+                //            activeCard.baseSpec.unit.minion = card.data.unit.minion;
+                //        }
+                //    }
+                //}
                 eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, null);
             }
         }
