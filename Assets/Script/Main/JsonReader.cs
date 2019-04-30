@@ -24,12 +24,33 @@ public class Req_cardsInventoryRead : JsonReader {
 public class Req_missionRead : JsonReader {
 
     [System.Serializable]
-    public class Deck : DataModules.Deck {
+    public class MissionData : DataModules.MissionData {
+        public new int stageNum;
+        public new string title;
+        public new DataModules.MonsterData[] creeps;
+        public new Deck playerDeck;
+        public new Deck opponentDeck;
+        public new float hqHitPoint;
+        public new DataModules.Conditions[] PlayerConditions;
+        public new DataModules.Conditions[] opponentConditions;
+    }
+
+    [System.Serializable]
+    public class Deck : DataModules.Deck  {
+        public new int? id;
+        public new string name;
+        public new bool isRepresent;
+
+        public new int[] heroSerial;
+        public new int[] activeSerial;
+        public new int[] passiveSerial;
+        public new int[] wildcardSerial;
+
+        public new Card[] cards;
     }
 
     [System.Serializable]
     public class Card : DataModules.Card {
-        public int id;
         public DataModules.CardData card { get { return data; } set { data = value; } }
     }
 
