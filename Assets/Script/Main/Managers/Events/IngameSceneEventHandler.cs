@@ -68,7 +68,8 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
         BUILDING_DESTROYED,
         BUILDING_RECONSTRUCTED,
         UNIT_UPGRADED,
-        ORDER_UNIT_RETURN
+        ORDER_UNIT_RETURN,
+        SUB_MISSION_COMPLETE
     }
 
     public struct BuildingDestroyedPackage {

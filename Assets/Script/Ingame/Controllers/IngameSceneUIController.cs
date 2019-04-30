@@ -10,6 +10,7 @@ using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
+using System.Linq;
 
 public class IngameSceneUIController : MonoBehaviour {
 
@@ -24,6 +25,8 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] public Transform attackCard;
     [SerializeField] IngameHpSystem IngameHpSystem;
+    [SerializeField] Transform missionGoalUI;
+    [SerializeField] GameObject missionGoalUI_prefab;
 
     public bool canPlaying = false;
     public bool canEnemyPlaying = false;
@@ -40,11 +43,22 @@ public class IngameSceneUIController : MonoBehaviour {
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
+        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, OnSubMissionComplete);
+    }
+
+    private void OnSubMissionComplete(Enum Event_Type, Component Sender, object Param) {
+        string index = (string)Param;
+        foreach(Transform goalUI in missionGoalUI) {
+            if(index == goalUI.GetComponent<StringIndex>().Id) {
+                goalUI.Find("CheckBox/Check").gameObject.SetActive(true);
+            }
+        }
     }
 
     void OnDestroy() {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
+        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, OnSubMissionComplete);
     }
 
     private void OnEnemyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
@@ -61,6 +75,24 @@ public class IngameSceneUIController : MonoBehaviour {
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
         playerCity = GameObject.Find("PlayerCity");
         enemyCity = GameObject.Find("EnemyCity");
+
+        int stageNum = AccountManager.Instance.mission.stageNum;
+        switch (stageNum) {
+            case 0:
+            case 1:
+                var values = PlayerController.Instance.stageGoals.missionLists
+                    .Where(x => x.Key.StartsWith(stageNum.ToString()))
+                    .Select(pv => pv.Value);
+
+                int count = 1;
+                foreach(string value in values) {
+                    GameObject ui = Instantiate(missionGoalUI_prefab, missionGoalUI);
+                    ui.transform.Find("Text").GetComponent<Text>().text = value;
+                    ui.GetComponent<StringIndex>().Id = stageNum + "-" + count;
+                    count++;
+                }
+                break;
+        }
     }
 
     private void Update() {

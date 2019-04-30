@@ -1429,13 +1429,139 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: stageGoals
+      Entry: 7
+      Data: 2|PlayerController+StageGoal, Assembly-CSharp
+    - Name: missionLists
+      Entry: 7
+      Data: 3|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-1
+    - Name: 
+      Entry: 1
+      Data: "\uB77C\uCE78\uC744 \uC0DD\uC0B0\uD574 \uC911\uC559 \uAC70\uC810\uC73C\uB85C
+        \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-2
+    - Name: 
+      Entry: 1
+      Data: "\uC911\uC559 \uAC70\uC810\uC758 \uC801\uC744 \uBB3C\uB9AC\uCE58\uACE0
+        \uC810\uB839\uB420 \uB54C \uAE4C\uC9C0 \uB300\uAE30\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-3
+    - Name: 
+      Entry: 1
+      Data: "\uC5F0\uC18D\uB41C \uC804\uD22C\uB85C \uC0C1\uCC98\uC785\uC740 \uC544\uAD70
+        \uC720\uB2DB\uB4E4\uC5D0\uAC8C \uB9C8\uBC95\uC744 \uC368\uC11C \uD68C\uBCF5\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-4
+    - Name: 
+      Entry: 1
+      Data: "\uC0C1\uB300 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-1
+    - Name: 
+      Entry: 1
+      Data: "\uAC70\uC810\uC73C\uB85C \uC720\uB2DB\uC744 \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-2
+    - Name: 
+      Entry: 1
+      Data: "\uC801\uC744 \uCC98\uC9C0\uD558\uACE0 \uB808\uBCA8 2\uC5D0 \uB3C4\uB2EC\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-3
+    - Name: 
+      Entry: 1
+      Data: "\uBAA8\uB4E0 \uAC70\uC810\uC744 \uC810\uB839\uD558\uACE0 \uD6A8\uACFC\uB97C
+        \uD655\uC778\uD574 \uBCF4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-4
+    - Name: 
+      Entry: 1
+      Data: "\uC801 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: heroPrefabs
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -5223,6 +5349,7 @@ RectTransform:
   - {fileID: 1535162192}
   - {fileID: 304595185}
   - {fileID: 1711368124}
+  - {fileID: 2064012111}
   m_Father: {fileID: 614469975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7533,6 +7660,9 @@ MonoBehaviour:
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 0}
   IngameHpSystem: {fileID: 1337645957}
+  missionGoalUI: {fileID: 2064012111}
+  missionGoalUI_prefab: {fileID: 1288972463116908, guid: 6987ee4a9a477c14ba8aaa3dbf421e15,
+    type: 2}
   canPlaying: 0
   canEnemyPlaying: 0
   playerController: {fileID: 282962850}
@@ -8312,9 +8442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 282962850}
-  myBuildings: {fileID: 0}
   myResource: {fileID: 0}
-  myBuildingInfo: []
   playerhpGauge: {fileID: 850662850}
   playerHQ:
     tileNum: 0
@@ -8355,9 +8483,7 @@ MonoBehaviour:
         imageName: 
     gameObject: {fileID: 0}
   enemyController: {fileID: 1844919643}
-  enemyBuildings: {fileID: 0}
   enemyResource: {fileID: 0}
-  enemybuildingInfos: []
   enemyhpGauge: {fileID: 1154392000}
   enemyHQ:
     tileNum: 0
@@ -13351,6 +13477,76 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2057837610}
   m_CullTransparentMesh: 0
+--- !u!1 &2064012110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2064012111}
+  - component: {fileID: 2064012113}
+  - component: {fileID: 2064012112}
+  m_Layer: 5
+  m_Name: MissionGoal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2064012111
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2064012110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 874304226}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 265.8, y: -103.2}
+  m_SizeDelta: {x: 531.7, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &2064012112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2064012110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
+--- !u!114 &2064012113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2064012110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 60
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
 --- !u!1 &2076449622
 GameObject:
   m_ObjectHideFlags: 0
