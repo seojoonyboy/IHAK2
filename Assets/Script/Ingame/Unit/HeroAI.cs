@@ -159,7 +159,7 @@ public partial class HeroAI : UnitAI {
 
     private void LvUpMinions() {
         Transform heroGroup = transform.parent;
-        for (int i = 1; i < heroGroup.childCount; i++) {
+        for (int i = 3; i < heroGroup.childCount; i++) {
             heroGroup.GetChild(i).GetComponent<MinionAI>().SetMinionData(unitCard, true);
         }
     }
