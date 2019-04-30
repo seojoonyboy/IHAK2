@@ -22,7 +22,7 @@ public class UnitGroup : MonoBehaviour {
     private bool directionOpen = false;
 
     private int maxMinionNum;
-    private int currentMinionNum {get {return transform.childCount -2;}}
+    private int currentMinionNum {get {return transform.childCount -3;}}
     private string minionType;
 
     private void Start() {
