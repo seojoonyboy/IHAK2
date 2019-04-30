@@ -48,8 +48,7 @@ namespace Container {
             activeCards = new List<ActiveCard>();
 
             for(int i = 0; i < playerDeck.cards.Length; i++) {
-                GameObject card = constructManager.GetBuildingObjectById(playerDeck.cards[i].id);
-                DataModules.CardData cardData = card.GetComponent<BuildingObject>().card.data;
+                DataModules.CardData cardData = playerDeck.cards[i].data;
                 ActiveCard activeCard = new ActiveCard();
                 
                 if(cardData != null) {

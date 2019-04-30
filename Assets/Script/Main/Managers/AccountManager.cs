@@ -410,7 +410,7 @@ public partial class AccountManager {
         if (response.responseCode != 200) return;
 
         if (response.responseCode == 200) {
-            if (response.data != null) {
+            if (response.data != null) {                
                 ConvertMissionData(JsonReader.Read<Req_missionRead.MissionData>(response.data.ToString()));
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_LOAD_COMPLETE, null, mission);
                 MissionLoadComplete();
@@ -430,7 +430,9 @@ public partial class AccountManager {
         mission.stageNum = mi.stageNum;
         mission.title = mi.title;
         mission.creeps = mi.creeps;
+        mission.playerDeck = null;
         mission.playerDeck = ConvertDeck(mi.playerDeck);
+        mission.opponentDeck = null;
         mission.opponentDeck = ConvertDeck(mi.opponentDeck);
         mission.hqHitPoint = mi.hqHitPoint;
         mission.PlayerConditions = mi.PlayerConditions;
