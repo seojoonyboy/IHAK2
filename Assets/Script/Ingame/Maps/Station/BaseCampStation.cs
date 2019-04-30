@@ -86,6 +86,7 @@ public partial class BaseCampStation {
         goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
 
         goblin.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+        goblin.GetComponent<MonsterAI>().expPoint = 20;
 
         foreach(Transform wayPoint in transform.GetChild(1)) {
             wayPoints.Add(wayPoint);

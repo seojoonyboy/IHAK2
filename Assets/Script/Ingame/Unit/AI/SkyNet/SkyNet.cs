@@ -11,8 +11,8 @@ namespace AI {
         [SerializeField] private float maxHp;
         public PlayerController.Player ownerNum;
         [SerializeField] protected Transform healthBar;
-        [SerializeField] private int expPoint;
-        private int lastAttackLayer = 0;
+        [SerializeField] public int expPoint;
+        protected int lastAttackLayer = 0;
 
 
         protected static int myLayer = 0;
@@ -63,8 +63,8 @@ namespace AI {
         }
 
         public virtual void Damage(float damage, Transform enemy) {
-            Damage(damage);
             lastAttackLayer = enemy.gameObject.layer;
+            Damage(damage);
         }
 
         public int ThisPlayerHitMe() {
@@ -79,7 +79,9 @@ namespace AI {
             HP += amount;
         }
 
-        public virtual void Die() { }
+        public virtual void Die() {
+            GiveExp();
+        }
         protected virtual void GiveExp() {
             int layerToGive = ThisPlayerHitMe();
             if(layerToGive == neutralLayer) return;

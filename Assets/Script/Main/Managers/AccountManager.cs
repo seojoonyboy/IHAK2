@@ -426,5 +426,4 @@ public partial class AccountManager {
             gsm.startScene(scenestate, GameSceneManager.SceneState.IngameScene);
         }
     }
-
 }
