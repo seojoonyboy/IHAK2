@@ -37,7 +37,13 @@ public class MissionList : MonoBehaviour {
             if (i == missionBtnList.childCount - 1) break;
         }
         missionSlider.value = (float)accountManager.missionClear / (missionBtnList.childCount - 1);
-        SelectMission(accountManager.missionClear);
+
+        if (accountManager.missionClear >= 3)
+            SelectMission(2);
+        else if (accountManager.missionClear <= 0)
+            SelectMission(0);
+        else
+            SelectMission(accountManager.missionClear);
     }
 	
     
