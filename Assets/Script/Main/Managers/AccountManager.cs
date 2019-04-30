@@ -411,15 +411,12 @@ public partial class AccountManager {
 
         if (response.responseCode == 200) {
             if (response.data != null) {
-                MissionData missionData = JsonReader.Read<Req_missionRead.MissionData>(response.data.ToString());
-                mission = missionData;
+                ConvertMissionData(JsonReader.Read<Req_missionRead.MissionData>(response.data.ToString()));
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_LOAD_COMPLETE, null, mission);
                 MissionLoadComplete();
             }
         }
-    }
-    
-
+    }  
 
     public void MissionLoadComplete() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
@@ -429,5 +426,30 @@ public partial class AccountManager {
         }
     }
 
-    
+    public void ConvertMissionData(Req_missionRead.MissionData mi) {
+        mission.stageNum = mi.stageNum;
+        mission.title = mi.title;
+        mission.creeps = mi.creeps;
+        mission.playerDeck = ConvertDeck(mi.playerDeck);
+        mission.opponentDeck = ConvertDeck(mi.opponentDeck);
+        mission.hqHitPoint = mi.hqHitPoint;
+        mission.PlayerConditions = mi.PlayerConditions;
+        mission.opponentConditions = mi.opponentConditions;
+    }
+
+    public Deck ConvertDeck(Req_missionRead.Deck mi) {
+        Deck deck = new Deck();
+        deck.id = mi.id;
+        deck.name = mi.name;
+        deck.isRepresent = mi.isRepresent;
+        deck.heroSerial = mi.heroSerial;
+        deck.activeSerial = mi.activeSerial;
+        deck.passiveSerial = mi.passiveSerial;
+        deck.wildcardSerial = mi.wildcardSerial;
+        deck.cards = mi.cards;
+        return deck;
+    }
+
+
+
 }
