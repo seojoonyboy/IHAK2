@@ -45,7 +45,7 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     void Start() {
-        SetEnemy();
+        if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
@@ -53,14 +53,15 @@ public partial class UnitAI : AI.SkyNet {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
-    private void OnEnable() {
-        if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
-        SetEnemy();
-    }
-
-    void OnDisable() {
-        if(detector == null) return;
-        detector.EnemyDone();
+    public void Battle(bool isBattle) {
+        if(isBattle) {
+            SetEnemy();
+        }
+        else  {
+            setState(aiState.RETURN);
+            if(detector == null) return;
+            detector.EnemyDone();
+        }
     }
 
     protected void InitStatic() {
@@ -159,6 +160,10 @@ public partial class UnitAI : AI.SkyNet {
             attackUnit();
         }
         else SetEnemy();
+    }
+
+    void returnUpdate(float time) {
+        //TODO : 영웅 근처로 돌아오기
     }
 
     public virtual void attackUnit() {

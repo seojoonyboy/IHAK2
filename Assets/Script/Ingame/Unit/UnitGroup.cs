@@ -55,16 +55,12 @@ public class UnitGroup : MonoBehaviour {
 
     private void Update() {
         MoveUpdate(Time.deltaTime);
-        //AttackUpdate(Time.deltaTime);
     }
 
     private void MoveUpdate(float time) {
         if(!moving) return;
+        if(attacking) return;
         Moving(time);
-    }
-    private void AttackUpdate(float time) {
-        if(!attacking) return;
-        transform.position = transform.GetChild(2).position;
     }
 
     private void Moving(float time) {
@@ -89,6 +85,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void AmIinHQ() {
+        //TODO : 미션으로 인해 맵이 바뀌는데 적의 위치가 무조건 S12라고는 안할듯
         UnitAI unit = transform.GetComponentInChildren<UnitAI>();
         if(unit == null) return;
         int unitLayer = unit.gameObject.layer;
@@ -103,7 +100,6 @@ public class UnitGroup : MonoBehaviour {
         Transform hq = group.transform.GetChild(0).Find("Tile[2,2]");
         enemyBuilding = hq.gameObject;
         enemyGroup = new List<GameObject>();
-        this.enabled = false;
         attacking = true;
         UnitIndividualSet(true);
     }
@@ -149,7 +145,7 @@ public class UnitGroup : MonoBehaviour {
     private void UnitIndividualSet(bool attack) {
         for(int i = 0; i < unitAIs.Length; i++) {
             if(unitAIs[i] == null) continue;
-            unitAIs[i].enabled = attack;
+            unitAIs[i].Battle(attack);
         }
     }
 
@@ -196,7 +192,6 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void PrepareBattle(Transform enemy) {
-        this.enabled = false;
         attacking = true;
         MonsterCheck(enemy);
         UnitCheck(enemy);
@@ -331,17 +326,26 @@ public class UnitGroup : MonoBehaviour {
 
     private void FinishBattle() {
         enemyGroup = null;
-        this.enabled = true;
         attacking = false;
         UnitIndividualSet(false);
+        PositionReset();
         if(IsHeroDead()) Destroy(gameObject, 5f);
         if(!moving) return;
         UnitMoveAnimation(true);
         UnitMoveDirection(MovingPos[0]);
     }
 
+    private void PositionReset() {
+        int count = transform.childCount;
+        Transform[] childrens = new Transform[count];
+        for(int i = 0; i < count; i++) childrens[i] = transform.GetChild(i);
+        HeroAI hero = transform.GetComponentInChildren<HeroAI>();
+        transform.DetachChildren();
+        transform.position = hero.transform.position;
+        foreach (var item in childrens) item.SetParent(transform, true);
+    }
+
     public void UnitDead() {
-        //TODO : 테스트 필요 게임오브젝트 파괴 명령 해도 바로 안사라지는 문제가 있어서 -1로 해야하는데 일단 0으로 세팅
         if(currentMinionNum == 0) Destroy(gameObject);
     }
 
