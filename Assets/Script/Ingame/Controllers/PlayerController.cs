@@ -229,6 +229,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public HeroSummonListener HeroSummonListener() {
         return _instance.GetComponent<HeroSummonListener>();
     }
+
+    public MissionConditionsController MissionConditionsController() {
+        return _instance.gameObject.transform.parent.GetComponent<MissionConditionsController>();
+    }
 }
 
 public partial class PlayerController {
