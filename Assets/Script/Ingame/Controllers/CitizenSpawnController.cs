@@ -13,6 +13,8 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
     void Start () {
         citizens = new List<GameObject>();
         citizenNum = 0;
+        CityPos = GameObject.Find("PlayerCity").transform;
+        SpawnPos = GameObject.Find("PlayerCitizenSpawnPos").transform;
         SpawnPos.transform.position = CityPos.position;
     }
 

@@ -59,6 +59,8 @@ public class IngameSceneUIController : MonoBehaviour {
     void Start() {
         playerName.text = AccountManager.Instance.userInfos.nickname;
         dummyRankBtn.parent.GetComponent<Text>().text = "Dummy";
+        playerCity = GameObject.Find("PlayerCity");
+        enemyCity = GameObject.Find("EnemyCity");
     }
 
     private void Update() {

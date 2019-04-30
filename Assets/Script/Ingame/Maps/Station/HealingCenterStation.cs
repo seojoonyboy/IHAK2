@@ -102,7 +102,7 @@ public partial class HealingCenterStation : DefaultStation {
             enemys.Remove(collision.gameObject);
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
-            if (!healingTarget.Exists(x => x == collision.gameObject)) healingTarget.Remove(collision.gameObject);
+            if (healingTarget.Exists(x => x == collision.gameObject)) healingTarget.Remove(collision.gameObject);
             Heal heal = collision.gameObject.GetComponent<Heal>();
             if (heal != null)
                 Destroy(heal);

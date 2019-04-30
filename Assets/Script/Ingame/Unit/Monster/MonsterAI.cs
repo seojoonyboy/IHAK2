@@ -39,8 +39,11 @@ public partial class MonsterAI : SkyNet {
         if (tower.GetType() == typeof(BaseCampStation)) {
             ((BaseCampStation)tower).MonsterDie(gameObject);
         }
-        GiveExp();
         Destroy(gameObject);
+    }
+
+    public override void Damage(float damage, Transform enemy) {
+        base.Damage(damage, enemy);
     }
 }
 

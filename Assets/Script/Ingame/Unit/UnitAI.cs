@@ -164,7 +164,7 @@ public partial class UnitAI : AI.SkyNet {
     public virtual void attackUnit() {
         AI.SkyNet skyNet = targetUnit.GetComponent<AI.SkyNet>();
         if(skyNet != null) {
-            skyNet.Damage(power);
+            skyNet.Damage(power, transform);
         }
         else if(targetUnit.GetComponent<TileObject>()) {
             bool isPlayer1 = myLayer == LayerMask.NameToLayer("PlayerUnit");            

@@ -16,7 +16,7 @@ public class EnemyPlayerController : MonoBehaviour {
         deckInfo = Instantiate(dummyPref, tileGroupParent)
             .transform
             .GetComponent<DeckInfo>();
-
+        tileGroupParent = GameObject.Find("EnemyCity").transform;
         //deckInfo.transform.Find("Background").gameObject.SetActive(false);
         playerResource = GetComponent<PlayerResource>();
 

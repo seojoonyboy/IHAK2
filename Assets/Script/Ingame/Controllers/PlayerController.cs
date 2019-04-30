@@ -66,7 +66,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public Dictionary<Player, GameObject> maps;
     IngameSceneEventHandler eventHandler;
     Req_deckDetail.Deck deck;
-    public GameObject cam;
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     public GameObject 
@@ -87,7 +86,17 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
     }
 
+    private void SetMap() {
+        maps.Add(Player.PLAYER_1, GameObject.Find("PlayerCity"));
+        maps.Add(Player.PLAYER_2, GameObject.Find("EnemyCity"));
+        maps.Add(Player.PLAYER_3, GameObject.Find("EnemyCity"));
+        maps.Add(Player.PLAYER_4, GameObject.Find("EnemyCity"));
+
+        summonParent = GameObject.Find("PlayerMinionSpawnPos").transform;
+    }
+
     private void Awake() {
+        SetMap();
         GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
 
         GameObject ld = (GameObject)Instantiate(
@@ -123,6 +132,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         transform.GetComponent<PlayerResource>().maxhp = transform.GetComponent<PlayerResource>().TotalHp = (int)AccountManager.Instance.mission.hqHitPoint;
         GetDeckDetailRequest(ld);
+        hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
     }
 
@@ -221,6 +231,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     public HeroSummonListener HeroSummonListener() {
         return _instance.GetComponent<HeroSummonListener>();
+    }
+
+    public MissionConditionsController MissionConditionsController() {
+        return _instance.gameObject.transform.parent.GetComponent<MissionConditionsController>();
     }
 }
 
