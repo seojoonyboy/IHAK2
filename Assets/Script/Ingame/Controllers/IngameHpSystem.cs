@@ -12,9 +12,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
     [Header (" - Player")]
     public GameObject playerController;
-    public MyBuildings myBuildings;
     public PlayerResource myResource;
-    public List<BuildingInfo> myBuildingInfo;
     public GameObject playerhpGauge;
     public BuildingInfo playerHQ;
     
@@ -22,9 +20,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     [Space(10)]
     [Header(" - Enemy")]
     public GameObject enemyController;
-    public EnemyBuildings enemyBuildings;
     public PlayerResource enemyResource;    
-    public List<BuildingInfo> enemybuildingInfos;
     public GameObject enemyhpGauge;
     public BuildingInfo enemyHQ;
 
@@ -43,19 +39,13 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     }
 
     private void SetEnemy(Enum Event_Type, Component Sender, object Param) {
-        enemyBuildings = enemyController.GetComponent<EnemyBuildings>();
         enemyResource = enemyController.GetComponent<PlayerResource>();
-        enemybuildingInfos = enemyBuildings.buildingInfos;
-        enemyHQ = enemybuildingInfos.Find(x => x.tileNum == 12);
         
         SetHp();
         //TakeDamage(Target.ME, 12, 1500);
     }
     private void SetPlayer(Enum Event_Type, Component Sender, object Param) {
-        myBuildings = playerController.GetComponent<MyBuildings>();
-        myBuildingInfo = myBuildings.buildingInfos;
         myResource = playerController.GetComponent<PlayerResource>();
-        playerHQ = myBuildingInfo.Find(x => x.tileNum == 12);
     }
 
     void OnDestroy() {

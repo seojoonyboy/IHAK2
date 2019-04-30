@@ -121,6 +121,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
+        transform.GetComponent<PlayerResource>().maxhp = transform.GetComponent<PlayerResource>().TotalHp = (int)AccountManager.Instance.mission.hqHitPoint;
         GetDeckDetailRequest(ld);
         _instance = this;
     }

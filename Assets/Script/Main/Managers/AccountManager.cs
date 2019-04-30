@@ -412,9 +412,12 @@ public partial class AccountManager {
         if (response.responseCode == 200) {
             if (response.data != null) {
                 MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
+                var deckData = JsonReader.Read<Req_missionRead.Card>(response.data.ToString());
+                Debug.Log(missionData);
+                /*
                 mission = missionData;
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_LOAD_COMPLETE, null, mission);
-                MissionLoadComplete();
+                MissionLoadComplete();*/
             }
         }
     }

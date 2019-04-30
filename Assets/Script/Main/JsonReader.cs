@@ -21,6 +21,21 @@ public class Req_cardsInventoryRead : JsonReader {
     }
 }
 
+public class Req_missionRead : JsonReader {
+
+    [System.Serializable]
+    public class Deck : DataModules.Deck {
+    }
+
+    [System.Serializable]
+    public class Card : DataModules.Card {
+        public int id;
+        public DataModules.CardData card { get { return data; } set { data = value; } }
+    }
+
+}
+
+
 public class Req_deckDetail : JsonReader {
     [System.Serializable]
     public class Deck {
