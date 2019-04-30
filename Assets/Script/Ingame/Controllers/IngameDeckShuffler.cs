@@ -63,8 +63,12 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
     private float CalculateHeroCoolTime(ActiveCardInfo card) {
         float baseCool = card.data.baseSpec.unit.coolTime;
-        //float magLv = card.data.ev.lv;
-        //return baseCool * ((100f + magLv * 8f) / 100f);
+
+        ConditionSet expSet = playerController
+            .MissionConditionsController()
+            .conditions.Find(x => x.condition == Conditions.cooltime_fix || x.condition == Conditions.hero_cooltime_fix);
+        if(expSet != null) baseCool = expSet.args[0];
+
         return baseCool;
     }
 
