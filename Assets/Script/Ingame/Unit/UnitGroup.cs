@@ -336,6 +336,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private void PositionReset() {
+        if(IsHeroDead()) return;
         int count = transform.childCount;
         Transform[] childrens = new Transform[count];
         for(int i = 0; i < count; i++) childrens[i] = transform.GetChild(i);
