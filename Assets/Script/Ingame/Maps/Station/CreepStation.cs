@@ -61,24 +61,36 @@ public partial class CreepStation {
     [SerializeField] [ReadOnly] int poolLv = 0;
     public CircularSlider occupySlider;
     [SerializeField] [ReadOnly] int maxMonsterNum;
-
+    private float occupyPercentageVal;
     public void SetMonsters() {
         monsters = new List<GameObject>();
         monsterParent = transform.parent.parent.Find("Monsters");
         Instantiate(Resources.Load("Prefabs/Monsters/MonsterPos") as GameObject, transform);
-        Set goblin = new Set {
-            num = 6,
-            monster = Resources.Load("Prefabs/Monsters/Goblin") as GameObject
-        };
 
-        goblin.monster.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
-        maxMonsterNum = goblin.num;
+        List<Transform> wayPoints = new List<Transform>();
+        foreach (Transform wayPoint in transform.GetChild(0)) {
+            wayPoints.Add(wayPoint);
+        }
 
-        List<Set> tempSets = new List<Set>();
-        tempSets.Add(goblin);
-        Pool tempPool = new Pool();
-        tempPool.sets = tempSets;
-        pools[0] = tempPool;
+        GameObject goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
+        goblin.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+        goblin.GetComponent<MonsterAI>().expPoint = 20;
+
+        var creeps = AccountManager.Instance.mission.creeps;
+        foreach (DataModules.MonsterData monsterData in creeps) {
+            if (monsterData.creep.id == "npc_monster_01001") {
+                int monsterCount = monsterData.count;
+                for (int i = 0; i < monsterCount; i++) {
+                    GameObject generateMonster = Instantiate(goblin, monsterParent);
+                    generateMonster.transform.position = transform.GetChild(0).GetChild(i).position;
+
+                    generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+                    generateMonster.GetComponent<MonsterAI>().tower = this;
+                    monsters.Add(generateMonster);
+                }
+                occupyPercentageVal = 100 / monsterCount;
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
@@ -118,34 +130,34 @@ public partial class CreepStation {
     public void MonsterDie(GameObject monster) {
         monsters.Remove(monster);
 
-        occupySlider.IncreaseByPercentage(18.0f);
+        occupySlider.IncreaseByPercentage(occupyPercentageVal);
     }
 
     public void MonstersReset(bool isTierUp) {
-        if (isTierUp) poolLv++;
+        //if (isTierUp) poolLv++;
 
-        Pool selPool = pools[poolLv];
+        //Pool selPool = pools[poolLv];
 
-        List<Transform> wayPoints = new List<Transform>();
-        foreach (Transform wayPoint in transform.GetChild(0)) {
-            wayPoints.Add(wayPoint);
-        }
+        //List<Transform> wayPoints = new List<Transform>();
+        //foreach (Transform wayPoint in transform.GetChild(0)) {
+        //    wayPoints.Add(wayPoint);
+        //}
 
-        foreach (Set set in selPool.sets) {
-            for (int i = 0; i < set.num; i++) {
-                GameObject instantiatedMonster = Instantiate(set.monster, monsterParent);
-                instantiatedMonster.transform.position = transform
-                    .GetChild(0)
-                    .GetChild(i)
-                    .transform
-                    .position;
+        //foreach (Set set in selPool.sets) {
+        //    for (int i = 0; i < set.num; i++) {
+        //        GameObject instantiatedMonster = Instantiate(set.monster, monsterParent);
+        //        instantiatedMonster.transform.position = transform
+        //            .GetChild(0)
+        //            .GetChild(i)
+        //            .transform
+        //            .position;
                 
-                instantiatedMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
-                instantiatedMonster.GetComponent<MonsterAI>().tower = this;
-                instantiatedMonster.GetComponent<MonsterAI>().ownerNum = OwnerNum;
-                monsters.Add(instantiatedMonster);
-            }
-        }
+        //        instantiatedMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+        //        instantiatedMonster.GetComponent<MonsterAI>().tower = this;
+        //        instantiatedMonster.GetComponent<MonsterAI>().ownerNum = OwnerNum;
+        //        monsters.Add(instantiatedMonster);
+        //    }
+        //}
     }
 
     private void SetOccupySlider() {

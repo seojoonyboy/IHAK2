@@ -76,7 +76,6 @@ public partial class BaseCampStation {
     public Transform monsterParent;
     public List<GameObject> monsters;
     public GameObject goblin;
-    int monsterCount = 6;
     List<Transform> wayPoints = new List<Transform>();
 
     public void SetMonsters() {
@@ -92,14 +91,20 @@ public partial class BaseCampStation {
             wayPoints.Add(wayPoint);
         }
 
-        for (int i = 0; i < monsterCount; i++) {
-            GameObject generateMonster = Instantiate(goblin, monsterParent);
-            generateMonster.transform.position = transform.GetChild(1).GetChild(i).position;
+        var creeps = AccountManager.Instance.mission.creeps;
+        foreach(DataModules.MonsterData monsterData in creeps) {
+            if(monsterData.creep.id == "npc_monster_01001") {
+                int monsterCount = monsterData.count;
+                for (int i = 0; i < monsterCount; i++) {
+                    GameObject generateMonster = Instantiate(goblin, monsterParent);
+                    generateMonster.transform.position = transform.GetChild(1).GetChild(i).position;
 
-            generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
-            generateMonster.GetComponent<MonsterAI>().tower = this;
-            monsters.Add(generateMonster);        
-        }        
+                    generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+                    generateMonster.GetComponent<MonsterAI>().tower = this;
+                    monsters.Add(generateMonster);
+                }
+            }
+        }
     }
 
     public void MonsterDie(GameObject monster) {

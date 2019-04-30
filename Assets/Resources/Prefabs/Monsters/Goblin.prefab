@@ -434,14 +434,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de272c92b612f5478bb5a430eda533f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 0
+  ownerNum: 0
+  healthBar: {fileID: 4878932774865594}
+  expPoint: 0
   originPos: {fileID: 0}
   patrolTarget: {x: 0, y: 0}
   moveToTarget: {fileID: 0}
-  health: 200
-  maxHealth: 200
-  healthBar: {fileID: 4878932774865594}
   tower: {fileID: 0}
-  monsterSpine: {fileID: 0}
+  monsterSpine: {fileID: 114854636294581766}
   data:
     id: npc_monster_01001
     rarity: 1
@@ -609,6 +611,7 @@ MonoBehaviour:
   runAnimationName: 2.move_2
   idleAnimationName: 1.idle
   attackAnimationName: 3.attack
+  skillAnimationName: 
 --- !u!212 &212137986636016610
 SpriteRenderer:
   m_ObjectHideFlags: 1
