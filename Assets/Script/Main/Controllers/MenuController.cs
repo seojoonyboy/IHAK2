@@ -70,7 +70,7 @@ public class MenuController : MonoBehaviour {
         userNickname.text = AccountManager.Instance.userInfos.nickname;
         deckListWnd.SetActive(false);
         missionListWnd.SetActive(false);
-        buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => OpenDeckWindow());
+        //buttonList.GetChild(2).GetComponent<Button>().OnClickAsObservable().Subscribe(_ => OpenDeckWindow());
         exitDeckList.OnClickAsObservable().Subscribe(_ => CloseDeckWindow());
 
         //clickMenuButton(pageNum);
