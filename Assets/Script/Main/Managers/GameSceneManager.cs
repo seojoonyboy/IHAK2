@@ -48,14 +48,21 @@ public class GameSceneManager : MonoBehaviour {
                 yield return null;
             }
         }
+        if(isIngame(state)) {
+            yield return SceneManager.LoadSceneAsync(
+                string.Format("stage{0}", AccountManager.Instance.mission.stageNum), 
+                LoadSceneMode.Additive);
+        }
         yield return new WaitForSeconds(0.5f);
         _wndLoadding.setLoaddingValue(0.5f);
         yield return new WaitForSeconds(0.5f);
+        
         AO = SceneManager.LoadSceneAsync(load, LoadSceneMode.Additive);
         while (!AO.isDone) {
             _wndLoadding.setLoaddingValue(0.5f + AO.progress / 3);
             yield return null; 
         }
+        missionIngame(state);
         yield return new WaitForSeconds(0.5f);
         _wndLoadding.setLoaddingValue(1.0f);
         yield return new WaitForSeconds(0.5f);
@@ -64,5 +71,19 @@ public class GameSceneManager : MonoBehaviour {
         Destroy(_wndLoadding.gameObject);
         sceneState = state;
         AccountManager.Instance.scenestate = state;
+    }
+
+    private bool isIngame(SceneState state) {
+        if(AccountManager.Instance.mission == null) return false;
+        if(state == SceneState.IngameScene) return true;
+        return false;
+    }
+
+    private void missionIngame(SceneState state) {
+        if(AccountManager.Instance.mission == null) return;
+        if(state != SceneState.IngameScene) return;
+        Scene ingame = SceneManager.GetSceneByName("IngameScene");
+		Scene stage = SceneManager.GetSceneByName(string.Format("stage{0}", AccountManager.Instance.mission.stageNum));
+        SceneManager.MergeScenes(stage, ingame);
     }
 }
