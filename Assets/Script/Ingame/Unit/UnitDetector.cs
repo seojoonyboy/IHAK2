@@ -18,7 +18,7 @@ public class UnitDetector : MonoBehaviour {
 	private void OnTriggerStay2D(Collider2D other) {
 		int otherLayer = (1 << other.gameObject.layer);
 		if((detectingLayer & otherLayer) == otherLayer) {		
-			if(other.GetComponent<UnitAI>() == null && other.GetComponent<MonsterAI>() == null) return;
+			if(other.GetComponent<AI.SkyNet>() == null) return;
 			unitAI.NearEnemy(other);
 			GetComponent<CircleCollider2D>().enabled = false;
 		}
