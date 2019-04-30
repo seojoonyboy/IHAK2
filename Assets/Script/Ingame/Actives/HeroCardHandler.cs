@@ -27,8 +27,6 @@ public class HeroCardHandler : IngameCardHandler {
             UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
             if (unitGroup == null) return;
 
-            MoveCamera();
-
             unitGroup.checkWay();
         }
         else {

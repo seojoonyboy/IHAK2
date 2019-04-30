@@ -41,11 +41,11 @@ namespace ingameUIModules {
             PlayerController.Instance.deckShuffler().UseCard(toggle.gameObject);
 
             tg.SetAllTogglesOff();
+            anyTogglesOn = false;
         }
 
         private bool IsSummonOk() {
             if (!anyTogglesOn) return false;
-
             GraphicRaycaster m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
             if (m_Raycaster == null) return false;
 
@@ -61,15 +61,10 @@ namespace ingameUIModules {
 
                 //spell card가 선택된 상태
                 if (toggle.GetComponent<HeroCardHandler>() == null) {
-                    Invoke("OffMobileTouchCamer", 0.1f);
                     return false;
                 }
                 if(toggle.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
                     return true;
-                }
-                else {
-                    IngameAlarm.instance.SetAlarm("이미 소환한 유닛입니다!");
-                    return false;
                 }
             }
             return false;
@@ -77,14 +72,8 @@ namespace ingameUIModules {
 
         public void ToggleListener(bool anyTogglesOn) {
             PlayerController.Instance.GoldResourceFlick.SetActive(anyTogglesOn);
-            Camera.main.GetComponent<MobileTouchCamera>().enabled = !anyTogglesOn;
             this.anyTogglesOn = anyTogglesOn;
             //PlayerController.Instance.CitizenResourceFlick.SetActive(isOn);
-        }
-
-        void OffMobileTouchCamer() {
-            Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
-            Debug.Log("!!");
         }
     }
 }

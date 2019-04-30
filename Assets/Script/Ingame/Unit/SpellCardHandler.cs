@@ -26,7 +26,7 @@ public class SpellCardHandler : IngameCardHandler {
         if (toggle.isOn) {
             transform.Find("Selected").gameObject.SetActive(true);
 
-            Cost cost = GetComponent<ActiveCardInfo>().data.baseSpec.unit.cost;
+            Cost cost = GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost;
             PlayerController.Instance.GoldResourceFlick.GetComponent<Image>().fillAmount = (float)(cost.gold / 10);
             //Debug.Log(cost.population);
             //PlayerController.Instance.CitizenResourceFlick.GetComponent<Image>().fillAmount = (float)(cost.population / 10);

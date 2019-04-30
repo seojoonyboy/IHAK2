@@ -11,6 +11,9 @@ namespace DataModules {
         public MonsterData[] creeps;
         public Deck playerDeck;
         public Deck opponentDeck;
+        public float hqHitPoint;
+        public Conditions[] PlayerConditions;
+        public Conditions[] opponentConditions;
     }
 
     [System.Serializable]
@@ -33,4 +36,11 @@ namespace DataModules {
         public float moveSpeed;
         public int exp;
     }
+
+    [System.Serializable]
+    public class Conditions {
+        public string methodName;
+        public string[] args;
+    }
+
 }

@@ -138,6 +138,7 @@ public partial class AccountManager : Singleton<AccountManager> {
         StringBuilder url = new StringBuilder();
         url.Append(_networkManager.baseUrl)
             .Append("api/users/deviceid/" + DEVICEID);
+        Debug.Log(url);
         _networkManager.request("GET", url.ToString(), OnUserReqCallback, false);
     }
 
@@ -412,6 +413,7 @@ public partial class AccountManager {
             if (response.data != null) {
                 MissionData missionData = JsonReader.Read<MissionData>(response.data.ToString());
                 mission = missionData;
+                eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.GET_MISSION_LOAD_COMPLETE, null, mission);
                 MissionLoadComplete();
             }
         }
@@ -419,7 +421,6 @@ public partial class AccountManager {
 
     public void MissionLoadComplete() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-
         if (mission != null) {
             Debug.Log(mission.title);
             gsm.startScene(scenestate, GameSceneManager.SceneState.IngameScene);
