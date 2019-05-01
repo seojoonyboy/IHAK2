@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Spine.Unity;
 using Container;
 using System;
+using UniRx;
 
 public class IngameHpSystem : Singleton<IngameHpSystem> {
     protected IngameHpSystem() { }
@@ -31,6 +32,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
     IngameSceneEventHandler ingameSceneEventHandler;
     public IngameSceneUIController ingameSceneUIController;
+    public IngameResultManager resultManager;
 
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
@@ -53,6 +55,23 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
             case PlayerController.Player.PLAYER_2:
                 enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = amount.ToString();
                 enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
+                break;
+        }
+    }
+
+    public void HpChanged(PlayerController.Player player, float hp) {
+        switch (player) {
+            case PlayerController.Player.PLAYER_1:
+                if(hp == 0) {
+                    resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
+                    Debug.Log("아군 HQ 파괴됨");
+                }
+                break;
+            case PlayerController.Player.PLAYER_2:
+                if(hp == 0) {
+                    resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+                    Debug.Log("적군 HQ 파괴됨");
+                }
                 break;
         }
     }

@@ -218,5 +218,11 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         );
 
         hq.GetComponent<IngameBuilding>().SetHp(hp);
+
+        hq
+            .ObserveEveryValueChanged(x => x.GetComponent<IngameBuilding>().HP)
+            .Subscribe(_ => {
+                IngameHpSystem.Instance.HpChanged(PlayerController.Player.PLAYER_2, hq.GetComponent<IngameBuilding>().HP);
+            });
     }
 }

@@ -2226,6 +2226,7 @@ MonoBehaviour:
   pathPrefabsParent: {fileID: 0}
   GoldResourceFlick: {fileID: 2057837610}
   CitizenResourceFlick: {fileID: 494684582}
+  resultManager: {fileID: 1567472046}
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
     type: 2}
   summonParent: {fileID: 0}
@@ -2247,7 +2248,6 @@ MonoBehaviour:
   gold_readonly: 0
   citizen_readonly: 0
   maxhp: 0
-  hp: 0
 --- !u!114 &282962854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10052,6 +10052,7 @@ MonoBehaviour:
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   ingameSceneUIController: {fileID: 1239632114}
+  resultManager: {fileID: 1567472046}
 --- !u!1 &1355335182
 GameObject:
   m_ObjectHideFlags: 0
@@ -13989,9 +13990,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: [{fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3,
-        type: 2}, {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629,
-        type: 2}]
+    ReferencedUnityObjects:
+    - {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
+    - {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -14098,7 +14099,6 @@ MonoBehaviour:
   gold_readonly: 0
   citizen_readonly: 0
   maxhp: 0
-  hp: 0
 --- !u!114 &1844919648
 MonoBehaviour:
   m_ObjectHideFlags: 0

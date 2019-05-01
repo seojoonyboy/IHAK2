@@ -113,7 +113,7 @@ public partial class HeroAI : UnitAI {
         if (expSet != null) {
             int percentage = expSet.args[0];
             exp = 0;
-            Debug.Log("영웅 경험치 보정");
+            //Debug.Log("영웅 경험치 보정");
         }
         unitCard.ev.exp += exp;
         CheckLv();

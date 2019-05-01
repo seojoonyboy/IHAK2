@@ -29,8 +29,6 @@ public class IngameBuilding : SkyNet {
 
         ani.Initialize(true);
         ani.AnimationState.SetAnimation(0, items[0], true);
-
-        Debug.Log("HQ 파괴");
     }
 
     public override void ChangeOwner(int newNum) {

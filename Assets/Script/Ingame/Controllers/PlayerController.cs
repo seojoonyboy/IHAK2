@@ -10,6 +10,7 @@ using TMPro;
 using System.Text;
 using ingameUIModules;
 using Resources = UnityEngine.Resources;
+using UniRx;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     [Header(" - ResourceText")]
@@ -31,6 +32,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         GoldResourceFlick,
         CitizenResourceFlick;
     Transform myCity;
+    public IngameResultManager resultManager;
 
     public StageGoal stageGoals;
 
@@ -290,5 +292,11 @@ public partial class PlayerController : SerializedMonoBehaviour {
         );
 
         hq.GetComponent<IngameBuilding>().SetHp(hp);
+
+        hq
+            .ObserveEveryValueChanged(x => x.GetComponent<IngameBuilding>().HP)
+            .Subscribe(_ => {
+                IngameHpSystem.Instance.HpChanged(Player.PLAYER_1, hq.GetComponent<IngameBuilding>().HP);
+            });
     }
 }
