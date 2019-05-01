@@ -899,6 +899,7 @@ MonoBehaviour:
   ownerNum: 0
   healthBar: {fileID: 0}
   expPoint: 0
+  standingStation: {fileID: 0}
   arrow: {fileID: 1770122807129098, guid: f78f211aa83a9134786377509d57bdaa, type: 2}
   power: 0
   moveSpeed: 0
@@ -1162,6 +1163,8 @@ MonoBehaviour:
   idleAnimationName: 1.idle
   attackAnimationName: 3.attack
   skillAnimationName: 
+  skinBlueSkull: 1.blue
+  skinRedSkull: 1.red
 --- !u!212 &212219743801216750
 SpriteRenderer:
   m_ObjectHideFlags: 1
