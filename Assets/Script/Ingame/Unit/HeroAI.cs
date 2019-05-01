@@ -37,6 +37,7 @@ public partial class HeroAI : UnitAI {
         int level = (actcard.ev.lv <= 0) ? 1 : actcard.ev.lv;
         SetUnitDataCommon(level);
         SetColliderData();
+        if(cardObj == null) return;
         unitCard.gameObject = cardObj;
         coroutine = UpdateInfoCard();
         StartCoroutine(coroutine);
@@ -125,18 +126,15 @@ public partial class HeroAI : UnitAI {
 
     private void CheckLv() {
         bool isLvUp = ExpNeed() <= unitCard.ev.exp;
-        if (isLvUp) {
-            ChangeStat();
-            if(unitCard.gameObject != null) {
-                Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
-                cardLvText.text = "Lv. " + unitCard.ev.lv;
+        if (!isLvUp) return;
+        ChangeStat();
 
-                Text atk = unitCard.gameObject.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>();
-                atk.text = "+ " + power;
+        if(unitCard.gameObject == null) return;
+        Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
+        cardLvText.text = "Lv. " + unitCard.ev.lv;
 
-                //Text def = unitCard.gameObject.transform.Find("Specs/Base/Def/Value").GetComponent<Text>();
-            }
-        }
+        Text atk = unitCard.gameObject.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>();
+        atk.text = "+ " + power;
     }
 
     private void ChangeStat() {
@@ -197,7 +195,8 @@ public partial class HeroAI : UnitAI {
             ingameDeckShuffler.HeroReturn(targetCard, true);
         }
         else if (gameObject.layer == enemyLayer) {
-            enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
+            //TODO : 적 사망시 저장 장소 세팅 필요
+            //enemyHeroGenerator.HeroReturn(unitCard.baseSpec.unit.id);
         }
         GiveExp();
         Destroy(gameObject);
@@ -212,7 +211,6 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void attackingHero(UnitAI unit) {
-        //TODO : 미니언일 경우 영웅을 데려와야하고 영웅이면 그대로 기록
         HeroAI heroAI = unit.GetMyHeroAI();
         if(heroAI == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
