@@ -34,7 +34,7 @@ public partial class UnitAI : AI.SkyNet {
     protected UnitSpine unitSpine;
     private UnitDetector detector;
     private IngameSceneEventHandler eventHandler;
-    protected UnitGroup myGroup;
+    public UnitGroup myGroup;
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;

@@ -200,7 +200,7 @@ public partial class HeroAI : UnitAI {
         }
         GiveExp();
         Destroy(gameObject);
-        myGroup.UnitDead();
+        myGroup.UnitDead(gameObject);
     }
 
     public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
@@ -215,7 +215,7 @@ public partial class HeroAI : UnitAI {
         if(heroAI == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
             if (fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
-        fightHeroes.Add(unit.GetComponent<HeroAI>());
+        fightHeroes.Add(heroAI);
     }
 
     public override HeroAI GetMyHeroAI() {

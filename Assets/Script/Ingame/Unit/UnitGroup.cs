@@ -10,6 +10,7 @@ public class UnitGroup : MonoBehaviour {
     private UnitSpine[] unitAnimations;
     private UnitAI[] unitAIs;
     private List<Vector3> MovingPos;
+    public List<GameObject> myGroupList;
 
     private float moveSpeed;
     private bool moving = false;
@@ -107,15 +108,27 @@ public class UnitGroup : MonoBehaviour {
     
 
     private void GetData() {
-        unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
-        unitAIs = transform.GetComponentsInChildren<UnitAI>();
+        DataSetting();
         UnitIndividualSet(false);
         moveSpeed = unitAIs[0].moveSpeed;
     }
 
     public void ResetData() {
+        DataSetting();
+    }
+
+    private void DataSetting() {
         unitAnimations = transform.GetComponentsInChildren<UnitSpine>();
         unitAIs = transform.GetComponentsInChildren<UnitAI>();
+        SetGroupList();
+    }
+
+    private void SetGroupList() {
+        myGroupList = new List<GameObject>();
+        for(int i = 0; i < unitAIs.Length; i++) {
+            if(unitAIs[i] == null) continue;
+            myGroupList.Add(unitAIs[i].gameObject);
+        }
     }
 
     private void SetMinionData() {
@@ -245,7 +258,7 @@ public class UnitGroup : MonoBehaviour {
     private void UnitCheck(Transform enemy) {
         UnitAI unit = enemy.GetComponent<UnitAI>();
         if(unit == null) return;
-        //TODO : 추후에 유닛끼리 대결할 때 유닛들의 리스트를 가져오기
+        enemyGroup = unit.myGroup.myGroupList;
         return;
     }
 
@@ -343,11 +356,16 @@ public class UnitGroup : MonoBehaviour {
         HeroAI hero = transform.GetComponentInChildren<HeroAI>();
         transform.DetachChildren();
         transform.position = hero.transform.position;
-        foreach (var item in childrens) item.SetParent(transform, true);
+        foreach (var item in childrens) {
+            item.SetParent(transform, true);
+            if(item.GetComponent<UnitAI>() != null) continue;
+            item.localPosition = Vector3.zero;
+        }
     }
 
-    public void UnitDead() {
-        if(currentMinionNum == 0) Destroy(gameObject);
+    public void UnitDead(GameObject unit) {
+        myGroupList.Remove(unit);
+        if(myGroupList.Count == 0) Destroy(gameObject);
     }
 
     private bool ClickGroup() {
