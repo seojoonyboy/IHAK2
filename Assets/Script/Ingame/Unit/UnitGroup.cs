@@ -377,30 +377,18 @@ public class UnitGroup : MonoBehaviour {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             LayerMask mask = 1 << LayerMask.NameToLayer("Direction");
             RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
-            //Debug.Log(hits.collider);
-            //foreach (RaycastHit2D target in hits) {
-            //    if (target.collider == clickCol)
-            //        return true;
-            //    if (target.collider.gameObject.layer == 31) {
-            //        int index = target.collider.transform.GetSiblingIndex();
-            //        List<Vector3> path = new List<Vector3>();
-            //        path.Add(currentStation.transform.position);
-            //        path.Add(currentStation.adjNodes[(MapStation.NodeDirection)index].transform.position);
-            //        SetMove(path);
-            //        return true;
-            //    }
-            //}
             if (!hits) {
                 if (directionOpen) checkWay();
                 return false;
             }
+            if (hits.collider.transform.childCount > 0 && hits.collider.transform.GetChild(2).gameObject.layer != 10) return false;
             if (hits.collider.attachedRigidbody == transform.GetChild(2).GetComponent<Rigidbody2D>())
                 return true;
             if (hits.collider == clickCol)
                 return true;
+
             if (hits.transform.parent.GetComponent<CircleCollider2D>() == clickCol)
                 return true;
-            //if (hits.collider == clickCol)
 
             else if (hits.collider.gameObject.layer == 31) {
                 if(!directionOpen) return false;
