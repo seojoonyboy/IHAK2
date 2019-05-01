@@ -80,27 +80,17 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     private void Awake() {
         SetMap();
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
 
-        GameObject ld = (GameObject)Instantiate(
+        GameObject go = AccountManager.Instance
+            .transform
+            .GetChild(0)
+            .GetChild(AccountManager.Instance.leaderIndex)
+            .gameObject;
+        GameObject ld = Instantiate(
             go,
             maps[Player.PLAYER_1].transform
         );
-        DeckInfo deckInfo = go.GetComponent<DeckInfo>();
-        ld.SetActive(true);
-        foreach (Transform tile in ld.transform) {
-            tile.gameObject.layer = 8;
-            foreach (Transform building in tile) {
-                building.gameObject.layer = 8;
-            }
-        }
-
-        for(int i=0; i< go.GetComponent<DeckInfo>().units.Count; i++) {
-            ld.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost = go.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost;
-        }
-        for(int i=0; i<go.GetComponent<DeckInfo>().spells.Count; i++) {
-            ld.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost = go.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost;
-        }
+        GetDeckDetailRequest(ld);
 
         scoreManager = IngameScoreManager.Instance;
         if (goldBar != null) goldBar.fillAmount = 0;
@@ -110,7 +100,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
         transform.GetComponent<PlayerResource>().maxhp = transform.GetComponent<PlayerResource>().TotalHp = (int)AccountManager.Instance.mission.hqHitPoint;
-        GetDeckDetailRequest(ld);
+        
         hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
 
@@ -184,10 +174,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 }
 
-    /// <summary>
-    /// 각각의 컨테이너를 리턴
-    /// </summary>
-    public partial class PlayerController {
+/// <summary>
+/// 각각의 컨테이너를 리턴
+/// </summary>
+public partial class PlayerController {
     public PlayerResource playerResource() {
         return _instance.GetComponent<PlayerResource>();
     }
@@ -224,7 +214,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
         return _instance.gameObject.transform.parent.GetComponent<MissionConditionsController>();
     }
 }
-
 public partial class PlayerController {
     public enum Player {
         PLAYER_1 = 10,
