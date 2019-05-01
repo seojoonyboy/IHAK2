@@ -32,9 +32,10 @@ public class SpellCardDragHandler : MonoBehaviour {
 
         if (PlayerController.Instance.deckShuffler().UseCard(targetCard)) {
             SpellActivated();
+            targetCard.GetComponent<SpellCardHandler>().Handle();
         }
         else {
-            targetCard.GetComponent<SpellCardHandler>().OffToggle();
+            targetCard.GetComponent<SpellCardHandler>().Cancel();
         }
     }
 

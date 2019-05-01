@@ -13,40 +13,16 @@ public class SpellCardHandler : IngameCardHandler {
     public GameObject targetCard;
 
     private GameObject instantiatedPrefab;
+    Toggle toggle;
 
     void Awake() {
         toggleGroup = transform.parent.parent.GetComponent<ToggleGroup>();
-
-        GetComponent<Toggle>().onValueChanged.AddListener(delegate {
-            ToggleValueChanged(GetComponent<Toggle>());
-        });
-    }
-
-    void ToggleValueChanged(Toggle toggle) {
-        if (toggle.isOn) {
-            transform.Find("Selected").gameObject.SetActive(true);
-
-            Cost cost = GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost;
-            PlayerController.Instance.GoldResourceFlick.GetComponent<Image>().fillAmount = (float)(cost.gold / 10);
-            //Debug.Log(cost.population);
-            //PlayerController.Instance.CitizenResourceFlick.GetComponent<Image>().fillAmount = (float)(cost.population / 10);
-        }
-        else {
-            transform.Find("Selected").gameObject.SetActive(false);
-            Destroy(instantiatedPrefab);
-        }
-
-        PlayerController.Instance
-            .HeroSummonListener()
-            .ToggleListener(
-                toggleGroup.AnyTogglesOn()
-            );
+        toggle = GetComponent<Toggle>();
     }
 
     protected override void OnSingleClick() {
         if (GetComponent<ActiveCardCoolTime>() != null) return;
 
-        Toggle toggle = GetComponent<Toggle>();
         toggle.isOn = !toggle.isOn;
         if (toggle.isOn) {
             instantiatedPrefab = Instantiate(prefab, PlayerController.Instance.spellPrefabParent);
@@ -62,17 +38,23 @@ public class SpellCardHandler : IngameCardHandler {
             Vector3 camPos = Camera.main.transform.position;
             camPos.z = 0;
             instantiatedPrefab.transform.position = camPos;
+
+            transform.Find("Selected").gameObject.SetActive(true);
         }
         else {
-            Destroy(instantiatedPrefab);
+            Cancel();
         }
-
-        ToggleValueChanged(toggle);
     }
 
-    public void OffToggle() {
-        Toggle toggle = GetComponent<Toggle>();
+    //마법을 사용하지 않고 취소
+    public void Cancel() {
         toggle.isOn = false;
-        ToggleValueChanged(toggle);
+        transform.Find("Selected").gameObject.SetActive(false);
+        Destroy(instantiatedPrefab);
+    }
+
+    public void Handle() {
+        toggle.isOn = false;
+        transform.Find("Selected").gameObject.SetActive(false);
     }
 }
