@@ -256,10 +256,12 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     IEnumerator RacanDetector() {
         while(true) {
+            if (SearchLevelUp()) break;
             if (racanRobot == null) {
                 yield return new WaitForSeconds(2.0f);
                 HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
                 racanRobot = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                StartCoroutine(RacanDetector());
                 racanRobot.SetMove(racanPath);
                 break;
             }
@@ -269,15 +271,26 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     IEnumerator WimpDetector() {
         while (true) {
+            if (SearchLevelUp()) break;
             if (wimpRobot == null) {
                 yield return new WaitForSeconds(2.0f);
                 HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
                 wimpRobot = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                StartCoroutine(WimpDetector());
                 wimpRobot.SetMove(wimpPath);
                 break;
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private bool SearchLevelUp() {
+        foreach(ActiveCard card in playerctlr.GetComponent<PlayerActiveCards>().activeCards) {
+            if(card.ev.lv > 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
