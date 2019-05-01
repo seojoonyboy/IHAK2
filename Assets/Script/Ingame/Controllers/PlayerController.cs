@@ -34,8 +34,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
     Transform myCity;
     public IngameResultManager resultManager;
 
-    public StageGoal stageGoals;
-
     private static PlayerController _instance;
     IngameSceneEventHandler eventHandler;
     public static PlayerController Instance {
@@ -49,11 +47,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
             }
         }
     }
-
-    public class StageGoal {
-        [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
-        public Dictionary<string, string> missionLists;
-    }
+    
 
     private void SetMap() {
         maps.Add(Player.PLAYER_1, GameObject.Find("PlayerCity"));

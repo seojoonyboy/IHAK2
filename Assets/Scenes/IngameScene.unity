@@ -1975,6 +1975,7 @@ GameObject:
   - component: {fileID: 282962857}
   - component: {fileID: 282962859}
   - component: {fileID: 282962858}
+  - component: {fileID: 282962855}
   - component: {fileID: 282962860}
   m_Layer: 0
   m_Name: PlayerController
@@ -2039,139 +2040,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: stageGoals
-      Entry: 7
-      Data: 2|PlayerController+StageGoal, Assembly-CSharp
-    - Name: missionLists
-      Entry: 7
-      Data: 3|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 8
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 1-1
-    - Name: 
-      Entry: 1
-      Data: "\uB77C\uCE78\uC744 \uC0DD\uC0B0\uD574 \uC911\uC559 \uAC70\uC810\uC73C\uB85C
-        \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 1-2
-    - Name: 
-      Entry: 1
-      Data: "\uC911\uC559 \uAC70\uC810\uC758 \uC801\uC744 \uBB3C\uB9AC\uCE58\uACE0
-        \uC810\uB839\uB420 \uB54C \uAE4C\uC9C0 \uB300\uAE30\uD558\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 1-3
-    - Name: 
-      Entry: 1
-      Data: "\uC5F0\uC18D\uB41C \uC804\uD22C\uB85C \uC0C1\uCC98\uC785\uC740 \uC544\uAD70
-        \uC720\uB2DB\uB4E4\uC5D0\uAC8C \uB9C8\uBC95\uC744 \uC368\uC11C \uD68C\uBCF5\uC2DC\uD0A4\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 1-4
-    - Name: 
-      Entry: 1
-      Data: "\uC0C1\uB300 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 2-1
-    - Name: 
-      Entry: 1
-      Data: "\uAC70\uC810\uC73C\uB85C \uC720\uB2DB\uC744 \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 2-2
-    - Name: 
-      Entry: 1
-      Data: "\uC801\uC744 \uCC98\uC9C0\uD558\uACE0 \uB808\uBCA8 2\uC5D0 \uB3C4\uB2EC\uD558\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 2-3
-    - Name: 
-      Entry: 1
-      Data: "\uBAA8\uB4E0 \uAC70\uC810\uC744 \uC810\uB839\uD558\uACE0 \uD6A8\uACFC\uB97C
-        \uD655\uC778\uD574 \uBCF4\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 1
-      Data: 2-4
-    - Name: 
-      Entry: 1
-      Data: "\uC801 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: heroPrefabs
       Entry: 7
-      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
+      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -2263,6 +2138,154 @@ MonoBehaviour:
   opponentCards: []
   deckInfo: {fileID: 0}
   playerController: {fileID: 0}
+--- !u!114 &282962855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282962850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6915c5bb7243949aaafcab5760610d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: stageGoals
+      Entry: 7
+      Data: 0|MissionManager+StageGoal, Assembly-CSharp
+    - Name: missionLists
+      Entry: 7
+      Data: 1|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 2|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-1
+    - Name: 
+      Entry: 1
+      Data: "\uB77C\uCE78\uC744 \uC0DD\uC0B0\uD574 \uC911\uC559 \uAC70\uC810\uC73C\uB85C
+        \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-2
+    - Name: 
+      Entry: 1
+      Data: "\uC911\uC559 \uAC70\uC810\uC758 \uC801\uC744 \uBB3C\uB9AC\uCE58\uACE0
+        \uC810\uB839\uB420 \uB54C \uAE4C\uC9C0 \uB300\uAE30\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-3
+    - Name: 
+      Entry: 1
+      Data: "\uC804\uD22C\uB85C \uC0C1\uCC98\uC785\uC740 \uC544\uAD70 \uC720\uB2DB\uB4E4\uC5D0\uAC8C
+        \uB9C8\uBC95\uC744 \uC368\uC11C \uD68C\uBCF5\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 1-4
+    - Name: 
+      Entry: 1
+      Data: "\uC0C1\uB300 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-1
+    - Name: 
+      Entry: 1
+      Data: "\uAC70\uC810\uC73C\uB85C \uC720\uB2DB\uC744 \uC774\uB3D9\uC2DC\uD0A4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-2
+    - Name: 
+      Entry: 1
+      Data: "\uC801\uC744 \uCC98\uC9C0\uD558\uACE0 \uB808\uBCA8 2\uC5D0 \uB3C4\uB2EC\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-3
+    - Name: 
+      Entry: 1
+      Data: "\uBAA8\uB4E0 \uAC70\uC810\uC744 \uC810\uB839\uD558\uACE0 \uD6A8\uACFC\uB97C
+        \uD655\uC778\uD574 \uBCF4\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: 2-4
+    - Name: 
+      Entry: 1
+      Data: "\uC801 \uB3C4\uC2DC\uB97C \uD30C\uAD34\uD558\uC138\uC694"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  stageNum: 0
+  count: 0
 --- !u!114 &282962856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13990,9 +14013,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
-    - {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629, type: 2}
+    ReferencedUnityObjects: [{fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3,
+        type: 2}, {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629,
+        type: 2}]
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -14085,6 +14108,7 @@ MonoBehaviour:
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
     type: 2}
   summonParent: {fileID: 0}
+  nodeParent: {fileID: 0}
 --- !u!114 &1844919647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15650,7 +15674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 483.7, y: 390}
+  m_AnchoredPosition: {x: 450, y: 300}
   m_SizeDelta: {x: 210, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2029069797

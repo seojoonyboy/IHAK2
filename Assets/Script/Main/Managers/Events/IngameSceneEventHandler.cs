@@ -72,6 +72,18 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
         SUB_MISSION_COMPLETE
     }
 
+    public enum MISSION_EVENT {
+        NONE,
+        UNIT_CONSTRUCT_COMPLTE,
+        MOVE_COMPLETE,
+        NODE_CAPTURE_COMPLETE,
+        USE_MAGIC,
+        UNIT_LEVEL_UP,
+        DESTROYED_ENEMY_CITY,
+
+    }
+
+
     public struct BuildingDestroyedPackage {
         public IngameHpSystem.Target target;
         public BuildingInfo buildingInfo;

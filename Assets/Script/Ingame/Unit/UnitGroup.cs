@@ -52,6 +52,10 @@ public class UnitGroup : MonoBehaviour {
         if(unitAIs == null) return;
         UnitMoveAnimation(true);
         UnitMoveDirection(MovingPos[0]);
+
+        if(myGroupList[0].gameObject.layer == 10) {
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.MOVE_COMPLETE, this, null);
+        }
     }
 
     private void Update() {
