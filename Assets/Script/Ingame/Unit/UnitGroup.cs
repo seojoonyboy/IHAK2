@@ -356,7 +356,11 @@ public class UnitGroup : MonoBehaviour {
         HeroAI hero = transform.GetComponentInChildren<HeroAI>();
         transform.DetachChildren();
         transform.position = hero.transform.position;
-        foreach (var item in childrens) item.SetParent(transform, true);
+        foreach (var item in childrens) {
+            item.SetParent(transform, true);
+            if(item.GetComponent<UnitAI>() != null) continue;
+            item.localPosition = Vector3.zero;
+        }
     }
 
     public void UnitDead(GameObject unit) {
