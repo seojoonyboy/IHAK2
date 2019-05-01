@@ -35,7 +35,6 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
         ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, SetEnemy);
-        ingameSceneEventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, SetPlayer);
     }
 
     private void SetEnemy(Enum Event_Type, Component Sender, object Param) {
@@ -44,13 +43,14 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         SetHp();
         //TakeDamage(Target.ME, 12, 1500);
     }
-    private void SetPlayer(Enum Event_Type, Component Sender, object Param) {
+    private void Start() {
         myResource = playerController.GetComponent<PlayerResource>();
+        playerHQ.gameObject = playerController.GetComponent<PlayerController>().maps[PlayerController.Player.PLAYER_1];
+        playerHQ.activate = true;
     }
 
     void OnDestroy() {
         ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, SetEnemy);
-        ingameSceneEventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, SetPlayer);
     }
 
 
@@ -194,7 +194,7 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
     private void BuildingDestroyed(Target target, BuildingInfo buildingInfo) {
         //buildingInfo.hp = 0;
-        IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
+        //IngameScoreManager.Instance.AddScore(buildingInfo.cardInfo.rarity, IngameScoreManager.ScoreType.DestroyBuilding);
         buildingInfo.activate = false;
         SetWreck(buildingInfo.gameObject);
 
