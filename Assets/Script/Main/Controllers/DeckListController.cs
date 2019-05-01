@@ -74,7 +74,9 @@ public partial class DeckListController : MonoBehaviour {
 
     private void ReqGetDecksCallback(HttpResponse response) {
         if(response.responseCode == 200) {
+            
             if(response.data != null) {
+                
                 List<Deck> decks = JsonReader.Read<List<Deck>>(response.data.ToString());
                 accountManager.decks = decks;
 
@@ -100,6 +102,7 @@ public partial class DeckListController : MonoBehaviour {
 
                 Sort(decks);
                 eventHandler.PostNotification(MenuSceneEventHandler.EVENT_TYPE.INITIALIZE_DECK_FINISHED, null, leaderIndex);
+                 
             }
         }
         else {
