@@ -182,8 +182,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         //hero.GetComponent<HeroAI>().targetCard = cardObj;
 
         unitAI.ownerNum = PlayerController.Player.PLAYER_2;
-        unitAI.Init(card, cardObj);
         unitAI.gameObject.layer = 11;
+        unitAI.Init(card, cardObj);
 
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);
