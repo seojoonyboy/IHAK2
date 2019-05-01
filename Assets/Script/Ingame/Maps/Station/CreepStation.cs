@@ -27,6 +27,10 @@ public partial class CreepStation : DefaultStation {
         }
     }
 
+    public override void DestroyEnteredTarget(GameObject unitObj) {
+        if (targets.Contains(unitObj)) targets.Remove(unitObj);
+    }
+
     IEnumerator FindOwner() {
         int targetLayer = 0;
         while (startSeize) {

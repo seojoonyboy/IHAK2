@@ -25,10 +25,15 @@ public partial class HealingCenterStation : DefaultStation {
         //    seizePlayer = enemys[0].layer;
         //    StartCoroutine(SeizeNeutralBuilding());
         //}
-        if(!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
+        if (!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
             startSeize = true;
             StartCoroutine(SeizeBuilding());
         }
+    }
+
+    public override void DestroyEnteredTarget(GameObject unitObj) {
+        if (enemys.Contains(unitObj)) enemys.Remove(unitObj);
+        if (healingTarget.Contains(unitObj)) healingTarget.Remove(unitObj);
     }
 
     IEnumerator SeizeBuilding() {
