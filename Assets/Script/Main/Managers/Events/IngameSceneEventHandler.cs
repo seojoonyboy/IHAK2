@@ -73,7 +73,7 @@ public class IngameSceneEventHandler : Singleton<IngameSceneEventHandler>, IEven
     }
 
     public enum MISSION_EVENT {
-        NONE,
+        NONE = 100,
         UNIT_CONSTRUCT_COMPLTE,
         MOVE_COMPLETE,
         NODE_CAPTURE_COMPLETE,

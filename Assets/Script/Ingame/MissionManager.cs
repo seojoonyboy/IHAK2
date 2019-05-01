@@ -61,6 +61,7 @@ public class MissionManager : SerializedMonoBehaviour {
     }
 
     private void UseMagic(Enum Event_Type, Component Sender, object Param) {
+        Debug.Log(Event_Type + " , " + Sender + " , " + Param);
         if (stageNum == 1) {
             eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-3");
         }
