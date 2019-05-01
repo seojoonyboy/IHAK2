@@ -115,7 +115,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     private void GetDetailDeckCallback(HttpResponse response) {
-        if (response.responseCode == 200) {
+        if (response.responseCode == 200 || response.responseCode == 404) {
             if (response.data != null) {
                 //deck = JsonReader.Read<Req_deckDetail.Deck>(response.data.ToString());
                 //DeckInfo deckInfo = maps[Player.PLAYER_1]
@@ -136,6 +136,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
                 eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, null);
             }
         }
+        else if (response.responseCode == 404) {
+
+        }
+
     }
 
     void OnDestroy() {
