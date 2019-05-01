@@ -811,22 +811,22 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 369
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -836,7 +836,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -846,7 +846,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -1609,20 +1609,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  productResource: {fileID: 1711368124}
-  ingameTimer: {fileID: 1905110268}
-  goldValue: {fileID: 1983411991}
   goldBar: {fileID: 751448560}
-  envValue: {fileID: 1749300415}
-  hqLevel: 1
-  tileCount: 0
-  goldConsume: 0
-  activeRepair: 0
-  repairTimer: 0
-  coinAni: {fileID: 11400000, guid: 2b5517e3c41964ebf94e9cc93c4b1a88, type: 2}
-  upgrageAni: {fileID: 11400000, guid: 54c912a1000ee6440baa5ee0b98ad068, type: 2}
-  coinAniMaterial: {fileID: 2100000, guid: 53b545dffe0dc440caeae620d165717a, type: 2}
-  upgradeAniMaterial: {fileID: 2100000, guid: 00e9eae2576a6e94aa55844f2dc721cd, type: 2}
   hq_mapStation: {fileID: 0}
   pathPrefabsParent: {fileID: 0}
   GoldResourceFlick: {fileID: 2057837610}
@@ -1661,6 +1648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeCards: []
+  opponentCards: []
   deckInfo: {fileID: 0}
   playerController: {fileID: 0}
 --- !u!114 &282962856
@@ -3374,22 +3362,22 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3399,7 +3387,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3409,7 +3397,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3573,22 +3561,22 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3598,7 +3586,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3608,7 +3596,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -3645,7 +3633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &614469972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5645,7 +5633,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -200, y: -39}
-  m_SizeDelta: {x: 430, y: 0}
+  m_SizeDelta: {x: 430, y: 152}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &920716470
 MonoBehaviour:
@@ -6637,22 +6625,22 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 265
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -6662,7 +6650,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -6672,7 +6660,7 @@ Prefab:
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224609330120728678, guid: 3544f7ffd2f547845a6da3209bc40eca,
         type: 2}
@@ -7639,10 +7627,8 @@ MonoBehaviour:
   enemyCity: {fileID: 0}
   playerRankBtn: {fileID: 1158399505}
   dummyRankBtn: {fileID: 884768184}
-  ingameTimer: {fileID: 1905110268}
   resultManager: {fileID: 1567472046}
   attackCard: {fileID: 0}
-  IngameHpSystem: {fileID: 1337645957}
   missionGoalUI: {fileID: 2064012111}
   missionGoalUI_prefab: {fileID: 1288972463116908, guid: 6987ee4a9a477c14ba8aaa3dbf421e15,
     type: 2}
@@ -8031,7 +8017,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -340}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 15, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1292266990
 MonoBehaviour:
@@ -9676,7 +9662,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 840, y: 0}
+  m_SizeDelta: {x: 840, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1568939765
 MonoBehaviour:
@@ -11682,8 +11668,10 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   playerNum: 0
-  shortDisMinion: {fileID: 0}
-  longDisMinion: {fileID: 0}
+  shortDisMinion: {fileID: 1569794317466014, guid: fedff130b26174f1383dc981623ce42c,
+    type: 2}
+  longDisMinion: {fileID: 1569794317466014, guid: e9c8e1510d3dc4d6e885a6bcf02e0789,
+    type: 2}
 --- !u!114 &1844919646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11698,7 +11686,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
+    - {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -11737,7 +11727,43 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: n_hc_01001
+    - Name: 
+      Entry: 10
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: n_hc_02001
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 1
+      Data: n_uu_01001
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -11749,6 +11775,7 @@ MonoBehaviour:
   goldConsume: 0
   activeRepair: 0
   repairTimer: 0
+  playerctlr: {fileID: 282962852}
   hq_mapStation: {fileID: 0}
   pathPrefabsParent: {fileID: 0}
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
