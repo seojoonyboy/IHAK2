@@ -59,7 +59,7 @@ public class IngameSceneUIController : MonoBehaviour {
         switch (stageNum) {
             case 0:
             case 1:
-                var values = PlayerController.Instance.stageGoals.missionLists
+                var values = PlayerController.Instance.gameObject.GetComponent<MissionManager>().stageGoals.missionLists
                     .Where(x => x.Key.StartsWith(stageNum.ToString()))
                     .Select(pv => pv.Value);
 
