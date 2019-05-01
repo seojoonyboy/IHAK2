@@ -50,7 +50,7 @@ public class MinionAI : UnitAI {
         GiveExp();
         playerController.DieEffect(this);   //사망시 패시브 효과 처리
         Destroy(gameObject);
-        myGroup.UnitDead();
+        myGroup.UnitDead(gameObject);
     }
 
     public override void ResetStat() {
