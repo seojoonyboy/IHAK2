@@ -6,7 +6,6 @@ using UniRx;
 using UnityEngine;
 
 public class IngameBuilding : SkyNet {
-    private float hpOffsetSize = 6;
     public override void Damage(float damage) {
         base.Damage(damage);
     }
@@ -53,7 +52,7 @@ public class IngameBuilding : SkyNet {
     protected override void CalculateHealthBar() {
         float percent = HP / MaxHealth;
         if(MaxHealth != 0) {
-            healthBar.transform.localScale = new Vector3(hpOffsetSize * percent, 3f, 1f);
+            healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
         }
     }
 
