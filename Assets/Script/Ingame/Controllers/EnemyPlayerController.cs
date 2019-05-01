@@ -21,6 +21,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
+    private PlayerController playerctrl;
 
     private bool alive = true;
     private bool playing = false;
@@ -35,6 +36,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     public int goldConsume;
     public bool activeRepair = false;
     public float repairTimer;
+    [SerializeField] PlayerController playerctlr;
     
 
     [Header(" - Player Maps")]
@@ -102,11 +104,16 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         _instance = this;
     }
 
-    //IEnumerator Stage2AI() {
-    //    while (alive) {
-    //        yield return WaitForSeconds(5.0f);
-    //    }
-    //}
+    private void Start() {
+        StartCoroutine(Stage2AI());
+    }
+
+    IEnumerator Stage2AI() {
+        while (alive) {
+            yield return new WaitForSeconds(5.0f);
+            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+        }
+    }
 
     private void GetDeckDetailRequest(GameObject ld) {
         StringBuilder url = new StringBuilder();
@@ -200,10 +207,10 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         }
 
         GameObject hero = Instantiate(result, unitGroup.transform);
-        cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
+        //cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
-        hero.GetComponent<HeroAI>().targetCard = cardObj;
+        //hero.GetComponent<HeroAI>().targetCard = cardObj;
 
         unitAI.ownerNum = PlayerController.Player.PLAYER_1;
         unitAI.Init(card, cardObj);
@@ -211,8 +218,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
-        _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
-        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
+        _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform, true);
+        //.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
     public GameObject GetHeroPrefab(string id) {
