@@ -258,7 +258,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
                 desc.text = "유닛 체력 버프 +" + pair.Value;
             }
 
-            if(pair.Key == "Minion_die_gold") {
+            if (pair.Key == "Minion_die_gold") {
                 desc.text = "미니언 사망시 골드 획득 +" + pair.Value;
             }
         }

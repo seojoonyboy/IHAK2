@@ -1,15 +1,8 @@
 using Container;
-using DataModules;
-using Newtonsoft.Json;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
 using System.Linq;
 
 public class IngameSceneUIController : MonoBehaviour {
@@ -21,10 +14,8 @@ public class IngameSceneUIController : MonoBehaviour {
     [SerializeField] GameObject enemyCity;
     [SerializeField] Transform playerRankBtn;
     [SerializeField] Transform dummyRankBtn;
-    [SerializeField] Text ingameTimer;
     [SerializeField] IngameResultManager resultManager;
     [SerializeField] public Transform attackCard;
-    [SerializeField] IngameHpSystem IngameHpSystem;
     [SerializeField] Transform missionGoalUI;
     [SerializeField] GameObject missionGoalUI_prefab;
 
@@ -41,8 +32,6 @@ public class IngameSceneUIController : MonoBehaviour {
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, OnSubMissionComplete);
     }
 
@@ -56,17 +45,7 @@ public class IngameSceneUIController : MonoBehaviour {
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildingsAdded);
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, OnEnemyBuildingsAdded);
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, OnSubMissionComplete);
-    }
-
-    private void OnEnemyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
-        canEnemyPlaying = true;
-    }
-
-    private void OnMyBuildingsAdded(Enum Event_Type, Component Sender, object Param) {
-        canPlaying = true;
     }
 
     // Use this for initialization
@@ -131,12 +110,5 @@ public class IngameSceneUIController : MonoBehaviour {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
         IngameScoreManager.Instance.DestroySelf();
-    }
-
-    IEnumerator EnemyRepair() {
-        while(time > 60 && canEnemyPlaying == true) {
-            yield return new WaitForSeconds(60f);
-            IngameAlarm.instance.SetAlarm("Dummy 도시의 건물이 재건됩니다!!");
-        }
     }
 }
