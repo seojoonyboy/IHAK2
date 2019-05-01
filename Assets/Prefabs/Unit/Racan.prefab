@@ -903,9 +903,10 @@ MonoBehaviour:
   power: 0
   moveSpeed: 0
   attackRange: 0
+  myGroup: {fileID: 0}
+  targetCard: {fileID: 0}
   unitCard:
     id: 0
-    parentBuilding: {fileID: 0}
     gameObject: {fileID: 0}
     baseSpec:
       unit:
