@@ -26,16 +26,6 @@ public class PlayerPassiveCards : SerializedMonoBehaviour {
 
     public void Init() {
         playerController = PlayerController.Instance;
-        var buildings = playerController.playerBuildings().buildingInfos;
-        foreach(BuildingInfo buildingInfo in buildings) {
-            /*
-            if(buildingInfo.cardInfo.type == "passive") {
-                passiveCards.Add(buildingInfo.gameObject);
-                //AddEffectModule(buildingInfo.cardInfo.passiveSkills[0].method.methodName);
-                TmpAddEffectModule(buildingInfo.cardInfo.id);
-            }
-            */
-        }
         playerController.SetPassiveUI();
     }
 

@@ -1,11 +1,8 @@
 using DataModules;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Spine.Unity;
 using System;
 using Container;
 using Sirenix.OdinInspector;
@@ -14,58 +11,19 @@ using System.Text;
 using ingameUIModules;
 
 public partial class PlayerController : SerializedMonoBehaviour {
-    public class ProductInfo { //gold food environment 순서의 생산량 저장
-        public int[] clickGold;
-        public int[] clickFood;
-        public int[] clickEnvironment;
-    }
-
-    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
-
-    [Header(" - UI")]
-    [SerializeField] Transform productResource;
-    [SerializeField] Text ingameTimer;
-
     [Header(" - ResourceText")]
-    [SerializeField] Text goldValue;
     [SerializeField] Image goldBar;
-    //[SerializeField] Text foodValue;
-    //[SerializeField] Text turnValue;
-    [SerializeField] Image envValue;
     
     private bool playing = false;
     public bool IsPlaying {
         get { return playing; }
     }
-
-    [Header(" - Player")]
-    public int hqLevel = 1;
-    public int tileCount;
-    private int MaxHpMulti;
-    public int goldConsume;
-    public bool activeRepair = false;
-    public float repairTimer;
-    
-    [Header(" - Spine")]
-    [SerializeField] private SkeletonDataAsset coinAni;
-    [SerializeField] private SkeletonDataAsset upgrageAni;
-    [SerializeField] private Material coinAniMaterial;
-    [SerializeField] private Material upgradeAniMaterial;
-
-    public ProductInfo pInfo { get; set; }
     IngameScoreManager scoreManager;
-    private bool warningOn = false;
-    private float envBonusProduce;
-
-    private bool envEfctOn = false;
-    private IEnumerator efct3;
-    private IEnumerator efct5;
 
     [Header(" - Player Maps")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
-    IngameSceneEventHandler eventHandler;
-    Req_deckDetail.Deck deck;
+
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     public GameObject 
@@ -75,7 +33,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public StageGoal stageGoals;
 
     private static PlayerController _instance;
-
+    IngameSceneEventHandler eventHandler;
     public static PlayerController Instance {
         get {
             if (_instance == null) {
@@ -104,33 +62,19 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     private void Awake() {
         SetMap();
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
 
-        GameObject ld = (GameObject)Instantiate(
+        GameObject go = AccountManager.Instance
+            .transform
+            .GetChild(0)
+            .GetChild(AccountManager.Instance.leaderIndex)
+            .gameObject;
+        GameObject ld = Instantiate(
             go,
             maps[Player.PLAYER_1].transform
         );
-        DeckInfo deckInfo = go.GetComponent<DeckInfo>();
-        ld.SetActive(true);
-        foreach (Transform tile in ld.transform) {
-            tile.gameObject.layer = 8;
-            foreach (Transform building in tile) {
-                building.gameObject.layer = 8;
-            }
-        }
-
-        for(int i=0; i< go.GetComponent<DeckInfo>().units.Count; i++) {
-            ld.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost = go.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost;
-        }
-        for(int i=0; i<go.GetComponent<DeckInfo>().spells.Count; i++) {
-            ld.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost = go.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost;
-        }
+        GetDeckDetailRequest(ld);
 
         scoreManager = IngameScoreManager.Instance;
-        pInfo = new ProductInfo();
-        pInfo.clickGold = new int[3];
-        pInfo.clickFood = new int[3];
-        pInfo.clickEnvironment = new int[3];
         if (goldBar != null) goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
@@ -138,7 +82,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
         transform.GetComponent<PlayerResource>().maxhp = transform.GetComponent<PlayerResource>().TotalHp = (int)AccountManager.Instance.mission.hqHitPoint;
-        GetDeckDetailRequest(ld);
+        
         hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
 
@@ -204,29 +148,24 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {
         playing = true;
-        playerActiveCards().Init();
-        playerBuildings().Init();
-        playerBuildings().RemoveTile();
 
+        playerActiveCards().Init();
         deckShuffler().InitCard();
+
         resourceManager().OnResourceProduce(true);
     }
 }
 
-    /// <summary>
-    /// 각각의 컨테이너를 리턴
-    /// </summary>
-    public partial class PlayerController {
+/// <summary>
+/// 각각의 컨테이너를 리턴
+/// </summary>
+public partial class PlayerController {
     public PlayerResource playerResource() {
         return _instance.GetComponent<PlayerResource>();
     }
 
     public IngameResourceManager resourceManager() {
         return _instance.GetComponent<IngameResourceManager>();
-    }
-
-    public MyBuildings playerBuildings() {
-        return _instance.GetComponent<MyBuildings>();
     }
 
     public PlayerActiveCards playerActiveCards() {
@@ -257,7 +196,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
         return _instance.gameObject.transform.parent.GetComponent<MissionConditionsController>();
     }
 }
-
 public partial class PlayerController {
     public enum Player {
         PLAYER_1 = 10,
@@ -320,7 +258,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
                 desc.text = "유닛 체력 버프 +" + pair.Value;
             }
 
-            if(pair.Key == "Minion_die_gold") {
+            if (pair.Key == "Minion_die_gold") {
                 desc.text = "미니언 사망시 골드 획득 +" + pair.Value;
             }
         }
