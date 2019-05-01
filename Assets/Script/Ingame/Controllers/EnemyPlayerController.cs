@@ -38,7 +38,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     public bool activeRepair = false;
     public float repairTimer;
     [SerializeField] PlayerController playerctlr;
-    
+
 
     [Header(" - Player Maps")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
@@ -227,6 +227,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
     [SerializeField] Transform nodeParent;
 
+    bool mision2on = true;
     UnitGroup racanRobot;
     UnitGroup wimpRobot;
 
@@ -234,28 +235,28 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     List<Vector3> wimpPath = new List<Vector3>();
 
     IEnumerator Stage2AI() {
-        while (alive) {
-            yield return new WaitForSeconds(5.0f);
-            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
-            racanRobot = summonParent.GetChild(6).GetComponent<UnitGroup>();
-            StartCoroutine(RacanDetector());
-            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
-            wimpRobot = summonParent.GetChild(7).GetComponent<UnitGroup>();
-            StartCoroutine(WimpDetector());
+        yield return new WaitForSeconds(5.0f);
+        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+        racanRobot = summonParent.GetChild(6).GetComponent<UnitGroup>();
+        StartCoroutine(RacanDetector());
+        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+        wimpRobot = summonParent.GetChild(7).GetComponent<UnitGroup>();
+        StartCoroutine(WimpDetector());
+        StartCoroutine(RexDetector());
+        StartCoroutine(StationDetector());
 
-            yield return new WaitForSeconds(2.0f);
-            racanPath.Add(nodeParent.Find("S12").transform.position);
-            racanPath.Add(nodeParent.Find("S20").transform.position);
-            wimpPath.Add(nodeParent.Find("S12").transform.position);
-            wimpPath.Add(nodeParent.Find("S00").transform.position);
-            racanRobot.SetMove(racanPath);
-            wimpRobot.SetMove(wimpPath);
-            break;
-        }
+        yield return new WaitForSeconds(2.0f);
+        racanPath.Add(nodeParent.Find("S12").transform.position);
+        racanPath.Add(nodeParent.Find("S20").transform.position);
+        wimpPath.Add(nodeParent.Find("S12").transform.position);
+        wimpPath.Add(nodeParent.Find("S00").transform.position);
+        racanRobot.SetMove(racanPath);
+        wimpRobot.SetMove(wimpPath);
     }
 
     IEnumerator RacanDetector() {
-        while(true) {
+        while (true) {
+            if (!mision2on) break;
             if (SearchLevelUp()) break;
             if (racanRobot == null) {
                 yield return new WaitForSeconds(2.0f);
@@ -271,6 +272,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     IEnumerator WimpDetector() {
         while (true) {
+            if (!mision2on) break;
             if (SearchLevelUp()) break;
             if (wimpRobot == null) {
                 yield return new WaitForSeconds(2.0f);
@@ -284,9 +286,29 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         }
     }
 
+    IEnumerator RexDetector() {
+        while (true) {
+            if (!PlayerController.Instance.FirstMove)
+                yield return new WaitForSeconds(0.1f);
+            else {
+                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2], null);
+                break;
+            }
+        }
+    }
+
+    IEnumerator StationDetector() {
+        while(true) {
+            if (nodeParent.GetChild(0).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1
+                && nodeParent.GetChild(3).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1)
+                mision2on = false;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     private bool SearchLevelUp() {
-        foreach(ActiveCard card in playerctlr.GetComponent<PlayerActiveCards>().activeCards) {
-            if(card.ev.lv > 1) {
+        foreach (ActiveCard card in playerctlr.GetComponent<PlayerActiveCards>().activeCards) {
+            if (card.ev.lv > 1) {
                 return true;
             }
         }

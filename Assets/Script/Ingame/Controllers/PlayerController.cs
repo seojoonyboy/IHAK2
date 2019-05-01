@@ -20,6 +20,14 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public bool IsPlaying {
         get { return playing; }
     }
+
+    //미션용 변수
+    private bool firstMove = false;
+    public bool FirstMove {
+        get { return firstMove; }
+        set { firstMove = value; }
+    }
+
     IngameScoreManager scoreManager;
 
     [Header(" - Player Maps")]
