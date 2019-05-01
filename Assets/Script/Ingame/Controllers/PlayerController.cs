@@ -72,6 +72,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         GoldResourceFlick,
         CitizenResourceFlick;
 
+    public StageGoal stageGoals;
+
     private static PlayerController _instance;
 
     public static PlayerController Instance {
@@ -84,6 +86,11 @@ public partial class PlayerController : SerializedMonoBehaviour {
                 return _instance;
             }
         }
+    }
+
+    public class StageGoal {
+        [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
+        public Dictionary<string, string> missionLists;
     }
 
     private void SetMap() {
@@ -134,6 +141,19 @@ public partial class PlayerController : SerializedMonoBehaviour {
         GetDeckDetailRequest(ld);
         hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
+
+        //StartCoroutine(subgoal_test());
+    }
+
+    IEnumerator subgoal_test() {
+        yield return new WaitForSeconds(5.0f);
+        eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-1");
+        yield return new WaitForSeconds(3.0f);
+        eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-2");
+        yield return new WaitForSeconds(3.0f);
+        eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-3");
+        yield return new WaitForSeconds(3.0f);
+        eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-4");
     }
 
     private void GetDeckDetailRequest(GameObject ld) {
