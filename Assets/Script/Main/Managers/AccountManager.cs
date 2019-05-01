@@ -363,27 +363,6 @@ public partial class AccountManager {
 /// <summary>
 /// 플레이어 대표 덱 메인화면에 표시하기 위한 처리. 기타 건물 타일 관련 처리
 /// </summary>
-public partial class AccountManager {
-    public void SetHQ(int num) {
-        GameObject targetbuilding = FindObjectOfType<ConstructManager>().townCenter;
-        GameObject targetTileGroup = transform.GetChild(0).GetChild(num).gameObject;
-        int tileCount = targetTileGroup.transform.childCount - 1;
-
-        if (targetTileGroup.transform.GetChild(tileCount / 2).childCount == 0) {
-            if (targetbuilding != null) {
-                GameObject targetTile = targetTileGroup.transform.GetChild(tileCount / 2).gameObject;
-                targetbuilding = Instantiate(targetbuilding, targetTile.transform);
-                targetTile.GetComponent<TileObject>().buildingSet = true;
-                targetbuilding.transform.position = targetTile.transform.position;
-                targetbuilding.GetComponent<BuildingObject>().setTileLocation = targetTile.GetComponent<TileObject>().tileNum;
-                if(targetbuilding.GetComponent<SpriteRenderer>() != null)
-                    targetbuilding.GetComponent<SpriteRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-                else
-                    targetbuilding.GetComponent<MeshRenderer>().sortingOrder = tileCount * 2 - targetTile.GetComponent<TileObject>().tileNum;
-            }
-        }
-    }
-}
 
 public partial class AccountManager {
     public MissionData mission;
@@ -425,7 +404,7 @@ public partial class AccountManager {
             gsm.startScene(scenestate, GameSceneManager.SceneState.IngameScene);
         }
     }
-
+    
     public void ConvertMissionData(Req_missionRead.MissionData mi) {
         mission.stageNum = mi.stageNum;
         mission.title = mi.title;
