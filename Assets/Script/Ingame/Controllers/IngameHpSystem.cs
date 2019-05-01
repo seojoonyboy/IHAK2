@@ -34,6 +34,9 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     public IngameSceneUIController ingameSceneUIController;
     public IngameResultManager resultManager;
 
+    private int playerMaxHp;
+    private int enemyMaxHp;
+
     void Awake() {
         ingameSceneEventHandler = IngameSceneEventHandler.Instance;
     }
@@ -50,11 +53,15 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
         switch (player) {
             case PlayerController.Player.PLAYER_1:
                 playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = amount.ToString();
-                playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
+                playerhpGauge.transform.Find("hpHeader").Find("hpMax").GetComponent<Text>().text = amount.ToString();
+                playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 1;
+                playerMaxHp = amount;
                 break;
             case PlayerController.Player.PLAYER_2:
                 enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = amount.ToString();
-                enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 100f;
+                enemyhpGauge.transform.Find("hpHeader").Find("hpMax").GetComponent<Text>().text = amount.ToString();
+                enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = 1;
+                enemyMaxHp = amount;
                 break;
         }
     }
@@ -62,13 +69,17 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
     public void HpChanged(PlayerController.Player player, float hp) {
         switch (player) {
             case PlayerController.Player.PLAYER_1:
-                if(hp == 0) {
+                playerhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hp / playerMaxHp;
+                playerhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = ((int)hp).ToString();
+                if (hp == 0) {
                     resultManager.GameOverWindow(IngameResultManager.GameOverType.LOSE);
                     Debug.Log("아군 HQ 파괴됨");
                 }
                 break;
             case PlayerController.Player.PLAYER_2:
-                if(hp == 0) {
+                enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hp / enemyMaxHp;
+                enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = ((int)hp).ToString();
+                if (hp == 0) {
                     resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
                     Debug.Log("적군 HQ 파괴됨");
                 }
