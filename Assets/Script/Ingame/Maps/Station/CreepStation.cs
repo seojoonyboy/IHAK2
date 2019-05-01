@@ -47,6 +47,7 @@ public partial class CreepStation : DefaultStation {
             targets.Clear();
             GetComponent<Collider2D>().enabled = true;
             startSeize = false;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
         }
     }
 
