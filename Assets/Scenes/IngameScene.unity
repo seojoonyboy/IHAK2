@@ -1847,7 +1847,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
 --- !u!222 &275560809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2101,6 +2101,7 @@ MonoBehaviour:
   pathPrefabsParent: {fileID: 0}
   GoldResourceFlick: {fileID: 2057837610}
   CitizenResourceFlick: {fileID: 494684582}
+  resultManager: {fileID: 1567472046}
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
     type: 2}
   summonParent: {fileID: 0}
@@ -10074,6 +10075,7 @@ MonoBehaviour:
   wreckSprite: {fileID: 21300000, guid: 59dffaf1f462945b8a56372c24e72cc8, type: 3}
   wreckSpine: {fileID: 11400000, guid: c8df3ff4adca34f359c226ff6cae9b91, type: 2}
   ingameSceneUIController: {fileID: 1239632114}
+  resultManager: {fileID: 1567472046}
 --- !u!1 &1355335182
 GameObject:
   m_ObjectHideFlags: 0
@@ -10161,7 +10163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1355877760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11629,7 +11631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1621379210
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14106,6 +14108,7 @@ MonoBehaviour:
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
     type: 2}
   summonParent: {fileID: 0}
+  nodeParent: {fileID: 0}
 --- !u!114 &1844919647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15671,7 +15674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 483.7, y: 390}
+  m_AnchoredPosition: {x: 450, y: 300}
   m_SizeDelta: {x: 210, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2029069797

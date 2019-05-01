@@ -18,6 +18,7 @@ namespace AI {
         protected static int myLayer = 0;
         protected static int enemyLayer = 0;
         protected static int neutralLayer = 0;
+        [SerializeField] protected DefaultStation standingStation;
 
         public float HP {
             get {
@@ -125,6 +126,20 @@ namespace AI {
                 return isEnemy ?  (1 << enemyLayer) | (1 << neutralLayer) : myLayer;
             else
                 return isEnemy ? (1 << myLayer) | (1 << neutralLayer) : enemyLayer;
+        }
+
+        void OnTriggerEnter2D(Collider2D collision) {
+            if (collision.GetComponent<DefaultStation>()) {
+                standingStation = collision.GetComponent<DefaultStation>();
+            }
+            else return;
+        }
+
+        void OnTriggerExit2D(Collider2D collision) {
+            if (collision.GetComponent<DefaultStation>()) {
+                standingStation = null;
+            }
+            else return;
         }
     }   
 }

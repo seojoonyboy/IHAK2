@@ -6,7 +6,6 @@ using UniRx;
 using UnityEngine;
 
 public class IngameBuilding : SkyNet {
-    private float hpOffsetSize = 6;
     public override void Damage(float damage) {
         base.Damage(damage);
     }
@@ -24,13 +23,13 @@ public class IngameBuilding : SkyNet {
         GiveExp();
 
         SkeletonAnimation ani = GetComponent<SkeletonAnimation>();
+        if (ani == null) return;
+
         ani.skeletonDataAsset = IngameHpSystem.Instance.wreckSpine;
         Spine.Animation[] items = ani.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
 
         ani.Initialize(true);
         ani.AnimationState.SetAnimation(0, items[0], true);
-
-        Debug.Log("HQ 파괴");
     }
 
     public override void ChangeOwner(int newNum) {
@@ -55,7 +54,7 @@ public class IngameBuilding : SkyNet {
     protected override void CalculateHealthBar() {
         float percent = HP / MaxHealth;
         if(MaxHealth != 0) {
-            healthBar.transform.localScale = new Vector3(hpOffsetSize * percent, 3f, 1f);
+            healthBar.transform.localScale = new Vector3(percent, 1f, 1f);
         }
     }
 

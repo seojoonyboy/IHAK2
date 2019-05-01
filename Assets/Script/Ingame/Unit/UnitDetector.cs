@@ -10,6 +10,7 @@ public class UnitDetector : MonoBehaviour {
 	}
 
 	public void SetData(float attackRange, int enemyLayer) {
+		gameObject.layer = transform.parent.gameObject.layer;
 		CircleCollider2D detectCollider = transform.GetComponent<CircleCollider2D>();
         detectCollider.radius = attackRange;
         detectingLayer = enemyLayer;

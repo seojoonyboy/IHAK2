@@ -38,4 +38,6 @@ public partial class DefaultStation : SerializedMonoBehaviour {
     public GameObject Building{
         get { return building; } set { building = value; }
     }
+
+    public virtual void DestroyEnteredTarget(GameObject unitObj) {}
 }

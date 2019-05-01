@@ -36,6 +36,7 @@ public partial class UnitAI : AI.SkyNet {
     private IngameSceneEventHandler eventHandler;
     public UnitGroup myGroup;
 
+
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
         if (myLayer > 0) return;
@@ -50,6 +51,7 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     private void OnDestroy() {
+        if (standingStation != null) standingStation.DestroyEnteredTarget(gameObject);
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 

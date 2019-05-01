@@ -88,7 +88,8 @@ public partial class HeroAI : UnitAI {
     }
 
     void OnDestroy() {
-        if(coroutine != null) StopCoroutine(coroutine);
+        if (standingStation != null) standingStation.DestroyEnteredTarget(gameObject);
+        if (coroutine != null) StopCoroutine(coroutine);
     }
 
     public override void attackUnit() {
@@ -113,7 +114,7 @@ public partial class HeroAI : UnitAI {
         if (expSet != null) {
             int percentage = expSet.args[0];
             exp = 0;
-            Debug.Log("영웅 경험치 보정");
+            //Debug.Log("영웅 경험치 보정");
         }
         unitCard.ev.exp += exp;
         CheckLv();
