@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: 003_Wimp_SkeletonData
+  m_Name: 000_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 59d08d7352b9f42d1928112a4403bf59, type: 2}
-  scale: 0.007
-  skeletonJSON: {fileID: 4900000, guid: 8515d8bda410e4f60be05a931b1450e5, type: 3}
+  - {fileID: 11400000, guid: 6906824d053574b2187a7e1dd1e122b2, type: 2}
+  scale: 0.0068
+  skeletonJSON: {fileID: 4900000, guid: ae6f626864be5480a8f630386d551aff, type: 3}
   skeletonDataModifiers: []
   fromAnimation:
   - 3.attack
   toAnimation:
-  - 1.waitting
+  - 1.idle
   duration:
   - 0.5
   defaultMix: 0.2
