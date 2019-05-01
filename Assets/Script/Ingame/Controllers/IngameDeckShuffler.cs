@@ -27,14 +27,10 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.BUILDING_DESTROYED, OnBuildingDestroyed);
-
         playerController = PlayerController.Instance;
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.HQ_UPGRADE, OnHqUpgraded);
     }
 
     public void HeroReturn(GameObject targetCard, bool isDead) {
@@ -74,12 +70,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
     public void HeroReturnBtnClicked() {
         eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, this);
-    }
-
-    private void OnBuildingDestroyed(Enum Event_Type, Component Sender, object Param) { }
-
-    private void OnHqUpgraded(Enum Event_Type, Component Sender, object Param) {
-        InitCard();
     }
 
     public void InitCard() {

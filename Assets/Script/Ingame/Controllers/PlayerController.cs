@@ -131,7 +131,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
         pInfo.clickGold = new int[3];
         pInfo.clickFood = new int[3];
         pInfo.clickEnvironment = new int[3];
-        goldBar.fillAmount = 0;
+        if (goldBar != null) goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
