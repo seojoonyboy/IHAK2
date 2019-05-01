@@ -12,20 +12,24 @@ public class HerbDragHandler : SpellCardDragHandler {
 
     public override void OnEndDrag() {
         base.OnEndDrag();
-        Herb herb = gameObject.AddComponent<Herb>();
-        herb.Init(data);
-        herb.StartHealing();
+        if (PlayerController.Instance.deckShuffler().CanUseCard(targetCard.GetComponent<ActiveCardInfo>())) {
+            Herb herb = gameObject.AddComponent<Herb>();
+            herb.Init(data);
+            herb.StartHealing();
 
-        ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
-        coolComp.coolTime = coolTime;
-        coolComp.behaviour = this;
-        coolComp.StartCool();
-        GetComponent<SpellCardDragHandler>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+            ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
+            coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
+            coolComp.coolTime = coolTime;
+            coolComp.behaviour = this;
+            coolComp.StartCool();
+            GetComponent<SpellCardDragHandler>().enabled = false;
 
-        //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
+            PlayerController.Instance.deckShuffler().UseCard(targetCard);
+        }
+        else {
+            IngameAlarm.instance.SetAlarm("자원이 부족합니다!");
+            targetCard.GetComponent<SpellCardHandler>().OffToggle();
+        }
     }
 
     public override void OnBeginDrag() {

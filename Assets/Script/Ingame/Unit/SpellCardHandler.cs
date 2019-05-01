@@ -69,4 +69,10 @@ public class SpellCardHandler : IngameCardHandler {
 
         ToggleValueChanged(toggle);
     }
+
+    public void OffToggle() {
+        Toggle toggle = GetComponent<Toggle>();
+        toggle.isOn = false;
+        ToggleValueChanged(toggle);
+    }
 }
