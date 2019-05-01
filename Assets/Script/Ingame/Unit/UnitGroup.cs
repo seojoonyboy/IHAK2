@@ -391,12 +391,14 @@ public class UnitGroup : MonoBehaviour {
                 return true;
 
             else if (hits.collider.gameObject.layer == 31) {
-                if(!directionOpen) return false;
+                if (!directionOpen) return false;
                 int index = hits.collider.transform.GetSiblingIndex();
                 List<Vector3> path = new List<Vector3>();
                 path.Add(currentStation.transform.position);
                 path.Add(currentStation.adjNodes[(MapStation.NodeDirection)index].transform.position);
                 SetMove(path);
+                if (!PlayerController.Instance.FirstMove)
+                    PlayerController.Instance.FirstMove = true;
                 return true;
             }
             else return false;
