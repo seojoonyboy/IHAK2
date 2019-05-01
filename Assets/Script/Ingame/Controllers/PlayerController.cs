@@ -204,11 +204,10 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {
         playing = true;
-        playerActiveCards().Init();
-        playerBuildings().Init();
-        playerBuildings().RemoveTile();
 
+        playerActiveCards().Init();
         deckShuffler().InitCard();
+
         resourceManager().OnResourceProduce(true);
     }
 }
@@ -223,10 +222,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
     public IngameResourceManager resourceManager() {
         return _instance.GetComponent<IngameResourceManager>();
-    }
-
-    public MyBuildings playerBuildings() {
-        return _instance.GetComponent<MyBuildings>();
     }
 
     public PlayerActiveCards playerActiveCards() {
