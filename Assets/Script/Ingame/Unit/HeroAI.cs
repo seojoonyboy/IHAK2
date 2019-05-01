@@ -88,7 +88,8 @@ public partial class HeroAI : UnitAI {
     }
 
     void OnDestroy() {
-        if(coroutine != null) StopCoroutine(coroutine);
+        if (standingStation != null) standingStation.DestroyEnteredTarget(gameObject);
+        if (coroutine != null) StopCoroutine(coroutine);
     }
 
     public override void attackUnit() {
