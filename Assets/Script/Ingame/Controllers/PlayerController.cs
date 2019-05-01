@@ -14,24 +14,10 @@ using System.Text;
 using ingameUIModules;
 
 public partial class PlayerController : SerializedMonoBehaviour {
-    public class ProductInfo { //gold food environment 순서의 생산량 저장
-        public int[] clickGold;
-        public int[] clickFood;
-        public int[] clickEnvironment;
-    }
-
     private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
 
-    [Header(" - UI")]
-    [SerializeField] Transform productResource;
-    [SerializeField] Text ingameTimer;
-
     [Header(" - ResourceText")]
-    [SerializeField] Text goldValue;
     [SerializeField] Image goldBar;
-    //[SerializeField] Text foodValue;
-    //[SerializeField] Text turnValue;
-    [SerializeField] Image envValue;
     
     private bool playing = false;
     public bool IsPlaying {
@@ -41,21 +27,11 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [Header(" - Player")]
     public int hqLevel = 1;
     public int tileCount;
-    private int MaxHpMulti;
     public int goldConsume;
     public bool activeRepair = false;
     public float repairTimer;
-    
-    [Header(" - Spine")]
-    [SerializeField] private SkeletonDataAsset coinAni;
-    [SerializeField] private SkeletonDataAsset upgrageAni;
-    [SerializeField] private Material coinAniMaterial;
-    [SerializeField] private Material upgradeAniMaterial;
 
-    public ProductInfo pInfo { get; set; }
     IngameScoreManager scoreManager;
-    private bool warningOn = false;
-    private float envBonusProduce;
 
     private bool envEfctOn = false;
     private IEnumerator efct3;
@@ -127,10 +103,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
         }
 
         scoreManager = IngameScoreManager.Instance;
-        pInfo = new ProductInfo();
-        pInfo.clickGold = new int[3];
-        pInfo.clickFood = new int[3];
-        pInfo.clickEnvironment = new int[3];
         if (goldBar != null) goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
