@@ -118,6 +118,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             .Append(AccountManager.Instance.DEVICEID)
             .Append("/decks/")
             .Append(id.ToString());
+        Debug.Log(url);
         _networkManager.request("GET", url.ToString(), GetDetailDeckCallback, false);
     }
 

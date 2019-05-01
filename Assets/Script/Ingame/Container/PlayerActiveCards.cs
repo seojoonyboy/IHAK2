@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Container {
     public class PlayerActiveCards : MonoBehaviour {
         public List<ActiveCard> activeCards;
+        public List<ActiveCard> opponentCards;
         [SerializeField] [ReadOnly] DeckInfo deckInfo;
         [SerializeField] [ReadOnly] PlayerController playerController;
 
@@ -14,6 +15,7 @@ namespace Container {
             playerController = PlayerController.Instance;
             DataModules.MissionData missionData;
             DataModules.Deck playerDeck;
+            DataModules.Deck opponentDeck;
             ConstructManager constructManager = ConstructManager.Instance;
             
             /*
@@ -40,12 +42,14 @@ namespace Container {
             try {
                 missionData = AccountManager.Instance.mission;
                 playerDeck = missionData.playerDeck;
+                opponentDeck = missionData.opponentDeck;
             }
             catch (NullReferenceException ex) {
                 Debug.LogError("미션데이터가 로드 되지않았습니다.");
                 return;
             }
             activeCards = new List<ActiveCard>();
+            opponentCards = new List<ActiveCard>();
 
             for(int i = 0; i < playerDeck.cards.Length; i++) {
                 DataModules.CardData cardData = playerDeck.cards[i].data;
@@ -68,7 +72,31 @@ namespace Container {
                     }
                     activeCards.Add(activeCard);
                 }               
-            }         
+            }
+            
+            for (int i = 0; i < opponentDeck.cards.Length; i++) {
+                DataModules.CardData cardData = opponentDeck.cards[i].data;
+                ActiveCard activeCard = new ActiveCard();
+
+                if(cardData != null) {
+                    switch (cardData.type) {
+                        case "active":
+                            activeCard.id = opponentDeck.cards[i].id;
+                            activeCard.baseSpec.skill = cardData.activeSkills[0];
+                            activeCard.baseSpec.unit = new DataModules.Unit();
+                            activeCard.type = cardData.type;
+                            break;
+                        case "hero":
+                            activeCard.id = opponentDeck.cards[i].id;
+                            activeCard.baseSpec.skill = new DataModules.ActiveSkill();
+                            activeCard.baseSpec.unit = cardData.unit;
+                            activeCard.type = cardData.type;
+                            break;
+                    }
+                    opponentCards.Add(activeCard);
+                }
+            }
+
         }
 
 
