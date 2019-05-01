@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using System.Text;
 using ingameUIModules;
+using Resources = UnityEngine.Resources;
 
 public partial class PlayerController : SerializedMonoBehaviour {
     [Header(" - ResourceText")]
@@ -29,6 +30,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public GameObject 
         GoldResourceFlick,
         CitizenResourceFlick;
+    Transform myCity;
 
     public StageGoal stageGoals;
 
@@ -58,10 +60,12 @@ public partial class PlayerController : SerializedMonoBehaviour {
         maps.Add(Player.PLAYER_4, GameObject.Find("EnemyCity"));
 
         summonParent = GameObject.Find("PlayerMinionSpawnPos").transform;
+        myCity = maps[Player.PLAYER_1].transform;
     }
 
     private void Awake() {
         SetMap();
+        SetHQ();
 
         GameObject go = AccountManager.Instance
             .transform
@@ -78,11 +82,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         if (goldBar != null) goldBar.fillAmount = 0;
 
         eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
-        transform.GetComponent<PlayerResource>().maxhp = transform.GetComponent<PlayerResource>().TotalHp = (int)AccountManager.Instance.mission.hqHitPoint;
-        
         hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
 
@@ -139,12 +140,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
-    }
-
-    private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
-        playerResource().maxhp = playerResource().TotalHp = 1000;
     }
 
     private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {
@@ -272,5 +268,23 @@ public partial class PlayerController : SerializedMonoBehaviour {
                 playerResource().Gold += (decimal)PlayerPassiveCards().effectModules["Minion_die_gold"];
             }
         }
+    }
+}
+
+/// <summary>
+/// 건물 배치
+/// </summary>
+public partial class PlayerController : SerializedMonoBehaviour {
+    private void SetHQ() {
+        GameObject hq = Instantiate(Resources.Load("Prefabs/HQ") as GameObject);
+        hq.transform.SetParent(myCity);
+
+        int hp = (int)AccountManager.Instance.mission.hqHitPoint;
+        IngameHpSystem.Instance.SetHp(
+            Player.PLAYER_1,
+            (int)AccountManager.Instance.mission.hqHitPoint
+        );
+
+        hq.GetComponent<IngameBuilding>().SetHp(hp);
     }
 }

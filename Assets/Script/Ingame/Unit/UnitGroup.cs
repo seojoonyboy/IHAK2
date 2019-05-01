@@ -97,7 +97,7 @@ public class UnitGroup : MonoBehaviour {
 
     private void AttackHQ(string name) {
         GameObject group = GameObject.Find(name);
-        Transform hq = group.transform.GetChild(0).Find("Tile[2,2]");
+        Transform hq = group.transform.GetChild(0);
         enemyBuilding = hq.gameObject;
         enemyGroup = new List<GameObject>();
         attacking = true;
