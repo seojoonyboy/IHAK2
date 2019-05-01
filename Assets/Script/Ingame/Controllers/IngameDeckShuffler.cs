@@ -147,7 +147,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":
-                    Debug.Log(activeCard.data.baseSpec.skill.cost.gold);
                     playerController.playerResource().UseGold(activeCard.data.baseSpec.skill.cost.gold);
                     break;
             }
