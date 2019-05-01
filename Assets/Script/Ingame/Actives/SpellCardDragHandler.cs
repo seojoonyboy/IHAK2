@@ -67,6 +67,7 @@ public class SpellCardDragHandler : MonoBehaviour {
         if(hits.collider == null) return null;
         target = hits.collider.gameObject;
         Debug.Log(target.name);
+        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
         return target;
     }
 
