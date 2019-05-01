@@ -264,7 +264,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3270f8780233249ce96b4b50813f5076, type: 2}
+  - {fileID: 2100000, guid: 98479d9e7e9ef470d8276a182fd35d99, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c5751ea37ff6e4f6aa6397e3137178ed, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 10b365d49cbc74ffbb63b3a920592fe4, type: 2}
   initialSkinName: 2.blue
   initialFlipX: 0
   initialFlipY: 0
@@ -525,10 +525,11 @@ MonoBehaviour:
   ownerNum: 0
   healthBar: {fileID: 0}
   expPoint: 18
-  arrow: {fileID: 1770122807129098, guid: f78f211aa83a9134786377509d57bdaa, type: 2}
+  arrow: {fileID: 1770122807129098, guid: 8c32066746ea64db0b727d2681ef7ad6, type: 2}
   power: 0
   moveSpeed: 0
   attackRange: 0
+  myGroup: {fileID: 0}
   unit:
     id: 
     name: "\uC6D0\uAC70\uB9AC\uBBF8\uB2C8\uC5B8"
@@ -742,7 +743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacdc7700974283869344394e21f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runAnimationName: 2.move_2
+  runAnimationName: 2.move
   idleAnimationName: 1.idle
   attackAnimationName: 3.attack
   skillAnimationName: 

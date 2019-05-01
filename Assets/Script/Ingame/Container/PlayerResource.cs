@@ -12,7 +12,6 @@ namespace Container {
         private decimal citizen;
         
         public int maxhp;
-        [ReadOnly] public int hp;
 
         public PlayerResource(int gold, int citizen) {
             Gold = gold;
@@ -46,17 +45,6 @@ namespace Container {
                 PlayerController.Instance.CitizenSpawnController().AddCitizen();
 
                 citizen_readonly = (float)citizen;
-            }
-        }
-
-        public int TotalHp {
-            get { return hp; }
-            set {
-                hp = value;
-                if (hp <= 0) {
-                    Debug.Log("도시체력 0이하로 떨어짐");
-                    hp = 0;
-                }
             }
         }
 

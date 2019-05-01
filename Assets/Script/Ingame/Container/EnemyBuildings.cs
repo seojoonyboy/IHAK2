@@ -40,7 +40,6 @@ public class EnemyBuildings : PlayerBuildings {
         //        buildingInfos.Add(info);
         //    }
         //}
-        GetComponent<PlayerResource>().maxhp = GetComponent<PlayerResource>().TotalHp = 1000;
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.EVENT_TYPE.ENEMY_BUILDINGS_INFO_ADDED, this, buildingInfos);
     }
 }

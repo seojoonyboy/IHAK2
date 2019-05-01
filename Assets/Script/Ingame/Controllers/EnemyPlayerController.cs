@@ -12,6 +12,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using System.Text;
 using ingameUIModules;
+using Resources = UnityEngine.Resources;
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
     public class ProductInfo { //gold food environment 순서의 생산량 저장
@@ -46,6 +47,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     Req_deckDetail.Deck deck;
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
+    Transform myCity;
 
     private static EnemyPlayerController _instance;
 
@@ -68,38 +70,16 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         maps.Add(PlayerController.Player.PLAYER_4, GameObject.Find("EnemyCity"));
 
         summonParent = GameObject.Find("EnemyMinionSpawnPos").transform;
+        myCity = PlayerController.Instance.maps[PlayerController.Player.PLAYER_2].transform;
     }
 
     private void Awake() {
         SetMap();
-        GameObject go = AccountManager.Instance.transform.GetChild(0).GetChild(AccountManager.Instance.leaderIndex).gameObject;
-
-        GameObject ld = (GameObject)Instantiate(
-            go,
-            maps[PlayerController.Player.PLAYER_2].transform
-        );
-        DeckInfo deckInfo = go.GetComponent<DeckInfo>();
-        ld.SetActive(true);
-        foreach (Transform tile in ld.transform) {
-            tile.gameObject.layer = 8;
-            foreach (Transform building in tile) {
-                building.gameObject.layer = 8;
-            }
-        }
-
-        for (int i = 0; i < go.GetComponent<DeckInfo>().units.Count; i++) {
-            ld.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost = go.GetComponent<DeckInfo>().units[i].baseSpec.unit.cost;
-        }
-        for (int i = 0; i < go.GetComponent<DeckInfo>().spells.Count; i++) {
-            ld.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost = go.GetComponent<DeckInfo>().spells[i].baseSpec.skill.cost;
-        }
-
+        SetHQ();    //HQ 건물 추가
 
         eventHandler = IngameSceneEventHandler.Instance;
-        eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
 
-        GetDeckDetailRequest(ld);
         hq_mapStation = GameObject.Find("S12").GetComponent<MapStation>();
         _instance = this;
     }
@@ -155,12 +135,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     void OnDestroy() {
-        eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_BUILDINGS_INFO_ADDED, OnMyBuildings_info_added);
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
-    }
-
-    private void OnMyBuildings_info_added(Enum Event_Type, Component Sender, object Param) {
-        playerResource().maxhp = playerResource().TotalHp = 1000;
     }
 
     private void OnMyDeckInfoAdded(Enum Event_Type, Component Sender, object Param) {
@@ -226,5 +201,22 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         if (!heroPrefabs.ContainsKey(id)) return null;
         return heroPrefabs[id];
     }
+}
 
+/// <summary>
+/// 건물 배치
+/// </summary>
+public partial class EnemyPlayerController : SerializedMonoBehaviour {
+    private void SetHQ() {
+        GameObject hq = Instantiate(Resources.Load("Prefabs/HQ") as GameObject);
+        hq.transform.SetParent(myCity);
+
+        int hp = (int)AccountManager.Instance.mission.hqHitPoint;
+        IngameHpSystem.Instance.SetHp(
+            PlayerController.Player.PLAYER_2,
+            hp
+        );
+
+        hq.GetComponent<IngameBuilding>().SetHp(hp);
+    }
 }

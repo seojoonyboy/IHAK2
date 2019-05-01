@@ -102,7 +102,7 @@ public class UnitGroup : MonoBehaviour {
 
     private void AttackHQ(string name) {
         GameObject group = GameObject.Find(name);
-        Transform hq = group.transform.GetChild(0).Find("Tile[2,2]");
+        Transform hq = group.transform.GetChild(0);
         enemyBuilding = hq.gameObject;
         enemyGroup = new List<GameObject>();
         attacking = true;
@@ -360,7 +360,11 @@ public class UnitGroup : MonoBehaviour {
         HeroAI hero = transform.GetComponentInChildren<HeroAI>();
         transform.DetachChildren();
         transform.position = hero.transform.position;
-        foreach (var item in childrens) item.SetParent(transform, true);
+        foreach (var item in childrens) {
+            item.SetParent(transform, true);
+            if(item.GetComponent<UnitAI>() != null) continue;
+            item.localPosition = Vector3.zero;
+        }
     }
 
     public void UnitDead(GameObject unit) {

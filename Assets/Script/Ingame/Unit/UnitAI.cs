@@ -192,6 +192,8 @@ public partial class UnitAI : AI.SkyNet {
         if(targetUnit == null) return;
         GameObject arrow = Instantiate(this.arrow, transform.position, Quaternion.identity);
         iTween.MoveTo(arrow, targetUnit.position, attackSpeed * 0.3f);
+        Vector3 vector = Vector3.Normalize(targetUnit.position - transform.position);
+        if(vector.x > 0) arrow.GetComponent<SpriteRenderer>().flipX = true;
         Destroy(arrow, attackSpeed * 0.3f);
     }
 
