@@ -51,7 +51,9 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             spawnNum = (int)PlayerController.Instance.playerResource().Citizen / 100;
         else spawnNum = heroCard.baseSpec.unit.minion.count;
 
-        if(isRobot) spawnNum = heroCard.baseSpec.unit.minion.count;
+        if (isRobot) {
+            spawnNum = heroCard.baseSpec.unit.minion.count;
+        }
 
 
         for (int i = 0; i < spawnNum; i++) {
@@ -65,7 +67,8 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             minion.transform.position
                 = new Vector3(spawnPos.position.x + Random.Range(-3.0f, 3.0f), spawnPos.position.y + Random.Range(-3.0f, 3.0f), spawnPos.position.z);
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
-            if(!isRobot) PlayerController.Instance.CitizenSpawnController().DeleteCitizen();
+            if (!isRobot) PlayerController.Instance.CitizenSpawnController().DeleteCitizen();
+            else minion.layer = 11;
         }
     }
 }

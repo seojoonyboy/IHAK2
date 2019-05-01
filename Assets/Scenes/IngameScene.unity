@@ -11890,6 +11890,7 @@ MonoBehaviour:
   unitGroupPrefab: {fileID: 1478968782876992, guid: 1a34a083d321241868c02d1e9bdba8d9,
     type: 2}
   summonParent: {fileID: 0}
+  nodeParent: {fileID: 0}
 --- !u!114 &1844919647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13137,7 +13138,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 483.7, y: 390}
+  m_AnchoredPosition: {x: 450, y: 300}
   m_SizeDelta: {x: 210, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2029069797

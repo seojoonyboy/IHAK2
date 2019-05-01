@@ -105,14 +105,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     private void Start() {
+        nodeParent = GameObject.Find("Nodes").transform;
         StartCoroutine(Stage2AI());
-    }
-
-    IEnumerator Stage2AI() {
-        while (alive) {
-            yield return new WaitForSeconds(5.0f);
-            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
-        }
     }
 
     private void GetDeckDetailRequest(GameObject ld) {
@@ -212,19 +206,79 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         UnitAI unitAI = hero.GetComponent<UnitAI>();
         //hero.GetComponent<HeroAI>().targetCard = cardObj;
 
-        unitAI.ownerNum = PlayerController.Player.PLAYER_1;
+        unitAI.ownerNum = PlayerController.Player.PLAYER_2;
         unitAI.Init(card, cardObj);
+        unitAI.gameObject.layer = 11;
 
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
         _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform, true);
-        //.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
+        //GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
     public GameObject GetHeroPrefab(string id) {
         if (!heroPrefabs.ContainsKey(id)) return null;
         return heroPrefabs[id];
+    }
+
+}
+
+//AI 시나리오
+public partial class EnemyPlayerController : SerializedMonoBehaviour {
+    [SerializeField] Transform nodeParent;
+
+    UnitGroup racanRobot;
+    UnitGroup wimpRobot;
+
+    List<Vector3> racanPath = new List<Vector3>();
+    List<Vector3> wimpPath = new List<Vector3>();
+
+    IEnumerator Stage2AI() {
+        while (alive) {
+            yield return new WaitForSeconds(5.0f);
+            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+            racanRobot = summonParent.GetChild(6).GetComponent<UnitGroup>();
+            StartCoroutine(RacanDetector());
+            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+            wimpRobot = summonParent.GetChild(7).GetComponent<UnitGroup>();
+            StartCoroutine(WimpDetector());
+
+            yield return new WaitForSeconds(2.0f);
+            racanPath.Add(nodeParent.Find("S12").transform.position);
+            racanPath.Add(nodeParent.Find("S20").transform.position);
+            wimpPath.Add(nodeParent.Find("S12").transform.position);
+            wimpPath.Add(nodeParent.Find("S00").transform.position);
+            racanRobot.SetMove(racanPath);
+            wimpRobot.SetMove(wimpPath);
+            break;
+        }
+    }
+
+    IEnumerator RacanDetector() {
+        while(true) {
+            if (racanRobot == null) {
+                yield return new WaitForSeconds(2.0f);
+                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+                racanRobot = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                racanRobot.SetMove(racanPath);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator WimpDetector() {
+        while (true) {
+            if (wimpRobot == null) {
+                yield return new WaitForSeconds(2.0f);
+                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+                wimpRobot = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                wimpRobot.SetMove(wimpPath);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
 }
