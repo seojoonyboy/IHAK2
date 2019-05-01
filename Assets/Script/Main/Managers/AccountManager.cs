@@ -1,13 +1,10 @@
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DataModules;
-using System.Linq;
 using System;
 using System.Text;
-using Spine.Unity;
+
 
 
 public partial class AccountManager : Singleton<AccountManager> {
