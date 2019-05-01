@@ -18,19 +18,33 @@ public class UnitSpine : MonoBehaviour {
     //public string hittedAnimationName;
     private Transform hitEffect;
 
+    [SpineSkin]
+    public string skinBlueSkull;
+    [SpineSkin]
+    public string skinRedSkull;
+
     private SkeletonAnimation skeletonAnimation;
     private Spine.AnimationState spineAnimationState;
-    private Skeleton skeleton;
+    protected Skeleton skeleton;
 
     private void Awake() {
         Init();
         hitEffect = transform.parent.Find("wolf_hit");
     }
 
+    private void Start() {
+        SetSkin();
+    }
+
     public virtual void Init() {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         spineAnimationState = skeletonAnimation.AnimationState;
         skeleton = skeletonAnimation.Skeleton;
+    }
+
+    public virtual void SetSkin() {
+        string skin = gameObject.layer == LayerMask.NameToLayer("PlayerUnit") ? skinBlueSkull : skinRedSkull;
+        skeleton.SetSkin(skin);
     }
 
     public void Idle() {
