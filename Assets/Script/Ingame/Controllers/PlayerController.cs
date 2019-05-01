@@ -1,11 +1,8 @@
 using DataModules;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Spine.Unity;
 using System;
 using Container;
 using Sirenix.OdinInspector;
@@ -14,8 +11,6 @@ using System.Text;
 using ingameUIModules;
 
 public partial class PlayerController : SerializedMonoBehaviour {
-    private GameSceneManager.SceneState sceneState = GameSceneManager.SceneState.IngameScene;
-
     [Header(" - ResourceText")]
     [SerializeField] Image goldBar;
     
@@ -23,25 +18,12 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public bool IsPlaying {
         get { return playing; }
     }
-
-    [Header(" - Player")]
-    public int hqLevel = 1;
-    public int tileCount;
-    public int goldConsume;
-    public bool activeRepair = false;
-    public float repairTimer;
-
     IngameScoreManager scoreManager;
-
-    private bool envEfctOn = false;
-    private IEnumerator efct3;
-    private IEnumerator efct5;
 
     [Header(" - Player Maps")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
-    IngameSceneEventHandler eventHandler;
-    Req_deckDetail.Deck deck;
+
     public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     public GameObject 
@@ -51,7 +33,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public StageGoal stageGoals;
 
     private static PlayerController _instance;
-
+    IngameSceneEventHandler eventHandler;
     public static PlayerController Instance {
         get {
             if (_instance == null) {
