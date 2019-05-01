@@ -23,6 +23,8 @@ public class IngameBuilding : SkyNet {
         GiveExp();
 
         SkeletonAnimation ani = GetComponent<SkeletonAnimation>();
+        if (ani == null) return;
+
         ani.skeletonDataAsset = IngameHpSystem.Instance.wreckSpine;
         Spine.Animation[] items = ani.skeletonDataAsset.GetSkeletonData(false).Animations.Items;
 

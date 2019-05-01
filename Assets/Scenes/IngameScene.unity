@@ -1847,7 +1847,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
 --- !u!222 &275560809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10163,7 +10163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1355877760
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11631,7 +11631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1621379210
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14013,9 +14013,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: [{fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3,
-        type: 2}, {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629,
-        type: 2}]
+    ReferencedUnityObjects:
+    - {fileID: 1569794317466014, guid: 817a63628bef2426bbb418bf50f74bb3, type: 2}
+    - {fileID: 1569794317466014, guid: d98cea5a7a1534c2aa711576f568d629, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
