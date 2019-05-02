@@ -209,7 +209,7 @@ public partial class HeroAI : UnitAI {
         HeroAI heroAI = unit.GetMyHeroAI();
         if(heroAI == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
-            if (fightHeroes[i].gameObject == null || fightHeroes[i].gameObject == unit.gameObject) return;
+            if (fightHeroes[i] == null || fightHeroes[i].gameObject == unit.gameObject) return;
         fightHeroes.Add(heroAI);
     }
 
