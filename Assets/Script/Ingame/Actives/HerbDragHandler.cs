@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI.Extensions;
 
@@ -26,6 +27,15 @@ public class HerbDragHandler : SpellCardDragHandler {
         ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
         coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
         coolComp.coolTime = coolTime;
+
+        ConditionSet expSet = PlayerController.Instance
+            .MissionConditionsController()
+            .conditions.Find(x => x.condition == Conditions.cooltime_fix);
+        if (expSet != null) {
+            coolComp.coolTime = expSet.args[0];
+            //Debug.Log("Herb CoolTime Fix : " + expSet.args[0]);
+        }
+
         coolComp.behaviour = this;
         coolComp.StartCool();
         GetComponent<SpellCardDragHandler>().enabled = false;
