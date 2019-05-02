@@ -12,6 +12,13 @@ public class HerbDragHandler : SpellCardDragHandler {
 
     public override void OnEndDrag() {
         base.OnEndDrag();
+    }
+
+    public override void OnBeginDrag() {
+        base.OnBeginDrag();
+    }
+
+    public override void SpellActivated() {
         Herb herb = gameObject.AddComponent<Herb>();
         herb.Init(data);
         herb.StartHealing();
@@ -22,16 +29,5 @@ public class HerbDragHandler : SpellCardDragHandler {
         coolComp.behaviour = this;
         coolComp.StartCool();
         GetComponent<SpellCardDragHandler>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
-
-        //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
-    }
-
-    public override void OnBeginDrag() {
-        base.OnBeginDrag();
-        //Setting();
-        //GetComponentInChildren<BoundaryCamMove>().isDrag = true;
-        //obj.GetComponent<Herb>().Init(data);
     }
 }

@@ -29,10 +29,20 @@ public class SpellCardDragHandler : MonoBehaviour {
     public virtual void OnEndDrag() {
         Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
         GetComponent<BoundaryCamMove>().isDrag = false;
+
+        if (PlayerController.Instance.deckShuffler().UseCard(targetCard)) {
+            SpellActivated();
+            targetCard.GetComponent<SpellCardHandler>().Handle();
+        }
+        else {
+            targetCard.GetComponent<SpellCardHandler>().Cancel();
+        }
     }
 
+    public virtual void OnDrag() { }
+    public virtual void SpellActivated() { }
+
     void Update() {
-        // Debug.Log(_mouseState);
         if (Input.GetMouseButtonDown(0)) {
             if (Target == GetClickedObject()) {
                 _mouseState = true;
@@ -69,10 +79,6 @@ public class SpellCardDragHandler : MonoBehaviour {
         Debug.Log(target.name);
         IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
         return target;
-    }
-
-    public virtual void OnDrag() {
-        Debug.Log("드래그!!!");
     }
 
     public virtual void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime, GameObject targetCard) {

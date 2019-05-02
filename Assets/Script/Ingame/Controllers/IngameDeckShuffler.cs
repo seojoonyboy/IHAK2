@@ -164,12 +164,12 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         switch (type) {
             case "hero":
                 cost = new Cost();
-                cost.gold = card.data.baseSpec.unit.cost.gold * 10;
+                cost.gold = card.data.baseSpec.unit.cost.gold * 100;
                 cost.population = card.data.baseSpec.unit.cost.population;
                 break;
             case "active":
                 cost = new Cost();
-                cost.gold = card.data.baseSpec.skill.cost.gold * 10;
+                cost.gold = card.data.baseSpec.skill.cost.gold * 100;
                 cost.population = card.data.baseSpec.skill.cost.population;
                 break;
         }
