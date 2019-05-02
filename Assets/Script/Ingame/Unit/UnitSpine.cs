@@ -47,8 +47,8 @@ public class UnitSpine : MonoBehaviour {
         skeleton.SetSkin(skin);
     }
 
-    public void Idle() {
-        if(CheckOverlap(idleAnimationName)) return;
+    public virtual void Idle() {
+        //if(CheckOverlap(idleAnimationName)) return;
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
