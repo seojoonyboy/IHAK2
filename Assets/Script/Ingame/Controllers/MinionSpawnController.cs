@@ -71,10 +71,9 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
         }
     }
-    public void SpawnMinionSquad(ActiveCard heroCard, Transform spawnPos, int robotNum) {
-        int spawnNum = robotNum;
+    public void SpawnMinionSquad(ActiveCard heroCard, Transform spawnPos, int robotMinionNum) {
 
-        for (int i = 0; i < spawnNum; i++) {
+        for (int i = 0; i < robotMinionNum; i++) {
             GameObject minion;
             if (heroCard.baseSpec.unit.minion.type == "melee") {
                 minion = Instantiate(shortDisMinion, spawnPos);
