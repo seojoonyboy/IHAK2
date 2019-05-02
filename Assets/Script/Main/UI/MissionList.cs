@@ -17,6 +17,7 @@ public class MissionList : MonoBehaviour {
     public int selectMissionNum = -1;
     public AccountManager accountManager;
     public GameObject startButton;
+    public GameObject unlockMissionBtn;
 	// Use this for initialization
 	void Start () {
         accountManager = AccountManager.Instance;
@@ -85,6 +86,22 @@ public class MissionList : MonoBehaviour {
     public void StartMission() {
         if (selectMissionNum > accountManager.missionClear) return;
         accountManager.RequestMissionDeck(selectMissionNum + 1);
+    }
+
+    public void unlockMission() {
+        if(accountManager.missionClear < 2) {
+            accountManager.missionClear = 3;
+
+            for (int i = 0; i < transform.Find("MissionList").childCount; i++) {
+                missionBtnList.GetChild(i).GetComponent<Image>().sprite = clearSprite;                
+            }
+            missionPivot.position = new Vector3(missionBtnList.GetChild(2).position.x, 50);
+            missionSlider.value = (float)accountManager.missionClear / (missionBtnList.childCount - 1);
+            missionText.text = "미션 3 : 더미도시와 겨루기";
+
+            startButton.GetComponent<Image>().color = Color.white;
+            startButton.transform.Find("Lock").gameObject.SetActive(false);
+        }
     }
 
 
