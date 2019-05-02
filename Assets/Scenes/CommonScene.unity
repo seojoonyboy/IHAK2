@@ -4147,6 +4147,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114106502685654768, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
+      propertyPath: typeImages.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114106502685654768, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
       propertyPath: primal_unit_cardImages.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -4229,6 +4234,18 @@ Prefab:
       propertyPath: primal_unit_cardImages.Array.data[2]
       value: 
       objectReference: {fileID: 21300028, guid: 471cca83cf83b5f4d906b80b3c23b6fc,
+        type: 3}
+    - target: {fileID: 114106502685654768, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: typeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300020, guid: 471cca83cf83b5f4d906b80b3c23b6fc,
+        type: 3}
+    - target: {fileID: 114106502685654768, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: typeImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300022, guid: 471cca83cf83b5f4d906b80b3c23b6fc,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}

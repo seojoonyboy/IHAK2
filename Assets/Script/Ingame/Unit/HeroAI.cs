@@ -16,8 +16,12 @@ public partial class HeroAI : UnitAI {
     [SerializeField] public ActiveCard unitCard;
     private List<HeroAI> fightHeroes;
     IEnumerator coroutine;
+    float bonusStat = 1.0f;
 
     public override void Init(object card) {
+        ConditionSet missionStat = PlayerController.Instance.MissionConditionsController().oppenentConditions.Find(x => x.condition == Conditions.hero_buff);
+        if (missionStat != null && gameObject.layer == 11)
+            bonusStat = (float)missionStat.args[0] / 100;
         healthBar = transform.Find("UnitBar/HP");
         expBar = transform.Find("UnitBar/Exp");
         cooltimeBar = transform.Find("UnitBar/SkillCool");
@@ -56,8 +60,7 @@ public partial class HeroAI : UnitAI {
         moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
-        power = unit.attackPower;
-        if (gameObject.layer == 11) power = power * 1.5f;
+        power = Mathf.RoundToInt(unit.attackPower * bonusStat);
         power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
@@ -78,6 +81,11 @@ public partial class HeroAI : UnitAI {
                 healthSlider.value = HP;
                 healthSlider.maxValue = MaxHealth;
 
+                unitCard
+                    .gameObject.transform.Find("MinionInfo/DivideIcon/CurrentMinion")
+                    .GetComponent<Text>().text = transform
+                    .parent.GetComponent<UnitGroup>()
+                    .currentMinionNum.ToString();
                 //Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);
@@ -107,10 +115,12 @@ public partial class HeroAI : UnitAI {
     }
 
     public void ExpGain(int exp) {
-        if (gameObject.layer == 11) exp = Mathf.RoundToInt(exp * 0.7f);
-        ConditionSet expSet = playerController.MissionConditionsController().conditions.Find(x => x.condition == Conditions.exp_add);
+        ConditionSet expSet = PlayerController.Instance.MissionConditionsController().conditions.Find(x => x.condition == Conditions.exp_add);
+        if(expSet == null)
+            expSet = PlayerController.Instance.MissionConditionsController().oppenentConditions.Find(x => x.condition == Conditions.exp_add);
+
         if (expSet != null) {
-            int percentage = expSet.args[0];
+            int percentage = expSet.args[0] / 100;
             exp += exp * percentage;
             //Debug.Log("영웅 경험치 보정 : " + percentage);
         }
@@ -182,9 +192,7 @@ public partial class HeroAI : UnitAI {
     }
 
     private void SetMaxHP() {
-        MaxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
-        if (gameObject.layer == 11)
-            MaxHealth = MaxHealth * 1.5f;
+        MaxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint) * bonusStat;
     }
 
     public override void Die() {
