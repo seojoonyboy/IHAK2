@@ -13,7 +13,8 @@ namespace Container {
         
         public int maxhp;
 
-        void Start() {
+        IEnumerator Start() {
+            yield return new WaitForSeconds(1.0f);
             Debug.Log("시작 시민과 골드 보정");
             Gold = 300;
             Citizen = 300;
