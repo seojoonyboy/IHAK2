@@ -356,7 +356,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
         while (true) {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.1f);
             int heroIndex = UnityEngine.Random.Range(0, 4);
             if (!spawnCool[heroIndex]) {
                 if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
