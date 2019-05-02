@@ -93,6 +93,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             healthSlider.value = healthSlider.maxValue = unit.hitPoint;
 
             card.transform.Find("MinionInfo/DivideIcon/MaxMinion").GetComponent<Text>().text = unit.minion.count.ToString();
+            card.transform.Find("Type").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetTypeImage(null, unit.attackType);
 
             heroCards.Add(card);
 

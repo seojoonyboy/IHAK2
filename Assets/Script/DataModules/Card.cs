@@ -28,6 +28,7 @@ namespace DataModules {
         public Cost cost;
         public int coolTime;
         public int size;
+        public string attackType;
         public int attackPower;
         public float attackSpeed;
         public float defence;
