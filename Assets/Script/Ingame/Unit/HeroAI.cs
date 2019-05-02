@@ -78,6 +78,11 @@ public partial class HeroAI : UnitAI {
                 healthSlider.value = HP;
                 healthSlider.maxValue = MaxHealth;
 
+                unitCard
+                    .gameObject.transform.Find("MinionInfo/DivideIcon/CurrentMinion")
+                    .GetComponent<Text>().text = transform
+                    .parent.GetComponent<UnitGroup>()
+                    .currentMinionNum.ToString();
                 //Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);

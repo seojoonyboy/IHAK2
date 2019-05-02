@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class CardImages : MonoBehaviour {
     public Sprite[]
         primal_unit_cardImages,
-        primal_spell_cardImages;
+        primal_spell_cardImages,
+        typeImages;
 
     public Sprite defaultImage;
 
@@ -27,6 +28,15 @@ public class CardImages : MonoBehaviour {
                     }
                 }
                 break;
+        }
+        return defaultImage;
+    }
+
+    public Sprite GetTypeImage(string race, string type) {
+        foreach(Sprite sprite in typeImages) {
+            if(sprite.name == type) {
+                return sprite;
+            }
         }
         return defaultImage;
     }

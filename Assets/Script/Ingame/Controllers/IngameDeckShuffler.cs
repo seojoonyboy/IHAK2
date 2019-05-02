@@ -92,6 +92,8 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             Slider healthSlider = card.transform.Find("Health").GetComponent<Slider>();
             healthSlider.value = healthSlider.maxValue = unit.hitPoint;
 
+            card.transform.Find("MinionInfo/DivideIcon/MaxMinion").GetComponent<Text>().text = unit.minion.count.ToString();
+
             heroCards.Add(card);
 
             card.AddComponent<Index>().Id = index;
