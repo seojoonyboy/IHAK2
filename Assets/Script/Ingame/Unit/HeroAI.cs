@@ -72,14 +72,10 @@ public partial class HeroAI : UnitAI {
     IEnumerator UpdateInfoCard() {
         while (true) {
             if(unitCard.gameObject != null) {
-                Slider healthSlider = unitCard.gameObject.transform.Find("Stats/Health").GetComponent<Slider>();
-                Slider expSlider = unitCard.gameObject.transform.Find("Stats/Exp").GetComponent<Slider>();
-
+                Slider healthSlider = unitCard.gameObject.transform.Find("Health").GetComponent<Slider>();
+                
                 healthSlider.value = HP;
                 healthSlider.maxValue = MaxHealth;
-
-                expSlider.value = unitCard.ev.exp;
-                expSlider.maxValue = ExpNeed();
 
                 //Debug.Log("HP : " + health);
             }
@@ -131,11 +127,8 @@ public partial class HeroAI : UnitAI {
         ChangeStat();
 
         if(unitCard.gameObject == null) return;
-        Text cardLvText = unitCard.gameObject.transform.Find("Lv").GetComponent<Text>();
-        cardLvText.text = "Lv. " + unitCard.ev.lv;
-
-        Text atk = unitCard.gameObject.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>();
-        atk.text = "+ " + power;
+        Text cardLvText = unitCard.gameObject.transform.Find("Level/Value").GetComponent<Text>();
+        cardLvText.text = unitCard.ev.lv.ToString();
     }
 
     private void ChangeStat() {

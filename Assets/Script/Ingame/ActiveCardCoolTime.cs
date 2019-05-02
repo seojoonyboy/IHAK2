@@ -14,6 +14,10 @@ public class ActiveCardCoolTime : CoolTime {
         deactive.SetActive(true);
         Image image = deactive.GetComponent<Image>();
         image.fillAmount = 1 - currTime / coolTime;
+
+        if(targetCard.GetComponent<ActiveCardInfo>().data.type == "hero") {
+            targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = (coolTime - currTime).ToString();
+        }
     }
 
     public override void OnTime() {
@@ -23,6 +27,9 @@ public class ActiveCardCoolTime : CoolTime {
         image.fillAmount = 1;
         deactive.SetActive(false);
 
+        if (targetCard.GetComponent<ActiveCardInfo>().data.type == "hero") {
+            targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = "00";
+        }
         Destroy(GetComponent<ActiveCardCoolTime>());
     }
 }
