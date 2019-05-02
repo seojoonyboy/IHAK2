@@ -86,7 +86,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     private void Start() {
         nodeParent = GameObject.Find("Nodes").transform;
-        StartCoroutine(Stage2AI());
+        if(AccountManager.Instance.mission.stageNum == 2)
+            StartCoroutine(Stage2AI());
     }
 
     private void GetDeckDetailRequest(GameObject ld) {
@@ -225,14 +226,19 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
 //AI 시나리오
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
+    [Header(" - MissionData")]
     [SerializeField] Transform nodeParent;
 
     bool mision2on = true;
+    bool mision3on = true;
     UnitGroup racanRobot;
     UnitGroup wimpRobot;
 
     List<Vector3> racanPath = new List<Vector3>();
     List<Vector3> wimpPath = new List<Vector3>();
+}
+
+    public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     IEnumerator Stage2AI() {
         yield return new WaitForSeconds(5.0f);
@@ -313,6 +319,32 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             }
         }
         return false;
+    }
+
+}
+
+
+public partial class EnemyPlayerController : SerializedMonoBehaviour {
+
+
+    IEnumerator Stage3AI() {
+        yield return new WaitForSeconds(5.0f);
+        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+        racanRobot = summonParent.GetChild(6).GetComponent<UnitGroup>();
+        StartCoroutine(RacanDetector());
+        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+        wimpRobot = summonParent.GetChild(7).GetComponent<UnitGroup>();
+        StartCoroutine(WimpDetector());
+        StartCoroutine(RexDetector());
+        StartCoroutine(StationDetector());
+
+        yield return new WaitForSeconds(2.0f);
+        racanPath.Add(nodeParent.Find("S12").transform.position);
+        racanPath.Add(nodeParent.Find("S20").transform.position);
+        wimpPath.Add(nodeParent.Find("S12").transform.position);
+        wimpPath.Add(nodeParent.Find("S00").transform.position);
+        racanRobot.SetMove(racanPath);
+        wimpRobot.SetMove(wimpPath);
     }
 
 }

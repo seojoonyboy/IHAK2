@@ -57,6 +57,7 @@ public partial class HeroAI : UnitAI {
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;
+        if (gameObject.layer == 11) power = power * 1.5f;
         power = PowerUP(power);
         unitCard.ev = new Ev() { lv = level };
         SetMaxHP();
@@ -106,6 +107,7 @@ public partial class HeroAI : UnitAI {
     }
 
     public void ExpGain(int exp) {
+        if (gameObject.layer == 11) exp = Mathf.RoundToInt(exp * 0.7f);
         ConditionSet expSet = playerController.MissionConditionsController().conditions.Find(x => x.condition == Conditions.exp_add);
         if (expSet != null) {
             int percentage = expSet.args[0];
@@ -181,6 +183,8 @@ public partial class HeroAI : UnitAI {
 
     private void SetMaxHP() {
         MaxHealth = PowerUP((float)unitCard.baseSpec.unit.hitPoint);
+        if (gameObject.layer == 11)
+            MaxHealth = MaxHealth * 1.5f;
     }
 
     public override void Die() {
