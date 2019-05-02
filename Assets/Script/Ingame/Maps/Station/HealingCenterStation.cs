@@ -50,7 +50,8 @@ public partial class HealingCenterStation : DefaultStation {
                 healingTarget.Clear();
                 GetComponent<Collider2D>().enabled = true;
                 startSeize = false;
-                IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
+                if (OwnerNum == PlayerController.Player.PLAYER_1)
+                    IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
             }
             if (healingTarget.Count > 0) startSeize = false;
             yield return new WaitForSeconds(0.1f);
