@@ -341,8 +341,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
     [SerializeField] [ReadOnly] private int aiMana = 0;
     [SerializeField] [ReadOnly] private int aiCitizen = 5;
-    bool[] swapnCool = new bool[4];
-    IEnumerator[] m3unitCtrl = new IEnumerator[4];
+    bool[] spawnCool = new bool[4];
 
     public int AiCitizen {
         get { return aiCitizen; }
@@ -350,20 +349,16 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     IEnumerator Stage3AI() {
-        for (int i = 0; i < 4; i++) swapnCool[i] = false;
+        for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-        m3unitCtrl[0] = RacanAI();
-        m3unitCtrl[1] = WimpAI();
-        m3unitCtrl[2] = ShellAI();
-        m3unitCtrl[3] = RexAI();
+
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
         while (true) {
             yield return new WaitForSeconds(1.0f);
             int heroIndex = UnityEngine.Random.Range(0, 4);
-            Debug.Log(heroIndex);
-            if (!swapnCool[heroIndex]) {
+            if (!spawnCool[heroIndex]) {
                 if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
                     aiMana -= (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold;
                     int spwanCitizen = 0;
@@ -376,13 +371,29 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                     HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex], null, spwanCitizen);
                     groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
                     groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
-                    swapnCool[heroIndex] = true;
-                    StartCoroutine(m3unitCtrl[heroIndex]);
+                    spawnCool[heroIndex] = true;
+                    StartUnitCoroutine(heroIndex);
                 }
             }
             if (!mission3on) break;
         }
+    }
 
+    private void StartUnitCoroutine(int unitNum) {
+        switch (unitNum) {
+            case 0:
+                StartCoroutine(RacanAI());
+                break;
+            case 1:
+                StartCoroutine(WimpAI());
+                break;
+            case 2:
+                StartCoroutine(ShellAI());
+                break;
+            case 3:
+                StartCoroutine(RexAI());
+                break;
+        }
     }
 
     IEnumerator ProduceMana() {
@@ -426,9 +437,11 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             if (!mission3on) break;
             if (groups[0] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0].baseSpec.unit.coolTime);
+                spawnCool[0] = false;
                 break;
             }
-            SetPath(0);
+            if(groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(0);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -437,9 +450,11 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             if (!mission3on) break;
             if (groups[1] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1].baseSpec.unit.coolTime);
+                spawnCool[1] = false;
                 break;
             }
-            SetPath(1);
+            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(1);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -448,9 +463,11 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             if (!mission3on) break;
             if (groups[2] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2].baseSpec.unit.coolTime);
+                spawnCool[2] = false;
                 break;
             }
-            SetPath(2);
+            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(2);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -459,9 +476,11 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
             if (!mission3on) break;
             if (groups[3] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[3].baseSpec.unit.coolTime);
+                spawnCool[3] = false;
                 break;
             }
-            SetPath(3);
+            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(3);
             yield return new WaitForSeconds(0.1f);
         }
     }
