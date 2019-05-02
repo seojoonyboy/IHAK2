@@ -16,7 +16,7 @@ public class ActiveCardCoolTime : CoolTime {
         image.fillAmount = 1 - currTime / coolTime;
 
         if(targetCard.GetComponent<ActiveCardInfo>().data.type == "hero") {
-            targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = (coolTime - currTime).ToString();
+            targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = ((int)(coolTime - currTime)).ToString();
         }
     }
 
