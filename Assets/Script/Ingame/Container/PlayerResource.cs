@@ -13,6 +13,12 @@ namespace Container {
         
         public int maxhp;
 
+        void Start() {
+            Debug.Log("시작 시민과 골드 보정");
+            Gold = 300;
+            Citizen = 300;
+        }
+
         public PlayerResource(int gold, int citizen) {
             Gold = gold;
             Citizen = citizen;
