@@ -62,6 +62,7 @@ public partial class BaseCampStation : DefaultStation {
             GetComponent<Collider2D>().enabled = true;
             StartCoroutine(RebuildTower());
             startSeize = false;
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
         }
     }
 
