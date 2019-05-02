@@ -82,21 +82,14 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             GameObject card = Instantiate(unitCardPref, heroCardParent);
             card.GetComponent<Toggle>().group = card.transform.parent.parent.GetComponent<ToggleGroup>();
 
-            card.transform.Find("Name").GetComponent<Text>().text = unit.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = unitCard;
-            card.transform.Find("Portrait").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.name);
+            card.transform.Find("InnerBg/Portrait").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "unit", unit.id);
 
-            //if (unit.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = unit.cost.food.ToString();
-            card.transform.Find("Header/Bg/Value").GetComponent<Text>().text = "<color=yellow>" + (int)unit.cost.gold + "</color><color=#0DBBFF>" + "/0</color>";
-            card.transform.Find("Specs/Base/Atk/Value").GetComponent<Text>().text = "+ " + unit.attackPower;
-            card.transform.Find("Specs/Base/Def/Value").GetComponent<Text>().text = "+ " + unit.defence;
-            card.transform.Find("Specs/Skills/Skill_A/Text").GetComponent<Text>().text = unit.skill.name;
-            
-            //card.transform.Find("Tier/Value").GetComponent<Text>().text = unit.tierNeed.ToString();
-            Slider healthSlider = card.transform.Find("Stats/Health").GetComponent<Slider>();
-            Slider ExpSlider = card.transform.Find("Stats/Exp").GetComponent<Slider>();
+            int cost = (int)unit.cost.gold;
+            card.transform.Find("Cost/Value").GetComponent<Text>().text = cost.ToString();
 
+            Slider healthSlider = card.transform.Find("Health").GetComponent<Slider>();
             healthSlider.value = healthSlider.maxValue = unit.hitPoint;
 
             heroCards.Add(card);
@@ -144,6 +137,8 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
                         activeCard.data.baseSpec.unit.hitPoint += Mathf.RoundToInt(effectModules["Unit_health"]);
                     }
                     playerController.HeroSummon(activeCard.data, selectedObject);
+
+                    selectedObject.transform.Find("Cost").gameObject.SetActive(false);
                     break;
                 //마법 주문 카드는 사용시 다시 덱에 들어감.
                 case "active":

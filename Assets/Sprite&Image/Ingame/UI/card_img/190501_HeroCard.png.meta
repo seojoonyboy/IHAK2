@@ -1,25 +1,22 @@
 fileFormatVersion: 2
-guid: b2d493b3ccbd70e4da9bbd3536d824db
+guid: 471cca83cf83b5f4d906b80b3c23b6fc
 TextureImporter:
   fileIDToRecycleName:
-    21300000: 190501_IngameUI_PlayerHP_BG
-    21300002: 190501_IngameUI_EnemyHP_BG
-    21300004: 190501_IngameUI_Opton
-    21300006: 190501_IngameUI_HpBar_VS
-    21300008: 190501_IngameUI_Spell_Btn
-    21300010: 190501_IngameUI_HpBar_Player
-    21300012: 190501_IngameUI_HpBar_Enemy
-    21300014: 190501_IngameUI_Spell_Bottom
-    21300016: 190501_IngameUI_Spell_Mana
-    21300018: 190501_IngameUI_Spell_ManaImg
-    21300020: 190501_IngameUI_Mana_BG
-    21300022: 190501_IngameUI_Mana_Bar
-    21300024: 190501_IngameUI_Citizen_Img
-    21300026: 190501_IngameUI_Citizen_BG
-    21300028: 190501_IngameUI_ItemSlot
-    21300030: 190501_IngameUI_0
-    21300032: draft_cardImg
-    21300034: draft_cooltime
+    21300000: Cost
+    21300002: Population_blue
+    21300004: Population_red
+    21300006: Bg_lv
+    21300008: Bg_base
+    21300010: Bg_n_hc_01001
+    21300012: Bg_n_hc_02001
+    21300014: Bg_n_hc_03002
+    21300016: Hp_bg
+    21300018: Hp_value
+    21300020: Type_warrior
+    21300022: Type_magician
+    21300024: n_hc_01001
+    21300026: n_hc_02001
+    21300028: n_hc_03002
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -113,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 190501_IngameUI_PlayerHP_BG
+      name: Cost
       rect:
         serializedVersion: 2
-        x: 130
-        y: 884
-        width: 350
-        height: 120
+        x: 102
+        y: 579
+        width: 38
+        height: 44
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,19 +124,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5439c4cb98de3bf43871cabfb677e4fa
+      spriteID: e13d48f9877c500499ee7be980e1bc9e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_EnemyHP_BG
+      name: Population_blue
       rect:
         serializedVersion: 2
-        x: 553
-        y: 884
-        width: 350
-        height: 120
+        x: 99
+        y: 514
+        width: 41
+        height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,19 +144,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0dc208e4c5d43c945aa77ec1fcdcc8c8
+      spriteID: a720a4821d771524abbe8f827c86fb78
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Opton
+      name: Population_red
       rect:
         serializedVersion: 2
-        x: 1882
-        y: 917
-        width: 76
-        height: 77
+        x: 156
+        y: 513
+        width: 41
+        height: 39
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,118 +164,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eece14d05d81b024199375fd955bed12
+      spriteID: 3d65a829c86ef9b4cab87a1ef531f211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_HpBar_VS
+      name: Bg_lv
       rect:
         serializedVersion: 2
-        x: 433
-        y: 772
-        width: 175
-        height: 88
+        x: 206
+        y: 434
+        width: 55
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 8, y: 8, z: 8, w: 8}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 764e9b5415903a3438eaca83d805b50a
+      spriteID: e8c4da5a67c8f7945b57abb5755044e5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Spell_Btn
+      name: Bg_base
       rect:
         serializedVersion: 2
-        x: 1305
-        y: 756
-        width: 97
-        height: 97
+        x: 321
+        y: 281
+        width: 179
+        height: 192
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 25, y: 25, z: 25, w: 25}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4a134a3e6242fd42a458bf97623b384
+      spriteID: 4b82319b9e47c9241bf6dcfe3897baab
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_HpBar_Player
+      name: Bg_n_hc_01001
       rect:
         serializedVersion: 2
-        x: 146
-        y: 711
-        width: 315
-        height: 33
+        x: 561
+        y: 311
+        width: 147
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 15, y: 15, z: 15, w: 15}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28f218eda00e65a40b492ec7e47afd41
+      spriteID: 42e844c20aab2f948b689494d37d07f1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_HpBar_Enemy
+      name: Bg_n_hc_02001
       rect:
         serializedVersion: 2
-        x: 568
-        y: 711
-        width: 314
-        height: 32
+        x: 756
+        y: 311
+        width: 146
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 15, y: 15, z: 15, w: 15}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ef4d8d3f2411d24ca62eb27edebcbeb
+      spriteID: 0d7d3392d6b840847a4e1f66cc2cfeaa
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Spell_Bottom
+      name: Bg_n_hc_03002
       rect:
         serializedVersion: 2
-        x: 1307
-        y: 695
-        width: 94
-        height: 41
+        x: 947
+        y: 311
+        width: 147
+        height: 160
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 15, y: 15, z: 15, w: 15}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1abbbb49b28355438186a16c6851eb8
+      spriteID: c8a91dd5ed440ee4da7e32d4b3e1b3ca
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Spell_Mana
+      name: Hp_bg
       rect:
         serializedVersion: 2
-        x: 1329
-        y: 669
-        width: 14
+        x: 112
+        y: 376
+        width: 147
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -287,19 +284,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e942ecef1eeaea4489935c3597962bac
+      spriteID: d3af701f446c01142a09e996c8e62c69
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Spell_ManaImg
+      name: Hp_value
       rect:
         serializedVersion: 2
-        x: 1004
-        y: 540
-        width: 120
-        height: 124
+        x: 112
+        y: 312
+        width: 147
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,19 +304,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9dad0cd40bfa3746932474ac9e5467f
+      spriteID: 9a3c50b29cac28544a97ef1881937ebd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Mana_BG
+      name: Type_warrior
       rect:
         serializedVersion: 2
-        x: 1133
-        y: 569
-        width: 632
-        height: 63
+        x: 100
+        y: 203
+        width: 49
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -327,19 +324,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acd7f7164dcf12f4c82b564bf217c543
+      spriteID: 02633ed6d3005084d86870ffa11fe128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Mana_Bar
+      name: Type_magician
       rect:
         serializedVersion: 2
-        x: 1148
-        y: 430
-        width: 603
-        height: 34
+        x: 177
+        y: 204
+        width: 47
+        height: 50
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -347,19 +344,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f16ad0be5a564ff4086775c71993f2da
+      spriteID: 7fbd9986df4f08541a6b5a3f53ea1966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Citizen_Img
+      name: n_hc_01001
       rect:
         serializedVersion: 2
-        x: 1928
-        y: 376
-        width: 76
-        height: 100
+        x: 563
+        y: 85
+        width: 145
+        height: 157
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,19 +364,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dc9488ea8f8cbc488b1da4659605f24
+      spriteID: 471124a4da9c4764f8352311ad42ac0c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_Citizen_BG
+      name: n_hc_02001
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 275
-        width: 210
-        height: 95
+        x: 755
+        y: 84
+        width: 145
+        height: 156
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -387,19 +384,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86c31807197b1c9459fa793771752055
+      spriteID: 9f09f19bdd4df974cb1234db02e2b22a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 190501_IngameUI_ItemSlot
+      name: n_hc_03002
       rect:
         serializedVersion: 2
-        x: 1916
-        y: 120
-        width: 110
-        height: 108
+        x: 949
+        y: 84
+        width: 143
+        height: 157
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -407,67 +404,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f5847edf3bc1e5409051db2f8270cc6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 190501_IngameUI_0
-      rect:
-        serializedVersion: 2
-        x: 1409
-        y: 275
-        width: 8
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 049c412657dc0974aac779091b98b1a3
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: draft_cardImg
-      rect:
-        serializedVersion: 2
-        x: 321
-        y: 96
-        width: 173
-        height: 185
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ede2ae3b285ae1418b0df45ff016832
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: draft_cooltime
-      rect:
-        serializedVersion: 2
-        x: 1226
-        y: 118
-        width: 68
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1b527f333b05ef24d9eadb8f3f2d152a
+      spriteID: 24c21d848acf4c447b2f49a165e33f6c
       vertices: []
       indices: 
       edges: []
@@ -475,7 +412,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 13f59172f44f3074f90038ad22510f3b
+    spriteID: ba96ab7336aec394da84c522c00c10eb
     vertices: []
     indices: 
     edges: []
