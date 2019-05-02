@@ -54,7 +54,7 @@ public class MissionManager : SerializedMonoBehaviour {
         }
         else if (stageNum == 2 && count < 2) {
             count++;
-            if (count >= 2)
+            if (count == 2)
                 eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "2-3");
 
         }

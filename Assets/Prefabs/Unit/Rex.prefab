@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 50790466705561782}
   - component: {fileID: 114355063108995748}
   m_Layer: 10
-  m_Name: Wimp
+  m_Name: Rex
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,7 +470,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 7b609aeddb1d9438dac9d3b2b2bc2c8e, type: 2}
+  - {fileID: 2100000, guid: 26eeb89c3e9dd491c8fd1c4f149d0387, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: b87c1c6241fff440ea15bb8213fb0f14, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cb70953cf58c641adb7f5f0c8ccac10a, type: 2}
   initialSkinName: 2.blue
   initialFlipX: 0
   initialFlipY: 0
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runAnimationName: 2.move
-  idleAnimationName: 1.waitting
+  idleAnimationName: 1.idle
   attackAnimationName: 3.attack
   skillAnimationName: 4.skill
   skinBlueSkull: 2.blue
