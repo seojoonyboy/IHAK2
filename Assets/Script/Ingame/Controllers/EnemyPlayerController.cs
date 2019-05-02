@@ -86,8 +86,16 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     private void Start() {
         nodeParent = GameObject.Find("Nodes").transform;
-        if(AccountManager.Instance.mission.stageNum == 2)
-            StartCoroutine(Stage2AI());
+        switch (AccountManager.Instance.mission.stageNum) {
+            case 1:
+                StartCoroutine(Stage2AI());
+                break;
+            case 2:
+                StartCoroutine(Stage3AI());
+                break;
+            default:
+                break;
+        }
     }
 
     private void GetDeckDetailRequest(GameObject ld) {
@@ -224,7 +232,6 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
 }
 
-//AI 시나리오
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
     [Header(" - MissionData")]
     [SerializeField] Transform nodeParent;
@@ -233,9 +240,13 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     bool mision3on = true;
     UnitGroup racanRobot;
     UnitGroup wimpRobot;
+    UnitGroup rexRobot;
+    UnitGroup shellRobot;
 
     List<Vector3> racanPath = new List<Vector3>();
     List<Vector3> wimpPath = new List<Vector3>();
+    List<Vector3> rexPath = new List<Vector3>();
+    List<Vector3> shellPath = new List<Vector3>();
 }
 
     public partial class EnemyPlayerController : SerializedMonoBehaviour {
@@ -325,26 +336,21 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
-
+    private int aiMana = 0;
+    private int aiCitizen = 0;
 
     IEnumerator Stage3AI() {
-        yield return new WaitForSeconds(5.0f);
-        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
-        racanRobot = summonParent.GetChild(6).GetComponent<UnitGroup>();
-        StartCoroutine(RacanDetector());
-        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
-        wimpRobot = summonParent.GetChild(7).GetComponent<UnitGroup>();
-        StartCoroutine(WimpDetector());
-        StartCoroutine(RexDetector());
-        StartCoroutine(StationDetector());
+        yield return new WaitForSeconds(0.1f);
+    }
 
+    IEnumerator ProduceMana() {
         yield return new WaitForSeconds(2.0f);
-        racanPath.Add(nodeParent.Find("S12").transform.position);
-        racanPath.Add(nodeParent.Find("S20").transform.position);
-        wimpPath.Add(nodeParent.Find("S12").transform.position);
-        wimpPath.Add(nodeParent.Find("S00").transform.position);
-        racanRobot.SetMove(racanPath);
-        wimpRobot.SetMove(wimpPath);
+        if (aiMana < 10) aiMana++;
+    }
+
+    IEnumerator ProduceCitizen() {
+        yield return new WaitForSeconds(12.5f);
+        if (aiMana < 10) aiCitizen++;
     }
 
 }

@@ -12,8 +12,8 @@ TextureImporter:
     21300014: Bg_n_hc_03002
     21300016: Hp_bg
     21300018: Hp_value
-    21300020: Type_warrior
-    21300022: Type_magician
+    21300020: melee
+    21300022: range
     21300024: n_hc_01001
     21300026: n_hc_02001
     21300028: n_hc_03002
@@ -310,7 +310,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Type_warrior
+      name: melee
       rect:
         serializedVersion: 2
         x: 100
@@ -330,7 +330,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Type_magician
+      name: range
       rect:
         serializedVersion: 2
         x: 177
