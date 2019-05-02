@@ -7,10 +7,6 @@ public class HerbDragHandler : SpellCardDragHandler {
         //base.MoveBlock();
     }
 
-    public override void OnDrag() {
-        base.OnDrag();
-    }
-
     public override void OnEndDrag() {
         base.OnEndDrag();
     }
@@ -39,5 +35,7 @@ public class HerbDragHandler : SpellCardDragHandler {
         coolComp.behaviour = this;
         coolComp.StartCool();
         GetComponent<SpellCardDragHandler>().enabled = false;
+
+        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
     }
 }
