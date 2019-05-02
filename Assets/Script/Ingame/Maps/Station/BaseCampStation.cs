@@ -105,6 +105,13 @@ public partial class BaseCampStation {
         foreach(DataModules.MonsterData monsterData in creeps) {
             if(monsterData.creep.id == "npc_monster_01001") {
                 int monsterCount = monsterData.count;
+                ConditionSet expSet = PlayerController.Instance
+                    .MissionConditionsController()
+                    .conditions.Find(x => x.condition == Conditions.geojeom_monster_count);
+                if (expSet != null) {
+                    monsterCount = 0;
+                }
+
                 for (int i = 0; i < monsterCount; i++) {
                     GameObject generateMonster = Instantiate(goblin, monsterParent);
                     generateMonster.transform.position = transform.GetChild(1).GetChild(i).position;
