@@ -145,7 +145,7 @@ public partial class BaseCampStation : DefaultStation {
             }
         }
 
-        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
             collision.gameObject.AddComponent<RespawnMinion>();
         }
     }
@@ -163,7 +163,7 @@ public partial class BaseCampStation : DefaultStation {
             }
         }
 
-        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(0).gameObject.layer == (int)OwnerNum)) {
+        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
             Destroy(collision.gameObject.GetComponent<RespawnMinion>());
         }
     }    
