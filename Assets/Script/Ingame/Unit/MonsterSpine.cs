@@ -12,4 +12,16 @@ public class MonsterSpine : UnitSpine {
     public override void SetSkin() {
         skeleton.SetColor(Color.gray);
     }
+
+    public override void Move() {
+        if (CheckOverlap(runAnimationName)) return;
+        spineAnimationState.SetAnimation(0, runAnimationName, true);
+        currentAnimationName = runAnimationName;
+    }
+
+    public override void Idle() {
+        if (CheckOverlap(idleAnimationName)) return;
+        spineAnimationState.SetAnimation(0, idleAnimationName, true);
+        currentAnimationName = idleAnimationName;
+    }
 }

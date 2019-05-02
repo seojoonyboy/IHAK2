@@ -20,7 +20,7 @@ public partial class BaseCampStation : DefaultStation {
         GameObject tower = Instantiate(Building, transform);
         tower.layer = 14;
         towerComponent = tower.GetComponent<FowardHQ>();
-        SetMonsters();
+        Invoke("SetMonsters", 3.0f);
     }
 
 
@@ -105,6 +105,16 @@ public partial class BaseCampStation {
         foreach(DataModules.MonsterData monsterData in creeps) {
             if(monsterData.creep.id == "npc_monster_01001") {
                 int monsterCount = monsterData.count;
+                MissionConditionsController mc = GameObject.Find("Controllers").GetComponent<MissionConditionsController>();
+                if(mc.conditions != null) {
+                    ConditionSet expSet = PlayerController.Instance
+                    .MissionConditionsController()
+                    .conditions.Find(x => x.condition == Conditions.geojeom_monster_count);
+                    if (expSet != null) {
+                        monsterCount = 0;
+                    }
+                }
+
                 for (int i = 0; i < monsterCount; i++) {
                     GameObject generateMonster = Instantiate(goblin, monsterParent);
                     generateMonster.transform.position = transform.GetChild(1).GetChild(i).position;

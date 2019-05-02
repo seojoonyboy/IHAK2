@@ -124,6 +124,13 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
             index++;
         }
+
+        spellCards = SpellCardSort();
+        foreach(GameObject card in spellCards) {
+            //ActiveCardInfo info = card.GetComponent<ActiveCardInfo>();
+            //Debug.Log(info.data.baseSpec.skill.cost.gold);
+            card.transform.SetAsLastSibling();
+        }
     }
 
     //card use
@@ -188,6 +195,15 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
         //uint cost = coolTime.cancelCooltimeCost;
 
         //coolTime.OnTime();
+    }
+
+    private List<GameObject> SpellCardSort() {
+        spellCards.Sort(delegate (GameObject x, GameObject y) {
+            if (x.GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost.gold == y.GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost.gold) return 0;
+            else if (x.GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost.gold > y.GetComponent<ActiveCardInfo>().data.baseSpec.skill.cost.gold) return 1;
+            else return -1;
+        });
+        return spellCards;
     }
 }
 

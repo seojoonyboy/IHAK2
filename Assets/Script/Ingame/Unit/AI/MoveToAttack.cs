@@ -20,8 +20,13 @@ namespace AI_submodule {
                     new Vector2(transform.position.x, transform.position.y),
                     target.position,
                     speed * Time.deltaTime
-                );
+                    );
+
+                    stateController.GetComponent<MonsterAI>().monsterSpine.Move();
                 }
+
+                Vector3 direction = target.position - transform.position;
+                GetComponent<MonsterAI>().monsterSpine.SetDirection(direction);
             }
             else {
                 stateController.TransitionToState(stateController.allStates[1]);

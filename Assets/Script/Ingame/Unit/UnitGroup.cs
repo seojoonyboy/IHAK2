@@ -26,6 +26,9 @@ public class UnitGroup : MonoBehaviour {
     public int currentMinionNum {get {return transform.childCount -3;}}
     private string minionType;
 
+    public bool IsMoving { get { return moving; } }
+    public bool Attacking { get { return attacking; } }
+
     private void Start() {
         clickCol = GetComponent<CircleCollider2D>();
         var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));

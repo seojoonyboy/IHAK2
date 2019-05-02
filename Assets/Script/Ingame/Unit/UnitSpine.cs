@@ -13,7 +13,7 @@ public class UnitSpine : MonoBehaviour {
     public string attackAnimationName;
     [SpineAnimation]
     public string skillAnimationName;
-    private string currentAnimationName;
+    protected string currentAnimationName;
     //[SpineAnimation]
     //public string hittedAnimationName;
     private Transform hitEffect;
@@ -23,8 +23,8 @@ public class UnitSpine : MonoBehaviour {
     [SpineSkin]
     public string skinRedSkull;
 
-    private SkeletonAnimation skeletonAnimation;
-    private Spine.AnimationState spineAnimationState;
+    protected SkeletonAnimation skeletonAnimation;
+    protected Spine.AnimationState spineAnimationState;
     protected Skeleton skeleton;
 
     private void Awake() {
@@ -47,13 +47,13 @@ public class UnitSpine : MonoBehaviour {
         skeleton.SetSkin(skin);
     }
 
-    public void Idle() {
+    public virtual void Idle() {
         //if(CheckOverlap(idleAnimationName)) return;
         spineAnimationState.SetAnimation(0, idleAnimationName, true);
         currentAnimationName = idleAnimationName;
     }
 
-    public void Move() {
+    public virtual void Move() {
         if(CheckOverlap(runAnimationName)) return;
         spineAnimationState.SetAnimation(0, runAnimationName, true);
         currentAnimationName = idleAnimationName;
@@ -67,7 +67,7 @@ public class UnitSpine : MonoBehaviour {
         Invoke("Idle", entry.TrackEnd);
     }
 
-    private bool CheckOverlap(string name) {
+    public bool CheckOverlap(string name) {
         if(name.CompareTo(currentAnimationName) == 0) return true;
         return false;
     }

@@ -22,6 +22,16 @@ namespace AI_submodule {
                 patrolTarget,
                 speed * Time.deltaTime
             );
+            float dist = Vector2.Distance(patrolTarget, transform.position);
+            if(dist == 0) {
+                GetComponent<MonsterAI>().monsterSpine.Idle();
+            }
+            else {
+                GetComponent<MonsterAI>().monsterSpine.Move();
+                Vector3 direction = new Vector3(patrolTarget.x, patrolTarget.y, 0) - transform.position;
+                GetComponent<MonsterAI>().monsterSpine.SetDirection(direction);
+            }
+
 
             if (this.time > interval) {
                 patrolTarget = GetPatrolTarget();
