@@ -43,7 +43,6 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
 
     private void Start() {
         PlayerController playerController = PlayerController.Instance;
-        myResource = playerController.playerResource();
 
         playerHQ.gameObject = playerController.maps[PlayerController.Player.PLAYER_1];
         enemyHQ.gameObject = playerController.maps[PlayerController.Player.PLAYER_2];
