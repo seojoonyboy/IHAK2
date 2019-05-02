@@ -71,6 +71,23 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
             minion.GetComponent<MinionAI>().SetMinionData(heroCard);
         }
     }
+    public void SpawnMinionSquad(ActiveCard heroCard, Transform spawnPos, int robotNum) {
+        int spawnNum = robotNum;
+
+        for (int i = 0; i < spawnNum; i++) {
+            GameObject minion;
+            if (heroCard.baseSpec.unit.minion.type == "melee") {
+                minion = Instantiate(shortDisMinion, spawnPos);
+            }
+            else {
+                minion = Instantiate(longDisMinion, spawnPos);
+            }
+            minion.transform.position
+                = new Vector3(spawnPos.position.x + Random.Range(-3.0f, 3.0f), spawnPos.position.y + Random.Range(-3.0f, 3.0f), spawnPos.position.z);
+            minion.layer = 11;
+            minion.GetComponent<MinionAI>().SetMinionData(heroCard);
+        }
+    }
 }
 
 public partial class MinionSpawnController : SerializedMonoBehaviour {

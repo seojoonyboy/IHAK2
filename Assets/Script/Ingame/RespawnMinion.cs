@@ -30,13 +30,26 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
         if (unitGroup.MinionType() == "melee") minion = Instantiate(shortDisMinion, transform);
         else if (unitGroup.MinionType() == "range") minion = Instantiate(longDisMinion, transform);
         else minion = null;
-
         if (minion == null) return;
+
+        if (transform.GetChild(2).gameObject.layer == 11) {
+            EnemyPlayerController epc = GameObject.Find("EnemyPlayerController").GetComponent<EnemyPlayerController>();
+            if(epc.AiCitizen > 1) {
+                ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
+                minion.GetComponent<MinionAI>().SetMinionData(card);
+                minion.layer = transform.GetChild(2).gameObject.layer;
+                minion.transform.position = unitGroup.transform.position;
+                unitGroup.ResetData();
+                minion.GetComponent<UnitAI>().enabled = false;
+            }
+            return;
+        }
+
         if (PlayerController.Instance.playerResource().citizen_readonly >= 100) {
             PlayerController.Instance.transform.GetComponent<Container.PlayerResource>().UseCitizen(1);
             ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
             minion.GetComponent<MinionAI>().SetMinionData(card);
-            minion.layer = transform.GetChild(0).gameObject.layer;
+            minion.layer = transform.GetChild(2).gameObject.layer;
             minion.transform.position = unitGroup.transform.position;
             unitGroup.ResetData();
             minion.GetComponent<UnitAI>().enabled = false;
