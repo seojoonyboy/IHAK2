@@ -4,7 +4,7 @@ using UnityEngine;
 using DataModules;
 using System;
 using System.Text;
-
+using System.Collections;
 
 
 public partial class AccountManager : Singleton<AccountManager> {

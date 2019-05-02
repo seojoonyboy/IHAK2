@@ -124,4 +124,10 @@ public class IngameSceneUIController : MonoBehaviour {
         gsm.startScene(sceneState, GameSceneManager.SceneState.MenuScene);
         IngameScoreManager.Instance.DestroySelf();
     }
+
+    public void NextMissionBtn() {
+        int stage = AccountManager.Instance.mission.stageNum;
+        AccountManager.Instance.StartMission(stage + 1);
+    }
+
 }

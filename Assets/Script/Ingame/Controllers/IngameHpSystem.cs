@@ -79,7 +79,8 @@ public class IngameHpSystem : Singleton<IngameHpSystem> {
                 enemyhpGauge.transform.Find("HpBar").GetComponent<Image>().fillAmount = hp / enemyMaxHp;
                 enemyhpGauge.transform.Find("hpHeader").Find("hpValue").GetComponent<Text>().text = ((int)hp).ToString();
                 if (hp == 0) {
-                    resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);
+                    IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.DESTROYED_ENEMY_CITY, null, null);
+                    resultManager.GameOverWindow(IngameResultManager.GameOverType.WIN);                    
                     Debug.Log("적군 HQ 파괴됨");
                 }
                 break;
