@@ -87,6 +87,10 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     private void Start() {
         nodeParent = GameObject.Find("Nodes").transform;
         groups = new UnitGroup[4];
+        groupPath = new List<Vector3>[4];
+        for(int i = 0; i < 4; i++) {
+            groupPath[i] = new List<Vector3>();
+        }
         switch (AccountManager.Instance.mission.stageNum) {
             case 2:
                 StartCoroutine(Stage2AI());
@@ -244,11 +248,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     bool mission3on = false;
 
     UnitGroup[] groups; //1:라칸, 2:윔프, 3:쉘, 4:렉스 
-
-    List<Vector3> racanPath = new List<Vector3>();
-    List<Vector3> wimpPath = new List<Vector3>();
-    List<Vector3> rexPath = new List<Vector3>();
-    List<Vector3> shellPath = new List<Vector3>();
+    List<Vector3>[] groupPath;
 }
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
@@ -266,12 +266,12 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         StartCoroutine(StationDetector());
 
         yield return new WaitForSeconds(2.0f);
-        racanPath.Add(nodeParent.Find("S12").transform.position);
-        racanPath.Add(nodeParent.Find("S20").transform.position);
-        wimpPath.Add(nodeParent.Find("S12").transform.position);
-        wimpPath.Add(nodeParent.Find("S00").transform.position);
-        groups[0].SetMove(racanPath);
-        groups[1].SetMove(wimpPath);
+        groupPath[0].Add(nodeParent.Find("S12").transform.position);
+        groupPath[0].Add(nodeParent.Find("S20").transform.position);
+        groupPath[1].Add(nodeParent.Find("S12").transform.position);
+        groupPath[1].Add(nodeParent.Find("S00").transform.position);
+        groups[0].SetMove(groupPath[0]);
+        groups[1].SetMove(groupPath[0]);
     }
 
     IEnumerator RacanDetector() {
@@ -283,7 +283,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
                 groups[0] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
                 StartCoroutine(RacanDetector());
-                groups[0].SetMove(racanPath);
+                groups[0].SetMove(groupPath[0]);
                 break;
             }
             yield return new WaitForSeconds(0.1f);
@@ -299,7 +299,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
                 groups[1] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
                 StartCoroutine(WimpDetector());
-                groups[1].SetMove(wimpPath);
+                groups[1].SetMove(groupPath[1]);
                 break;
             }
             yield return new WaitForSeconds(0.1f);
@@ -339,8 +339,9 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
-    private int aiMana = 0;
-    private int aiCitizen = 0;
+    [SerializeField] [ReadOnly] private int aiMana = 0;
+    [SerializeField] [ReadOnly] private int aiCitizen = 5;
+    bool[] swapnCool = new bool[4];
     IEnumerator[] m3unitCtrl = new IEnumerator[4];
 
     public int AiCitizen {
@@ -349,7 +350,9 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     IEnumerator Stage3AI() {
+        for (int i = 0; i < 4; i++) swapnCool[i] = false;
         mission3on = true;
+        nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
         m3unitCtrl[0] = RacanAI();
         m3unitCtrl[1] = WimpAI();
         m3unitCtrl[2] = ShellAI();
@@ -359,70 +362,106 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         while (true) {
             yield return new WaitForSeconds(1.0f);
             int heroIndex = UnityEngine.Random.Range(0, 4);
-            if (groups[heroIndex] == null) {
-                if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold < aiMana) {
+            Debug.Log(heroIndex);
+            if (!swapnCool[heroIndex]) {
+                if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
+                    aiMana -= (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold;
                     int spwanCitizen = 0;
-                    int reqCitizen = (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.population;
+                    int reqCitizen = (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.minion.count;
                     if (reqCitizen > aiCitizen)
                         spwanCitizen = aiCitizen;
                     else
                         spwanCitizen = reqCitizen;
+                    aiCitizen -= spwanCitizen;
                     HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex], null, spwanCitizen);
                     groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                    groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
+                    swapnCool[heroIndex] = true;
                     StartCoroutine(m3unitCtrl[heroIndex]);
                 }
             }
+            if (!mission3on) break;
         }
 
     }
 
     IEnumerator ProduceMana() {
-        yield return new WaitForSeconds(2.0f);
-        if (aiMana < 10) aiMana++;
+        while (true) {
+            if (!mission3on) break;
+            yield return new WaitForSeconds(2.0f);
+            if (aiMana < 10) aiMana++;
+        }
     }
 
     IEnumerator ProduceCitizen() {
-        yield return new WaitForSeconds(12.5f);
-        if (aiMana < 10) aiCitizen++;
+        while (true) {
+            if (!mission3on) break;
+            yield return new WaitForSeconds(12.5f);
+            if (aiMana < 10) aiCitizen++;
+        }
+    }
+
+    private void SetPath(int unitNum) {
+        if (!groups[unitNum].IsMoving && !groups[unitNum].Attacking) {
+            int count = 0;
+            while (true) {
+                MapStation.NodeDirection wayNum = (MapStation.NodeDirection)UnityEngine.Random.Range(0, 8);
+                if (groups[unitNum].currentStation.adjNodes.ContainsKey(wayNum)) {
+                    if (groups[unitNum].currentStation.adjNodes[wayNum].gameObject.GetComponent<DefaultStation>().OwnerNum != PlayerController.Player.PLAYER_2 || count > 100) {
+                        groupPath[unitNum].Add(groups[unitNum].currentStation.transform.position);
+                        groupPath[unitNum].Add(groups[unitNum].currentStation.adjNodes[wayNum].transform.position);
+                        groups[unitNum].SetMove(groupPath[unitNum]);
+                        break;
+                    }
+                    count++;
+                }
+            }
+            return;
+        }
+        else return;
     }
 
     IEnumerator RacanAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[0] == null) break;
-            yield return new WaitForSeconds(0.1f);
-            MapStation.NodeDirection wayNum = (MapStation.NodeDirection)UnityEngine.Random.Range(0, 8);
-            int count = 0;
-            while (true) {
-                if (groups[0].currentStation.adjNodes.ContainsKey(wayNum)) {
-                    if (count < 20 && groups[0].currentStation.adjNodes[wayNum].gameObject.layer != 11) {
-                        racanPath.Add(groups[0].currentStation.transform.position);
-                        racanPath.Add(groups[0].currentStation.adjNodes[wayNum].transform.position);
-                        groups[0].SetMove(racanPath);
-                    }
-                }
-                count++;
+            if (groups[0] == null) {
+                yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0].baseSpec.unit.coolTime);
+                break;
             }
+            SetPath(0);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator WimpAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[1] == null) break;
+            if (groups[1] == null) {
+                yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1].baseSpec.unit.coolTime);
+                break;
+            }
+            SetPath(1);
             yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator ShellAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[2] == null) break;
+            if (groups[2] == null) {
+                yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2].baseSpec.unit.coolTime);
+                break;
+            }
+            SetPath(2);
             yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator RexAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[3] == null) break;
+            if (groups[3] == null) {
+                yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[3].baseSpec.unit.coolTime);
+                break;
+            }
+            SetPath(3);
             yield return new WaitForSeconds(0.1f);
         }
     }
