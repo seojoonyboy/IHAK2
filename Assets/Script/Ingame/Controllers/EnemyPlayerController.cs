@@ -428,7 +428,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0].baseSpec.unit.coolTime);
                 break;
             }
-            SetPath(0);
+            if(groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(0);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -439,7 +440,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1].baseSpec.unit.coolTime);
                 break;
             }
-            SetPath(1);
+            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(1);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -450,7 +452,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2].baseSpec.unit.coolTime);
                 break;
             }
-            SetPath(2);
+            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(2);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -461,7 +464,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[3].baseSpec.unit.coolTime);
                 break;
             }
-            SetPath(3);
+            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                SetPath(3);
             yield return new WaitForSeconds(0.1f);
         }
     }
