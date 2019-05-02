@@ -916,6 +916,7 @@ MonoBehaviour:
         rarity: 0
         coolTime: 0
         size: 0
+        attackType: 
         attackPower: 0
         attackSpeed: 0
         defence: 0
@@ -968,7 +969,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0.5
+  m_padding: 1.319
   m_renderer: {fileID: 23776931483168488}
   m_meshFilter: {fileID: 33537720647995248}
   m_boxCollider: {fileID: 0}
@@ -1209,7 +1210,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212546179239670288
 SpriteRenderer:
@@ -1255,7 +1256,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212556139875478062
 SpriteRenderer:
@@ -1301,7 +1302,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212690343599607002
 SpriteRenderer:
@@ -1347,7 +1348,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212728007670846936
 SpriteRenderer:
@@ -1393,7 +1394,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212812901124656064
 SpriteRenderer:
@@ -1439,7 +1440,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!222 &222165069254508608
 CanvasRenderer:

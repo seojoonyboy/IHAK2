@@ -537,6 +537,7 @@ MonoBehaviour:
     rarity: 0
     coolTime: 0
     size: 1
+    attackType: 
     attackPower: 7
     attackSpeed: 1.2
     defence: 0
@@ -794,7 +795,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212690343599607002
 SpriteRenderer:
@@ -840,7 +841,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!222 &222927666911628658
 CanvasRenderer:
