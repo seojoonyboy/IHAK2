@@ -70,7 +70,10 @@ public class MissionManager : SerializedMonoBehaviour {
     private void DestroyEnemy(Enum Event_Type, Component Sender, object Param) {
         if (stageNum == 1) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-4");
         else if (stageNum == 2) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "2-4");
-        if (stageNum == 3) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "3-1");
+        else if (stageNum == 3) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "3-1");
+
+        if (AccountManager.Instance.missionClear < stageNum) 
+            AccountManager.Instance.missionClear = stageNum;        
     }
 
     private void LevelUP(Enum Event_Type, Component Sender, object Param) {
