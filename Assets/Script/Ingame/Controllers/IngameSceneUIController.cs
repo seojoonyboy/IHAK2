@@ -59,6 +59,7 @@ public class IngameSceneUIController : MonoBehaviour {
         int stageNum = AccountManager.Instance.mission.stageNum;
         switch (stageNum) {
             case 0:
+                break;
             case 1:
                 var values = PlayerController.Instance.gameObject.GetComponent<MissionManager>().stageGoals.missionLists
                     .Where(x => x.Key.StartsWith(stageNum.ToString()))
@@ -78,6 +79,19 @@ public class IngameSceneUIController : MonoBehaviour {
                     .Select(pv => pv.Value);
                 
                 foreach (string value in secondValues) {
+                    GameObject ui = Instantiate(missionGoalUI_prefab, missionGoalUI);
+                    ui.transform.Find("Text").GetComponent<Text>().text = value;
+                    ui.GetComponent<StringIndex>().Id = stageNum + "-" + count;
+                    count++;
+                }
+                break;
+
+            case 3:
+                var thirdValue = PlayerController.Instance.gameObject.GetComponent<MissionManager>().stageGoals.missionLists
+                    .Where(x => x.Key.StartsWith(stageNum.ToString()))
+                    .Select(pv => pv.Value);
+
+                foreach (string value in thirdValue) {
                     GameObject ui = Instantiate(missionGoalUI_prefab, missionGoalUI);
                     ui.transform.Find("Text").GetComponent<Text>().text = value;
                     ui.GetComponent<StringIndex>().Id = stageNum + "-" + count;
