@@ -25,8 +25,7 @@ public class MissionList : MonoBehaviour {
         missionPivot = transform.Find("location");
         missionSlider = transform.Find("missionSlider").GetComponent<Slider>();
         missionText = transform.Find("missionText").GetComponent<Text>();
-        CheckClear();
-        
+        CheckClear();        
     }
 
     

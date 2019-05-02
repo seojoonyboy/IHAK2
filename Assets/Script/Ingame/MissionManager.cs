@@ -73,7 +73,9 @@ public class MissionManager : SerializedMonoBehaviour {
         else if (stageNum == 3) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "3-1");
 
         if (AccountManager.Instance.missionClear < stageNum) 
-            AccountManager.Instance.missionClear = stageNum;        
+            AccountManager.Instance.missionClear = stageNum;
+
+        PlayerPrefs.SetInt("missionClear", stageNum);
     }
 
     private void LevelUP(Enum Event_Type, Component Sender, object Param) {

@@ -146,6 +146,7 @@ public partial class AccountManager : Singleton<AccountManager> {
                 LogoSceneController lgc = FindObjectOfType<LogoSceneController>();
                 lgc.startButton();
                 ConstructManager.Instance.SetAllBuildings();
+                missionClear = PlayerPrefs.GetInt("missionClear");               
             });
         }
         else if (response.responseCode == 404) {
