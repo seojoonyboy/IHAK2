@@ -109,8 +109,8 @@ public partial class HeroAI : UnitAI {
         ConditionSet expSet = playerController.MissionConditionsController().conditions.Find(x => x.condition == Conditions.exp_add);
         if (expSet != null) {
             int percentage = expSet.args[0];
-            exp = 0;
-            //Debug.Log("영웅 경험치 보정");
+            exp += exp * percentage;
+            //Debug.Log("영웅 경험치 보정 : " + percentage);
         }
         unitCard.ev.exp += exp;
         CheckLv();

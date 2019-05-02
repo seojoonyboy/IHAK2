@@ -14,7 +14,7 @@ public class CoolTime : MonoBehaviour {
     }
 
     IEnumerator Cool(float coolTime) {
-        while(currTime < coolTime) {
+        while (currTime < coolTime) {
             currTime += 0.5f;
             Work();
             //Debug.Log("Cool 남은 시간 " + (coolTime - currTime) + "초");

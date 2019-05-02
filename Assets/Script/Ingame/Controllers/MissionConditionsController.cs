@@ -71,5 +71,6 @@ public enum Conditions {
     exp_add,
     cooltime_fix,
     hero_cooltime_fix,
-    geojeom_monster_count
+    geojeom_monster_count,
+    hero_buff
 };
