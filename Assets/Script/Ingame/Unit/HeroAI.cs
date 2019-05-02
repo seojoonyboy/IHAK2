@@ -146,6 +146,7 @@ public partial class HeroAI : UnitAI {
         LvUpMinions();
         LvUpHP();
         ChangeLvText();
+        if (unitCard.ev.lv == 2) eventHandler.PostNotification(IngameSceneEventHandler.MISSION_EVENT.UNIT_LEVEL_UP, null, null);        
     }
 
     private void ChangeLvText() {

@@ -33,7 +33,7 @@ public partial class UnitAI : AI.SkyNet {
 
     protected UnitSpine unitSpine;
     private UnitDetector detector;
-    private IngameSceneEventHandler eventHandler;
+    protected IngameSceneEventHandler eventHandler;
     public UnitGroup myGroup;
 
 
