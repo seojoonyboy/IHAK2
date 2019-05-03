@@ -21,7 +21,8 @@ public partial class BaseCampStation : DefaultStation {
         tower.layer = 14;
         towerComponent = tower.GetComponent<FowardHQ>();
         Invoke("SetMonsters", 3.0f);
-        LoadFogLight();
+        Invoke("SettingFog", 3.1f);
+        
     }
 
 

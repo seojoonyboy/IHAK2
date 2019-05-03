@@ -17,7 +17,7 @@ public partial class HealingCenterStation : DefaultStation {
         healingTarget = new List<GameObject>();
         Building = Resources.Load("Prefabs/FieldHospital") as GameObject;
         Instantiate(Building, transform);
-        LoadFogLight();
+        SettingFog();
     }
 
     private void Update() {

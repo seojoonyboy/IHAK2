@@ -21,7 +21,7 @@ public partial class CreepStation : DefaultStation {
         targets = new List<GameObject>();
         SetMonsters();
         MonstersReset(false);
-        PostRespawnTimer();
+        PostRespawnTimer();        
     }
 
     private void LateUpdate() {
@@ -202,6 +202,7 @@ public partial class CreepStation {
         var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Publish().RefCount();
         oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { intervalTime.Value--; }).AddTo(this);
         oneSecond.Where(_ => intervalTime.Value <= 0).Subscribe(_ => { RespawnMonster(); intervalTime.Value = pivotTime; }).AddTo(this);
+        
     }
 
     public void RespawnMonster() {

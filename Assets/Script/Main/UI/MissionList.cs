@@ -100,6 +100,8 @@ public class MissionList : MonoBehaviour {
 
             startButton.GetComponent<Image>().color = Color.white;
             startButton.transform.Find("Lock").gameObject.SetActive(false);
+
+            selectMissionNum = 2;
         }
     }
 
