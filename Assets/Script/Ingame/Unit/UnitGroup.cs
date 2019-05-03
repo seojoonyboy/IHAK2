@@ -389,6 +389,7 @@ public class UnitGroup : MonoBehaviour {
                 if (directionOpen) checkWay();
                 return false;
             }
+            if (hits.collider.transform != transform && hits.collider.transform.parent != transform && hits.collider.transform.parent.parent != transform) return false;
             if (hits.collider.transform.childCount > 0 && hits.collider.transform.GetChild(2).gameObject.layer != 10) return false;
             if (hits.collider.attachedRigidbody == transform.GetChild(2).GetComponent<Rigidbody2D>())
                 return true;
