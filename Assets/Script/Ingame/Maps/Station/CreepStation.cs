@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UniRx;
+
 
 public partial class CreepStation : DefaultStation {
 
@@ -14,16 +16,18 @@ public partial class CreepStation : DefaultStation {
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
+        pivotTime = 20;
+        intervalTime = new ReactiveProperty<int>(pivotTime);
         targets = new List<GameObject>();
         SetMonsters();
         MonstersReset(false);
-        SetOccupySlider();
+        PostRespawnTimer();        
     }
 
     private void LateUpdate() {
         if (!startSeize && monsters.Count == 0 && targets.Count > 0 ) {
             startSeize = true;
-            StartCoroutine(FindOwner());
+            //StartCoroutine(FindOwner());
         }
     }
 
@@ -31,6 +35,7 @@ public partial class CreepStation : DefaultStation {
         if (targets.Contains(unitObj)) targets.Remove(unitObj);
     }
 
+    /*
     IEnumerator FindOwner() {
         int targetLayer = 0;
         while (startSeize) {
@@ -54,7 +59,7 @@ public partial class CreepStation : DefaultStation {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
         }
     }
-
+    */
     public void ChangeOwner() { }
 }
 
@@ -134,8 +139,12 @@ public partial class CreepStation {
 
     public void MonsterDie(GameObject monster) {
         monsters.Remove(monster);
-
-        occupySlider.IncreaseByPercentage(occupyPercentageVal);
+        try {
+            occupySlider.IncreaseByPercentage(occupyPercentageVal);
+        }
+        catch (NullReferenceException ne) {
+            Debug.Log("크립지점");
+        }
     }
 
     public void MonstersReset(bool isTierUp) {
@@ -185,4 +194,44 @@ public partial class CreepStation {
         public int num;
         public GameObject monster;
     }
+}
+
+public partial class CreepStation {
+
+    public void PostRespawnTimer() {
+        var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Publish().RefCount();
+        oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { intervalTime.Value--; }).AddTo(this);
+        oneSecond.Where(_ => intervalTime.Value <= 0).Subscribe(_ => { RespawnMonster(); intervalTime.Value = pivotTime; }).AddTo(this);
+        
+    }
+
+    public void RespawnMonster() {
+        List<Transform> wayPoints = new List<Transform>();
+        foreach (Transform wayPoint in transform.GetChild(0)) {
+            wayPoints.Add(wayPoint);
+        }
+
+        GameObject goblin = Resources.Load("Prefabs/Monsters/Goblin") as GameObject;
+        goblin.GetComponent<MonsterAI>().Init(AccountManager.Instance.neutralMonsterDatas.Find(x => x.id == "npc_monster_01001"));
+        goblin.GetComponent<MonsterAI>().expPoint = 20;
+
+        var creeps = AccountManager.Instance.mission.creeps;
+        foreach (DataModules.MonsterData monsterData in creeps) {
+            if (monsterData.creep.id == "npc_monster_01001") {
+                int monsterCount = monsterData.count;
+                for (int i = 0; i < monsterCount; i++) {
+                    GameObject generateMonster = Instantiate(goblin, monsterParent);
+                    generateMonster.transform.position = transform.GetChild(0).GetChild(i).position;
+
+                    generateMonster.GetComponent<StateController>().SetupAI(true, wayPoints);
+                    generateMonster.GetComponent<MonsterAI>().tower = this;
+                    monsters.Add(generateMonster);
+                }
+                occupyPercentageVal = 100 / monsterCount;
+            }
+        }
+    }
+    
+
+
 }

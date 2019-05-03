@@ -35,6 +35,7 @@ public partial class UnitAI : AI.SkyNet {
     private UnitDetector detector;
     protected IngameSceneEventHandler eventHandler;
     public UnitGroup myGroup;
+    private SpriteMask shaderMask;
 
 
     void Awake() {
@@ -47,7 +48,14 @@ public partial class UnitAI : AI.SkyNet {
 
     void Start() {
         if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
+        LightSet();
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
+    }
+
+    private void LightSet() {
+        shaderMask = GetComponentInChildren<SpriteMask>();
+        if(gameObject.layer == myLayer) return;
+        shaderMask.gameObject.SetActive(false);
     }
 
     private void OnDestroy() {
@@ -178,6 +186,10 @@ public partial class UnitAI : AI.SkyNet {
     public virtual void attackUnit() {
         AI.SkyNet skyNet = targetUnit.GetComponent<AI.SkyNet>();
         if(skyNet != null) {
+            if(skyNet.HP <= 0) {
+                targetUnit = null;
+                return;
+            } 
             skyNet.Damage(power, transform);
         }
         else if(targetUnit.GetComponent<TileObject>()) {

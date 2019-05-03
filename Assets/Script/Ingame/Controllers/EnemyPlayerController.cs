@@ -88,7 +88,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         nodeParent = GameObject.Find("Nodes").transform;
         groups = new UnitGroup[4];
         groupPath = new List<Vector3>[4];
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             groupPath[i] = new List<Vector3>();
         }
         switch (AccountManager.Instance.mission.stageNum) {
@@ -412,25 +412,40 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         }
     }
 
-    private void SetPath(int unitNum) {
+    private void FindPath(int unitNum) {
         if (!groups[unitNum].IsMoving && !groups[unitNum].Attacking) {
             int count = 0;
             while (true) {
                 MapStation.NodeDirection wayNum = (MapStation.NodeDirection)UnityEngine.Random.Range(0, 8);
                 if (groups[unitNum].currentStation.adjNodes.ContainsKey(wayNum)) {
-                    if (groups[unitNum].currentStation.adjNodes[wayNum].gameObject.GetComponent<DefaultStation>().OwnerNum != PlayerController.Player.PLAYER_2 || count > 100) {
-                        groupPath[unitNum].Add(groups[unitNum].currentStation.transform.position);
-                        groupPath[unitNum].Add(groups[unitNum].currentStation.adjNodes[wayNum].transform.position);
-                        groups[unitNum].SetMove(groupPath[unitNum]);
+                    if (groups[unitNum].currentStation.adjNodes[wayNum].gameObject.GetComponent<DefaultStation>().OwnerNum != PlayerController.Player.PLAYER_2) {
+                        SetPath(unitNum, wayNum);
                         break;
                     }
-                    count++;
+                    else if (groups[unitNum].currentStation.adjNodes[wayNum].transform.position.x < transform.position.x) {
+                        SetPath(unitNum, wayNum);
+                        break;
+                    }
+                    else if (count > 100) {
+                        SetPath(unitNum, wayNum);
+                        break;
+                    }
+                    else
+                        count++;
                 }
             }
             return;
         }
         else return;
     }
+
+    private void SetPath(int unitNum, MapStation.NodeDirection wayNum) {
+        groupPath[unitNum] = new List<Vector3>();
+        groupPath[unitNum].Add(groups[unitNum].currentStation.transform.position);
+        groupPath[unitNum].Add(groups[unitNum].currentStation.adjNodes[wayNum].transform.position);
+        groups[unitNum].SetMove(groupPath[unitNum]);
+    }
+
 
     IEnumerator RacanAI() {
         while (true) {
@@ -440,8 +455,8 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[0] = false;
                 break;
             }
-            if(groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
-                SetPath(0);
+            if (groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+                FindPath(0);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -454,7 +469,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 break;
             }
             if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
-                SetPath(1);
+                FindPath(1);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -467,7 +482,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 break;
             }
             if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
-                SetPath(2);
+                FindPath(2);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -480,7 +495,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 break;
             }
             if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
-                SetPath(3);
+                FindPath(3);
             yield return new WaitForSeconds(0.1f);
         }
     }
