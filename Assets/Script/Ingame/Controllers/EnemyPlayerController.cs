@@ -339,12 +339,12 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-
+        int countUnit = playerctlr.GetComponent<PlayerActiveCards>().opponentCards.Count;
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
         while (true) {
             yield return new WaitForSeconds(0.1f);
-            int heroIndex = UnityEngine.Random.Range(0, 3);
+            int heroIndex = UnityEngine.Random.Range(0, countUnit);
             if (!spawnCool[heroIndex]) {
                 if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
                     aiMana -= (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold;
@@ -383,12 +383,12 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-
+        int countUnit = playerctlr.GetComponent<PlayerActiveCards>().opponentCards.Count;
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
         while (true) {
             yield return new WaitForSeconds(0.1f);
-            int heroIndex = UnityEngine.Random.Range(0, 4);
+            int heroIndex = UnityEngine.Random.Range(0, countUnit);
             if (!spawnCool[heroIndex]) {
                 if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
                     aiMana -= (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold;
