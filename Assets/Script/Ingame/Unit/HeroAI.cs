@@ -225,7 +225,7 @@ public partial class HeroAI : UnitAI {
         HeroAI heroAI = unit.GetMyHeroAI();
         if(heroAI == null) return;
         for (int i = 0; i < fightHeroes.Count; i++)
-            if (fightHeroes[i] == null || fightHeroes[i].gameObject == unit.gameObject) return;
+            if (fightHeroes[i] == null || GameObject.ReferenceEquals(fightHeroes[i].gameObject, heroAI.gameObject)) return;
         fightHeroes.Add(heroAI);
     }
 
@@ -235,7 +235,7 @@ public partial class HeroAI : UnitAI {
 
     protected override void GiveExp() {
         if (fightHeroes.Count == 0) return;
-        int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.id.CompareTo("n_uu_02002") == 0 ? 2 : 1 / 5f);
+        int exp = Mathf.FloorToInt(200f * unitCard.ev.lv * unitCard.baseSpec.unit.rarity / 5f);
         RemoveDeadHeroNoExp();
         if (fightHeroes.Count == 0) return;
         exp /= fightHeroes.Count;
