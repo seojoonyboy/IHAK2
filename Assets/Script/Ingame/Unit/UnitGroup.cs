@@ -435,6 +435,12 @@ public class UnitGroup : MonoBehaviour {
     }
 
     public void checkWay() {
+        if (PlayerController.Instance.ClickedUnitgroup == null)
+            PlayerController.Instance.ClickedUnitgroup = gameObject;
+        else if (PlayerController.Instance.ClickedUnitgroup == gameObject)
+            PlayerController.Instance.ClickedUnitgroup = null;
+        else
+            return;
         directionOpen = !directionOpen;
         foreach (MapStation.NodeDirection node in currentStation.adjNodes.Keys) {
             gameObject.GetComponent<CircleCollider2D>().enabled = !directionOpen;
