@@ -14,17 +14,20 @@ public partial class HeroAI : UnitAI {
         GameObject targetObject = null;
         while (!targetObject) {
             List<HeroAI> heroes = new List<HeroAI>();
-            GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+            
+            AI.SkyNet[] units = FindObjectsOfType<AI.SkyNet>();
             
             int layerToGive = LayertoGive(true);
-            float tempLegnth = 100;
+            float tempLegnth = 5f;
             HeroAI skillTargetHero = null;
             UnitAI skillTargetUnit = null;
             MonsterAI skillTargetMonster = null;
             for (int i = 0; i < units.Length; i++) {
-                if (units[i].layer != layerToGive) continue;
+                int hisLayer = 1 << units[i].gameObject.layer;
+                bool targetLayer = (layerToGive & hisLayer) == hisLayer;
+                if (!targetLayer) continue;
                 float length = Vector3.Distance(units[i].transform.position, transform.position);
-                if (length > 100f) continue;
+                if (length > 5f) continue;
                 if (units[i].GetComponent<HeroAI>() == null && skillTargetHero != null) continue;
                 if (length < tempLegnth) {
                     if (units[i].GetComponent<HeroAI>())
@@ -34,7 +37,7 @@ public partial class HeroAI : UnitAI {
                     else
                         skillTargetMonster = units[i].GetComponent<MonsterAI>();
                     tempLegnth = length;
-                    targetObject = units[i];
+                    targetObject = units[i].gameObject;
                 }
             }
             //yield return new WaitForSeconds(0.5f);
@@ -51,10 +54,7 @@ public partial class HeroAI : UnitAI {
             length = Vector3.Distance(targetUnit.transform.position, transform.position);
             yield return null;
         }
-        if(targetUnit.GetComponent<UnitAI>())
-            targetUnit.GetComponent<UnitAI>().Damage(power * 3, transform);
-        else if(targetUnit.GetComponent<MonsterAI>())
-            targetUnit.GetComponent<MonsterAI>().Damage(power * 3);
+        targetUnit.GetComponent<AI.SkyNet>().Damage(power * 3, transform);
         moveSpeed = moveSpeed / 3;
         SkillFinish();
     }
@@ -65,7 +65,9 @@ public partial class HeroAI : UnitAI {
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
         int layerToGive = LayertoGive(true);
         for (int i = 0; i < units.Length; i++) {
-            if (units[i].layer == layerToGive) continue;
+            int hisLayer = 1 << units[i].gameObject.layer;
+            bool targetLayer = (layerToGive & hisLayer) == hisLayer;
+            if (targetLayer) continue;
             float length = Vector3.Distance(units[i].transform.position, transform.position);
             if (length > 45f) continue;
             if (units[i].GetComponent<Buff_evilmind>()) continue;
@@ -99,7 +101,9 @@ public partial class HeroAI : UnitAI {
             GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
             int layerToGive = LayertoGive(true);
             for (int i = 0; i < units.Length; i++) {
-                if (units[i].layer != layerToGive) continue;
+                int hisLayer = 1 << units[i].gameObject.layer;
+                bool targetLayer = (layerToGive & hisLayer) == hisLayer;
+                if (!targetLayer) continue;
                 float length = Vector3.Distance(units[i].transform.position, transform.position);
                 if (length > 30f) continue;
                 if (units[i].GetComponent<HeroAI>() == null) {
