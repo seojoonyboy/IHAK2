@@ -18,6 +18,7 @@ public partial class TowerStation : DefaultStation {
         tower.layer = 14;
         towerComponent = tower.GetComponent<Tower_Detactor>();
         towerComponent.Init(null);
+        LoadFogLight();
     }
 	
 	// Update is called once per frame

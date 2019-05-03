@@ -19,6 +19,7 @@ public class ConstructManager : Singleton<ConstructManager> {
     public GameObject townCenter;
     public GameObject hpGauge;
     public GameObject nameMesh;
+    public GameObject unfog;
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);

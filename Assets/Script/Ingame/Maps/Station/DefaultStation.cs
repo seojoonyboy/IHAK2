@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
+
 public partial class DefaultStation : SerializedMonoBehaviour {
 
-    
-	// Use this for initialization
-	void Start () {
+    [SerializeField] public GameObject fogLight; 
+
+    // Use this for initialization
+    public void LoadFogLight() {
+        fogLight = ConstructManager.Instance.unfog;
+        GameObject view = Instantiate(fogLight, transform);
+        view.transform.SetAsLastSibling();
+        view.SetActive(false);
     }
+}
+
+public partial class DefaultStation : SerializedMonoBehaviour {    
+    public UniRx.ReactiveProperty<int> intervalTime;
+    public int pivotTime;
 }
 
 public partial class DefaultStation : SerializedMonoBehaviour {

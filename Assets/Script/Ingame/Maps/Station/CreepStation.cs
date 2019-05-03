@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UniRx;
 
+
 public partial class CreepStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
@@ -15,7 +16,8 @@ public partial class CreepStation : DefaultStation {
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
-        respawnTime = new ReactiveProperty<int>(spawntime);
+        pivotTime = 20;
+        intervalTime = new ReactiveProperty<int>(pivotTime);
         targets = new List<GameObject>();
         SetMonsters();
         MonstersReset(false);
@@ -195,13 +197,11 @@ public partial class CreepStation {
 }
 
 public partial class CreepStation {
-    public ReactiveProperty<int> respawnTime;
-    public int spawntime = 60;
 
-    public void PostRespawnTimer() { 
-        var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0),TimeSpan.FromSeconds(1)).Publish().RefCount();
-        oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { respawnTime.Value--;}).AddTo(this);
-        oneSecond.Where(_ => respawnTime.Value <= 0).Subscribe(_ => { RespawnMonster(); respawnTime.Value = spawntime; }).AddTo(this);
+    public void PostRespawnTimer() {
+        var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Publish().RefCount();
+        oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { intervalTime.Value--; }).AddTo(this);
+        oneSecond.Where(_ => intervalTime.Value <= 0).Subscribe(_ => { RespawnMonster(); intervalTime.Value = pivotTime; }).AddTo(this);
     }
 
     public void RespawnMonster() {
