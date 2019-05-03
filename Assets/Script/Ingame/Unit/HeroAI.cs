@@ -81,7 +81,8 @@ public partial class HeroAI : UnitAI {
         attackRange = unit.attackRange;
         power = Mathf.RoundToInt(unit.attackPower * bonusStat);
         power = PowerUP(power);
-        unitCard.ev = new Ev() { lv = level };
+        if(unitCard.ev == null) unitCard.ev = new Ev() { lv = level };
+        unitCard.ev.lv = level;
         SetMaxHP();
         if (HP == 0) HP = MaxHealth = unitCard.ev.hp;
         else HP += HealTime();
