@@ -94,7 +94,7 @@ public partial class TowerStation : DefaultStation {
 
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == 16) return;
+        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 5) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!targets.Exists(x => x == collision.gameObject)) {
                 targets.Add(collision.gameObject);
@@ -104,7 +104,7 @@ public partial class TowerStation : DefaultStation {
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 16) return;
+        if (collision.gameObject.layer == 16 || collision.gameObject.layer == 5) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             targets.Remove(collision.gameObject);
 
