@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4244293423088130}
   - component: {fileID: 212653605257936464}
   - component: {fileID: 95714660696183772}
-  m_Layer: 29
+  m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 212098937600760748}
   - component: {fileID: 95781071714194348}
   - component: {fileID: 114999411105188200}
-  m_Layer: 30
+  m_Layer: 5
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4899952711389354}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Animator:
   m_GameObject: {fileID: 1161266838631480}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 66f6dc9ebae8b19419b0401f6b86ede4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
