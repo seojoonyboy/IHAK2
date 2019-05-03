@@ -339,7 +339,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-        int countUnit = playerctlr.GetComponent<PlayerActiveCards>().opponentCards.Count;
+        int countUnit = PlayerController.Instance.playerActiveCards().opponentCards.Count;
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
         while (true) {
@@ -383,9 +383,10 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-        int countUnit = playerctlr.GetComponent<PlayerActiveCards>().opponentCards.Count;
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
+        yield return new WaitForSeconds(1.0f);
+        int countUnit = PlayerController.Instance.playerActiveCards().opponentCards.Count;
         while (true) {
             yield return new WaitForSeconds(0.1f);
             int heroIndex = UnityEngine.Random.Range(0, countUnit);
@@ -486,7 +487,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[0] = false;
                 break;
             }
-            if (groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+            if (groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(0);
             yield return new WaitForSeconds(0.1f);
         }
@@ -499,7 +500,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[1] = false;
                 break;
             }
-            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(1);
             yield return new WaitForSeconds(0.1f);
         }
@@ -512,7 +513,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[2] = false;
                 break;
             }
-            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(2);
             yield return new WaitForSeconds(0.1f);
         }
@@ -525,7 +526,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[3] = false;
                 break;
             }
-            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2)
+            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(3);
             yield return new WaitForSeconds(0.1f);
         }
