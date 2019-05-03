@@ -72,16 +72,16 @@ public partial class HeroAI : UnitAI {
         }
         switch(unitSkill.method.methodName) {
             case "bite" : //라칸 물어뜯기
-                SetSkill(Lakan_bite, 3f, -1f);
+                SetSkill(Lakan_bite, unitSkill.coolTime, -1f);
                 break;
             case "arsonist" :   //쉘 방화범
-                SetSkill(Shell_humantorch, 3f, 5f);
+                SetSkill(Shell_humantorch, unitSkill.coolTime, 5f);
                 break;
             case "evil_mind" : //윔프 악한마음 
-                SetSkill(Wimp_evilmind, 9f, 6f);
+                SetSkill(Wimp_evilmind, unitSkill.coolTime, 6f);
                 break;
             case "satiation": //렉스 포식
-                SetSkill(Rex_satiation, 7f, -1f);
+                SetSkill(Rex_satiation, unitSkill.coolTime, -1f);
                 break;
             default :
                 Debug.LogWarning(string.Format("{0}이 스킬을 가지고 있지 않습니다.", name));
