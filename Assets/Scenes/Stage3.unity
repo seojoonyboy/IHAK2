@@ -617,7 +617,6 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 0}
     - {fileID: 1853951388}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -645,8 +644,8 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: 
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -658,7 +657,7 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -900,7 +899,6 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 0}
     - {fileID: 687447117}
     - {fileID: 862529910}
     SerializedBytesString: 
@@ -929,8 +927,8 @@ MonoBehaviour:
       Entry: 3
       Data: 4
     - Name: 
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -942,7 +940,7 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -954,7 +952,7 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -1439,7 +1437,7 @@ MonoBehaviour:
   roads:
   - {fileID: 1699923214}
   - {fileID: 261254239}
-  - {fileID: 1234135598}
+  - {fileID: 0}
   mapStationList: []
 --- !u!4 &349814006
 Transform:
@@ -1997,7 +1995,6 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 0}
     - {fileID: 310319780}
     - {fileID: 1853951388}
     - {fileID: 349814005}
@@ -2027,6 +2024,18 @@ MonoBehaviour:
       Entry: 3
       Data: 5
     - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
       Entry: 10
       Data: 0
     - Name: 
@@ -2037,7 +2046,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 0
+      Data: 3
     - Name: 
       Entry: 10
       Data: 1
@@ -2049,22 +2058,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 3
       Data: 2
     - Name: 
       Entry: 10
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -3560,9 +3557,6 @@ GameObject:
   - component: {fileID: 1432288347}
   - component: {fileID: 1432288346}
   - component: {fileID: 1432288348}
-  - component: {fileID: 1234135597}
-  - component: {fileID: 1234135599}
-  - component: {fileID: 1234135598}
   m_Layer: 16
   m_Name: R11
   m_TagString: Untagged
@@ -3570,68 +3564,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1234135597
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1234135596}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -30, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1928166538}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1234135598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1234135596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8365d687cb9456baeb71b290ee1b2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  mapPostion: 130
-  stations:
-  - {fileID: 1853951388}
-  - {fileID: 349814005}
---- !u!61 &1234135599
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1234135596}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 40, y: 7}
-  m_EdgeRadius: 0
 --- !u!1 &1262600618
 GameObject:
   m_ObjectHideFlags: 0
@@ -5061,7 +4993,7 @@ MonoBehaviour:
   roads:
   - {fileID: 886386998}
   - {fileID: 684434042}
-  - {fileID: 1234135598}
+  - {fileID: 0}
   mapStationList: []
 --- !u!4 &1853951389
 Transform:
@@ -5331,7 +5263,7 @@ Transform:
   - {fileID: 684434043}
   - {fileID: 1699923215}
   - {fileID: 261254240}
-  - {fileID: 1234135597}
+  - {fileID: 2007607826}
   m_Father: {fileID: 216397196}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5448,6 +5380,85 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 25, y: 7}
   m_EdgeRadius: 0
+--- !u!1 &2007607825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2007607826}
+  - component: {fileID: 2007607828}
+  - component: {fileID: 2007607827}
+  m_Layer: 16
+  m_Name: R30
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2007607826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2007607825}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -30, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1928166538}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &2007607827
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2007607825}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 48.65, y: 7}
+  m_EdgeRadius: 0
+--- !u!114 &2007607828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2007607825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8365d687cb9456baeb71b290ee1b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  mapPostion: 130
+  stations:
+  - {fileID: 1853951388}
+  - {fileID: 349814005}
 --- !u!1 &2043800702
 GameObject:
   m_ObjectHideFlags: 0
