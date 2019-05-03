@@ -30,9 +30,8 @@ public class HeroCardHandler : IngameCardHandler {
             }
             else {
                 IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
+                unitGroup.checkWay();
             }
-
-            unitGroup.checkWay();
         }
         else {
             Toggle toggle = GetComponent<Toggle>();
