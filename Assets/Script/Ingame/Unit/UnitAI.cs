@@ -223,6 +223,7 @@ public partial class UnitAI : AI.SkyNet {
 
     public override void Damage(float damage, Transform enemy) {
         base.Damage(damage, enemy);
+        if (myGroup == null || enemy == null) return;
         myGroup.UnitHittedOrFound(enemy);
     }
 

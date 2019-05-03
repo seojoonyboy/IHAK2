@@ -104,6 +104,8 @@ public partial class HeroAI : UnitAI {
                 expSlider.value = unitCard.ev.exp;
                 expSlider.maxValue = ExpNeed();
 
+                unitCard.gameObject.transform.Find("Level/Value").GetComponent<Text>().text = unitCard.ev.lv.ToString();
+
                 unitCard
                     .gameObject.transform.Find("MinionInfo/CurrentMinion")
                     .GetComponent<Text>().text = transform

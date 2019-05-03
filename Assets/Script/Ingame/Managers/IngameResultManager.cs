@@ -15,9 +15,11 @@ public class IngameResultManager : MonoBehaviour {
 
     [SerializeField] GameObject playerSlot;
     GameObject prevWindow;
+    GameOverType currentType;
 
     public void GameOverWindow(GameOverType type) {
         gameObject.SetActive(true);
+        currentType = type;
         switch (type) {
             case GameOverType.WIN:
                 prevWindow = transform.GetChild(0).gameObject;
@@ -64,6 +66,10 @@ public class IngameResultManager : MonoBehaviour {
             rewardWnd.GetChild(i).Find("Name").GetComponent<Text>().text = score.Key;
             rewardWnd.GetChild(i).Find("Score").GetComponent<Text>().text = score.Value.ToString();
             i++;
+        }
+
+        if(currentType == GameOverType.LOSE) {
+            transform.GetChild(4).Find("RestartBtn").gameObject.SetActive(false);
         }
     }
 }
