@@ -54,7 +54,6 @@ public class MinionAI : UnitAI {
     }
 
     public override void ResetStat() {
-        moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
         power = unit.attackPower;

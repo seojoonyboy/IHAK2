@@ -39,7 +39,7 @@ public partial class PlayerController : SerializedMonoBehaviour {
     public GameObject 
         GoldResourceFlick,
         CitizenResourceFlick;
-    Transform myCity;
+    public Transform myCity;
     public IngameResultManager resultManager;
 
     private static PlayerController _instance;
