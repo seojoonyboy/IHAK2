@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Text;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UniRx;
 
 public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     [SerializeField] [ReadOnly] PlayerController playerController;
@@ -78,7 +79,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
         int index = 0;
         foreach (ActiveCard unitCard in playerController.playerActiveCards().unitCards()) {
-            Unit unit = unitCard.baseSpec.unit;
+            DataModules.Unit unit = unitCard.baseSpec.unit;
             GameObject card = Instantiate(unitCardPref, heroCardParent);
             card.GetComponent<Toggle>().group = card.transform.parent.parent.GetComponent<ToggleGroup>();
 
@@ -110,8 +111,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = spellCard;
 
-            card.transform.Find("Image").GetComponent<Image>().sprite = ConstructManager.Instance.GetComponent<CardImages>().GetImage("primal", "spell", skill.name);
-
             //if (skill.cost.food > 0) card.transform.Find("Cost/FoodIcon/Value").GetComponent<Text>().text = skill.cost.food.ToString();
             if (skill.cost.gold > 0) card.transform.Find("Cost/GoldIcon/Value").GetComponent<Text>().text = skill.cost.gold.ToString();
 
@@ -129,6 +128,12 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             //Debug.Log(info.data.baseSpec.skill.cost.gold);
             card.transform.SetAsLastSibling();
         }
+
+        PlayerController.Instance.playerResource()
+            .ObserveEveryValueChanged(x => x.Gold)
+            .Subscribe(_ => {
+                OnManaChaged(PlayerController.Instance.playerResource().Gold);
+            });
     }
 
     //card use
@@ -202,6 +207,21 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             else return -1;
         });
         return spellCards;
+    }
+
+    private void OnManaChaged(decimal mana) {
+        foreach(GameObject card in heroCards) {
+            var cost = card.GetComponent<ActiveCardInfo>().data.baseSpec.unit.cost.gold;
+            cost *= 100;
+            if(mana >= cost && card.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
+                card.transform.Find("Cost").gameObject.SetActive(false);
+            }
+            else {
+                if(card.GetComponent<HeroCardHandler>().instantiatedUnitObj == null) {
+                    card.transform.Find("Cost").gameObject.SetActive(true);
+                }
+            }
+        }
     }
 }
 
