@@ -25,35 +25,33 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
 
     private void SpawnMinion() {
         if (unitGroup.IsMinionMax() == true) return;
-        GameObject minion;
 
+        if (transform.GetChild(2).gameObject.layer == 11) {
+            EnemyPlayerController epc = FindObjectOfType<EnemyPlayerController>();
+            if(epc.AiCitizen > 1) SetMinionInfo();
+        }
+        else if (PlayerController.Instance.playerResource().citizen_readonly >= 100) {
+            PlayerController.Instance.transform.GetComponent<Container.PlayerResource>().UseCitizen(1);
+            SetMinionInfo();
+        }
+    }
+
+    private GameObject SelectSpawnMinion() {
+        GameObject minion;
         if (unitGroup.MinionType() == "melee") minion = Instantiate(shortDisMinion, transform);
         else if (unitGroup.MinionType() == "range") minion = Instantiate(longDisMinion, transform);
         else minion = null;
-        if (minion == null) return;
+        return minion;
+    }
 
-        if (transform.GetChild(2).gameObject.layer == 11) {
-            EnemyPlayerController epc = GameObject.Find("EnemyPlayerController").GetComponent<EnemyPlayerController>();
-            if(epc.AiCitizen > 1) {
-                ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
-                minion.GetComponent<MinionAI>().SetMinionData(card);
-                minion.layer = transform.GetChild(2).gameObject.layer;
-                minion.transform.position = unitGroup.transform.position;
-                unitGroup.ResetData();
-            }
-            return;
-        }
-
-        if (PlayerController.Instance.playerResource().citizen_readonly >= 100) {
-            PlayerController.Instance.transform.GetComponent<Container.PlayerResource>().UseCitizen(1);
-            ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
-            minion.GetComponent<MinionAI>().SetMinionData(card);
-            minion.layer = transform.GetChild(2).gameObject.layer;
-            minion.transform.position = unitGroup.transform.position;
-            unitGroup.ResetData();
-        }
-        else
-            return;
+    private void SetMinionInfo() {
+        ActiveCard card = GetComponentInChildren<HeroAI>().unitCard;
+        if(card == null) return;
+        GameObject minion = SelectSpawnMinion();
+        minion.GetComponent<MinionAI>().SetMinionData(card);
+        minion.layer = transform.GetChild(2).gameObject.layer;
+        minion.transform.position = unitGroup.transform.position;
+        unitGroup.ResetData();
     }
 }
 
