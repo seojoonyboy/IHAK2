@@ -402,7 +402,7 @@ public class UnitGroup : MonoBehaviour {
     private bool ClickGroup() {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            LayerMask mask = 1 << LayerMask.NameToLayer("Direction");
+            LayerMask mask = (1 << LayerMask.NameToLayer("Direction")) | (1 << LayerMask.NameToLayer("UnitGroup"));
             RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
             if (!hits) {
                 if (directionOpen) checkWay();
