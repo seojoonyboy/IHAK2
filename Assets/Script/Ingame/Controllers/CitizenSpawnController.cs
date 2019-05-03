@@ -27,6 +27,8 @@ public partial class CitizenSpawnController : SerializedMonoBehaviour {
                 = new Vector3(CityPos.position.x + Random.Range(-5.0f, 5.0f), CityPos.position.y + Random.Range(-5.0f, 5.0f), CityPos.position.z);
             citizen.GetComponent<UnitAI>().enabled = false;
             citizens.Add(citizen);
+
+            citizen.GetComponent<MinionAI>().SetUnitColor(new Color32(0, 105, 253, 255));
         }
     }
 

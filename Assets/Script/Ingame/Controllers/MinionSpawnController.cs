@@ -38,9 +38,9 @@ public partial class MinionSpawnController : SerializedMonoBehaviour {
                     Debug.Log("아군 미니언 체력 버프 적용됨");
                 }
             }
-
-            minions[i].GetComponent<MinionAI>().Init(null, null);
+            
             minions[i].layer = minionLayer;
+            minions[i].GetComponent<MinionAI>().Init(null, null);
             minions[i].transform.position = transform.GetChild(i).position;
         }
     }

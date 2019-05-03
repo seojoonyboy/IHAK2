@@ -26,6 +26,8 @@ public class MinionAI : UnitAI {
         HP = unit.hitPoint;
         CalculateHealthBar();
         SetColliderData();
+
+        SetUnitColor();
     }
 
     public void SetMinionData(ActiveCard heroCard, bool levelup = false) {
@@ -42,6 +44,8 @@ public class MinionAI : UnitAI {
         CalculateHealthBar();
         SetColliderData();
         setState(aiState.NONE);
+
+        SetUnitColor();
     }
 
     private void SetMaxHP() {
@@ -59,5 +63,28 @@ public class MinionAI : UnitAI {
         attackRange = unit.attackRange;
         power = unit.attackPower;
         MaxHealth = unit.hitPoint;
+    }
+
+    /// <summary>
+    /// 피아 식별 색상
+    /// </summary>
+    public void SetUnitColor() {
+        var spriteRenderer = transform.Find("UnitBar/Indicator").GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return;
+        switch (gameObject.layer) {
+            case 10:
+                spriteRenderer.color = new Color32(0, 105, 253, 255);
+                break;
+            case 11:
+                spriteRenderer.color = new Color32(253, 58, 0, 255);
+                break;
+        }
+    }
+
+    public void SetUnitColor(Color32 color) {
+        var spriteRenderer = transform.Find("UnitBar/Indicator").GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return;
+
+        spriteRenderer.color = color;
     }
 }

@@ -41,10 +41,29 @@ public partial class HeroAI : UnitAI {
         int level = (actcard.ev.lv <= 0) ? 1 : actcard.ev.lv;
         SetUnitDataCommon(level);
         SetColliderData();
-        if(cardObj == null) return;
+        SetUnitColor();
+
+        if (cardObj == null) return;
         unitCard.gameObject = cardObj;
+
         coroutine = UpdateInfoCard();
         StartCoroutine(coroutine);
+    }
+
+    /// <summary>
+    /// 피아 식별 색상
+    /// </summary>
+    private void SetUnitColor() {
+        var spriteRenderer = transform.Find("UnitBar/Indicator").GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return;
+        switch (ownerNum) {
+            case PlayerController.Player.PLAYER_1:
+                spriteRenderer.color = new Color32(0, 105, 253, 255);
+                break;
+            case PlayerController.Player.PLAYER_2:
+                spriteRenderer.color = new Color32(253, 58, 0, 255);
+                break;
+        }
     }
 
     //public override void setunitdata(unit unit, int level) {
