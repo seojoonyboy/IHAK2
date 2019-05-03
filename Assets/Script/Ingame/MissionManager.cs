@@ -49,10 +49,12 @@ public class MissionManager : SerializedMonoBehaviour {
     }
 
     private void PointCaptured(Enum Event_Type, Component Sender, object Param) {
+        /*
         if (stageNum == 1) {
             eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-2");
         }
-        else if (stageNum == 2 && count < 2) {
+        */
+        if (stageNum == 2 && count < 2) {
             count++;
             if (count == 2)
                 eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "2-3");
@@ -63,12 +65,12 @@ public class MissionManager : SerializedMonoBehaviour {
     private void UseMagic(Enum Event_Type, Component Sender, object Param) {
         Debug.Log(Event_Type + " , " + Sender + " , " + Param);
         if (stageNum == 1) {
-            eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-3");
+            eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-2");
         }
     }
 
     private void DestroyEnemy(Enum Event_Type, Component Sender, object Param) {
-        if (stageNum == 1) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-4");
+        if (stageNum == 1) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "1-3");
         else if (stageNum == 2) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "2-4");
         else if (stageNum == 3) eventHandler.PostNotification(IngameSceneEventHandler.EVENT_TYPE.SUB_MISSION_COMPLETE, this, "3-1");
 
