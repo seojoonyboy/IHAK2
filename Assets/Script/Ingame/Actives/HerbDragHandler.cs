@@ -31,6 +31,8 @@ public class HerbDragHandler : SpellCardDragHandler {
             coolComp.coolTime = coolTime;
             coolComp.behaviour = this;
             coolComp.StartCool();
+
+            IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
         }
         else {
             obj.SetActive(false);
