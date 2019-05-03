@@ -106,8 +106,6 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
             ActiveSkill skill = spellCard.baseSpec.skill;
             GameObject card = Instantiate(spellCardPref, spellCardParent);
 
-            card.GetComponent<Toggle>().group = card.transform.parent.parent.GetComponent<ToggleGroup>();
-
             card.transform.Find("Name").GetComponent<Text>().text = skill.name;
             ActiveCardInfo activeCardInfo = card.AddComponent<ActiveCardInfo>();
             activeCardInfo.data = spellCard;
@@ -121,7 +119,7 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
 
             spellCards.Add(card);
 
-            AddSkill(skill.method.methodName, card, skill.method.args, skill.coolTime);
+            AddSkill(card, skill);
             index++;
         }
 
@@ -213,26 +211,19 @@ public partial class IngameDeckShuffler : SerializedMonoBehaviour {
     public Dictionary<Effects, GameObject> effectModules;
     public Camera camera;
 
-    private void AddSkill(string methodName, GameObject card, string[] args, int coolTime) {
-        switch (methodName) {
-            case "magma":
-                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_magma];
-                break;
-
+    private void AddSkill(GameObject card, ActiveSkill skill) {
+        switch (skill.method.methodName) {
             case "herb_distribution":
-                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_herb];
+                card.AddComponent<HerbDragHandler>();
+                card.GetComponent<SpellCardDragHandler>().prefab = effectModules[Effects.skill_herb];
                 break;
-            case "scary_prediction":
-                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_scaryOracle];
+            case "magma":
+                card.AddComponent<MagmaDragHandler>();
+                card.GetComponent<SpellCardDragHandler>().prefab = effectModules[Effects.skill_magma];
                 break;
-
-            case "war_cry":
-                card.GetComponent<SpellCardHandler>().prefab = effectModules[Effects.skill_warcry];
-                break;
+                
         }
-        card.GetComponent<SpellCardHandler>().data = args;
-        card.GetComponent<SpellCardHandler>().coolTime = coolTime;
-        card.GetComponent<SpellCardHandler>().targetCard = card;
+        card.GetComponent<SpellCardDragHandler>().Init(skill, card);
     }
 
     public enum Effects {

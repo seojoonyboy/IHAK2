@@ -4,15 +4,42 @@ using System.Linq;
 using UnityEngine;
 
 public class Magma : MonoBehaviour {
+    public SpriteRenderer range_texture;
+
     List<GameObject> targets;
+    Data data;
     // Use this for initialization
     void Start() {
         targets = new List<GameObject>();
     }
 
     public void StartDamaging() {
-        SpellCardDragHandler hanlder = GetComponent<SpellCardDragHandler>();
-        StartCoroutine(Damage(1, 6));
+        StartCoroutine(Damage(data.interval, data.duration));
+    }
+
+    public void Init(string[] data) {
+        range_texture.transform.localScale = new Vector3(22, 22, 1);
+        
+        int range = 0;
+        int.TryParse(data[0], out range);
+        range /= 4;
+        GetComponent<CircleCollider2D>().radius = range;
+        range_texture.transform.localScale *= range;
+
+        int interval = 1;
+
+        int duration = 0;
+        int.TryParse(data[1], out duration);
+
+        int damage = 0;
+        int.TryParse(data[2], out damage);
+
+        this.data = new Data() {
+            interval = interval,
+            range = range,
+            amount = damage,
+            duration = duration
+        };
     }
 
     IEnumerator Damage(float interval, int loopCount) {
@@ -20,8 +47,11 @@ public class Magma : MonoBehaviour {
         while (count < loopCount) {
             foreach(GameObject target in targets.ToList()) {
                 if (target == null) continue;
-                if(target.layer == 11 || target.layer == 14) {
-                    target.GetComponent<AI.SkyNet>().Damage(12);
+                if(target.layer == 11) {
+                    target.GetComponent<UnitAI>().Damage(data.amount);
+                }
+                else if(target.layer == 14) {
+                    target.GetComponent<MonsterAI>().Damage(data.amount);
                 }
             }
             count++;
@@ -47,5 +77,12 @@ public class Magma : MonoBehaviour {
         if (collision.gameObject.layer == 14 && collision.GetComponent<MonsterAI>() != null) {
             targets.Remove(collision.gameObject);
         }
+    }
+
+    public struct Data {
+        public int range;       //범위
+        public int interval;    //간격
+        public int amount;      //피해 정도
+        public int duration;    //지속시간
     }
 }

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4098081674590514}
   - component: {fileID: 212176125894487098}
+  - component: {fileID: 114254331756244844}
   m_Layer: 5
   m_Name: RangeTexture
   m_TagString: Untagged
@@ -36,8 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4263763910880020}
   - component: {fileID: 58108351778124754}
-  - component: {fileID: 114296292534019242}
-  - component: {fileID: 114151737672446406}
+  - component: {fileID: 114375234252740218}
   m_Layer: 5
   m_Name: Herb
   m_TagString: Untagged
@@ -87,7 +87,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114151737672446406
+--- !u!114 &114254331756244844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544030710607658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91fae60df87efa44a1391d44777f477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range_texture: {fileID: 212176125894487098}
+--- !u!114 &114375234252740218
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,36 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1966172136889694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bdb4b74d63c8734aa148f73b55b04c5, type: 3}
+  m_Script: {fileID: 11500000, guid: b91fae60df87efa44a1391d44777f477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftOffset: 10
-  RightOffset: 10
-  TopOffset: 10
-  BottomOffset: 20
-  Speed: 10
-  isDrag: 0
---- !u!114 &114296292534019242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1966172136889694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a66c40f7a3da2749aa01e26a978bc99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  isInit: 0
-  parentBuilding: {fileID: 0}
-  data: []
-  coolTime: 0
-  deckShuffler: {fileID: 0}
-  targetCard: {fileID: 0}
-  Target: {fileID: 0}
-  screenSpace: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
+  range_texture: {fileID: 212176125894487098}
 --- !u!212 &212176125894487098
 SpriteRenderer:
   m_ObjectHideFlags: 1
