@@ -22,10 +22,15 @@ public class HeroCardHandler : IngameCardHandler {
 
     protected override void OnSingleClick() {
         if(instantiatedUnitObj != null) {
-            IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
-
             UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
             if (unitGroup == null) return;
+
+            if (unitGroup.IsMoving) {
+                IngameAlarm.instance.SetAlarm("이동중에는 방향을 조작할 수 없습니다.");
+            }
+            else {
+                IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
+            }
 
             unitGroup.checkWay();
         }
