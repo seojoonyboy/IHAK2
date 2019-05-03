@@ -21,7 +21,9 @@ public class UnitDetector : MonoBehaviour {
 		if((detectingLayer & otherLayer) == otherLayer) {		
 			if(other.GetComponent<AI.SkyNet>() == null) return;
 			unitAI.NearEnemy(other);
-			GetComponent<CircleCollider2D>().enabled = false;
+			if(GetComponentInParent<UnitGroup>() != null) return;
+			if(GetComponentInParent<UnitGroup>().Attacking)
+				GetComponent<CircleCollider2D>().enabled = false;
 		}
 	}
 
