@@ -15,6 +15,7 @@ public class UnitGroup : MonoBehaviour {
     private float moveSpeed;
     private bool moving = false;
     private bool attacking = false;
+    private bool escaping = false;
     public MapStation currentStation;
     public MapNode currentNode;
     private List<GameObject> enemyGroup;
@@ -28,11 +29,18 @@ public class UnitGroup : MonoBehaviour {
 
     public bool IsMoving { get { return moving; } }
     public bool Attacking { get { return attacking; } }
+    public bool IsClickable { 
+        get {
+            if(!moving) return true;
+            bool fightingInStation = currentNode.GetComponent<MapStation>() != null && attacking;
+            return fightingInStation;
+        } 
+    }
 
     private void Start() {
         clickCol = GetComponent<CircleCollider2D>();
         var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
-        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => !moving && ClickGroup() && !Canvas.FindObjectOfType<ToggleGroup>().AnyTogglesOn()).Subscribe(_ => checkWay());
+        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => IsClickable && ClickGroup() && !Canvas.FindObjectOfType<ToggleGroup>().AnyTogglesOn()).Subscribe(_ => checkWay());
         GetData();
         SetMinionData();
         UnitMoveAnimation(false);
@@ -42,12 +50,20 @@ public class UnitGroup : MonoBehaviour {
     }
 
     public void SetMove(List<Vector3> pos) {
-        if(moving) return;
+        if(!IsClickable) return;
+        IsNeedtoEscapse();
         MovingPos = new List<Vector3>(pos);
         if(MovingPos == null || MovingPos.Count == 0) return;
         MovingPos.RemoveAt(0);
         if(MovingPos.Count == 0) return;
         MoveStart();
+    }
+
+    private void IsNeedtoEscapse() {
+        if(!attacking) return;
+        escaping = true;
+        moving = false;
+        FinishBattle();
     }
 
     private void MoveStart() {
@@ -87,6 +103,7 @@ public class UnitGroup : MonoBehaviour {
 
     private void MoveEnd() {
         moving = false;
+        escaping = false;
         UnitMoveAnimation(false);
         MovingPos = null;
         AmIinHQ();
@@ -208,6 +225,7 @@ public class UnitGroup : MonoBehaviour {
 
     public void UnitHittedOrFound(Transform enemy) {
         if(attacking) return;
+        if(escaping) return;
         PrepareBattle(enemy);
     }
 
@@ -303,6 +321,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     public Transform GiveMeEnemy(Transform myTransform) {
+        if(escaping) return null;
         if(!CheckEnemyLeft()) return null;
         Transform target = null;
         CheckEnemyGroup(myTransform, ref target);
@@ -389,6 +408,7 @@ public class UnitGroup : MonoBehaviour {
                 if (directionOpen) checkWay();
                 return false;
             }
+            if (hits.collider.transform != transform && hits.collider.transform.parent != transform && hits.collider.transform.parent.parent != transform) return false;
             if (hits.collider.transform.childCount > 0 && hits.collider.transform.GetChild(2).gameObject.layer != 10) return false;
             if (hits.collider.attachedRigidbody == transform.GetChild(2).GetComponent<Rigidbody2D>())
                 return true;
