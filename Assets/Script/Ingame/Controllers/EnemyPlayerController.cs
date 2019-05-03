@@ -253,86 +253,117 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
+    //IEnumerator Stage2AI() {
+    //    mission2on = true;
+    //    yield return new WaitForSeconds(5.0f);
+    //    HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+    //    groups[0] = summonParent.GetChild(6).GetComponent<UnitGroup>();
+    //    StartCoroutine(RacanDetector());
+    //    HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+    //    groups[1] = summonParent.GetChild(7).GetComponent<UnitGroup>();
+    //    StartCoroutine(WimpDetector());
+    //    StartCoroutine(RexDetector());
+    //    StartCoroutine(StationDetector());
+
+    //    yield return new WaitForSeconds(2.0f);
+    //    groupPath[0].Add(nodeParent.Find("S12").transform.position);
+    //    groupPath[0].Add(nodeParent.Find("S20").transform.position);
+    //    groupPath[1].Add(nodeParent.Find("S12").transform.position);
+    //    groupPath[1].Add(nodeParent.Find("S00").transform.position);
+    //    groups[0].SetMove(groupPath[0]);
+    //    groups[1].SetMove(groupPath[0]);
+    //}
+
+    //IEnumerator RacanDetector() {
+    //    while (true) {
+    //        if (!mission2on) break;
+    //        if (SearchLevelUp()) break;
+    //        if (groups[0] == null) {
+    //            yield return new WaitForSeconds(2.0f);
+    //            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
+    //            groups[0] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+    //            StartCoroutine(RacanDetector());
+    //            groups[0].SetMove(groupPath[0]);
+    //            break;
+    //        }
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
+
+    //IEnumerator WimpDetector() {
+    //    while (true) {
+    //        if (!mission2on) break;
+    //        if (SearchLevelUp()) break;
+    //        if (groups[1] == null) {
+    //            yield return new WaitForSeconds(2.0f);
+    //            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
+    //            groups[1] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+    //            StartCoroutine(WimpDetector());
+    //            groups[1].SetMove(groupPath[1]);
+    //            break;
+    //        }
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
+
+    //IEnumerator RexDetector() {
+    //    while (true) {
+    //        if (!PlayerController.Instance.FirstMove)
+    //            yield return new WaitForSeconds(0.1f);
+    //        else {
+    //            HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2], null);
+    //            break;
+    //        }
+    //    }
+    //}
+
+    //IEnumerator StationDetector() {
+    //    while (true) {
+    //        if (nodeParent.GetChild(0).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1
+    //            && nodeParent.GetChild(3).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1)
+    //            mission2on = false;
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
+
+    //private bool SearchLevelUp() {
+    //    foreach (ActiveCard card in playerctlr.GetComponent<PlayerActiveCards>().activeCards) {
+    //        if (card.ev.lv > 1) {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
     IEnumerator Stage2AI() {
-        mission2on = true;
-        yield return new WaitForSeconds(5.0f);
-        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
-        groups[0] = summonParent.GetChild(6).GetComponent<UnitGroup>();
-        StartCoroutine(RacanDetector());
-        HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
-        groups[1] = summonParent.GetChild(7).GetComponent<UnitGroup>();
-        StartCoroutine(WimpDetector());
-        StartCoroutine(RexDetector());
-        StartCoroutine(StationDetector());
+        for (int i = 0; i < 4; i++) spawnCool[i] = false;
+        mission3on = true;
+        nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
 
-        yield return new WaitForSeconds(2.0f);
-        groupPath[0].Add(nodeParent.Find("S12").transform.position);
-        groupPath[0].Add(nodeParent.Find("S20").transform.position);
-        groupPath[1].Add(nodeParent.Find("S12").transform.position);
-        groupPath[1].Add(nodeParent.Find("S00").transform.position);
-        groups[0].SetMove(groupPath[0]);
-        groups[1].SetMove(groupPath[0]);
-    }
-
-    IEnumerator RacanDetector() {
+        StartCoroutine(ProduceMana());
+        StartCoroutine(ProduceCitizen());
         while (true) {
-            if (!mission2on) break;
-            if (SearchLevelUp()) break;
-            if (groups[0] == null) {
-                yield return new WaitForSeconds(2.0f);
-                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0], null);
-                groups[0] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
-                StartCoroutine(RacanDetector());
-                groups[0].SetMove(groupPath[0]);
-                break;
-            }
             yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    IEnumerator WimpDetector() {
-        while (true) {
-            if (!mission2on) break;
-            if (SearchLevelUp()) break;
-            if (groups[1] == null) {
-                yield return new WaitForSeconds(2.0f);
-                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1], null);
-                groups[1] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
-                StartCoroutine(WimpDetector());
-                groups[1].SetMove(groupPath[1]);
-                break;
+            int heroIndex = UnityEngine.Random.Range(0, 3);
+            if (!spawnCool[heroIndex]) {
+                if (playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold <= aiMana) {
+                    aiMana -= (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.cost.gold;
+                    int spwanCitizen = 0;
+                    int reqCitizen = (int)playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex].baseSpec.unit.minion.count;
+                    if (reqCitizen > aiCitizen)
+                        spwanCitizen = aiCitizen;
+                    else
+                        spwanCitizen = reqCitizen;
+                    aiCitizen -= spwanCitizen;
+                    HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex], null, spwanCitizen);
+                    groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                    groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
+                    spawnCool[heroIndex] = true;
+                    StartUnitCoroutine(heroIndex);
+                }
             }
-            yield return new WaitForSeconds(0.1f);
+            if (!mission3on) break;
         }
-    }
-
-    IEnumerator RexDetector() {
-        while (true) {
-            if (!PlayerController.Instance.FirstMove)
-                yield return new WaitForSeconds(0.1f);
-            else {
-                HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2], null);
-                break;
-            }
-        }
-    }
-
-    IEnumerator StationDetector() {
-        while (true) {
-            if (nodeParent.GetChild(0).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1
-                && nodeParent.GetChild(3).GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_1)
-                mission2on = false;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    private bool SearchLevelUp() {
-        foreach (ActiveCard card in playerctlr.GetComponent<PlayerActiveCards>().activeCards) {
-            if (card.ev.lv > 1) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
