@@ -40,7 +40,6 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
                 minion.layer = transform.GetChild(2).gameObject.layer;
                 minion.transform.position = unitGroup.transform.position;
                 unitGroup.ResetData();
-                minion.GetComponent<UnitAI>().enabled = false;
             }
             return;
         }
@@ -52,7 +51,6 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
             minion.layer = transform.GetChild(2).gameObject.layer;
             minion.transform.position = unitGroup.transform.position;
             unitGroup.ResetData();
-            minion.GetComponent<UnitAI>().enabled = false;
         }
         else
             return;

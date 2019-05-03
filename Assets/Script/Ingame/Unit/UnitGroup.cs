@@ -221,6 +221,10 @@ public class UnitGroup : MonoBehaviour {
     }
 
     IEnumerator MinimapSpawnAlert() {
+        if(unitAIs[0].gameObject.layer != 10) {
+            transform.GetChild(1).gameObject.SetActive(false);
+            yield break;
+        }
         int count = 0;
         while (true) {
             transform.GetChild(1).gameObject.SetActive(false);
@@ -234,6 +238,7 @@ public class UnitGroup : MonoBehaviour {
     }
 
     IEnumerator MinimapBattleAlart() {
+        if(unitAIs[0].gameObject.layer != 10) yield break;
         while (attacking) {
             transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
             if (!attacking) {
