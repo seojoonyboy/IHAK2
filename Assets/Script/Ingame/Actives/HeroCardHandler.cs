@@ -70,4 +70,14 @@ public class HeroCardHandler : IngameCardHandler {
                 toggleGroup.AnyTogglesOn()
             );
     }
+
+    public void OnAlarmTxt(string msg) {
+        transform.Find("Alarm").gameObject.SetActive(true);
+        transform.Find("Alarm/Value").GetComponent<Text>().text = msg;
+    }
+
+    public void OffAlarmTxt() {
+        transform.Find("Alarm/Value").GetComponent<Text>().text = "";
+        transform.Find("Alarm").gameObject.SetActive(false);
+    }
 }
