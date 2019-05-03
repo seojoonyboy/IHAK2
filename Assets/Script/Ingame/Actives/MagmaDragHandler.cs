@@ -1,38 +1,46 @@
+using DataModules;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class MagmaDragHandler : SpellCardDragHandler {
-    void Start() {
-        //base.MoveBlock();
-    }
+    public override void OnEndDrag(PointerEventData eventData) {
+        base.OnEndDrag(eventData);
 
-    public override void OnEndDrag() {
-        base.OnEndDrag();
-    }
+        //RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        //UI가 있는 곳에서 Drop시 스킬 발동 하지 않음
+        GraphicRaycaster m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>(); ;
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
 
-    public override void OnBeginDrag() {
-        base.OnBeginDrag();
-    }
-
-    public override void SpellActivated() {
-        GetComponent<Magma>().StartDamaging();
-
-        ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
-        coolComp.coolTime = coolTime;
-
-        ConditionSet expSet = PlayerController.Instance
-            .MissionConditionsController()
-            .conditions.Find(x => x.condition == Conditions.cooltime_fix);
-        if (expSet != null) {
-            coolComp.coolTime = expSet.args[0];
-            //Debug.Log("마그마 카드 쿨타임 보정 : " + expSet.args[0]);
+        if (results.Count != 0) {
+            obj.SetActive(false);
+            return;
         }
 
-        coolComp.behaviour = this;
-        coolComp.StartCool();
+        if (UseCard()) {
+            obj.GetComponent<Magma>().StartDamaging();
 
-        GetComponent<SpellCardDragHandler>().enabled = false;
+            ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
+            coolComp.targetCard = gameObject;
+            coolComp.coolTime = coolTime;
+            coolComp.behaviour = this;
+            coolComp.StartCool();
+        }
+        else {
+            obj.SetActive(false);
+        }
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+    }
+
+    public override void OnBeginDrag(PointerEventData eventData) {
+        base.OnBeginDrag(eventData);
+
+        obj.GetComponent<Magma>().Init(data);
     }
 }

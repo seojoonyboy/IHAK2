@@ -1,101 +1,84 @@
 using BitBenderGames;
+using DataModules;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SpellCardDragHandler : MonoBehaviour {
-    [SerializeField] protected Camera camera;
+public class SpellCardDragHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler {
+    [SerializeField] public GameObject prefab, obj;
+    [SerializeField] Camera camera;
     [SerializeField] protected bool isInit = false;
-    [SerializeField] protected GameObject parentBuilding;
-    [SerializeField] public string[] data;
+    [SerializeField] protected GameObject targetCard;
+    [SerializeField] protected string[] data;
     [SerializeField] protected int coolTime;
     [SerializeField] protected IngameDeckShuffler deckShuffler;
-    [SerializeField] public GameObject targetCard;
 
-    private bool _mouseState;
-    public GameObject Target;
-    public Vector3 screenSpace;
-    public Vector3 offset;
+    protected Vector3 startScale;
+    protected Vector3 startPosition;
 
-    void Awake() {
-        Target = gameObject;
+    void Start() {
+        MoveBlock();
     }
 
-    public virtual void OnBeginDrag() {
+    public virtual void OnBeginDrag(PointerEventData eventData) {
+        startPosition = transform.position;
+        startScale = transform.localScale;
+
         Camera.main.GetComponent<MobileTouchCamera>().enabled = false;
-        GetComponent<BoundaryCamMove>().isDrag = true;
     }
 
-    public virtual void OnEndDrag() {
+    public virtual void OnEndDrag(PointerEventData eventData) {
+        transform.position = startPosition;
+
         Camera.main.GetComponent<MobileTouchCamera>().enabled = true;
-        GetComponent<BoundaryCamMove>().isDrag = false;
+    }
 
-        if (PlayerController.Instance.deckShuffler().UseCard(targetCard)) {
-            SpellActivated();
-            targetCard.GetComponent<SpellCardHandler>().Handle();
+    public virtual void OnDrag(PointerEventData eventData) {
+        transform.position = Input.mousePosition;
+
+        if (!isInit) {
+            Debug.LogError("Prefab 관련 초기화가 정상적으로 되지 않았습니다!");
+            return;
         }
-        else {
-            targetCard.GetComponent<SpellCardHandler>().Cancel();
+        if (obj != null) {
+            obj.SetActive(true);
+            Vector3 origin = camera.ScreenToWorldPoint(Input.mousePosition);
+            obj.transform.position = new Vector3(origin.x, origin.y, 0);
         }
     }
 
-    public virtual void OnDrag() { }
-    public virtual void SpellActivated() { }
+    public virtual void Init(ActiveSkill skill, GameObject targetCard) {
+        obj = Instantiate(prefab, GameObject.Find("Map").transform);
+        data = skill.method.args;
 
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            if (Target == GetClickedObject()) {
-                _mouseState = true;
-                screenSpace = Camera.main.WorldToScreenPoint(Target.transform.position);
-                offset = Target.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
+        startPosition = transform.position;
+        startScale = transform.localScale;
+        deckShuffler = PlayerController.Instance.deckShuffler();
+        camera = Camera.main;
 
-                OnBeginDrag();
-            }
-        }
-        if (Input.GetMouseButtonUp(0)) {
-
-            OnEndDrag();
-            _mouseState = false;
-        }
-        if (_mouseState) {
-            //keep track of the mouse position
-            var curScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
-
-            //convert the screen mouse position to world point and adjust with offset
-            var curPosition = Camera.main.ScreenToWorldPoint(curScreenSpace) + offset;
-
-            //update the position of the object in the world
-            Target.transform.position = curPosition;
-        }
-    }
-
-    GameObject GetClickedObject() {
-        GameObject target = null;
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        LayerMask mask = 1 << LayerMask.NameToLayer("UI");
-        RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
-        if(hits.collider == null) return null;
-        target = hits.collider.gameObject;
-        Debug.Log(target.name);
-        //IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
-        return target;
-    }
-
-    public virtual void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime, GameObject targetCard) {
-        this.camera = camera;
-        this.parentBuilding = parentBuilding;
-        this.deckShuffler = deckShuffler;
-        this.data = data;
-        this.coolTime = coolTime;
         this.targetCard = targetCard;
+        coolTime = skill.coolTime;
 
         isInit = true;
+    }
 
-        int range;
-        int.TryParse(this.data[0], out range);
-        range /= 2;
+    public bool UseCard() {
+        transform.position = startPosition;
+        transform.localScale = new Vector3(1, 1, 1);
 
-        GetComponent<CircleCollider2D>().radius = range;
-        transform.GetChild(0).localScale *= range;
+        var result = deckShuffler.UseCard(gameObject);
+        return result;
+    }
+
+    protected virtual void MoveBlock() {
+        EventTrigger et = GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+
+        entry.callback.AddListener(
+            (eventData) => Camera.main.GetComponent<TouchInputController>().OnEventTriggerPointerDown(null)
+        );
+
+        et.triggers.Add(entry);
     }
 }

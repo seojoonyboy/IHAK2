@@ -41,6 +41,7 @@ public class MinionAI : UnitAI {
             HP = MaxHealth;
         CalculateHealthBar();
         SetColliderData();
+        setState(aiState.NONE);
     }
 
     private void SetMaxHP() {

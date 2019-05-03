@@ -1,55 +1,49 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class WarCryDragHandler : SpellCardDragHandler {
-    void Start() {
-        //base.MoveBlock();
-    }
 
-    public override void OnEndDrag() {
-        base.OnEndDrag();
-        //base.OnEndDrag(eventData);
-        //if (UseCard()) {
-        //    GetComponent<WarCryDragHandler>().enabled = false;
+    public override void OnEndDrag(PointerEventData eventData) {
+        base.OnEndDrag(eventData);
 
-        //    var lists = FindObjectsOfType<UnitAI>();
-        //    foreach (UnitAI unit in lists) {
-        //        //아군 유닛만
-        //        if (unit.gameObject.layer == 10 && (unit.GetComponent<MinionAI>() != null || unit.GetComponent<HeroAI>() != null)) {
-        //            WarCry warCry = unit.gameObject.AddComponent<WarCry>();
-        //            warCry.Init(data);
-        //            warCry.StartBuff();
+        //RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        //UI가 있는 곳에서 Drop시 스킬 발동 하지 않음
+        GraphicRaycaster m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>(); ;
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
 
-        //            unit.AddBuff("war_cry", warCry);
-        //        }
-        //    }
+        if (results.Count != 0) return;
 
-        //    ActiveCardCoolTime coolComp = parentBuilding.AddComponent<ActiveCardCoolTime>();
-        //    coolComp.targetCard = gameObject;
-        //    coolComp.coolTime = coolTime;
-        //    coolComp.behaviour = this;
-        //    coolComp.StartCool();
-        //}
+        if (UseCard()) {
+            GetComponent<WarCryDragHandler>().enabled = false;
 
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
-        //PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+            var lists = FindObjectsOfType<UnitAI>();
+            foreach (UnitAI unit in lists) {
+                //아군 유닛만
+                if (unit.gameObject.layer == 10 && (unit.GetComponent<MinionAI>() != null || unit.GetComponent<HeroAI>() != null)) {
+                    WarCry warCry = unit.gameObject.AddComponent<WarCry>();
+                    warCry.Init(data);
+                    warCry.StartBuff();
 
-        //GetComponentInChildren<BoundaryCamMove>().isDrag = false;
-    }
+                    unit.AddBuff("war_cry", warCry);
+                }
+            }
 
-    public override void Init(Camera camera, GameObject parentBuilding, IngameDeckShuffler deckShuffler, string[] data, int coolTime, GameObject targetCard) {
-        this.camera = camera;
-        this.parentBuilding = parentBuilding;
-        this.deckShuffler = deckShuffler;
-        this.data = data;
-        this.coolTime = coolTime;
-        this.targetCard = targetCard;
-        isInit = true;
-
-        int range = 1000;
-
-        GetComponent<CircleCollider2D>().radius = range;
-        transform.GetChild(0).localScale *= range;
+            ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
+            coolComp.targetCard = gameObject;
+            coolComp.coolTime = coolTime;
+            coolComp.behaviour = this;
+            coolComp.StartCool();
+        }
+        else {
+            obj.SetActive(false);
+        }
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
     }
 }

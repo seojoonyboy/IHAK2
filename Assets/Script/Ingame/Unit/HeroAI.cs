@@ -81,8 +81,12 @@ public partial class HeroAI : UnitAI {
                 healthSlider.value = HP;
                 healthSlider.maxValue = MaxHealth;
 
+                Slider expSlider = unitCard.gameObject.transform.Find("Exp").GetComponent<Slider>();
+                expSlider.value = unitCard.ev.exp;
+                expSlider.maxValue = ExpNeed();
+
                 unitCard
-                    .gameObject.transform.Find("MinionInfo/DivideIcon/CurrentMinion")
+                    .gameObject.transform.Find("MinionInfo/CurrentMinion")
                     .GetComponent<Text>().text = transform
                     .parent.GetComponent<UnitGroup>()
                     .currentMinionNum.ToString();

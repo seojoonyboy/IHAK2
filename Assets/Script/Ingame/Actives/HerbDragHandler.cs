@@ -1,41 +1,47 @@
+using DataModules;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 public class HerbDragHandler : SpellCardDragHandler {
-    void Start() {
-        //base.MoveBlock();
-    }
 
-    public override void OnEndDrag() {
-        base.OnEndDrag();
-    }
+    public override void OnEndDrag(PointerEventData eventData) {
+        base.OnEndDrag(eventData);
 
-    public override void OnBeginDrag() {
-        base.OnBeginDrag();
-    }
+        //RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        //UI가 있는 곳에서 Drop시 스킬 발동 하지 않음
+        GraphicRaycaster m_Raycaster = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>(); ;
+        PointerEventData m_PointEventData = new PointerEventData(FindObjectOfType<EventSystem>());
+        m_PointEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointEventData, results);
 
-    public override void SpellActivated() {
-        Herb herb = gameObject.AddComponent<Herb>();
-        herb.Init(data);
-        herb.StartHealing();
-
-        ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
-        coolComp.targetCard = GetComponent<SpellCardDragHandler>().targetCard;
-        coolComp.coolTime = coolTime;
-
-        ConditionSet expSet = PlayerController.Instance
-            .MissionConditionsController()
-            .conditions.Find(x => x.condition == Conditions.cooltime_fix);
-        if (expSet != null) {
-            coolComp.coolTime = expSet.args[0];
-            //Debug.Log("Herb CoolTime Fix : " + expSet.args[0]);
+        if (results.Count != 0) {
+            obj.SetActive(false);
+            return;
         }
 
-        coolComp.behaviour = this;
-        coolComp.StartCool();
-        GetComponent<SpellCardDragHandler>().enabled = false;
+        if (UseCard()) {
+            obj.GetComponent<Herb>().StartHealing();
 
-        IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.USE_MAGIC, null, null);
+            ActiveCardCoolTime coolComp = targetCard.AddComponent<ActiveCardCoolTime>();
+            coolComp.targetCard = gameObject;
+            coolComp.coolTime = coolTime;
+            coolComp.behaviour = this;
+            coolComp.StartCool();
+        }
+        else {
+            obj.SetActive(false);
+        }
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = false;
+        PlayerController.Instance.deckShuffler().spellCardParent.GetComponent<FlowLayoutGroup>().enabled = true;
+    }
+
+    public override void OnBeginDrag(PointerEventData eventData) {
+        base.OnBeginDrag(eventData);
+
+        obj.GetComponent<Herb>().Init(data);
     }
 }

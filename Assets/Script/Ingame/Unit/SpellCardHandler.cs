@@ -26,14 +26,15 @@ public class SpellCardHandler : IngameCardHandler {
         toggle.isOn = !toggle.isOn;
         if (toggle.isOn) {
             instantiatedPrefab = Instantiate(prefab, PlayerController.Instance.spellPrefabParent);
-            instantiatedPrefab.GetComponent<SpellCardDragHandler>().Init(
-                camera: Camera.main,
-                parentBuilding: parentBuilding,
-                deckShuffler: PlayerController.Instance.deckShuffler(),
-                data: data,
-                coolTime: coolTime,
-                targetCard: targetCard
-            );
+            
+            //instantiatedPrefab.GetComponent<SpellCardDragHandler>().Init(
+            //    camera: Camera.main,
+            //    parentBuilding: parentBuilding,
+            //    deckShuffler: PlayerController.Instance.deckShuffler(),
+            //    data: data,
+            //    coolTime: coolTime,
+            //    targetCard: targetCard
+            //);
 
             Vector3 camPos = Camera.main.transform.position;
             camPos.z = 0;

@@ -18,6 +18,9 @@ public class ActiveCardCoolTime : CoolTime {
         if(targetCard.GetComponent<ActiveCardInfo>().data.type == "hero") {
             targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = ((int)(coolTime - currTime)).ToString();
         }
+        if (targetCard.GetComponent<ActiveCardInfo>().data.type == "active") {
+            targetCard.GetComponent<SpellCardDragHandler>().enabled = false;
+        }
     }
 
     public override void OnTime() {
@@ -29,6 +32,9 @@ public class ActiveCardCoolTime : CoolTime {
 
         if (targetCard.GetComponent<ActiveCardInfo>().data.type == "hero") {
             targetCard.transform.Find("Deactive/Value").GetComponent<Text>().text = "00";
+        }
+        if(targetCard.GetComponent<ActiveCardInfo>().data.type == "active") {
+            targetCard.GetComponent<SpellCardDragHandler>().enabled = true;
         }
         Destroy(GetComponent<ActiveCardCoolTime>());
     }

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4098081674590514}
   - component: {fileID: 212176125894487098}
+  - component: {fileID: 114727123062764940}
   m_Layer: 5
   m_Name: RangeTexture
   m_TagString: Untagged
@@ -36,9 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4263763910880020}
   - component: {fileID: 58108351778124754}
-  - component: {fileID: 114358614799262452}
   - component: {fileID: 114483137811766532}
-  - component: {fileID: 114237903270358576}
   m_Layer: 5
   m_Name: Magma
   m_TagString: Untagged
@@ -88,44 +87,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &114237903270358576
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1966172136889694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bdb4b74d63c8734aa148f73b55b04c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftOffset: 10
-  RightOffset: 10
-  TopOffset: 10
-  BottomOffset: 20
-  Speed: 10
-  isDrag: 0
---- !u!114 &114358614799262452
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1966172136889694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6af5ad00d0b8ce419f8acaef35270a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  isInit: 0
-  parentBuilding: {fileID: 0}
-  data: []
-  coolTime: 0
-  deckShuffler: {fileID: 0}
-  targetCard: {fileID: 0}
-  Target: {fileID: 0}
-  screenSpace: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114483137811766532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +98,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78aba04911e849747a9a1363bf73a3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range_texture: {fileID: 212176125894487098}
+--- !u!114 &114727123062764940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544030710607658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78aba04911e849747a9a1363bf73a3c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range_texture: {fileID: 212176125894487098}
 --- !u!212 &212176125894487098
 SpriteRenderer:
   m_ObjectHideFlags: 1
