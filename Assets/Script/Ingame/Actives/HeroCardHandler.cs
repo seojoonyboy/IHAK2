@@ -22,12 +22,16 @@ public class HeroCardHandler : IngameCardHandler {
 
     protected override void OnSingleClick() {
         if(instantiatedUnitObj != null) {
-            IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
-
             UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
             if (unitGroup == null) return;
 
-            unitGroup.checkWay();
+            if (unitGroup.IsMoving) {
+                IngameAlarm.instance.SetAlarm("이동중에는 방향을 조작할 수 없습니다.");
+            }
+            else {
+                IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
+                unitGroup.checkWay();
+            }
         }
         else {
             Toggle toggle = GetComponent<Toggle>();
@@ -69,5 +73,15 @@ public class HeroCardHandler : IngameCardHandler {
             .ToggleListener(
                 toggleGroup.AnyTogglesOn()
             );
+    }
+
+    public void OnAlarmTxt(string msg) {
+        transform.Find("Alarm").gameObject.SetActive(true);
+        transform.Find("Alarm/Value").GetComponent<Text>().text = msg;
+    }
+
+    public void OffAlarmTxt() {
+        transform.Find("Alarm/Value").GetComponent<Text>().text = "";
+        transform.Find("Alarm").gameObject.SetActive(false);
     }
 }
