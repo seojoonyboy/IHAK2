@@ -100,7 +100,7 @@ public partial class UnitAI : AI.SkyNet {
         setState(aiState.MOVE);
     }
 
-    private void setState(aiState state) {
+    protected void setState(aiState state) {
         update = null;
         currentTime = 0f;
         switch (state) {
