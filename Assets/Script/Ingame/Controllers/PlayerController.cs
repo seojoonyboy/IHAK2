@@ -28,6 +28,13 @@ public partial class PlayerController : SerializedMonoBehaviour {
         set { firstMove = value; }
     }
 
+    private GameObject clickedUnitgroup = null;
+
+    public GameObject ClickedUnitgroup {
+        get { return clickedUnitgroup; }
+        set { clickedUnitgroup = value; }
+    }
+
     IngameScoreManager scoreManager;
 
     [Header(" - Player Maps")]
