@@ -15,6 +15,7 @@ public partial class CreepStation : DefaultStation {
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
+        respawnTime = new ReactiveProperty<int>(spawntime);
         targets = new List<GameObject>();
         SetMonsters();
         MonstersReset(false);
@@ -194,12 +195,13 @@ public partial class CreepStation {
 }
 
 public partial class CreepStation {
-    public ReactiveProperty<int> respawnTime = new IntReactiveProperty(20);
+    public ReactiveProperty<int> respawnTime;
+    public int spawntime = 60;
 
     public void PostRespawnTimer() { 
         var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0),TimeSpan.FromSeconds(1)).Publish().RefCount();
         oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { respawnTime.Value--;}).AddTo(this);
-        oneSecond.Where(_ => respawnTime.Value <= 0).Subscribe(_ => { RespawnMonster(); respawnTime.Value = 20; }).AddTo(this);
+        oneSecond.Where(_ => respawnTime.Value <= 0).Subscribe(_ => { RespawnMonster(); respawnTime.Value = spawntime; }).AddTo(this);
     }
 
     public void RespawnMonster() {
