@@ -186,6 +186,10 @@ public partial class UnitAI : AI.SkyNet {
     public virtual void attackUnit() {
         AI.SkyNet skyNet = targetUnit.GetComponent<AI.SkyNet>();
         if(skyNet != null) {
+            if(skyNet.HP <= 0) {
+                targetUnit = null;
+                return;
+            } 
             skyNet.Damage(power, transform);
         }
         else if(targetUnit.GetComponent<TileObject>()) {
