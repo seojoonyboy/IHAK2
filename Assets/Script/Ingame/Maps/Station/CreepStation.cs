@@ -11,17 +11,26 @@ using UniRx;
 public partial class CreepStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
+    [SerializeField] [ReadOnly] public GameObject stationObject;
 
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
+        
         pivotTime = 20;
         intervalTime = new ReactiveProperty<int>(pivotTime);
         targets = new List<GameObject>();
         SetMonsters();
+        SetCreepPoint();
         MonstersReset(false);
         PostRespawnTimer();        
+    }
+
+    private void SetCreepPoint() {
+        stationObject = ConstructManager.Instance.gameObject.GetComponent<BuildingImages>().pointObjects[0];
+        stationObject = Instantiate(stationObject, transform);
+        stationObject.transform.SetAsLastSibling();
     }
 
     private void LateUpdate() {

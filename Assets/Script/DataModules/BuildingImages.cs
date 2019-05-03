@@ -11,6 +11,8 @@ public class BuildingImages : MonoBehaviour {
         primal_other_buildingImages,
         primal_product_buildingIcons,
         primal_other_buildingIcons;
+
+    public GameObject[] pointObjects;
     
     public SkeletonDataAsset[] 
         primal_product_buildingSpines,

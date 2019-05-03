@@ -4150,6 +4150,11 @@ Prefab:
       propertyPath: typeImages.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: pointObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 114106502685654768, guid: 8940f3bec3896b14dba5bfd19bd44de6,
         type: 2}
       propertyPath: primal_unit_cardImages.Array.size
@@ -4252,6 +4257,30 @@ Prefab:
       propertyPath: unfog
       value: 
       objectReference: {fileID: 1413295073701638, guid: 73d31f08f181d4919ae668a97c7e5340,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: pointObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1171954147315184, guid: a02170fdd42cea942b5f144f9c18d51e,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: pointObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1097099380438830, guid: 45ef5aa961ecbc344bdd7e74d79ac2ee,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: pointObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 1117920691956014, guid: 45ef5aa961ecbc344bdd7e74d79ac2ee,
+        type: 2}
+    - target: {fileID: 114255265318009386, guid: 8940f3bec3896b14dba5bfd19bd44de6,
+        type: 2}
+      propertyPath: pointObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 1819311975467568, guid: 441714596937045489247a5608f378f4,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8940f3bec3896b14dba5bfd19bd44de6, type: 2}
