@@ -339,9 +339,10 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         for (int i = 0; i < 4; i++) spawnCool[i] = false;
         mission3on = true;
         nodeParent.Find("S12").GetComponent<DefaultStation>().OwnerNum = PlayerController.Player.PLAYER_2;
-        int countUnit = PlayerController.Instance.playerActiveCards().opponentCards.Count;
         StartCoroutine(ProduceMana());
         StartCoroutine(ProduceCitizen());
+        yield return new WaitForSeconds(1.0f);
+        int countUnit = PlayerController.Instance.playerActiveCards().opponentCards.Count;
         while (true) {
             yield return new WaitForSeconds(0.1f);
             int heroIndex = UnityEngine.Random.Range(0, countUnit);
