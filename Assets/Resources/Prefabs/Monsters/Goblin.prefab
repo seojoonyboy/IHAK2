@@ -439,6 +439,7 @@ MonoBehaviour:
   ownerNum: 0
   healthBar: {fileID: 4878932774865594}
   expPoint: 0
+  standingStation: {fileID: 0}
   originPos: {fileID: 0}
   patrolTarget: {x: 0, y: 0}
   moveToTarget: {fileID: 0}
@@ -612,6 +613,8 @@ MonoBehaviour:
   idleAnimationName: 1.idle
   attackAnimationName: 3.attack
   skillAnimationName: 
+  skinBlueSkull: 
+  skinRedSkull: 
 --- !u!212 &212137986636016610
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -656,7 +659,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!212 &212410172468577592
 SpriteRenderer:
@@ -702,7 +705,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!222 &222091567231986970
 CanvasRenderer:
