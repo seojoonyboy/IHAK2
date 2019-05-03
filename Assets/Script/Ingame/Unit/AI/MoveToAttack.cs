@@ -7,7 +7,7 @@ namespace AI_submodule {
     public class MoveToAttack : MonoBehaviour {
         Transform target;
         StateController stateController;
-        float speed = 2;
+        float speed = 4;
         public bool isCloseToTarget;
         // Update is called once per frame
         void Update() {
