@@ -225,6 +225,17 @@ public partial class UnitAI : AI.SkyNet {
         base.Damage(damage, enemy);
         if (myGroup == null || enemy == null) return;
         myGroup.UnitHittedOrFound(enemy);
+        CheckisNeedChangeTarget(enemy);
+    }
+
+    private void CheckisNeedChangeTarget(Transform enemy) {
+        if(targetUnit == null) return;
+        IngameBuilding building = targetUnit.GetComponent<IngameBuilding>();
+        TileObject HQ = targetUnit.GetComponent<TileObject>();
+        bool isBuilding = (building != null || HQ != null);
+        if(!isBuilding) return;
+        if(enemy.GetComponent<UnitAI>() == null) return;
+        targetUnit = enemy;
     }
 
     public void Heal() {
