@@ -18,7 +18,7 @@ public partial class CreepStation : DefaultStation {
         OwnerNum = PlayerController.Player.NEUTRAL;
         StationIdentity = StationBasic.StationState.Creep;
         
-        pivotTime = 20;
+        pivotTime = 60;
         intervalTime = new ReactiveProperty<int>(pivotTime);
         targets = new List<GameObject>();
         SetMonsters();

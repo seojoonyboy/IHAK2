@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StationBasic : MonoBehaviour {
 
@@ -29,7 +30,15 @@ public class StationBasic : MonoBehaviour {
                 gameObject.AddComponent<PlayerBaseStation>();
                 break;
         }
+        StartCoroutine(DrawStationName());
 	}
+
+    IEnumerator DrawStationName() {
+        yield return new WaitForSeconds(3.0f);
+        GameObject name = Resources.Load("Prefabs/BuildingName") as GameObject;
+        TextMeshPro stationName = Instantiate(name, transform).GetComponent<TextMeshPro>();
+        stationName.text = stationstate.ToString();
+    }
 
     public enum StationState {
         PlayerBase = 0,

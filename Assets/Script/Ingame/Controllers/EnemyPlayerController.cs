@@ -501,7 +501,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[1] = false;
                 break;
             }
-            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
+            if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[1].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(1);
             yield return new WaitForSeconds(0.1f);
         }
@@ -514,7 +514,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[2] = false;
                 break;
             }
-            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
+            if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[2].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(2);
             yield return new WaitForSeconds(0.1f);
         }
@@ -527,7 +527,7 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 spawnCool[3] = false;
                 break;
             }
-            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
+            if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[3].currentStation.GetComponent<CreepStation>() != null)
                 FindPath(3);
             yield return new WaitForSeconds(0.1f);
         }
