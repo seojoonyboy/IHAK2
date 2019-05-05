@@ -25,7 +25,7 @@ public class HeroCardHandler : IngameCardHandler {
             UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
             if (unitGroup == null) return;
 
-            if (!unitGroup.IsClickable) {
+            if (unitGroup.IsMoving) {
                 IngameAlarm.instance.SetAlarm("이동중에는 방향을 조작할 수 없습니다.");
             }
             else {
