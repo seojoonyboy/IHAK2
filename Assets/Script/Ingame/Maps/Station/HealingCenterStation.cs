@@ -42,6 +42,8 @@ public partial class HealingCenterStation : DefaultStation {
             coroutine = SeizeBuilding();
             StartCoroutine(coroutine);
         }
+
+        if (enemys.Count == 0) startSeize = false;
     }
 
     public override void DestroyEnteredTarget(GameObject unitObj) {

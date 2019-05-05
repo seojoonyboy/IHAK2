@@ -37,6 +37,8 @@ public partial class TowerStation : DefaultStation {
             coroutine = FindOwner();
             StartCoroutine(coroutine);
         }
+
+        if (targets.Count == 0) startSeize = false;
 	}
 
     public override void DestroyEnteredTarget(GameObject unitObj) {

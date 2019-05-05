@@ -41,6 +41,8 @@ public partial class BaseCampStation : DefaultStation {
             startSeize = true;
             StartCoroutine(FindOwner());
         }
+
+        if (targets.Count == 0) startSeize = false;
     }
 
     public override void DestroyEnteredTarget(GameObject unitObj) {
