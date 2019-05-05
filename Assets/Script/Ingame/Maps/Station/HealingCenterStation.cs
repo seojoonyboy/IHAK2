@@ -43,7 +43,14 @@ public partial class HealingCenterStation : DefaultStation {
             StartCoroutine(coroutine);
         }
 
-        if (enemys.Count == 0) startSeize = false;
+        if (enemys.Count == 0) {
+            if(coroutine != null) {
+                isAlreadyCoroutine = false;
+                StopCoroutine(coroutine);
+                circularSlider.Reset();
+            }
+            startSeize = false;
+        }
     }
 
     public override void DestroyEnteredTarget(GameObject unitObj) {
@@ -66,6 +73,7 @@ public partial class HealingCenterStation : DefaultStation {
 
             if (canSeize()) {
                 time++;
+                Debug.Log("Seize : " + time);
             }
 
             if (time == 100) {
