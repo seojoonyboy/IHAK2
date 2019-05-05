@@ -22,6 +22,10 @@ namespace ingameUIModules {
             if (slider.fillAmount == 1) occupyTerritory();
         }
 
+        public void ChangeByValue(float value) {
+            slider.fillAmount = value / 100.0f;
+        }
+
         public void DecreaseByPercentage(float amount) {
             float val = amount / 100.0f;
             slider.fillAmount -= val;

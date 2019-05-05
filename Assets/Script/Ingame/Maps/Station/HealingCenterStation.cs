@@ -1,3 +1,4 @@
+using ingameUIModules;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,11 @@ public partial class HealingCenterStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
     [SerializeField] [ReadOnly] protected int seizePlayer;
+    [SerializeField] [ReadOnly] GameObject occupySlider;
+    [SerializeField] [ReadOnly] CircularSlider circularSlider;
 
+    bool isAlreadyCoroutine = false;
+    IEnumerator coroutine;
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
@@ -18,6 +23,9 @@ public partial class HealingCenterStation : DefaultStation {
         Building = Resources.Load("Prefabs/FieldHospital") as GameObject;
         Instantiate(Building, transform);
         SettingFog();
+
+        occupySlider = Instantiate(Resources.Load("Prefabs/OccupySlider") as GameObject, transform);
+        circularSlider = occupySlider.GetComponent<CircularSlider>();
     }
 
     private void Update() {
@@ -26,9 +34,13 @@ public partial class HealingCenterStation : DefaultStation {
         //    seizePlayer = enemys[0].layer;
         //    StartCoroutine(SeizeNeutralBuilding());
         //}
+
+        //점령한 유닛이 없고 상대 유닛이 왔을 때 점령 시작
+        //Coroutine이 2번 시작되는 버그가 있음
         if (!startSeize && enemys.Count > 0 && healingTarget.Count == 0) {
             startSeize = true;
-            StartCoroutine(SeizeBuilding());
+            coroutine = SeizeBuilding();
+            StartCoroutine(coroutine);
         }
     }
 
@@ -38,12 +50,22 @@ public partial class HealingCenterStation : DefaultStation {
     }
 
     IEnumerator SeizeBuilding() {
+        if (isAlreadyCoroutine) StopCoroutine(coroutine);
+
+        isAlreadyCoroutine = true;
         int time = 0;
+        circularSlider.Reset();
+
         while (startSeize) {
             if (enemys.Count == 0) {
                 startSeize = false;
                 break;
             }
+
+            if (canSeize()) {
+                time++;
+            }
+
             if (time == 100) {
                 OwnerNum = (PlayerController.Player)enemys[0].gameObject.layer;
                 GetComponent<Collider2D>().enabled = false;
@@ -51,14 +73,15 @@ public partial class HealingCenterStation : DefaultStation {
                 healingTarget.Clear();
                 GetComponent<Collider2D>().enabled = true;
                 startSeize = false;
+                isAlreadyCoroutine = false;
                 if (OwnerNum == PlayerController.Player.PLAYER_1)
                     IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
             }
             if (healingTarget.Count > 0) startSeize = false;
+            Debug.Log(time);
+            circularSlider.ChangeByValue(time);
             yield return new WaitForSeconds(0.1f);
-            time++;
         }
-
     }
 
     IEnumerator SeizeNeutralBuilding() {
@@ -76,12 +99,31 @@ public partial class HealingCenterStation : DefaultStation {
                 }
             }
             yield return new WaitForSeconds(0.1f);
-            StartCoroutine(SeizeBuilding());
+            //StartCoroutine(SeizeBuilding());
             startSeize = false;
         }
     }
 
+    bool canSeize() {
+        var query =
+            from unit in enemys
+            where(unit.GetComponent<HeroAI>() != null)
+            group unit by unit.GetComponent<UnitAI>().ownerNum;
 
+        int count = 0;
+        foreach(var group in query) {
+            count++;
+        }
+        //Debug.Log("그룹 : " + count);
+        if(count == 1) {
+            //Debug.Log("점령 진행");
+            return true;
+        }
+        else {
+            //Debug.Log("적이 감지되어 점령 중지");
+            return false;
+        }
+    }
 }
 
 public partial class HealingCenterStation : DefaultStation {
