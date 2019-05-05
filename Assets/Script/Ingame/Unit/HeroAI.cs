@@ -141,15 +141,26 @@ public partial class HeroAI : UnitAI {
     }
 
     public void ExpGain(int exp) {
-        ConditionSet expSet = PlayerController.Instance.MissionConditionsController().conditions.Find(x => x.condition == Conditions.exp_add);
-        if(expSet == null)
-            expSet = PlayerController.Instance.MissionConditionsController().oppenentConditions.Find(x => x.condition == Conditions.exp_add);
-
-        if (expSet != null) {
-            int percentage = expSet.args[0] / 100;
-            exp += exp * percentage;
-            //Debug.Log("영웅 경험치 보정 : " + percentage);
+        if(gameObject.layer == 10) {
+            ConditionSet expSet = PlayerController.Instance
+                .MissionConditionsController()
+                .conditions.Find(x => x.condition == Conditions.exp_add);
+            if (expSet != null) {
+                int percentage = expSet.args[0] / 100;
+                exp += exp * percentage;
+            }
         }
+        
+        else if(gameObject.layer == 11) {
+            ConditionSet expSet = PlayerController.Instance
+                .MissionConditionsController()
+                .oppenentConditions.Find(x => x.condition == Conditions.exp_add);
+            if (expSet != null) {
+                int percentage = expSet.args[0] / 100;
+                exp += exp * percentage;
+            }
+        }
+
         unitCard.ev.exp += exp;
         CheckLv();
         calculateExpBar();
