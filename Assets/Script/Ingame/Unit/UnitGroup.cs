@@ -294,11 +294,27 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private bool CheckEnemyLeft() {
+        bool enemyGroupLeft;
+        bool towerHPLeft = false;
         if(enemyGroup == null) return false;
-        if(enemyGroup.Count != 0 || enemyBuilding != null) return true;
+        enemyGroupLeft = enemyGroup.Count != 0;
+        towerHPLeft = CheckBuildingHPLeft();
+        if(enemyGroupLeft || towerHPLeft) return true;
         enemyGroup = null;
         enemyBuilding = null;
         FinishBattle();
+        return false;
+    }
+
+    private bool CheckBuildingHPLeft() {
+        if(enemyBuilding != null) {
+            AI.SkyNet towerSkyNet = enemyBuilding.GetComponent<AI.SkyNet>();
+            TileObject towerTileObject = enemyBuilding.GetComponent<TileObject>();
+            if(towerSkyNet != null)
+                return enemyBuilding.GetComponent<AI.SkyNet>().HP > 0;
+            else if(towerTileObject != null)
+                return true;
+        }
         return false;
     }
 
