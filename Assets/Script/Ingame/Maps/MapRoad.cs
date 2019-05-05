@@ -9,4 +9,11 @@ public class MapRoad : MapNode {
 		if(stations[0].mapPostion == station) return stations[1];
 		else return stations[0];
 	}
+
+	public bool IsNear(EnumMapPosition station) {
+		for(int i = 0; i < stations.Length; i++)
+			if(stations[i].mapPostion == station)
+				return true;
+		return false;
+	}
 }

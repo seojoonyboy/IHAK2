@@ -208,7 +208,34 @@ public class UnitGroup : MonoBehaviour {
 
     public void UnitHittedOrFound(Transform enemy) {
         if(attacking) return;
+        if(CheckDifferentRoad(enemy)) return;
         PrepareBattle(enemy);
+    }
+
+    private bool CheckDifferentRoad(Transform enemy) {
+        UnitGroup enemyGroup = enemy.GetComponentInParent<UnitGroup>();
+        if(enemyGroup == null) return false;
+        if(CheckSameRoad(enemyGroup.currentNode)) return false;
+        return true;
+    }
+
+    private bool CheckSameRoad(MapNode enemyNode) {
+        //같은 위치면 전투 발생
+        if(enemyNode.mapPostion == currentNode.mapPostion) return true;
+        //둘 다 길이면 서로 멈
+        if((int)enemyNode.mapPostion >= 100 && (int)currentNode.mapPostion >= 100) return false;
+        //둘 다 거점이면 (서로 다른 거점) 서로 멈
+        if((int)enemyNode.mapPostion < 100 && (int)currentNode.mapPostion < 100) return false;
+        //길과 거점이면 비교를 구체적으로
+        return StationandRoadClose(enemyNode);
+    }
+
+    private bool StationandRoadClose(MapNode enemyNode) {
+        MapRoad road1 = enemyNode.GetComponent<MapRoad>();
+        MapRoad road2 = currentNode.GetComponent<MapRoad>();
+        if(road1 != null) return road1.IsNear(currentNode.mapPostion);
+        if(road2 != null) return road2.IsNear(enemyNode.mapPostion);
+        return false;
     }
 
     private void PrepareBattle(Transform enemy) {
@@ -294,11 +321,27 @@ public class UnitGroup : MonoBehaviour {
     }
 
     private bool CheckEnemyLeft() {
+        bool enemyGroupLeft;
+        bool towerHPLeft = false;
         if(enemyGroup == null) return false;
-        if(enemyGroup.Count != 0 || enemyBuilding != null) return true;
+        enemyGroupLeft = enemyGroup.Count != 0;
+        towerHPLeft = CheckBuildingHPLeft();
+        if(enemyGroupLeft || towerHPLeft) return true;
         enemyGroup = null;
         enemyBuilding = null;
         FinishBattle();
+        return false;
+    }
+
+    private bool CheckBuildingHPLeft() {
+        if(enemyBuilding != null) {
+            AI.SkyNet towerSkyNet = enemyBuilding.GetComponent<AI.SkyNet>();
+            TileObject towerTileObject = enemyBuilding.GetComponent<TileObject>();
+            if(towerSkyNet != null)
+                return enemyBuilding.GetComponent<AI.SkyNet>().HP > 0;
+            else if(towerTileObject != null)
+                return true;
+        }
         return false;
     }
 
