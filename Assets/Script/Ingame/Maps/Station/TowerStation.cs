@@ -1,3 +1,4 @@
+using ingameUIModules;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,11 @@ using UnityEngine;
 public partial class TowerStation : DefaultStation {
     [SerializeField] [ReadOnly] protected bool startSeize = false;
     [SerializeField] [ReadOnly] protected bool rebuilding = false;
+    [SerializeField] [ReadOnly] GameObject occupySlider;
+    [SerializeField] [ReadOnly] CircularSlider circularSlider;
 
+    IEnumerator coroutine;
+    bool isAlreadyCoroutine = false;
     // Use this for initialization
     void Start () {
         OwnerNum = PlayerController.Player.NEUTRAL;
@@ -19,6 +24,9 @@ public partial class TowerStation : DefaultStation {
         towerComponent = tower.GetComponent<Tower_Detactor>();
         towerComponent.Init(null);
         SettingFog();
+
+        occupySlider = Instantiate(Resources.Load("Prefabs/OccupySlider") as GameObject, transform);
+        circularSlider = occupySlider.GetComponent<CircularSlider>();
     }
 	
 	// Update is called once per frame
@@ -26,7 +34,8 @@ public partial class TowerStation : DefaultStation {
         if (rebuilding) return;
         if (towerComponent.IsDestroyed && !startSeize) {
             startSeize = true;
-            StartCoroutine(FindOwner());
+            coroutine = FindOwner();
+            StartCoroutine(coroutine);
         }
 	}
 
@@ -39,7 +48,12 @@ public partial class TowerStation : DefaultStation {
     }
 
     IEnumerator FindOwner() {
+        if (isAlreadyCoroutine) StopCoroutine(coroutine);
+
         int targetLayer = 0;
+        int time = 0;
+        isAlreadyCoroutine = true;
+
         while (startSeize) {
             if(targets.Count == 0) {
                 startSeize = false; 
@@ -55,14 +69,22 @@ public partial class TowerStation : DefaultStation {
                     yield return new WaitForSeconds(0.1f);
                     if (targetLayer != target.layer) startSeize = false;
                 }
-            }   
+            }
             yield return new WaitForSeconds(0.1f);
-            OwnerNum = (PlayerController.Player)targetLayer;
-            GetComponent<Collider2D>().enabled = false;
-            targets.Clear();
-            GetComponent<Collider2D>().enabled = true;
-            StartCoroutine(RebuildTower());
-            startSeize = false;
+
+            if (canSeize()) {
+                time++;
+                circularSlider.ChangeByValue(time);
+
+                if (time == 100) {
+                    OwnerNum = (PlayerController.Player)targetLayer;
+                    GetComponent<Collider2D>().enabled = false;
+                    targets.Clear();
+                    GetComponent<Collider2D>().enabled = true;
+                    StartCoroutine(RebuildTower());
+                    startSeize = false;
+                }
+            }
         }
     }
 
@@ -76,6 +98,27 @@ public partial class TowerStation : DefaultStation {
         tower.layer = (int)OwnerNum;
         towerComponent = tower.GetComponent<Tower_Detactor>();
         rebuilding = false;
+    }
+
+    bool canSeize() {
+        var query =
+            from unit in targets
+            where (unit.GetComponent<HeroAI>() != null)
+            group unit by unit.GetComponent<UnitAI>().ownerNum;
+
+        int count = 0;
+        foreach (var group in query) {
+            count++;
+        }
+        //Debug.Log("그룹 : " + count);
+        if (count == 1) {
+            //Debug.Log("점령 진행");
+            return true;
+        }
+        else {
+            //Debug.Log("적이 감지되어 점령 중지");
+            return false;
+        }
     }
 }
 
