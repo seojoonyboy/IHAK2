@@ -48,8 +48,8 @@ namespace Container {
                 }
                 if (value > 1000) { value = 1000; return; }
                 citizen = value;
-                PlayerController.Instance.resourceManager().RefreshCitizen();
-                PlayerController.Instance.CitizenSpawnController().AddCitizen();
+                //PlayerController.Instance.resourceManager().RefreshCitizen();
+                //PlayerController.Instance.CitizenSpawnController().AddCitizen();
 
                 citizen_readonly = (float)citizen;
             }
