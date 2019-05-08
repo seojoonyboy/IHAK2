@@ -8,7 +8,6 @@ using UnityEngine;
 public partial class HealingCenterStation : DefaultStation {
 
     [SerializeField] [ReadOnly] protected bool startSeize = false;
-    [SerializeField] [ReadOnly] protected int seizePlayer;
     [SerializeField] [ReadOnly] GameObject occupySlider;
     [SerializeField] [ReadOnly] CircularSlider circularSlider;
 
@@ -146,10 +145,6 @@ public partial class HealingCenterStation : DefaultStation {
         if (collision.gameObject.layer == 16) return;
         if ((collision.gameObject.layer != (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!enemys.Exists(x => x == collision.gameObject)) enemys.Add(collision.gameObject);
-            if(OwnerNum == PlayerController.Player.NEUTRAL) {
-                if (seizePlayer != collision.gameObject.layer)
-                    startSeize = false;
-            }
         }
         if ((collision.gameObject.layer == (int)OwnerNum) && collision.GetComponent<UnitAI>() != null) {
             if (!healingTarget.Exists(x => x == collision.gameObject)) healingTarget.Add(collision.gameObject);
