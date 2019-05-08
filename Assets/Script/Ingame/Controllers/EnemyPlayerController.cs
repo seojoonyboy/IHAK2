@@ -45,7 +45,6 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     public Dictionary<PlayerController.Player, GameObject> maps;
     IngameSceneEventHandler eventHandler;
     Req_deckDetail.Deck deck;
-    public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     Transform myCity;
 
@@ -79,8 +78,6 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
-
-        hq_mapStation = GameObject.Find("S12").GetComponent<MapStation>();
         _instance = this;
     }
 
@@ -178,18 +175,15 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     [Header(" - Prefabs")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<string, GameObject> heroPrefabs;
-
-    [SerializeField] GameObject unitGroupPrefab;
     [SerializeField] Transform summonParent;
 
     public void HeroSummon(ActiveCard card, GameObject cardObj, int minionNum = 0) {
-        GameObject unitGroup = Instantiate(unitGroupPrefab, summonParent);
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if (result == null) {
             result = GetHeroPrefab("n_uu_01001");
         }
 
-        GameObject hero = Instantiate(result, unitGroup.transform);
+        GameObject hero = Instantiate(result, summonParent);
         //cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
@@ -203,9 +197,9 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
         if (mission2on)
-            _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform, true);
+            _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, summonParent, true);
         if (mission3on)
-            _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform, minionNum);
+            _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, summonParent, minionNum);
         //GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
@@ -237,7 +231,6 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                 IngameHpSystem.Instance.HpChanged(PlayerController.Player.PLAYER_2, hq.GetComponent<IngameBuilding>().HP);
             });
     }
-
 }
 
 public partial class EnemyPlayerController : SerializedMonoBehaviour {
@@ -246,8 +239,6 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
 
     bool mission2on = false;
     bool mission3on = false;
-
-    UnitGroup[] groups; //1:라칸, 2:윔프, 3:쉘, 4:렉스 
     List<Vector3>[] groupPath;
 }
 
@@ -357,8 +348,9 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                         spwanCitizen = reqCitizen;
                     aiCitizen -= spwanCitizen;
                     HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex], null, spwanCitizen);
-                    groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
-                    groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
+                    //TODO : 영웅 소환 그룹 넣기 관련 정리 필요
+                    //groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                    //groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
                     spawnCool[heroIndex] = true;
                     StartUnitCoroutine(heroIndex);
                 }
@@ -402,8 +394,9 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
                         spwanCitizen = reqCitizen;
                     aiCitizen -= spwanCitizen;
                     HeroSummon(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[heroIndex], null, spwanCitizen);
-                    groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
-                    groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
+                    //TODO : 영웅 소환 그룹 넣기 관련 정리 필요
+                    //groups[heroIndex] = summonParent.GetChild(summonParent.childCount - 1).GetComponent<UnitGroup>();
+                    //groups[heroIndex].currentStation = nodeParent.Find("S12").GetComponent<MapStation>();
                     spawnCool[heroIndex] = true;
                     StartUnitCoroutine(heroIndex);
                 }
@@ -445,90 +438,56 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
         }
     }
 
-    private void FindPath(int unitNum) {
-        if (!groups[unitNum].IsMoving && !groups[unitNum].Attacking) {
-            int count = 0;
-            while (true) {
-                MapStation.NodeDirection wayNum = (MapStation.NodeDirection)UnityEngine.Random.Range(0, 8);
-                if (groups[unitNum].currentStation.adjNodes.ContainsKey(wayNum)) {
-                    if (groups[unitNum].currentStation.adjNodes[wayNum].gameObject.GetComponent<DefaultStation>().OwnerNum != PlayerController.Player.PLAYER_2) {
-                        SetPath(unitNum, wayNum);
-                        break;
-                    }
-                    else if (groups[unitNum].currentStation.adjNodes[wayNum].transform.position.x < transform.position.x) {
-                        SetPath(unitNum, wayNum);
-                        break;
-                    }
-                    else if (count > 100) {
-                        SetPath(unitNum, wayNum);
-                        break;
-                    }
-                    else
-                        count++;
-                }
-            }
-            return;
-        }
-        else return;
-    }
-
-    private void SetPath(int unitNum, MapStation.NodeDirection wayNum) {
-        groupPath[unitNum] = new List<Vector3>();
-        groupPath[unitNum].Add(groups[unitNum].currentStation.transform.position);
-        groupPath[unitNum].Add(groups[unitNum].currentStation.adjNodes[wayNum].transform.position);
-        groups[unitNum].SetMove(groupPath[unitNum]);
-    }
-
-
+    //TODO : 길찾기 관련 다시 구성할 필요 있습니다.
     IEnumerator RacanAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[0] == null) {
+            /*if (groups[0] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[0].baseSpec.unit.coolTime);
                 spawnCool[0] = false;
                 break;
             }
             if (groups[0].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[0].currentStation.GetComponent<CreepStation>() != null)
-                FindPath(0);
+                FindPath(0);*/
             yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator WimpAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[1] == null) {
+            /*if (groups[1] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[1].baseSpec.unit.coolTime);
                 spawnCool[1] = false;
                 break;
             }
             if (groups[1].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[1].currentStation.GetComponent<CreepStation>() != null)
-                FindPath(1);
+                FindPath(1);*/
             yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator ShellAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[2] == null) {
+            /*if (groups[2] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[2].baseSpec.unit.coolTime);
                 spawnCool[2] = false;
                 break;
             }
             if (groups[2].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[2].currentStation.GetComponent<CreepStation>() != null)
-                FindPath(2);
+                FindPath(2);*/
             yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator RexAI() {
         while (true) {
             if (!mission3on) break;
-            if (groups[3] == null) {
+            /*if (groups[3] == null) {
                 yield return new WaitForSeconds(playerctlr.GetComponent<PlayerActiveCards>().opponentCards[3].baseSpec.unit.coolTime);
                 spawnCool[3] = false;
                 break;
             }
             if (groups[3].currentStation.GetComponent<DefaultStation>().OwnerNum == PlayerController.Player.PLAYER_2 || groups[3].currentStation.GetComponent<CreepStation>() != null)
-                FindPath(3);
+                FindPath(3);*/
             yield return new WaitForSeconds(0.1f);
         }
     }

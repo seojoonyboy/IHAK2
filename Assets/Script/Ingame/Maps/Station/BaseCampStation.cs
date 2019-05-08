@@ -193,10 +193,10 @@ public partial class BaseCampStation : DefaultStation {
                 if (towerComponent.Enemy == null) towerComponent.Enemy = targets[0].transform;
             }
         }
-
-        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
+        //TODO : UnitGroup의 삭제로 인해 미니언 추가 방식? 알아봐야함
+        /*if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
             collision.gameObject.AddComponent<RespawnMinion>();
-        }
+        }*/
     }
 
 
@@ -211,9 +211,9 @@ public partial class BaseCampStation : DefaultStation {
                 else towerComponent.Enemy = targets[0].transform;
             }
         }
-
-        if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
+        //TODO : UnitGroup의 삭제로 인해 미니언 추가 방식? 알아봐야함
+        /*if (collision.GetComponent<UnitGroup>() != null && (collision.transform.GetChild(2).gameObject.layer == (int)OwnerNum)) {
             Destroy(collision.gameObject.GetComponent<RespawnMinion>());
-        }
+        }*/
     }
 }

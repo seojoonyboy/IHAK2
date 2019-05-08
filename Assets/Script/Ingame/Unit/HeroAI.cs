@@ -115,13 +115,6 @@ public partial class HeroAI : UnitAI {
                 expSlider.maxValue = ExpNeed();
 
                 unitCard.gameObject.transform.Find("Level/Value").GetComponent<Text>().text = unitCard.ev.lv.ToString();
-
-                //unitCard
-                //    .gameObject.transform.Find("MinionInfo/CurrentMinion")
-                //    .GetComponent<Text>().text = transform
-                //    .parent.GetComponent<UnitGroup>()
-                //    .currentMinionNum.ToString();
-                //Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);
         }
@@ -253,7 +246,6 @@ public partial class HeroAI : UnitAI {
         }
         GiveExp();
         Destroy(gameObject);
-        myGroup.UnitDead(gameObject);
     }
 
     public override void ReturnDeck(Enum Event_Type, Component Sender, object Param) {
@@ -300,11 +292,6 @@ public partial class HeroAI : UnitAI {
         attackRange = unit.attackRange;
         power = PowerUP(unit.attackPower);
         MaxHealth = PowerUP(unit.hitPoint);
-    }
-
-    public MapStation GetCurrentNode() {
-        UnitGroup group = GetComponentInParent<UnitGroup>();
-        return group.currentStation;
     }
 
     private bool ClickGroup() {

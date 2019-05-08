@@ -34,7 +34,6 @@ public partial class UnitAI : AI.SkyNet {
     protected UnitSpine unitSpine;
     private UnitDetector detector;
     protected IngameSceneEventHandler eventHandler;
-    public UnitGroup myGroup;
     private SpriteMask shaderMask;
 
 
@@ -47,7 +46,6 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     void Start() {
-        if(myGroup == null) myGroup = GetComponentInParent<UnitGroup>();
         LightSet();
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
@@ -87,8 +85,9 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     public void SearchEnemy() {
-        if(myGroup == null) return;
-        Transform enemy = myGroup.GiveMeEnemy(transform);
+        //TODO : 적 검색 방식 개선 필요
+        //Transform enemy = myGroup.GiveMeEnemy(transform);
+        Transform enemy = null;
         if(enemy == null) return;
         targetUnit = enemy;
         if(targetUnit == null) Debug.LogWarning("어떤 유령인건지 궁금하니 이종욱에게 말해주세요");
@@ -223,8 +222,7 @@ public partial class UnitAI : AI.SkyNet {
 
     public override void Damage(float damage, Transform enemy) {
         base.Damage(damage, enemy);
-        if (myGroup == null || enemy == null) return;
-        myGroup.UnitHittedOrFound(enemy);
+        if (enemy == null) return;
         CheckisNeedChangeTarget(enemy);
     }
 
@@ -245,7 +243,6 @@ public partial class UnitAI : AI.SkyNet {
 
     public void NearEnemy(Collider2D other) {
         //targetUnit = other.GetComponent<UnitAI>();
-        myGroup.UnitHittedOrFound(other.transform);
     }
 
     public virtual HeroAI GetMyHeroAI() {

@@ -7,10 +7,8 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
     
     public float time = 0f;
     public float respawnTime = 5f;
-    [ReadOnly] public UnitGroup unitGroup;
 
     private void Start() {
-        unitGroup = transform.GetComponent<UnitGroup>();
         shortDisMinion = PlayerController.Instance.transform.GetComponent<MinionSpawnController>().ShortDisMinion;
         longDisMinion = PlayerController.Instance.transform.GetComponent<MinionSpawnController>().LongDisMinion;
     }
@@ -24,7 +22,6 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
     }
 
     private void SpawnMinion() {
-        if (unitGroup.IsMinionMax() == true) return;
 
         if (transform.GetChild(2).gameObject.layer == 11) {
             EnemyPlayerController epc = FindObjectOfType<EnemyPlayerController>();
@@ -38,9 +35,11 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
 
     private GameObject SelectSpawnMinion() {
         GameObject minion;
-        if (unitGroup.MinionType() == "melee") minion = Instantiate(shortDisMinion, transform);
-        else if (unitGroup.MinionType() == "range") minion = Instantiate(longDisMinion, transform);
-        else minion = null;
+        //TODO : 베이스캠프 거점에서 미니언 늘리는 방식이 아닌 다른 방식으로 해야할 필요 있습니다.
+        //if (unitGroup.MinionType() == "melee") minion = Instantiate(shortDisMinion, transform);
+        //else if (unitGroup.MinionType() == "range") minion = Instantiate(longDisMinion, transform);
+        //else 
+        minion = null;
         return minion;
     }
 
@@ -50,8 +49,9 @@ public partial class RespawnMinion : SerializedMonoBehaviour {
         GameObject minion = SelectSpawnMinion();
         minion.GetComponent<MinionAI>().SetMinionData(card);
         minion.layer = transform.GetChild(2).gameObject.layer;
-        minion.transform.position = unitGroup.transform.position;
-        unitGroup.ResetData();
+        //TODO : 베이스캠프 거점에서 미니언 늘리는 방식이 아닌 다른 방식으로 해야할 필요 있습니다.
+        //minion.transform.position = unitGroup.transform.position;
+        //unitGroup.ResetData();
     }
 }
 
