@@ -22,15 +22,12 @@ public class HeroCardHandler : IngameCardHandler {
 
     protected override void OnSingleClick() {
         if(instantiatedUnitObj != null) {
-            UnitGroup unitGroup = instantiatedUnitObj.GetComponentInParent<UnitGroup>();
-            if (unitGroup == null) return;
-
-            if (unitGroup.IsMoving) {
+            //TODO : 영웅 유닛을 이동중인지로 파악해야할듯 합니다.
+            if (true) {
                 IngameAlarm.instance.SetAlarm("이동중에는 방향을 조작할 수 없습니다.");
             }
             else {
                 IngameAlarm.instance.SetAlarm("영웅을 이동시킬 방향을 선택하세요.");
-                unitGroup.checkWay();
             }
         }
         else {

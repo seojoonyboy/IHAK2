@@ -40,8 +40,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [Header(" - Player Maps")]
     [DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
     public Dictionary<Player, GameObject> maps;
-
-    public MapStation hq_mapStation;
     public Transform pathPrefabsParent;
     public GameObject 
         GoldResourceFlick,
@@ -94,8 +92,6 @@ public partial class PlayerController : SerializedMonoBehaviour {
 
         eventHandler = IngameSceneEventHandler.Instance;
         eventHandler.AddListener(IngameSceneEventHandler.EVENT_TYPE.MY_DECK_DETAIL_INFO_ADDED, OnMyDeckInfoAdded);
-
-        hq_mapStation = GameObject.Find("S10").GetComponent<MapStation>();
         _instance = this;
 
         //StartCoroutine(subgoal_test());
