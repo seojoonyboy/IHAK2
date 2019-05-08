@@ -36,7 +36,7 @@ public partial class CreepStation : DefaultStation {
     private void LateUpdate() {
         if (!startSeize && monsters.Count == 0 && targets.Count > 0 ) {
             startSeize = true;
-            //StartCoroutine(FindOwner());
+            StartCoroutine(FindOwner());
         }
     }
 
@@ -44,7 +44,7 @@ public partial class CreepStation : DefaultStation {
         if (targets.Contains(unitObj)) targets.Remove(unitObj);
     }
 
-    /*
+    
     IEnumerator FindOwner() {
         int targetLayer = 0;
         while (startSeize) {
@@ -68,7 +68,7 @@ public partial class CreepStation : DefaultStation {
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
         }
     }
-    */
+    
     public void ChangeOwner() { }
 }
 
