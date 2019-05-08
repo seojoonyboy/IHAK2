@@ -252,8 +252,8 @@ public partial class PlayerController : SerializedMonoBehaviour {
         GameObject name = hero.transform.Find("Name").gameObject;
         name.SetActive(true);
         name.GetComponent<TextMeshPro>().text = card.baseSpec.unit.name;
-        _instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
-        unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
+        //_instance.GetComponent<MinionSpawnController>().SpawnMinionSquad(card, unitGroup.transform);
+        //unitGroup.GetComponent<UnitGroup>().SetMove(cardObj.GetComponent<HeroCardHandler>().path);
     }
 
     public GameObject GetHeroPrefab(string id) {
