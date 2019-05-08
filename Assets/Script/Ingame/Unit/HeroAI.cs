@@ -48,6 +48,7 @@ public partial class HeroAI : UnitAI {
 
         coroutine = UpdateInfoCard();
         StartCoroutine(coroutine);
+        setState(aiState.NONE);
     }
 
     /// <summary>
@@ -107,11 +108,11 @@ public partial class HeroAI : UnitAI {
 
                 unitCard.gameObject.transform.Find("Level/Value").GetComponent<Text>().text = unitCard.ev.lv.ToString();
 
-                unitCard
-                    .gameObject.transform.Find("MinionInfo/CurrentMinion")
-                    .GetComponent<Text>().text = transform
-                    .parent.GetComponent<UnitGroup>()
-                    .currentMinionNum.ToString();
+                //unitCard
+                //    .gameObject.transform.Find("MinionInfo/CurrentMinion")
+                //    .GetComponent<Text>().text = transform
+                //    .parent.GetComponent<UnitGroup>()
+                //    .currentMinionNum.ToString();
                 //Debug.Log("HP : " + health);
             }
             yield return new WaitForSeconds(0.1f);

@@ -234,13 +234,15 @@ public partial class PlayerController : SerializedMonoBehaviour {
     [SerializeField] GameObject passiveUIPref;
 
     public void HeroSummon(ActiveCard card, GameObject cardObj) {
-        GameObject unitGroup = Instantiate(unitGroupPrefab, summonParent);
+        //GameObject unitGroup = Instantiate(unitGroupPrefab, summonParent);
+
         var result = GetHeroPrefab(card.baseSpec.unit.id);
         if(result == null) {
             result = GetHeroPrefab("n_uu_01001");
         }
 
-        GameObject hero = Instantiate(result, unitGroup.transform);
+        //GameObject hero = Instantiate(result, unitGroup.transform);
+        GameObject hero = Instantiate(result, summonParent);
         cardObj.GetComponent<HeroCardHandler>().instantiatedUnitObj = hero;
 
         UnitAI unitAI = hero.GetComponent<UnitAI>();
