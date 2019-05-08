@@ -5,9 +5,13 @@ using TMPro;
 using DataModules;
 using System;
 using UnityEngine.UI;
+using UniRx;
 
 public partial class HeroAI : UnitAI {
     public GameObject targetCard;
+    GameObject selectedMark;
+    bool unitSelected = false;
+    bool moving = false;
 
     private Transform expBar;
     private Transform cooltimeBar;
@@ -32,12 +36,14 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void Init(object card, GameObject cardObj) {
+        var clickGroup = Observable.EveryUpdate().Where(_ => Input.GetMouseButtonDown(0));
+        clickGroup.RepeatUntilDestroy(gameObject).Where(_ => !moving && ClickGroup() && !Canvas.FindObjectOfType<ToggleGroup>().AnyTogglesOn()).Subscribe(_ => checkWay());
         Init(card);
         ActiveCard actcard = (ActiveCard)card;
         MaxHealth = actcard.baseSpec.unit.hitPoint;
         HP = MaxHealth;
         this.unitCard = actcard;
-        Unit unit = actcard.baseSpec.unit;
+        DataModules.Unit unit = actcard.baseSpec.unit;
         int level = (actcard.ev.lv <= 0) ? 1 : actcard.ev.lv;
         SetUnitDataCommon(level);
         SetColliderData();
@@ -49,6 +55,8 @@ public partial class HeroAI : UnitAI {
         coroutine = UpdateInfoCard();
         StartCoroutine(coroutine);
         setState(aiState.NONE);
+        selectedMark = Instantiate(UnityEngine.Resources.Load("Prefabs/MoveArrow") as GameObject, transform);
+        selectedMark.SetActive(false);
     }
 
     /// <summary>
@@ -76,7 +84,7 @@ public partial class HeroAI : UnitAI {
     //}
 
     private void SetUnitDataCommon(int level) {
-        Unit unit = unitCard.baseSpec.unit;
+        DataModules.Unit unit = unitCard.baseSpec.unit;
         moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
@@ -286,7 +294,7 @@ public partial class HeroAI : UnitAI {
     }
 
     public override void ResetStat() {
-        Unit unit = unitCard.baseSpec.unit;
+        DataModules.Unit unit = unitCard.baseSpec.unit;
         moveSpeed = unit.moveSpeed;
         attackSpeed = unit.attackSpeed;
         attackRange = unit.attackRange;
@@ -297,5 +305,50 @@ public partial class HeroAI : UnitAI {
     public MapStation GetCurrentNode() {
         UnitGroup group = GetComponentInParent<UnitGroup>();
         return group.currentStation;
+    }
+
+    private bool ClickGroup() {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            LayerMask mask = (1 << LayerMask.NameToLayer("Direction")) | (1 << LayerMask.NameToLayer("PlayerUnit"));
+            RaycastHit2D hits = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, Mathf.Infinity, mask);
+            if (!hits) {
+                //if (unitSelected) checkWay();
+                if (unitSelected) {
+                    transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+                    checkWay();
+                }
+                return false;
+            }
+            if (hits.collider.transform != transform && hits.collider.transform.parent != transform && hits.collider.transform.parent.parent != transform) return false;
+            if (hits.collider.transform.childCount > 0 && hits.collider.transform.GetChild(2).gameObject.layer != 10) return false;
+            if (hits.collider.attachedRigidbody == transform.GetChild(2).GetComponent<Rigidbody2D>())
+                return true;
+
+            if (hits.transform.parent.GetComponent<CircleCollider2D>() == transform.parent.GetComponent<CircleCollider2D>())
+                return true;
+
+            else if (hits.collider.gameObject.layer == 10) {
+                if (!unitSelected) return false;
+                int index = hits.collider.transform.GetSiblingIndex();
+                
+                if (!PlayerController.Instance.FirstMove)
+                    PlayerController.Instance.FirstMove = true;
+                return true;
+            }
+            else return false;
+        }
+        return false;
+    }
+
+    public void checkWay() {
+        if (PlayerController.Instance.ClickedUnitgroup == null)
+            PlayerController.Instance.ClickedUnitgroup = gameObject;
+        else if (PlayerController.Instance.ClickedUnitgroup == gameObject)
+            PlayerController.Instance.ClickedUnitgroup = null;
+        else
+            return;
+        unitSelected = !unitSelected;
+        selectedMark.SetActive(unitSelected);
     }
 }
