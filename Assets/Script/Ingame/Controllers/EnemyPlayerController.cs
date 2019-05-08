@@ -85,22 +85,22 @@ public partial class EnemyPlayerController : SerializedMonoBehaviour {
     }
 
     private void Start() {
-        nodeParent = GameObject.Find("Nodes").transform;
-        groups = new UnitGroup[4];
-        groupPath = new List<Vector3>[4];
-        for (int i = 0; i < 4; i++) {
-            groupPath[i] = new List<Vector3>();
-        }
-        switch (AccountManager.Instance.mission.stageNum) {
-            case 2:
-                StartCoroutine(Stage2AI());
-                break;
-            case 3:
-                StartCoroutine(Stage3AI());
-                break;
-            default:
-                break;
-        }
+        //nodeParent = GameObject.Find("Nodes").transform;
+        //groups = new UnitGroup[4];
+        //groupPath = new List<Vector3>[4];
+        //for (int i = 0; i < 4; i++) {
+        //    groupPath[i] = new List<Vector3>();
+        //}
+        //switch (AccountManager.Instance.mission.stageNum) {
+        //    case 2:
+        //        StartCoroutine(Stage2AI());
+        //        break;
+        //    case 3:
+        //        StartCoroutine(Stage3AI());
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     private void GetDeckDetailRequest(GameObject ld) {
