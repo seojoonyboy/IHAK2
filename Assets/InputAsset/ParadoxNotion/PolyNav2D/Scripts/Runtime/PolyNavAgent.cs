@@ -78,6 +78,9 @@ namespace PolyNav{
 
 		private static List<PolyNavAgent> allAgents = new List<PolyNavAgent>();
 
+        private CircleCollider2D circleCollider;
+        public GameObject nearAgent;
+        IEnumerator coroutine;
 		///----------------------------------------------------------------------------------------------
 
 		///The position of the agent
@@ -167,6 +170,7 @@ namespace PolyNav{
 			if (_map == null){
 				_map = FindObjectsOfType<PolyNav2D>().FirstOrDefault(m => m.PointIsValid(position));
 			}
+            circleCollider = GetComponent<CircleCollider2D>();
 		}
 
 		///Set the destination for the agent. As a result the agent starts moving
@@ -288,11 +292,11 @@ namespace PolyNav{
 			LookAhead();
 
 
-			//check active avoidance elapsed time (= stuck)
+            //check active avoidance elapsed time (= stuck)
 			if (isAvoiding && avoidingElapsedTime >= avoidanceConsiderStuckedTime){
-				if (remainingDistance > avoidanceConsiderReachedDistance){
+                if (remainingDistance > avoidanceConsiderReachedDistance){
 					OnInvalid();
-				} else {
+                } else {
 					OnArrived();
 				}
 			}
@@ -388,8 +392,12 @@ namespace PolyNav{
 
 		//stop the agent and callback + message
 		void OnInvalid(){
+            if (coroutine != null) return;
 
-			Stop();
+            coroutine = Avoid(nextPoint.x < transform.position.x);
+            StartCoroutine(coroutine);
+
+            Stop();
 
 			if (reachedCallback != null){
 				reachedCallback(false);
@@ -400,9 +408,40 @@ namespace PolyNav{
 			}
 		}
 
-		
-		//seeking a target
-		Vector2 Seek(Vector2 pos){
+        IEnumerator Avoid(bool isRight) {
+            float time = 0;
+            var goal = primeGoal;
+            int count = 0;
+            while (time < 5.0f) {
+                time += Time.deltaTime;
+                if(count == 0) {
+                    if (isRight) {
+                        primeGoal = new Vector2(transform.position.x - 10, transform.position.y);
+                    }
+                    else {
+                        primeGoal = new Vector2(transform.position.x + 10, transform.position.y);
+                    }
+                    Repath();
+
+                    Debug.Log("!!");
+                }
+                count++;
+                yield return new WaitForFixedUpdate();
+            }
+            primeGoal = goal;
+            Repath();
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision) {
+            if (collision.GetComponent<PolyNavAgent>() == null) return;
+
+            nearAgent = collision.gameObject;
+        }
+
+        //seeking a target
+        Vector2 Seek(Vector2 pos){
 
 			Vector2 desiredVelocity= (pos - position).normalized * maxSpeed;
 			Vector2 steer= desiredVelocity - velocity;
@@ -517,8 +556,7 @@ namespace PolyNav{
 			}	
 		}
 
-		#endif
-		///----------------------------------------------------------------------------------------------
-
-	}
+#endif
+        ///----------------------------------------------------------------------------------------------
+    }
 }
