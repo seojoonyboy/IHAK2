@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace PolyNav{
 		private List<PolyNavObstacle> navObstacles;
 		private bool useCustomMap;
 		private PolyMap map;
-		private List<PathNode> nodes = new List<PathNode>();
+		public List<PathNode> nodes = new List<PathNode>();
 		private PathNode[] tempNodes;
 
 		private Queue<PathRequest> pathRequests = new Queue<PathRequest>();
@@ -668,6 +668,11 @@ namespace PolyNav{
 					DebugDrawPolygon(poly.points, Color.grey);
 				}
 			}
+
+            foreach(var node in nodes) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawCube(node.pos, Vector3.one * 0.5f);
+            }
 			//
 		}
 
@@ -689,7 +694,8 @@ namespace PolyNav{
 			_masterCollider.enabled = false;
 		}
 
-		[UnityEditor.MenuItem("GameObject/Other/PolyNav Map")]
+
+        [UnityEditor.MenuItem("GameObject/Other/PolyNav Map")]
 		[UnityEditor.MenuItem("Tools/ParadoxNotion/PolyNav/Create PolyNav Map")]
 		public static void Create(){
 			var newNav = new GameObject("@PolyNav2D").AddComponent<PolyNav2D>();

@@ -77,10 +77,6 @@ namespace PolyNav{
 		private float accelerationValue = 0;
 
 		private static List<PolyNavAgent> allAgents = new List<PolyNavAgent>();
-
-        private CircleCollider2D circleCollider;
-        public GameObject nearAgent;
-        IEnumerator coroutine;
 		///----------------------------------------------------------------------------------------------
 
 		///The position of the agent
@@ -160,8 +156,9 @@ namespace PolyNav{
 		
 		///The elapsed time in seconds in which the agent is actively avoiding another agent.
 		public float avoidingElapsedTime{get; private set;}
-
-		///----------------------------------------------------------------------------------------------
+        ///----------------------------------------------------------------------------------------------
+        private bool isClicked = false;
+        private Vector2 clickedPos;
 
 		void OnEnable(){ allAgents.Add(this); }
 		void OnDisable(){ allAgents.Remove(this); }
@@ -170,11 +167,14 @@ namespace PolyNav{
 			if (_map == null){
 				_map = FindObjectsOfType<PolyNav2D>().FirstOrDefault(m => m.PointIsValid(position));
 			}
-            circleCollider = GetComponent<CircleCollider2D>();
 		}
 
 		///Set the destination for the agent. As a result the agent starts moving
-		public bool SetDestination(Vector2 goal){ return SetDestination(goal, null); }
+		public bool SetDestination(Vector2 goal){
+            isClicked = true;
+            clickedPos = goal;
+            return SetDestination(goal, null);
+        }
 
 		///Set the destination for the agent. As a result the agent starts moving. Only the callback from the last SetDestination will be called upon arrival
 		public bool SetDestination(Vector2 goal, Action<bool> callback){
@@ -234,7 +234,6 @@ namespace PolyNav{
 
 		//the callback from map for when path is ready to use
 		void SetPath(Vector2[] path){
-			
 			//in case the agent stoped somehow, but a path was pending
 			if (requests == 0){
 				return;
@@ -247,7 +246,7 @@ namespace PolyNav{
 				return;
 			}
 
-			activePath = path.ToList();
+            activePath = path.ToList();
 			if (OnNavigationStarted != null){
 				OnNavigationStarted();
 			}
@@ -264,7 +263,27 @@ namespace PolyNav{
 			//when there is no path just restrict
 			if (!hasPath){
 				Restrict();
-				return;
+                //idea 1 : goal의 방향으로 Ray를 보내 해당 Obstacle방향으로 일단 이동한다.
+                //idea 2 : goal의 절반 위치로 다시 경로 요청을 한다. (실패시 또 절반)
+                if (isClicked) {
+                    //primeGoal = (clickedPos + (Vector2)transform.position) / 2;
+                    //Debug.Log(primeGoal);
+                    //Repath();
+                    //Debug.DrawRay(position, clickedPos - position, Color.red);
+                    //RaycastHit2D[] hits = Physics2D.RaycastAll(position, clickedPos - position);
+                    //int count = 0;
+                    //foreach(var hit in hits) {
+                    //    if(count != 0) {
+                    //        if (hit.collider.gameObject.GetComponent<PolyNavObstacle>() != null) {
+                    //            Debug.Log(hit.collider.gameObject.name);
+                    //            primeGoal = hit.collider.GetComponent<PolyNavObstacle>().GetPathPoints(0)[0];
+                    //            map.FindPath(position, primeGoal, SetPath);
+                    //        }
+                    //    }
+                    //    count++;
+                    //}
+                }
+                return;
 			}
 
 			if (maxSpeed <= 0){
@@ -293,17 +312,19 @@ namespace PolyNav{
 
 
             //check active avoidance elapsed time (= stuck)
-			if (isAvoiding && avoidingElapsedTime >= avoidanceConsiderStuckedTime){
-                if (remainingDistance > avoidanceConsiderReachedDistance){
-					OnInvalid();
-                } else {
-					OnArrived();
-				}
-			}
+            if (isAvoiding && avoidingElapsedTime >= avoidanceConsiderStuckedTime) {
+                if (remainingDistance > avoidanceConsiderReachedDistance) {
+                    //ToDo : 헤매는 시간이 초과되면 적을 다시 탐색
+                    //OnInvalid();
+                }
+                else {
+                    //OnArrived();
+                }
+            }
 
 
-			//move the agent
-			position += velocity * Time.deltaTime;
+            //move the agent
+            position += velocity * Time.deltaTime;
 
 			//restrict just after movement
 			Restrict();
@@ -392,11 +413,6 @@ namespace PolyNav{
 
 		//stop the agent and callback + message
 		void OnInvalid(){
-            if (coroutine != null) return;
-
-            coroutine = Avoid(nextPoint.x < transform.position.x);
-            StartCoroutine(coroutine);
-
             Stop();
 
 			if (reachedCallback != null){
@@ -407,38 +423,6 @@ namespace PolyNav{
 				OnDestinationInvalid();
 			}
 		}
-
-        IEnumerator Avoid(bool isRight) {
-            float time = 0;
-            var goal = primeGoal;
-            int count = 0;
-            while (time < 5.0f) {
-                time += Time.deltaTime;
-                if(count == 0) {
-                    if (isRight) {
-                        primeGoal = new Vector2(transform.position.x - 10, transform.position.y);
-                    }
-                    else {
-                        primeGoal = new Vector2(transform.position.x + 10, transform.position.y);
-                    }
-                    Repath();
-
-                    Debug.Log("!!");
-                }
-                count++;
-                yield return new WaitForFixedUpdate();
-            }
-            primeGoal = goal;
-            Repath();
-            StopCoroutine(coroutine);
-            coroutine = null;
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision) {
-            if (collision.GetComponent<PolyNavAgent>() == null) return;
-
-            nearAgent = collision.gameObject;
-        }
 
         //seeking a target
         Vector2 Seek(Vector2 pos){
@@ -553,7 +537,12 @@ namespace PolyNav{
 				for (int i= 0; i < activePath.Count; i++){
 					Gizmos.DrawLine(activePath[i], activePath[(i == activePath.Count - 1)? i : i + 1]);
 				}
-			}	
+			}
+
+            foreach(var node in map.nodes) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawCube(node.pos, Vector3.one * 0.3f);
+            }
 		}
 
 #endif
