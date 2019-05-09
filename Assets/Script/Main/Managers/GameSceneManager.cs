@@ -49,9 +49,7 @@ public class GameSceneManager : MonoBehaviour {
             }
         }
         if(isIngame(state)) {
-            yield return SceneManager.LoadSceneAsync(
-                string.Format("stage{0}", AccountManager.Instance.mission.stageNum), 
-                LoadSceneMode.Additive);
+            yield return SceneManager.LoadSceneAsync("Stage", LoadSceneMode.Additive);
         }
         yield return new WaitForSeconds(0.5f);
         _wndLoadding.setLoaddingValue(0.5f);
@@ -83,7 +81,7 @@ public class GameSceneManager : MonoBehaviour {
         if(AccountManager.Instance.mission == null) return;
         if(state != SceneState.IngameScene) return;
         Scene ingame = SceneManager.GetSceneByName("IngameScene");
-		Scene stage = SceneManager.GetSceneByName(string.Format("stage{0}", AccountManager.Instance.mission.stageNum));
+		Scene stage = SceneManager.GetSceneByName("Stage");
         SceneManager.MergeScenes(stage, ingame);
     }
 }
