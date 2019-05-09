@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 61600329227709166}
   - component: {fileID: 50790466705561782}
   - component: {fileID: 114581974659180004}
+  - component: {fileID: 114713006602732460}
   m_Layer: 10
   m_Name: RangerMinion
   m_TagString: Unit
@@ -591,7 +592,6 @@ MonoBehaviour:
   power: 0
   moveSpeed: 0
   attackRange: 0
-  myGroup: {fileID: 0}
   unit:
     id: 
     name: "\uC6D0\uAC70\uB9AC\uBBF8\uB2C8\uC5B8"
@@ -631,6 +631,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add212bdfa69d4cc6a45fae8d6cbf46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114713006602732460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569794317466014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cc6a4987f7c684798156c56d545838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _map: {fileID: 0}
+  maxSpeed: 3.5
+  mass: 20
+  stoppingDistance: 0.1
+  slowingDistance: 1
+  accelerationRate: 2
+  decelerationRate: 2
+  lookAheadDistance: 1
+  avoidRadius: 0
+  avoidanceConsiderStuckedTime: 3
+  avoidanceConsiderReachedDistance: 1
+  rotateTransform: 1
+  rotateSpeed: 350
+  centerOffset: {x: 0, y: 0}
+  repath: 1
+  restrict: 0
+  closerPointOnInvalid: 1
+  debugPath: 1
+  nearAgent: {fileID: 0}
 --- !u!114 &114763526177971322
 MonoBehaviour:
   m_ObjectHideFlags: 1

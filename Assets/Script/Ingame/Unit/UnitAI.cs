@@ -4,6 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 using DataModules;
 using System;
+using PolyNav;
 
 public partial class UnitAI : AI.SkyNet {
     public enum aiState {
@@ -16,6 +17,7 @@ public partial class UnitAI : AI.SkyNet {
     protected delegate void timeUpdate(float time);
     protected timeUpdate update;
     protected Transform targetUnit;
+    protected Vector3 targetPos;
     [SerializeField] private GameObject arrow;
 
     public float power = 0;
@@ -35,10 +37,12 @@ public partial class UnitAI : AI.SkyNet {
     private UnitDetector detector;
     protected IngameSceneEventHandler eventHandler;
     private SpriteMask shaderMask;
+    private PolyNavAgent navAgent;
 
 
     void Awake() {
         eventHandler = IngameSceneEventHandler.Instance;
+        navAgent = GetComponent<PolyNavAgent>();
         if (myLayer > 0) return;
         myLayer = LayerMask.NameToLayer("PlayerUnit");
         enemyLayer = LayerMask.NameToLayer("EnemyUnit");
@@ -61,17 +65,6 @@ public partial class UnitAI : AI.SkyNet {
         eventHandler.RemoveListener(IngameSceneEventHandler.EVENT_TYPE.ORDER_UNIT_RETURN, ReturnDeck);
     }
 
-    public void Battle(bool isBattle) {
-        if(isBattle) {
-            SetEnemy();
-        }
-        else  {
-            setState(aiState.RETURN);
-            if(detector == null) return;
-            detector.EnemyDone();
-        }
-    }
-
     protected void InitStatic() {
         if (playerController == null) playerController = FindObjectOfType<PlayerController>();
         if (ingameDeckShuffler == null) ingameDeckShuffler = FindObjectOfType<IngameDeckShuffler>();
@@ -82,21 +75,6 @@ public partial class UnitAI : AI.SkyNet {
     protected void SetColliderData() {
         detector = transform.GetComponentInChildren<UnitDetector>();
         detector.SetData(attackRange, LayertoGive(true));
-    }
-
-    public void SearchEnemy() {
-        //TODO : 적 검색 방식 개선 필요
-        //Transform enemy = myGroup.GiveMeEnemy(transform);
-        Transform enemy = null;
-        if(enemy == null) return;
-        targetUnit = enemy;
-        if(targetUnit == null) Debug.LogWarning("어떤 유령인건지 궁금하니 이종욱에게 말해주세요");
-    }
-
-    private void SetEnemy() {
-        SearchEnemy();
-        if(targetUnit == null) return;
-        setState(aiState.MOVE);
     }
 
     protected void setState(aiState state) {
@@ -123,11 +101,13 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     private bool StartMove() {
-        if(targetUnit == null) return false;
-        Transform target = targetUnit.transform;
-        Vector3 distance = target.position - transform.position;
-        unitSpine.SetDirection(distance);
+        if(targetUnit == null && targetPos == null) return false;
+        Vector3 pos;
+        if(targetUnit == null) pos = targetPos;
+        else pos = targetUnit.position;
+        Vector3 distance = pos - transform.position;
         unitSpine.Move();
+        navAgent.SetDestination(targetPos);
         return true;
     }
 
@@ -139,18 +119,16 @@ public partial class UnitAI : AI.SkyNet {
 
     void moveUpdate(float time) {
         currentTime += time; 
-        if (targetUnit == null) { 
-            SetEnemy();
-            return;
-        }
-        Transform target = targetUnit;
-        Vector3 distance = target.position - transform.position;
-        float length = Vector3.Distance(transform.position, target.position);
+        
+        Vector3 pos = targetUnit.position;
+        Vector3 distance = pos - transform.position;
+        float length = Vector3.Distance(transform.position, pos);
         if (isTargetClose(length)) {
             setState(aiState.ATTACK);
             return;
         }
-        transform.Translate(distance.normalized * time * moveSpeed);
+        unitSpine.SetDirection(distance);
+        if(length < 0.5f) setState(aiState.NONE);
         if (currentTime < 2f) return;
         currentTime = 0f;
     }
@@ -164,11 +142,12 @@ public partial class UnitAI : AI.SkyNet {
             distance = Vector3.Distance(targetUnit.position, transform.position);
             if (!isTargetClose(distance)) {
                 setState(aiState.MOVE);
+                if(detector == null) return;
+                detector.EnemyDone();
                 return;
             }
             attackUnit();
         }
-        else SetEnemy();
     }
 
     void returnUpdate(float time) {
@@ -211,10 +190,7 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     private bool isTargetClose(float distance) {
-        if (targetUnit == null) {
-            SetEnemy();
-            return false;
-        }
+        if(targetUnit == null) return false;
         if (distance <= attackRange)
             return true;
         return false;
@@ -242,11 +218,16 @@ public partial class UnitAI : AI.SkyNet {
     }
 
     public void NearEnemy(Collider2D other) {
-        //targetUnit = other.GetComponent<UnitAI>();
+        targetUnit = other.transform;
     }
 
     public virtual HeroAI GetMyHeroAI() {
         return transform.parent.GetComponentInChildren<HeroAI>();
+    }
+
+    public void SetDestination(Vector3 pos) {
+        targetPos = pos;
+        setState(aiState.MOVE);
     }
 
     public override void Init(object card) { }
