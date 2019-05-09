@@ -38,9 +38,10 @@ public partial class DefaultStation : SerializedMonoBehaviour {
 
 }
 
-public partial class DefaultStation : SerializedMonoBehaviour {    
+public partial class DefaultStation : SerializedMonoBehaviour {
     public UniRx.ReactiveProperty<int> intervalTime;
     public int pivotTime;
+    public bool checkFlag = false;
 }
 
 public partial class DefaultStation : SerializedMonoBehaviour {

@@ -132,7 +132,9 @@ public class MenuController : MonoBehaviour {
 
     public void StartIngame() {
         GameSceneManager gsm = FindObjectOfType<GameSceneManager>();
-        OpenMissionWindow();
+        //OpenMissionWindow();
+
+        accountManager.RequestMissionDeck(3);
 
         /*
         if (accountManager.decks.Count == 0)
