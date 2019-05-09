@@ -19,7 +19,7 @@ public partial class CreepStation : DefaultStation {
         StationIdentity = StationBasic.StationState.Creep;
         
         pivotTime = 60;
-        intervalTime = new ReactiveProperty<int>(pivotTime);
+        intervalTime = new ReactiveProperty<int>(pivotTime);        
         targets = new List<GameObject>();
         SetMonsters();
         SetCreepPoint();
@@ -65,6 +65,9 @@ public partial class CreepStation : DefaultStation {
             targets.Clear();
             GetComponent<Collider2D>().enabled = true;
             startSeize = false;
+            checkFlag = true;
+            intervalTime.Value = pivotTime;
+            SpawnPlayerMinion();
             IngameSceneEventHandler.Instance.PostNotification(IngameSceneEventHandler.MISSION_EVENT.NODE_CAPTURE_COMPLETE, this, null);
         }
     }
@@ -209,10 +212,13 @@ public partial class CreepStation {
 
     public void PostRespawnTimer() {
         var oneSecond = Observable.Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)).Publish().RefCount();
-        oneSecond.Where(_ => monsters.Count <= 0).Subscribe(_ => { intervalTime.Value--; }).AddTo(this);
-        oneSecond.Where(_ => intervalTime.Value <= 0).Subscribe(_ => { RespawnMonster(); intervalTime.Value = pivotTime; }).AddTo(this);
-        
+        oneSecond.Where(_ => (monsters.Count <= 0) && OwnerNum != PlayerController.Player.NEUTRAL).Subscribe(_ => { intervalTime.Value--; }).AddTo(this);
+        oneSecond.Where(_ => (intervalTime.Value <= 0) && OwnerNum != PlayerController.Player.NEUTRAL).Subscribe(_ => { RespawnMonster(); intervalTime.Value = pivotTime; }).AddTo(this);
     }
+
+    public void SpawnPlayerMinion() {
+    }
+
 
     public void RespawnMonster() {
         List<Transform> wayPoints = new List<Transform>();
@@ -239,6 +245,10 @@ public partial class CreepStation {
                 occupyPercentageVal = 100 / monsterCount;
             }
         }
+        checkFlag = false;
+        OwnerNum = PlayerController.Player.NEUTRAL;
+        occupySlider.Reset();
+        intervalTime.Value = pivotTime;
     }
     
 
